@@ -17,3 +17,4 @@ jobs:
       install-web-workload: true
       install-ios-workload: true
       install-android-workload: true
+      install-wasm-workload: true
