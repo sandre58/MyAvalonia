@@ -23,10 +23,10 @@ public static class ClipboardManager
     {
         _clipboardService = clipboardService;
         CopyTextCommand = ActionCommand.Create<string>(async x => await CopyTextAsync(x).ConfigureAwait(false));
-        CopyCommand = ActionCommand.Create<IDataObject>(async x => await CopyAsync(x).ConfigureAwait(false));
+        CopyCommand = ActionCommand.Create<IAsyncDataTransfer>(async x => await CopyAsync(x).ConfigureAwait(false));
     }
 
-    public static async Task CopyAsync(IDataObject content)
+    public static async Task CopyAsync(IAsyncDataTransfer content)
     {
         if (_clipboardService is not { } clipboardService) return;
 

@@ -19,13 +19,13 @@ public class ClipboardService(Func<TopLevel?> topLevel) : IClipboardService
 {
     private readonly Lazy<IClipboard?> _clipboard = new(() => topLevel()?.Clipboard);
 
-    public async Task CopyAsync(IDataObject content)
+    public async Task CopyAsync(IAsyncDataTransfer content)
     {
         if (_clipboard.Value is not { } clipboard) return;
 
         try
         {
-            await clipboard.SetDataObjectAsync(content).ConfigureAwait(false);
+            await clipboard.SetDataAsync(content).ConfigureAwait(false);
             ToasterManager.ShowInformation(MessageResources.CopyInClipBoardSuccess);
         }
         catch (Exception)

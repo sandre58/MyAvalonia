@@ -11,7 +11,7 @@ namespace MyNet.Avalonia.Clipboard;
 
 public interface IClipboardService
 {
-    Task CopyAsync(IDataObject content);
+    Task CopyAsync(IAsyncDataTransfer content);
 
     Task CopyTextAsync(string text);
 }
