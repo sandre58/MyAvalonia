@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Product>My .NET Avalonia</Product>
+        <Description>Platform for testing and experimenting with Avalonia controls and styles. </Description>
+        <ApplicationIcon>Assets\Demo.ico</ApplicationIcon>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Fody" Version="6.9.3" PrivateAssets="all" />
+        <PackageReference Include="MyNet.UI" Version="11.0.43" />
+        <PackageReference Include="MyNet.Utilities.Generator.Extensions" Version="8.0.43" />
+        <PackageReference Include="MyNet.Utilities.Geography.Extensions" Version="8.0.43" />
+        <PackageReference Include="MyNet.Utilities.Localization.Extensions" Version="8.0.43" />
+        <PackageReference Include="MyNet.Utilities.Logging.NLog" Version="8.0.43" />
+        <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-rc.1.25451.107" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\MyNet.Avalonia.Theme\MyNet.Avalonia.Theme.csproj" />
+        <ProjectReference Include="..\..\src\MyNet.Avalonia.UI\MyNet.Avalonia.UI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Resources\DemoResources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>DemoResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+</Project>

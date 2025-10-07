@@ -1,0 +1,46 @@
+<Project>
+
+    <!-- To override -->
+    <PropertyGroup>
+        <PackageIcon>$(ProductName).png</PackageIcon>
+        <Description></Description>
+        <PackageTags>utilities;dotnet;tools</PackageTags>
+    </PropertyGroup>
+
+    <PropertyGroup>
+
+        <!-- NuGet information -->
+        <RepositoryUrl>https://github.com/sandre58/MyAvalonia</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryBranch>main</RepositoryBranch>
+        <PackageOutputPath>$(MSBuildThisFileDirectory)..\packages</PackageOutputPath>
+        <PackageProjectUrl>https://github.com/sandre58/MyAvalonia</PackageProjectUrl>
+        <PackageReleaseNotes>https://github.com/sandre58/MyAvalonia/releases</PackageReleaseNotes>
+        <PackageIconUrl>$(PackageIcon)</PackageIconUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+
+        <!-- Build configuration -->
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <IncludeSymbols>true</IncludeSymbols>
+        <IncludeSource>true</IncludeSource>
+
+    </PropertyGroup>
+
+    <!-- Embedded files -->
+    <ItemGroup>
+        <None Include="$(MSBuildThisFileDirectory)..\LICENSE" Pack="true" PackagePath="">
+            <Link>_package/LICENSE</Link>
+        </None>
+        <None Include="$(MSBuildThisFileDirectory)..\assets\$(PackageIcon)" Pack="true" PackagePath="">
+            <Link>_package/$(PackageIcon)</Link>
+        </None>
+        <None Include="$(MSBuildProjectDirectory)\README.md" Pack="true" PackagePath="">
+            <Link>_package/README.md</Link>
+        </None>
+    </ItemGroup>
+
+</Project>

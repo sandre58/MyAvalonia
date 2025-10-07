@@ -1,0 +1,12 @@
+{
+    "wasmHostProperties": {
+        "perHostConfig": [
+            {
+                "name": "browser",
+                "host": "browser"
+            }
+        ],
+        "enableJiterpreter": false,
+        "enableWasmEH": true
+    }
+}

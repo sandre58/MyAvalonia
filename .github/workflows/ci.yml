@@ -1,0 +1,16 @@
+name: CI - Build and Test
+
+on:
+  push:
+    branches: [ "main", "feature/*", "hotfix/*" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: sandre58/MyWorkflows/.github/workflows/ci.yml@main
+    with:
+      app-projects: "demos"
+      nuget-projects: "src"
+      app-target-framework: "net10.0"

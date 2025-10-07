@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+
+    <!-- General test run configuration -->
+    <RunConfiguration>
+        <!-- Disable parallel test execution (set to true only if tests share state) -->
+        <DisableParallelization>false</DisableParallelization>
+
+        <!-- Global timeout for the entire test session in milliseconds -->
+        <TestSessionTimeout>600000</TestSessionTimeout>
+
+        <!-- Results directory -->
+        <ResultsDirectory>TestResults</ResultsDirectory>
+    </RunConfiguration>
+
+    <!-- xUnit specific settings -->
+    <xUnit>
+        <!-- Enable diagnostic messages for troubleshooting -->
+        <DiagnosticMessages>true</DiagnosticMessages>
+        <!-- Display class and method names in test output -->
+        <MethodDisplay>ClassAndMethod</MethodDisplay>
+        <!-- Run test collections in parallel -->
+        <ParallelizeTestCollections>true</ParallelizeTestCollections>
+    </xUnit>
+
+    <!-- Code coverage configuration -->
+    <DataCollectionRunSettings>
+        <DataCollectors>
+            <!-- Using XPlat Code Coverage (Coverlet) -->
+            <DataCollector friendlyName="XPlat Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0">
+                <Configuration>
+
+                    <!-- Output formats: lcov (GitHub Actions), opencover (ReportGenerator), cobertura (SonarQube) -->
+                    <Format>cobertura</Format>
+
+                    <!-- Exclude unwanted assemblies -->
+                    <Exclude>[*.Tests]*</Exclude>
+                    <Exclude>[*.Demos]*</Exclude>
+                    <Exclude>[xunit.*]*</Exclude>
+                    <Exclude>[Microsoft.*]*</Exclude>
+                    <Exclude>[System.*]*</Exclude>
+
+                    <!-- Exclude specific file paths -->
+                    <ExcludeByFile>**/Migrations/*,**/obj/*,**/bin/*</ExcludeByFile>
+
+                    <!-- Exclude classes/methods marked with these attributes -->
+                    <ExcludeByAttribute>
+                        Obsolete
+                        GeneratedCodeAttribute
+                        CompilerGeneratedAttribute
+                    </ExcludeByAttribute>
+
+                    <!-- Optional: skip auto-implemented properties getters/setters -->
+                    <SkipAutoProps>true</SkipAutoProps>
+
+                    <!-- Optional: include test assembly references -->
+                    <UseSourceLink>true</UseSourceLink>
+
+                    <!-- Count multiple hits per line (false = measure all hits) -->
+                    <SingleHit>false</SingleHit>
+
+                </Configuration>
+            </DataCollector>
+        </DataCollectors>
+    </DataCollectionRunSettings>
+</RunSettings>

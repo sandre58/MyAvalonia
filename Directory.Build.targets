@@ -1,0 +1,12 @@
+<Project>
+    <!-- Target to display the main properties of each project -->
+    <Target Name="ShowProjectProperties" AfterTargets="Build">
+        <Message Text="========== $(MSBuildProjectName) ==========" Importance="High" />
+        <Message Text="Version=$(Version)" Importance="High" />
+        <Message Text="IsTestProject=$(IsTestProject)" Importance="High" />
+        <Message Text="IsDemoProject=$(IsDemoProject)" Importance="High" />
+        <Message Text="IsPackable=$(IsPackable)" Importance="High" />
+        <Message Text="EnableAnalyzers=$(EnableAnalyzers)" Importance="High" />
+        <Message Text="RunSettingsFile=$(RunSettingsFile)" Importance="High" Condition="'$(IsTestProject)' == 'True'" />
+    </Target>
+</Project>

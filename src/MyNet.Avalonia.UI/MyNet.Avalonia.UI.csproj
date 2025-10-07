@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Product>My .NET Avalonia - UI</Product>
+        <PackageIcon>MyAvalonia.png</PackageIcon>
+        <Description>Custom user interface components and controls for Avalonia applications, providing a rich set of features and functionality.</Description>
+        <PackageTags>Avalonia;UI;Controls;MyNet;Extensions;CrossPlatform;Desktop</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MyNet.Avalonia.Controls\MyNet.Avalonia.Controls.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="**/*.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MyNet.UI" Version="11.0.43" />
+    </ItemGroup>
+
+</Project>

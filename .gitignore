@@ -1,0 +1,108 @@
+## =========================
+## Build / Output
+## =========================
+artifacts/
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+# VSCode / Rider temp
+.vscode/
+.idea/
+/.vs/
+
+# Avalonia compiled XAML
+*.g.cs
+*.g.i.cs
+
+# Visual Studio user files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider user prefs
+.idea/
+*.sln.iml
+
+## =========================
+## Logs / Reports
+## =========================
+*.log
+*.tlog
+*.wrn
+*.err
+
+## =========================
+## Package / NuGet
+## =========================
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+# Dotnet tools
+.dotnet-tools/
+
+## =========================
+## Coverage / Test
+## =========================
+TestResult*/
+TestResults/
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+*.opencover.xml
+
+## =========================
+## OS / Temp Files
+## =========================
+[Tt]humbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+## =========================
+## Cache / Generated
+## =========================
+*.pidb
+*.svclog
+*.scc
+_ReSharper*/
+_ReSharper.Caches/
+*.DotSettings.user
+*.idea/
+
+# MSBuild generated
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# StyleCop caches
+StyleCop.Cache
+
+# Backup files
+*.bak
+*.tmp
+*.temp
+
+## =========================
+## Secrets / Environment
+## =========================
+.env
+.env.*
+secrets.json
+appsettings.Development.json
