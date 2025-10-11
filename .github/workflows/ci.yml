@@ -13,7 +13,6 @@ jobs:
     with:
       app-projects: "demos"
       nuget-projects: "src"
-      app-target-framework: "net10.0"
       install-web-workload: true
       install-ios-workload: true
       install-android-workload: true
