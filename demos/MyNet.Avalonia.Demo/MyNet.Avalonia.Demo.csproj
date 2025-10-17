@@ -8,16 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="Fody" Version="6.9.3" PrivateAssets="all" />
-        <PackageReference Include="MyNet.UI" Version="11.0.43" />
-        <PackageReference Include="MyNet.Utilities.Generator.Extensions" Version="8.0.43" />
-        <PackageReference Include="MyNet.Utilities.Geography.Extensions" Version="8.0.43" />
-        <PackageReference Include="MyNet.Utilities.Localization.Extensions" Version="8.0.43" />
-        <PackageReference Include="MyNet.Utilities.Logging.NLog" Version="8.0.43" />
-        <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-rc.1.25451.107" />
+        <PackageReference Include="Avalonia.Fonts.Inter" />
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" />
+        <PackageReference Include="Fody" PrivateAssets="all" />
+        <PackageReference Include="MyNet.UI" />
+        <PackageReference Include="MyNet.Utilities.Generator.Extensions" />
+        <PackageReference Include="MyNet.Utilities.Geography.Extensions" />
+        <PackageReference Include="MyNet.Utilities.Localization.Extensions" />
+        <PackageReference Include="MyNet.Utilities.Logging.NLog" />
+        <PackageReference Include="PropertyChanged.Fody" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     </ItemGroup>
 
     <ItemGroup>

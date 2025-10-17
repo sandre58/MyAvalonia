@@ -10,6 +10,8 @@
     <PropertyGroup>
 
         <!-- NuGet information -->
+        <PackageVersion Condition="'$(VersionSuffix)' != ''">$(Version)-$(VersionSuffix)</PackageVersion>
+        <PackageVersion Condition="'$(VersionSuffix)' == ''">$(Version)</PackageVersion>
         <RepositoryUrl>https://github.com/sandre58/MyAvalonia</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryBranch>main</RepositoryBranch>

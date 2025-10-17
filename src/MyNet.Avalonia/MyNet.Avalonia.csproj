@@ -8,10 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MyNet.Humanizer" Version="5.0.43" />
-        <PackageReference Include="MyNet.Observable" Version="9.0.43" />
-        <PackageReference Include="MyNet.Utilities" Version="8.0.43" />
-        <PackageReference Include="System.Reactive" Version="6.1.0" />
+        <PackageReference Include="MyNet.Humanizer" />
+        <PackageReference Include="MyNet.Observable" />
+        <PackageReference Include="MyNet.Utilities" />
+        <PackageReference Include="System.Reactive" />
     </ItemGroup>
 
     <ItemGroup>

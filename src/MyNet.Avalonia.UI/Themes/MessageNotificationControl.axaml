@@ -13,7 +13,8 @@
                               Classes="Medium"
                               Data="{StaticResource MyNet.Geometry.Alert}" />
                     <ContentPresenter Name="PART_HeaderPresenter"
-                                      Grid.Row="0" Grid.Column="1"
+                                      Grid.Row="0"
+                                      Grid.Column="1"
                                       Margin="{my:Thickness Medium,
                                                             Bottom}"
                                       Content="{TemplateBinding Header}"

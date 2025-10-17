@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MyNet.UI" Version="11.0.43" />
+      <PackageReference Include="MyNet.UI" />
     </ItemGroup>
 
 </Project>

@@ -21,15 +21,36 @@
     <PropertyGroup>
         <TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>
         <LangVersion>preview</LangVersion>
-        <NeutralLanguage>fr</NeutralLanguage>
         <Nullable Condition="'$(Nullable)' == ''">enable</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <EnableAnalyzers Condition="'$(EnableAnalyzers)' == ''">true</EnableAnalyzers>
 
         <!-- Output builds -->
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
+    <!-- Versioning -->
+    <PropertyGroup>
+
+        <!-- GitVersion -->
+        <GitVersionMajor Condition="'$(GitVersion_Major)' != ''">$(GitVersion_Major)</GitVersionMajor>
+        <GitVersionMinor Condition="'$(GitVersion_Minor)' != ''">$(GitVersion_Minor)</GitVersionMinor>
+        <GitVersionPatch Condition="'$(GitVersion_Patch)' != ''">$(GitVersion_Patch)</GitVersionPatch>
+        <GitVersionMajor Condition="'$(GitVersionMajor)' == ''">1</GitVersionMajor>
+        <GitVersionMinor Condition="'$(GitVersionMinor)' == ''">0</GitVersionMinor>
+        <GitVersionPatch Condition="'$(GitVersionPatch)' == ''">0</GitVersionPatch>
+
+        <!-- Final version -->
+        <Version>$(GitVersionMajor).$(GitVersionMinor).$(GitVersionPatch)</Version>
+        <AssemblyVersion>$(GitVersionMajor).$(GitVersionMinor).0.0</AssemblyVersion>
+        <FileVersion>$(GitVersionMajor).$(GitVersionMinor).$(GitVersionPatch).0</FileVersion>
+
+        <!-- Preversion (preview, alpha, etc.) -->
+        <VersionSuffix Condition="'$(GitVersion_PreReleaseLabel)' != ''">$(GitVersion_PreReleaseLabel).$(GitVersion_PreReleaseNumber)</VersionSuffix>
+
+    </PropertyGroup>
+    
     <!-- Configuration for test projects - use .runsettings for coverage -->
     <PropertyGroup Condition="'$(IsTestProject)' == 'True'">
         <!-- Path to the .runsettings file -->
@@ -46,7 +67,7 @@
     </ItemGroup>
 
     <!-- Imports -->
-    <Import Project="$(MSBuildThisFileDirectory)/build/code-analysis.props" Condition="Exists('$(MSBuildThisFileDirectory)/build/code-analysis.props')" />
+    <Import Project="$(MSBuildThisFileDirectory)/build/code-analysis.props" Condition="Exists('$(MSBuildThisFileDirectory)/build/code-analysis.props') and '$(EnableAnalyzers)' == 'true'" />
     <Import Project="$(MSBuildThisFileDirectory)/build/dependencies.props" Condition="Exists('$(MSBuildThisFileDirectory)/build/dependencies.props')" />
     <Import Project="$(MSBuildThisFileDirectory)/build/package.props" Condition="Exists('$(MSBuildThisFileDirectory)/build/package.props') and '$(IsPackable)' == 'true'" />
 

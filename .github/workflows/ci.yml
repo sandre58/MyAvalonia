@@ -17,3 +17,5 @@ jobs:
       install-ios-workload: true
       install-android-workload: true
       install-wasm-workload: true
+    secrets:
+      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
