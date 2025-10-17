@@ -67,7 +67,7 @@ if (result == DialogResult.Yes)
 }
 
 // Show custom dialogs
-var customResult = await DialogService.ShowDialogAsync<CustomDialogViewModel>();
+var customResult = await DialogService.ShowDialogAsync<ContentDialogViewModel>();
 ```
 
 ### Toast Notifications

@@ -7,7 +7,7 @@
 using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.UI.Controls.Primitives;
-using MyNet.UI.Dialogs.CustomDialogs;
+using MyNet.UI.Dialogs.ContentDialogs;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.UI.Controls;

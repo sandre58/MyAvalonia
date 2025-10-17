@@ -2,7 +2,8 @@
     <PropertyGroup>
         <Product>My .NET Avalonia</Product>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net9.0-android</TargetFrameworks>
+        <TargetFrameworks></TargetFrameworks>
+        <TargetFramework>net9.0-android</TargetFramework>
         <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
         <ApplicationId>com.MyNet.Avalonia.Demo</ApplicationId>
         <ApplicationVersion>1</ApplicationVersion>

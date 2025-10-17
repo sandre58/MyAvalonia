@@ -14,7 +14,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
-using MyNet.UI.Dialogs.CustomDialogs;
+using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.Utilities;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure

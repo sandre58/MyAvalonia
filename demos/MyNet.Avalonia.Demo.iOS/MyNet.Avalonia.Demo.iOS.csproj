@@ -2,7 +2,8 @@
     <PropertyGroup>
         <Product>My .NET Avalonia</Product>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net10.0-ios</TargetFrameworks>
+        <TargetFrameworks></TargetFrameworks>
+        <TargetFramework>net10.0-ios</TargetFramework>
         <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
     </PropertyGroup>
 

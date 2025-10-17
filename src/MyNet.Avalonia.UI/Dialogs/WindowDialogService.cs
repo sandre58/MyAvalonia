@@ -12,7 +12,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.UI.Controls;
-using MyNet.UI.Dialogs.CustomDialogs;
+using MyNet.UI.Dialogs.ContentDialogs;
 
 namespace MyNet.Avalonia.UI.Dialogs;
 

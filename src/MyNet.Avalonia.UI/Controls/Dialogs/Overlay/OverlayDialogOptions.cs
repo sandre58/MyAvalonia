@@ -47,7 +47,7 @@ public class OverlayDialogOptions
     public string? Title { get; set; }
 
     /// <summary>
-    ///     Gets or sets only works for CustomDialogControl.
+    ///     Gets or sets only works for ContentDialogControl.
     /// </summary>
     public bool? IsCloseButtonVisible { get; set; } = true;
 

@@ -20,7 +20,7 @@
         </HeaderedContentControl>
 
         <StackPanel>
-            <Button Command="{Binding OpenCustomDialogCommand}" Content="Modal" />
+            <Button Command="{Binding OpenContentDialogCommand}" Content="Modal" />
             <Button Command="{Binding OpenCustomNonDialogCommand}" Content="Non Modal" />
             <Button Command="{Binding OpenPerfDialogCommand}" Content="Perf Modal" />
             <Button Command="{Binding OpenPerfNonDialogCommand}" Content="Perf Non modal" />

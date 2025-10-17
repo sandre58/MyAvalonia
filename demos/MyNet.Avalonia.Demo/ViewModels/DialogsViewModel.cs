@@ -15,7 +15,7 @@ namespace MyNet.Avalonia.Demo.ViewModels;
 
 internal class DialogsViewModel : NavigableWorkspaceViewModel
 {
-    public ICommand OpenCustomDialogCommand { get; set; }
+    public ICommand OpenContentDialogCommand { get; set; }
 
     public ICommand OpenCustomNonDialogCommand { get; set; }
 
@@ -25,7 +25,7 @@ internal class DialogsViewModel : NavigableWorkspaceViewModel
 
     public DialogsViewModel()
     {
-        OpenCustomDialogCommand = CommandsManager.Create(async () =>
+        OpenContentDialogCommand = CommandsManager.Create(async () =>
         {
             var vm = new LoginDialogViewModel();
             await WindowDialogManager.ShowDialogAsync(vm).ConfigureAwait(false);

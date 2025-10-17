@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyNet.Avalonia.UI.Dialogs;
 using MyNet.UI.Dialogs;
-using MyNet.UI.Dialogs.CustomDialogs;
+using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Locators;
 using MyNet.Utilities.Messaging;
 
@@ -127,7 +127,7 @@ public static class WindowDialogManager
 
         var view = GetViewFromViewModel(viewModel.GetType());
 
-        return view is null ? false : await DialogService.ShowDialogAsync(view, viewModel).ConfigureAwait(false);
+        return view is null ? false : await DialogService.ShowModalAsync(view, viewModel).ConfigureAwait(false);
     }
 
     #endregion ShowDialog
