@@ -14,9 +14,9 @@ jobs:
     with:
       app-projects: "demos"
       nuget-projects: "src"
-      install-web-workload: true
-      install-ios-workload: true
-      install-android-workload: true
-      install-wasm-workload: true
+      install-web-workload: "true"
+      install-ios-workload: "true"
+      install-android-workload: "true"
+      install-wasm-workload: "true"
     secrets:
       NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
