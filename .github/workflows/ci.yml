@@ -1,8 +1,9 @@
-name: CI - Build and Test
+name: CI - Build, Test, Pack and Publish
 
 on:
   push:
-    branches: [ "main", "feature/*", "hotfix/*" ]
+    branches: [ "main", "feature/*" ]
+    tags: ["v*"]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
