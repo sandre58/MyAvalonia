@@ -429,25 +429,25 @@ public static class TextFieldAssist
 
     #endregion
 
-    #region IsEditable
+    #region IsTextEditable
 
     /// <summary>
-    /// Provides IsEditable Property for attached TextFieldAssist element.
+    /// Provides IsTextEditable Property for attached TextFieldAssist element.
     /// </summary>
-    public static readonly AttachedProperty<bool> IsEditableProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("IsEditable", typeof(TextFieldAssist), true);
+    public static readonly AttachedProperty<bool> IsTextEditableProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("IsTextEditable", typeof(TextFieldAssist), true);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="IsEditableProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="IsEditableProperty"/>.</param>
-    public static void SetIsEditable(StyledElement element, bool value) => element.SetValue(IsEditableProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="IsEditableProperty"/>.
+    /// Accessor for Attached  <see cref="IsTextEditableProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static bool GetIsEditable(StyledElement element) => element.GetValue(IsEditableProperty);
+    /// <param name="value">The value to set  <see cref="IsTextEditableProperty"/>.</param>
+    public static void SetIsTextEditable(StyledElement element, bool value) => element.SetValue(IsTextEditableProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="IsTextEditableProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static bool GetIsTextEditable(StyledElement element) => element.GetValue(IsTextEditableProperty);
 
     #endregion
 }

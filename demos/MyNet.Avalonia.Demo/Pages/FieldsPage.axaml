@@ -55,8 +55,8 @@
                         </ListBox>
                     </HeaderedContentControl>
 
-                    <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource Editable}">
-                        <ToggleSwitch Name="Editable" IsChecked="True" />
+                    <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource IsEditable}">
+                        <ToggleSwitch Name="IsEditable" IsChecked="True" />
                     </HeaderedContentControl>
 
                     <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource IconLayout}">

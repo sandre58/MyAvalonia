@@ -66,7 +66,7 @@
             <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
             <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
         </Style>
-        
+
         <Setter Property="Template">
             <ControlTemplate TargetType="NumericUpDown">
                 <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
@@ -152,7 +152,8 @@
                                                          CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                                          Classes="no-disablable"
                                                          DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                         IsEnabled="{TemplateBinding (my:TextFieldAssist.IsEditable)}"
+                                                         IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                         IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
                                                          SelectionBrush="{my:Brush $parent[NumericUpDown].(my:ThemeAssist.PrimaryColor),
                                                                                    Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                                          SelectionForegroundBrush="{TemplateBinding Foreground}"
@@ -200,7 +201,7 @@
         <Style Selector="^[ShowButtonSpinner=True][(my|SpinnerAssist.Layout)=Opposite]">
             <Setter Property="Padding" Value="0" />
         </Style>
-        
+
         <Style Selector="^.IconRight">
             <Style Selector="^ /template/ ContentControl#PART_Icon">
                 <Setter Property="Grid.Column" Value="2" />
@@ -232,8 +233,8 @@
         </Style>
 
         <!-- Is Read only -->
-        <Style Selector="^[(my|TextFieldAssist.IsEditable)=False]">
-            <Setter Property="Cursor" Value="Arrow" />
+        <Style Selector="^[(my|TextFieldAssist.IsTextEditable)=False]">
+            <Setter Property="Cursor" Value="Hand" />
         </Style>
 
         <!-- Hover -->
@@ -331,7 +332,7 @@
                 </ControlTheme>
             </Setter.Value>
         </Setter>
-        
+
         <Style Selector="^">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
@@ -419,7 +420,8 @@
                                                      CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                                      Classes="no-disablable"
                                                      DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                     IsEnabled="{TemplateBinding (my:TextFieldAssist.IsEditable)}"
+                                                     IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                     IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
                                                      SelectionBrush="{my:Brush $parent[NumericUpDown].(my:ThemeAssist.PrimaryColor),
                                                                                Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                                      SelectionForegroundBrush="{TemplateBinding Foreground}"
@@ -486,7 +488,7 @@
         <Style Selector="^[ShowButtonSpinner=True][(my|SpinnerAssist.Layout)=Opposite] /template/ ButtonSpinner#PART_Spinner">
             <Setter Property="Padding" Value="{my:Thickness Default, Horizontal}" />
         </Style>
-        
+
         <Style Selector="^.IconRight">
             <Style Selector="^ /template/ ContentControl#PART_Icon">
                 <Setter Property="Margin" Value="{Binding (my:IconAssist.Margin), RelativeSource={RelativeSource TemplatedParent}}" />
@@ -496,7 +498,7 @@
         <!-- Focused -->
         <Style Selector="^:focus-within">
             <Setter Property="BorderThickness" Value="0 0 0 1" />
-            
+
             <Style Selector="^ /template/ my|Underline#PART_Underline">
                 <Setter Property="IsActive" Value="True" />
             </Style>

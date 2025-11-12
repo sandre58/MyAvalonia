@@ -11,7 +11,10 @@ public static class PseudoClassName
     public const string Active = ":active";
     public const string Blackout = ":blackout";
     public const string Bottom = ":bottom";
+    public const string Century = ":century";
     public const string Checked = ":checked";
+    public const string Day = ":day";
+    public const string Decade = ":decade";
     public const string Disabled = ":disabled";
     public const string Empty = ":empty";
     public const string EndDate = ":end-date";
@@ -50,4 +53,5 @@ public static class PseudoClassName
     public const string Vertical = ":vertical";
     public const string VerticalCollapsed = ":vertical-collapsed";
     public const string Warning = ":warning";
+    public const string Year = ":year";
 }

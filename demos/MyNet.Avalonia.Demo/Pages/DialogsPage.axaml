@@ -15,15 +15,77 @@
         <!-- Settings -->
         <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
             <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                <StackPanel />
+                <StackPanel>
+                    <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource ShowCloseButton}">
+                        <ToggleSwitch IsChecked="{Binding ShowCloseButton}" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource CanDragMove}">
+                        <ToggleSwitch IsChecked="{Binding CanDragMove}" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource CanResize}">
+                        <ToggleSwitch IsChecked="{Binding CanResize}" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource FullScreen}">
+                        <ToggleSwitch IsChecked="{Binding FullScreen}" />
+                    </HeaderedContentControl>
+                </StackPanel>
             </ScrollViewer>
         </HeaderedContentControl>
 
-        <StackPanel>
-            <Button Command="{Binding OpenContentDialogCommand}" Content="Modal" />
-            <Button Command="{Binding OpenCustomNonDialogCommand}" Content="Non Modal" />
-            <Button Command="{Binding OpenPerfDialogCommand}" Content="Perf Modal" />
-            <Button Command="{Binding OpenPerfNonDialogCommand}" Content="Perf Non modal" />
-        </StackPanel>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="20" Spacing="15">
+
+                <!-- Window Dialog Service Tests -->
+                <HeaderedContentControl Header="Window Dialog Service">
+                    <StackPanel Margin="10" Spacing="10">
+                        <TextBlock Margin="0 0 0 10"
+                                   Opacity="0.7"
+                                   Text="{my:Resource WindowDialogDescription}"
+                                   TextWrapping="Wrap" />
+
+                        <Button MinWidth="200"
+                                HorizontalAlignment="Left"
+                                Command="{Binding OpenWindowDialogModalCommand}"
+                                Content="Window Dialog - Modal" />
+
+                        <Button MinWidth="200"
+                                HorizontalAlignment="Left"
+                                Command="{Binding OpenWindowDialogNonModalCommand}"
+                                Content="Window Dialog - Non Modal" />
+
+                        <Button MinWidth="200"
+                                HorizontalAlignment="Left"
+                                Command="{Binding OpenWindowPerfDialogCommand}"
+                                Content="Window Perf Dialog - Modal" />
+                    </StackPanel>
+                </HeaderedContentControl>
+
+                <!-- Overlay Dialog Service Tests -->
+                <HeaderedContentControl Header="Overlay Dialog Service">
+                    <StackPanel Margin="10" Spacing="10">
+                        <TextBlock Margin="0 0 0 10"
+                                   Opacity="0.7"
+                                   Text="{my:Resource OverlayDialogDescription}"
+                                   TextWrapping="Wrap" />
+
+                        <Button MinWidth="200"
+                                HorizontalAlignment="Left"
+                                Command="{Binding OpenOverlayDialogModalCommand}"
+                                Content="Overlay Dialog - Modal" />
+
+                        <Button MinWidth="200"
+                                HorizontalAlignment="Left"
+                                Command="{Binding OpenOverlayDialogNonModalCommand}"
+                                Content="Overlay Dialog - Non Modal" />
+
+                        <Button MinWidth="200"
+                                HorizontalAlignment="Left"
+                                Command="{Binding OpenOverlayPerfDialogCommand}"
+                                Content="Overlay Perf Dialog - Modal" />
+                    </StackPanel>
+                </HeaderedContentControl>
+
+            </StackPanel>
+        </ScrollViewer>
     </DockPanel>
 </pages:Page>

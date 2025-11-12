@@ -63,10 +63,11 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             IsHitTestVisible="False" />
                     <Panel Margin="{TemplateBinding WindowDecorationMargin}" Background="Transparent" />
-                    <VisualLayerManager Margin="{Binding $parent[my:ExtendedWindow].OffScreenMargin}">
+                    <VisualLayerManager Margin="{Binding $parent[my:WindowDialog].OffScreenMargin}">
                         <VisualLayerManager.ChromeOverlayLayer>
                             <Panel Margin="{Binding $parent[my:WindowDialog].OffScreenMargin}">
                                 <my:TitleBar Margin="{Binding $parent[my:WindowDialog].TitleBarMargin}"
+                                             Padding="{Binding $parent[my:WindowDialog].TitleBarPadding}"
                                              Content="{Binding $parent[my:WindowDialog].TitleBarContent}"
                                              IsTitleVisible="{Binding $parent[my:WindowDialog].IsTitleBarVisible}"
                                              LeftContent="{Binding $parent[my:WindowDialog].LeftContent}"
@@ -90,5 +91,6 @@
                 </Panel>
             </ControlTemplate>
         </Setter>
+
     </ControlTheme>
 </ResourceDictionary>

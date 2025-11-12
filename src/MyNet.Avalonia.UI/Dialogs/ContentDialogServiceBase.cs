@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DialogServiceBase.cs" company="Stéphane ANDRE">
+// <copyright file="ContentDialogServiceBase.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -11,7 +11,7 @@ using MyNet.UI.Dialogs.ContentDialogs;
 
 namespace MyNet.Avalonia.UI.Dialogs;
 
-public abstract class DialogServiceBase : IContentDialogService
+public abstract class ContentDialogServiceBase : IContentDialogService
 {
     public ObservableCollection<IDialogViewModel> OpenedDialogs { get; } = [];
 

@@ -83,12 +83,12 @@ public class DataGridNumericColumn : DataGridBoundColumn<NumericUpDown, TextBloc
     #region Interval
 
     /// <summary>
-    /// Provides Increment Property.
+    /// Provides Add Property.
     /// </summary>
     public static readonly StyledProperty<decimal> IncrementProperty = NumericUpDown.IncrementProperty.AddOwner<DataGridNumericColumn>();
 
     /// <summary>
-    /// Gets or sets the Increment property.
+    /// Gets or sets the Add property.
     /// </summary>
     public decimal Increment
     {

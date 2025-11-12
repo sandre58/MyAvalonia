@@ -14,6 +14,12 @@ namespace MyNet.Avalonia.UI.Controls;
 
 public class ContentDialog : HeaderedContentControl
 {
+    static ContentDialog()
+    {
+        PaddingProperty.OverrideDefaultValue<ContentDialog>(new Thickness(10));
+        MarginProperty.OverrideDefaultValue<ContentDialog>(new Thickness(0, 35, 0, 0));
+    }
+
     #region StartupLocation
 
     /// <summary>

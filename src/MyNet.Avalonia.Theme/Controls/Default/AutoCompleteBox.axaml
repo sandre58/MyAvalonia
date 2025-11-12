@@ -129,7 +129,7 @@
                                                  CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                                  Classes="no-disablable"
                                                  DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                 IsEnabled="{TemplateBinding (my:TextFieldAssist.IsEditable)}"
+                                                 IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
                                                  SelectionBrush="{my:Brush $parent[AutoCompleteBox].(my:ThemeAssist.PrimaryColor),
                                                                            Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                                  SelectionForegroundBrush="{TemplateBinding Foreground}"
@@ -215,9 +215,6 @@
             <Style Selector="^ /template/ my|TextField#PART_TextField">
                 <Setter Property="Margin" Value="{Binding (my:TextFieldAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
             </Style>
-            <Style Selector="^ /template/ ToggleButton#PART_RevealButton">
-                <Setter Property="Padding" Value="{my:Thickness Default}" />
-            </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
                 <Setter Property="Padding" Value="{my:Thickness Default}" />
             </Style>
@@ -232,14 +229,11 @@
 
         <!-- With clipboard button -->
         <Style Selector="^[(my|TextFieldAssist.ShowClipboardButton)=True]">
-            <Style Selector="^[(my|ProxyAssist.IsEmpty)=False] /template/ Button#PART_ClipboardButton">
-                <Setter Property="IsVisible" Value="True" />
+            <Style Selector="^[(my|ProxyAssist.IsEmpty)=False]">
+                <Style Selector="^[(my|TextFieldAssist.IsTextEditable)=True] /template/ Button#PART_ClipboardButton">
+                    <Setter Property="IsVisible" Value="True" />
+                </Style>
             </Style>
-        </Style>
-
-        <!-- Is Read only -->
-        <Style Selector="^[(my|TextFieldAssist.IsEditable)=False]">
-            <Setter Property="Cursor" Value="Arrow" />
         </Style>
 
         <!-- Hover -->
@@ -387,7 +381,7 @@
                                              CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                              Classes="no-disablable"
                                              DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                             IsEnabled="{TemplateBinding (my:TextFieldAssist.IsEditable)}"
+                                             IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
                                              SelectionBrush="{my:Brush $parent[AutoCompleteBox].(my:ThemeAssist.PrimaryColor),
                                                                        Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                              SelectionForegroundBrush="{TemplateBinding Foreground}"

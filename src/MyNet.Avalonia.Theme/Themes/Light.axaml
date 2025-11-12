@@ -57,6 +57,10 @@
     <Color x:Key="MyNet.Color.Code.Brace">Chocolate</Color>
     <Color x:Key="MyNet.Color.Code.Entity">LightSeaGreen</Color>
 
+    <!-- Gender -->
+    <Color x:Key="MyNet.Color.Female">#c90076</Color>
+    <Color x:Key="MyNet.Color.Male">#2986cc</Color>
+
     <!-- Brushes -->
     <SolidColorBrush x:Key="MyNet.Brush.Application.Background" Color="{StaticResource MyNet.Color.Application.Background}" />
     <SolidColorBrush x:Key="MyNet.Brush.Application.Foreground" Color="{StaticResource MyNet.Color.Application.Foreground}" />
@@ -91,6 +95,8 @@
     <SolidColorBrush x:Key="MyNet.Brush.Warning" Color="{StaticResource MyNet.Color.Warning}" />
     <SolidColorBrush x:Key="MyNet.Brush.Information" Color="{StaticResource MyNet.Color.Information}" />
     <SolidColorBrush x:Key="MyNet.Brush.Neutral" Color="{StaticResource MyNet.Color.Neutral}" />
+    <SolidColorBrush x:Key="MyNet.Brush.Male" Color="{StaticResource MyNet.Color.Male}" />
+    <SolidColorBrush x:Key="MyNet.Brush.Female" Color="{StaticResource MyNet.Color.Female}" />
 
     <VisualBrush x:Key="MyNet.Brush.Transparency"
                  DestinationRect="0,0,20,20"

@@ -12,18 +12,34 @@
 
         <!-- Settings -->
         <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <StackPanel>
+            <StackPanel Spacing="{StaticResource MyNet.Spacing.Large}">
                 <ComboBox Name="SelectionMode"
                           ItemsSource="{my:EnumSource {x:Type CalendarSelectionMode}}"
                           PlaceholderText="{my:Resource SelectionMode}"
                           SelectedIndex="0"
                           SelectedValueBinding="{ReflectionBinding Value}" />
+                <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource AllowTapRangeSelection}">
+                    <ToggleSwitch Name="AllowTapRangeSelection" IsChecked="False" />
+                </HeaderedContentControl>
             </StackPanel>
         </HeaderedContentControl>
 
         <!-- Fields -->
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
-            <StackPanel Name="Root" Classes="Large" Grid.IsSharedSizeScope="True" />
+            <StackPanel Name="Root" Classes="Large">
+                <HeaderedContentControl Background="Transparent" Classes="H6" Header="Calendar">
+                    <StackPanel Classes="Large" Grid.IsSharedSizeScope="True" Orientation="Horizontal">
+                        <Calendar AllowTapRangeSelection="{Binding IsChecked, ElementName=AllowTapRangeSelection}" SelectionMode="{Binding ElementName=SelectionMode, Path=SelectedValue}" />
+                        <Calendar AllowTapRangeSelection="{Binding IsChecked, ElementName=AllowTapRangeSelection}" Classes="Accent Shadow" SelectionMode="{Binding ElementName=SelectionMode, Path=SelectedValue}" />
+                    </StackPanel>
+                </HeaderedContentControl>
+                <HeaderedContentControl Background="Transparent" Classes="H6" Header="MyCalendar">
+                    <StackPanel Classes="Large" Grid.IsSharedSizeScope="True" Orientation="Horizontal">
+                        <my:Calendar AllowTapRangeSelection="{Binding IsChecked, ElementName=AllowTapRangeSelection}" SelectionMode="{Binding ElementName=SelectionMode, Path=SelectedValue}" />
+                        <my:Calendar AllowTapRangeSelection="{Binding IsChecked, ElementName=AllowTapRangeSelection}" Classes="Accent Shadow" SelectionMode="{Binding ElementName=SelectionMode, Path=SelectedValue}" />
+                    </StackPanel>
+                </HeaderedContentControl>
+            </StackPanel>
         </ScrollViewer>
 
     </DockPanel>

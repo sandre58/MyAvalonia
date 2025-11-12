@@ -197,9 +197,6 @@
             <Style Selector="^ /template/ my|TextField#PART_TextField">
                 <Setter Property="Margin" Value="{Binding (my:TextFieldAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
             </Style>
-            <Style Selector="^ /template/ ToggleButton#PART_RevealButton">
-                <Setter Property="Padding" Value="{my:Thickness Default}" />
-            </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
                 <Setter Property="Padding" Value="{my:Thickness Default}" />
             </Style>
@@ -220,8 +217,8 @@
         </Style>
 
         <!-- Is Read only -->
-        <Style Selector="^[(my|TextFieldAssist.IsEditable)=False]">
-            <Setter Property="Cursor" Value="Arrow" />
+        <Style Selector="^[(my|TextFieldAssist.IsTextEditable)=False]">
+            <Setter Property="Cursor" Value="Hand" />
         </Style>
 
         <!-- Hover -->

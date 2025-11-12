@@ -25,7 +25,7 @@ namespace MyNet.Avalonia.Controls;
 [TemplatePart(PartButton, typeof(Button))]
 [TemplatePart(PartPopup, typeof(Popup))]
 [TemplatePart(PartTextBox, typeof(TextBox))]
-[TemplatePart(PartCalendar, typeof(CalendarView))]
+[TemplatePart(PartCalendar, typeof(Calendar))]
 [TemplatePart(PartTimePicker, typeof(TimePickerPresenter))]
 public class DateTimePicker : DatePickerBase
 {
@@ -57,7 +57,7 @@ public class DateTimePicker : DatePickerBase
 
     private Button? _button;
     private Popup? _popup;
-    private CalendarView? _calendar;
+    private Calendar? _calendar;
     private TextBox? _textBox;
     private bool _fromText;
     private bool _isFocused;
@@ -97,13 +97,13 @@ public class DateTimePicker : DatePickerBase
         if (date is null)
         {
             _ = _textBox?.SetValue(TextBox.TextProperty, null);
-            _calendar?.ClearSelection();
+            //_calendar?.ClearSelection();
             _timePickerPresenter?.SyncTime(null);
         }
         else
         {
             _ = _textBox?.SetValue(TextBox.TextProperty, date.Value.ToString(DisplayFormat ?? CultureInfo.CurrentCulture.DateTimeFormat.FullDateTimePattern, CultureInfo.CurrentCulture));
-            _calendar?.MarkDates(date.Value.Date, date.Value.Date);
+            //_calendar?.MarkDates(date.Value.Date, date.Value.Date);
             _timePickerPresenter?.SyncTime(date.Value.TimeOfDay);
         }
     }
@@ -114,27 +114,26 @@ public class DateTimePicker : DatePickerBase
         GotFocusEvent.RemoveHandler(OnTextBoxGetFocus, _textBox);
         TextBox.TextChangedEvent.RemoveHandler(OnTextChanged, _textBox);
         Button.ClickEvent.RemoveHandler(OnButtonClick, _button);
-        CalendarView.DateSelectedEvent.RemoveHandler(OnDateSelected, _calendar);
+        Calendar.DateSelectedEvent.RemoveHandler(OnDateSelected, _calendar);
         TimePickerPresenter.SelectedTimeChangedEvent.RemoveHandler(OnTimeSelectedChanged, _timePickerPresenter);
         _button = e.NameScope.Find<Button>(PartButton);
         _popup = e.NameScope.Find<Popup>(PartPopup);
         _textBox = e.NameScope.Find<TextBox>(PartTextBox);
-        _calendar = e.NameScope.Find<CalendarView>(PartCalendar);
+        _calendar = e.NameScope.Find<Calendar>(PartCalendar);
         _timePickerPresenter = e.NameScope.Find<TimePickerPresenter>(PartTimePicker);
         Button.ClickEvent.AddHandler(OnButtonClick, RoutingStrategies.Bubble, true, _button);
         GotFocusEvent.AddHandler(OnTextBoxGetFocus, _textBox);
         TextBox.TextChangedEvent.AddHandler(OnTextChanged, _textBox);
-        CalendarView.DateSelectedEvent.AddHandler(OnDateSelected, RoutingStrategies.Bubble, true, _calendar);
+        Calendar.DateSelectedEvent.AddHandler(OnDateSelected, RoutingStrategies.Bubble, true, _calendar);
         TimePickerPresenter.SelectedTimeChangedEvent.AddHandler(OnTimeSelectedChanged, _timePickerPresenter);
         SyncSelectedDateToText(SelectedDate);
     }
 
-    private void OnDateSelected(object? sender, CalendarDayButtonEventArgs e)
+    private void OnDateSelected(object? sender, CalendarDateButtonEventArgs e)
     {
+        var date = e.Context.ToDate();
         if (SelectedDate is null)
         {
-            if (e.Date is null) return;
-            var date = e.Date.Value;
             var time = DateTime.Now.TimeOfDay;
             SetCurrentValue(SelectedDateProperty,
                 new DateTime(date.Year, date.Month, date.Day, time.Hours, time.Minutes, time.Seconds));
@@ -142,8 +141,7 @@ public class DateTimePicker : DatePickerBase
         else
         {
             var selectedDate = SelectedDate;
-            if (e.Date is null) return;
-            var date = e.Date.Value;
+
             SetCurrentValue(SelectedDateProperty,
                 new DateTime(date.Year, date.Month, date.Day, selectedDate.Value.Hour, selectedDate.Value.Minute, selectedDate.Value.Second));
         }
@@ -187,7 +185,7 @@ public class DateTimePicker : DatePickerBase
         if (string.IsNullOrEmpty(_textBox?.Text))
         {
             SetCurrentValue(SelectedDateProperty, null);
-            _calendar?.ClearSelection();
+           // _calendar?.ClearSelection();
             _timePickerPresenter?.SyncTime(null);
         }
         else if (string.IsNullOrEmpty(DisplayFormat))
@@ -195,7 +193,7 @@ public class DateTimePicker : DatePickerBase
             if (DateTime.TryParse(_textBox?.Text, out var defaultTime))
             {
                 SetCurrentValue(SelectedDateProperty, defaultTime);
-                _calendar?.MarkDates(defaultTime.Date, defaultTime.Date);
+                //_calendar?.MarkDates(defaultTime.Date, defaultTime.Date);
                 _timePickerPresenter?.SyncTime(defaultTime.TimeOfDay);
             }
         }
@@ -212,8 +210,8 @@ public class DateTimePicker : DatePickerBase
         if (_calendar is not null)
         {
             var date = SelectedDate ?? DateTime.Today;
-            _calendar.ContextDate = _calendar.ContextDate.With(date.Year, date.Month);
-            _calendar.UpdateDayButtons();
+            //_calendar.ContextDate = _calendar.ContextDate.With(date.Year, date.Month);
+            //_calendar.UpdateDayButtons();
             _timePickerPresenter?.SyncTime(date.TimeOfDay);
         }
 
@@ -262,18 +260,18 @@ public class DateTimePicker : DatePickerBase
             SetCurrentValue(SelectedDateProperty, date);
             if (_calendar is not null)
             {
-                _calendar.ContextDate = _calendar.ContextDate.With(date.Year, date.Month);
-                _calendar.UpdateDayButtons();
+                //_calendar.ContextDate = _calendar.ContextDate.With(date.Year, date.Month);
+                //_calendar.UpdateDayButtons();
             }
 
-            _calendar?.MarkDates(date.Date, date.Date);
+            //_calendar?.MarkDates(date.Date, date.Date);
             _timePickerPresenter?.SyncTime(date.TimeOfDay);
         }
         else
         {
             SetCurrentValue(SelectedDateProperty, null);
             if (clearWhenInvalid) _ = _textBox?.SetValue(TextBox.TextProperty, null);
-            _calendar?.ClearSelection();
+            //_calendar?.ClearSelection();
             _timePickerPresenter?.SyncTime(null);
         }
     }

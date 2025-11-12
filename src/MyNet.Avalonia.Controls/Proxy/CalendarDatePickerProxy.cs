@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using Avalonia.Controls;
 using MyNet.Avalonia.Controls.Primitives;
 
 namespace MyNet.Avalonia.Controls.Proxy;
@@ -13,7 +14,7 @@ public sealed class CalendarDatePickerProxy : IControlProxy
 {
     private readonly CalendarDatePicker _control;
 
-    public bool IsEmpty() => _control.SelectedDate is null;
+    public bool IsEmpty() => _control.IsEmpty();
 
     public bool IsFocused() => _control.IsKeyboardFocusWithin || _control.IsDropDownOpen;
 
@@ -28,13 +29,6 @@ public sealed class CalendarDatePickerProxy : IControlProxy
     public CalendarDatePickerProxy(CalendarDatePicker control)
     {
         _control = control ?? throw new ArgumentNullException(nameof(control));
-        _ = CalendarDatePicker.SelectedDateProperty.Changed.Subscribe(e =>
-        {
-            if (e.Sender is not CalendarDatePicker calendarDatePicker || calendarDatePicker != _control)
-                return;
-            IsEmptyChanged?.Invoke(_control, EventArgs.Empty);
-            IsActiveChanged?.Invoke(_control, EventArgs.Empty);
-        });
         _ = DatePickerBase.IsDropDownOpenProperty.Changed.Subscribe(e =>
         {
             if (e.Sender is not CalendarDatePicker calendarDatePicker || calendarDatePicker != _control)
@@ -44,6 +38,20 @@ public sealed class CalendarDatePickerProxy : IControlProxy
         });
         _control.GotFocus += OnGotFocus;
         _control.LostFocus += OnLostFocus;
+        _control.SelectedDateChanged += OnSeletedDateChanged;
+        _control.TextChanged += OnTextChanged;
+    }
+
+    private void OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        IsEmptyChanged?.Invoke(_control, EventArgs.Empty);
+        IsActiveChanged?.Invoke(_control, EventArgs.Empty);
+    }
+
+    private void OnSeletedDateChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        IsEmptyChanged?.Invoke(_control, EventArgs.Empty);
+        IsActiveChanged?.Invoke(_control, EventArgs.Empty);
     }
 
     private void OnGotFocus(object? sender, global::Avalonia.Input.GotFocusEventArgs e)
@@ -62,5 +70,7 @@ public sealed class CalendarDatePickerProxy : IControlProxy
     {
         _control.GotFocus -= OnGotFocus;
         _control.LostFocus -= OnLostFocus;
+        _control.SelectedDateChanged -= OnSeletedDateChanged;
+        _control.TextChanged -= OnTextChanged;
     }
 }

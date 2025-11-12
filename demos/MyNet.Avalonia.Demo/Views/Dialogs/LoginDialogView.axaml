@@ -5,23 +5,14 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:my="http://mynet.com/avalonia"
                   xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels.Dialogs"
-                  d:DesignHeight="450"
-                  d:DesignWidth="800"
-                  Header="{my:Resource Login}"
+                  xmlns:samples="clr-namespace:MyNet.Avalonia.Demo.Views.Samples"
+                  d:DesignHeight="600"
+                  d:DesignWidth="900"
                   x:DataType="vm:LoginDialogViewModel"
+                  CanResize="True"
+                  Header="User Registration"
                   mc:Ignorable="d">
-    <my:Form LabelPosition="Left" LabelWidth="*">
-        <TextBox Width="300"
-                 my:FormItem.IsRequired="True"
-                 my:FormItem.Label="{my:Icon InformationCircle}"
-                 Text="{Binding Login}"
-                 Watermark="{my:Resource Name}" />
-        <TextBox Width="300"
-                 my:FormItem.IsRequired="True"
-                 my:FormItem.Label="{my:Icon Lock}"
-                 PasswordChar="*"
-                 RevealPassword="True"
-                 Text="{Binding Password}"
-                 Watermark="{my:Resource Password}" />
-    </my:Form>
+    <ScrollViewer MaxHeight="500">
+        <samples:FormContent DataContext="{Binding Form}" />
+    </ScrollViewer>
 </my:ContentDialog>

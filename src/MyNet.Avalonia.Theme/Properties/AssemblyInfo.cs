@@ -7,3 +7,4 @@
 using Avalonia.Metadata;
 
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme")]
+[assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.Converters")]

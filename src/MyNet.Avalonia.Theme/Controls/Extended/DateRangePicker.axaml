@@ -141,7 +141,9 @@
                                                      CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                                      Classes="no-disablable"
                                                      DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                     IsEnabled="{TemplateBinding (my:TextFieldAssist.IsEditable)}"
+                                                     Focusable="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                 IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                     IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
                                                      SelectionBrush="{my:Brush $parent[my:DateRangePicker].(my:ThemeAssist.PrimaryColor),
                                                                                Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                                      SelectionForegroundBrush="{TemplateBinding Foreground}"
@@ -158,7 +160,9 @@
                                                      CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                                      Classes="no-disablable"
                                                      DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                     IsEnabled="{TemplateBinding (my:TextFieldAssist.IsEditable)}"
+                                                     Focusable="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                 IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                     IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
                                                      SelectionBrush="{my:Brush $parent[my:DateRangePicker].(my:ThemeAssist.PrimaryColor),
                                                                                Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                                      SelectionForegroundBrush="{TemplateBinding Foreground}"
@@ -221,34 +225,34 @@
                                 <Border Background="{TemplateBinding (my:FlyoutAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
                                         <Grid ColumnDefinitions="*,Auto,*">
-                                            <my:CalendarView Name="{x:Static my:DateRangePicker.PartStartCalendar}"
-                                                             my:ThemeAssist.PrimaryColor="{TemplateBinding my:FlyoutAssist.PrimaryColor}"
-                                                             Background="Transparent"
-                                                             BorderThickness="0"
-                                                             FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
-                                                             Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}"
-                                                             IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
-                                                <my:CalendarView.Styles>
+                                            <my:Calendar Name="{x:Static my:DateRangePicker.PartStartCalendar}"
+                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:FlyoutAssist.PrimaryColor}"
+                                                         Background="Transparent"
+                                                         BorderThickness="0"
+                                                         FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                                         Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}"
+                                                         IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
+                                                <my:Calendar.Styles>
                                                     <Style Selector="my|CalendarDayButton">
                                                         <Setter Property="my:ClassesAssist.AddClasses" Value="Range" />
                                                     </Style>
-                                                </my:CalendarView.Styles>
-                                            </my:CalendarView>
+                                                </my:Calendar.Styles>
+                                            </my:Calendar>
                                             <Separator Grid.Column="1" Margin="0" Classes="Vertical" />
-                                            <my:CalendarView Name="{x:Static my:DateRangePicker.PartEndCalendar}"
-                                                             Grid.Column="2"
-                                                             my:ThemeAssist.PrimaryColor="{TemplateBinding my:FlyoutAssist.PrimaryColor}"
-                                                             Background="Transparent"
-                                                             BorderThickness="0"
-                                                             FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
-                                                             Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}"
-                                                             IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
-                                                <my:CalendarView.Styles>
+                                            <my:Calendar Name="{x:Static my:DateRangePicker.PartEndCalendar}"
+                                                         Grid.Column="2"
+                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:FlyoutAssist.PrimaryColor}"
+                                                         Background="Transparent"
+                                                         BorderThickness="0"
+                                                         FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                                         Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}"
+                                                         IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
+                                                <my:Calendar.Styles>
                                                     <Style Selector="my|CalendarDayButton">
                                                         <Setter Property="my:ClassesAssist.AddClasses" Value="Range" />
                                                     </Style>
-                                                </my:CalendarView.Styles>
-                                            </my:CalendarView>
+                                                </my:Calendar.Styles>
+                                            </my:Calendar>
                                         </Grid>
                                     </Border>
                                 </Border>
@@ -278,9 +282,6 @@
             <Style Selector="^ /template/ my|TextField#PART_TextField">
                 <Setter Property="Margin" Value="{Binding (my:TextFieldAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
             </Style>
-            <Style Selector="^ /template/ ToggleButton#PART_RevealButton">
-                <Setter Property="Padding" Value="{my:Thickness Default}" />
-            </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
                 <Setter Property="Padding" Value="{my:Thickness Default}" />
             </Style>
@@ -301,8 +302,8 @@
         </Style>
 
         <!-- Is Read only -->
-        <Style Selector="^[(my|TextFieldAssist.IsEditable)=False]">
-            <Setter Property="Cursor" Value="Arrow" />
+        <Style Selector="^[(my|TextFieldAssist.IsTextEditable)=False]">
+            <Setter Property="Cursor" Value="Hand" />
         </Style>
 
         <!-- Hover -->
@@ -453,7 +454,9 @@
                                                  CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                                  Classes="no-disablable"
                                                  DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                 IsEnabled="{TemplateBinding (my:TextFieldAssist.IsEditable)}"
+                                                 Focusable="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                 IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                 IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
                                                  SelectionBrush="{my:Brush $parent[my:DateRangePicker].(my:ThemeAssist.PrimaryColor),
                                                                            Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                                  SelectionForegroundBrush="{TemplateBinding Foreground}"
@@ -470,7 +473,9 @@
                                                  CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                                  Classes="no-disablable"
                                                  DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                 IsEnabled="{TemplateBinding (my:TextFieldAssist.IsEditable)}"
+                                                 Focusable="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                 IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                 IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
                                                  SelectionBrush="{my:Brush $parent[my:DateRangePicker].(my:ThemeAssist.PrimaryColor),
                                                                            Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                                  SelectionForegroundBrush="{TemplateBinding Foreground}"
@@ -552,34 +557,34 @@
                                 <Border Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
                                         <Grid ColumnDefinitions="*,Auto,*">
-                                            <my:CalendarView Name="{x:Static my:DateRangePicker.PartStartCalendar}"
-                                                             my:ThemeAssist.PrimaryColor="{TemplateBinding my:FlyoutAssist.PrimaryColor}"
-                                                             Background="Transparent"
-                                                             BorderThickness="0"
-                                                             FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
-                                                             Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}"
-                                                             IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
-                                                <my:CalendarView.Styles>
+                                            <my:Calendar Name="{x:Static my:DateRangePicker.PartStartCalendar}"
+                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:FlyoutAssist.PrimaryColor}"
+                                                         Background="Transparent"
+                                                         BorderThickness="0"
+                                                         FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                                         Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}"
+                                                         IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
+                                                <my:Calendar.Styles>
                                                     <Style Selector="my|CalendarDayButton">
                                                         <Setter Property="my:ClassesAssist.AddClasses" Value="Range" />
                                                     </Style>
-                                                </my:CalendarView.Styles>
-                                            </my:CalendarView>
+                                                </my:Calendar.Styles>
+                                            </my:Calendar>
                                             <Separator Grid.Column="1" Margin="0" Classes="Vertical" />
-                                            <my:CalendarView Name="{x:Static my:DateRangePicker.PartEndCalendar}"
-                                                             Grid.Column="2"
-                                                             my:ThemeAssist.PrimaryColor="{TemplateBinding my:FlyoutAssist.PrimaryColor}"
-                                                             Background="Transparent"
-                                                             BorderThickness="0"
-                                                             FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
-                                                             Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}"
-                                                             IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
-                                                <my:CalendarView.Styles>
+                                            <my:Calendar Name="{x:Static my:DateRangePicker.PartEndCalendar}"
+                                                         Grid.Column="2"
+                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:FlyoutAssist.PrimaryColor}"
+                                                         Background="Transparent"
+                                                         BorderThickness="0"
+                                                         FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                                         Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}"
+                                                         IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
+                                                <my:Calendar.Styles>
                                                     <Style Selector="my|CalendarDayButton">
                                                         <Setter Property="my:ClassesAssist.AddClasses" Value="Range" />
                                                     </Style>
-                                                </my:CalendarView.Styles>
-                                            </my:CalendarView>
+                                                </my:Calendar.Styles>
+                                            </my:Calendar>
                                         </Grid>
                                     </Border>
                                 </Border>

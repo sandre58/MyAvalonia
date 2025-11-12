@@ -170,6 +170,7 @@
                                     <ToggleButton Name="PART_RevealButton"
                                                   Grid.Column="4"
                                                   my:ThemeAssist.TertiaryColor="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
+                                                  Classes="Stretch ExtraSmall no-disablable"
                                                   Content="{StaticResource MyNet.Geometry.Eye}"
                                                   IsChecked="{TemplateBinding RevealPassword, Mode=TwoWay}"
                                                   IsVisible="False"
@@ -239,7 +240,7 @@
 
         <!-- With reveal button -->
         <Style Selector="^[(my|TextFieldAssist.ShowRevealButton)=True]">
-            <Style Selector="^ /template/ ToggleButton#PART_RevealButton">
+            <Style Selector="^:not(:empty) /template/ ToggleButton#PART_RevealButton">
                 <Setter Property="IsVisible" Value="True" />
             </Style>
 

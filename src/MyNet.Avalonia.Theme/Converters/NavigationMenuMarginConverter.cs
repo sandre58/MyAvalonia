@@ -12,7 +12,7 @@ using Avalonia.Data.Converters;
 
 namespace MyNet.Avalonia.Theme.Converters;
 
-public class NavigationMenuMarginConverter : IMultiValueConverter
+internal sealed class NavigationMenuMarginConverter : IMultiValueConverter
 {
     public static NavigationMenuMarginConverter Default { get; } = new();
 

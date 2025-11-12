@@ -34,8 +34,8 @@ public abstract class TimePickerBase : TemplatedControl
     public static readonly StyledProperty<bool> IsDropDownOpenProperty = AvaloniaProperty.Register<TimePickerBase, bool>(
         nameof(IsDropDownOpen), defaultBindingMode: BindingMode.TwoWay);
 
-    public static readonly StyledProperty<bool> IsReadonlyProperty = AvaloniaProperty.Register<TimePickerBase, bool>(
-        nameof(IsReadonly));
+    public static readonly StyledProperty<bool> IsReadOnlyProperty = AvaloniaProperty.Register<TimePickerBase, bool>(
+        nameof(IsReadOnly));
 
     public static readonly StyledProperty<string?> WatermarkProperty = AvaloniaProperty.Register<TimePickerBase, string?>(
 nameof(Watermark));
@@ -46,10 +46,10 @@ nameof(Watermark));
         set => SetValue(WatermarkProperty, value);
     }
 
-    public bool IsReadonly
+    public bool IsReadOnly
     {
-        get => GetValue(IsReadonlyProperty);
-        set => SetValue(IsReadonlyProperty, value);
+        get => GetValue(IsReadOnlyProperty);
+        set => SetValue(IsReadOnlyProperty, value);
     }
 
     public bool IsDropDownOpen

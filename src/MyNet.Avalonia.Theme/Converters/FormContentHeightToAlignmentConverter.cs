@@ -11,7 +11,7 @@ using Avalonia.Layout;
 
 namespace MyNet.Avalonia.Theme.Converters;
 
-public class FormContentHeightToAlignmentConverter : IValueConverter
+internal sealed class FormContentHeightToAlignmentConverter : IValueConverter
 {
     public static FormContentHeightToAlignmentConverter Default { get; } = new(32);
 

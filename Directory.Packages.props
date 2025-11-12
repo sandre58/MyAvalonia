@@ -3,25 +3,25 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Avalonia" Version="11.3.7" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.3.7" />
-    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.7" />
-    <PackageVersion Include="Avalonia.Android" Version="11.3.7" />
-    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="11.3.7" />
-    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="11.3.7" />
-    <PackageVersion Include="Avalonia.Browser" Version="11.3.7" />
-    <PackageVersion Include="Avalonia.Skia" Version="11.3.7" />
-    <PackageVersion Include="Avalonia.Desktop" Version="11.3.7" />
-    <PackageVersion Include="Avalonia.iOS" Version="11.3.7" />
+    <PackageVersion Include="Avalonia" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Android" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Browser" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Skia" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Desktop" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.iOS" Version="11.3.8" />
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.14" />
-    <PackageVersion Include="MyNet.Humanizer" Version="13.0.0" />
-    <PackageVersion Include="MyNet.Observable" Version="13.0.0" />
-    <PackageVersion Include="MyNet.Utilities" Version="13.0.0" />
-    <PackageVersion Include="MyNet.Utilities.Generator.Extensions" Version="13.0.0" />
-    <PackageVersion Include="MyNet.Utilities.Geography.Extensions" Version="13.0.0" />
-    <PackageVersion Include="MyNet.Utilities.Localization.Extensions" Version="13.0.0" />
-    <PackageVersion Include="MyNet.Utilities.Logging.NLog" Version="13.0.0" />
-    <PackageVersion Include="MyNet.UI" Version="13.0.0" />
+    <PackageVersion Include="MyNet.Humanizer" Version="13.1.0" />
+    <PackageVersion Include="MyNet.Observable" Version="13.1.0" />
+    <PackageVersion Include="MyNet.Utilities" Version="13.1.0" />
+    <PackageVersion Include="MyNet.Utilities.Generator.Extensions" Version="13.1.0" />
+    <PackageVersion Include="MyNet.Utilities.Geography.Extensions" Version="13.1.0" />
+    <PackageVersion Include="MyNet.Utilities.Localization.Extensions" Version="13.1.0" />
+    <PackageVersion Include="MyNet.Utilities.Logging.NLog" Version="13.1.0" />
+    <PackageVersion Include="MyNet.UI" Version="13.1.0" />
     <PackageVersion Include="System.Reactive" Version="6.1.0" />
     <PackageVersion Include="Fody" Version="6.9.3" />
     <PackageVersion Include="PropertyChanged.Fody" Version="4.1.0" />

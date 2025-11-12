@@ -19,7 +19,7 @@ namespace MyNet.Avalonia.Demo.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class DemoResources {
@@ -75,6 +75,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         internal static string ActivateOnClose {
             get {
                 return ResourceManager.GetString("ActivateOnClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sélection d&apos;une plage.
+        /// </summary>
+        internal static string AllowTapRangeSelection {
+            get {
+                return ResourceManager.GetString("AllowTapRangeSelection", resourceCulture);
             }
         }
         
@@ -156,6 +165,24 @@ namespace MyNet.Avalonia.Demo.Resources {
         internal static string CalendarSelectionModeSingleRange {
             get {
                 return ResourceManager.GetString("CalendarSelectionModeSingleRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Déplaçable.
+        /// </summary>
+        internal static string CanDragMove {
+            get {
+                return ResourceManager.GetString("CanDragMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redimensionnable.
+        /// </summary>
+        internal static string CanResize {
+            get {
+                return ResourceManager.GetString("CanResize", resourceCulture);
             }
         }
         
@@ -511,15 +538,6 @@ namespace MyNet.Avalonia.Demo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Est editable.
-        /// </summary>
-        internal static string Editable {
-            get {
-                return ResourceManager.GetString("Editable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Champs invalide.
         /// </summary>
         internal static string ErrorOnFieldMessage {
@@ -552,6 +570,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         internal static string FreezeOnMouseEnter {
             get {
                 return ResourceManager.GetString("FreezeOnMouseEnter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plein écran.
+        /// </summary>
+        internal static string FullScreen {
+            get {
+                return ResourceManager.GetString("FullScreen", resourceCulture);
             }
         }
         
@@ -687,6 +714,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         internal static string IsDirectionReversed {
             get {
                 return ResourceManager.GetString("IsDirectionReversed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Est éditable.
+        /// </summary>
+        internal static string IsEditable {
+            get {
+                return ResourceManager.GetString("IsEditable", resourceCulture);
             }
         }
         
@@ -952,6 +988,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Test des dialogues en overlay sur la page.
+        /// </summary>
+        internal static string OverlayDialogDescription {
+            get {
+                return ResourceManager.GetString("OverlayDialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Palette.
         /// </summary>
         internal static string Palette {
@@ -1110,6 +1155,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         internal static string ShowClearButton {
             get {
                 return ResourceManager.GetString("ShowClearButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Afficher le bouton Fermer.
+        /// </summary>
+        internal static string ShowCloseButton {
+            get {
+                return ResourceManager.GetString("ShowCloseButton", resourceCulture);
             }
         }
         
@@ -1560,6 +1614,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         internal static string Watermark {
             get {
                 return ResourceManager.GetString("Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test des dialogues en fenêtre séparée.
+        /// </summary>
+        internal static string WindowDialogDescription {
+            get {
+                return ResourceManager.GetString("WindowDialogDescription", resourceCulture);
             }
         }
     }

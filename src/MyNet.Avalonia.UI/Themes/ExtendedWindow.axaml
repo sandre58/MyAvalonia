@@ -64,6 +64,7 @@
                         <VisualLayerManager.ChromeOverlayLayer>
                             <Panel Margin="{Binding $parent[my:ExtendedWindow].OffScreenMargin}">
                                 <my:TitleBar Margin="{Binding $parent[my:ExtendedWindow].TitleBarMargin}"
+                                             Padding="{Binding $parent[my:ExtendedWindow].TitleBarPadding}"
                                              Content="{Binding $parent[my:ExtendedWindow].TitleBarContent}"
                                              IsTitleVisible="{Binding $parent[my:ExtendedWindow].IsTitleBarVisible}"
                                              LeftContent="{Binding $parent[my:ExtendedWindow].LeftContent}"
@@ -102,7 +103,10 @@
                         <Border Name="PART_Background" Background="{TemplateBinding Background}" IsHitTestVisible="True" />
                         <Grid HorizontalAlignment="Stretch" ColumnDefinitions="Auto, *, Auto, Auto">
                             <ContentPresenter Grid.Column="0" Content="{TemplateBinding LeftContent}" IsVisible="{TemplateBinding IsTitleVisible}" />
-                            <ContentPresenter Grid.Column="1" Content="{TemplateBinding Content}" IsVisible="{TemplateBinding IsTitleVisible}" />
+                            <ContentPresenter Grid.Column="1"
+                                              Padding="{TemplateBinding Padding}"
+                                              Content="{TemplateBinding Content}"
+                                              IsVisible="{TemplateBinding IsTitleVisible}" />
                             <ContentPresenter Grid.Column="2" Content="{TemplateBinding RightContent}" IsVisible="{TemplateBinding IsTitleVisible}" />
                             <my:CaptionButtons x:Name="PART_CaptionButtons"
                                                Grid.Column="3"
@@ -135,7 +139,10 @@
                     <Button Name="PART_RestoreButton" Theme="{StaticResource MyNet.Theme.Button.Caption}">
                         <PathIcon Name="PART_RestoreButtonIcon" Classes="ExtraSmall" Data="{StaticResource MyNet.Geometry.WindowMaximize}" />
                     </Button>
-                    <Button Name="PART_CloseButton" Classes="Close" Theme="{StaticResource MyNet.Theme.Button.Caption}" ToolTip.Tip="{my:Resource Close}">
+                    <Button Name="PART_CloseButton"
+                            Classes="Close"
+                            Theme="{StaticResource MyNet.Theme.Button.Caption}"
+                            ToolTip.Tip="{my:Resource Close}">
                         <PathIcon Classes="ExtraSmall" Data="{StaticResource MyNet.Geometry.WindowClose}" />
                     </Button>
                 </StackPanel>

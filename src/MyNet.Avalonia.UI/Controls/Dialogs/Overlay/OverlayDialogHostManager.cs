@@ -8,21 +8,22 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using MyNet.Avalonia.UI.Controls;
 
-namespace MyNet.Avalonia.UI.Dialogs;
+#pragma warning disable IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.UI.Controls;
+#pragma warning restore IDE0130 // Namespace does not match folder structure
 
 internal static class OverlayDialogHostManager
 {
     private static readonly ConcurrentDictionary<HostKey, OverlayDialogHost> Hosts = new();
 
-    public static void RegisterHost(OverlayDialogHost host, string? id, int? hash)
+    public static void Register(OverlayDialogHost host, string? id, int? hash)
     {
         Debug.WriteLine("Count: " + Hosts.Count);
         _ = Hosts.TryAdd(new HostKey(id, hash), host);
     }
 
-    public static void UnregisterHost(string? id, int? hash) => Hosts.TryRemove(new HostKey(id, hash), out _);
+    public static void Unregister(string? id, int? hash) => Hosts.TryRemove(new HostKey(id, hash), out _);
 
     public static OverlayDialogHost? GetHost(string? id, int? hash)
     {

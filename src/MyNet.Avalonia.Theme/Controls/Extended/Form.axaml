@@ -14,7 +14,7 @@
                                 HorizontalAlignment="{TemplateBinding LabelAlignment}"
                                 VerticalAlignment="Center"
                                 Orientation="Horizontal">
-                        <Label Name="PART_Label" Content="{TemplateBinding Label}" Target="{Binding #PART_ContentPresenter.Content}" />
+                        <Label Classes="no-disablable" Name="PART_Label" Content="{TemplateBinding Label}" Target="{Binding #PART_ContentPresenter.Content}" />
                         <TextBlock Foreground="{DynamicResource MyNet.Brush.Validation.Error}" IsVisible="{TemplateBinding IsRequired}" Text="*" />
                     </StackPanel>
                     <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
@@ -36,7 +36,7 @@
                                         HorizontalAlignment="{TemplateBinding LabelAlignment}"
                                         VerticalAlignment="{Binding #PART_ContentPresenter.Bounds.Height, Converter={x:Static c:FormContentHeightToAlignmentConverter.Default}}"
                                         Orientation="Horizontal">
-                                <Label Name="PART_Label" Content="{TemplateBinding Label}" />
+                                <Label Classes="no-disablable" Name="PART_Label" Content="{TemplateBinding Label}" />
                                 <TextBlock Foreground="{DynamicResource MyNet.Brush.Validation.Error}" IsVisible="{TemplateBinding IsRequired}" Text="*" />
                             </StackPanel>
                         </Border>

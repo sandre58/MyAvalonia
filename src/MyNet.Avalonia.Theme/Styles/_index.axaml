@@ -4,6 +4,8 @@
     <StyleInclude Source="avares://MyNet.Avalonia.Theme/Styles/Colors.axaml" />
     <StyleInclude Source="avares://MyNet.Avalonia.Theme/Styles/Disablable.axaml" />
     <StyleInclude Source="avares://MyNet.Avalonia.Theme/Styles/Fonts.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Styles/Forms.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Styles/Genders.axaml" />
     <StyleInclude Source="avares://MyNet.Avalonia.Theme/Styles/Iconable.axaml" />
     <StyleInclude Source="avares://MyNet.Avalonia.Theme/Styles/Misc.axaml" />
     <StyleInclude Source="avares://MyNet.Avalonia.Theme/Styles/Opacities.axaml" />

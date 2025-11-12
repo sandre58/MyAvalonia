@@ -16,7 +16,7 @@ using MyNet.UI.Dialogs.ContentDialogs;
 
 namespace MyNet.Avalonia.UI.Dialogs;
 
-public class WindowDialogService : DialogServiceBase
+public class WindowDialogService : ContentDialogServiceBase
 {
     /// <inheritdoc />
     public override Task ShowAsync(object view, IDialogViewModel viewModel)
@@ -62,13 +62,18 @@ public class WindowDialogService : DialogServiceBase
     private WindowDialog GetWindow(object view, IDialogViewModel viewModel)
     {
         var dialog = CreateWindow();
-        PrepareWindow(dialog, GetOptions(view));
+        PrepareWindow(dialog, view as ContentDialog, viewModel);
 
         dialog.Content = view;
         dialog.DataContext = viewModel;
 
         if (!string.IsNullOrEmpty(viewModel.Title))
             dialog.Title = viewModel.Title;
+
+        if (view is ContentDialog contentDialog)
+        {
+            dialog.TitleBarContent = contentDialog.Header;
+        }
 
         // Load view Model on openning control
         dialog.Loaded += OnWindowLoaded;
@@ -83,20 +88,6 @@ public class WindowDialogService : DialogServiceBase
     }
 
     protected virtual WindowDialog CreateWindow() => new();
-
-    private static WindowDialogOptions GetOptions(object view) => view is ContentDialog contentDialog
-            ? new WindowDialogOptions
-            {
-                Title = contentDialog.Header?.ToString(),
-                StartupLocation = contentDialog.StartupLocation,
-                IsCloseButtonVisible = contentDialog.ShowCloseButton,
-                CanDragMove = contentDialog.CanDragMove,
-                CanResize = contentDialog.CanResize,
-                ShowInTaskBar = contentDialog.ShowInTaskBar,
-                Position = contentDialog.Position,
-                Classes = contentDialog.ParentClasses
-            }
-            : new WindowDialogOptions();
 
     private void OnWindowLoaded(object? sender, RoutedEventArgs e)
     {
@@ -114,28 +105,32 @@ public class WindowDialogService : DialogServiceBase
         (sender as Window)!.Closed -= OnWindowClosed;
     }
 
-    protected virtual void PrepareWindow(WindowDialog window, WindowDialogOptions options)
+    protected virtual void PrepareWindow(WindowDialog window, ContentDialog? content, IDialogViewModel? dialogViewModel)
     {
-        window.WindowStartupLocation = options.StartupLocation;
-        window.Title = options.Title;
-        window.IsCloseButtonVisible = options.IsCloseButtonVisible;
         window.WindowState = WindowState.Normal;
-        window.CanDragMove = options.CanDragMove;
-        window.CanResize = options.CanResize;
-        window.IsManagedResizerVisible = options.CanResize;
-        window.ShowInTaskbar = options.ShowInTaskBar;
 
-        if (options.StartupLocation == WindowStartupLocation.Manual)
+        if (content is null) return;
+
+        window.WindowStartupLocation = content.StartupLocation;
+        window.TitleBarContent = content.Header ?? dialogViewModel?.Title;
+        window.Title = dialogViewModel?.Title ?? (content.Header is string ? content.Header.ToString() : null);
+        window.IsCloseButtonVisible = content.ShowCloseButton;
+        window.CanDragMove = content.CanDragMove;
+        window.CanResize = content.CanResize;
+        window.IsManagedResizerVisible = content.CanResize;
+        window.ShowInTaskbar = content.ShowInTaskBar;
+
+        if (content.StartupLocation == WindowStartupLocation.Manual)
         {
-            if (options.Position is not null)
-                window.Position = options.Position.Value;
+            if (content.Position is not null)
+                window.Position = content.Position.Value;
             else
                 window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         }
 
-        if (!string.IsNullOrWhiteSpace(options.Classes))
+        if (!string.IsNullOrWhiteSpace(content.ParentClasses))
         {
-            window.AddClasses(options.Classes);
+            window.AddClasses(content.ParentClasses);
         }
     }
 }

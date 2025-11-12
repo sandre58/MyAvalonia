@@ -150,7 +150,7 @@ internal static class BuildHelper
         }
 
         // Custom Controls
-        if (theme.CustomControls.Count <= 0)
+        if (theme.CustomControls.Count == 0)
             return;
 
         var panel = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 20 };
@@ -258,7 +258,7 @@ internal static class BuildHelper
             }
             else
             {
-                IconAssist.SetIcon(x, null!);
+                IconAssist.SetIcon(x, null);
             }
         });
 

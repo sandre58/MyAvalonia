@@ -78,13 +78,12 @@ internal sealed partial class FieldsPage : Page
                     [!TextBox.WatermarkProperty] = Watermark[!TextBox.TextProperty],
                     [!TextBox.InnerLeftContentProperty] = InnerLeftContent[!TextBox.TextProperty],
                     [!TextBox.InnerRightContentProperty] = InnerRightContent[!TextBox.TextProperty],
-                    [!TextBox.UseFloatingWatermarkProperty] = IsFloating[!ToggleButton.IsCheckedProperty],
-                    [!TextBox.IsReadOnlyProperty] = Editable[!ToggleButton.IsCheckedProperty]
+                    [!TextBox.UseFloatingWatermarkProperty] = IsFloating[!ToggleButton.IsCheckedProperty]
                 };
 
                 _ = item.Bind(TextBox.IsReadOnlyProperty, new Binding(nameof(ToggleButton.IsChecked))
                 {
-                    Source = Editable,
+                    Source = IsEditable,
                     Converter = BoolConverters.Not
                 });
                 return item;
@@ -344,7 +343,7 @@ internal sealed partial class FieldsPage : Page
                     control[!TextFieldAssist.ShowClearButtonProperty] = ShowClearButton[!ToggleButton.IsCheckedProperty];
                     control[!TextFieldAssist.ShowClipboardButtonProperty] = ShowClipboardButton[!ToggleButton.IsCheckedProperty];
                     control[!TextFieldAssist.ShowRevealButtonProperty] = IsPassword[!ToggleButton.IsCheckedProperty];
-                    control[!TextFieldAssist.IsEditableProperty] = Editable[!ToggleButton.IsCheckedProperty];
+                    control[!TextFieldAssist.IsTextEditableProperty] = IsEditable[!ToggleButton.IsCheckedProperty];
 
                     Grid.SetRow(control, row);
                     Grid.SetColumn(control, column);

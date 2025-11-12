@@ -11,7 +11,7 @@ using Avalonia.Data.Converters;
 
 namespace MyNet.Avalonia.Theme.Converters;
 
-public class FormContentHeightToMarginConverter : IValueConverter
+internal sealed class FormContentHeightToMarginConverter : IValueConverter
 {
     public static FormContentHeightToMarginConverter Default { get; } = new();
 

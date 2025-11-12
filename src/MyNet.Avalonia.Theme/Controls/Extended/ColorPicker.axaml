@@ -142,7 +142,9 @@
                                                      CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                                      Classes="no-disablable"
                                                      DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                     IsEnabled="{TemplateBinding (my:TextFieldAssist.IsEditable)}"
+                                                     Focusable="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                     IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                     IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
                                                      SelectionBrush="{my:Brush $parent[my:ColorPicker].(my:ThemeAssist.PrimaryColor),
                                                                                Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                                      SelectionForegroundBrush="{TemplateBinding Foreground}"
@@ -270,9 +272,6 @@
             <Style Selector="^ /template/ my|TextField#PART_TextField">
                 <Setter Property="Margin" Value="{Binding (my:TextFieldAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
             </Style>
-            <Style Selector="^ /template/ ToggleButton#PART_RevealButton">
-                <Setter Property="Padding" Value="{my:Thickness Default}" />
-            </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
                 <Setter Property="Padding" Value="{my:Thickness Default}" />
             </Style>
@@ -293,8 +292,8 @@
         </Style>
 
         <!-- Is Read only -->
-        <Style Selector="^[(my|TextFieldAssist.IsEditable)=False]">
-            <Setter Property="Cursor" Value="Arrow" />
+        <Style Selector="^[(my|TextFieldAssist.IsTextEditable)=False]">
+            <Setter Property="Cursor" Value="Hand" />
         </Style>
 
         <!-- Hover -->
@@ -455,7 +454,9 @@
                                                  CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                                  Classes="no-disablable"
                                                  DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                 IsEnabled="{TemplateBinding (my:TextFieldAssist.IsEditable)}"
+                                                 Focusable="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                 IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
+                                                 IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
                                                  SelectionBrush="{my:Brush $parent[my:ColorPicker].(my:ThemeAssist.PrimaryColor),
                                                                            Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                                  SelectionForegroundBrush="{TemplateBinding Foreground}"

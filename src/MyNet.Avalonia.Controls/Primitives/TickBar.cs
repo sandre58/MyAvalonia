@@ -361,7 +361,7 @@ public class TickBar : Control
                     interval = minInterval;
             }
 
-            // Draw Min & Max tick
+            // Draw Floor & Ceiling tick
             if (TickMode != TickMode.Values)
             {
                 context.DrawLine(pen, startPoint, new Point(startPoint.X + tickLen, startPoint.Y));
@@ -440,7 +440,7 @@ public class TickBar : Control
                     interval = minInterval;
             }
 
-            // Draw Min & Max tick
+            // Draw Floor & Ceiling tick
             if (TickMode != TickMode.Values)
             {
                 context.DrawLine(pen, startPoint, new Point(startPoint.X, startPoint.Y + tickLen));

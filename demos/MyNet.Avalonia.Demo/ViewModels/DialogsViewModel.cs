@@ -5,8 +5,10 @@
 // -----------------------------------------------------------------------
 
 using System.Windows.Input;
-using MyNet.Avalonia.Demo.Services;
 using MyNet.Avalonia.Demo.ViewModels.Dialogs;
+using MyNet.Avalonia.Demo.Views.Dialogs;
+using MyNet.Avalonia.UI.Controls;
+using MyNet.Avalonia.UI.Dialogs;
 using MyNet.UI.Commands;
 using MyNet.UI.Toasting;
 using MyNet.UI.ViewModels.Workspace;
@@ -15,40 +17,112 @@ namespace MyNet.Avalonia.Demo.ViewModels;
 
 internal class DialogsViewModel : NavigableWorkspaceViewModel
 {
-    public ICommand OpenContentDialogCommand { get; set; }
+    private readonly WindowDialogService _windowDialogService = new();
+    private readonly OverlayDialogService _overlayDialogService = new();
 
-    public ICommand OpenCustomNonDialogCommand { get; set; }
+    // WindowDialogService Commands
+    public ICommand OpenWindowDialogModalCommand { get; set; }
 
-    public ICommand OpenPerfNonDialogCommand { get; set; }
+    public ICommand OpenWindowDialogNonModalCommand { get; set; }
 
-    public ICommand OpenPerfDialogCommand { get; set; }
+    public ICommand OpenWindowPerfDialogCommand { get; set; }
+
+    // OverlayDialogService Commands
+    public ICommand OpenOverlayDialogModalCommand { get; set; }
+
+    public ICommand OpenOverlayDialogNonModalCommand { get; set; }
+
+    public ICommand OpenOverlayPerfDialogCommand { get; set; }
+
+    // Settings Properties
+    public bool ShowCloseButton { get; set; } = true;
+
+    public bool CanDragMove { get; set; } = true;
+
+    public bool CanResize { get; set; } = true;
+
+    public bool FullScreen { get; set; }
 
     public DialogsViewModel()
     {
-        OpenContentDialogCommand = CommandsManager.Create(async () =>
+        // WindowDialogService Commands
+        OpenWindowDialogModalCommand = CommandsManager.Create(async () =>
         {
             var vm = new LoginDialogViewModel();
-            await WindowDialogManager.ShowDialogAsync(vm).ConfigureAwait(false);
+            var view = new LoginDialogView { DataContext = vm };
+
+            var result = await _windowDialogService.ShowModalAsync(view, vm).ConfigureAwait(false);
 
             ShowToasterResult(vm);
         });
 
-        OpenCustomNonDialogCommand = CommandsManager.Create(async () =>
+        OpenWindowDialogNonModalCommand = CommandsManager.Create(async () =>
         {
             var vm = new LoginDialogViewModel();
-            await WindowDialogManager.ShowAsync(vm, x => ShowToasterResult(x)).ConfigureAwait(false);
+            var view = new LoginDialogView { DataContext = vm };
+
+            await _windowDialogService.ShowAsync(view, vm).ConfigureAwait(false);
         });
 
-        OpenPerfNonDialogCommand = CommandsManager.Create(async () =>
+        OpenWindowPerfDialogCommand = CommandsManager.Create(async () =>
         {
             using var vm = new PerfDialogViewModel();
-            await WindowDialogManager.ShowAsync(vm).ConfigureAwait(false);
+            var view = new PerfDialogView { DataContext = vm };
+
+            var result = await _windowDialogService.ShowModalAsync(view, vm).ConfigureAwait(false);
         });
 
-        OpenPerfDialogCommand = CommandsManager.Create(async () =>
+        // OverlayDialogService Commands
+        OpenOverlayDialogModalCommand = CommandsManager.Create(async () =>
+        {
+            var vm = new LoginDialogViewModel();
+            var view = new LoginDialogView { DataContext = vm };
+
+            var options = new OverlayDialogOptions
+            {
+                IsCloseButtonVisible = ShowCloseButton,
+                CanDragMove = CanDragMove,
+                CanResize = CanResize,
+                FullScreen = FullScreen
+            };
+
+            var result = await _overlayDialogService.ShowDialogCoreAsync(view, vm, null, options).ConfigureAwait(false);
+
+            ShowToasterResult(vm);
+        });
+
+        OpenOverlayDialogNonModalCommand = CommandsManager.Create(async () =>
+        {
+            var vm = new LoginDialogViewModel();
+            var view = new LoginDialogView { DataContext = vm };
+
+            var options = new OverlayDialogOptions
+            {
+                IsCloseButtonVisible = ShowCloseButton,
+                CanDragMove = CanDragMove,
+                CanResize = CanResize,
+                FullScreen = FullScreen
+            };
+
+            _overlayDialogService.Show(view, vm, null, options);
+
+            await System.Threading.Tasks.Task.CompletedTask.ConfigureAwait(false);
+        });
+
+        OpenOverlayPerfDialogCommand = CommandsManager.Create(async () =>
         {
             using var vm = new PerfDialogViewModel();
-            await WindowDialogManager.ShowDialogAsync(vm).ConfigureAwait(false);
+            var view = new PerfDialogView { DataContext = vm };
+
+            var options = new OverlayDialogOptions
+            {
+                IsCloseButtonVisible = ShowCloseButton,
+                CanDragMove = CanDragMove,
+                CanResize = CanResize,
+                FullScreen = FullScreen
+            };
+
+            var result = await _overlayDialogService.ShowDialogCoreAsync(view, vm, null, options).ConfigureAwait(false);
         });
     }
 
@@ -61,6 +135,6 @@ internal class DialogsViewModel : NavigableWorkspaceViewModel
         else
             ToasterManager.ShowError("Dialog has been cancelled");
 
-        ToasterManager.ShowInformation($"Login : {viewModel.Login} ; Password : {viewModel.Password}");
+        ToasterManager.ShowInformation($"Login : {viewModel.Form.Login} ; Password : {viewModel.Form.Password}");
     }
 }

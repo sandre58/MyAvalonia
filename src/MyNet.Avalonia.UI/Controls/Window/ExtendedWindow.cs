@@ -112,6 +112,15 @@ public class ExtendedWindow : Window
         set => SetValue(TitleBarMarginProperty, value);
     }
 
+    public static readonly StyledProperty<Thickness> TitleBarPaddingProperty = AvaloniaProperty.Register<ExtendedWindow, Thickness>(
+    nameof(TitleBarPadding), new Thickness(10, 0));
+
+    public Thickness TitleBarPadding
+    {
+        get => GetValue(TitleBarPaddingProperty);
+        set => SetValue(TitleBarPaddingProperty, value);
+    }
+
     protected virtual async Task<bool> CanCloseAsync() => await Task.FromResult(true).ConfigureAwait(false);
 
     protected override async void OnClosing(WindowClosingEventArgs e)

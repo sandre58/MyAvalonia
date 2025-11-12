@@ -1,0 +1,365 @@
+<UserControl x:Class="MyNet.Avalonia.Demo.Views.Samples.FormContent"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:u="clr-namespace:MyNet.Utilities;assembly=MyNet.Utilities"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+             d:DesignHeight="1200"
+             d:DesignWidth="1000"
+             x:DataType="vm:FormsViewModel"
+             mc:Ignorable="d">
+    <my:Form LabelPosition="Left" LabelWidth="*">
+
+        <!-- ============================================ -->
+        <!-- ACCOUNT INFORMATION SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Resource AccountInformation}">
+            <!-- Username with icon -->
+            <TextBox my:FormItem.IsRequired="True"
+                     my:FormItem.Label="{my:Icon Account}"
+                     Classes="StretchH"
+                     Text="{Binding Login}"
+                     Watermark="{my:Resource Username}" />
+
+            <!-- Email with validation icon -->
+            <TextBox my:FormItem.IsRequired="True"
+                     my:FormItem.Label="{my:Icon Email}"
+                     Classes="StretchH"
+                     Text="{Binding Email}"
+                     Watermark="{my:Resource Email}" />
+
+            <!-- Password fields side by side -->
+            <Grid my:FormItem.IsRequired="True" my:FormItem.Label="{my:Icon Lock}" ColumnDefinitions="*,10,*">
+                <TextBox Classes="StretchH"
+                         PasswordChar="*"
+                         my:TextFieldAssist.ShowRevealButton="True"
+                         Text="{Binding Password}"
+                         Watermark="{my:Resource Password}" />
+                <TextBox Grid.Column="2"
+                         Classes="StretchH"
+                         PasswordChar="*"
+                         my:TextFieldAssist.ShowRevealButton="True"
+                         Text="{Binding ConfirmPassword}"
+                         Watermark="{my:Resource ConfirmPassword}" />
+            </Grid>
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- PERSONAL INFORMATION SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Resource PersonalInformation}">
+            <!-- Name fields in horizontal layout -->
+            <Grid my:FormItem.IsRequired="True" my:FormItem.Label="{my:Icon CardAccountDetails}" ColumnDefinitions="*,10,*">
+                <TextBox Classes="StretchH" Text="{Binding FirstName}" Watermark="{my:Resource FirstName}" />
+                <TextBox Grid.Column="2"
+                         Classes="StretchH"
+                         Text="{Binding LastName}"
+                         Watermark="{my:Resource LastName}" />
+            </Grid>
+
+            <!-- Gender with ComboBox instead -->
+            <ListBox my:FormItem.Label="{my:Icon GenderMaleFemale}"
+                     my:ItemsAssist.UseDisplayMember="False"
+                     my:ItemsAssist.EnumSourceType="{x:Type u:GenderType}"
+                     Classes="Gender"
+                     SelectedValue="{Binding Gender}" />
+
+            <!-- Birth Date with Calendar (without InnerLeftContent) -->
+            <my:CalendarDatePicker Width="200" my:FormItem.Label="{my:Icon Calendar}"
+                                   SelectedDate="{Binding BirthDate}"
+                                   Watermark="{my:Resource BirthDate}" />
+            <DatePicker Width="200" my:FormItem.Label="{my:Icon Calendar}"
+                                   SelectedDate="{Binding BirthDate}"
+                                   my:TextFieldAssist.Watermark="{my:Resource BirthDate}" />
+
+            <!-- Phone Number -->
+            <TextBox Width="300"
+                     my:FormItem.Label="{my:Resource PhoneNumber}"
+                     Text="{Binding PhoneNumber}"
+                     Watermark="+33 6 12 34 56 78">
+                <TextBox.InnerLeftContent>
+                    <PathIcon Data="{StaticResource MyNet.Geometry.Phone}" />
+                </TextBox.InnerLeftContent>
+            </TextBox>
+
+            <!-- Country -->
+            <ComboBox Width="300"
+                      my:FormItem.IsRequired="True"
+                      my:FormItem.Label="{my:Resource Country}"
+                      ItemsSource="{Binding Countries}"
+                      PlaceholderText="{my:Resource ChooseCountry}"
+                      SelectedItem="{Binding SelectedCountry}" />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- ADDRESS SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="Address Information">
+            <!-- Full address -->
+            <TextBox Width="450"
+                     my:FormItem.Label="Street Address"
+                     Text="{Binding Address}"
+                     Watermark="123 Main Street" />
+
+            <!-- City, Postal Code, State in a grid -->
+            <Grid my:FormItem.Label="Location" ColumnDefinitions="200,150,100">
+                <TextBox Grid.Column="0"
+                         Margin="0 0 5 0"
+                         Text="{Binding City}"
+                         Watermark="City" />
+                <TextBox Grid.Column="1"
+                         Margin="5 0 5 0"
+                         Text="{Binding PostalCode}"
+                         Watermark="Postal Code" />
+                <TextBox Grid.Column="2"
+                         Margin="5 0 0 0"
+                         Text="{Binding State}"
+                         Watermark="State" />
+            </Grid>
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- PROFESSIONAL INFORMATION SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="Professional Information">
+            <ComboBox Width="300"
+                      my:FormItem.Label="{my:Resource Role}"
+                      ItemsSource="{Binding Roles}"
+                      PlaceholderText="{my:Resource SelectRole}"
+                      SelectedItem="{Binding SelectedRole}" />
+
+            <TextBox Width="450"
+                     my:FormItem.Label="Company"
+                     Text="{Binding Company}"
+                     Watermark="Company name" />
+
+            <TextBox Width="450"
+                     my:FormItem.Label="Job Title"
+                     Text="{Binding JobTitle}"
+                     Watermark="Software Engineer, Project Manager, etc." />
+
+            <!-- Years of Experience with NumericUpDown -->
+            <NumericUpDown Width="150"
+                           my:FormItem.Label="Years of Experience"
+                           Maximum="50"
+                           Minimum="0"
+                           ShowButtonSpinner="True"
+                           Watermark="0"
+                           Value="{Binding YearsOfExperience}" />
+
+            <!-- Salary with currency -->
+            <NumericUpDown Width="200"
+                           my:FormItem.Label="Expected Salary (€)"
+                           FormatString="C0"
+                           Increment="1000"
+                           Maximum="500000"
+                           Minimum="0"
+                           ShowButtonSpinner="True"
+                           Watermark="0"
+                           Value="{Binding Salary}" />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- SKILLS & LANGUAGES SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="Skills &amp; Languages">
+            <!-- Skills with MultiComboBox -->
+            <my:MultiComboBox Width="450"
+                              my:FormItem.Label="Technical Skills"
+                              ItemsSource="{Binding AvailableSkills}"
+                              SelectedItems="{Binding SelectedSkills}"
+                              Watermark="Select your skills..." />
+
+            <!-- Languages -->
+            <my:MultiComboBox Width="450"
+                              my:FormItem.Label="Languages"
+                              ItemsSource="{Binding AvailableLanguages}"
+                              SelectedItems="{Binding SelectedLanguages}"
+                              Watermark="Select languages you speak..." />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- AVAILABILITY SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="Availability">
+            <!-- Working hours -->
+            <StackPanel my:FormItem.Label="Preferred Working Hours" Orientation="Horizontal" Spacing="10">
+                <my:TimePicker Width="150" SelectedTime="{Binding PreferredStartTime}" Watermark="Start time" />
+                <TextBlock VerticalAlignment="Center" Text="to" />
+                <my:TimePicker Width="150" SelectedTime="{Binding PreferredEndTime}" Watermark="End time" />
+            </StackPanel>
+
+            <!-- Availability Percentage with Slider -->
+            <StackPanel my:FormItem.Label="Availability (%)" Spacing="5">
+                <Slider Width="300"
+                        Maximum="100"
+                        Minimum="0"
+                        TickFrequency="10"
+                        Value="{Binding AvailabilityPercentage}" />
+                <TextBlock HorizontalAlignment="Center">
+                    <Run Text="{Binding AvailabilityPercentage}" />
+                    <Run Text="%" />
+                </TextBlock>
+            </StackPanel>
+
+            <!-- Days of week availability -->
+            <StackPanel my:FormItem.Label="Available Days" Spacing="8">
+                <CheckBox Content="Monday" IsChecked="{Binding MondayAvailable}" />
+                <CheckBox Content="Tuesday" IsChecked="{Binding TuesdayAvailable}" />
+                <CheckBox Content="Wednesday" IsChecked="{Binding WednesdayAvailable}" />
+                <CheckBox Content="Thursday" IsChecked="{Binding ThursdayAvailable}" />
+                <CheckBox Content="Friday" IsChecked="{Binding FridayAvailable}" />
+            </StackPanel>
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- CONTRACT INFORMATION SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="Contract Information">
+            <ComboBox Width="300"
+                      my:FormItem.Label="Contract Type"
+                      ItemsSource="{Binding ContractTypes}"
+                      PlaceholderText="Select contract type"
+                      SelectedItem="{Binding SelectedContractType}" />
+
+            <!-- Contract dates -->
+            <StackPanel my:FormItem.Label="Contract Period" Orientation="Horizontal" Spacing="10">
+                <my:CalendarDatePicker Width="180" SelectedDate="{Binding ContractStartDate}" Watermark="Start date" />
+                <TextBlock VerticalAlignment="Center" Text="to" />
+                <my:CalendarDatePicker Width="180" SelectedDate="{Binding ContractEndDate}" Watermark="End date" />
+            </StackPanel>
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- SOCIAL & WEB PRESENCE SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="Social &amp; Web Presence">
+            <TextBox Width="450"
+                     my:FormItem.Label="Website"
+                     Text="{Binding Website}"
+                     Watermark="https://yourwebsite.com">
+                <TextBox.InnerLeftContent>
+                    <PathIcon Data="{StaticResource MyNet.Geometry.Web}" />
+                </TextBox.InnerLeftContent>
+            </TextBox>
+
+            <TextBox Width="450"
+                     my:FormItem.Label="LinkedIn"
+                     Text="{Binding LinkedIn}"
+                     Watermark="https://linkedin.com/in/yourprofile">
+                <TextBox.InnerLeftContent>
+                    <PathIcon Data="{StaticResource MyNet.Geometry.LinkedIn}" />
+                </TextBox.InnerLeftContent>
+            </TextBox>
+
+            <TextBox Width="450"
+                     my:FormItem.Label="GitHub"
+                     Text="{Binding GitHub}"
+                     Watermark="https://github.com/yourusername">
+                <TextBox.InnerLeftContent>
+                    <PathIcon Data="{StaticResource MyNet.Geometry.GitHub}" />
+                </TextBox.InnerLeftContent>
+            </TextBox>
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- ADDITIONAL DETAILS SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Resource AdditionalDetails}">
+            <!-- Bio with multiline TextBox -->
+            <TextBox Width="450"
+                     Height="120"
+                     my:FormItem.Label="Bio"
+                     AcceptsReturn="True"
+                     Text="{Binding Bio}"
+                     TextWrapping="Wrap"
+                     Watermark="Tell us about yourself, your experience, interests, etc." />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- EMERGENCY CONTACT SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="Emergency Contact">
+            <TextBox Width="450"
+                     my:FormItem.Label="Contact Name"
+                     Text="{Binding EmergencyContactName}"
+                     Watermark="Full name" />
+
+            <TextBox Width="300"
+                     my:FormItem.Label="Contact Phone"
+                     Text="{Binding EmergencyContactPhone}"
+                     Watermark="+33 6 12 34 56 78">
+                <TextBox.InnerLeftContent>
+                    <PathIcon Data="{StaticResource MyNet.Geometry.Phone}" />
+                </TextBox.InnerLeftContent>
+            </TextBox>
+
+            <TextBox Width="300"
+                     my:FormItem.Label="Relation"
+                     Text="{Binding EmergencyContactRelation}"
+                     Watermark="Spouse, Parent, Sibling, etc." />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- PREFERENCES & SETTINGS SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="Preferences &amp; Settings">
+            <!-- Toggle switches for preferences -->
+            <ToggleSwitch my:FormItem.Label="Notifications" Content="Enable push notifications" IsChecked="{Binding EnableNotifications}" />
+
+            <ToggleSwitch my:FormItem.Label="Two-Factor Auth" Content="Enable two-factor authentication" IsChecked="{Binding EnableTwoFactor}" />
+
+            <ToggleSwitch my:FormItem.Label="Public Profile" Content="Make my profile visible to public" IsChecked="{Binding MakeProfilePublic}" />
+
+            <!-- Checkboxes -->
+            <CheckBox my:FormItem.IsRequired="True"
+                      my:FormItem.Label="Terms &amp; Conditions"
+                      Content="I accept the terms and conditions"
+                      IsChecked="{Binding AcceptTerms}" />
+
+            <CheckBox my:FormItem.Label="Newsletter" Content="I want to receive newsletters and updates" IsChecked="{Binding ReceiveNewsletter}" />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- INFO SECTION -->
+        <!-- ============================================ -->
+        <Border Padding="20"
+                my:FormItem.NoLabel="True"
+                Background="{DynamicResource MyNet.Brush.Information}"
+                BorderBrush="{DynamicResource MyNet.Brush.Information.Border}"
+                BorderThickness="2"
+                CornerRadius="8">
+            <StackPanel Spacing="10">
+                <TextBlock FontSize="16" FontWeight="Bold" Text="📌 Important Information" />
+                <Separator />
+                <TextBlock TextWrapping="Wrap">
+                    <Run Text="• Fields marked with" />
+                    <Run FontWeight="Bold" Foreground="{DynamicResource MyNet.Brush.Validation.Error}" Text="*" />
+                    <Run Text="are required and must be filled before submission" />
+                </TextBlock>
+                <TextBlock Text="• Your password must be at least 8 characters long and contain uppercase, lowercase, numbers, and special characters" TextWrapping="Wrap" />
+                <TextBlock Text="• Email address will be used for account verification and password recovery" TextWrapping="Wrap" />
+                <TextBlock Text="• All personal information is encrypted and stored securely according to GDPR regulations" TextWrapping="Wrap" />
+                <TextBlock Text="• You can update your information at any time from your profile settings" TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+
+        <!-- ============================================ -->
+        <!-- SUBMIT BUTTON SECTION -->
+        <!-- ============================================ -->
+        <StackPanel Margin="0 20 0 0"
+                    HorizontalAlignment="Right"
+                    my:FormItem.NoLabel="True"
+                    Orientation="Horizontal"
+                    Spacing="10">
+            <Button Padding="20 10" Classes="Flat" Content="Reset Form" />
+            <Button Padding="20 10"
+                    Classes="Filled"
+                    Content="Submit Registration"
+                    Theme="{StaticResource MyNet.Theme.Button.Accent}" />
+        </StackPanel>
+
+    </my:Form>
+</UserControl>

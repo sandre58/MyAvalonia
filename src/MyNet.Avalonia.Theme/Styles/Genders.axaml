@@ -1,0 +1,15 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <Style Selector=":is(ListBox).Gender">
+        <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ListBox.Toggle}" />
+        <Setter Property="my:ClassesAssist.AddClasses" Value="Uniform" />
+
+        <Style Selector="^ ListBoxItem">
+            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{ReflectionBinding Value, Converter={x:Static my:GenderTypeConverter.Brush}}" />
+            <Setter Property="my:IconAssist.Icon" Value="{ReflectionBinding Value, Converter={x:Static my:GenderTypeConverter.Icon}}" />
+            <Setter Property="Content" Value="{ReflectionBinding Display}" />
+        </Style>
+    </Style>
+</Styles>

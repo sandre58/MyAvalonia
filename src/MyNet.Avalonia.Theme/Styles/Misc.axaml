@@ -12,13 +12,46 @@
         </Setter>
     </Style>
 
-    <Style Selector=":is(TextBox), :is(ComboBox), :is(CalendarDatePicker), :is(NumericUpDown), :is(DatePicker), :is(TimePicker), :is(my|ColorPicker), :is(my|CodeBlock),  :is(my|MultiComboBox),  :is(my|Tag), :is(my|TagBox)">
+    <Style Selector=":is(TextBox), :is(ComboBox), :is(CalendarDatePicker), :is(NumericUpDown), :is(DatePicker), :is(TimePicker), :is(my|ColorPicker), :is(my|CalendarDatePicker), :is(my|CodeBlock), :is(my|DateRangePicker),  :is(my|MultiComboBox),  :is(my|Tag), :is(my|TagBox), :is(my|TimePicker), :is(my|TimeRangePicker)">
         <Style Selector="^.Circle">
             <Setter Property="FocusAdorner" Value="{x:Null}" />
         </Style>
     </Style>
 
+    <!-- Focus -->
     <Style Selector=":is(TemplatedControl).HiddenFocus">
         <Setter Property="FocusAdorner" Value="{x:Null}" />
+    </Style>
+
+    <!-- Alignments -->
+    <Style Selector=":is(Layoutable)">
+
+        <!-- Horizontal Alignments -->
+        <Style Selector="^.Left">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+        <Style Selector="^.Right">
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+        <Style Selector="^.CenterH">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="^.StretchH">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+        
+        <!-- Vertical Alignments -->
+        <Style Selector="^.Bottom">
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+        </Style>
+        <Style Selector="^.Top">
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <Style Selector="^.CenterH">
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="^.StretchV">
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
     </Style>
 </Styles>

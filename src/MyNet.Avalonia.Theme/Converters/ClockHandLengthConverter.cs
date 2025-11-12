@@ -10,7 +10,7 @@ using Avalonia.Data.Converters;
 
 namespace MyNet.Avalonia.Theme.Converters;
 
-public class ClockHandLengthConverter(double ratio) : IValueConverter
+internal sealed class ClockHandLengthConverter(double ratio) : IValueConverter
 {
     public static ClockHandLengthConverter Hour { get; } = new(1 - 0.6);
 

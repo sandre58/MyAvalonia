@@ -546,7 +546,7 @@
   <data name="InProgress" xml:space="preserve">
     <value>In progress</value>
   </data>
-  <data name="Editable" xml:space="preserve">
+  <data name="IsEditable" xml:space="preserve">
     <value>Is editable</value>
   </data>
   <data name="Icons" xml:space="preserve">
@@ -617,5 +617,26 @@
   </data>
   <data name="LiveUpdate" xml:space="preserve">
     <value>Live update</value>
+  </data>
+  <data name="WindowDialogDescription" xml:space="preserve">
+    <value>Test of window dialogs</value>
+  </data>
+  <data name="OverlayDialogDescription" xml:space="preserve">
+    <value>Test of overlay dialogs</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="CanResize" xml:space="preserve">
+    <value>Can resize</value>
+  </data>
+  <data name="CanDragMove" xml:space="preserve">
+    <value>Can drag move</value>
+  </data>
+  <data name="ShowCloseButton" xml:space="preserve">
+    <value>Show close button</value>
+  </data>
+  <data name="AllowTapRangeSelection" xml:space="preserve">
+    <value>Allow tag range</value>
   </data>
 </root>

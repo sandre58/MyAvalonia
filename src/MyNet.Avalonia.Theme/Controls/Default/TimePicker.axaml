@@ -444,9 +444,6 @@
             <Style Selector="^ /template/ my|TextField#PART_TextField">
                 <Setter Property="Margin" Value="{Binding (my:TextFieldAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
             </Style>
-            <Style Selector="^ /template/ ToggleButton#PART_RevealButton">
-                <Setter Property="Padding" Value="{my:Thickness Default}" />
-            </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
                 <Setter Property="Padding" Value="{my:Thickness Default}" />
             </Style>

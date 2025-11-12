@@ -16,7 +16,6 @@ using Avalonia.Styling;
 using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.UI.Controls.Primitives;
-using MyNet.Avalonia.UI.Dialogs;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.UI.Controls;
@@ -164,7 +163,7 @@ public partial class OverlayDialogHost : Canvas
                 });
         }
 
-        OverlayDialogHostManager.RegisterHost(this, HostId, _toplevelHash);
+        OverlayDialogHostManager.Register(this, HostId, _toplevelHash);
     }
 
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
@@ -175,7 +174,7 @@ public partial class OverlayDialogHost : Canvas
         }
 
         _modalStatusSubscription?.Dispose();
-        OverlayDialogHostManager.UnregisterHost(HostId, _toplevelHash);
+        OverlayDialogHostManager.Unregister(HostId, _toplevelHash);
         base.OnDetachedFromVisualTree(e);
     }
 

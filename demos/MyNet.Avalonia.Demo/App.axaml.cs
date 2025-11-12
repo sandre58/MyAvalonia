@@ -100,9 +100,17 @@ public class App : Application
         Controls.ResourceLocator.Initialize();
         TranslationService.RegisterResources(nameof(CountryResources), CountryResources.ResourceManager);
         TranslationService.RegisterResources(nameof(DemoResources), DemoResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(FormResources), FormResources.ResourceManager);
     }
 
-    public override void Initialize() => AvaloniaXamlLoader.Load(this);
+    public override void Initialize()
+    {
+        AvaloniaXamlLoader.Load(this);
+
+#if DEBUG
+        //this.AttachDevTools();
+#endif
+    }
 
     public override void OnFrameworkInitializationCompleted()
     {

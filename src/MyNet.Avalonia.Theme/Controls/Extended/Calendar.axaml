@@ -3,13 +3,13 @@
                     xmlns:my="http://mynet.com/avalonia"
                     x:CompileBindings="True">
 
-    <ControlTheme x:Key="MyNet.Theme.Button.Embedded.CalendarView" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+    <ControlTheme x:Key="MyNet.Theme.Button.Embedded.Calendar" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Margin" Value="{my:Thickness Small}" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $parent[my:CalendarView].(my:ThemeAssist.PrimaryColor)}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $parent[my:Calendar].(my:ThemeAssist.PrimaryColor)}" />
         <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
         <Setter Property="Template">
@@ -63,7 +63,7 @@
 
         <Style Selector="^.Range">
             <Setter Property="Margin" Value="{my:Thickness Small, Vertical}" />
-            
+
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
                 <Setter Property="my:ClassesAssist.AddClasses" Value="no-transitions" />
             </Style>
@@ -71,7 +71,7 @@
                 <Setter Property="my:ClassesAssist.AddClasses" Value="no-transitions" />
             </Style>
         </Style>
-        
+
         <Style Selector="^:in-range">
             <Setter Property="CornerRadius" Value="0" />
 
@@ -118,15 +118,14 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type my:CalendarDayButton}" TargetType="my:CalendarDayButton" BasedOn="{StaticResource MyNet.Theme.Button.Embedded.CalendarView}" />
-    <ControlTheme x:Key="{x:Type my:CalendarYearButton}" TargetType="my:CalendarYearButton" BasedOn="{StaticResource MyNet.Theme.Button.Embedded.CalendarView}" />
+    <ControlTheme x:Key="{x:Type my:CalendarDayButton}" TargetType="my:CalendarDayButton" BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar}" />
+    <ControlTheme x:Key="{x:Type my:CalendarYearButton}" TargetType="my:CalendarYearButton" BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar}" />
 
-    <ControlTheme x:Key="{x:Type my:CalendarView}" TargetType="my:CalendarView">
+    <ControlTheme x:Key="{x:Type my:Calendar}" TargetType="my:Calendar">
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Container}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Container}" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Container}" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Container}" />
-        <Setter Property="Focusable" Value="false" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -152,7 +151,7 @@
         </Style>
 
         <Setter Property="Template">
-            <ControlTemplate TargetType="my:CalendarView">
+            <ControlTemplate TargetType="my:Calendar">
                 <Border Padding="{TemplateBinding Padding}"
                         my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
                         Background="{TemplateBinding Background}"
@@ -165,56 +164,96 @@
                           VerticalAlignment="Stretch"
                           RowDefinitions="Auto, *">
                         <Grid Grid.Row="0" Margin="{my:Thickness Medium, Bottom}" ColumnDefinitions="Auto, Auto,*, Auto, Auto">
-                            <Button Name="{x:Static my:CalendarView.PartFastPreviousButton}"
+                            <Button Name="{x:Static my:Calendar.PartFastPreviousButton}"
                                     Grid.Column="0"
                                     Classes="Text Small no-disablable"
-                                    Content="{my:Icon ChevronDoubleLeft}" />
-                            <Button Name="{x:Static my:CalendarView.PartPreviousButton}"
+                                    Content="{my:Icon ChevronDoubleLeft}"
+                                    Focusable="False" />
+                            <Button Name="{x:Static my:Calendar.PartPreviousButton}"
                                     Grid.Column="1"
                                     Classes="Text Small no-disablable"
-                                    Content="{my:Icon ChevronLeft}" />
+                                    Content="{my:Icon ChevronLeft}"
+                                    Focusable="False" />
 
                             <Grid Grid.Column="2" ColumnDefinitions="*, *">
-                                <Button Name="{x:Static my:CalendarView.PartMonthButton}"
+                                <Button Name="{x:Static my:Calendar.PartMonthButton}"
                                         Grid.Column="0"
                                         HorizontalAlignment="Stretch"
-                                        Classes="Text Small no-disablable" />
-                                <Button Name="{x:Static my:CalendarView.PartYearButton}"
+                                        Classes="Text Small no-disablable"
+                                        Content="{my:Translation DisplayDateContext,
+                                                                 Casing=Title,
+                                                                 RelativeSource={RelativeSource TemplatedParent}}"
+                                        Focusable="False" />
+                                <Button Name="{x:Static my:Calendar.PartYearButton}"
                                         Grid.Column="1"
                                         HorizontalAlignment="Stretch"
-                                        Classes="Text Small no-disablable" />
-                                <Button Name="{x:Static my:CalendarView.PartHeaderButton}"
+                                        Classes="Text Small no-disablable"
+                                        Content="{ReflectionBinding DisplayDateContext.Year,
+                                                                    FallbackValue='',
+                                                                    RelativeSource={RelativeSource TemplatedParent}}"
+                                        Focusable="False" />
+                                <Button Name="{x:Static my:Calendar.PartHeaderButton}"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="2"
                                         HorizontalAlignment="Stretch"
                                         Classes="Text Small no-disablable"
-                                        IsVisible="True" />
+                                        Content="{my:Translation DisplayDateContext,
+                                                                 RelativeSource={RelativeSource TemplatedParent}}"
+                                        Focusable="False"
+                                        IsVisible="False" />
                             </Grid>
 
-                            <Button Name="{x:Static my:CalendarView.PartNextButton}"
+                            <Button Name="{x:Static my:Calendar.PartNextButton}"
                                     Grid.Column="3"
                                     Classes="Text Small no-disablable"
-                                    Content="{my:Icon ChevronRight}" />
-                            <Button Name="{x:Static my:CalendarView.PartFastNextButton}"
+                                    Content="{my:Icon ChevronRight}"
+                                    Focusable="False" />
+                            <Button Name="{x:Static my:Calendar.PartFastNextButton}"
                                     Grid.Column="4"
                                     Classes="Text Small no-disablable"
-                                    Content="{my:Icon ChevronDoubleRight}" />
+                                    Content="{my:Icon ChevronDoubleRight}"
+                                    Focusable="False" />
                         </Grid>
-                        <Grid Name="{x:Static my:CalendarView.PartMonthGrid}"
+                        <Grid Name="{x:Static my:Calendar.PartMonthGrid}"
                               Grid.Row="1"
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch"
                               ColumnDefinitions="*, *, *, *, *, *, *"
                               RowDefinitions="*, Auto, *, *, *, *, *, *" />
-                        <Grid Name="{x:Static my:CalendarView.PartYearGrid}"
+                        <Grid Name="{x:Static my:Calendar.PartYearGrid}"
                               Grid.Row="1"
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch"
                               ColumnDefinitions="*, *, *"
+                              IsVisible="False"
                               RowDefinitions="*, *, *, *" />
                     </Grid>
                 </Border>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^:year, ^:decade, ^:century">
+            <Style Selector="^ /template/ Grid#PART_YearGrid">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+            <Style Selector="^ /template/ Button#PART_HeaderButton">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+            <Style Selector="^ /template/ Button#PART_FastNextButton">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ Button#PART_FastPreviousButton">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ Button#PART_YearButton">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ Button#PART_MonthButton">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ Grid#PART_MonthGrid">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+        </Style>
     </ControlTheme>
 </ResourceDictionary>

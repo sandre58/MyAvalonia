@@ -5,10 +5,21 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            xmlns:samples="clr-namespace:MyNet.Avalonia.Demo.Views.Samples"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            my:ViewModelAssist.AutoWire="True"
+            x:DataType="vm:FormsViewModel"
             ClipToBounds="False"
             mc:Ignorable="d">
     <ScrollViewer IsEnabled="{Binding $parent[pages:FormsPage].IsActive}">
-        <StackPanel Margin="24 0 0 0" HorizontalAlignment="Left">
+        <Border Width="550"
+                Padding="{my:Thickness ExtraLarge}"
+                HorizontalAlignment="Left"
+                Classes="Solid"
+                Theme="{StaticResource MyNet.Theme.Border.Card}">
+            <samples:FormContent DataContext="{Binding}" />
+        </Border>
+        <!--<StackPanel Margin="24 0 0 0" HorizontalAlignment="Left">
 
             <my:Divider Content="Simple Form"/>
             <my:Form LabelPosition="Left" LabelWidth="*">
@@ -47,6 +58,6 @@
                 </my:FormGroup>
                 <Button Classes="Solid Primary" HorizontalAlignment="Stretch" my:FormItem.NoLabel="True" Content="Submit" />
             </my:Form>
-        </StackPanel>
+        </StackPanel>-->
     </ScrollViewer>
 </pages:Page>

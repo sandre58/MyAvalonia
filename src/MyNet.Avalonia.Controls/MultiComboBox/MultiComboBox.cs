@@ -4,20 +4,23 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections;
-using System.Collections.Specialized;
 using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Disposables.Fluent;
 using Avalonia;
-using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Selection;
 using Avalonia.Controls.Templates;
 using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.Metadata;
 using Avalonia.Styling;
+using Avalonia.VisualTree;
 using MyNet.Avalonia.Extensions;
+using MyNet.Utilities;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -26,50 +29,41 @@ namespace MyNet.Avalonia.Controls;
 /// <summary>
 /// This control inherits from <see cref="SelectingItemsControl"/>, but it only supports MVVM pattern.
 /// </summary>
-[TemplatePart(PartRootPanel, typeof(Panel))]
-[PseudoClasses(PseudoClassName.FlyoutOpen, PseudoClassName.Empty)]
+[TemplatePart(PartPopup, typeof(Popup), IsRequired = true)]
+[PseudoClasses(PseudoClassName.FlyoutOpen, PseudoClassName.Empty, PseudoClassName.Pressed)]
 public class MultiComboBox : SelectingItemsControl
 {
     public const string PartRootPanel = "PART_RootPanel";
+    public const string PartPopup = "PART_Popup";
 
     private static readonly ITemplate<Panel?> DefaultPanel = new FuncTemplate<Panel?>(() => new VirtualizingStackPanel());
 
-    public static readonly StyledProperty<bool> IsDropDownOpenProperty =
-        ComboBox.IsDropDownOpenProperty.AddOwner<MultiComboBox>();
+    public static readonly StyledProperty<bool> IsDropDownOpenProperty = ComboBox.IsDropDownOpenProperty.AddOwner<MultiComboBox>();
 
-    public static readonly StyledProperty<double> MaxDropDownHeightProperty =
-        AvaloniaProperty.Register<MultiComboBox, double>(
-            nameof(MaxDropDownHeight));
+    public static readonly StyledProperty<double> MaxDropDownHeightProperty = AvaloniaProperty.Register<MultiComboBox, double>(nameof(MaxDropDownHeight));
 
-    public static readonly StyledProperty<double> MaxSelectionBoxHeightProperty =
-        AvaloniaProperty.Register<MultiComboBox, double>(
-            nameof(MaxSelectionBoxHeight));
+    public static readonly StyledProperty<double> MaxSelectionBoxHeightProperty = AvaloniaProperty.Register<MultiComboBox, double>(nameof(MaxSelectionBoxHeight));
 
-    public static new readonly StyledProperty<IList?> SelectedItemsProperty =
-        AvaloniaProperty.Register<MultiComboBox, IList?>(
-            nameof(SelectedItems));
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("AvaloniaProperty", "AVP1010", Justification = "This property is owned by SelectingItemsControl, but protected there. ListBox changes its visibility.")]
+    public static new readonly DirectProperty<SelectingItemsControl, IList?> SelectedItemsProperty = SelectingItemsControl.SelectedItemsProperty;
 
-    public static readonly StyledProperty<IDataTemplate?> SelectedItemTemplateProperty =
-        AvaloniaProperty.Register<MultiComboBox, IDataTemplate?>(
-            nameof(SelectedItemTemplate));
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("AvaloniaProperty", "AVP1010", Justification = "This property is owned by SelectingItemsControl, but protected there. ListBox changes its visibility.")]
+    public static new readonly DirectProperty<SelectingItemsControl, ISelectionModel> SelectionProperty = SelectingItemsControl.SelectionProperty;
 
-    public static readonly StyledProperty<string?> WatermarkProperty =
-        TextBox.WatermarkProperty.AddOwner<MultiComboBox>();
+    public static readonly StyledProperty<IDataTemplate?> SelectedItemTemplateProperty = AvaloniaProperty.Register<MultiComboBox, IDataTemplate?>(nameof(SelectedItemTemplate));
 
-    private Panel? _rootPanel;
+    public static readonly StyledProperty<string?> WatermarkProperty = TextBox.WatermarkProperty.AddOwner<MultiComboBox>();
+
+    private readonly CompositeDisposable _subscriptionsOnOpen = [];
+    private Popup? _popup;
 
     static MultiComboBox()
     {
+        SelectionModeProperty.OverrideDefaultValue<MultiComboBox>(SelectionMode.Toggle | SelectionMode.Multiple);
         FocusableProperty.OverrideDefaultValue<MultiComboBox>(true);
         ItemsPanelProperty.OverrideDefaultValue<MultiComboBox>(DefaultPanel);
         IsDropDownOpenProperty.AffectsPseudoClass<MultiComboBox>(PseudoClassName.FlyoutOpen);
-        _ = SelectedItemsProperty.Changed.AddClassHandler<MultiComboBox, IList?>((box, args) => box.OnSelectedItemsChanged(args));
-    }
-
-    public MultiComboBox()
-    {
-        SelectedItems = new AvaloniaList<object>();
-        if (SelectedItems is INotifyCollectionChanged c) c.CollectionChanged += OnSelectedItemsCollectionChanged;
+        KeyboardNavigation.TabNavigationProperty.OverrideDefaultValue<MultiComboBox>(KeyboardNavigationMode.Once);
     }
 
     #region SelectedItemContainerTheme
@@ -129,8 +123,14 @@ public class MultiComboBox : SelectingItemsControl
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Used for binding")]
     public new IList? SelectedItems
     {
-        get => GetValue(SelectedItemsProperty);
-        set => SetValue(SelectedItemsProperty, value);
+        get => base.SelectedItems;
+        set => base.SelectedItems = value;
+    }
+
+    public new ISelectionModel Selection
+    {
+        get => base.Selection;
+        set => base.Selection = value;
     }
 
     [InheritDataTypeFromItems(nameof(SelectedItems))]
@@ -146,55 +146,133 @@ public class MultiComboBox : SelectingItemsControl
         set => SetValue(WatermarkProperty, value);
     }
 
-    private void OnSelectedItemsChanged(AvaloniaPropertyChangedEventArgs<IList?> args)
-    {
-        if (args.OldValue.Value is INotifyCollectionChanged old)
-            old.CollectionChanged -= OnSelectedItemsCollectionChanged;
-        if (args.NewValue.Value is INotifyCollectionChanged @new)
-            @new.CollectionChanged += OnSelectedItemsCollectionChanged;
+    public event EventHandler? DropDownClosed;
 
-        RaiseEvent(new SelectionChangedEventArgs(SelectionChangedEvent, args.OldValue.Value!, args.NewValue.Value!) { RoutedEvent = SelectionChangedEvent, Source = this });
-    }
+    public event EventHandler? DropDownOpened;
 
-    private void OnSelectedItemsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        PseudoClasses.Set(PseudoClassName.Empty, SelectedItems?.Count is null or 0);
-        var containers = Presenter?.Panel?.Children;
-        if (containers is null) return;
-        foreach (var container in containers)
-        {
-            if (container is MultiComboBoxItem i)
-            {
-                i.UpdateSelection();
-            }
-        }
-
-        RaiseEvent(new SelectionChangedEventArgs(SelectionChangedEvent, e.OldItems!, e.NewItems!) { RoutedEvent = SelectionChangedEvent, Source = this });
-    }
-
-    protected override bool NeedsContainerOverride(object? item, int index, out object? recycleKey)
-    {
-        recycleKey = item;
-        return item is not MultiComboBoxItem;
-    }
+    protected override bool NeedsContainerOverride(object? item, int index, out object? recycleKey) => NeedsContainer<MultiComboBoxItem>(item, out recycleKey);
 
     protected override Control CreateContainerForItemOverride(object? item, int index, object? recycleKey) => new MultiComboBoxItem();
 
-    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    /// <inheritdoc/>
+    protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
-        base.OnApplyTemplate(e);
-        PointerPressedEvent.RemoveHandler(OnBackgroundPointerPressed, _rootPanel);
-        _rootPanel = e.NameScope.Find<Panel>(PartRootPanel);
-        PointerPressedEvent.AddHandler(OnBackgroundPointerPressed, _rootPanel);
-        PseudoClasses.Set(PseudoClassName.Empty, SelectedItems?.Count == 0);
+        base.OnPointerPressed(e);
+        if (!e.Handled && e.Source is Visual source)
+        {
+            if (_popup?.IsInsidePopup(source) == true)
+            {
+                e.Handled = true;
+                return;
+            }
+        }
+
+        if (IsDropDownOpen)
+        {
+            // When a drop-down is open with OverlayDismissEventPassThrough enabled and the control
+            // is pressed, close the drop-down
+            SetCurrentValue(IsDropDownOpenProperty, false);
+            e.Handled = true;
+        }
+        else
+        {
+            PseudoClasses.Set(PseudoClassName.Pressed, true);
+        }
     }
 
-    private void OnBackgroundPointerPressed(object? sender, PointerPressedEventArgs e) => SetCurrentValue(IsDropDownOpenProperty, !IsDropDownOpen);
+    /// <inheritdoc/>
+    protected override void OnPointerReleased(PointerReleasedEventArgs e)
+    {
+        if (!e.Handled && e.Source is Visual source)
+        {
+            if (_popup?.IsInsidePopup(source) == true)
+            {
+                if (UpdateSelectionFromEventSource(e.Source))
+                {
+                    e.Handled = true;
+                }
+            }
+            else if (PseudoClasses.Contains(PseudoClassName.Pressed))
+            {
+                SetCurrentValue(IsDropDownOpenProperty, !IsDropDownOpen);
+                e.Handled = true;
+            }
+        }
+
+        PseudoClasses.Set(PseudoClassName.Pressed, false);
+        base.OnPointerReleased(e);
+    }
+
+    /// <inheritdoc/>
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    {
+        if (_popup != null)
+        {
+            _popup.Opened -= PopupOpened;
+            _popup.Closed -= PopupClosed;
+        }
+
+        _popup = e.NameScope.Get<Popup>("PART_Popup");
+        _popup.Opened += PopupOpened;
+        _popup.Closed += PopupClosed;
+    }
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+
+        if (e.Handled)
+            return;
+
+        if (!IsDropDownOpen && e.Key is Key.F4 or Key.Down or Key.Enter or Key.Space)
+        {
+            SetCurrentValue(IsDropDownOpenProperty, true);
+            e.Handled = true;
+        }
+        else if (IsDropDownOpen)
+        {
+            var hotkeys = Application.Current!.PlatformSettings?.HotkeyConfiguration;
+            var ctrl = hotkeys is not null && e.KeyModifiers.HasFlag(hotkeys.CommandModifiers);
+
+            if (e.Key is Key.Escape or Key.Tab or Key.F4)
+            {
+                SetCurrentValue(IsDropDownOpenProperty, false);
+                e.Handled = true;
+            }
+
+            // This part of code is needed just to acquire initial focus, subsequent focus navigation will be done by ItemsControl.
+            else if (SelectedIndex < 0 && ItemCount > 0 && (e.Key == Key.Up || e.Key == Key.Down) && IsFocused)
+            {
+                var firstChild = Presenter?.Panel?.Children.FirstOrDefault(CanFocus);
+                if (firstChild != null)
+                {
+                    e.Handled = firstChild.Focus(NavigationMethod.Directional);
+                }
+            }
+            else if (!ctrl && e.Key.ToNavigationDirection() is { } direction && direction.IsDirectional())
+            {
+                e.Handled |= MoveSelection(direction, WrapSelection, e.KeyModifiers.HasFlag(KeyModifiers.Shift));
+            }
+            else if (SelectionMode.HasFlag(SelectionMode.Multiple) && hotkeys?.SelectAll.Any(x => x.Matches(e)) == true)
+            {
+                Selection.SelectAll();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Space || e.Key == Key.Enter)
+            {
+                UpdateSelectionFromEventSource(e.Source, true, e.KeyModifiers.HasFlag(KeyModifiers.Shift), ctrl);
+            }
+        }
+    }
 
     internal void ItemFocused(MultiComboBoxItem dropDownItem)
     {
         if (IsDropDownOpen && dropDownItem.IsFocused && dropDownItem.IsArrangeValid) dropDownItem.BringIntoView();
     }
+
+    public void SelectAll() => Selection.SelectAll();
+
+    public void UnselectAll() => Selection.Clear();
 
     public void Remove(object? o)
     {
@@ -211,33 +289,61 @@ public class MultiComboBox : SelectingItemsControl
         }
     }
 
-    public void Clear()
+    private void PopupClosed(object? sender, EventArgs e)
     {
-        SelectedItems?.Clear();
-        var containers = Presenter?.Panel?.Children;
-        if (containers is null) return;
-        foreach (var container in containers)
+        _subscriptionsOnOpen.Clear();
+
+        if (CanFocus(this))
         {
-            if (container is MultiComboBoxItem t)
-                t.IsSelected = false;
+            Focus();
+        }
+
+        DropDownClosed?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void PopupOpened(object? sender, EventArgs e)
+    {
+        TryFocusSelectedItem();
+
+        _subscriptionsOnOpen.Clear();
+
+        this.GetObservable(IsVisibleProperty).Subscribe(IsVisibleChanged).DisposeWith(_subscriptionsOnOpen);
+
+        foreach (var parent in this.GetVisualAncestors().OfType<Control>())
+        {
+            parent.GetObservable(IsVisibleProperty).Subscribe(IsVisibleChanged).DisposeWith(_subscriptionsOnOpen);
+        }
+
+        DropDownOpened?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void IsVisibleChanged(bool isVisible)
+    {
+        if (!isVisible && IsDropDownOpen)
+        {
+            SetCurrentValue(IsDropDownOpenProperty, false);
         }
     }
 
-    public void SelectAll()
+    private void TryFocusSelectedItem()
     {
-        SelectedItems = new AvaloniaList<object?>(Items);
-        var containers = Presenter?.Panel?.Children;
-        if (containers is null) return;
-        foreach (var container in containers)
+        var selectedIndex = SelectedIndex;
+        if (IsDropDownOpen && selectedIndex != -1)
         {
-            if (container is MultiComboBoxItem t)
-                t.IsSelected = true;
+            var container = ContainerFromIndex(selectedIndex);
+
+            if (container == null && SelectedIndex != -1)
+            {
+                ScrollIntoView(Selection.SelectedIndex);
+                container = ContainerFromIndex(selectedIndex);
+            }
+
+            if (container != null && CanFocus(container))
+            {
+                container.Focus();
+            }
         }
     }
 
-    protected override void OnUnloaded(RoutedEventArgs e)
-    {
-        base.OnUnloaded(e);
-        if (SelectedItems is INotifyCollectionChanged c) c.CollectionChanged -= OnSelectedItemsCollectionChanged;
-    }
+    private bool CanFocus(Control control) => control.Focusable && control.IsEffectivelyEnabled && control.IsVisible;
 }

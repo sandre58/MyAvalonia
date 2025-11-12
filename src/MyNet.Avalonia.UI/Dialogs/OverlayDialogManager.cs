@@ -14,7 +14,6 @@ using Avalonia.Layout;
 using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.UI.Controls;
 using MyNet.Avalonia.UI.Controls.Primitives;
-using MyNet.UI.Dialogs;
 using MyNet.UI.Dialogs.MessageBox;
 using MyNet.UI.Locators;
 

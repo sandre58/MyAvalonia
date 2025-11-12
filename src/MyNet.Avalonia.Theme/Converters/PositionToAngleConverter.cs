@@ -10,7 +10,7 @@ using Avalonia.Data.Converters;
 
 namespace MyNet.Avalonia.Theme.Converters;
 
-public class PositionToAngleConverter : IValueConverter
+internal sealed class PositionToAngleConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value is double d ? d * 3.6 : (object)0;
 

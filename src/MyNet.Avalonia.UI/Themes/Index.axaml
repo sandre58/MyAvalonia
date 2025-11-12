@@ -13,4 +13,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>
+
+    <!-- Styles -->
+    <StyleInclude Source="avares://MyNet.Avalonia.UI/Styles/_index.axaml" />
+
 </Styles>

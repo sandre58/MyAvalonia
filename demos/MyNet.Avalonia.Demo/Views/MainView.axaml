@@ -95,7 +95,6 @@
                 <my:NavigationMenuItem CommandParameter="{x:Type pages:AvatarsPage}" Header="{my:Resource Avatar}" Icon="{StaticResource MyNet.Geometry.AccountBox}" />
                 <my:NavigationMenuItem CommandParameter="{x:Type pages:BadgesPage}" Header="{my:Resource Badge}" Icon="{StaticResource MyNet.Geometry.CheckboxBlankBadge}" />
                 <my:NavigationMenuItem CommandParameter="{x:Type pages:BannersPage}" Header="{my:Resource Banner}" Icon="{StaticResource MyNet.Geometry.InformationBox}" />
-                <my:NavigationMenuItem CommandParameter="{x:Type pages:CalendarViewsPage}" Header="{my:Resource CalendarView}" Icon="{StaticResource MyNet.Geometry.Calendar}" />
                 <my:NavigationMenuItem CommandParameter="{x:Type pages:ClocksPage}" Header="{my:Resource Clock}" Icon="{StaticResource MyNet.Geometry.Clock}" />
                 <my:NavigationMenuItem CommandParameter="{x:Type pages:DialogsPage}" Header="{my:Resource Dialogs}" Icon="{StaticResource MyNet.Geometry.DockWindow}" />
                 <my:NavigationMenuItem CommandParameter="{x:Type pages:DrawersPage}" Header="{my:Resource Drawers}" Icon="{StaticResource MyNet.Geometry.ViewSplitVertical}" />

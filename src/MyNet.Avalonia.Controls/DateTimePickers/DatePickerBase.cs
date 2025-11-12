@@ -22,31 +22,27 @@ public class DatePickerBase : TemplatedControl
 {
     protected DatePickerBase() => GlobalizationService.Current.CultureChanged += (_, _) => DisplayFormat = GlobalizationService.Current.Culture.DateTimeFormat.ShortDatePattern;
 
-    public static readonly StyledProperty<string?> DisplayFormatProperty =
-        AvaloniaProperty.Register<DatePickerBase, string?>(
-            nameof(DisplayFormat), CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
+    public static readonly StyledProperty<string?> DisplayFormatProperty = AvaloniaProperty.Register<DatePickerBase, string?>(nameof(DisplayFormat), CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 
-    public static readonly StyledProperty<AvaloniaList<Period>> BlackoutDatesProperty =
-        AvaloniaProperty.Register<DatePickerBase, AvaloniaList<Period>>(nameof(BlackoutDates));
+    public static readonly StyledProperty<AvaloniaList<Period>> BlackoutDatesProperty = AvaloniaProperty.Register<DatePickerBase, AvaloniaList<Period>>(nameof(BlackoutDates));
 
-    public static readonly StyledProperty<IDateSelector?> BlackoutDateRuleProperty =
-        AvaloniaProperty.Register<DatePickerBase, IDateSelector?>(nameof(BlackoutDateRule));
+    public static readonly StyledProperty<IDateSelector?> BlackoutDateRuleProperty = AvaloniaProperty.Register<DatePickerBase, IDateSelector?>(nameof(BlackoutDateRule));
 
-    public static readonly StyledProperty<DayOfWeek> FirstDayOfWeekProperty =
-        AvaloniaProperty.Register<DatePickerBase, DayOfWeek>(
-            nameof(FirstDayOfWeek), CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek);
+    public static readonly StyledProperty<DayOfWeek> FirstDayOfWeekProperty = AvaloniaProperty.Register<DatePickerBase, DayOfWeek>(nameof(FirstDayOfWeek), CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek);
 
-    public static readonly StyledProperty<bool> IsTodayHighlightedProperty =
-        AvaloniaProperty.Register<DatePickerBase, bool>(nameof(IsTodayHighlighted), true);
+    public static readonly StyledProperty<bool> IsTodayHighlightedProperty = AvaloniaProperty.Register<DatePickerBase, bool>(nameof(IsTodayHighlighted), true);
 
-    public static readonly StyledProperty<bool> IsDropDownOpenProperty = AvaloniaProperty.Register<DatePickerBase, bool>(
-        nameof(IsDropDownOpen), defaultBindingMode: BindingMode.TwoWay);
+    public static readonly StyledProperty<bool> IsDropDownOpenProperty = AvaloniaProperty.Register<DatePickerBase, bool>(nameof(IsDropDownOpen), defaultBindingMode: BindingMode.TwoWay);
 
-    public static readonly StyledProperty<bool> IsReadonlyProperty = AvaloniaProperty.Register<DatePickerBase, bool>(
-        nameof(IsReadonly));
+    public static readonly StyledProperty<bool> AllowSpinProperty = AvaloniaProperty.Register<DatePickerBase, bool>(nameof(AllowSpin));
 
-    public static readonly StyledProperty<string?> WatermarkProperty = AvaloniaProperty.Register<DatePickerBase, string?>(
-    nameof(Watermark));
+    public static readonly StyledProperty<string?> WatermarkProperty = AvaloniaProperty.Register<DatePickerBase, string?>(nameof(Watermark));
+
+    public static readonly StyledProperty<DateTime> DisplayDateProperty = AvaloniaProperty.Register<CalendarDatePicker, DateTime>(nameof(DisplayDate), DateTime.Today);
+
+    public static readonly StyledProperty<DateTime?> DisplayDateStartProperty = AvaloniaProperty.Register<CalendarDatePicker, DateTime?>(nameof(DisplayDateStart));
+
+    public static readonly StyledProperty<DateTime?> DisplayDateEndProperty = AvaloniaProperty.Register<CalendarDatePicker, DateTime?>(nameof(DisplayDateEnd));
 
     public string? Watermark
     {
@@ -79,12 +75,6 @@ public class DatePickerBase : TemplatedControl
         set => SetValue(IsTodayHighlightedProperty, value);
     }
 
-    public bool IsReadonly
-    {
-        get => GetValue(IsReadonlyProperty);
-        set => SetValue(IsReadonlyProperty, value);
-    }
-
     public bool IsDropDownOpen
     {
         get => GetValue(IsDropDownOpenProperty);
@@ -95,5 +85,29 @@ public class DatePickerBase : TemplatedControl
     {
         get => GetValue(DisplayFormatProperty);
         set => SetValue(DisplayFormatProperty, value);
+    }
+
+    public DateTime DisplayDate
+    {
+        get => GetValue(DisplayDateProperty);
+        set => SetValue(DisplayDateProperty, value);
+    }
+
+    public DateTime? DisplayDateStart
+    {
+        get => GetValue(DisplayDateStartProperty);
+        set => SetValue(DisplayDateStartProperty, value);
+    }
+
+    public DateTime? DisplayDateEnd
+    {
+        get => GetValue(DisplayDateEndProperty);
+        set => SetValue(DisplayDateEndProperty, value);
+    }
+
+    public bool AllowSpin
+    {
+        get => GetValue(AllowSpinProperty);
+        set => SetValue(AllowSpinProperty, value);
     }
 }

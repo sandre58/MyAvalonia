@@ -546,8 +546,8 @@
   <data name="InProgress" xml:space="preserve">
     <value>En cours</value>
   </data>
-  <data name="Editable" xml:space="preserve">
-    <value>Est editable</value>
+  <data name="IsEditable" xml:space="preserve">
+    <value>Est éditable</value>
   </data>
   <data name="Icons" xml:space="preserve">
     <value>Icônes</value>
@@ -617,5 +617,26 @@
   </data>
   <data name="Ticks" xml:space="preserve">
     <value>Graduations</value>
+  </data>
+  <data name="WindowDialogDescription" xml:space="preserve">
+    <value>Test des dialogues en fenêtre séparée</value>
+  </data>
+  <data name="OverlayDialogDescription" xml:space="preserve">
+    <value>Test des dialogues en overlay sur la page</value>
+  </data>
+  <data name="ShowCloseButton" xml:space="preserve">
+    <value>Afficher le bouton Fermer</value>
+  </data>
+  <data name="CanDragMove" xml:space="preserve">
+    <value>Déplaçable</value>
+  </data>
+  <data name="CanResize" xml:space="preserve">
+    <value>Redimensionnable</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Plein écran</value>
+  </data>
+  <data name="AllowTapRangeSelection" xml:space="preserve">
+    <value>Sélection d'une plage</value>
   </data>
 </root>
