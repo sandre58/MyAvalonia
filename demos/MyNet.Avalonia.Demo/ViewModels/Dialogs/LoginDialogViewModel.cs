@@ -8,7 +8,7 @@ using MyNet.UI.ViewModels.Dialogs;
 
 namespace MyNet.Avalonia.Demo.ViewModels.Dialogs;
 
-internal class LoginDialogViewModel : DialogViewModel
+internal sealed class LoginDialogViewModel : DialogViewModel
 {
     public FormsViewModel Form { get; set; } = new();
 }

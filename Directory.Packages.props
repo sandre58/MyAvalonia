@@ -14,20 +14,20 @@
     <PackageVersion Include="Avalonia.Desktop" Version="11.3.8" />
     <PackageVersion Include="Avalonia.iOS" Version="11.3.8" />
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.14" />
-    <PackageVersion Include="MyNet.Humanizer" Version="13.1.0" />
-    <PackageVersion Include="MyNet.Observable" Version="13.1.0" />
-    <PackageVersion Include="MyNet.Utilities" Version="13.1.0" />
-    <PackageVersion Include="MyNet.Utilities.Generator.Extensions" Version="13.1.0" />
-    <PackageVersion Include="MyNet.Utilities.Geography.Extensions" Version="13.1.0" />
-    <PackageVersion Include="MyNet.Utilities.Localization.Extensions" Version="13.1.0" />
-    <PackageVersion Include="MyNet.Utilities.Logging.NLog" Version="13.1.0" />
-    <PackageVersion Include="MyNet.UI" Version="13.1.0" />
-    <PackageVersion Include="System.Reactive" Version="6.1.0" />
+    <PackageVersion Include="MyNet.Humanizer" Version="14.0.4" />
+    <PackageVersion Include="MyNet.Observable" Version="14.0.4" />
+    <PackageVersion Include="MyNet.Utilities" Version="14.0.4" />
+    <PackageVersion Include="MyNet.Utilities.Generator.Extensions" Version="14.0.4" />
+    <PackageVersion Include="MyNet.Utilities.Geography.Extensions" Version="14.0.4" />
+    <PackageVersion Include="MyNet.Utilities.Localization.Extensions" Version="14.0.3" />
+    <PackageVersion Include="MyNet.Utilities.Logging.NLog" Version="14.0.4" />
+    <PackageVersion Include="MyNet.UI" Version="14.0.4" />
+    <PackageVersion Include="System.Reactive" Version="7.0.0-preview.1" />
     <PackageVersion Include="Fody" Version="6.9.3" />
     <PackageVersion Include="PropertyChanged.Fody" Version="4.1.0" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-rc.2.25502.107" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
     <!-- Code Analysis -->
-    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.100-rc.2.25502.107" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.100" />
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
     <PackageVersion Include="Roslynator.Analyzers" Version="4.14.1" />
     <!-- Tests -->

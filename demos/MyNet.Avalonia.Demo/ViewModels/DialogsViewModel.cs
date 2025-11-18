@@ -15,7 +15,7 @@ using MyNet.UI.ViewModels.Workspace;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal class DialogsViewModel : NavigableWorkspaceViewModel
+internal sealed class DialogsViewModel : NavigableWorkspaceViewModel
 {
     private readonly WindowDialogService _windowDialogService = new();
     private readonly OverlayDialogService _overlayDialogService = new();

@@ -11,6 +11,8 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Styling;
+using Avalonia.Threading;
+using MyNet.Avalonia.Helpers;
 using MyNet.Avalonia.Resources;
 using MyNet.Utilities;
 using MyNet.Utilities.Localization;
@@ -33,9 +35,11 @@ public static class ResourceLocator
 
         Humanizer.ResourceLocator.Initialize();
 
-        GlobalizationService.Current.CultureChanged += (_, _) => FillColorResourcesDictionary();
+        GlobalizationService.Current.CultureChanged += OnCultureChanged;
         _isInitialized = true;
     }
+
+    private static void OnCultureChanged(object? sender, EventArgs e) => DispatcherHelper.Post(FillColorResourcesDictionary);
 
     public static T? TryGetResource<T>(string resourceKey, ThemeVariant? themeVariant = null) => (Application.Current?.TryGetResource(resourceKey, themeVariant ?? Application.Current.ActualThemeVariant, out var resource) ?? false) ? (T?)resource : default;
 

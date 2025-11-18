@@ -20,12 +20,14 @@ namespace MyNet.Avalonia.UI.Dialogs;
 
 public class OverlayDialogService : ContentDialogServiceBase
 {
+    private static readonly OverlayDialogOptions DefaultOptions = new();
+
     public virtual void Show(object view, IDialogViewModel viewModel, string? hostId, OverlayDialogOptions? options = null, CancellationToken? token = default)
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return;
-        var dialog = GetOverlayDialog(view, viewModel);
 
+        var dialog = GetOverlayDialog(view, viewModel);
         host.AddDialog(dialog);
     }
 
@@ -33,7 +35,6 @@ public class OverlayDialogService : ContentDialogServiceBase
     public override Task ShowAsync(object view, IDialogViewModel viewModel)
     {
         Show(view, viewModel, null);
-
         return Task.CompletedTask;
     }
 
@@ -41,8 +42,8 @@ public class OverlayDialogService : ContentDialogServiceBase
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return Task.FromResult(default(bool?));
-        var dialog = GetOverlayDialog(view, viewModel);
 
+        var dialog = GetOverlayDialog(view, viewModel);
         host.AddModalDialog(dialog);
         return dialog.ShowAsync<bool?>(token);
     }
@@ -53,21 +54,37 @@ public class OverlayDialogService : ContentDialogServiceBase
     private OverlayDialog GetOverlayDialog(object view, IDialogViewModel viewModel)
     {
         var dialog = CreateOverlayDialog();
-        PrepareOverlayDialog(dialog, GetOptions(view));
+        var options = GetOptions(view);
+        PrepareOverlayDialog(dialog, options);
 
         dialog.Content = view;
         dialog.DataContext = viewModel;
 
-        // Load view Model on openning control
-        dialog.Loaded += OnDialogLoaded;
+        // Load view Model on opening control
+        dialog.Loaded += onDialogLoaded;
 
         // Close control when view Model request
-        viewModel.CloseRequest += (sender, e) => dialog.Close();
+        viewModel.CloseRequest += onViewModelCloseRequest;
 
-        // Hide Control
-        dialog.Closed += OnDialogClosed;
+        dialog.Closed += onDialogClosed;
 
         return dialog;
+
+        // Local functions to avoid lambda allocations
+        async void onDialogLoaded(object? sender, RoutedEventArgs e)
+        {
+            if (viewModel is { LoadWhenDialogOpening: true })
+                await viewModel.LoadAsync().ConfigureAwait(false);
+        }
+
+        void onViewModelCloseRequest(object? sender, EventArgs e) => dialog.Close();
+
+        void onDialogClosed(object? sender, ResultEventArgs e)
+        {
+            viewModel.CloseRequest -= onViewModelCloseRequest;
+            dialog.Loaded -= onDialogLoaded;
+            dialog.Closed -= onDialogClosed;
+        }
     }
 
     protected virtual OverlayDialog CreateOverlayDialog() => new()
@@ -75,27 +92,20 @@ public class OverlayDialogService : ContentDialogServiceBase
         [KeyboardNavigation.TabNavigationProperty] = KeyboardNavigationMode.Cycle
     };
 
-    private static OverlayDialogOptions GetOptions(object view) => view is ContentDialog contentDialog
-            ? new OverlayDialogOptions
+    private static OverlayDialogOptions GetOptions(object view) => view is not ContentDialog contentDialog
+            ? DefaultOptions
+            : new OverlayDialogOptions
             {
-                Title = contentDialog.Header?.ToString(),
+                Title = contentDialog.Header switch
+                {
+                    string str => str,
+                    null => null,
+                    var header => header.ToString()
+                },
                 IsCloseButtonVisible = contentDialog.ShowCloseButton,
                 CanDragMove = contentDialog.CanDragMove,
                 CanResize = contentDialog.CanResize
-            }
-            : new OverlayDialogOptions();
-
-    private void OnDialogLoaded(object? sender, RoutedEventArgs e)
-    {
-        if ((sender as OverlayDialog)!.DataContext is IDialogViewModel { LoadWhenDialogOpening: true } dialogViewModel)
-            dialogViewModel.Load();
-    }
-
-    private void OnDialogClosed(object? sender, EventArgs e)
-    {
-        (sender as Window)!.Loaded -= OnDialogLoaded;
-        (sender as Window)!.Closed -= OnDialogClosed;
-    }
+            };
 
     protected virtual void PrepareOverlayDialog(OverlayDialog control, OverlayDialogOptions options)
     {
@@ -110,13 +120,12 @@ public class OverlayDialogService : ContentDialogServiceBase
         control.VerticalAnchor = options.VerticalAnchor;
         control.ActualHorizontalAnchor = options.HorizontalAnchor;
         control.ActualVerticalAnchor = options.VerticalAnchor;
-        control.HorizontalOffset =
-            control.HorizontalAnchor == HorizontalPosition.Center ? null : options.HorizontalOffset;
-        control.VerticalOffset =
-            options.VerticalAnchor == VerticalPosition.Center ? null : options.VerticalOffset;
+        control.HorizontalOffset = control.HorizontalAnchor == HorizontalPosition.Center ? null : options.HorizontalOffset;
+        control.VerticalOffset = options.VerticalAnchor == VerticalPosition.Center ? null : options.VerticalOffset;
         control.IsCloseButtonVisible = options.IsCloseButtonVisible;
         control.CanLightDismiss = options.CanLightDismiss;
         control.CanResize = options.CanResize;
+
         if (!string.IsNullOrWhiteSpace(options.StyleClass))
         {
             var styles = options.StyleClass!.Split(' ', StringSplitOptions.RemoveEmptyEntries);

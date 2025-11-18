@@ -32,7 +32,7 @@
     <Style Selector=":is(Control):not(HeaderedContentControl):not(TabControl).SubCaption">
         <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size.SubCaption}" />
     </Style>
-    <Style Selector=":is(Control):not(HeaderedContentControl):not(TabControl).Watermark">
+    <Style Selector=":is(Control):not(HeaderedContentControl):not(TabControl):not(my|PlaceholderContentControl).Watermark">
         <Setter Property="TextElement.FontSize" Value="{Binding $parent[Control].(TextElement.FontSize), Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
         <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Watermark}" />
     </Style>

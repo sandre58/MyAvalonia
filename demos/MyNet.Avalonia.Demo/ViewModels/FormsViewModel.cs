@@ -11,7 +11,7 @@ using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal class FormsViewModel : EditableObject
+internal sealed class FormsViewModel : EditableObject
 {
     // Account Information
     public string? Login { get; set; }

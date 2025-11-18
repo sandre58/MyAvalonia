@@ -22,8 +22,8 @@ public class WindowDialogService : ContentDialogServiceBase
     public override Task ShowAsync(object view, IDialogViewModel viewModel)
     {
         var window = GetWindow(view, viewModel);
-
         var owner = GetMainWindow();
+
         if (owner is null)
         {
             window.Show();
@@ -41,8 +41,8 @@ public class WindowDialogService : ContentDialogServiceBase
     protected override Task<bool?> ShowDialogCoreAsync(object view, IDialogViewModel viewModel)
     {
         var window = GetWindow(view, viewModel);
-
         var owner = GetMainWindow();
+
         if (owner is null)
         {
             window.Show();
@@ -62,7 +62,9 @@ public class WindowDialogService : ContentDialogServiceBase
     private WindowDialog GetWindow(object view, IDialogViewModel viewModel)
     {
         var dialog = CreateWindow();
-        PrepareWindow(dialog, view as ContentDialog, viewModel);
+        var contentDialog = view as ContentDialog;
+
+        PrepareWindow(dialog, contentDialog, viewModel);
 
         dialog.Content = view;
         dialog.DataContext = viewModel;
@@ -70,40 +72,46 @@ public class WindowDialogService : ContentDialogServiceBase
         if (!string.IsNullOrEmpty(viewModel.Title))
             dialog.Title = viewModel.Title;
 
-        if (view is ContentDialog contentDialog)
+        if (contentDialog is not null)
         {
             dialog.TitleBarContent = contentDialog.Header;
         }
 
-        // Load view Model on openning control
-        dialog.Loaded += OnWindowLoaded;
+        // Load view Model on opening control
+        dialog.Loaded += onWindowLoaded;
 
         // Manage control closing by view Model
-        dialog.Closing += OnWindowClosingAsync;
+        dialog.Closing += onWindowClosingAsync;
 
         // Hide Control
-        dialog.Closed += OnWindowClosed;
+        dialog.Closed += onWindowClosed;
 
         return dialog;
+
+        // Local functions to avoid lambda allocations and improve performance
+        async void onWindowLoaded(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Window { DataContext: IDialogViewModel { LoadWhenDialogOpening: true } dialogVm })
+                await dialogVm.LoadAsync().ConfigureAwait(false);
+        }
+
+        async void onWindowClosingAsync(object? sender, WindowClosingEventArgs e)
+        {
+            if (sender is Window { DataContext: IDialogViewModel dialogVm })
+                e.Cancel = !await dialogVm.CanCloseAsync().ConfigureAwait(false);
+        }
+
+        void onWindowClosed(object? sender, EventArgs e)
+        {
+            if (sender is not Window window) return;
+
+            window.Loaded -= onWindowLoaded;
+            window.Closing -= onWindowClosingAsync;
+            window.Closed -= onWindowClosed;
+        }
     }
 
     protected virtual WindowDialog CreateWindow() => new();
-
-    private void OnWindowLoaded(object? sender, RoutedEventArgs e)
-    {
-        if ((sender as Window)!.DataContext is IDialogViewModel dialogViewModel && dialogViewModel.LoadWhenDialogOpening)
-            dialogViewModel.Load();
-    }
-
-    private async void OnWindowClosingAsync(object? sender, WindowClosingEventArgs e)
-        => e.Cancel = !await ((sender as Window)!.DataContext as IDialogViewModel)!.CanCloseAsync().ConfigureAwait(false);
-
-    private void OnWindowClosed(object? sender, EventArgs e)
-    {
-        (sender as Window)!.Loaded -= OnWindowLoaded;
-        (sender as Window)!.Closing -= OnWindowClosingAsync;
-        (sender as Window)!.Closed -= OnWindowClosed;
-    }
 
     protected virtual void PrepareWindow(WindowDialog window, ContentDialog? content, IDialogViewModel? dialogViewModel)
     {
@@ -113,7 +121,15 @@ public class WindowDialogService : ContentDialogServiceBase
 
         window.WindowStartupLocation = content.StartupLocation;
         window.TitleBarContent = content.Header ?? dialogViewModel?.Title;
-        window.Title = dialogViewModel?.Title ?? (content.Header is string ? content.Header.ToString() : null);
+
+        // Optimize ToString() call - avoid boxing
+        window.Title = dialogViewModel?.Title ?? content.Header switch
+        {
+            string str => str,
+            null => null,
+            var header => header.ToString()
+        };
+
         window.IsCloseButtonVisible = content.ShowCloseButton;
         window.CanDragMove = content.CanDragMove;
         window.CanResize = content.CanResize;

@@ -5,6 +5,7 @@
         <Description>Platform for testing and experimenting with Avalonia controls and styles. </Description>
         <ApplicationIcon>Assets\Demo.ico</ApplicationIcon>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <NeutralLanguage>fr</NeutralLanguage>
     </PropertyGroup>
 
     <ItemGroup>

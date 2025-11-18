@@ -8,37 +8,80 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Media;
+using Avalonia.Threading;
+using DynamicData;
 using MyNet.Avalonia.Enums;
 using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Humanizer;
+using MyNet.UI.Navigation.Models;
 using MyNet.UI.ViewModels.List;
 using MyNet.UI.ViewModels.List.Filtering;
 using MyNet.UI.ViewModels.List.Filtering.Filters;
 using MyNet.UI.ViewModels.List.Paging;
 using MyNet.UI.ViewModels.List.Sorting;
+using MyNet.UI.ViewModels.Workspace;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class IconsViewModel : SelectionListViewModel<IconBuilderData>
+internal sealed class IconsViewModel : NavigableWorkspaceViewModel
 {
-    public static readonly ICollection<string> CodePatterns = [
-        "{0}",
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup method")]
+    private readonly SourceList<IconBuilderData> _allIcons = new();
 
-        ThemeResources.GetPattern(ThemeResources.GeometryKey),
+    public ListViewModel<IconBuilderData> Icons { get; }
 
-        ThemeResources.IconPathPattern,
+    public IconsViewModel() => Icons = new ListViewModel<IconBuilderData>(_allIcons.Connect(), new IconsControllerProvider())
+    {
+        CanPage = true
+    };
 
-        ThemeResources.IconPattern
-    ];
+    protected override bool CanRefreshOnNavigatedTo(NavigationContext navigationContext) => !IsLoaded;
 
-    private static readonly IList<IconBuilderData> PathIcons = [.. Enum.GetValues<IconData>()
-        .Select(x => new IconBuilderData(x.ToString(), x.ToGeometry()))];
+    protected override async Task RefreshCoreAsync()
+    {
+        // Get all icon names on background thread (no UI access)
+        var iconNames = await Task.Run(() => Enum.GetValues<IconData>().Select(x => x.ToString()).ToList()).ConfigureAwait(false);
 
-    public IconsViewModel()
-        : base(PathIcons, new IconsControllerProvider(), MyNet.UI.Selection.SelectionMode.Single) => CanPage = true;
+        // Create IconBuilderData on UI thread progressively
+        var newIcons = new List<IconBuilderData>();
+
+        await Dispatcher.UIThread.InvokeAsync(async () =>
+        {
+            // Create and add items in batches to keep UI responsive
+            const int batchSize = 50;
+            for (var i = 0; i < iconNames.Count; i += batchSize)
+            {
+                foreach (var iconName in iconNames.Skip(i).Take(batchSize))
+                {
+                    // ToGeometry() must be called on UI thread
+                    if (Enum.TryParse<IconData>(iconName, out var iconEnum))
+                    {
+                        var iconData = new IconBuilderData(iconName, iconEnum.ToGeometry());
+                        _allIcons.Add(iconData);
+                    }
+                }
+
+                // Small delay to keep UI responsive
+                if (i + batchSize < iconNames.Count)
+                {
+                    await Task.Delay(1).ConfigureAwait(true);
+                }
+            }
+
+            MarkAsLoaded();
+        },
+        DispatcherPriority.Background).ConfigureAwait(false);
+    }
+
+    protected override void Cleanup()
+    {
+        _allIcons.Dispose();
+        base.Cleanup();
+    }
 }
 
 internal sealed class IconsControllerProvider : ListParametersProvider
@@ -52,11 +95,18 @@ internal sealed class IconsControllerProvider : ListParametersProvider
 
 internal sealed class IconBuilderData(string name, Geometry? geometry)
 {
+    public static readonly ICollection<string> CodePatterns = [
+        "{0}",
+        ThemeResources.GetPattern(ThemeResources.GeometryKey),
+        ThemeResources.IconPathPattern,
+        ThemeResources.IconPattern
+    ];
+
     public string Name { get; } = name;
 
     public string DisplayName { get; } = name.Humanize().ToTitle();
 
     public Geometry? Geometry { get; } = geometry;
 
-    public ObservableCollection<string> CodeBlocks { get; } = [.. IconsViewModel.CodePatterns.Select(x => x.FormatWith(name))];
+    public ObservableCollection<string> CodeBlocks { get; } = [.. CodePatterns.Select(x => x.FormatWith(name))];
 }

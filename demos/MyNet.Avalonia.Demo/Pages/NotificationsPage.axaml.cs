@@ -144,5 +144,9 @@ internal sealed partial class NotificationsPage : AutoBuildPage, IDisposable
 
     private void Button_Click(object? sender, RoutedEventArgs e) => _toasterService?.Clear();
 
-    public void Dispose() => _toasterService?.Dispose();
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        _toasterService?.Dispose();
+    }
 }

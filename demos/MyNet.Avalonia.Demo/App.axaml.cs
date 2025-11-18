@@ -103,14 +103,7 @@ public class App : Application
         TranslationService.RegisterResources(nameof(FormResources), FormResources.ResourceManager);
     }
 
-    public override void Initialize()
-    {
-        AvaloniaXamlLoader.Load(this);
-
-#if DEBUG
-        //this.AttachDevTools();
-#endif
-    }
+    public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
     {
@@ -146,7 +139,7 @@ public class App : Application
     private void RegisterServices(ServiceCollection collection)
         => collection.AddSingleton<ILogger, Utilities.Logging.NLog.Logger>()
                      .AddSingleton<IViewModelResolver, ViewModelResolver>()
-                     .AddSingleton<IViewModelLocator, ViewModelLocator>(x => new ViewModelLocator(x))
+                     .AddSingleton<IViewModelLocator, ViewModelLocator>()
                      .AddSingleton<IViewLocator, ViewLocator>()
                      .AddSingleton<IViewResolver, ViewResolver>()
                      .AddSingleton<IThemeService>(new ThemeService(MyTheme.Current))
@@ -155,12 +148,12 @@ public class App : Application
                      .AddSingleton<IToasterService>(new ToasterService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
                      .AddSingleton<IClipboardService>(new ClipboardService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
 
-                     // .AddSingleton<IDialogService, OverlayDialogService>()
-                     .AddScoped<IBusyServiceFactory, BusyServiceFactory>()
+            // .AddSingleton<IDialogService, OverlayDialogService>()
+     .AddScoped<IBusyServiceFactory, BusyServiceFactory>()
 
-                     // .AddScoped<IMessageBoxFactory, MessageBoxFactory>()
-                     .AddScoped<IScheduler, AvaloniaScheduler>(_ => AvaloniaScheduler.Current)
-                     .AddScoped<ICommandFactory, AvaloniaCommandFactory>()
-                     .AddScoped<IAppCommandsService, AppCommandsService>()
-                     ;
+               // .AddScoped<IMessageBoxFactory, MessageBoxFactory>()
+.AddScoped<IScheduler, AvaloniaScheduler>(_ => AvaloniaScheduler.Current)
+  .AddScoped<ICommandFactory, AvaloniaCommandFactory>()
+          .AddScoped<IAppCommandsService, AppCommandsService>()
+  ;
 }
