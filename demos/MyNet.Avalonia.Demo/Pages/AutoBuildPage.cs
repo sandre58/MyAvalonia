@@ -28,12 +28,15 @@ internal abstract class AutoBuildPage : Page, IDisposable
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
-        base.OnApplyTemplate(e);
+        using (PerformanceMonitor.Measure($"AutoBuildPage ({GetType().Name}) - OnApplyTemplate"))
+        {
+            base.OnApplyTemplate(e);
 
-        var panel = this.FindControl<Panel>("Root");
+            var panel = this.FindControl<Panel>("Root");
 
-        if (panel is not null)
-            _ = BuildAsync(panel);
+            if (panel is not null)
+                _ = BuildAsync(panel);
+        }
     }
 
     protected abstract IEnumerable<ControlThemeData> ProvideThemes();
@@ -49,15 +52,27 @@ internal abstract class AutoBuildPage : Page, IDisposable
         _cancellationTokenSource = new CancellationTokenSource();
         var cancellationToken = _cancellationTokenSource.Token;
 
-        using (LogManager.MeasureTime())
+        using (PerformanceMonitor.Measure($"AutoBuildPage ({GetType().Name}) - Total Build"))
         {
-            var themes = ProvideThemes().ToList();
+            List<ControlThemeData> themes;
+            using (PerformanceMonitor.Measure($"AutoBuildPage ({GetType().Name}) - ProvideThemes"))
+            {
+                themes = [.. ProvideThemes()];
+            }
+
+            LogManager.Debug($"[PERF] AutoBuildPage ({GetType().Name}) - Building {themes.Count} theme sections");
 
             // Build controls progressively
+            var sectionIndex = 0;
             foreach (var item in themes)
             {
                 if (cancellationToken.IsCancellationRequested)
+                {
+                    LogManager.Debug($"[PERF] AutoBuildPage ({GetType().Name}) - Build cancelled at section {sectionIndex}");
                     return;
+                }
+
+                sectionIndex++;
 
                 // Build each theme section on the UI thread with low priority
                 await Dispatcher.UIThread.InvokeAsync(() =>
@@ -65,8 +80,11 @@ internal abstract class AutoBuildPage : Page, IDisposable
                     if (cancellationToken.IsCancellationRequested)
                         return;
 
-                    var container = BuildThemeSection(item);
-                    root.Children.Add(container);
+                    using (PerformanceMonitor.Measure($"AutoBuildPage ({GetType().Name}) - Build section '{item.Name}'"))
+                    {
+                        var container = BuildThemeSection(item);
+                        root.Children.Add(container);
+                    }
                 },
                 DispatcherPriority.Background);
 
@@ -84,7 +102,14 @@ internal abstract class AutoBuildPage : Page, IDisposable
             [!IsEnabledProperty] = this[!IsActiveProperty]
         };
 
-        BuildHelper.Build(grid, item, CreateControl);
+        int controlCount;
+        using (PerformanceMonitor.Measure($"BuildHelper.Build for '{item.Name}'"))
+        {
+            BuildHelper.Build(grid, item, CreateControl);
+            controlCount = grid.Children.Count;
+        }
+
+        LogManager.Debug($"[PERF] Section '{item.Name}' - Created {controlCount} controls");
 
         var container = new HeaderedContentControl
         {

@@ -7,6 +7,7 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             xmlns:samples="clr-namespace:MyNet.Avalonia.Demo.Views.Samples"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:u="clr-namespace:MyNet.Utilities;assembly=MyNet.Utilities"
             my:ViewModelAssist.AutoWire="True"
             x:DataType="vm:FormsViewModel"
             ClipToBounds="False"
@@ -19,45 +20,5 @@
                 Theme="{StaticResource MyNet.Theme.Border.Card}">
             <samples:FormContent DataContext="{Binding}" />
         </Border>
-        <!--<StackPanel Margin="24 0 0 0" HorizontalAlignment="Left">
-
-            <my:Divider Content="Simple Form"/>
-            <my:Form LabelPosition="Left" LabelWidth="*">
-                <TextBox Width="300" my:FormItem.IsRequired="True" my:FormItem.Label="Name" />
-                <TextBox Width="300" my:FormItem.Label="Email" />
-                <TextBox Width="300" my:FormItem.Label="Message" Classes="TextArea" />
-            </my:Form>
-
-            <my:Divider Content="Form accessibility"/>
-
-            <my:Form LabelPosition="Left" LabelWidth="*">
-                <TextBox Width="300" my:FormItem.Label="_Name" />
-                <TextBox Width="300" my:FormItem.Label="_Email" />
-                <TextBox Width="300" my:FormItem.Label="_Message" Classes="TextArea" />
-            </my:Form>
-
-            <my:Divider Content="Label on top"/>
-
-            <my:Form LabelPosition="Top" LabelWidth="*">
-                <TextBox Width="300" my:FormItem.Label="Name" />
-                <TextBox Width="300" my:FormItem.Label="Email" />
-            </my:Form>
-
-            <my:Divider Content="FormGroup"/>
-
-            <my:Form LabelPosition="Left" LabelWidth="*">
-                <my:FormGroup Header="Basic Information">
-                    <TextBox Width="300" my:FormItem.Label="Name" />
-                    <TextBox Width="300" my:FormItem.Label="Email" />
-                </my:FormGroup>
-                <my:FormGroup Header="Education Information">
-                    <TextBox Width="300" my:FormItem.Label="Collage" />
-                    <my:FormItem Label="Study Time">
-                        <my:DateRangePicker Width="300" />
-                    </my:FormItem>
-                </my:FormGroup>
-                <Button Classes="Solid Primary" HorizontalAlignment="Stretch" my:FormItem.NoLabel="True" Content="Submit" />
-            </my:Form>
-        </StackPanel>-->
     </ScrollViewer>
 </pages:Page>

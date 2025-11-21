@@ -78,6 +78,7 @@ public class NavigationMenu : ItemsControl
         RoutedEvent.Register<NavigationMenu, SelectionChangedEventArgs>(nameof(SelectionChanged), RoutingStrategies.Bubble);
 
     private bool _updateFromUi;
+    private Dictionary<object, NavigationMenuItem>? _leafMenuCache;
 
     static NavigationMenu()
     {
@@ -205,14 +206,10 @@ public class NavigationMenu : ItemsControl
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
+        InvalidateLeafMenuCache();
         _ = TryToSelectItem(SelectedItem);
     }
 
-    /// <summary>
-    ///     this implementation only works in the case that only leaf menu item is allowed to select. It will be changed if we
-    ///     introduce parent level selection in the future.
-    /// </summary>
-    /// <param name="args">.</param>
     private void OnSelectedItemChange(AvaloniaPropertyChangedEventArgs<object?> args)
     {
         var a = new SelectionChangedEventArgs(
@@ -241,22 +238,50 @@ public class NavigationMenu : ItemsControl
     private bool TryToSelectItem(object? item)
     {
         if (item is null) return false;
-        var leaves = GetLeafMenus();
-        var found = false;
-        foreach (var leaf in leaves)
+
+        if (_leafMenuCache is null)
         {
-            if (leaf != item && leaf.DataContext != item)
-                continue;
-            leaf.SelectItem(leaf);
-            found = true;
+            InvalidateLeafMenuCache();
         }
 
-        return found;
+        if (_leafMenuCache!.TryGetValue(item, out var leaf))
+        {
+            leaf.SelectItem(leaf);
+            return true;
+        }
+
+        foreach (var kvp in _leafMenuCache)
+        {
+            if (kvp.Key == item || (kvp.Value.DataContext != null && kvp.Value.DataContext == item))
+            {
+                kvp.Value.SelectItem(kvp.Value);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void InvalidateLeafMenuCache()
+    {
+        _leafMenuCache = [];
+        foreach (var leaf in GetLeafMenus())
+        {
+            var key = leaf.DataContext is not null && leaf.DataContext != DataContext ? leaf.DataContext : leaf;
+            if (!_leafMenuCache.ContainsKey(key))
+            {
+                _leafMenuCache[key] = leaf;
+            }
+        }
     }
 
     protected override bool NeedsContainerOverride(object? item, int index, out object? recycleKey) => NeedsContainer<NavigationMenuItem>(item, out recycleKey);
 
-    protected override Control CreateContainerForItemOverride(object? item, int index, object? recycleKey) => new NavigationMenuItem();
+    protected override Control CreateContainerForItemOverride(object? item, int index, object? recycleKey)
+    {
+        InvalidateLeafMenuCache();
+        return new NavigationMenuItem();
+    }
 
     internal void SelectItem(NavigationMenuItem item, NavigationMenuItem parent)
     {
