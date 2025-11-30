@@ -47,9 +47,9 @@
             <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
             <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
             <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
-            <Setter Property="my:FlyoutAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
-            <Setter Property="my:FlyoutAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PopupAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
+            <Setter Property="my:PopupAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
         </Style>
 
         <Setter Property="Template">
@@ -127,8 +127,7 @@
                                                  Focusable="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
                                                  IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
                                                  IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                 SelectionBrush="{my:Brush $parent[my:CalendarDatePicker].(my:ThemeAssist.PrimaryColor),
-                                                                           Opacity={StaticResource MyNet.Opacity.Overlay}}"
+                                                 SelectionBrush="{my:Brush $parent[my:CalendarDatePicker].(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                                  SelectionForegroundBrush="{TemplateBinding Foreground}"
                                                  Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
                                     </my:TextField>
@@ -185,19 +184,19 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:FlyoutAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
+                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
-                                        <my:Calendar Name="PART_Calendar"
-                                                     my:ThemeAssist.PrimaryColor="{TemplateBinding my:FlyoutAssist.PrimaryColor}"
+                                        <my:Calendar Name="PART_Previewer"
+                                                     my:ThemeAssist.PrimaryColor="{TemplateBinding my:PopupAssist.PrimaryColor}"
                                                      Background="Transparent"
                                                      BorderThickness="0"
                                                      DisplayDate="{TemplateBinding DisplayDate}"
                                                      DisplayDateEnd="{TemplateBinding DisplayDateEnd}"
                                                      DisplayDateStart="{TemplateBinding DisplayDateStart}"
                                                      FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
-                                                     Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}"
+                                                     Foreground="{TemplateBinding (my:PopupAssist.Foreground)}"
                                                      IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
-                                                     SelectedDate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedDate, Mode=TwoWay}" />
+                                                     SelectedDate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedValue, Mode=TwoWay}" />
                                     </Border>
                                 </Border>
                             </Popup>
@@ -247,7 +246,7 @@
 
         <!-- Is Read only -->
         <Style Selector="^[(my|TextFieldAssist.IsTextEditable)=False]">
-            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Cursor" Value="Arrow" />
         </Style>
 
         <!-- Hover -->
@@ -285,10 +284,10 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
         </Style>
 
         <!-- Styles -->
@@ -478,7 +477,7 @@
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
-                                        <my:Calendar Name="PART_Calendar"
+                                        <my:Calendar Name="PART_Previewer"
                                                      my:ThemeAssist.PrimaryColor="{TemplateBinding my:ThemeAssist.PrimaryColor}"
                                                      Background="Transparent"
                                                      BorderThickness="0"

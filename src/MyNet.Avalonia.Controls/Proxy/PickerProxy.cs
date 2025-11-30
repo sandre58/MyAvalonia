@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="CalendarDatePickerProxy.cs" company="Stéphane ANDRE">
+// <copyright file="PickerProxy.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -10,9 +10,9 @@ using MyNet.Avalonia.Controls.Primitives;
 
 namespace MyNet.Avalonia.Controls.Proxy;
 
-public sealed class CalendarDatePickerProxy : IControlProxy
+public sealed class PickerProxy : IControlProxy
 {
-    private readonly CalendarDatePicker _control;
+    private readonly ITextPicker _control;
 
     public bool IsEmpty() => _control.IsEmpty();
 
@@ -26,19 +26,19 @@ public sealed class CalendarDatePickerProxy : IControlProxy
 
     public event EventHandler? IsActiveChanged;
 
-    public CalendarDatePickerProxy(CalendarDatePicker control)
+    public PickerProxy(ITextPicker control)
     {
         _control = control ?? throw new ArgumentNullException(nameof(control));
-        _ = DatePickerBase.IsDropDownOpenProperty.Changed.Subscribe(e =>
+        _ = DropDownControl.IsDropDownOpenProperty.Changed.Subscribe(e =>
         {
-            if (e.Sender is not CalendarDatePicker calendarDatePicker || calendarDatePicker != _control)
+            if (e.Sender is not ITextPicker pickerBase || pickerBase != _control)
                 return;
             IsFocusedChanged?.Invoke(_control, EventArgs.Empty);
             IsActiveChanged?.Invoke(_control, EventArgs.Empty);
         });
         _control.GotFocus += OnGotFocus;
         _control.LostFocus += OnLostFocus;
-        _control.SelectedDateChanged += OnSeletedDateChanged;
+        _control.SelectedValueChanged += OnSelectedValueChanged;
         _control.TextChanged += OnTextChanged;
     }
 
@@ -48,7 +48,7 @@ public sealed class CalendarDatePickerProxy : IControlProxy
         IsActiveChanged?.Invoke(_control, EventArgs.Empty);
     }
 
-    private void OnSeletedDateChanged(object? sender, SelectionChangedEventArgs e)
+    private void OnSelectedValueChanged(object? sender, SelectionChangedEventArgs e)
     {
         IsEmptyChanged?.Invoke(_control, EventArgs.Empty);
         IsActiveChanged?.Invoke(_control, EventArgs.Empty);
@@ -70,7 +70,7 @@ public sealed class CalendarDatePickerProxy : IControlProxy
     {
         _control.GotFocus -= OnGotFocus;
         _control.LostFocus -= OnLostFocus;
-        _control.SelectedDateChanged -= OnSeletedDateChanged;
+        _control.SelectedValueChanged -= OnSelectedValueChanged;
         _control.TextChanged -= OnTextChanged;
     }
 }

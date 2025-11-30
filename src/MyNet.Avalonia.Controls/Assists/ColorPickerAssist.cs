@@ -54,5 +54,4 @@ public static class ColorPickerAssist
     public static ControlTheme GetColorViewTheme(StyledElement element) => element.GetValue(ColorViewThemeProperty);
 
     #endregion
-
 }

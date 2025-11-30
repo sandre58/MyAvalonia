@@ -16,6 +16,7 @@ public static class PseudoClassName
     public const string Day = ":day";
     public const string Decade = ":decade";
     public const string Disabled = ":disabled";
+    public const string Dot = ":dot";
     public const string Empty = ":empty";
     public const string EndDate = ":end-date";
     public const string Error = ":error";

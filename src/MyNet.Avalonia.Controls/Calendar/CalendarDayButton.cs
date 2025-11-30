@@ -8,14 +8,12 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls;
+namespace MyNet.Avalonia.Controls.Primitives;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
 [PseudoClasses(PseudoClassName.Pressed, PseudoClassName.Selected, PseudoClassName.StartDate, PseudoClassName.EndDate, PseudoClassName.PreviewStartDate, PseudoClassName.PreviewEndDate, PseudoClassName.InRange, PseudoClassName.Today, PseudoClassName.Blackout, PseudoClassName.Inactive)]
 public class CalendarDayButton : CalendarDateButton
 {
-    private bool _ignoringMouseOverState;
-
     public bool IsStartDate
     {
         get;
@@ -76,33 +74,12 @@ public class CalendarDayButton : CalendarDateButton
         }
     }
 
-    internal void IgnoreMouseOverState()
-    {
-        // TODO: Investigate whether this needs to be done by changing the
-        // state everytime we change any state, or if it can be done once
-        // to properly reset the control.
-        _ignoringMouseOverState = false;
-
-        // If the button thinks it's in the MouseOver state (which can
-        // happen when a Popup is closed before the button can change state)
-        // we will override the state so it shows up as normal.
-        if (IsPointerOver)
-        {
-            _ignoringMouseOverState = true;
-            SetPseudoClasses();
-        }
-    }
-
     protected override void SetPseudoClasses()
     {
         base.SetPseudoClasses();
 
-        if (_ignoringMouseOverState)
-        {
-            PseudoClasses.Set(PseudoClassName.Pressed, IsPressed);
-            PseudoClasses.Set(PseudoClassName.Disabled, !IsEnabled);
-        }
-
+        PseudoClasses.Set(PseudoClassName.Pressed, IsPressed);
+        PseudoClasses.Set(PseudoClassName.Disabled, !IsEnabled);
         PseudoClasses.Set(PseudoClassName.Blackout, IsBlackout);
         PseudoClasses.Set(PseudoClassName.StartDate, IsStartDate);
         PseudoClasses.Set(PseudoClassName.EndDate, IsEndDate);

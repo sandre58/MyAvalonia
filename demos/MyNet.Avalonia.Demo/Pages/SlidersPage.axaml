@@ -55,15 +55,13 @@
                     </HeaderedContentControl>
                     <UniformGrid Columns="2">
                         <NumericUpDown Name="Minimum"
-                                       Margin="{my:Thickness Default,
-                                                             Right}"
+                                       Margin="{my:Thickness Default, Right}"
                                        Maximum="1000"
                                        Minimum="-1000"
                                        Watermark="{my:Resource Minimum}"
                                        Value="0" />
                         <NumericUpDown Name="Maximum"
-                                       Margin="{my:Thickness Default,
-                                                             Left}"
+                                       Margin="{my:Thickness Default, Left}"
                                        Maximum="1000"
                                        Minimum="-1000"
                                        Watermark="{my:Resource Maximum}"

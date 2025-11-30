@@ -73,6 +73,7 @@
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/Calendar.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/CalendarDatePicker.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/Clock.axaml" />
+        <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/ClockSelector.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/CodeBlock.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/ColorEyeDropper.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/ColorPicker.axaml" />
@@ -108,6 +109,7 @@
         <!--<ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/ThemeSelector.axaml" />-->
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/TimePicker.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/TimeRangePicker.axaml" />
+        <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/TimeView.axaml" />
         <!--<ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/Timeline.axaml" />
                 <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/TreeComboBox.axaml"/>
                 <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Extended/Skeleton.axaml" />

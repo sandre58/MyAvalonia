@@ -14,7 +14,7 @@ using MyNet.Utilities;
 using MyNet.Utilities.Helpers;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls;
+namespace MyNet.Avalonia.Controls.Primitives;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
 public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollection<DateTime>
@@ -57,7 +57,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
 
         base.ClearItems();
 
-        // The event fires after SelectedDate changes
+        // The event fires after Value changes
         if (_owner.SelectionMode != CalendarSelectionMode.None && _owner.SelectedDate != null)
             _owner.SelectedDate = null;
     }
@@ -71,7 +71,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         {
             base.InsertItem(index, date);
 
-            // The event fires after SelectedDate changes
+            // The event fires after Value changes
             if (index == 0 && !(_owner.SelectedDate.HasValue && DateTime.Compare(_owner.SelectedDate.Value, date) == 0))
                 _owner.SelectedDate = date;
         }
@@ -83,7 +83,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
 
         base.RemoveItem(index);
 
-        // The event fires after SelectedDate changes
+        // The event fires after Value changes
         if (index == 0)
             _owner.SelectedDate = Count > 0 ? this[0] : null;
     }
@@ -96,7 +96,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         {
             base.SetItem(index, item);
 
-            // The event fires after SelectedDate changes
+            // The event fires after Value changes
             if (index == 0 && !(_owner.SelectedDate.HasValue && DateTime.Compare(_owner.SelectedDate.Value, item) == 0))
                 _owner.SelectedDate = item;
         }

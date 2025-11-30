@@ -21,7 +21,7 @@ namespace MyNet.Avalonia.Controls;
 public class DataGridTimeColumn : DataGridBoundColumn<TimePicker, ContentControl>
 {
     public DataGridTimeColumn()
-        : base(TimePicker.SelectedTimeProperty, ContentControl.ContentProperty)
+        : base(TimePicker.SelectedValueProperty, ContentControl.ContentProperty)
     {
         DisplayFormat = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern;
         PanelFormat = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Replace(":", " ", StringComparison.OrdinalIgnoreCase);
@@ -81,9 +81,9 @@ public class DataGridTimeColumn : DataGridBoundColumn<TimePicker, ContentControl
         DataGridHelper.SynchronizeColumnProperty(this, control, DisplayFormatProperty);
     }
 
-    protected override void ResetValue(TimePicker control, object uneditedValue) => control.SelectedTime = (TimeSpan?)uneditedValue;
+    protected override void ResetValue(TimePicker control, object uneditedValue) => control.SelectedValue = (TimeSpan?)uneditedValue;
 
-    protected override object? GetValue(TimePicker control) => control.SelectedTime;
+    protected override object? GetValue(TimePicker control) => control.SelectedValue;
 
     private void SynchronizeDataTemplate(Control element)
     {

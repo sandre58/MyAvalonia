@@ -1,0 +1,109 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:MyNet.Avalonia.Theme.Converters"
+                    xmlns:u="clr-namespace:MyNet.Utilities.DateTimes;assembly=MyNet.Utilities"
+                    xmlns:my="http://mynet.com/avalonia"
+                    x:CompileBindings="True">
+
+    <ControlTheme x:Key="{x:Type my:NumericUpDownTimeComponent}" TargetType="my:NumericUpDownTimeComponent" BasedOn="{StaticResource {x:Type NumericUpDown}}">
+        <Setter Property="ShowButtonSpinner" Value="False" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="Width" Value="55" />
+
+        <Style Selector="^[IsActive=False]">
+            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Watermark}" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type my:TimeView}" TargetType="my:TimeView">
+        <Setter Property="MinWidth" Value="200" />
+        <Setter Property="MinHeight" Value="250" />
+        <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H2}" />
+        <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
+
+        <Style Selector="^">
+            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+        </Style>
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="{x:Type my:TimeView}">
+                <HeaderedContentControl Classes="Headered Custom"
+                                        my:ThemeAssist.PrimaryColor="{TemplateBinding my:ThemeAssist.PrimaryColor}"
+                                        Background="Transparent"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        my:HeaderAssist.HorizontalAlignment="Center"
+                                        my:HeaderAssist.FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                        my:HeaderAssist.FontWeight="{TemplateBinding my:HeaderAssist.FontWeight}">
+                    <HeaderedContentControl.Header>
+                        <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                            <my:NumericUpDownTimeComponent x:Name="PART_Hour"
+                                                           Grid.Column="0"
+                                                           Classes="Inverse"
+                                                           FormatString="{TemplateBinding NumberFormat}"
+                                                           Value="{TemplateBinding Hour, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                                                           FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                                           Minimum="{TemplateBinding TimeFormat, Converter={x:Static c:AmPmRangeConverter.Minimum}}"
+                                                           Maximum="{TemplateBinding TimeFormat, Converter={x:Static c:AmPmRangeConverter.Maximum}}"
+                                                           Increment="1"
+                                                           IsActive="True" />
+                            <ContentControl Content=":"
+                                            Grid.Column="1"
+                                            Margin="{my:Thickness Default, Horizontal}" />
+                            <my:NumericUpDownTimeComponent x:Name="PART_Minute"
+                                                           Grid.Column="2"
+                                                           Classes="Inverse"
+                                                           FormatString="{TemplateBinding NumberFormat}"
+                                                           FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                                           Minimum="0"
+                                                           Maximum="59"
+                                                           Value="{TemplateBinding Minute, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                                                           Increment="1" />
+                            <ContentControl Grid.Column="3"
+                                            Content=":"
+                                            Margin="{my:Thickness Default, Horizontal}"
+                                            IsVisible="{TemplateBinding ShowSeconds}" />
+                            <my:NumericUpDownTimeComponent x:Name="PART_Second"
+                                                           Grid.Column="4"
+                                                           Classes="Inverse"
+                                                           FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                                           FormatString="{TemplateBinding NumberFormat}"
+                                                           Minimum="0"
+                                                           Maximum="59"
+                                                           Increment="1"
+                                                           Value="{TemplateBinding Second, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                                                           IsEnabled="{TemplateBinding ShowSeconds}"
+                                                           IsVisible="{TemplateBinding ShowSeconds}"/>
+                            <Separator Grid.Column="5" Margin="{my:Thickness Default, Horizontal}" IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static u:TimeFormat.TwelveHour}}" />
+                            <ListBox Grid.Column="6"
+                                     FontSize="{TemplateBinding FontSize}"
+                                     Theme="{StaticResource MyNet.Theme.ListBox.Cards}"
+                                     Classes="Vertical Inverse Light Transparent Small"
+                                     SelectedValue="{TemplateBinding IsAm, Mode=TwoWay}"
+                                     SelectedValueBinding="{ReflectionBinding DataContext}"
+                                     IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static u:TimeFormat.TwelveHour}}">
+                                <ListBoxItem DataContext="{x:True}" Content="{my:Resource Am, Casing=AllCaps}" />
+                                <ListBoxItem DataContext="{x:False}" Content="{my:Resource Pm, Casing=AllCaps}" />
+                            </ListBox>
+                        </Grid>
+                    </HeaderedContentControl.Header>
+                    <my:ClockSelector x:Name="PART_ClockSelector"
+                                      Classes="Solid Shadow"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      Height="{Binding $self.Bounds.Width}"
+                                      MinWidth="220"
+                                      Hour="{TemplateBinding Hour, Mode=TwoWay}"
+                                      Minute="{TemplateBinding Minute, Mode=TwoWay}"
+                                      Second="{TemplateBinding Second, Mode=TwoWay}"
+                                      my:ThemeAssist.PrimaryColor="{TemplateBinding my:ThemeAssist.PrimaryColor}"
+                                      TimeFormat="{TemplateBinding TimeFormat}"
+                                      ShowSeconds="{TemplateBinding ShowSeconds}"
+                                      SelectedComponent="{TemplateBinding SelectedComponent, Mode=TwoWay}"
+                                      IsAm="{TemplateBinding IsAm}" />
+                </HeaderedContentControl>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

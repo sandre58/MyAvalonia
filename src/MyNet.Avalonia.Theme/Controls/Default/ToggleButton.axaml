@@ -3,6 +3,7 @@
                     xmlns:my="http://mynet.com/avalonia"
                     x:CompileBindings="True">
     <ControlTheme x:Key="{x:Type ToggleButton}" TargetType="ToggleButton" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Cursor" Value="Arrow" />
 
         <Style Selector="^">
             <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
@@ -36,6 +37,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ToggleButton.Rounded" TargetType="ToggleButton" BasedOn="{StaticResource MyNet.Theme.Button.Rounded}">
+        <Setter Property="Cursor" Value="Arrow" />
 
         <Style Selector="^">
             <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
@@ -68,6 +70,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ToggleButton.Icon" TargetType="ToggleButton" BasedOn="{StaticResource MyNet.Theme.Button.Icon}">
+        <Setter Property="Cursor" Value="Arrow" />
 
         <Style Selector="^">
             <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
@@ -93,6 +96,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ToggleButton.CheckBox" TargetType="ToggleButton">
+        <Setter Property="Cursor" Value="Arrow" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -227,8 +231,8 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="BorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
         </Style>
 
         <!-- Sizes -->
@@ -244,6 +248,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ToggleButton.Embedded.Tool" TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />

@@ -27,7 +27,39 @@ public sealed class Clock : TemplatedControl, IDisposable
     public const string PartClockTicks = "PART_ClockTicks";
 
     private readonly System.Timers.Timer _timer = new(1.Seconds());
+    private readonly Animation _secondsAnimation = new()
+    {
+        FillMode = FillMode.Forward,
+        Duration = TimeSpan.FromSeconds(1),
+        Children =
+        {
+            new KeyFrame
+            {
+                Cue = new Cue(0.0),
+                Setters = { new Setter { Property = SecondAngleProperty } }
+            },
+            new KeyFrame
+            {
+                Cue = new Cue(1.0),
+                Setters = { new Setter { Property = SecondAngleProperty } }
+            }
+        }
+    };
+
     private CancellationTokenSource _cts = new();
+
+    static Clock()
+    {
+        _ = TimeProperty.Changed.AddClassHandler<Clock, TimeSpan>((clock, args) => clock.OnTimeChanged(args));
+        _ = IsSmoothProperty.Changed.AddClassHandler<Clock, bool>((clock, args) => clock.OnIsSmoothChanged(args));
+        _ = LiveUpdateProperty.Changed.AddClassHandler<Clock, bool>((clock, args) => clock.OnLiveUpdateChanged(args));
+    }
+
+    public Clock()
+    {
+        Time = DateTime.Now.TimeOfDay;
+        _timer.Elapsed += TimerOnElapsed;
+    }
 
     #region LiveUpdate
 
@@ -43,6 +75,19 @@ public sealed class Clock : TemplatedControl, IDisposable
     {
         get => GetValue(LiveUpdateProperty);
         set => SetValue(LiveUpdateProperty, value);
+    }
+
+    private void OnLiveUpdateChanged(AvaloniaPropertyChangedEventArgs<bool> args)
+    {
+        if (args.NewValue.Value)
+        {
+            Time = DateTime.Now.TimeOfDay;
+            _timer.Start();
+        }
+        else
+        {
+            _timer.Stop();
+        }
     }
 
     #endregion
@@ -173,159 +218,23 @@ public sealed class Clock : TemplatedControl, IDisposable
 
     #endregion
 
-    public static readonly StyledProperty<DateTime> TimeProperty = AvaloniaProperty.Register<Clock, DateTime>(
-        nameof(Time), defaultBindingMode: BindingMode.TwoWay);
+    #region Time
 
-    public static readonly StyledProperty<bool> ShowHourTicksProperty =
-        ClockTicks.ShowHourTicksProperty.AddOwner<Clock>();
+    public static readonly StyledProperty<TimeSpan> TimeProperty = AvaloniaProperty.Register<Clock, TimeSpan>(nameof(Time), defaultBindingMode: BindingMode.TwoWay);
 
-    public static readonly StyledProperty<bool> ShowMinuteTicksProperty =
-        ClockTicks.ShowMinuteTicksProperty.AddOwner<Clock>();
-
-    public static readonly StyledProperty<bool> ShowHourHandProperty = AvaloniaProperty.Register<Clock, bool>(
-        nameof(ShowHourHand), true);
-
-    public static readonly StyledProperty<bool> ShowMinuteHandProperty = AvaloniaProperty.Register<Clock, bool>(
-        nameof(ShowMinuteHand), true);
-
-    public static readonly StyledProperty<bool> ShowSecondHandProperty = AvaloniaProperty.Register<Clock, bool>(
-        nameof(ShowSecondHand), true);
-
-    public static readonly StyledProperty<bool> IsSmoothProperty = AvaloniaProperty.Register<Clock, bool>(
-        nameof(IsSmooth));
-
-    public static readonly DirectProperty<Clock, double> HourAngleProperty =
-        AvaloniaProperty.RegisterDirect<Clock, double>(
-            nameof(HourAngle), o => o.HourAngle);
-
-    public static readonly DirectProperty<Clock, double> MinuteAngleProperty =
-        AvaloniaProperty.RegisterDirect<Clock, double>(
-            nameof(MinuteAngle), o => o.MinuteAngle);
-
-    public static readonly DirectProperty<Clock, double> SecondAngleProperty =
-        AvaloniaProperty.RegisterDirect<Clock, double>(
-            nameof(SecondAngle), o => o.SecondAngle, (o, v) => o.SecondAngle = v);
-
-    static Clock()
-    {
-        _ = TimeProperty.Changed.AddClassHandler<Clock, DateTime>((clock, args) => clock.OnTimeChanged(args));
-        _ = IsSmoothProperty.Changed.AddClassHandler<Clock, bool>((clock, args) => clock.OnIsSmoothChanged(args));
-        _ = LiveUpdateProperty.Changed.AddClassHandler<Clock, bool>((clock, args) => clock.OnLiveUpdateChanged(args));
-    }
-
-    public Clock()
-    {
-        Time = DateTime.Now;
-        _timer.Elapsed += TimerOnElapsed;
-    }
-
-    public DateTime Time
+    public TimeSpan Time
     {
         get => GetValue(TimeProperty);
         set => SetValue(TimeProperty, value);
     }
 
-    public bool ShowHourTicks
+    private void OnTimeChanged(AvaloniaPropertyChangedEventArgs<TimeSpan> args)
     {
-        get => GetValue(ShowHourTicksProperty);
-        set => SetValue(ShowHourTicksProperty, value);
-    }
-
-    public bool ShowMinuteTicks
-    {
-        get => GetValue(ShowMinuteTicksProperty);
-        set => SetValue(ShowMinuteTicksProperty, value);
-    }
-
-    public bool ShowHourHand
-    {
-        get => GetValue(ShowHourHandProperty);
-        set => SetValue(ShowHourHandProperty, value);
-    }
-
-    public bool ShowMinuteHand
-    {
-        get => GetValue(ShowMinuteHandProperty);
-        set => SetValue(ShowMinuteHandProperty, value);
-    }
-
-    public bool ShowSecondHand
-    {
-        get => GetValue(ShowSecondHandProperty);
-        set => SetValue(ShowSecondHandProperty, value);
-    }
-
-    public bool IsSmooth
-    {
-        get => GetValue(IsSmoothProperty);
-        set => SetValue(IsSmoothProperty, value);
-    }
-
-    public double HourAngle
-    {
-        get;
-        private set => SetAndRaise(HourAngleProperty, ref field, value);
-    }
-
-    public double MinuteAngle
-    {
-        get;
-        private set => SetAndRaise(MinuteAngleProperty, ref field, value);
-    }
-
-    public double SecondAngle
-    {
-        get;
-        private set => SetAndRaise(SecondAngleProperty, ref field, value);
-    }
-
-    private readonly Animation _secondsAnimation = new()
-    {
-        FillMode = FillMode.Forward,
-        Duration = TimeSpan.FromSeconds(1),
-        Children =
-        {
-            new KeyFrame
-            {
-                Cue = new Cue(0.0),
-                Setters = { new Setter { Property = SecondAngleProperty } }
-            },
-            new KeyFrame
-            {
-                Cue = new Cue(1.0),
-                Setters = { new Setter { Property = SecondAngleProperty } }
-            }
-        }
-    };
-
-    private void OnIsSmoothChanged(AvaloniaPropertyChangedEventArgs<bool> args)
-    {
-        if (args.NewValue.Value && !_cts.IsCancellationRequested)
-            _cts.Cancel();
-    }
-
-    private void OnLiveUpdateChanged(AvaloniaPropertyChangedEventArgs<bool> args)
-    {
-        if (args.NewValue.Value)
-        {
-            Time = DateTime.Now;
-            _timer.Start();
-        }
-        else
-        {
-            _timer.Stop();
-        }
-    }
-
-    private void TimerOnElapsed(object? sender, ElapsedEventArgs e) => Dispatcher.UIThread.Invoke(() => IsEnabled.IfTrue(() => Time = DateTime.Now));
-
-    private void OnTimeChanged(AvaloniaPropertyChangedEventArgs<DateTime> args)
-    {
-        var oldSeconds = args.OldValue.Value.Second;
+        var oldSeconds = args.OldValue.Value.Seconds;
         var time = args.NewValue.Value;
-        var hour = time.Hour;
-        var minute = time.Minute;
-        var second = time.Second;
+        var hour = time.Hours;
+        var minute = time.Minutes;
+        var second = time.Seconds;
         var hourAngle = (360.0 / 12 * hour) + (360.0 / 12 / 60 * minute);
         var minuteAngle = (360.0 / 60 * minute) + (360.0 / 60 / 60 * second);
         if (second == 0) second = 60;
@@ -349,6 +258,124 @@ public sealed class Clock : TemplatedControl, IDisposable
             _ = _secondsAnimation.RunAsync(this, _cts.Token);
         }
     }
+
+    #endregion
+
+    #region ShowHourTicks
+
+    public static readonly StyledProperty<bool> ShowHourTicksProperty = ClockTicks.ShowHourTicksProperty.AddOwner<Clock>();
+
+    public bool ShowHourTicks
+    {
+        get => GetValue(ShowHourTicksProperty);
+        set => SetValue(ShowHourTicksProperty, value);
+    }
+
+    #endregion
+
+    #region ShowMinuteTicks
+
+    public static readonly StyledProperty<bool> ShowMinuteTicksProperty = ClockTicks.ShowMinuteTicksProperty.AddOwner<Clock>();
+
+    public bool ShowMinuteTicks
+    {
+        get => GetValue(ShowMinuteTicksProperty);
+        set => SetValue(ShowMinuteTicksProperty, value);
+    }
+
+    #endregion
+
+    #region ShowHourHand
+
+    public static readonly StyledProperty<bool> ShowHourHandProperty = AvaloniaProperty.Register<Clock, bool>(nameof(ShowHourHand), true);
+
+    public bool ShowHourHand
+    {
+        get => GetValue(ShowHourHandProperty);
+        set => SetValue(ShowHourHandProperty, value);
+    }
+
+    #endregion
+
+    #region ShowMinuteHand
+
+    public static readonly StyledProperty<bool> ShowMinuteHandProperty = AvaloniaProperty.Register<Clock, bool>(nameof(ShowMinuteHand), true);
+
+    public bool ShowMinuteHand
+    {
+        get => GetValue(ShowMinuteHandProperty);
+        set => SetValue(ShowMinuteHandProperty, value);
+    }
+
+    #endregion
+
+    #region ShowSecondHand
+
+    public static readonly StyledProperty<bool> ShowSecondHandProperty = AvaloniaProperty.Register<Clock, bool>(nameof(ShowSecondHand), true);
+
+    public bool ShowSecondHand
+    {
+        get => GetValue(ShowSecondHandProperty);
+        set => SetValue(ShowSecondHandProperty, value);
+    }
+
+    #endregion
+
+    #region IsSmooth
+
+    public static readonly StyledProperty<bool> IsSmoothProperty = AvaloniaProperty.Register<Clock, bool>(nameof(IsSmooth));
+
+    public bool IsSmooth
+    {
+        get => GetValue(IsSmoothProperty);
+        set => SetValue(IsSmoothProperty, value);
+    }
+
+    private void OnIsSmoothChanged(AvaloniaPropertyChangedEventArgs<bool> args)
+    {
+        if (args.NewValue.Value && !_cts.IsCancellationRequested)
+            _cts.Cancel();
+    }
+
+    #endregion
+
+    #region HourAngle
+
+    public static readonly DirectProperty<Clock, double> HourAngleProperty = AvaloniaProperty.RegisterDirect<Clock, double>(nameof(HourAngle), o => o.HourAngle);
+
+    public double HourAngle
+    {
+        get;
+        private set => SetAndRaise(HourAngleProperty, ref field, value);
+    }
+
+    #endregion
+
+    #region MinuteAngle
+
+    public static readonly DirectProperty<Clock, double> MinuteAngleProperty = AvaloniaProperty.RegisterDirect<Clock, double>(nameof(MinuteAngle), o => o.MinuteAngle);
+
+    public double MinuteAngle
+    {
+        get;
+        private set => SetAndRaise(MinuteAngleProperty, ref field, value);
+    }
+
+    #endregion
+
+    #region SecondAngle
+
+    public static readonly DirectProperty<Clock, double> SecondAngleProperty = AvaloniaProperty.RegisterDirect<Clock, double>(nameof(SecondAngle), o => o.SecondAngle, (o, v) => o.SecondAngle = v);
+
+    public double SecondAngle
+    {
+        get;
+        private set => SetAndRaise(SecondAngleProperty, ref field, value);
+    }
+
+    #endregion
+
+    private void TimerOnElapsed(object? sender, ElapsedEventArgs e) => Dispatcher.UIThread.Invoke(() => IsEnabled.IfTrue(() => Time = DateTime.Now.TimeOfDay));
 
     protected override Size MeasureOverride(Size availableSize)
     {

@@ -14,6 +14,7 @@
         <Setter Property="CornerRadius" Value="{Binding $parent[DatePicker].(my:ItemsAssist.CornerRadius)}" />
         <Setter Property="Background" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
         <Setter Property="BorderThickness" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderThickness)}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBackground)}" />
         <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBorderBrush)}" />
@@ -29,6 +30,7 @@
 
         <Style Selector="^:selected">
             <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="CornerRadius" Value="0" />
         </Style>
 
         <Style Selector="^ /template/ Border#PART_ActiveBorder">
@@ -37,9 +39,10 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type DatePickerPresenter}" TargetType="DatePickerPresenter">
-        <Setter Property="Width" Value="296" />
-        <Setter Property="MinWidth" Value="296" />
+        <Setter Property="Width" Value="{Binding $parent[DatePicker].Bounds.Width}" />
+        <Setter Property="MinWidth" Value="{Binding $parent[DatePicker].Bounds.Width}" />
         <Setter Property="MaxHeight" Value="300" />
+        <Setter Property="Padding" Value="{my:Thickness Default}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="DatePickerPresenter">
                 <Border Name="Background"
@@ -50,11 +53,11 @@
                         BoxShadow="{DynamicResource DateTimePickerFlyoutBoxShadow}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid Name="ContentPanel" RowDefinitions="*,Auto">
+                        <Grid Name="ContentPanel" RowDefinitions="*,Auto" Margin="{TemplateBinding Padding}">
                             <Grid Name="PART_PickerContainer">
                                 <Grid.Styles>
                                     <Style Selector="DateTimePickerPanel">
-                                        <Setter Property="ItemHeight" Value="36" />
+                                        <Setter Property="ItemHeight" Value="{Binding $parent[DatePicker].Bounds.Height}" />
 
                                         <Style Selector="^ > ListBoxItem">
                                             <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ListBoxItem.Embedded.DatePicker}" />
@@ -70,64 +73,56 @@
                                 </Grid.Styles>
 
                                 <!-- Column Definitions set in code, ignore here -->
-                                <Panel Name="PART_MonthHost">
-                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-                                        <DateTimePickerPanel Name="PART_MonthSelector" PanelType="Month" ShouldLoop="True" />
-                                    </ScrollViewer>
-                                    <RepeatButton Name="PART_MonthUpButton" VerticalAlignment="Top" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Up}" />
-                                    <RepeatButton Name="PART_MonthDownButton" VerticalAlignment="Bottom" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Down}" />
-                                </Panel>
-                                <Panel Name="PART_DayHost">
+                                <Panel Name="PART_DayHost" Margin="{my:Thickness Default, Horizontal}">
                                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel Name="PART_DaySelector" PanelType="Day" ShouldLoop="True" />
                                     </ScrollViewer>
-                                    <RepeatButton Name="PART_DayUpButton" VerticalAlignment="Top" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Up}" />
-                                    <RepeatButton Name="PART_DayDownButton" VerticalAlignment="Bottom" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Down}" />
+                                    <RepeatButton Name="PART_DayUpButton" HorizontalAlignment="Center" VerticalAlignment="Top" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronUp}" Classes="ExtraSmall" />
+                                    <RepeatButton Name="PART_DayDownButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronDown}" Classes="ExtraSmall" />
                                 </Panel>
-                                <Panel Name="PART_YearHost">
+                                <Panel Name="PART_MonthHost" Margin="{my:Thickness Default, Horizontal}">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
+                                        <DateTimePickerPanel Name="PART_MonthSelector" PanelType="Month" ShouldLoop="True" />
+                                    </ScrollViewer>
+                                    <RepeatButton Name="PART_MonthUpButton" HorizontalAlignment="Center" VerticalAlignment="Top" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronUp}" Classes="ExtraSmall" />
+                                    <RepeatButton Name="PART_MonthDownButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronDown}" Classes="ExtraSmall" />
+                                </Panel>
+                                <Panel Name="PART_YearHost" Margin="{my:Thickness Default, Horizontal}">
                                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel Name="PART_YearSelector" PanelType="Year" ShouldLoop="False" />
                                     </ScrollViewer>
-                                    <RepeatButton Name="PART_YearUpButton" VerticalAlignment="Top" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Up}" />
-                                    <RepeatButton Name="PART_YearDownButton" VerticalAlignment="Bottom" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Down}" />
+                                    <RepeatButton Name="PART_YearUpButton" HorizontalAlignment="Center" VerticalAlignment="Top" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronUp}" Classes="ExtraSmall" />
+                                    <RepeatButton Name="PART_YearDownButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronDown}" Classes="ExtraSmall" />
                                 </Panel>
-                                <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                 <Rectangle Name="PART_FirstSpacer"
-                                           Grid.Column="1"
-                                           Width="1"
+                                           Width="0"
                                            HorizontalAlignment="Center"
                                            Fill="{DynamicResource MyNet.Brush.Container.Border}" />
-                                <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                 <Rectangle Name="PART_SecondSpacer"
-                                           Grid.Column="3"
-                                           Width="1"
+                                           Width="0"
                                            HorizontalAlignment="Center"
                                            Fill="{DynamicResource MyNet.Brush.Container.Border}" />
                             </Grid>
 
-                            <Grid Name="AcceptDismissGrid" Grid.Row="1" ColumnDefinitions="*,Auto,*">
+                            <Grid Name="AcceptDismissGrid" Grid.Row="1" ColumnDefinitions="*,Auto,*" Margin="0 3 0 0">
                                 <Button Name="PART_AcceptButton"
                                         Grid.Column="0"
                                         HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"
-                                        my:ThemeAssist.PrimaryColor="{DynamicResource MyNet.Brush.Positive}"
-                                        Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Validation}">
-                                    <PathIcon Classes="Small" Data="{StaticResource MyNet.Geometry.Check}" />
-                                </Button>
-                                <Rectangle Grid.Column="1" Width="1" Fill="{DynamicResource MyNet.Brush.Container.Border}" />
+                                        Margin="{my:Thickness Default}"
+                                        IsDefault="True"
+                                        Focusable="False"
+                                        Classes="Text Primary Small"
+                                        ToolTip.Tip="{my:Resource Validate}"
+                                        Content="{my:Icon Check}" />
                                 <Button Name="PART_DismissButton"
                                         Grid.Column="2"
+                                        IsCancel="True"
+                                        Focusable="False"
                                         HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"
-                                        my:ThemeAssist.PrimaryColor="{DynamicResource MyNet.Brush.Negative}"
-                                        Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Validation}">
-                                    <PathIcon Classes="Small" Data="{StaticResource MyNet.Geometry.Close}" />
-                                </Button>
-                                <Rectangle Grid.Column="0"
-                                           Grid.ColumnSpan="3"
-                                           Height="1"
-                                           VerticalAlignment="Top"
-                                           Fill="{DynamicResource MyNet.Brush.Container.Border}" />
+                                        Margin="{my:Thickness Default}"
+                                        Classes="Text Small"
+                                        ToolTip.Tip="{my:Resource Cancel}"
+                                        Content="{my:Icon Close}" />
                             </Grid>
                         </Grid>
                     </Border>
@@ -163,13 +158,15 @@
         <Setter Property="my:TextFieldAssist.Watermark" Value="{x:Static sys:String.Empty}" />
         <Setter Property="my:TextFieldAssist.FloatingScale" Value="0.75" />
         <Setter Property="my:TextFieldAssist.FloatingOffset" Value="12" />
+        <Setter Property="my:TextFieldAssist.UpdateValueOnKeyboard" Value="True" />
+        <Setter Property="my:TextFieldAssist.UpdateValueOnMouseWheel" Value="True" />
         <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
         <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Center" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.Margin" Value="0" />
-        <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem}" />
-        <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
+        <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Small}" />
+        <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="my:ProxyAssist.Enable" Value="True" />
         <Setter Property="Focusable" Value="True" />
@@ -179,6 +176,9 @@
         <Setter Property="my:DateTimePickerAssist.WatermarkMonth" Value="{my:Resource Month}" />
         <Setter Property="my:DateTimePickerAssist.WatermarkYear" Value="{my:Resource Year}" />
         <Setter Property="my:DateTimePickerAssist.OverrideWatermark" Value="True" />
+        <Setter Property="my:GlobalizationAssist.UpdateOnCultureChanged" Value="True" />
+        <Setter Property="my:PopupAssist.EnableShortcutKeys" Value="True"/>
+        <Setter Property="my:PopupAssist.AutoFocusOnOpening" Value="True"/>
 
         <Style Selector="^">
             <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
@@ -195,18 +195,19 @@
             <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
             <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
             <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
-            <Setter Property="my:FlyoutAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
-            <Setter Property="my:FlyoutAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PopupAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
+            <Setter Property="my:PopupAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:FlyoutAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0.5" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:PopupAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:FlyoutAssist.Foreground)}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:FlyoutAssist.PrimaryColor)}" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.(my:ItemsAssist.ActiveBackground), Contrast=True}" />
-            <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.(my:FlyoutAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:PopupAssist.PrimaryColor)}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
         </Style>
 
         <Setter Property="Template">
@@ -281,8 +282,7 @@
 
                                             <Grid Name="PART_ButtonContentGrid" VerticalAlignment="Center" ColumnDefinitions="78*,Auto,132*,Auto,78*">
                                                 <TextBlock Name="PART_DayTextBlock"
-                                                           Padding="{my:Thickness Default,
-                                                                                  Horizontal}"
+                                                           Padding="{my:Thickness Default, Horizontal}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
                                                            FontFamily="{TemplateBinding FontFamily}"
@@ -291,8 +291,7 @@
                                                            Text="{TemplateBinding my:DateTimePickerAssist.WatermarkDay}" />
                                                 <TextBlock Name="PART_MonthTextBlock"
                                                            Grid.Column="0"
-                                                           Padding="{my:Thickness Default,
-                                                                                  Horizontal}"
+                                                           Padding="{my:Thickness Default, Horizontal}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
                                                            FontFamily="{TemplateBinding FontFamily}"
@@ -302,8 +301,7 @@
                                                            TextAlignment="Left" />
                                                 <TextBlock Name="PART_YearTextBlock"
                                                            Grid.Column="0"
-                                                           Padding="{my:Thickness Default,
-                                                                                  Horizontal}"
+                                                           Padding="{my:Thickness Default, Horizontal}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
                                                            FontFamily="{TemplateBinding FontFamily}"
@@ -353,14 +351,15 @@
                         </Border>
 
                         <Popup Name="PART_Popup"
+                               HorizontalOffset="3"
                                InheritsTransform="True"
                                IsLightDismissEnabled="True"
                                Placement="Bottom"
                                PlacementTarget="{TemplateBinding}"
                                WindowManagerAddShadowHint="False">
-                            <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:FlyoutAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
+                            <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                 <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
-                                    <DatePickerPresenter Name="PART_PickerPresenter" Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}" />
+                                    <DatePickerPresenter Name="PART_PickerPresenter" Foreground="{TemplateBinding (my:PopupAssist.Foreground)}" />
                                 </Border>
                             </Border>
                         </Popup>
@@ -452,10 +451,10 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
         </Style>
 
         <!-- Styles -->
@@ -564,8 +563,7 @@
 
                                         <Grid Name="PART_ButtonContentGrid" VerticalAlignment="Center" ColumnDefinitions="78*,Auto,132*,Auto,78*">
                                             <TextBlock Name="PART_DayTextBlock"
-                                                       Padding="{my:Thickness Default,
-                                                                              Horizontal}"
+                                                       Padding="{my:Thickness Default, Horizontal}"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
                                                        FontFamily="{TemplateBinding FontFamily}"
@@ -574,8 +572,7 @@
                                                        Text="{TemplateBinding my:DateTimePickerAssist.WatermarkDay}" />
                                             <TextBlock Name="PART_MonthTextBlock"
                                                        Grid.Column="0"
-                                                       Padding="{my:Thickness Default,
-                                                                              Horizontal}"
+                                                       Padding="{my:Thickness Default, Horizontal}"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
                                                        FontFamily="{TemplateBinding FontFamily}"
@@ -585,8 +582,7 @@
                                                        TextAlignment="Left" />
                                             <TextBlock Name="PART_YearTextBlock"
                                                        Grid.Column="0"
-                                                       Padding="{my:Thickness Default,
-                                                                              Horizontal}"
+                                                       Padding="{my:Thickness Default, Horizontal}"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
                                                        FontFamily="{TemplateBinding FontFamily}"
@@ -613,8 +609,7 @@
                                 <!-- Clear button -->
                                 <Button Name="PART_ClearButton"
                                         Grid.Column="2"
-                                        Margin="{my:Thickness Small,
-                                                              Left}"
+                                        Margin="{my:Thickness Small, Left}"
                                         Classes="no-disablable"
                                         Command="{Binding $parent[DatePicker].Clear}"
                                         Content="{StaticResource MyNet.Geometry.Close}"
@@ -651,6 +646,7 @@
                         </Border>
 
                         <Popup Name="PART_Popup"
+                               HorizontalOffset="3"
                                InheritsTransform="True"
                                IsLightDismissEnabled="True"
                                Placement="Bottom"

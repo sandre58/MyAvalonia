@@ -4,6 +4,7 @@
                     x:CompileBindings="True">
 
     <ControlTheme x:Key="{x:Type TabItem}" TargetType="TabItem">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="HorizontalContentAlignment" Value="{Binding $parent[TabControl].(my:ItemsAssist.HorizontalContentAlignment)}" />
         <Setter Property="VerticalContentAlignment" Value="{Binding $parent[TabControl].(my:ItemsAssist.VerticalContentAlignment)}" />
         <Setter Property="Margin" Value="{Binding $parent[TabControl].(my:ItemsAssist.Margin)}" />
@@ -174,7 +175,7 @@
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverBackground" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $parent[TemplatedControl].Foreground}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.Foreground}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
             <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />

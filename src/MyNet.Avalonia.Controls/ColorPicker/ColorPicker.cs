@@ -4,19 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Reactive.Disposables;
+using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.Media;
-using MyNet.Avalonia.Controls.Resources;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Extensions;
-using MyNet.Utilities;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -25,81 +20,14 @@ namespace MyNet.Avalonia.Controls;
 /// <summary>
 /// A color selection control that allows the user to select dates from a drop down color view.
 /// </summary>
-[TemplatePart(ElementButton, typeof(Button))]
-[TemplatePart(ElementColorView, typeof(ColorView))]
-[TemplatePart(ElementPopup, typeof(Popup))]
-[TemplatePart(ElementTextBox, typeof(TextBox))]
+[TemplatePart(PartButton, typeof(Button))]
+[TemplatePart(PartPreviewer, typeof(ColorView))]
+[TemplatePart(PartPopup, typeof(Popup))]
+[TemplatePart(PartTextBox, typeof(TextBox))]
 [PseudoClasses(PseudoClassName.FlyoutOpen, PseudoClassName.Pressed)]
-public class ColorPicker : ColorView, IDisposable
+public class ColorPicker : TextPicker<Color?, ColorView>
 {
-    private const string ElementTextBox = "PART_TextBox";
-    private const string ElementButton = "PART_Button";
-    private const string ElementPopup = "PART_Popup";
-    private const string ElementColorView = "PART_ColorView";
-
-    private ColorView? _colorView;
-    private Button? _dropDownButton;
-    private Popup? _popUp;
-    private TextBox? _textBox;
-    private CompositeDisposable? _buttonPointerPressedSubscription;
-
-    private bool _colorIsUpdating;
-    private Color? _onOpenColor;
-    private bool _isPopupClosing;
-    private bool _ignoreButtonClick;
-    private bool _isFlyoutOpen;
-    private bool _isPressed;
-
-    /// <summary>
-    /// Event for when the selected color changes within the slider.
-    /// </summary>
-    public event EventHandler<ColorTextChangedEventArgs>? TextChanged;
-
-    /// <summary>
-    /// Occurs when the drop-down
-    /// </summary>
-    public event EventHandler? ColorViewClosed;
-
-    /// <summary>
-    /// Occurs when the drop-down
-    /// </summary>
-    public event EventHandler? ColorViewOpened;
-
-    #region IsDropDownOpen
-
-    /// <summary>
-    /// Provides IsDropDownOpen Property.
-    /// </summary>
-    public static readonly StyledProperty<bool> IsDropDownOpenProperty = AvaloniaProperty.Register<ColorPicker, bool>(nameof(IsDropDownOpen));
-
-    /// <summary>
-    /// Gets or sets a value indicating whether gets or sets the IsDropDownOpen property.
-    /// </summary>
-    public bool IsDropDownOpen
-    {
-        get => GetValue(IsDropDownOpenProperty);
-        set => SetValue(IsDropDownOpenProperty, value);
-    }
-
-    #endregion
-
-    #region Text
-
-    /// <summary>
-    /// Provides Text Property.
-    /// </summary>
-    public static readonly StyledProperty<string?> TextProperty = AvaloniaProperty.Register<ColorPicker, string?>(nameof(Text));
-
-    /// <summary>
-    /// Gets or sets the Text property.
-    /// </summary>
-    public string? Text
-    {
-        get => GetValue(TextProperty);
-        set => SetValue(TextProperty, value);
-    }
-
-    #endregion
+    static ColorPicker() => CloseOnCommitProperty.OverrideDefaultValue<ColorPicker>(false);
 
     #region TextMode
 
@@ -121,8 +49,6 @@ public class ColorPicker : ColorView, IDisposable
 
     #region Hexa
 
-    private bool _disposedValue;
-
     /// <summary>
     /// Hexa DirectProperty definition.
     /// </summary>
@@ -139,462 +65,486 @@ public class ColorPicker : ColorView, IDisposable
 
     #endregion
 
-    #region Watermark
+    #region ColorView
 
     /// <summary>
-    /// Defines the <see cref="Watermark"/> property.
+    /// Defines the <see cref="ColorModel"/> property.
     /// </summary>
-    public static readonly StyledProperty<string?> WatermarkProperty = TextBox.WatermarkProperty.AddOwner<ColorPicker>();
+    public static readonly StyledProperty<ColorModel> ColorModelProperty = ColorView.ColorModelProperty.AddOwner<ColorView>();
 
     /// <summary>
-    /// Gets or sets the Watermark property.
+    /// Defines the <see cref="ColorSpectrumComponents"/> property.
     /// </summary>
-    public string? Watermark
+    public static readonly StyledProperty<ColorSpectrumComponents> ColorSpectrumComponentsProperty = ColorView.ColorSpectrumComponentsProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="ColorSpectrumShape"/> property.
+    /// </summary>
+    public static readonly StyledProperty<ColorSpectrumShape> ColorSpectrumShapeProperty = ColorView.ColorSpectrumShapeProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="HexInputAlphaPosition"/> property.
+    /// </summary>
+    public static readonly StyledProperty<AlphaComponentPosition> HexInputAlphaPositionProperty = ColorView.HexInputAlphaPositionProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="HsvColor"/> property.
+    /// </summary>
+    public static readonly StyledProperty<HsvColor> HsvColorProperty = ColorView.HsvColorProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsAccentColorsVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsAccentColorsVisibleProperty = ColorView.IsAccentColorsVisibleProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsAlphaEnabled"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsAlphaEnabledProperty = ColorView.IsAlphaEnabledProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsAlphaVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsAlphaVisibleProperty = ColorView.IsAlphaVisibleProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsColorComponentsVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsColorComponentsVisibleProperty = ColorView.IsColorComponentsVisibleProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsColorModelVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsColorModelVisibleProperty = ColorView.IsColorModelVisibleProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsColorPaletteVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsColorPaletteVisibleProperty = ColorView.IsColorPaletteVisibleProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsColorPreviewVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsColorPreviewVisibleProperty = ColorView.IsColorPreviewVisibleProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsColorSpectrumVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsColorSpectrumVisibleProperty = ColorView.IsColorSpectrumVisibleProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsColorSpectrumSliderVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsColorSpectrumSliderVisibleProperty = ColorView.IsColorSpectrumSliderVisibleProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsComponentSliderVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsComponentSliderVisibleProperty = ColorView.IsComponentSliderVisibleProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsComponentTextInputVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsComponentTextInputVisibleProperty = ColorView.IsComponentTextInputVisibleProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="IsHexInputVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsHexInputVisibleProperty = ColorView.IsHexInputVisibleProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="MaxHue"/> property.
+    /// </summary>
+    public static readonly StyledProperty<int> MaxHueProperty = ColorView.MaxHueProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="MaxSaturation"/> property.
+    /// </summary>
+    public static readonly StyledProperty<int> MaxSaturationProperty = ColorView.MaxSaturationProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="MaxValue"/> property.
+    /// </summary>
+    public static readonly StyledProperty<int> MaxValueProperty = ColorView.MaxValueProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="MinHue"/> property.
+    /// </summary>
+    public static readonly StyledProperty<int> MinHueProperty = ColorView.MinHueProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="MinSaturation"/> property.
+    /// </summary>
+    public static readonly StyledProperty<int> MinSaturationProperty = ColorView.MinSaturationProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="MinValue"/> property.
+    /// </summary>
+    public static readonly StyledProperty<int> MinValueProperty = ColorView.MinValueProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="PaletteColors"/> property.
+    /// </summary>
+    public static readonly StyledProperty<IEnumerable<Color>?> PaletteColorsProperty = ColorView.PaletteColorsProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="PaletteColumnCount"/> property.
+    /// </summary>
+    public static readonly StyledProperty<int> PaletteColumnCountProperty = ColorView.PaletteColumnCountProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="Palette"/> property.
+    /// </summary>
+    public static readonly StyledProperty<IColorPalette?> PaletteProperty = ColorView.PaletteProperty.AddOwner<ColorView>();
+
+    /// <summary>
+    /// Defines the <see cref="SelectedIndex"/> property.
+    /// </summary>
+    public static readonly StyledProperty<int> SelectedIndexProperty = ColorView.SelectedIndexProperty.AddOwner<ColorView>();
+
+    /// <inheritdoc cref="ColorSlider.ColorModel"/>
+    /// <remarks>
+    /// This property is only applicable to the Components tab.
+    /// The spectrum tab must always be in HSV and the palette tab contains only pre-defined colors.
+    /// </remarks>
+    public ColorModel ColorModel
     {
-        get => GetValue(WatermarkProperty);
-        set => SetValue(WatermarkProperty, value);
+        get => GetValue(ColorModelProperty);
+        set => SetValue(ColorModelProperty, value);
+    }
+
+    /// <inheritdoc cref="ColorSpectrum.Components"/>
+    public ColorSpectrumComponents ColorSpectrumComponents
+    {
+        get => GetValue(ColorSpectrumComponentsProperty);
+        set => SetValue(ColorSpectrumComponentsProperty, value);
+    }
+
+    /// <inheritdoc cref="ColorSpectrum.Shape"/>
+    public ColorSpectrumShape ColorSpectrumShape
+    {
+        get => GetValue(ColorSpectrumShapeProperty);
+        set => SetValue(ColorSpectrumShapeProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the position of the alpha component in the hexadecimal input box relative to
+    /// all other color Components.
+    /// </summary>
+    public AlphaComponentPosition HexInputAlphaPosition
+    {
+        get => GetValue(HexInputAlphaPositionProperty);
+        set => SetValue(HexInputAlphaPositionProperty, value);
+    }
+
+    /// <inheritdoc cref="ColorSpectrum.HsvColor"/>
+    public HsvColor HsvColor
+    {
+        get => GetValue(HsvColorProperty);
+        set => SetValue(HsvColorProperty, value);
+    }
+
+    /// <inheritdoc cref="ColorPreviewer.IsAccentColorsVisible"/>
+    public bool IsAccentColorsVisible
+    {
+        get => GetValue(IsAccentColorsVisibleProperty);
+        set => SetValue(IsAccentColorsVisibleProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the alpha component is enabled.
+    /// When disabled (set to false) the alpha component will be fixed to maximum and
+    /// editing controls disabled.
+    /// </summary>
+    public bool IsAlphaEnabled
+    {
+        get => GetValue(IsAlphaEnabledProperty);
+        set => SetValue(IsAlphaEnabledProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the alpha component editing controls
+    /// (Slider(s) and TextBox) are visible. When hidden, the existing alpha component
+    /// value is maintained.
+    /// </summary>
+    /// <remarks>
+    /// Note that <see cref="IsComponentTextInputVisible"/> also controls the alpha
+    /// component TextBox visibility.
+    /// </remarks>
+    public bool IsAlphaVisible
+    {
+        get => GetValue(IsAlphaVisibleProperty);
+        set => SetValue(IsAlphaVisibleProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the color Components tab/panel/page (subview) is visible.
+    /// </summary>
+    public bool IsColorComponentsVisible
+    {
+        get => GetValue(IsColorComponentsVisibleProperty);
+        set => SetValue(IsColorComponentsVisibleProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the active color model indicator/selector is visible.
+    /// </summary>
+    public bool IsColorModelVisible
+    {
+        get => GetValue(IsColorModelVisibleProperty);
+        set => SetValue(IsColorModelVisibleProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the color palette tab/panel/page (subview) is visible.
+    /// </summary>
+    public bool IsColorPaletteVisible
+    {
+        get => GetValue(IsColorPaletteVisibleProperty);
+        set => SetValue(IsColorPaletteVisibleProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the color preview is visible.
+    /// </summary>
+    /// <remarks>
+    /// Note that accent color visibility is controlled separately by
+    /// <see cref="IsAccentColorsVisible"/>.
+    /// </remarks>
+    public bool IsColorPreviewVisible
+    {
+        get => GetValue(IsColorPreviewVisibleProperty);
+        set => SetValue(IsColorPreviewVisibleProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the color spectrum tab/panel/page (subview) is visible.
+    /// </summary>
+    public bool IsColorSpectrumVisible
+    {
+        get => GetValue(IsColorSpectrumVisibleProperty);
+        set => SetValue(IsColorSpectrumVisibleProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the color spectrum's third component slider
+    /// is visible.
+    /// </summary>
+    public bool IsColorSpectrumSliderVisible
+    {
+        get => GetValue(IsColorSpectrumSliderVisibleProperty);
+        set => SetValue(IsColorSpectrumSliderVisibleProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether color component sliders are visible.
+    /// </summary>
+    /// <remarks>
+    /// All color Components are controlled by this property but alpha can also be
+    /// controlled with <see cref="IsAlphaVisible"/>.
+    /// </remarks>
+    public bool IsComponentSliderVisible
+    {
+        get => GetValue(IsComponentSliderVisibleProperty);
+        set => SetValue(IsComponentSliderVisibleProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether color component text inputs are visible.
+    /// </summary>
+    /// <remarks>
+    /// All color Components are controlled by this property but alpha can also be
+    /// controlled with <see cref="IsAlphaVisible"/>.
+    /// </remarks>
+    public bool IsComponentTextInputVisible
+    {
+        get => GetValue(IsComponentTextInputVisibleProperty);
+        set => SetValue(IsComponentTextInputVisibleProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the hexadecimal color value text input
+    /// is visible.
+    /// </summary>
+    public bool IsHexInputVisible
+    {
+        get => GetValue(IsHexInputVisibleProperty);
+        set => SetValue(IsHexInputVisibleProperty, value);
+    }
+
+    /// <inheritdoc cref="ColorSpectrum.MaxHue"/>
+    public int MaxHue
+    {
+        get => GetValue(MaxHueProperty);
+        set => SetValue(MaxHueProperty, value);
+    }
+
+    /// <inheritdoc cref="ColorSpectrum.MaxSaturation"/>
+    public int MaxSaturation
+    {
+        get => GetValue(MaxSaturationProperty);
+        set => SetValue(MaxSaturationProperty, value);
+    }
+
+    /// <inheritdoc cref="ColorSpectrum.MaxValue"/>
+    public int MaxValue
+    {
+        get => GetValue(MaxValueProperty);
+        set => SetValue(MaxValueProperty, value);
+    }
+
+    /// <inheritdoc cref="ColorSpectrum.MinHue"/>
+    public int MinHue
+    {
+        get => GetValue(MinHueProperty);
+        set => SetValue(MinHueProperty, value);
+    }
+
+    /// <inheritdoc cref="ColorSpectrum.MinSaturation"/>
+    public int MinSaturation
+    {
+        get => GetValue(MinSaturationProperty);
+        set => SetValue(MinSaturationProperty, value);
+    }
+
+    /// <inheritdoc cref="ColorSpectrum.MinValue"/>
+    public int MinValue
+    {
+        get => GetValue(MinValueProperty);
+        set => SetValue(MinValueProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the collection of individual colors in the palette.
+    /// </summary>
+    /// <remarks>
+    /// This is not commonly set manually. Instead, it should be set automatically by
+    /// providing an <see cref="IColorPalette"/> to the <see cref="Palette"/> property.
+    /// <br/><br/>
+    /// Also note that this property is what should be bound in the control template.
+    /// <see cref="Palette"/> is too high-level to use on its own.
+    /// </remarks>
+    public IEnumerable<Color>? PaletteColors
+    {
+        get => GetValue(PaletteColorsProperty);
+        set => SetValue(PaletteColorsProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the number of colors in each row (section) of the color palette.
+    /// Within a standard palette, rows are shades and columns are colors.
+    /// </summary>
+    /// <remarks>
+    /// This is not commonly set manually. Instead, it should be set automatically by
+    /// providing an <see cref="IColorPalette"/> to the <see cref="Palette"/> property.
+    /// <br/><br/>
+    /// Also note that this property is what should be bound in the control template.
+    /// <see cref="Palette"/> is too high-level to use on its own.
+    /// </remarks>
+    public int PaletteColumnCount
+    {
+        get => GetValue(PaletteColumnCountProperty);
+        set => SetValue(PaletteColumnCountProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the color palette.
+    /// </summary>
+    /// <remarks>
+    /// This will automatically set both <see cref="PaletteColors"/> and
+    /// <see cref="PaletteColumnCount"/> overwriting any existing values.
+    /// </remarks>
+    public IColorPalette? Palette
+    {
+        get => GetValue(PaletteProperty);
+        set => SetValue(PaletteProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the index of the selected tab/panel/page (subview).
+    /// </summary>
+    /// <remarks>
+    /// When using the default control theme, this property is designed to be used with the
+    /// <see cref="ColorViewTab"/> enum. The <see cref="ColorViewTab"/> enum defines the
+    /// index values of each of the three standard tabs.
+    /// Use like `SelectedIndex = (int)ColorViewTab.Palette`.
+    /// </remarks>
+    public int SelectedIndex
+    {
+        get => GetValue(SelectedIndexProperty);
+        set => SetValue(SelectedIndexProperty, value);
     }
 
     #endregion
 
-    #region UseFloatingWatermark
+    #region Selector
 
-    /// <summary>
-    /// Defines the <see cref="UseFloatingWatermark"/> property.
-    /// </summary>
-    public static readonly StyledProperty<bool> UseFloatingWatermarkProperty = TextBox.UseFloatingWatermarkProperty.AddOwner<ColorPicker>();
+    protected override void AddPreviewerHandlers() => Previewer?.OnLoading<ColorView>(x => x.ColorChanged += OnColorChanged, x => x.ColorChanged -= OnColorChanged);
 
-    /// <summary>
-    /// Gets or sets a value indicating whether gets or sets the UseFloatingWatermark property.
-    /// </summary>
-    public bool UseFloatingWatermark
-    {
-        get => GetValue(UseFloatingWatermarkProperty);
-        set => SetValue(UseFloatingWatermarkProperty, value);
-    }
+    private void OnColorChanged(object? sender, ColorChangedEventArgs e) => OnPreviewValueChanged();
 
     #endregion
 
-    /// <summary>
-    /// Updates the visual state of the control by applying latest PseudoClasses.
-    /// </summary>
-    protected void UpdatePseudoClasses()
+    protected override Color? IncrementValue(int offset)
     {
-        PseudoClasses.Set(PseudoClassName.FlyoutOpen, _isFlyoutOpen);
-        PseudoClasses.Set(PseudoClassName.Pressed, _isPressed);
+        if (!SelectedValue.HasValue) return null;
+
+        var hsv = SelectedValue.Value.ToHsv();
+        var newHue = (hsv.H + offset) % 360;
+        if (newHue < 0) newHue += 360;
+
+        var newHsv = new HsvColor(SelectedValue.Value.A, newHue, hsv.S, hsv.V);
+        return newHsv.ToRgb();
     }
 
-    /// <inheritdoc/>
-    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    protected override Color? IncrementLargeValue(int offset)
     {
-        if (_colorView != null)
-            _colorView.KeyDown -= ColorView_KeyDown;
+        if (!SelectedValue.HasValue) return null;
 
-        _colorView = e.NameScope.Find<ColorView>(ElementColorView);
-        if (_colorView != null)
-            _colorView.KeyDown += ColorView_KeyDown;
+        var hsv = SelectedValue.Value.ToHsv();
+        var newHue = (hsv.H + (offset * 10)) % 360;
+        if (newHue < 0) newHue += 360;
 
-        if (_popUp != null)
-        {
-            _popUp.Child = null;
-            _popUp.Closed -= PopUp_Closed;
-        }
-
-        _popUp = e.NameScope.Find<Popup>(ElementPopup);
-        if (_popUp != null)
-        {
-            _popUp.Closed += PopUp_Closed;
-            if (IsDropDownOpen)
-                OpenDropDown();
-        }
-
-        if (_dropDownButton != null)
-        {
-            _dropDownButton.Click -= DropDownButton_Click;
-            _buttonPointerPressedSubscription?.Dispose();
-        }
-
-        _dropDownButton = e.NameScope.Find<Button>(ElementButton);
-        if (_dropDownButton != null)
-        {
-            _dropDownButton.Click += DropDownButton_Click;
-            _buttonPointerPressedSubscription = new CompositeDisposable(
-                _dropDownButton.AddDisposableHandler(PointerPressedEvent, DropDownButton_PointerPressed, handledEventsToo: true),
-                _dropDownButton.AddDisposableHandler(PointerReleasedEvent, DropDownButton_PointerReleased, handledEventsToo: true));
-        }
-
-        if (_textBox != null)
-        {
-            _textBox.KeyDown -= TextBox_KeyDown;
-            _textBox.GotFocus -= TextBox_GotFocus;
-        }
-
-        _textBox = e.NameScope.Find<TextBox>(ElementTextBox);
-
-        UpdatePseudoClasses();
-
-        base.OnApplyTemplate(e);
+        var newHsv = new HsvColor(SelectedValue.Value.A, newHue, hsv.S, hsv.V);
+        return newHsv.ToRgb();
     }
 
-    /// <inheritdoc/>
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    protected override string? ConvertValueToString(Color? value)
     {
-        // IsDropDownOpen
-        if (change.Property == IsDropDownOpenProperty)
+        if (!value.HasValue)
         {
-            var (oldValue, newValue) = change.GetOldAndNewValue<bool>();
-
-            if (_popUp is { Child: not null } && newValue != oldValue)
-            {
-                if (newValue)
-                {
-                    OpenDropDown();
-                }
-                else
-                {
-                    _popUp.IsOpen = false;
-                    _isFlyoutOpen = _popUp.IsOpen;
-                    _isPressed = false;
-
-                    UpdatePseudoClasses();
-                    OnColorViewClosed(new RoutedEventArgs());
-                }
-            }
-        }
-
-        // Color
-        else if (change.Property == ColorProperty && !_colorIsUpdating)
-        {
-            _colorIsUpdating = true;
-
-            var (_, newValue) = change.GetOldAndNewValue<Color>();
-            try
-            {
-                UpdateColorName(newValue);
-                Hexa = newValue.ToHex();
-            }
-            finally
-            {
-                _colorIsUpdating = false;
-            }
-        }
-
-        // Text
-        else if (change.Property == TextProperty && !_colorIsUpdating)
-        {
-            var (_, newValue) = change.GetOldAndNewValue<string?>();
-
-            if (string.IsNullOrEmpty(newValue))
-            {
-                SetCurrentValue(ColorProperty, default);
-            }
-            else if (newValue.ToColor() is { } color)
-            {
-                if (Color != color)
-                {
-                    SetCurrentValue(ColorProperty, color);
-                }
-
-                // if the color stayed the same we still have to update the displayed name
-                else
-                {
-                    _colorIsUpdating = true;
-                    try
-                    {
-                        UpdateColorName(color);
-                        Hexa = color.ToHex();
-                    }
-                    finally
-                    {
-                        _colorIsUpdating = false;
-                    }
-                }
-            }
-            else
-            {
-                throw new FormatException(ColorPickerResources.XIsNotAValidColorError.FormatWith(newValue));
-            }
-
-            TextChanged?.Invoke(this, new ColorTextChangedEventArgs(newValue));
-        }
-
-        base.OnPropertyChanged(change);
-    }
-
-    /// <inheritdoc/>
-    protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception? error)
-    {
-        if (property == ColorProperty || property == TextProperty)
-            DataValidationErrors.SetError(this, error);
-
-        base.UpdateDataValidation(property, state, error);
-    }
-
-    /// <inheritdoc/>
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
-    {
-        base.OnPointerPressed(e);
-
-        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            return;
-        e.Handled = true;
-
-        _ignoreButtonClick = _isPopupClosing;
-
-        _isPressed = true;
-        UpdatePseudoClasses();
-    }
-
-    /// <inheritdoc/>
-    protected override void OnPointerReleased(PointerReleasedEventArgs e)
-    {
-        base.OnPointerReleased(e);
-
-        if (!_isPressed || e.InitialPressMouseButton != MouseButton.Left)
-            return;
-        e.Handled = true;
-
-        if (!_ignoreButtonClick)
-        {
-            TogglePopUp();
-        }
-        else
-        {
-            _ignoreButtonClick = false;
-        }
-
-        _isPressed = false;
-        UpdatePseudoClasses();
-    }
-
-    /// <inheritdoc/>
-    protected override void OnPointerCaptureLost(PointerCaptureLostEventArgs e)
-    {
-        base.OnPointerCaptureLost(e);
-
-        _isPressed = false;
-        UpdatePseudoClasses();
-    }
-
-    /// <inheritdoc/>
-    protected override void OnGotFocus(GotFocusEventArgs e)
-    {
-        base.OnGotFocus(e);
-        if (!IsEnabled || _textBox == null)
-            return;
-        _ = _textBox.Focus();
-        _textBox.SelectAll();
-    }
-
-    /// <inheritdoc/>
-    protected override void OnLostFocus(RoutedEventArgs e)
-    {
-        base.OnLostFocus(e);
-
-        _isPressed = false;
-        UpdatePseudoClasses();
-    }
-
-    /// <inheritdoc/>
-    protected override void OnKeyUp(KeyEventArgs e)
-    {
-        var key = e.Key;
-
-        if (key is Key.Space or Key.Enter && IsEffectivelyEnabled)
-        {
-            // Since the TextBox is used for direct date entry,
-            // it isn't supported to open the popup/flyout using these keys.
-            // Other controls open the popup/flyout here.
-        }
-        else if (key == Key.Down && e.KeyModifiers.HasFlag(KeyModifiers.Alt) && IsEffectivelyEnabled && !IsDropDownOpen)
-        {
-            e.Handled = true;
-
-            if (!_ignoreButtonClick)
-            {
-                TogglePopUp();
-            }
-            else
-            {
-                _ignoreButtonClick = false;
-            }
-
-            UpdatePseudoClasses();
-        }
-        else
-        {
-            // No action for other keys.
-        }
-
-        base.OnKeyUp(e);
-    }
-
-    private void OnColorViewClosed(EventArgs e) => ColorViewClosed?.Invoke(this, e);
-
-    private void OnColorViewOpened(EventArgs e) => ColorViewOpened?.Invoke(this, e);
-
-    private void ColorView_KeyDown(object? sender, KeyEventArgs e)
-    {
-        if (e.Handled || sender is not ColorView || e.Key is not (Key.Enter or Key.Space or Key.Escape))
-            return;
-
-        _ = Focus();
-        SetCurrentValue(IsDropDownOpenProperty, false);
-
-        if (e.Key == Key.Escape)
-            SetCurrentValue(ColorProperty, _onOpenColor);
-    }
-
-    private void TextBox_GotFocus(object? sender, RoutedEventArgs e) => SetCurrentValue(IsDropDownOpenProperty, false);
-
-    private void TextBox_KeyDown(object? sender, KeyEventArgs e)
-    {
-        if (!e.Handled)
-            e.Handled = ProcessDatePickerKey(e);
-    }
-
-    private void DropDownButton_PointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        if (_isFlyoutOpen && _dropDownButton?.IsEffectivelyEnabled == true && e.GetCurrentPoint(_dropDownButton).Properties.IsLeftButtonPressed)
-        {
-            // When a flyout is open with OverlayDismissEventPassThrough enabled and the drop-down button
-            // is pressed, close the flyout
-            _ignoreButtonClick = true;
-
-            e.Handled = true;
-            TogglePopUp();
-        }
-        else
-        {
-            _ignoreButtonClick = _isPopupClosing;
-
-            _isPressed = true;
-            UpdatePseudoClasses();
-        }
-    }
-
-    private void DropDownButton_PointerReleased(object? sender, PointerReleasedEventArgs e)
-    {
-        _isPressed = false;
-        UpdatePseudoClasses();
-    }
-
-    private void DropDownButton_Click(object? sender, RoutedEventArgs e)
-    {
-        if (!_ignoreButtonClick)
-        {
-            TogglePopUp();
-        }
-        else
-        {
-            _ignoreButtonClick = false;
-        }
-    }
-
-    private void PopUp_Closed(object? sender, EventArgs e)
-    {
-        SetCurrentValue(IsDropDownOpenProperty, false);
-
-        if (_isPopupClosing)
-            return;
-        _isPopupClosing = true;
-        _ = global::Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() => _isPopupClosing = false);
-    }
-
-    /// <summary>
-    /// Toggles the <see cref="IsDropDownOpen"/> property to open/close the calendar popup.
-    /// This will automatically adjust control focus as well.
-    /// </summary>
-    private void TogglePopUp()
-    {
-        if (IsDropDownOpen)
-        {
-            _ = Focus();
-            SetCurrentValue(IsDropDownOpenProperty, false);
-        }
-        else
-        {
-            SetCurrentValue(IsDropDownOpenProperty, true);
-            _ = _colorView?.Focus();
-        }
-    }
-
-    private void OpenDropDown()
-    {
-        if (_colorView == null)
-            return;
-        _ = _colorView.Focus();
-
-        // Open the PopUp
-        _onOpenColor = Color;
-        _popUp!.IsOpen = true;
-        _isFlyoutOpen = _popUp!.IsOpen;
-
-        UpdatePseudoClasses();
-        OnColorViewOpened(new RoutedEventArgs());
-    }
-
-    private bool ProcessDatePickerKey(KeyEventArgs e)
-    {
-        if (e.Key is Key.Enter)
-        {
-            TogglePopUp();
-            return true;
-        }
-        else if (e.Key is Key.Down)
-        {
-            if ((e.KeyModifiers & KeyModifiers.Control) == KeyModifiers.Control)
-            {
-                TogglePopUp();
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected virtual void UpdateColorName(Color color)
-    {
-        if (color == default)
-        {
-            SetCurrentValue(TextProperty, null);
-            return;
+            return null;
         }
 
         if (TextMode == ColorDisplayNameMode.Hexa)
         {
-            SetCurrentValue(TextProperty, color.ToHex());
+            return value.Value.ToHex();
         }
         else
         {
-            var name = color.ToName();
+            var name = value.Value.ToName();
 
             if (TextMode == ColorDisplayNameMode.Name)
             {
-                SetCurrentValue(TextProperty, name);
+                return name;
             }
             else
             {
-                var hexa = color.ToHex();
-                SetCurrentValue(TextProperty, name == hexa ? hexa : $"{name} ({hexa})");
+                var hexa = value.Value.ToHex();
+                return name == hexa ? hexa : $"{name} ({hexa})";
             }
         }
     }
 
-    protected virtual void Dispose(bool disposing)
-    {
-        if (_disposedValue)
-            return;
-        if (disposing)
-            _buttonPointerPressedSubscription?.Dispose();
+    protected override Color? ConvertValueFromString(string text) => text.TryToColor();
 
-        _disposedValue = true;
+    protected override void SetPreviewValue(Color? value)
+    {
+        if (Previewer is not null && value.HasValue)
+        {
+            Previewer.Color = value!.Value;
+        }
     }
 
-    public void Dispose()
-    {
-        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
+    protected override Color? GetPreviewValue() => Previewer?.Color;
 }

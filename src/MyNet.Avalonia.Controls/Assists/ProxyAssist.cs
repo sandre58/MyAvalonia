@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Proxy;
 using MyNet.Utilities;
 
@@ -38,12 +39,10 @@ public static class ProxyAssist
         Builders.Add(new ProxyBuilder(c => c is AutoCompleteBox, c => new AutoCompleteBoxProxy((AutoCompleteBox)c)));
         Builders.Add(new ProxyBuilder(c => c is NumericUpDown, c => new NumericUpDownProxy((NumericUpDown)c)));
         Builders.Add(new ProxyBuilder(c => c is global::Avalonia.Controls.CalendarDatePicker, c => new CalendarDatePickerDefaultProxy((global::Avalonia.Controls.CalendarDatePicker)c)));
-        Builders.Add(new ProxyBuilder(c => c is CalendarDatePicker, c => new CalendarDatePickerProxy((CalendarDatePicker)c)));
+        Builders.Add(new ProxyBuilder(c => c is ITextPicker, c => new PickerProxy((ITextPicker)c)));
         Builders.Add(new ProxyBuilder(c => c is DatePicker, c => new DatePickerProxy((DatePicker)c)));
         Builders.Add(new ProxyBuilder(c => c is global::Avalonia.Controls.TimePicker, c => new TimePickerDefaultProxy((global::Avalonia.Controls.TimePicker)c)));
-        Builders.Add(new ProxyBuilder(c => c is TimePicker, c => new TimePickerProxy((TimePicker)c)));
         Builders.Add(new ProxyBuilder(c => c is CodeBlock, c => new CodeBlockProxy((CodeBlock)c)));
-        Builders.Add(new ProxyBuilder(c => c is ColorPicker, c => new ColorPickerProxy((ColorPicker)c)));
         Builders.Add(new ProxyBuilder(c => c is DateTimePicker, c => new DateTimePickerProxy((DateTimePicker)c)));
         Builders.Add(new ProxyBuilder(c => c is DateRangePicker, c => new DateRangePickerProxy((DateRangePicker)c)));
         Builders.Add(new ProxyBuilder(c => c is TimeRangePicker, c => new TimeRangePickerProxy((TimeRangePicker)c)));

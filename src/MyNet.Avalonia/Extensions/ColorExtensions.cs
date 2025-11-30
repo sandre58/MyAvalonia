@@ -27,18 +27,7 @@ public static class ColorExtensions
 
         try
         {
-            // if we don't have a string, we cannot have any Color
-            if (string.IsNullOrWhiteSpace(colorName))
-            {
-                return null;
-            }
-
-            if (!colorName.StartsWith('#') && ResourceLocator.ColorResourcesDictionary.Any(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)))
-            {
-                result = ResourceLocator.ColorResourcesDictionary.FirstOrDefault(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)).Key;
-            }
-
-            result ??= Color.Parse(colorName) as Color?;
+            result = TryToColor(colorName);
         }
         catch (FormatException)
         {
@@ -50,6 +39,12 @@ public static class ColorExtensions
 
         return result;
     }
+
+    public static Color? TryToColor(this string? colorName)
+        => string.IsNullOrWhiteSpace(colorName) ? null
+            : !colorName.StartsWith('#') && ResourceLocator.ColorResourcesDictionary.Any(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)) ? ResourceLocator.ColorResourcesDictionary.FirstOrDefault(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)).Key
+            : Color.TryParse(colorName, out var color) ? color
+            : Color.Parse($"#{colorName}");
 
     public static string ToHex(this Color color) => color.A != 255 ? string.Format(CultureInfo.InvariantCulture, "#{0:X2}{1:X2}{2:X2}{3:X2}", color.A, color.R, color.G, color.B) : string.Format(CultureInfo.InvariantCulture, "#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
 

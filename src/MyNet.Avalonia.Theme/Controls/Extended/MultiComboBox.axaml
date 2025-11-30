@@ -205,19 +205,19 @@
             <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
             <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
             <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
-            <Setter Property="my:FlyoutAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
-            <Setter Property="my:FlyoutAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PopupAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
+            <Setter Property="my:PopupAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.Foreground" Value="{Binding $self.(my:FlyoutAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:FlyoutAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:PopupAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:FlyoutAssist.Foreground)}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:FlyoutAssist.PrimaryColor)}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:PopupAssist.PrimaryColor)}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.(my:ItemsAssist.ActiveBackground), Contrast=True}" />
-            <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.(my:FlyoutAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
         </Style>
 
         <Setter Property="Template">
@@ -349,7 +349,7 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:FlyoutAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
+                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
                                         <DockPanel>
                                             <Button HorizontalAlignment="Stretch"
@@ -367,7 +367,7 @@
                                                                 Grid.IsSharedSizeScope="True"
                                                                 ItemsPanel="{TemplateBinding ItemsPanel}"
                                                                 KeyboardNavigation.TabNavigation="Continue"
-                                                                TextElement.Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}" />
+                                                                TextElement.Foreground="{TemplateBinding (my:PopupAssist.Foreground)}" />
                                             </ScrollViewer>
                                         </DockPanel>
                                     </Border>
@@ -479,10 +479,10 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
         </Style>
 
         <!-- Styles -->
@@ -681,7 +681,7 @@
                                                                 Grid.IsSharedSizeScope="True"
                                                                 ItemsPanel="{TemplateBinding ItemsPanel}"
                                                                 KeyboardNavigation.TabNavigation="Continue"
-                                                                TextElement.Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}" />
+                                                                TextElement.Foreground="{TemplateBinding (my:PopupAssist.Foreground)}" />
                                             </ScrollViewer>
                                         </DockPanel>
                                     </Border>

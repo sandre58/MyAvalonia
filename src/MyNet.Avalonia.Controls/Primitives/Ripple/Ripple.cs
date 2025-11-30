@@ -105,7 +105,7 @@ public class Ripple : ContentControl
         var r = CreateRipple(x, y, IsCentered);
         _last = r;
 
-        // Attach ripple instance to canvas
+        // AttachOnUpdateValueOnMouseWheel ripple instance to canvas
         _container.Children.Add(r);
         r.SendHandlerMessage(RippleHandler.FirstStepMessage);
 

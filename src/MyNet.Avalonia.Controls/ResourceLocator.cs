@@ -19,6 +19,7 @@ public static class ResourceLocator
 
         // Common Resources
         TranslationService.RegisterResources(nameof(ColorPickerResources), ColorPickerResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(MessagesResources), MessagesResources.ResourceManager);
 
         Avalonia.ResourceLocator.Initialize();
 

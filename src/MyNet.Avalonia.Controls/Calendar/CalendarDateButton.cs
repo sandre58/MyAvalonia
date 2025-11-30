@@ -10,10 +10,9 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Mixins;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
-using MyNet.Avalonia.Controls.DateTimePickers;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls;
+namespace MyNet.Avalonia.Controls.Primitives;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
 [PseudoClasses(PseudoClassName.Range, PseudoClassName.Selected, PseudoClassName.Inactive, PseudoClassName.Today)]

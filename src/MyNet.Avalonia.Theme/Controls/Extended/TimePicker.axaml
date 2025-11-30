@@ -4,127 +4,6 @@
                     xmlns:sys="clr-namespace:System;assembly=netstandard"
                     x:CompileBindings="True">
 
-    <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Embedded.MyTimePicker" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.HorizontalAlignment)}" />
-        <Setter Property="VerticalAlignment" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.VerticalAlignment)}" />
-        <Setter Property="Margin" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.Margin)}" />
-        <Setter Property="Padding" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.Padding)}" />
-        <Setter Property="CornerRadius" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.CornerRadius)}" />
-        <Setter Property="Background" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.Background)}" />
-        <Setter Property="BorderBrush" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.BorderBrush)}" />
-        <Setter Property="BorderThickness" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.BorderThickness)}" />
-        <Setter Property="my:ThemeAssist.HoverBackground" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.HoverBackground)}" />
-        <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.HoverBorderBrush)}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.HoverForeground)}" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.ActiveBackground)}" />
-        <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.ActiveBorderBrush)}" />
-        <Setter Property="my:ThemeAssist.ActiveForeground" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.ActiveForeground)}" />
-        <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.RippleColor)}" />
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{Binding $parent[my:TimePicker].(my:ItemsAssist.ShadowDepth)}" />
-        <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[my:TimePicker].(my:IconAssist.Alignment)}" />
-        <Setter Property="my:IconAssist.Margin" Value="{Binding $parent[my:TimePicker].(my:IconAssist.Margin)}" />
-        <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[my:TimePicker].(my:IconAssist.Opacity)}" />
-
-        <!-- Selected -->
-        <Style Selector="^:selected">
-            <Setter Property="IsHitTestVisible" Value="False" />
-        </Style>
-
-        <Style Selector="^ /template/ Border#PART_ActiveBorder">
-            <Setter Property="my:ClassesAssist.Classes" Value="no-transitions" />
-        </Style>
-    </ControlTheme>
-
-    <ControlTheme x:Key="{x:Type my:TimePickerPresenter}" TargetType="my:TimePickerPresenter">
-        <Setter Property="MaxHeight" Value="300" />
-        <Setter Property="Template">
-            <ControlTemplate TargetType="my:TimePickerPresenter">
-                <Border Name="Background"
-                        HorizontalAlignment="Stretch"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
-                    <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid Name="{x:Static my:TimePickerPresenter.PartPickerContainer}" ColumnDefinitions="*,Auto,*,Auto,*,Auto,*">
-                            <Grid.Styles>
-                                <Style Selector="my|DateTimeScrollPanel">
-                                    <Setter Property="ItemHeight" Value="36" />
-
-                                    <Style Selector="^ > ListBoxItem">
-                                        <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ListBoxItem.Embedded.MyTimePicker}" />
-                                        <Setter Property="ContentTemplate">
-                                            <Setter.Value>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{my:Translation Casing=Title}" />
-                                                </DataTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </Style>
-                            </Grid.Styles>
-
-                            <!-- Column Definitions set in code, ignore here -->
-                            <ScrollViewer Name="{x:Static my:TimePickerPresenter.PartHourScrollPanel}"
-                                          Grid.Column="0"
-                                          HorizontalScrollBarVisibility="Disabled"
-                                          VerticalScrollBarVisibility="Hidden">
-                                <my:DateTimeScrollPanel Name="{x:Static my:TimePickerPresenter.PartHourSelector}" PanelType="Hour" ShouldLoop="True" />
-                            </ScrollViewer>
-                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                            <ScrollViewer Name="{x:Static my:TimePickerPresenter.PartMinuteScrollPanel}"
-                                          Grid.Column="2"
-                                          HorizontalScrollBarVisibility="Disabled"
-                                          VerticalScrollBarVisibility="Hidden">
-                                <my:DateTimeScrollPanel Name="{x:Static my:TimePickerPresenter.PartMinuteSelector}" PanelType="Minute" ShouldLoop="True" />
-                            </ScrollViewer>
-                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                            <ScrollViewer Name="{x:Static my:TimePickerPresenter.PartSecondScrollPanel}"
-                                          Grid.Column="4"
-                                          HorizontalScrollBarVisibility="Disabled"
-                                          VerticalScrollBarVisibility="Hidden">
-                                <my:DateTimeScrollPanel Name="{x:Static my:TimePickerPresenter.PartSecondSelector}" PanelType="Second" ShouldLoop="False" />
-                            </ScrollViewer>
-                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                            <ScrollViewer Name="{x:Static my:TimePickerPresenter.PartPeriodScrollPanel}"
-                                          Grid.Column="6"
-                                          HorizontalScrollBarVisibility="Disabled"
-                                          VerticalScrollBarVisibility="Hidden">
-                                <my:DateTimeScrollPanel Name="{x:Static my:TimePickerPresenter.PartPeriodSelector}" PanelType="TimePeriod" ShouldLoop="False" />
-                            </ScrollViewer>
-                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                            <Rectangle Name="{x:Static my:TimePickerPresenter.PartFirstSeparator}"
-                                       Grid.Column="1"
-                                       Width="1"
-                                       HorizontalAlignment="Center"
-                                       Fill="{DynamicResource MyNet.Brush.Container.Border}" />
-                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                            <Rectangle Name="{x:Static my:TimePickerPresenter.PartSecondSeparator}"
-                                       Grid.Column="3"
-                                       Width="1"
-                                       HorizontalAlignment="Center"
-                                       Fill="{DynamicResource MyNet.Brush.Container.Border}" />
-                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                            <Rectangle Name="{x:Static my:TimePickerPresenter.PartThirdSeparator}"
-                                       Grid.Column="5"
-                                       Width="1"
-                                       HorizontalAlignment="Center"
-                                       Fill="{DynamicResource MyNet.Brush.Container.Border}" />
-                        </Grid>
-                    </Border>
-                </Border>
-            </ControlTemplate>
-        </Setter>
-
-        <Style Selector="^ /template/ Panel">
-            <Style Selector="^:pointerover RepeatButton">
-                <Setter Property="IsVisible" Value="True" />
-            </Style>
-        </Style>
-    </ControlTheme>
-
     <ControlTheme x:Key="{x:Type my:TimePicker}" TargetType="my:TimePicker">
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
@@ -175,18 +54,18 @@
             <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
             <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
             <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
-            <Setter Property="my:FlyoutAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
-            <Setter Property="my:FlyoutAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PopupAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
+            <Setter Property="my:PopupAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:FlyoutAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:PopupAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:FlyoutAssist.Foreground)}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:FlyoutAssist.PrimaryColor)}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:PopupAssist.PrimaryColor)}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.(my:ItemsAssist.ActiveBackground), Contrast=True}" />
-            <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.(my:FlyoutAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
         </Style>
 
         <Setter Property="Template">
@@ -264,8 +143,7 @@
                                                  Focusable="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
                                                  IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
                                                  IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                 SelectionBrush="{my:Brush $parent[my:TimePicker].(my:ThemeAssist.PrimaryColor),
-                                                                           Opacity={StaticResource MyNet.Opacity.Overlay}}"
+                                                 SelectionBrush="{my:Brush $parent[my:TimePicker].(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                                  SelectionForegroundBrush="{TemplateBinding Foreground}"
                                                  Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
                                     </my:TextField>
@@ -322,17 +200,12 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border Background="{TemplateBinding (my:FlyoutAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
+                                <Border Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
                                         <DockPanel>
-                                            <Button HorizontalAlignment="Stretch"
-                                                    my:ThemeAssist.PrimaryColor="{DynamicResource MyNet.Brush.Positive}"
-                                                    Command="{Binding $parent[my:TimePicker].Confirm}"
-                                                    Content="{my:Icon Check}"
-                                                    DockPanel.Dock="Bottom"
-                                                    IsVisible="{TemplateBinding NeedConfirmation}"
-                                                    Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Validation}" />
-                                            <my:TimePickerPresenter Name="{x:Static my:TimePicker.PartPresenter}" NeedsConfirmation="{TemplateBinding NeedConfirmation}" PanelFormat="{TemplateBinding PanelFormat}" />
+                                            <my:TimeView Name="PART_Previewer"
+                                                         Foreground="{TemplateBinding (my:PopupAssist.Foreground)}"
+                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:ThemeAssist.PrimaryColor}" />
                                         </DockPanel>
                                     </Border>
                                 </Border>
@@ -383,7 +256,7 @@
 
         <!-- Is Read only -->
         <Style Selector="^[(my|TextFieldAssist.IsTextEditable)=False]">
-            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Cursor" Value="Arrow" />
         </Style>
 
         <!-- Hover -->
@@ -421,10 +294,10 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
         </Style>
 
         <!-- Styles -->
@@ -535,8 +408,7 @@
                                              Focusable="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
                                              IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
                                              IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                             SelectionBrush="{my:Brush $parent[my:TimePicker].(my:ThemeAssist.PrimaryColor),
-                                                                       Opacity={StaticResource MyNet.Opacity.Overlay}}"
+                                             SelectionBrush="{my:Brush $parent[my:TimePicker].(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Overlay}}"
                                              SelectionForegroundBrush="{TemplateBinding Foreground}"
                                              Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
 
@@ -545,8 +417,7 @@
                                 <!-- Clipboard button -->
                                 <Button Name="PART_ClipboardButton"
                                         Grid.Column="2"
-                                        Margin="{my:Thickness Small,
-                                                              Left}"
+                                        Margin="{my:Thickness Small, Left}"
                                         Classes="Clipboard no-disablable"
                                         CommandParameter="{Binding Text, ElementName=PART_TextBox, Mode=OneWay}"
                                         IsVisible="False"
@@ -555,8 +426,7 @@
                                 <!-- Clear button -->
                                 <Button Name="PART_ClearButton"
                                         Grid.Column="3"
-                                        Margin="{my:Thickness Small,
-                                                              Left}"
+                                        Margin="{my:Thickness Small, Left}"
                                         Classes="no-disablable"
                                         Command="{Binding $parent[my:TimePicker].Clear}"
                                         Content="{StaticResource MyNet.Geometry.Close}"
@@ -566,8 +436,7 @@
                                 <!-- Time button -->
                                 <Button Name="PART_Button"
                                         Grid.Column="5"
-                                        Margin="{my:Thickness Small,
-                                                              Left}"
+                                        Margin="{my:Thickness Small, Left}"
                                         my:ThemeAssist.TertiaryColor="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                         Classes="no-disablable"
                                         Classes.Selected="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
@@ -615,14 +484,9 @@
                                 <Border Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
                                         <DockPanel>
-                                            <Button HorizontalAlignment="Stretch"
-                                                    my:ThemeAssist.PrimaryColor="{DynamicResource MyNet.Brush.Positive}"
-                                                    Command="{Binding $parent[my:TimePicker].Confirm}"
-                                                    Content="{my:Icon Check}"
-                                                    DockPanel.Dock="Bottom"
-                                                    IsVisible="{TemplateBinding NeedConfirmation}"
-                                                    Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Validation}" />
-                                            <my:TimePickerPresenter Name="{x:Static my:TimePicker.PartPresenter}" NeedsConfirmation="{TemplateBinding NeedConfirmation}" PanelFormat="{TemplateBinding PanelFormat}" />
+                                            <my:TimeView Name="PART_Previewer"
+                                                         Foreground="{TemplateBinding (my:PopupAssist.Foreground)}"
+                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:ThemeAssist.PrimaryColor}" />
                                         </DockPanel>
                                     </Border>
                                 </Border>

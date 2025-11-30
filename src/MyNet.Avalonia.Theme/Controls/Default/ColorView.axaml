@@ -11,7 +11,7 @@
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="Transparent" />
         <Setter Property="my:ThemeAssist.ActiveBackground" Value="Transparent" />
-        <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{Binding $parent[TemplatedControl].Foreground}" />
+        <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{Binding $self.Foreground}" />
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ListBox.ColorPalette" TargetType="ListBox" BasedOn="{StaticResource MyNet.Theme.ListBox.Cards}">
@@ -51,8 +51,7 @@
 
                     <TabControl Name="PART_TabControl"
                                 Grid.Row="0"
-                                Padding="{my:Thickness Medium,
-                                                       Top}"
+                                Padding="{my:Thickness Medium, Top}"
                                 Classes="no-disablable Uniform"
                                 SelectedIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
                         <my:HeaderAssist.IsVisible>
@@ -68,8 +67,7 @@
                             <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="*">
                                 <ColorSlider Name="ColorSpectrumThirdComponentSlider"
                                              Grid.Column="0"
-                                             Margin="{my:Thickness Medium,
-                                                                   Right}"
+                                             Margin="{my:Thickness Medium, Right}"
                                              HorizontalAlignment="Center"
                                              VerticalAlignment="Stretch"
                                              AutomationProperties.Name="Third Component"
@@ -95,8 +93,7 @@
                                                Shape="{TemplateBinding ColorSpectrumShape}" />
                                 <ColorSlider Name="ColorSpectrumAlphaSlider"
                                              Grid.Column="2"
-                                             Margin="{my:Thickness Medium,
-                                                                   Left}"
+                                             Margin="{my:Thickness Medium, Left}"
                                              HorizontalAlignment="Center"
                                              VerticalAlignment="Stretch"
                                              AutomationProperties.Name="Alpha Component"
@@ -168,8 +165,7 @@
                                     <TextBox Name="PART_HexTextBox"
                                              Grid.Column="1"
                                              Width="130"
-                                             Margin="{my:Thickness Medium,
-                                                                   Left}"
+                                             Margin="{my:Thickness Medium, Left}"
                                              HorizontalAlignment="Stretch"
                                              my:TextFieldAssist.ShowClipboardButton="True"
                                              AutomationProperties.Name="Hexadecimal Color"
@@ -351,8 +347,7 @@
                     <!-- Previewer -->
                     <ColorPreviewer Grid.Row="1"
                                     Height="32"
-                                    Margin="{my:Thickness Medium,
-                                                          Top}"
+                                    Margin="{my:Thickness Medium, Top}"
                                     Classes="no-disablable"
                                     HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                     IsAccentColorsVisible="{TemplateBinding IsAccentColorsVisible}"
@@ -446,8 +441,7 @@
                         <TextBox Name="PART_HexTextBox"
                                  Grid.Column="1"
                                  Width="100"
-                                 Margin="{my:Thickness Medium,
-                                                       Left}"
+                                 Margin="{my:Thickness Medium, Left}"
                                  HorizontalAlignment="Stretch"
                                  my:TextFieldAssist.ShowClipboardButton="True"
                                  AutomationProperties.Name="Hexadecimal Color"

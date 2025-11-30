@@ -97,14 +97,14 @@ public class DateTimePicker : DatePickerBase
         if (date is null)
         {
             _ = _textBox?.SetValue(TextBox.TextProperty, null);
-            //_calendar?.ClearSelection();
-            _timePickerPresenter?.SyncTime(null);
+            //Previewer?.ClearSelection();
+            _timePickerPresenter?.MoveToTime(null);
         }
         else
         {
             _ = _textBox?.SetValue(TextBox.TextProperty, date.Value.ToString(DisplayFormat ?? CultureInfo.CurrentCulture.DateTimeFormat.FullDateTimePattern, CultureInfo.CurrentCulture));
-            //_calendar?.MarkDates(date.Value.Date, date.Value.Date);
-            _timePickerPresenter?.SyncTime(date.Value.TimeOfDay);
+            //Previewer?.MarkDates(date.Value.Date, date.Value.Date);
+            _timePickerPresenter?.MoveToTime(date.Value.TimeOfDay);
         }
     }
 
@@ -185,16 +185,16 @@ public class DateTimePicker : DatePickerBase
         if (string.IsNullOrEmpty(_textBox?.Text))
         {
             SetCurrentValue(SelectedDateProperty, null);
-           // _calendar?.ClearSelection();
-            _timePickerPresenter?.SyncTime(null);
+           // Previewer?.ClearSelection();
+            _timePickerPresenter?.MoveToTime(null);
         }
         else if (string.IsNullOrEmpty(DisplayFormat))
         {
             if (DateTime.TryParse(_textBox?.Text, out var defaultTime))
             {
                 SetCurrentValue(SelectedDateProperty, defaultTime);
-                //_calendar?.MarkDates(defaultTime.Date, defaultTime.Date);
-                _timePickerPresenter?.SyncTime(defaultTime.TimeOfDay);
+                //Previewer?.MarkDates(defaultTime.Date, defaultTime.Date);
+                _timePickerPresenter?.MoveToTime(defaultTime.TimeOfDay);
             }
         }
         else
@@ -210,9 +210,9 @@ public class DateTimePicker : DatePickerBase
         if (_calendar is not null)
         {
             var date = SelectedDate ?? DateTime.Today;
-            //_calendar.ContextDate = _calendar.ContextDate.With(date.Year, date.Month);
-            //_calendar.UpdateDayButtons();
-            _timePickerPresenter?.SyncTime(date.TimeOfDay);
+            //Previewer.ContextDate = Previewer.ContextDate.With(date.Year, date.Month);
+            //Previewer.UpdateDayButtons();
+            _timePickerPresenter?.MoveToTime(date.TimeOfDay);
         }
 
         SetCurrentValue(IsDropDownOpenProperty, true);
@@ -260,19 +260,19 @@ public class DateTimePicker : DatePickerBase
             SetCurrentValue(SelectedDateProperty, date);
             if (_calendar is not null)
             {
-                //_calendar.ContextDate = _calendar.ContextDate.With(date.Year, date.Month);
-                //_calendar.UpdateDayButtons();
+                //Previewer.ContextDate = Previewer.ContextDate.With(date.Year, date.Month);
+                //Previewer.UpdateDayButtons();
             }
 
-            //_calendar?.MarkDates(date.Date, date.Date);
-            _timePickerPresenter?.SyncTime(date.TimeOfDay);
+            //Previewer?.MarkDates(date.Date, date.Date);
+            _timePickerPresenter?.MoveToTime(date.TimeOfDay);
         }
         else
         {
             SetCurrentValue(SelectedDateProperty, null);
             if (clearWhenInvalid) _ = _textBox?.SetValue(TextBox.TextProperty, null);
-            //_calendar?.ClearSelection();
-            _timePickerPresenter?.SyncTime(null);
+            //Previewer?.ClearSelection();
+            _timePickerPresenter?.MoveToTime(null);
         }
     }
 

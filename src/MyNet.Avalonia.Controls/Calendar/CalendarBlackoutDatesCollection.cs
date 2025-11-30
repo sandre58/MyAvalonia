@@ -12,7 +12,7 @@ using MyNet.Utilities;
 using MyNet.Utilities.DateTimes;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls;
+namespace MyNet.Avalonia.Controls.Primitives;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
 public sealed class CalendarBlackoutDatesCollection(Calendar owner) : ObservableCollection<Period>

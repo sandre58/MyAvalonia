@@ -48,7 +48,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid Name="{x:Static my:TimePickerPresenter.PartPickerContainer}" ColumnDefinitions="*,Auto,*,Auto,*,Auto,*">
+                        <Grid Name="" ColumnDefinitions="*,Auto,*,Auto,*,Auto,*">
                             <Grid.Styles>
                                 <Style Selector="my|DateTimeScrollPanel">
                                     <Setter Property="ItemHeight" Value="36" />
@@ -67,33 +67,33 @@
                             </Grid.Styles>
 
                             <!-- Column Definitions set in code, ignore here -->
-                            <ScrollViewer Name="{x:Static my:TimePickerPresenter.PartHourScrollPanel}"
+                            <!--<ScrollViewer Name="{x:Static my:TimePickerPresenter.PartHourScrollPanel}"
                                           Grid.Column="0"
                                           HorizontalScrollBarVisibility="Disabled"
                                           VerticalScrollBarVisibility="Hidden">
                                 <my:DateTimeScrollPanel Name="{x:Static my:TimePickerPresenter.PartHourSelector}" PanelType="Hour" ShouldLoop="True" />
-                            </ScrollViewer>
+                            </ScrollViewer>-->
                             <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                            <ScrollViewer Name="{x:Static my:TimePickerPresenter.PartMinuteScrollPanel}"
+                           <!-- <ScrollViewer Name="{x:Static my:TimePickerPresenter.PartMinuteScrollPanel}"
                                           Grid.Column="2"
                                           HorizontalScrollBarVisibility="Disabled"
                                           VerticalScrollBarVisibility="Hidden">
                                 <my:DateTimeScrollPanel Name="{x:Static my:TimePickerPresenter.PartMinuteSelector}" PanelType="Minute" ShouldLoop="True" />
-                            </ScrollViewer>
+                            </ScrollViewer>-->
                             <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                            <ScrollViewer Name="{x:Static my:TimePickerPresenter.PartSecondScrollPanel}"
+                           <!-- <ScrollViewer Name="{x:Static my:TimePickerPresenter.PartSecondScrollPanel}"
                                           Grid.Column="4"
                                           HorizontalScrollBarVisibility="Disabled"
                                           VerticalScrollBarVisibility="Hidden">
                                 <my:DateTimeScrollPanel Name="{x:Static my:TimePickerPresenter.PartSecondSelector}" PanelType="Second" ShouldLoop="False" />
-                            </ScrollViewer>
+                            </ScrollViewer>-->
                             <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                            <ScrollViewer Name="{x:Static my:TimePickerPresenter.PartPeriodScrollPanel}"
+                           <!-- <ScrollViewer Name="{x:Static my:TimePickerPresenter.PartPeriodScrollPanel}"
                                           Grid.Column="6"
                                           HorizontalScrollBarVisibility="Disabled"
                                           VerticalScrollBarVisibility="Hidden">
                                 <my:DateTimeScrollPanel Name="{x:Static my:TimePickerPresenter.PartPeriodSelector}" PanelType="TimePeriod" ShouldLoop="False" />
-                            </ScrollViewer>
+                            </ScrollViewer>-->
                             <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                             <Rectangle Name="{x:Static my:TimePickerPresenter.PartFirstSeparator}"
                                        Grid.Column="1"
@@ -176,18 +176,18 @@
             <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
             <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
             <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
-            <Setter Property="my:FlyoutAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
-            <Setter Property="my:FlyoutAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PopupAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
+            <Setter Property="my:PopupAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:FlyoutAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:PopupAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:FlyoutAssist.Foreground)}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:FlyoutAssist.PrimaryColor)}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:PopupAssist.PrimaryColor)}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.(my:ItemsAssist.ActiveBackground), Contrast=True}" />
-            <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.(my:FlyoutAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
         </Style>
 
         <Setter Property="Template">
@@ -323,15 +323,15 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border Background="{TemplateBinding (my:FlyoutAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
+                                <Border Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
                                         <Grid ColumnDefinitions="*,Auto,*">
                                             <my:Calendar Name="{x:Static my:DateTimePicker.PartCalendar}"
-                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:FlyoutAssist.PrimaryColor}"
+                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:PopupAssist.PrimaryColor}"
                                                          Background="Transparent"
                                                          BorderThickness="0"
                                                          FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
-                                                         Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}"
+                                                         Foreground="{TemplateBinding (my:PopupAssist.Foreground)}"
                                                          IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}" />
                                             <Separator Grid.Column="1" Margin="0" Classes="Vertical" />
                                             <my:TimePickerPresenter Name="{x:Static my:DateTimePicker.PartTimePicker}"
@@ -388,7 +388,7 @@
 
         <!-- Is Read only -->
         <Style Selector="^[(my|TextFieldAssist.IsTextEditable)=False]">
-            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Cursor" Value="Arrow" />
         </Style>
 
         <!-- Hover -->
@@ -426,10 +426,10 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
         </Style>
 
         <!-- Styles -->
@@ -621,11 +621,11 @@
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
                                         <Grid ColumnDefinitions="*, Auto, *">
                                             <my:Calendar Name="{x:Static my:DateTimePicker.PartCalendar}"
-                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:FlyoutAssist.PrimaryColor}"
+                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:PopupAssist.PrimaryColor}"
                                                          Background="Transparent"
                                                          BorderThickness="0"
                                                          FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
-                                                         Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}"
+                                                         Foreground="{TemplateBinding (my:PopupAssist.Foreground)}"
                                                          IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}" />
                                             <Separator Grid.Column="1" Margin="0" Classes="Vertical" />
                                             <my:TimePickerPresenter Name="{x:Static my:DateTimePicker.PartTimePicker}"

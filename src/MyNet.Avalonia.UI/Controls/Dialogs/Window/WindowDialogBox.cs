@@ -78,7 +78,7 @@ public class WindowDialogBox : WindowDialog
 
     private void SetButtonVisibility()
     {
-        // Close button should be hidden instead if invisible to retain layout.
+        // ClosePopup button should be hidden instead if invisible to retain layout.
         IsVisibleProperty.SetValue(true, CloseButton);
         var closeButtonVisible = IsCloseButtonVisible && (DataContext is IDialogViewModel || Buttons != MessageBoxResultOption.YesNo);
         IsHitTestVisibleProperty.SetValue(closeButtonVisible, CloseButton);

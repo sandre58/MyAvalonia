@@ -101,8 +101,8 @@ public class TimeRangePicker : TimePickerBase
         _ = Focus(NavigationMethod.Pointer);
         SetCurrentValue(StartTimeProperty, null);
         SetCurrentValue(EndTimeProperty, null);
-        _startPresenter?.SyncTime(null);
-        _endPresenter?.SyncTime(null);
+        _startPresenter?.MoveToTime(null);
+        _endPresenter?.MoveToTime(null);
     }
 
     private void OnDisplayFormatChanged()
@@ -116,7 +116,7 @@ public class TimeRangePicker : TimePickerBase
         SyncTimeToText(args.NewValue.Value, start);
         _suppressTextPresenterEvent = true;
         var presenter = start ? _startPresenter : _endPresenter;
-        presenter?.SyncTime(args.NewValue.Value);
+        presenter?.MoveToTime(args.NewValue.Value);
         _suppressTextPresenterEvent = false;
     }
 
@@ -157,8 +157,8 @@ public class TimeRangePicker : TimePickerBase
         TimePickerPresenter.SelectedTimeChangedEvent.AddHandler(OnPresenterTimeChanged, _startPresenter, _endPresenter);
         TextBox.TextChangedEvent.AddHandler(OnTextChanged, _startTextBox, _endTextBox);
 
-        _startPresenter?.SyncTime(StartTime);
-        _endPresenter?.SyncTime(EndTime);
+        _startPresenter?.MoveToTime(StartTime);
+        _endPresenter?.MoveToTime(EndTime);
         SyncTimeToText(StartTime);
         SyncTimeToText(EndTime, false);
     }
@@ -175,14 +175,14 @@ public class TimeRangePicker : TimePickerBase
         if (textBox?.Text is null || string.IsNullOrEmpty(textBox.Text))
         {
             SetCurrentValue(property, null);
-            presenter?.SyncTime(null);
+            presenter?.MoveToTime(null);
         }
         else if (string.IsNullOrEmpty(DisplayFormat))
         {
             if (DateTime.TryParse(textBox.Text, out var defaultTime))
             {
                 SetCurrentValue(property, defaultTime.TimeOfDay);
-                presenter?.SyncTime(defaultTime.TimeOfDay);
+                presenter?.MoveToTime(defaultTime.TimeOfDay);
             }
         }
         else
@@ -190,7 +190,7 @@ public class TimeRangePicker : TimePickerBase
             if (DateTime.TryParseExact(textBox.Text, DisplayFormat, CultureInfo.CurrentCulture, DateTimeStyles.None, out var date))
             {
                 SetCurrentValue(property, date.TimeOfDay);
-                presenter?.SyncTime(date.TimeOfDay);
+                presenter?.MoveToTime(date.TimeOfDay);
             }
             else
             {
@@ -198,7 +198,7 @@ public class TimeRangePicker : TimePickerBase
                 {
                     SetCurrentValue(property, null);
                     _ = textBox.SetValue(TextBox.TextProperty, null);
-                    presenter?.SyncTime(null);
+                    presenter?.MoveToTime(null);
                 }
             }
         }
@@ -256,8 +256,8 @@ public class TimeRangePicker : TimePickerBase
 
     public void Confirm()
     {
-        _startPresenter?.Confirm();
-        _endPresenter?.Confirm();
+       // _startPresenter?.Confirm();
+        //_endPresenter?.Confirm();
         SetCurrentValue(IsDropDownOpenProperty, false);
         _ = Focus();
     }
@@ -301,7 +301,7 @@ public class TimeRangePicker : TimePickerBase
     {
         if (DateTime.TryParseExact(_startTextBox?.Text, DisplayFormat, CultureInfo.CurrentCulture, DateTimeStyles.None, out var start))
         {
-            _startPresenter?.SyncTime(start.TimeOfDay);
+            _startPresenter?.MoveToTime(start.TimeOfDay);
             SetCurrentValue(StartTimeProperty, start.TimeOfDay);
         }
         else
@@ -309,13 +309,13 @@ public class TimeRangePicker : TimePickerBase
             if (clearWhenInvalid)
             {
                 _ = _startTextBox?.SetValue(TextBox.TextProperty, null);
-                _startPresenter?.SyncTime(null);
+                _startPresenter?.MoveToTime(null);
             }
         }
 
         if (DateTime.TryParseExact(_endTextBox?.Text, DisplayFormat, CultureInfo.CurrentCulture, DateTimeStyles.None, out var end))
         {
-            _endPresenter?.SyncTime(end.TimeOfDay);
+            _endPresenter?.MoveToTime(end.TimeOfDay);
             SetCurrentValue(EndTimeProperty, end.TimeOfDay);
         }
         else
@@ -323,7 +323,7 @@ public class TimeRangePicker : TimePickerBase
             if (clearWhenInvalid)
             {
                 _ = _endTextBox?.SetValue(TextBox.TextProperty, null);
-                _endPresenter?.SyncTime(null);
+                _endPresenter?.MoveToTime(null);
             }
         }
     }

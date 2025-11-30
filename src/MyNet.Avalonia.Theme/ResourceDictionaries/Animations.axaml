@@ -7,6 +7,7 @@
     <x:TimeSpan x:Key="MyNet.Timespan.Glyph">0:0:0.1</x:TimeSpan>
     <x:TimeSpan x:Key="MyNet.Timespan.Opacity">0:0:0.15</x:TimeSpan>
     <x:TimeSpan x:Key="MyNet.Timespan.Switch">0:0:0.2</x:TimeSpan>
+    <x:TimeSpan x:Key="MyNet.Timespan.Fade">0:0:0.3</x:TimeSpan>
     <x:TimeSpan x:Key="MyNet.Timespan.Slide">0:0:0.3</x:TimeSpan>
     <x:TimeSpan x:Key="MyNet.Timespan.Shadow">0:0:0.3</x:TimeSpan>
     <x:TimeSpan x:Key="MyNet.Timespan.Underline">0:0:0.4</x:TimeSpan>

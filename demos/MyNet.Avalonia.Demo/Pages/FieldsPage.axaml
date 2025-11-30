@@ -14,8 +14,7 @@
             <DockPanel>
                 <Image Width="16"
                        Height="16"
-                       Margin="{my:Thickness Medium,
-                                             Right}"
+                       Margin="{my:Thickness Medium, Right}"
                        VerticalAlignment="Center"
                        DockPanel.Dock="Left"
                        Source="{Binding Converter={x:Static c:CountryToBitmapConverter.To16}}" />

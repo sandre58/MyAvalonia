@@ -14,6 +14,7 @@
         <Setter Property="CornerRadius" Value="{Binding $parent[TimePicker].(my:ItemsAssist.CornerRadius)}" />
         <Setter Property="Background" Value="{Binding $parent[TimePicker].(my:ItemsAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $parent[TimePicker].(my:ItemsAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
         <Setter Property="BorderThickness" Value="{Binding $parent[TimePicker].(my:ItemsAssist.BorderThickness)}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{Binding $parent[TimePicker].(my:ItemsAssist.HoverBackground)}" />
         <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{Binding $parent[TimePicker].(my:ItemsAssist.HoverBorderBrush)}" />
@@ -29,6 +30,7 @@
 
         <Style Selector="^:selected">
             <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="CornerRadius" Value="0" />
         </Style>
 
         <Style Selector="^ /template/ Border#PART_ActiveBorder">
@@ -37,9 +39,10 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type TimePickerPresenter}" TargetType="TimePickerPresenter">
-        <Setter Property="Width" Value="242" />
-        <Setter Property="MinWidth" Value="242" />
+        <Setter Property="Width" Value="{Binding $parent[TimePicker].Bounds.Width}" />
+        <Setter Property="MinWidth" Value="{Binding $parent[TimePicker].Bounds.Width}" />
         <Setter Property="MaxHeight" Value="300" />
+        <Setter Property="Padding" Value="{my:Thickness Default}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="TimePickerPresenter">
                 <Border Name="Background"
@@ -53,7 +56,7 @@
                             <Grid Name="PART_PickerContainer">
                                 <Grid.Styles>
                                     <Style Selector="DateTimePickerPanel">
-                                        <Setter Property="ItemHeight" Value="36" />
+                                        <Setter Property="ItemHeight" Value="{Binding $parent[TimePicker].Bounds.Height}" />
 
                                         <Style Selector="^ > ListBoxItem">
                                             <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ListBoxItem.Embedded.TimePicker}" />
@@ -69,80 +72,73 @@
                                 </Grid.Styles>
 
                                 <!-- Column Definitions set in code, ignore here -->
-                                <Panel Name="PART_HourHost" Grid.Column="0">
+                                <Panel Name="PART_HourHost" Grid.Column="0" Margin="{my:Thickness Default, Horizontal}">
                                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel Name="PART_HourSelector" PanelType="Hour" ShouldLoop="True" />
                                     </ScrollViewer>
-                                    <RepeatButton Name="PART_HourUpButton" VerticalAlignment="Top" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Up}" />
-                                    <RepeatButton Name="PART_HourDownButton" VerticalAlignment="Bottom" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Down}" />
+                                    <RepeatButton Name="PART_HourUpButton" HorizontalAlignment="Center" VerticalAlignment="Top" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronUp}" Classes="ExtraSmall" />
+                                    <RepeatButton Name="PART_HourDownButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronDown}" Classes="ExtraSmall" />
                                 </Panel>
                                 <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                                <Panel Name="PART_MinuteHost" Grid.Column="2">
+                                <Panel Name="PART_MinuteHost" Grid.Column="2" Margin="{my:Thickness Default, Horizontal}">
                                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel Name="PART_MinuteSelector" PanelType="Minute" ShouldLoop="True" />
                                     </ScrollViewer>
-                                    <RepeatButton Name="PART_MinuteUpButton" VerticalAlignment="Top" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Up}" />
-                                    <RepeatButton Name="PART_MinuteDownButton" VerticalAlignment="Bottom" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Down}" />
+                                    <RepeatButton Name="PART_MinuteUpButton" HorizontalAlignment="Center" VerticalAlignment="Top" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronUp}" Classes="ExtraSmall" />
+                                    <RepeatButton Name="PART_MinuteDownButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronDown}" Classes="ExtraSmall" />
                                 </Panel>
                                 <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                                <Panel Name="PART_SecondHost" Grid.Column="4">
+                                <Panel Name="PART_SecondHost" Grid.Column="4" Margin="{my:Thickness Default, Horizontal}">
                                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel Name="PART_SecondSelector" PanelType="Second" ShouldLoop="False" />
                                     </ScrollViewer>
-                                    <RepeatButton Name="PART_SecondUpButton" VerticalAlignment="Top" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Up}" />
-                                    <RepeatButton Name="PART_SecondDownButton" VerticalAlignment="Bottom" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Down}" />
+                                    <RepeatButton Name="PART_SecondUpButton" HorizontalAlignment="Center" VerticalAlignment="Top" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronUp}" Classes="ExtraSmall" />
+                                    <RepeatButton Name="PART_SecondDownButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronDown}" Classes="ExtraSmall" />
                                 </Panel>
                                 <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                                <Panel Name="PART_PeriodHost" Grid.Column="6">
+                                <Panel Name="PART_PeriodHost" Grid.Column="6" Margin="{my:Thickness Default, Horizontal}">
                                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel Name="PART_PeriodSelector" PanelType="TimePeriod" ShouldLoop="False" />
                                     </ScrollViewer>
-                                    <RepeatButton Name="PART_PeriodUpButton" VerticalAlignment="Top" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Up}" />
-                                    <RepeatButton Name="PART_PeriodDownButton" VerticalAlignment="Bottom" Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Down}" />
+                                    <RepeatButton Name="PART_PeriodUpButton" HorizontalAlignment="Center" VerticalAlignment="Top" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronUp}" Classes="ExtraSmall" />
+                                    <RepeatButton Name="PART_PeriodDownButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Focusable="False" IsVisible="False" Content="{StaticResource MyNet.Geometry.ChevronDown}" Classes="ExtraSmall" />
                                 </Panel>
                                 <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                 <Rectangle Name="PART_FirstSpacer"
-                                           Grid.Column="1"
-                                           Width="1"
+                                           Width="0"
                                            HorizontalAlignment="Center"
                                            Fill="{DynamicResource MyNet.Brush.Container.Border}" />
                                 <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                 <Rectangle Name="PART_SecondSpacer"
-                                           Grid.Column="3"
-                                           Width="1"
+                                           Width="0"
                                            HorizontalAlignment="Center"
                                            Fill="{DynamicResource MyNet.Brush.Container.Border}" />
                                 <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                 <Rectangle Name="PART_ThirdSpacer"
-                                           Grid.Column="5"
-                                           Width="1"
+                                           Width="0"
                                            HorizontalAlignment="Center"
                                            Fill="{DynamicResource MyNet.Brush.Container.Border}" />
                             </Grid>
-
-                            <Grid Name="AcceptDismissGrid" Grid.Row="1" ColumnDefinitions="*,Auto,*">
+                            
+                            <Grid Name="AcceptDismissGrid" Grid.Row="1" ColumnDefinitions="*,Auto,*" Margin="0 3 0 0">
                                 <Button Name="PART_AcceptButton"
                                         Grid.Column="0"
                                         HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"
-                                        my:ThemeAssist.PrimaryColor="{DynamicResource MyNet.Brush.Positive}"
-                                        Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Validation}">
-                                    <PathIcon Classes="Small" Data="{StaticResource MyNet.Geometry.Check}" />
-                                </Button>
-                                <Rectangle Grid.Column="1" Width="1" Fill="{DynamicResource MyNet.Brush.Container.Border}" />
+                                        Margin="{my:Thickness Default}"
+                                        IsDefault="True"
+                                        Focusable="False"
+                                        Classes="Text Primary Small"
+                                        ToolTip.Tip="{my:Resource Validate}"
+                                        Content="{my:Icon Check}" />
                                 <Button Name="PART_DismissButton"
                                         Grid.Column="2"
+                                        IsCancel="True"
+                                        Focusable="False"
                                         HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"
-                                        my:ThemeAssist.PrimaryColor="{DynamicResource MyNet.Brush.Negative}"
-                                        Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.Picker.Validation}">
-                                    <PathIcon Classes="Small" Data="{StaticResource MyNet.Geometry.Close}" />
-                                </Button>
-                                <Rectangle Grid.Column="0"
-                                           Grid.ColumnSpan="3"
-                                           Height="1"
-                                           VerticalAlignment="Top"
-                                           Fill="{DynamicResource MyNet.Brush.Container.Border}" />
+                                        Margin="{my:Thickness Default}"
+                                        Classes="Text Small"
+                                        ToolTip.Tip="{my:Resource Cancel}"
+                                        Content="{my:Icon Close}" />
                             </Grid>
                         </Grid>
                     </Border>
@@ -178,13 +174,15 @@
         <Setter Property="my:TextFieldAssist.Watermark" Value="{x:Static sys:String.Empty}" />
         <Setter Property="my:TextFieldAssist.FloatingScale" Value="0.75" />
         <Setter Property="my:TextFieldAssist.FloatingOffset" Value="12" />
+        <Setter Property="my:TextFieldAssist.UpdateValueOnKeyboard" Value="True" />
+        <Setter Property="my:TextFieldAssist.UpdateValueOnMouseWheel" Value="True" />
         <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
         <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Center" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.Margin" Value="0" />
-        <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem}" />
-        <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
+        <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Small}" />
+        <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="my:ProxyAssist.Enable" Value="True" />
         <Setter Property="Focusable" Value="True" />
@@ -195,6 +193,8 @@
         <Setter Property="my:DateTimePickerAssist.WatermarkSecond" Value="{my:Resource Second}" />
         <Setter Property="my:DateTimePickerAssist.OverrideWatermark" Value="True" />
         <Setter Property="my:GlobalizationAssist.UpdateOnCultureChanged" Value="True" />
+        <Setter Property="my:PopupAssist.EnableShortcutKeys" Value="True"/>
+        <Setter Property="my:PopupAssist.AutoFocusOnOpening" Value="True"/>
 
         <Style Selector="^">
             <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
@@ -211,18 +211,19 @@
             <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
             <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
             <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
-            <Setter Property="my:FlyoutAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
-            <Setter Property="my:FlyoutAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PopupAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
+            <Setter Property="my:PopupAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:FlyoutAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0.5" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:PopupAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:FlyoutAssist.Foreground)}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:FlyoutAssist.PrimaryColor)}" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.(my:ItemsAssist.ActiveBackground), Contrast=True}" />
-            <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.(my:FlyoutAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:PopupAssist.PrimaryColor)}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
         </Style>
 
         <Setter Property="Template">
@@ -301,8 +302,7 @@
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Stretch">
                                                     <TextBlock Name="PART_HourTextBlock"
-                                                               Padding="{my:Thickness Default,
-                                                                                      Horizontal}"
+                                                               Padding="{my:Thickness Default, Horizontal}"
                                                                HorizontalAlignment="Center"
                                                                VerticalAlignment="Center"
                                                                FontFamily="{TemplateBinding FontFamily}"
@@ -310,22 +310,17 @@
                                                                FontWeight="{TemplateBinding FontWeight}"
                                                                Text="{TemplateBinding my:DateTimePickerAssist.WatermarkHour}" />
                                                 </Border>
-
-                                                <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                                 <Rectangle Name="PART_FirstColumnDivider"
                                                            Grid.Column="1"
                                                            Width="1"
                                                            HorizontalAlignment="Center"
                                                            Fill="{TemplateBinding BorderBrush}" />
-
-                                                <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                                 <Border Name="PART_SecondPickerHost"
                                                         Grid.Column="2"
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Stretch">
                                                     <TextBlock Name="PART_MinuteTextBlock"
-                                                               Padding="{my:Thickness Default,
-                                                                                      Horizontal}"
+                                                               Padding="{my:Thickness Default, Horizontal}"
                                                                HorizontalAlignment="Center"
                                                                VerticalAlignment="Center"
                                                                FontFamily="{TemplateBinding FontFamily}"
@@ -333,22 +328,17 @@
                                                                FontWeight="{TemplateBinding FontWeight}"
                                                                Text="{TemplateBinding my:DateTimePickerAssist.WatermarkMinute}" />
                                                 </Border>
-
-                                                <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                                 <Rectangle Name="PART_SecondColumnDivider"
                                                            Grid.Column="3"
                                                            Width="1"
                                                            HorizontalAlignment="Center"
                                                            Fill="{TemplateBinding BorderBrush}" />
-
-                                                <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                                 <Border Name="PART_ThirdPickerHost"
                                                         Grid.Column="4"
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Stretch">
                                                     <TextBlock Name="PART_SecondTextBlock"
-                                                               Padding="{my:Thickness Default,
-                                                                                      Horizontal}"
+                                                               Padding="{my:Thickness Default, Horizontal}"
                                                                HorizontalAlignment="Center"
                                                                VerticalAlignment="Center"
                                                                FontFamily="{TemplateBinding FontFamily}"
@@ -356,22 +346,17 @@
                                                                FontWeight="{TemplateBinding FontWeight}"
                                                                Text="{TemplateBinding my:DateTimePickerAssist.WatermarkSecond}" />
                                                 </Border>
-
-                                                <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                                 <Rectangle Name="PART_ThirdColumnDivider"
                                                            Grid.Column="5"
                                                            Width="1"
                                                            HorizontalAlignment="Center"
                                                            Fill="{TemplateBinding BorderBrush}" />
-
-                                                <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                                 <Border Name="PART_FourthPickerHost"
                                                         Grid.Column="6"
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Stretch">
                                                     <TextBlock Name="PART_PeriodTextBlock"
-                                                               Padding="{my:Thickness Default,
-                                                                                      Horizontal}"
+                                                               Padding="{my:Thickness Default, Horizontal}"
                                                                HorizontalAlignment="Center"
                                                                VerticalAlignment="Center"
                                                                FontFamily="{TemplateBinding FontFamily}"
@@ -409,14 +394,15 @@
                         </Border>
 
                         <Popup Name="PART_Popup"
+                               HorizontalOffset="3"
                                InheritsTransform="True"
                                IsLightDismissEnabled="True"
                                Placement="Bottom"
                                PlacementTarget="{TemplateBinding}"
                                WindowManagerAddShadowHint="False">
-                            <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:FlyoutAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
+                            <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                 <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
-                                    <TimePickerPresenter Name="PART_PickerPresenter" Foreground="{TemplateBinding (my:FlyoutAssist.Foreground)}" />
+                                    <TimePickerPresenter Name="PART_PickerPresenter" Foreground="{TemplateBinding (my:PopupAssist.Foreground)}" />
                                 </Border>
                             </Border>
                         </Popup>
@@ -508,10 +494,10 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:FlyoutAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
         </Style>
 
         <!-- Style -->
@@ -623,8 +609,7 @@
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch">
                                                 <TextBlock Name="PART_HourTextBlock"
-                                                           Padding="{my:Thickness Default,
-                                                                                  Horizontal}"
+                                                           Padding="{my:Thickness Default, Horizontal}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
                                                            FontFamily="{TemplateBinding FontFamily}"
@@ -632,22 +617,17 @@
                                                            FontWeight="{TemplateBinding FontWeight}"
                                                            Text="{TemplateBinding my:DateTimePickerAssist.WatermarkHour}" />
                                             </Border>
-
-                                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                             <Rectangle Name="PART_FirstColumnDivider"
                                                        Grid.Column="1"
                                                        Width="1"
                                                        HorizontalAlignment="Center"
                                                        Fill="{TemplateBinding BorderBrush}" />
-
-                                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                             <Border Name="PART_SecondPickerHost"
                                                     Grid.Column="2"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch">
                                                 <TextBlock Name="PART_MinuteTextBlock"
-                                                           Padding="{my:Thickness Default,
-                                                                                  Horizontal}"
+                                                           Padding="{my:Thickness Default, Horizontal}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
                                                            FontFamily="{TemplateBinding FontFamily}"
@@ -655,22 +635,17 @@
                                                            FontWeight="{TemplateBinding FontWeight}"
                                                            Text="{TemplateBinding my:DateTimePickerAssist.WatermarkMinute}" />
                                             </Border>
-
-                                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                             <Rectangle Name="PART_SecondColumnDivider"
                                                        Grid.Column="3"
                                                        Width="1"
                                                        HorizontalAlignment="Center"
                                                        Fill="{TemplateBinding BorderBrush}" />
-
-                                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                             <Border Name="PART_ThirdPickerHost"
                                                     Grid.Column="4"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch">
                                                 <TextBlock Name="PART_SecondTextBlock"
-                                                           Padding="{my:Thickness Default,
-                                                                                  Horizontal}"
+                                                           Padding="{my:Thickness Default, Horizontal}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
                                                            FontFamily="{TemplateBinding FontFamily}"
@@ -678,22 +653,17 @@
                                                            FontWeight="{TemplateBinding FontWeight}"
                                                            Text="{TemplateBinding my:DateTimePickerAssist.WatermarkSecond}" />
                                             </Border>
-
-                                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                             <Rectangle Name="PART_ThirdColumnDivider"
                                                        Grid.Column="5"
                                                        Width="1"
                                                        HorizontalAlignment="Center"
                                                        Fill="{TemplateBinding BorderBrush}" />
-
-                                            <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
                                             <Border Name="PART_FourthPickerHost"
                                                     Grid.Column="6"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch">
                                                 <TextBlock Name="PART_PeriodTextBlock"
-                                                           Padding="{my:Thickness Default,
-                                                                                  Horizontal}"
+                                                           Padding="{my:Thickness Default, Horizontal}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
                                                            FontFamily="{TemplateBinding FontFamily}"
@@ -708,8 +678,7 @@
                                 <!-- Clear button -->
                                 <Button Name="PART_ClearButton"
                                         Grid.Column="2"
-                                        Margin="{my:Thickness Small,
-                                                              Left}"
+                                        Margin="{my:Thickness Small, Left}"
                                         Classes="no-disablable"
                                         Command="{Binding $parent[TimePicker].Clear}"
                                         Content="{StaticResource MyNet.Geometry.Close}"
@@ -746,6 +715,7 @@
                         </Border>
 
                         <Popup Name="PART_Popup"
+                               HorizontalOffset="3"
                                InheritsTransform="True"
                                IsLightDismissEnabled="True"
                                Placement="Bottom"

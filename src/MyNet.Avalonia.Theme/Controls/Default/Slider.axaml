@@ -36,7 +36,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.Thumb.Embedded.Slider" TargetType="{x:Type Thumb}" BasedOn="{StaticResource MyNet.Theme.Thumb.Ellipse}">
-        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Cursor" Value="Arrow" />
         <Setter Property="Height" Value="{Binding $parent[Slider].(my:SliderAssist.ThumbSize)}" />
         <Setter Property="Width" Value="{Binding $parent[Slider].(my:SliderAssist.ThumbSize)}" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -353,8 +353,8 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
         </Style>
 
         <!-- Error -->

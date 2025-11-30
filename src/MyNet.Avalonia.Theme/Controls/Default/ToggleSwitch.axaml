@@ -8,7 +8,7 @@
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Cursor" Value="Arrow" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.ToggleSwitch.Medium}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -148,7 +148,7 @@
         
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
         </Style>
 
         <!-- Sizes -->

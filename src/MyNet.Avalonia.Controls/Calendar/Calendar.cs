@@ -17,13 +17,17 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using MyNet.Avalonia.Controls.DateTimePickers;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.DateTimes;
 using MyNet.Utilities.Helpers;
 using MyNet.Utilities.Localization;
 using MyNet.Utilities.Suspending;
+using CalendarBlackoutDatesCollection = MyNet.Avalonia.Controls.Primitives.CalendarBlackoutDatesCollection;
+using CalendarDateChangedEventArgs = MyNet.Avalonia.Controls.Primitives.CalendarDateChangedEventArgs;
+using CalendarDayButton = MyNet.Avalonia.Controls.Primitives.CalendarDayButton;
+using SelectedDatesCollection = MyNet.Avalonia.Controls.Primitives.SelectedDatesCollection;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -69,6 +73,7 @@ public class Calendar : TemplatedControl
 
     private DateTime? _hoverStart;
     private DateTime? _lastSelectedDate;
+    private KeyModifiers _lastKeyModifiers;
 
     static Calendar()
     {
@@ -96,7 +101,7 @@ public class Calendar : TemplatedControl
         BlackoutDates.CollectionChanged += OnBlackoutDatesCollectionChanged;
     }
 
-    internal event EventHandler<PointerReleasedEventArgs>? DayButtonMouseUp;
+    internal event EventHandler<RoutedEventArgs>? DayButtonClick;
 
     #region IsTodayHighlighted
 
@@ -208,7 +213,7 @@ public class Calendar : TemplatedControl
 
     #region SelectedDate
 
-    public static readonly RoutedEvent<CalendarDateButtonEventArgs> DateSelectedEvent = RoutedEvent.Register<TimePickerPresenter, CalendarDateButtonEventArgs>(nameof(DateSelected), RoutingStrategies.Bubble);
+    public static readonly RoutedEvent<CalendarDateButtonEventArgs> DateSelectedEvent = RoutedEvent.Register<Calendar, CalendarDateButtonEventArgs>(nameof(DateSelected), RoutingStrategies.Bubble);
 
     public event EventHandler<CalendarDateButtonEventArgs> DateSelected
     {
@@ -595,9 +600,9 @@ public class Calendar : TemplatedControl
                 };
                 _ = cell.SetValue(Grid.RowProperty, i);
                 _ = cell.SetValue(Grid.ColumnProperty, j);
+                cell.AddHandler(Button.ClickEvent, OnDayButtonClick);
                 cell.AddHandler(PointerReleasedEvent, OnDayPointerReleased, handledEventsToo: true);
                 cell.AddHandler(PointerPressedEvent, OnDayPointerPressed, handledEventsToo: true);
-                cell.AddHandler(KeyDownEvent, OnDayKeyDown, RoutingStrategies.Tunnel, handledEventsToo: true);
 
                 children.Add(cell);
             }
@@ -615,7 +620,6 @@ public class Calendar : TemplatedControl
             Grid.SetRow(cell, i / NumberOfColumnInYearGrid);
             Grid.SetColumn(cell, i % NumberOfColumnInYearGrid);
             cell.AddHandler(Button.ClickEvent, OnCalendarYearButtonClick);
-            cell.AddHandler(KeyDownEvent, OnYearKeyDown, RoutingStrategies.Tunnel, handledEventsToo: true);
 
             _yearGrid?.Children.Add(cell);
         }
@@ -998,6 +1002,8 @@ public class Calendar : TemplatedControl
 
         Focus();
 
+        _lastKeyModifiers = e.KeyModifiers;
+
         if (cell.IsBlackout || !cell.IsEnabled || SelectionMode is CalendarSelectionMode.None || cell.DateContext?.ToDate() is not DateTime date)
         {
             _hoverStart = null;
@@ -1010,18 +1016,22 @@ public class Calendar : TemplatedControl
             _hoverStart = date;
     }
 
-    private void OnDayPointerReleased(object? sender, PointerReleasedEventArgs e)
+    private void OnDayPointerReleased(object? sender, PointerReleasedEventArgs e) => OnDayButtonClick(sender, e);
+
+    private void OnDayButtonClick(object? sender, RoutedEventArgs e)
     {
-        if (sender is not CalendarDayButton cell || e.InitialPressMouseButton != MouseButton.Left) return;
+        if (sender is not CalendarDayButton cell) return;
+
+        Focus();
 
         if (cell.DataContext is DateTime selectedDate)
         {
-            var shift = (e.KeyModifiers & KeyModifiers.Shift) == KeyModifiers.Shift;
-            var ctrl = (e.KeyModifiers & KeyModifiers.Control) == KeyModifiers.Control;
+            var shift = (_lastKeyModifiers & KeyModifiers.Shift) == KeyModifiers.Shift;
+            var ctrl = (_lastKeyModifiers & KeyModifiers.Control) == KeyModifiers.Control;
 
             ProcessDateSelection(selectedDate, shift, ctrl);
 
-            DayButtonMouseUp?.Invoke(this, e);
+            DayButtonClick?.Invoke(this, e);
         }
     }
 
@@ -1038,25 +1048,11 @@ public class Calendar : TemplatedControl
 
     #region Keyboard events
 
-    private void OnDayKeyDown(object? sender, KeyEventArgs e)
-    {
-        if (e.Handled || sender is not CalendarDayButton) return;
-
-        if (e.Key == Key.Enter || e.Key == Key.Space)
-            OnCalendarKeyDown(e);
-    }
-
-    private void OnYearKeyDown(object? sender, KeyEventArgs e)
-    {
-        if (e.Handled || sender is not CalendarYearButton) return;
-
-        if (e.Key == Key.Enter || e.Key == Key.Space)
-            OnCalendarKeyDown(e);
-    }
-
     private void OnCalendarKeyDown(KeyEventArgs e)
     {
         if (e.Handled || !IsEnabled) return;
+
+        _lastKeyModifiers = e.KeyModifiers;
 
         var ctrl = (e.KeyModifiers & KeyModifiers.Control) == KeyModifiers.Control;
         var shift = (e.KeyModifiers & KeyModifiers.Shift) == KeyModifiers.Shift;
@@ -1101,11 +1097,6 @@ public class Calendar : TemplatedControl
             case Key.End:
                 ProcessEndKey(ctrl, shift);
                 e.Handled = true;
-                break;
-
-            case Key.Enter:
-            case Key.Space:
-                ProcessEnterKey(ctrl, shift);
                 break;
         }
     }
@@ -1194,24 +1185,6 @@ public class Calendar : TemplatedControl
 
             case CenturyContext:
                 ProcessContextSelection(CurrentMonthContext.AddDecades(1));
-                break;
-        }
-    }
-
-    private void ProcessEnterKey(bool ctrl, bool shift)
-    {
-        switch (DisplayDateContext)
-        {
-            case MonthContext:
-                var date = (DateTime?)GetFocusedDayButton()?.DataContext;
-                if (date.HasValue)
-                    ProcessDateSelection(date.Value, shift, ctrl);
-                break;
-
-            default:
-                var context = _cells.Values.FirstOrDefault(x => x.IsSelected)?.DateContext;
-                if (context is not null)
-                    DisplayDateContext = context;
                 break;
         }
     }

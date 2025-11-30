@@ -4,6 +4,7 @@
                     x:CompileBindings="True">
 
     <ControlTheme x:Key="{x:Type Expander}" TargetType="Expander" BasedOn="{StaticResource {x:Type HeaderedContentControl}}">
+        <Setter Property="my:ExpanderAssist.EnableShortcutKeys" Value="True"/>
         <Setter Property="Template">
             <ControlTemplate TargetType="Expander">
                 <Border Name="PART_Root"
@@ -251,6 +252,7 @@
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Icon.Left}" />
         <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Cursor" Value="Arrow" />
         <Setter Property="my:ExpanderAssist.ButtonTheme" Value="{StaticResource {x:Type Button}}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="Expander">

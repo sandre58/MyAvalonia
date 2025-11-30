@@ -18,7 +18,7 @@
                     <ContentControl Name="InlineDataValidationContentControl"
                                     Margin="0 0 0 -15"
                                     VerticalAlignment="Bottom"
-                                    Content="{Binding (DataValidationErrors.Errors)}"
+                                    Content="{Binding (DataValidationErrors.Errors), Converter={x:Static my:ValidationErrorMessageConverter.Default}}"
                                     ContentTemplate="{TemplateBinding ErrorTemplate}"
                                     Cursor="Arrow"
                                     DataContext="{TemplateBinding Owner}"
@@ -58,7 +58,7 @@
                                       CornerRadius="{TemplateBinding CornerRadius}" />
                     <ContentControl Margin="0 0 -23 0"
                                     HorizontalAlignment="Right"
-                                    Content="{Binding (DataValidationErrors.Errors)}"
+                                    Content="{Binding (DataValidationErrors.Errors), Converter={x:Static my:ValidationErrorMessageConverter.Default}}"
                                     ContentTemplate="{TemplateBinding ErrorTemplate}"
                                     Cursor="Arrow"
                                     DataContext="{TemplateBinding Owner}"
@@ -96,7 +96,7 @@
 
                     <ContentControl HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
-                                    Content="{Binding (DataValidationErrors.Errors)}"
+                                    Content="{Binding (DataValidationErrors.Errors), Converter={x:Static my:ValidationErrorMessageConverter.Default}}"
                                     ContentTemplate="{TemplateBinding ErrorTemplate}"
                                     Cursor="Arrow"
                                     DataContext="{TemplateBinding Owner}"

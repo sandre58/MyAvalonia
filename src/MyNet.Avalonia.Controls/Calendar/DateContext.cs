@@ -9,7 +9,9 @@ using System.Globalization;
 using MyNet.Utilities;
 using MyNet.Utilities.Helpers;
 
-namespace MyNet.Avalonia.Controls.DateTimePickers;
+#pragma warning disable IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.Controls.Primitives;
+#pragma warning restore IDE0130 // Namespace does not match folder structure
 
 public abstract record DateContext : ISimilar<DateTime>
 {

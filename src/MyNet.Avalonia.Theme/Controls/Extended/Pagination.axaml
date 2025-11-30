@@ -91,7 +91,7 @@
                     <DropDownButton Margin="{my:Thickness Default,
                                                           Left}"
                                     VerticalAlignment="Stretch"
-                                    my:FlyoutAssist.Placement="BottomEdgeAlignedLeft"
+                                    my:PopupAssist.Placement="BottomEdgeAlignedLeft"
                                     Classes="no-disablable"
                                     Content="{TemplateBinding PageSize}"
                                     FontSize="{StaticResource MyNet.Font.Size}"

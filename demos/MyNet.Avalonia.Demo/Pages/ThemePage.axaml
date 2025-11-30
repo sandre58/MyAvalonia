@@ -90,8 +90,8 @@
                             <ListBoxItem my:IconAssist.Icon="{my:Icon WeatherNight}" Content="{my:Resource Dark}" DataContext="{x:Static theme:ThemeBase.Dark}" />
                         </ListBox>
                     </HeaderedContentControl>
-                    <my:ColorPicker my:TextFieldAssist.ShowClipboardButton="True" Watermark="{my:Resource PrimaryColor}" Color="{Binding CurrentPrimaryColor}" />
-                    <my:ColorPicker my:TextFieldAssist.ShowClipboardButton="True" Watermark="{my:Resource AccentColor}" Color="{Binding CurrentAccentColor}" />
+                    <my:ColorPicker my:TextFieldAssist.ShowClipboardButton="True" Watermark="{my:Resource PrimaryColor}" SelectedValue="{Binding CurrentPrimaryColor}" />
+                    <my:ColorPicker my:TextFieldAssist.ShowClipboardButton="True" Watermark="{my:Resource AccentColor}" SelectedValue="{Binding CurrentAccentColor}" />
                 </StackPanel>
             </ScrollViewer>
         </HeaderedContentControl>

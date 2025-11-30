@@ -29,7 +29,7 @@ internal sealed partial class SplitButtonsPage : AutoBuildPage
             {
                 ItemsSource = MenuHelper.RandomizeMenuItems(1, 3, 5, 3)
             },
-            [!FlyoutAssist.PlacementProperty] = PopupPlacement[!SelectingItemsControl.SelectedValueProperty]
+            [!PopupAssist.PlacementProperty] = PopupPlacement[!SelectingItemsControl.SelectedValueProperty]
         };
 
         if (data.Theme.NotContainsAny("rounded"))

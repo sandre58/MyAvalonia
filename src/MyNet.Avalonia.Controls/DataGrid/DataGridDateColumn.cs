@@ -24,7 +24,7 @@ namespace MyNet.Avalonia.Controls;
 public class DataGridDateColumn : DataGridBoundColumn<CalendarDatePicker, ContentControl>
 {
     public DataGridDateColumn()
-        : base(CalendarDatePicker.SelectedDateProperty, ContentControl.ContentProperty) => Format = nameof(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
+        : base(CalendarDatePicker.SelectedValueProperty, ContentControl.ContentProperty) => Format = nameof(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 
     #region FirstDayOfWeek
 
@@ -95,9 +95,9 @@ public class DataGridDateColumn : DataGridBoundColumn<CalendarDatePicker, Conten
         ((CalendarDatePicker)control).DisplayFormat = DateTimeHelper.TranslateDatePattern(Format.OrEmpty(), CultureInfo.CurrentCulture);
     }
 
-    protected override void ResetValue(CalendarDatePicker control, object uneditedValue) => control.SelectedDate = (DateTime?)uneditedValue;
+    protected override void ResetValue(CalendarDatePicker control, object uneditedValue) => control.SelectedValue = (DateTime?)uneditedValue;
 
-    protected override object? GetValue(CalendarDatePicker control) => control.SelectedDate;
+    protected override object? GetValue(CalendarDatePicker control) => control.SelectedValue;
 
     private void SynchronizeDataTemplate(Control element)
     {

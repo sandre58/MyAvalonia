@@ -19,6 +19,7 @@ using Avalonia.Input;
 using Avalonia.Metadata;
 using Avalonia.Styling;
 using Avalonia.VisualTree;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Extensions;
 using MyNet.Utilities;
 
@@ -31,7 +32,7 @@ namespace MyNet.Avalonia.Controls;
 /// </summary>
 [TemplatePart(PartPopup, typeof(Popup), IsRequired = true)]
 [PseudoClasses(PseudoClassName.FlyoutOpen, PseudoClassName.Empty, PseudoClassName.Pressed)]
-public class MultiComboBox : SelectingItemsControl
+public class MultiComboBox : SelectingItemsControl, IPopupControl
 {
     public const string PartRootPanel = "PART_RootPanel";
     public const string PartPopup = "PART_Popup";
@@ -171,7 +172,7 @@ public class MultiComboBox : SelectingItemsControl
         {
             // When a drop-down is open with OverlayDismissEventPassThrough enabled and the control
             // is pressed, close the drop-down
-            SetCurrentValue(IsDropDownOpenProperty, false);
+            ClosePopup();
             e.Handled = true;
         }
         else
@@ -194,7 +195,7 @@ public class MultiComboBox : SelectingItemsControl
             }
             else if (PseudoClasses.Contains(PseudoClassName.Pressed))
             {
-                SetCurrentValue(IsDropDownOpenProperty, !IsDropDownOpen);
+                TogglePopup();
                 e.Handled = true;
             }
         }
@@ -221,22 +222,29 @@ public class MultiComboBox : SelectingItemsControl
     {
         base.OnKeyDown(e);
 
-        if (e.Handled)
-            return;
+        if (e.Handled) return;
 
-        if (!IsDropDownOpen && e.Key is Key.F4 or Key.Down or Key.Enter or Key.Space)
+        if (!IsDropDownOpen)
         {
-            SetCurrentValue(IsDropDownOpenProperty, true);
-            e.Handled = true;
+            switch (e.Key)
+            {
+                case Key.Enter:
+                case Key.Down:
+                case Key.Up:
+                case Key.F4:
+                    OpenPopup();
+
+                    break;
+            }
         }
-        else if (IsDropDownOpen)
+        else
         {
             var hotkeys = Application.Current!.PlatformSettings?.HotkeyConfiguration;
             var ctrl = hotkeys is not null && e.KeyModifiers.HasFlag(hotkeys.CommandModifiers);
 
             if (e.Key is Key.Escape or Key.Tab or Key.F4)
             {
-                SetCurrentValue(IsDropDownOpenProperty, false);
+                ClosePopup();
                 e.Handled = true;
             }
 
@@ -289,6 +297,23 @@ public class MultiComboBox : SelectingItemsControl
         }
     }
 
+    public void TogglePopup()
+    {
+        if (IsDropDownOpen)
+        {
+            Focus();
+            ClosePopup();
+        }
+        else
+        {
+            OpenPopup();
+        }
+    }
+
+    public void OpenPopup() => IsDropDownOpen.IfFalse(() => SetCurrentValue(IsDropDownOpenProperty, true));
+
+    public void ClosePopup() => IsDropDownOpen.IfTrue(() => SetCurrentValue(IsDropDownOpenProperty, false));
+
     private void PopupClosed(object? sender, EventArgs e)
     {
         _subscriptionsOnOpen.Clear();
@@ -319,9 +344,9 @@ public class MultiComboBox : SelectingItemsControl
 
     private void IsVisibleChanged(bool isVisible)
     {
-        if (!isVisible && IsDropDownOpen)
+        if (!isVisible)
         {
-            SetCurrentValue(IsDropDownOpenProperty, false);
+            ClosePopup();
         }
     }
 

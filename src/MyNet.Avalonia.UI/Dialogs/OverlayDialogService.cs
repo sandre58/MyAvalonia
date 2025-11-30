@@ -63,7 +63,7 @@ public class OverlayDialogService : ContentDialogServiceBase
         // Load view Model on opening control
         dialog.Loaded += onDialogLoaded;
 
-        // Close control when view Model request
+        // ClosePopup control when view Model request
         viewModel.CloseRequest += onViewModelCloseRequest;
 
         dialog.Closed += onDialogClosed;

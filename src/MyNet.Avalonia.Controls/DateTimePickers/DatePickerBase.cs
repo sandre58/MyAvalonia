@@ -10,7 +10,6 @@ using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
-using MyNet.Avalonia.Controls.DateTimePickers;
 using MyNet.Utilities.DateTimes;
 using MyNet.Utilities.Localization;
 

@@ -5,9 +5,9 @@
     <!-- Inverse -->
     <Style Selector=":is(TemplatedControl), Border, Ellipse, :is(TextBlock)">
         <Style Selector="^.Inverse:not(.Primary):not(.Accent)">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{Binding $parent[TemplatedControl].Foreground}" />
-            <Setter Property="my:ThemeAssist.SecondaryColor" Value="{Binding $parent[TemplatedControl].Foreground}" />
-            <Setter Property="my:ThemeAssist.TertiaryColor" Value="{Binding $parent[TemplatedControl].Foreground}" />
+            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{Binding $parent[Control].(TextElement.Foreground)}" />
+            <Setter Property="my:ThemeAssist.SecondaryColor" Value="{Binding $parent[Control].(TextElement.Foreground)}" />
+            <Setter Property="my:ThemeAssist.TertiaryColor" Value="{Binding $parent[Control].(TextElement.Foreground)}" />
         </Style>
     </Style>
 

@@ -3,8 +3,11 @@
                     xmlns:my="http://mynet.com/avalonia"
                     x:CompileBindings="True">
     <ControlTheme x:Key="{x:Type DropDownButton}" TargetType="DropDownButton" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="my:FlyoutAssist.Placement" Value="BottomEdgeAlignedRight" />
-
+        <Setter Property="my:PopupAssist.Placement" Value="BottomEdgeAlignedRight" />
+        <Setter Property="Cursor" Value="Arrow" />
+        <Setter Property="my:PopupAssist.EnableShortcutKeys" Value="True"/>
+        <Setter Property="my:PopupAssist.AutoFocusOnOpening" Value="True"/>
+        
         <Style Selector="^">
             <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $self.(my:ThemeAssist.TertiaryColor)}" />
@@ -168,17 +171,17 @@
         <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
             <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronDown}" />
         </Style>
-        <Style Selector="^[(my|FlyoutAssist.Placement)=Right], ^[(my|FlyoutAssist.Placement)=RightEdgeAlignedTop], ^[(my|FlyoutAssist.Placement)=RightEdgeAlignedBottom]">
+        <Style Selector="^[(my|PopupAssist.Placement)=Right], ^[(my|PopupAssist.Placement)=RightEdgeAlignedTop], ^[(my|PopupAssist.Placement)=RightEdgeAlignedBottom]">
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronRight}" />
             </Style>
         </Style>
-        <Style Selector="^[(my|FlyoutAssist.Placement)=Left], ^[(my|FlyoutAssist.Placement)=LeftEdgeAlignedTop], ^[(my|FlyoutAssist.Placement)=LeftEdgeAlignedBottom]">
+        <Style Selector="^[(my|PopupAssist.Placement)=Left], ^[(my|PopupAssist.Placement)=LeftEdgeAlignedTop], ^[(my|PopupAssist.Placement)=LeftEdgeAlignedBottom]">
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronLeft}" />
             </Style>
         </Style>
-        <Style Selector="^[(my|FlyoutAssist.Placement)=Top], ^[(my|FlyoutAssist.Placement)=TopEdgeAlignedLeft], ^[(my|FlyoutAssist.Placement)=TopEdgeAlignedRight]">
+        <Style Selector="^[(my|PopupAssist.Placement)=Top], ^[(my|PopupAssist.Placement)=TopEdgeAlignedLeft], ^[(my|PopupAssist.Placement)=TopEdgeAlignedRight]">
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronUp}" />
             </Style>
@@ -235,6 +238,7 @@
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Medium}" />
         <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Medium}" />
+        <Setter Property="Cursor" Value="Arrow" />
         <Setter Property="FocusAdorner">
             <FocusAdornerTemplate>
                 <Ellipse Classes="Inner" Theme="{StaticResource MyNet.Theme.Ellipse.Focus}" />

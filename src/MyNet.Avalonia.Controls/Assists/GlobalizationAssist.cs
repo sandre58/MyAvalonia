@@ -61,18 +61,31 @@ public static class GlobalizationAssist
     private static void UpdateControl(Control? element)
     {
         if (element is global::Avalonia.Controls.TimePicker tp)
-            UpdateTimeFormat(tp);
+            UpdateTimePicker(tp);
 
         if (element is global::Avalonia.Controls.CalendarDatePicker calendarDatePicker)
-            UpdateDateFormat(calendarDatePicker);
+            UpdateCalendarDatePicker(calendarDatePicker);
+
+        if (element is DatePicker datepicker)
+            UpdateDatePicker(datepicker);
     }
 
-    private static void UpdateTimeFormat(global::Avalonia.Controls.TimePicker timePicker) => timePicker.ClockIdentifier = GlobalizationService.Current.Culture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? "24HourClock" : "12HourClock";
+    private static void UpdateTimePicker(global::Avalonia.Controls.TimePicker timePicker) => timePicker.ClockIdentifier = GlobalizationService.Current.Culture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? "24HourClock" : "12HourClock";
 
-    private static void UpdateDateFormat(global::Avalonia.Controls.CalendarDatePicker calendarDatePicker)
+    private static void UpdateCalendarDatePicker(global::Avalonia.Controls.CalendarDatePicker calendarDatePicker)
     {
         calendarDatePicker.SelectedDateFormat = CalendarDatePickerFormat.Custom;
         calendarDatePicker.CustomDateFormatString = GlobalizationService.Current.Culture.DateTimeFormat.ShortDatePattern;
+    }
+
+    private static void UpdateDatePicker(DatePicker datePicker)
+    {
+        var oldValue = datePicker.MonthFormat;
+        datePicker.MonthFormat = string.Empty;
+        datePicker.MonthFormat = oldValue;
+
+        datePicker.DayVisible = !datePicker.DayVisible;
+        datePicker.DayVisible = !datePicker.DayVisible;
     }
 
     #endregion

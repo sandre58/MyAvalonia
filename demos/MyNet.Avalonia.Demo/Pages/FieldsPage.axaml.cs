@@ -16,6 +16,7 @@ using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Styling;
 using MyNet.Avalonia.Controls.Assists;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Demo.Resources;
 using MyNet.Avalonia.Extensions;
@@ -170,10 +171,10 @@ internal sealed partial class FieldsPage : Page
             new ControlData<Controls.CalendarDatePicker>(() => new Controls.CalendarDatePicker
             {
                 Width = 150,
-                [!Controls.Primitives.DatePickerBase.WatermarkProperty] = Watermark[!TextBox.TextProperty]
+                [!Controls.CalendarDatePicker.WatermarkProperty] = Watermark[!TextBox.TextProperty]
             },
-            x => x.SelectedDate = RandomGenerator.Date(DateTime.Today.AddYears(-1), DateTime.Today.AddYears(1)),
-            x => x.SelectedDate = null,
+            x => x.SelectedValue = RandomGenerator.Date(DateTime.Today.AddYears(-1), DateTime.Today.AddYears(1)),
+            x => x.SelectedValue = null,
             "MyCalendarDatePicker"),
 
             new ControlData<DatePicker>(() => new DatePicker
@@ -200,18 +201,17 @@ internal sealed partial class FieldsPage : Page
             new ControlData<Controls.TimePicker>(() => new Controls.TimePicker
             {
                 Width = 110,
-                NeedConfirmation = RandomGenerator.Bool(),
-                [!Controls.Primitives.TimePickerBase.WatermarkProperty] = Watermark[!TextBox.TextProperty]
+                [!Controls.TimePicker.WatermarkProperty] = Watermark[!TextBox.TextProperty]
             },
-            x => x.SelectedTime = RandomGenerator.Date(DateTime.Today.AddYears(-1), DateTime.Today.AddYears(1)).TimeOfDay,
-            x => x.SelectedTime = null,
+            x => x.SelectedValue = RandomGenerator.Date(DateTime.Today.AddYears(-1), DateTime.Today.AddYears(1)).TimeOfDay,
+            x => x.SelectedValue = null,
             "MyTimePicker"),
 
             new ControlData<Controls.DateTimePicker>(() => new Controls.DateTimePicker
             {
                 Width = 220,
                 NeedConfirmation = RandomGenerator.Bool(),
-                [!Controls.Primitives.DatePickerBase.WatermarkProperty] = Watermark[!TextBox.TextProperty]
+                [!DatePickerBase.WatermarkProperty] = Watermark[!TextBox.TextProperty]
             },
             x => x.SelectedDate = RandomGenerator.Date(DateTime.Today.AddYears(-1), DateTime.Today.AddYears(1)),
             x => x.SelectedDate = null),
@@ -219,7 +219,7 @@ internal sealed partial class FieldsPage : Page
             new ControlData<Controls.DateRangePicker>(() => new Controls.DateRangePicker
             {
                 Width = 200,
-                [!Controls.Primitives.DatePickerBase.WatermarkProperty] = Watermark[!TextBox.TextProperty]
+                [!DatePickerBase.WatermarkProperty] = Watermark[!TextBox.TextProperty]
             },
             x =>
             {
@@ -235,7 +235,7 @@ internal sealed partial class FieldsPage : Page
             new ControlData<Controls.TimeRangePicker>(() => new Controls.TimeRangePicker
             {
                 Width = 140,
-                [!Controls.Primitives.TimePickerBase.WatermarkProperty] = Watermark[!TextBox.TextProperty]
+                [!TimePickerBase.WatermarkProperty] = Watermark[!TextBox.TextProperty]
             },
             x =>
             {
@@ -251,10 +251,10 @@ internal sealed partial class FieldsPage : Page
             new ControlData<Controls.ColorPicker>(() => new Controls.ColorPicker
             {
                 Width = 150,
-                [!CalendarDatePicker.WatermarkProperty] = Watermark[!TextBox.TextProperty]
+                [!Controls.ColorPicker.WatermarkProperty] = Watermark[!TextBox.TextProperty]
             },
-            x => x.Color = RandomGenerator.Color().ToColor().GetValueOrDefault(),
-            x => x.Color = default)
+            x => x.SelectedValue = RandomGenerator.Color().ToColor().GetValueOrDefault(),
+            x => x.SelectedValue = default)
         ];
     }
 

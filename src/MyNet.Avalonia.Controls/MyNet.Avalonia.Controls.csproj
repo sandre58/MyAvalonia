@@ -3,6 +3,7 @@
     <PropertyGroup>
         <Product>My .NET Avalonia - Controls</Product>
         <PackageIcon>MyAvalonia.png</PackageIcon>
+        <NeutralLanguage>fr</NeutralLanguage>
         <Description>Advanced controls and UI components for Avalonia applications: color pickers, data grids, custom cursors, and integration with MyNet libraries.</Description>
         <PackageTags>Avalonia;UI;Controls;ColorPicker;DataGrid;MyNet;Extensions;CrossPlatform;Desktop</PackageTags>
     </PropertyGroup>
@@ -30,12 +31,30 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
       </Compile>
+      <Compile Update="Resources\ControlResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ControlResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\MessagesResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MessagesResources.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
     
     <ItemGroup>
       <EmbeddedResource Update="Resources\ColorPickerResources.resx">
         <LastGenOutput>ColorPickerResources.Designer.cs</LastGenOutput>
         <Generator>ResXFileCodeGenerator</Generator>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\ControlResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ControlResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\MessagesResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>MessagesResources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
 

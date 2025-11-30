@@ -170,7 +170,7 @@
             <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
             <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $parent[TemplatedControl].Foreground}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.Foreground}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.(my:ItemsAssist.ActiveBackground), Contrast=True}" />
             <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.Foreground}" />
@@ -443,7 +443,7 @@
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverBackground" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $parent[TemplatedControl].Foreground}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.Foreground}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
             <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />

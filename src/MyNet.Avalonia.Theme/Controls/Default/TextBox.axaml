@@ -139,11 +139,11 @@
                                                            SelectionStart="{TemplateBinding SelectionStart}"
                                                            Text="{TemplateBinding Text, Mode=TwoWay}"
                                                            TextAlignment="{TemplateBinding TextAlignment}"
-                                                           TextBlock.FontFamily="{TemplateBinding FontFamily}"
-                                                           TextBlock.FontSize="{TemplateBinding FontSize}"
-                                                           TextBlock.FontStyle="{TemplateBinding FontStyle}"
-                                                           TextBlock.FontWeight="{TemplateBinding FontWeight}"
-                                                           TextBlock.Foreground="{TemplateBinding Foreground}"
+                                                           TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                                           TextElement.FontSize="{TemplateBinding FontSize}"
+                                                           TextElement.FontStyle="{TemplateBinding FontStyle}"
+                                                           TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                           TextElement.Foreground="{TemplateBinding Foreground}"
                                                            TextWrapping="{TemplateBinding TextWrapping}" />
                                         </ScrollViewer>
 
@@ -284,9 +284,9 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
         </Style>
 
         <!-- Style -->
@@ -408,11 +408,11 @@
                                                        SelectionStart="{TemplateBinding SelectionStart}"
                                                        Text="{TemplateBinding Text, Mode=TwoWay}"
                                                        TextAlignment="{TemplateBinding TextAlignment}"
-                                                       TextBlock.FontFamily="{TemplateBinding FontFamily}"
-                                                       TextBlock.FontSize="{TemplateBinding FontSize}"
-                                                       TextBlock.FontStyle="{TemplateBinding FontStyle}"
-                                                       TextBlock.FontWeight="{TemplateBinding FontWeight}"
-                                                       TextBlock.Foreground="{TemplateBinding Foreground}"
+                                                       TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                                       TextElement.FontSize="{TemplateBinding FontSize}"
+                                                       TextElement.FontStyle="{TemplateBinding FontStyle}"
+                                                       TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                       TextElement.Foreground="{TemplateBinding Foreground}"
                                                        TextWrapping="{TemplateBinding TextWrapping}" />
                                     </ScrollViewer>
 
@@ -421,8 +421,7 @@
                                 <!-- Clipboard button -->
                                 <Button Name="PART_ClipboardButton"
                                         Grid.Column="2"
-                                        Margin="{my:Thickness Small,
-                                                              Left}"
+                                        Margin="{my:Thickness Small, Left}"
                                         Classes="Clipboard no-disablable"
                                         CommandParameter="{TemplateBinding Text, Mode=OneWay}"
                                         IsVisible="False"
@@ -431,8 +430,7 @@
                                 <!-- Clear button -->
                                 <Button Name="PART_ClearButton"
                                         Grid.Column="3"
-                                        Margin="{my:Thickness Small,
-                                                              Left}"
+                                        Margin="{my:Thickness Small, Left}"
                                         Classes="no-disablable"
                                         Command="{Binding $parent[TextBox].Clear}"
                                         Content="{StaticResource MyNet.Geometry.Close}"
@@ -442,8 +440,7 @@
                                 <!-- Reveal Button -->
                                 <ToggleButton Name="PART_RevealButton"
                                               Grid.Column="4"
-                                              Margin="{my:Thickness Small,
-                                                                    Left}"
+                                              Margin="{my:Thickness Small, Left}"
                                               my:ThemeAssist.TertiaryColor="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
                                               Classes="no-disablable"
                                               Content="{StaticResource MyNet.Geometry.Eye}"
@@ -535,11 +532,11 @@
                                    SelectionStart="{TemplateBinding SelectionStart}"
                                    Text="{TemplateBinding Text, Mode=TwoWay}"
                                    TextAlignment="{TemplateBinding TextAlignment}"
-                                   TextBlock.FontFamily="{TemplateBinding FontFamily}"
-                                   TextBlock.FontSize="{TemplateBinding FontSize}"
-                                   TextBlock.FontStyle="{TemplateBinding FontStyle}"
-                                   TextBlock.FontWeight="{TemplateBinding FontWeight}"
-                                   TextBlock.Foreground="{TemplateBinding Foreground}"
+                                   TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                   TextElement.FontSize="{TemplateBinding FontSize}"
+                                   TextElement.FontStyle="{TemplateBinding FontStyle}"
+                                   TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                   TextElement.Foreground="{TemplateBinding Foreground}"
                                    TextWrapping="{TemplateBinding TextWrapping}" />
                 </ScrollViewer>
             </ControlTemplate>

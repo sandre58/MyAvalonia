@@ -13,7 +13,7 @@
         <Style Selector="^">
             <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Container.Background}" />
             <Setter Property="PaneBackground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
+            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
         </Style>
 
         <Style Selector="^:left">

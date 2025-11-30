@@ -25,6 +25,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <EnableAnalyzers Condition="'$(EnableAnalyzers)' == ''">true</EnableAnalyzers>
+        <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
 
         <!-- Output builds -->
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>

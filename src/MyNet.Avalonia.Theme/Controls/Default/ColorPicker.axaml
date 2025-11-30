@@ -9,8 +9,8 @@
         <Setter Property="Palette">
             <my:DarkColorPalette />
         </Setter>
-        <Setter Property="my:FlyoutAssist.Width" Value="316" />
-        <Setter Property="my:FlyoutAssist.Height" Value="360" />
+        <Setter Property="my:PopupAssist.Width" Value="316" />
+        <Setter Property="my:PopupAssist.Height" Value="360" />
         <Setter Property="ContentTemplate">
             <DataTemplate  DataType="{x:Type Color}">
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Medium}">
@@ -39,8 +39,8 @@
                                 UseLayoutRounding="False">
                     <DropDownButton.Flyout>
                         <Flyout>
-                            <ColorView Width="{TemplateBinding my:FlyoutAssist.Width}"
-                                       Height="{TemplateBinding my:FlyoutAssist.Height}"
+                            <ColorView Width="{TemplateBinding my:PopupAssist.Width}"
+                                       Height="{TemplateBinding my:PopupAssist.Height}"
                                        ColorModel="{TemplateBinding ColorModel}"
                                        ColorSpectrumComponents="{TemplateBinding ColorSpectrumComponents}"
                                        ColorSpectrumShape="{TemplateBinding ColorSpectrumShape}"
@@ -82,8 +82,8 @@
             <Setter Property="IsAccentColorsVisible" Value="False" />
             <Setter Property="ColorModel" Value="Hsva" />
             <Setter Property="IsComponentTextInputVisible" Value="False" />
-            <Setter Property="my:FlyoutAssist.Width" Value="260" />
-            <Setter Property="my:FlyoutAssist.Height" Value="NaN" />
+            <Setter Property="my:PopupAssist.Width" Value="260" />
+            <Setter Property="my:PopupAssist.Height" Value="NaN" />
         </Style>
 
         <Style Selector="^.HideValue">

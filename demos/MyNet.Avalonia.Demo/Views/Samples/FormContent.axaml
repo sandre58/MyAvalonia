@@ -68,7 +68,7 @@
 
             <!-- Birth Date with Calendar (without InnerLeftContent) -->
             <my:CalendarDatePicker Width="200" my:FormItem.Label="{my:Icon Calendar}"
-                                   SelectedDate="{Binding BirthDate}"
+                                   SelectedValue="{Binding BirthDate}"
                                    Watermark="{my:Resource BirthDate}" />
             <DatePicker Width="200" my:FormItem.Label="{my:Icon Calendar}"
                         SelectedDate="{Binding BirthDate}"
@@ -193,9 +193,9 @@
             <my:FormGroup Header="Availability">
                 <!-- Working hours -->
                 <StackPanel my:FormItem.Label="Preferred Working Hours" Orientation="Horizontal" Spacing="10">
-                    <my:TimePicker Width="150" SelectedTime="{Binding PreferredStartTime}" Watermark="Start time" />
+                    <my:TimePicker Width="150" SelectedValue="{Binding PreferredStartTime}" Watermark="Start time" />
                     <TextBlock VerticalAlignment="Center" Text="to" />
-                    <my:TimePicker Width="150" SelectedTime="{Binding PreferredEndTime}" Watermark="End time" />
+                    <my:TimePicker Width="150" SelectedValue="{Binding PreferredEndTime}" Watermark="End time" />
                 </StackPanel>
 
                 <!-- Availability Percentage with Slider -->
@@ -235,9 +235,9 @@
 
                 <!-- Contract dates -->
                 <StackPanel my:FormItem.Label="Contract Period" Orientation="Horizontal" Spacing="10">
-                    <my:CalendarDatePicker Width="180" SelectedDate="{Binding ContractStartDate}" Watermark="Start date" />
+                    <my:CalendarDatePicker Width="180" SelectedValue="{Binding ContractStartDate}" Watermark="Start date" />
                     <TextBlock VerticalAlignment="Center" Text="to" />
-                    <my:CalendarDatePicker Width="180" SelectedDate="{Binding ContractEndDate}" Watermark="End date" />
+                    <my:CalendarDatePicker Width="180" SelectedValue="{Binding ContractEndDate}" Watermark="End date" />
                 </StackPanel>
             </my:FormGroup>
         </Expander>
