@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyNet.Avalonia.UI.Dialogs;
+using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.UI.Dialogs;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Locators;

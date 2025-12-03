@@ -65,7 +65,7 @@
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
             <Setter Property="PlaceholderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
             <Setter Property="my:ThemeAssist.ActiveForeground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
@@ -220,7 +220,7 @@
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
-                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
+                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <ScrollViewer>
                                             <ItemsPresenter Name="PART_ItemsPresenter"
                                                             Grid.IsSharedSizeScope="True"
@@ -240,7 +240,7 @@
         <Style Selector="^:not(.no-transitions) /template/ PathIcon#PART_ExpanderIcon">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Timespan.Opacity}" />
+                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
                 </Transitions>
             </Setter>
         </Style>
@@ -525,7 +525,7 @@
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
-                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
+                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <ScrollViewer>
                                             <ItemsPresenter Name="PART_ItemsPresenter"
                                                             Grid.IsSharedSizeScope="True"

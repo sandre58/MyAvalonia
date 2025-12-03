@@ -7,8 +7,8 @@
 using System.Windows.Input;
 using MyNet.Avalonia.Demo.ViewModels.Dialogs;
 using MyNet.Avalonia.Demo.Views.Dialogs;
-using MyNet.Avalonia.UI.Controls;
-using MyNet.Avalonia.UI.Dialogs;
+using MyNet.Avalonia.Extended.Controls;
+using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.UI.Commands;
 using MyNet.UI.Toasting;
 using MyNet.UI.ViewModels.Workspace;

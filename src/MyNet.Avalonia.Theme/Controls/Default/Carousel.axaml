@@ -90,7 +90,7 @@
 
     <ControlTheme x:Key="MyNet.Theme.Carousel.Full" TargetType="Carousel">
         <Setter Property="PageTransition">
-            <PageSlide Orientation="Horizontal" Duration="{StaticResource MyNet.Timespan.Slide}" />
+            <PageSlide Orientation="Horizontal" Duration="{StaticResource MyNet.Animation.Slide}" />
         </Setter>
         <Setter Property="my:SpinnerAssist.ButtonTheme" Value="{StaticResource MyNet.Theme.Button.Embedded.Carousel}" />
         <Setter Property="my:SpinnerAssist.DecreaseContent" Value="{StaticResource MyNet.Geometry.ChevronLeft}" />

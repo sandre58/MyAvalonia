@@ -123,7 +123,7 @@
                                    Grid.Column="1"
                                    Width="1"
                                    VerticalAlignment="Stretch"
-                                   Fill="{DynamicResource MyNet.Brush.Container.Border}" />
+                                   Fill="{DynamicResource MyNet.Brush.Surface.Border}" />
                     </Grid>
                 </Panel>
             </ControlTemplate>
@@ -217,7 +217,7 @@
         <Style Selector="^:not(.no-transitions) /template/ ContentPresenter#PART_Content">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Timespan.Opacity}" />
+                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
                 </Transitions>
             </Setter>
         </Style>
@@ -415,7 +415,7 @@
         <Style Selector="^:not(.no-transitions)">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Timespan.Opacity}" />
+                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
                 </Transitions>
             </Setter>
         </Style>
@@ -480,7 +480,7 @@
 
     <ControlTheme x:Key="{x:Type DataGridRowGroupHeader}" TargetType="DataGridRowGroupHeader">
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Container.Background.Dark}" />
+        <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background.Dark}" />
         <Setter Property="Margin" Value="{my:Thickness Top=10, Bottom=2}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Template">
@@ -548,15 +548,15 @@
             <!-- DataGrid -->
             <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Container.Border}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
             <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
-            <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource MyNet.Brush.Container.Border}" />
-            <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource MyNet.Brush.Container.Border}" />
+            <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
+            <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
 
             <!-- Headers -->
             <Setter Property="HeadersVisibility" Value="Column" />
             <Setter Property="ColumnHeaderHeight" Value="35" />
-            <Setter Property="my:HeaderAssist.CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+            <Setter Property="my:HeaderAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default}" />
             <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size}" />
             <Setter Property="my:HeaderAssist.FontFamily" Value="{Binding $self.FontFamily}" />
@@ -573,7 +573,7 @@
             <!-- Row -->
             <Setter Property="my:DataGridAssist.ShowSelection" Value="True" />
             <Setter Property="my:ItemsAssist.Margin" Value="0 1" />
-            <Setter Property="my:DataGridAssist.RowCornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+            <Setter Property="my:DataGridAssist.RowCornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:DataGridAssist.UseAlternateRowBackground" Value="True" />
             <Setter Property="RowBackground" Value="Transparent" />
             <Setter Property="my:DataGridAssist.AlternateRowBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Alternate}}" />
@@ -590,7 +590,7 @@
             <!-- Cell -->
             <Setter Property="my:DataGridAssist.ShowCellSelection" Value="False" />
             <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Default}" />
-            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="1" />
@@ -668,7 +668,7 @@
             <Style Selector="^:not(.no-transitions)">
                 <Setter Property="Transitions">
                     <Transitions>
-                        <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Timespan.Opacity}" />
+                        <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
                     </Transitions>
                 </Setter>
             </Style>

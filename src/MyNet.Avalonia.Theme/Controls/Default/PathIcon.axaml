@@ -48,8 +48,8 @@
             <Setter Property="my:TransitionsAssist.Transitions">
                 <Setter.Value>
                     <Transitions>
-                        <BrushTransition Easing="LinearEasing" Property="Foreground" Duration="{StaticResource MyNet.Timespan.Opacity}" />
-                        <TransformOperationsTransition Property="RenderTransform" Duration="{StaticResource MyNet.Timespan.Glyph}" />
+                        <BrushTransition Easing="LinearEasing" Property="Foreground" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                        <TransformOperationsTransition Property="RenderTransform" Duration="{StaticResource MyNet.Animation.Glyph}" />
                     </Transitions>
                 </Setter.Value>
             </Setter>

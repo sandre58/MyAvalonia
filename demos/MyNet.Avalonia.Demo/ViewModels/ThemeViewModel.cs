@@ -76,10 +76,10 @@ public class ThemeViewModel : NavigableWorkspaceViewModel
 
     private void UpdateBrushes()
     {
-        _accentBrushes.Set(MyTheme.Current.Resources.Where(x => x.Key.ToString().OrEmpty().Contains(ThemeResources.BrushKey, System.StringComparison.OrdinalIgnoreCase))
+        _accentBrushes.Set(MyTheme.Current.Resources.Where(x => x.Key.ToString().OrEmpty().Contains(ThemeResourceKeyFactory.BrushKey, System.StringComparison.OrdinalIgnoreCase))
                                                             .Select(x => new BrushData(x.Key.ToString().OrEmpty())));
         _themeBrushes.Set(((ResourceDictionary)MyTheme.Current.Resources.ThemeDictionaries[global::Avalonia.Application.Current!.ActualThemeVariant])
-                                                       .Where(x => x.Key.ToString().OrEmpty().Contains(ThemeResources.BrushKey, System.StringComparison.OrdinalIgnoreCase))
+                                                       .Where(x => x.Key.ToString().OrEmpty().Contains(ThemeResourceKeyFactory.BrushKey, System.StringComparison.OrdinalIgnoreCase))
                                                        .Select(x => new BrushData(x.Key.ToString().OrEmpty()))
                                                        .Where(x => x.Category != "Code"));
     }
@@ -122,10 +122,10 @@ internal sealed class BrushData : ObservableObject
     {
         Brush = ResourceLocator.GetResource<IBrush>(fullName);
         FullName = fullName;
-        ColorFullName = fullName.Replace(ThemeResources.BrushKey, ThemeResources.ColorKey, System.StringComparison.OrdinalIgnoreCase);
+        ColorFullName = fullName.Replace(ThemeResourceKeyFactory.BrushKey, ThemeResourceKeyFactory.ColorKey, System.StringComparison.OrdinalIgnoreCase);
         Category = GetCategory(fullName);
 
-        var stringToReplace = !string.IsNullOrEmpty(Category) ? $"{ThemeResources.ResourcePrefix}.{ThemeResources.BrushKey}.{Category}." : $"{ThemeResources.ResourcePrefix}.{ThemeResources.BrushKey}.";
+        var stringToReplace = !string.IsNullOrEmpty(Category) ? $"{ThemeResourceKeyFactory.ResourcePrefix}.{ThemeResourceKeyFactory.BrushKey}.{Category}." : $"{ThemeResourceKeyFactory.ResourcePrefix}.{ThemeResourceKeyFactory.BrushKey}.";
         Name = fullName.Replace(stringToReplace, string.Empty, System.StringComparison.OrdinalIgnoreCase);
         Color = (Brush as SolidColorBrush)?.Color;
         Opacity = Brush.Opacity;
@@ -160,15 +160,15 @@ internal sealed class OpacityData : ObservableObject
     public OpacityData(string displayName, string brushName)
     {
         DisplayName = displayName;
-        Name = ThemeResources.GetOpacityKey(displayName);
+        Name = ThemeResourceKeyFactory.Opacity(displayName);
         _brushName = brushName;
-        Brush = ThemeResources.GetBrush(brushName);
-        Opacity = ThemeResources.GetOpacity(Name);
+        Brush = ThemeResourceProvider.GetBrush(brushName);
+        Opacity = ThemeResourceProvider.GetOpacity(Name);
 
         ThemeManager.ThemeChanged += ThemeManager_ThemeChanged;
     }
 
-    private void ThemeManager_ThemeChanged(object? sender, ThemeChangedEventArgs e) => Brush = ThemeResources.GetBrush(_brushName);
+    private void ThemeManager_ThemeChanged(object? sender, ThemeChangedEventArgs e) => Brush = ThemeResourceProvider.GetBrush(_brushName);
 
     public string DisplayName { get; }
 

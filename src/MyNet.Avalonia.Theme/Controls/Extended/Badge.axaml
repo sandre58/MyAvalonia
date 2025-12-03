@@ -11,7 +11,7 @@
         <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Small}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="BadgeFontSize" Value="{StaticResource MyNet.Font.Size.SubCaption}" />
         <Setter Property="BadgeFontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />

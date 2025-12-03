@@ -11,7 +11,6 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Styling;
-using Avalonia.Threading;
 using MyNet.Avalonia.Helpers;
 using MyNet.Avalonia.Resources;
 using MyNet.Utilities;

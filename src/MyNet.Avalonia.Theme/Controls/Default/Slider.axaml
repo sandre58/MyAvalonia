@@ -118,8 +118,8 @@
         <Style Selector="^:not(.no-transitions) /template/ Panel#PART_InnerPanel">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="CircularEaseOut" Property="Opacity" Duration="{StaticResource MyNet.Timespan.Slide}" />
-                    <TransformOperationsTransition Easing="CircularEaseOut" Property="RenderTransform" Duration="{StaticResource MyNet.Timespan.Slide}" />
+                    <DoubleTransition Easing="CircularEaseOut" Property="Opacity" Duration="{StaticResource MyNet.Animation.Slide}" />
+                    <TransformOperationsTransition Easing="CircularEaseOut" Property="RenderTransform" Duration="{StaticResource MyNet.Animation.Slide}" />
                 </Transitions>
             </Setter>
         </Style>
@@ -133,7 +133,7 @@
     <ControlTheme x:Key="{x:Type Slider}" TargetType="Slider">
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.SubCaption}" />
         <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="Focusable" Value="True" />

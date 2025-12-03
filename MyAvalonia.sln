@@ -55,7 +55,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Controls", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Theme", "src\MyNet.Avalonia.Theme\MyNet.Avalonia.Theme.csproj", "{9DBF2395-99F5-6808-71DB-51EF6DD6B456}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.UI", "src\MyNet.Avalonia.UI\MyNet.Avalonia.UI.csproj", "{42D9450F-33AA-A921-9C05-1DF88925535F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Extended", "src\MyNet.Avalonia.Extended\MyNet.Avalonia.Extended.csproj", "{42D9450F-33AA-A921-9C05-1DF88925535F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Demo", "demos\MyNet.Avalonia.Demo\MyNet.Avalonia.Demo.csproj", "{5771D788-0298-CFC7-B3D2-D20249AA3FCE}"
 EndProject

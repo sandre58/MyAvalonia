@@ -12,7 +12,7 @@
     <ControlTheme x:Key="{x:Type ProgressBar}" TargetType="ProgressBar">
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Medium}" />

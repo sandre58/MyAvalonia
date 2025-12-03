@@ -42,7 +42,7 @@ A comprehensive collection of Avalonia UI libraries and extensions for modern cr
 | [**MyNet.Avalonia**](src/MyNet.Avalonia) | 🎨 Core Avalonia library with extensions, helpers, theming, reactive programming, and integration with MyNet libraries. | [![NuGet](https://img.shields.io/nuget/v/MyNet.Avalonia)](https://www.nuget.org/packages/MyNet.Avalonia) |
 | [**MyNet.Avalonia.Controls**](src/MyNet.Avalonia.Controls) | 🪟 Advanced controls and UI components including color pickers, data grids, navigation menus, and custom cursors for Avalonia applications. | [![NuGet](https://img.shields.io/nuget/v/MyNet.Avalonia.Controls)](https://www.nuget.org/packages/MyNet.Avalonia.Controls) |
 | [**MyNet.Avalonia.Theme**](src/MyNet.Avalonia.Theme) | 🎭 Comprehensive theming system with custom styles, control templates, and visual resources for consistent UI design. | [![NuGet](https://img.shields.io/nuget/v/MyNet.Avalonia.Theme)](https://www.nuget.org/packages/MyNet.Avalonia.Theme) |
-| [**MyNet.Avalonia.UI**](src/MyNet.Avalonia.UI) | 🖼️ High-level UI components and composite controls for rapid application development with Avalonia. | [![NuGet](https://img.shields.io/nuget/v/MyNet.Avalonia.UI)](https://www.nuget.org/packages/MyNet.Avalonia.UI) |
+| [**MyNet.Avalonia.Extended**](src/MyNet.Avalonia.Extended) | 🖼️ High-level UI components and composite controls for rapid application development with Avalonia. | [![NuGet](https://img.shields.io/nuget/v/MyNet.Avalonia.Extended)](https://www.nuget.org/packages/MyNet.Avalonia.Extended) |
 
 ## 🚀 Getting Started
 
@@ -69,7 +69,7 @@ dotnet add package MyNet.Avalonia.Controls
 dotnet add package MyNet.Avalonia.Theme
 
 # High-level UI components
-dotnet add package MyNet.Avalonia.UI
+dotnet add package MyNet.Avalonia.Extended
 ```
 
 **Using Package Manager Console:**
@@ -77,7 +77,7 @@ dotnet add package MyNet.Avalonia.UI
 Install-Package MyNet.Avalonia
 Install-Package MyNet.Avalonia.Controls
 Install-Package MyNet.Avalonia.Theme
-Install-Package MyNet.Avalonia.UI
+Install-Package MyNet.Avalonia.Extended
 ```
 
 **Using PackageReference:**
@@ -85,7 +85,7 @@ Install-Package MyNet.Avalonia.UI
 <PackageReference Include="MyNet.Avalonia" Version="1.0.*" />
 <PackageReference Include="MyNet.Avalonia.Controls" Version="1.0.*" />
 <PackageReference Include="MyNet.Avalonia.Theme" Version="1.0.*" />
-<PackageReference Include="MyNet.Avalonia.UI" Version="1.0.*" />
+<PackageReference Include="MyNet.Avalonia.Extended" Version="1.0.*" />
 ```
 
 ### Quick Examples
@@ -134,7 +134,7 @@ For detailed usage examples and API references, explore the documentation in eac
   - **`MyNet.Avalonia/`** — Core Avalonia library with extensions, theming, and reactive programming
   - **`MyNet.Avalonia.Controls/`** — Advanced controls, color pickers, data grids, and UI components
   - **`MyNet.Avalonia.Theme/`** — Comprehensive theming system and visual resources
-  - **`MyNet.Avalonia.UI/`** — High-level UI components and composite controls
+  - **`MyNet.Avalonia.Extended/`** — High-level UI components and composite controls
 
 - **`demos/`** — Example Avalonia applications showcasing library features
   - **`MyNet.Avalonia.Demo/`** — Comprehensive cross-platform demo application

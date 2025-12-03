@@ -4,8 +4,8 @@
 
     <ControlTheme x:Key="MyNet.Theme.Rectangle.Focus" TargetType="Rectangle">
         <Setter Property="Margin" Value="0" />
-        <Setter Property="RadiusX" Value="{Binding Source={StaticResource MyNet.CornerRadius.Control}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
-        <Setter Property="RadiusY" Value="{Binding Source={StaticResource MyNet.CornerRadius.Control}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="RadiusX" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="RadiusY" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
         <Setter Property="Stroke" Value="{DynamicResource MyNet.Brush.Control.Border.Focus}" />
         <Setter Property="StrokeDashArray" Value="1,2" />
         <Setter Property="StrokeThickness" Value="1" />

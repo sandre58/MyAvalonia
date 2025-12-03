@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
     <ControlTheme x:Key="{x:Type my:PlaceholderContentControl}" TargetType="my:PlaceholderContentControl">
-        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Container}" />
-        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Container}" />
-        <Setter Property="HorizontalContentAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Container}" />
-        <Setter Property="VerticalContentAlignment" Value="{StaticResource MyNet.VerticalAlignment.Container}" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="HorizontalContentAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalContentAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="Focusable" Value="false" />
         <Setter Property="Template">
             <ControlTemplate>

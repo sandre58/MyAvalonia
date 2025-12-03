@@ -97,9 +97,9 @@ internal sealed class IconBuilderData(string name, Geometry? geometry)
 {
     public static readonly ICollection<string> CodePatterns = [
         "{0}",
-        ThemeResources.GetPattern(ThemeResources.GeometryKey),
-        ThemeResources.IconPathPattern,
-        ThemeResources.IconPattern
+        ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.GeometryKey),
+        ThemeResourceKeyFactory.IconPathPattern,
+        ThemeResourceKeyFactory.IconPattern
     ];
 
     public string Name { get; } = name;

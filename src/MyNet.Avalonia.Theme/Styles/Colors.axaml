@@ -32,9 +32,9 @@
     <!-- Dark -->
     <Style Selector=":is(TemplatedControl), Border, Ellipse, :is(TextBlock)">
         <Style Selector="^.Dark">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Container.Background.Dark}" />
-            <Setter Property="my:ThemeAssist.SecondaryColor" Value="{DynamicResource MyNet.Brush.Container.Background.Dark}" />
-            <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Container.Background.Dark}" />
+            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Surface.Background.Dark}" />
+            <Setter Property="my:ThemeAssist.SecondaryColor" Value="{DynamicResource MyNet.Brush.Surface.Background.Dark}" />
+            <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Surface.Background.Dark}" />
         </Style>
     </Style>
 

@@ -1,0 +1,42 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!-- ===================================================================== -->
+    <!-- Font Family Tokens                                                    -->
+    <!-- ===================================================================== -->
+
+    <FontFamily x:Key="MyNet.Font.FontFamily">Inter, -apple-system,BlinkMacSystemFont,PingFang SC, Microsoft YaHei, Segoe UI, Hiragino Sans GB, Helvetica Neue,Helvetica,Arial,sans-serif</FontFamily>
+    <FontFamily x:Key="MyNet.Font.FontFamily.Code">Cascadia Code, Consolas, Inconsolata, monospace</FontFamily>
+
+    <!-- ===================================================================== -->
+    <!-- Font Size Tokens                                                      -->
+    <!-- ===================================================================== -->
+
+    <sys:Double x:Key="MyNet.Font.Size.SubCaption">10</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size">12</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Caption">14</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H6">16</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H5">18</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H4">20</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H3">24</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H2">28</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H1">32</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Tag">11</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Button">13</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Menu">13</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.TextField">12</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Tab">13</sys:Double>
+
+    <!-- ===================================================================== -->
+    <!-- Font Weight Tokens                                                    -->
+    <!-- ===================================================================== -->
+
+    <FontWeight x:Key="MyNet.Font.Weight">Regular</FontWeight>
+    <FontWeight x:Key="MyNet.Font.Weight.Caption">SemiBold</FontWeight>
+    <FontWeight x:Key="MyNet.Font.Weight.Header">Bold</FontWeight>
+    <FontWeight x:Key="MyNet.Font.Weight.Button">Medium</FontWeight>
+    <FontWeight x:Key="MyNet.Font.Weight.Tab">Medium</FontWeight>
+    <FontWeight x:Key="MyNet.Font.Weight.Avatar">Bold</FontWeight>
+
+</ResourceDictionary>

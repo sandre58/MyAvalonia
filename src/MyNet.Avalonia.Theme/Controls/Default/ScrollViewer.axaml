@@ -31,8 +31,8 @@
         <Style Selector="^:not(.no-transitions)">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="LinearEasing" Property="Height" Duration="{StaticResource MyNet.Timespan.Opacity}" />
-                    <DoubleTransition Easing="LinearEasing" Property="Width" Duration="{StaticResource MyNet.Timespan.Opacity}" />
+                    <DoubleTransition Easing="LinearEasing" Property="Height" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                    <DoubleTransition Easing="LinearEasing" Property="Width" Duration="{StaticResource MyNet.Animation.Opacity}" />
                 </Transitions>
             </Setter>
         </Style>
@@ -195,8 +195,8 @@
 
     <!-- ScrollViewer -->
     <ControlTheme x:Key="{x:Type ScrollViewer}" TargetType="ScrollViewer">
-        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Container}" />
-        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Container}" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{Binding $self.Foreground}" />
         <Setter Property="Focusable" Value="False" />
@@ -246,7 +246,7 @@
             <Style Selector="^:not(.no-transitions)">
                 <Setter Property="Transitions">
                     <Transitions>
-                        <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Timespan.Opacity}" />
+                        <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
                     </Transitions>
                 </Setter>
             </Style>

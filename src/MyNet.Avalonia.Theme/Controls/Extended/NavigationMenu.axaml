@@ -60,7 +60,7 @@
         <Style Selector="^:not(:horizontal-collapsed)">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="{StaticResource MyNet.Transition.SineEaseInOut.NavigationMenu}" Property="Width" Duration="{StaticResource MyNet.Timespan.Slide}" />
+                    <DoubleTransition Easing="{StaticResource MyNet.Transition.SineEaseInOut.NavigationMenu}" Property="Width" Duration="{StaticResource MyNet.Animation.Slide}" />
                 </Transitions>
             </Setter>
             <Setter Property="Width" Value="{Binding $self.ExpandWidth}" />
@@ -69,7 +69,7 @@
         <Style Selector="^:horizontal-collapsed">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="{StaticResource MyNet.Transition.SineEaseInOut.NavigationMenu}" Property="Width" Duration="{StaticResource MyNet.Timespan.Slide}" />
+                    <DoubleTransition Easing="{StaticResource MyNet.Transition.SineEaseInOut.NavigationMenu}" Property="Width" Duration="{StaticResource MyNet.Animation.Slide}" />
                 </Transitions>
             </Setter>
             <Setter Property="Width" Value="{Binding $self.CollapseWidth}" />
@@ -178,7 +178,7 @@
         <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
         <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.Foreground}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Menu}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -202,7 +202,7 @@
             <Style Selector="^:not(.no-transitions) /template/ Border#PART_HoverBorder">
                 <Setter Property="Transitions">
                     <Transitions>
-                        <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Timespan.Opacity}" />
+                        <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
                     </Transitions>
                 </Setter>
             </Style>
@@ -210,7 +210,7 @@
             <Style Selector="^:not(.no-transitions) /template/ Border#PART_ActiveBorder">
                 <Setter Property="Transitions">
                     <Transitions>
-                        <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Timespan.Opacity}" />
+                        <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
                     </Transitions>
                 </Setter>
             </Style>

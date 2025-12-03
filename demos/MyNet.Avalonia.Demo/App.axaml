@@ -5,11 +5,7 @@
              RequestedThemeVariant="Dark">
     <Application.Styles>
         <my:MyTheme />
-        <StyleInclude Source="avares://MyNet.Avalonia.UI/Themes/Index.axaml" />
-
-        <!-- To specify default colors -->
-        <!--<my:MyTheme PrimaryColor="Red" PrimaryForegroundColor="Yellow" AccentColor="Blue" AccentForegroundColor="Green" />-->
-        <!--<my:MyTheme PrimaryColor="Red" AccentColor="Blue" />-->
+        <!--<StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Default.axaml" />-->
 
         <Style Selector="HeaderedContentControl.Settings">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -21,10 +17,10 @@
             <Setter Property="Header" Value="{my:Resource Options}" />
             <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
             <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.ShadowDepth.Container}" />
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="my:HeaderAssist.Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor)}" />
             <Setter Property="my:HeaderAssist.Foreground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Container.Background.Dark}" />
+            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Surface.Background.Dark}" />
             <Setter Property="ClipToBounds" Value="False" />
 
             <Style Selector="^ > ScrollViewer">
@@ -54,13 +50,13 @@
                     <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
                     <Setter Property="my:HeaderAssist.Opacity" Value="{StaticResource MyNet.Opacity.Secondary}" />
                     <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Small, Bottom}" />
-                    <Setter Property="my:HeaderAssist.CornerRadius" Value="{StaticResource MyNet.CornerRadius.Container}" />
+                    <Setter Property="my:HeaderAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
                     <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Caption}" />
                     <Setter Property="my:HeaderAssist.Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor)}" />
                     <Setter Property="my:HeaderAssist.Foreground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
                     <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
                     <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Center" />
-                    <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Container.Background.Dark}" />
+                    <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Surface.Background.Dark}" />
                 </Style>
             </Style>
 

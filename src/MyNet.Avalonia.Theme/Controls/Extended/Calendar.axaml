@@ -11,7 +11,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $parent[my:Calendar].(my:ThemeAssist.PrimaryColor)}" />
         <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="PART_RootPanel">
@@ -106,11 +106,11 @@
         </Style>
 
         <Style Selector="^:start-date, ^:preview-start-date">
-            <Setter Property="CornerRadius" Value="{Binding Source={StaticResource MyNet.CornerRadius.Control}, Converter={x:Static my:CornerRadiusConverter.Left}}" />
+            <Setter Property="CornerRadius" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusConverter.Left}}" />
         </Style>
 
         <Style Selector="^:end-date, ^:preview-end-date">
-            <Setter Property="CornerRadius" Value="{Binding Source={StaticResource MyNet.CornerRadius.Control}, Converter={x:Static my:CornerRadiusConverter.Right}}" />
+            <Setter Property="CornerRadius" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusConverter.Right}}" />
         </Style>
 
         <Style Selector="^:blackout /template/ Panel#PART_RootPanel">
@@ -122,10 +122,10 @@
     <ControlTheme x:Key="{x:Type my:CalendarYearButton}" TargetType="my:CalendarYearButton" BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar}" />
 
     <ControlTheme x:Key="{x:Type my:Calendar}" TargetType="my:Calendar">
-        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Container}" />
-        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Container}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Container}" />
-        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Container}" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -146,8 +146,8 @@
 
         <Style Selector="^">
             <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Container.Background}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Container.Border}" />
+            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
         </Style>
 
         <Setter Property="Template">

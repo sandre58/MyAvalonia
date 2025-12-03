@@ -12,7 +12,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <AvaloniaResource Include="**/*.xaml" />
+        <AvaloniaResource Include="Themes/**/*.axaml" />
+        <AvaloniaResource Include="Styles/**/*.axaml" />
+        <AvaloniaResource Include="Tokens/**/*.axaml" />
+        <AvaloniaResource Include="ResourceDictionaries/**/*.axaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="MyTheme.axaml.cs">
+        <DependentUpon>MyTheme.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

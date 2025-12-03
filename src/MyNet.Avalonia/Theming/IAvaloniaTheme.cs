@@ -10,11 +10,15 @@ namespace MyNet.Avalonia.Theming;
 
 public interface IAvaloniaTheme
 {
-    Color PrimaryColor { get; set; }
+    void SetPrimary(Color color, Color? foreground);
 
-    Color? PrimaryForegroundColor { get; set; }
+    void SetAccent(Color color, Color? foreground);
 
-    Color AccentColor { get; set; }
+    void SetTheme(string? name);
 
-    Color? AccentForegroundColor { get; set; }
+    string? GetThemeName();
+
+    ColorPair GetPrimaryPair();
+
+    ColorPair GetAccentPair();
 }

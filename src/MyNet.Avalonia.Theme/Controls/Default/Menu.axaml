@@ -106,7 +106,7 @@
         <Setter Property="FontWeight" Value="{StaticResource MyNet.Font.Weight}" />
         <Setter Property="FontStyle" Value="Normal" />
         <Setter Property="TextBlock.TextDecorations" Value="{x:Null}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="PART_RootPanel">
@@ -195,7 +195,7 @@
                            VerticalOffset="-2"
                            WindowManagerAddShadowHint="False">
                         <Border MaxHeight="{StaticResource MyNet.MaxHeight.Menu}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
-                            <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
+                            <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                 <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Menu}">
                                     <ItemsPresenter Name="PART_ItemsPresenter"
                                                     Grid.IsSharedSizeScope="True"
@@ -292,7 +292,7 @@
                            VerticalOffset="2"
                            WindowManagerAddShadowHint="False">
                         <Border MaxHeight="{StaticResource MyNet.MaxHeight.Menu}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
-                            <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
+                            <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                 <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Menu}">
                                     <ItemsPresenter Name="PART_ItemsPresenter"
                                                     Grid.IsSharedSizeScope="True"
@@ -337,14 +337,14 @@
 
     <!-- ContextMenu -->
     <ControlTheme x:Key="{x:Type ContextMenu}" TargetType="ContextMenu">
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.ShadowDepth.Popup}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Popup}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Popup.Border}" />
         <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Popup}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Popup}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Container}" />
-        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Container}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
         <Setter Property="Margin" Value="{StaticResource MyNet.Margin.Popup}" />
         <Setter Property="MaxHeight" Value="{StaticResource MyNet.MaxHeight.Menu}" />
         <Setter Property="Focusable" Value="False" />
@@ -364,7 +364,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Theme="{StaticResource MyNet.Theme.Border.Popup}">
-                    <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
+                    <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                         <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Menu}">
                             <ItemsPresenter Name="PART_ItemsPresenter"
                                             Grid.IsSharedSizeScope="True"
@@ -379,15 +379,15 @@
 
     <!-- Flyouts -->
     <ControlTheme x:Key="{x:Type FlyoutPresenter}" TargetType="FlyoutPresenter">
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.ShadowDepth.Popup}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Popup}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Popup.Border}" />
         <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Popup}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Popup}" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Popup}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Container}" />
-        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Container}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Margin" Value="{StaticResource MyNet.Margin.Popup}" />
@@ -405,7 +405,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Theme="{StaticResource MyNet.Theme.Border.Popup}">
-                    <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
+                    <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                         <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                             <ContentPresenter Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -422,11 +422,11 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type MenuFlyoutPresenter}" TargetType="MenuFlyoutPresenter">
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.ShadowDepth.Popup}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Popup}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Popup.Border}" />
         <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Popup}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Popup}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Margin" Value="{StaticResource MyNet.Margin.Popup}" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -443,7 +443,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Theme="{StaticResource MyNet.Theme.Border.Popup}">
-                    <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
+                    <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                         <ScrollViewer CornerRadius="{TemplateBinding CornerRadius}"
                                       HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                       Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Menu}"

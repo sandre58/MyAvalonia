@@ -7,7 +7,6 @@
 using System;
 using Avalonia.Data;
 using Avalonia.Markup.Xaml;
-using Avalonia.Markup.Xaml.MarkupExtensions;
 using MyNet.Avalonia.Converters;
 using MyNet.Utilities;
 
@@ -56,11 +55,11 @@ public class BrushExtension(string path) : MarkupExtension
             converter = BrushConverter.Lighten;
         }
 
-        return new ReflectionBindingExtension(Path)
+        return new Binding(Path)
         {
             RelativeSource = RelativeSource,
             Converter = converter,
             ConverterParameter = converterParameter
-        }.ProvideValue(serviceProvider);
+        };
     }
 }

@@ -15,7 +15,7 @@ using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Demo.Resources;
 using MyNet.Avalonia.Demo.Views.Samples;
 using MyNet.Avalonia.Templates;
-using MyNet.Avalonia.UI.Toasting;
+using MyNet.Avalonia.Extended.Toasting;
 using MyNet.Observable;
 using MyNet.UI.Notifications;
 using MyNet.UI.Toasting.Settings;

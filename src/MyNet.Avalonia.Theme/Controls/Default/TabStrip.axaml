@@ -86,7 +86,7 @@
         <Style Selector="^:not(.no-transitions)">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Timespan.Opacity}" />
+                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
                 </Transitions>
             </Setter>
         </Style>
@@ -205,7 +205,7 @@
         <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Small}" />
         <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Medium}" />
-        <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+        <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Left" />
         <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Top" />
         <Setter Property="ItemsPanel">
@@ -245,7 +245,7 @@
 
         <Style Selector="^.Shadow">
             <Setter Property="ClipToBounds" Value="False" />
-            <Setter Property="my:ItemsAssist.ShadowDepth" Value="{StaticResource MyNet.ShadowDepth.Control}" />
+            <Setter Property="my:ItemsAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Control}" />
             <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Default}" />
         </Style>
 
@@ -290,7 +290,7 @@
     <!-- Toggle -->
     <ControlTheme x:Key="MyNet.Theme.TabStrip.Toggle" TargetType="TabStrip" BasedOn="{StaticResource {x:Type TabStrip}}">
         <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.TabStripItem.Medium}" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
@@ -326,13 +326,13 @@
         <!-- Style -->
         <Style Selector="^.Shadow">
             <Setter Property="ClipToBounds" Value="False" />
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.ShadowDepth.Control}" />
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Control}" />
         </Style>
 
         <Style Selector="^.Spacing">
             <Setter Property="Padding" Value="{my:Thickness Small}" />
             <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Small}" />
-            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
         </Style>
 
@@ -427,7 +427,7 @@
         <!-- Style -->
         <Style Selector="^.Shadow">
             <Setter Property="ClipToBounds" Value="False" />
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.ShadowDepth.Control}" />
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Control}" />
         </Style>
 
         <!-- Layout -->

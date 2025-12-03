@@ -90,7 +90,7 @@
 
         <Style Selector="^.Solid">
             <Setter Property="my:ThemeAssist.PrimaryColor" Value="{my:Brush $self.Background, Contrast=True}" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Container.Background}" />
+            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
             <Setter Property="TickBrush" Value="{my:Brush $self.Background, Contrast=True}" />
 
             <Style Selector="^.Inverse">

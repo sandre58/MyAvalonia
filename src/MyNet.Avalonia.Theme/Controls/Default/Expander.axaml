@@ -91,7 +91,7 @@
         <Style Selector="^:not(.no-transitions) /template/ my|ExpandControl#PART_ExpandControl">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="CircularEaseOut" Property="Multiplier" Duration="{StaticResource MyNet.Timespan.Slide}" />
+                    <DoubleTransition Easing="CircularEaseOut" Property="Multiplier" Duration="{StaticResource MyNet.Animation.Slide}" />
                 </Transitions>
             </Setter>
         </Style>
@@ -244,9 +244,9 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.Expander.Button" TargetType="Expander">
-        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Container}" />
-        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Container}" />
-        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Container}" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
         <Setter Property="Focusable" Value="false" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
@@ -306,7 +306,7 @@
         <Style Selector="^:not(.no-transitions) /template/ my|ExpandControl#PART_ExpandControl">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="CircularEaseOut" Property="Multiplier" Duration="{StaticResource MyNet.Timespan.Slide}" />
+                    <DoubleTransition Easing="CircularEaseOut" Property="Multiplier" Duration="{StaticResource MyNet.Animation.Slide}" />
                 </Transitions>
             </Setter>
         </Style>

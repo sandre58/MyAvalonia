@@ -1,11 +1,11 @@
 // -----------------------------------------------------------------------
-// <copyright file="PerfDialogView.axaml.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="PerfDialogView.axaml.cs" company="Stï¿½phane ANDRE">
+// Copyright (c) Stï¿½phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using Avalonia.Markup.Xaml;
-using MyNet.Avalonia.UI.Controls;
+using MyNet.Avalonia.Extended.Controls;
 using PropertyChanged;
 
 namespace MyNet.Avalonia.Demo.Views.Dialogs;

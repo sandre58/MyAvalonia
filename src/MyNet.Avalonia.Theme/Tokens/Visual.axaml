@@ -1,0 +1,49 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+                    xmlns:enums="clr-namespace:MyNet.Avalonia.Controls.Enums;assembly=MyNet.Avalonia.Controls">
+
+    <!-- ===================================================================== -->
+    <!-- Opacity Tokens                                                        -->
+    <!-- ===================================================================== -->
+
+    <sys:Double x:Key="MyNet.Opacity.Secondary">0.7</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Tertiary">0.56</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Watermark">0.60</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Overlay">0.40</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Disabled">0.40</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Ripple">0.19</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Active">0.16</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Hover">0.13</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Filled">0.11</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Alternate">0.03</sys:Double>
+
+    <!-- ===================================================================== -->
+    <!-- Shadow Depth Tokens                                                   -->
+    <!-- ===================================================================== -->
+
+    <enums:ShadowDepth x:Key="MyNet.Shadow.Surface">Depth1</enums:ShadowDepth>
+    <enums:ShadowDepth x:Key="MyNet.Shadow.Control">Depth2</enums:ShadowDepth>
+    <enums:ShadowDepth x:Key="MyNet.Shadow.Popup">Depth2</enums:ShadowDepth>
+    <enums:ShadowDepth x:Key="MyNet.Shadow.ToolTip">Depth2</enums:ShadowDepth>
+
+    <!-- ===================================================================== -->
+    <!-- Animation Duration Tokens                                             -->
+    <!-- ===================================================================== -->
+
+    <sys:TimeSpan x:Key="MyNet.Animation.Instant">0:0:0.0</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Fast">0:0:0.15</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Default">0:0:0.3</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Slow">0:0:0.35</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.VerySlow">0:0:0.5</sys:TimeSpan>
+
+    <!-- Semantic Aliases -->
+    <sys:TimeSpan x:Key="MyNet.Animation.Glyph">0:0:0.1</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Opacity">0:0:0.15</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Switch">0:0:0.2</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Fade">0:0:0.3</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Slide">0:0:0.3</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Shadow">0:0:0.3</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Underline">0:0:0.4</sys:TimeSpan>
+
+</ResourceDictionary>

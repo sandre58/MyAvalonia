@@ -12,7 +12,7 @@ namespace MyNet.Avalonia.Theme.Extensions;
 
 public static class GeometryExtensions
 {
-    public static StreamGeometry ToGeometry(this IconData icon) => ResourceLocator.GetResource<StreamGeometry>(ThemeResources.GetGeometryKey(icon.ToString()));
+    public static StreamGeometry ToGeometry(this IconData icon) => ResourceLocator.GetResource<StreamGeometry>(ThemeResourceKeyFactory.Geometry(icon.ToString()));
 
     public static PathIcon ToIcon(this IconData icon, double? size = null)
     {

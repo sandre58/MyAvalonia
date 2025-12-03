@@ -77,8 +77,8 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type my:FormGroup}" TargetType="my:FormGroup">
-        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Container}" />
-        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Container}" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="Margin" Value="{StaticResource MyNet.Margin.Form.Group}" />
         <Setter Property="Padding" Value="{my:Thickness Medium, Top}" />
         <Setter Property="Focusable" Value="false" />
@@ -99,7 +99,7 @@
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
             <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 1" />
-            <Setter Property="my:HeaderAssist.BorderBrush" Value="{DynamicResource MyNet.Brush.Container.Border}" />
+            <Setter Property="my:HeaderAssist.BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
             <Setter Property="my:HeaderAssist.Foreground" Value="{Binding $self.Foreground}" />
         </Style>
 

@@ -24,7 +24,7 @@
         <Style Selector="^:not(.no-transitions) /template/ Rectangle#PART_ActiveIndicator">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="CircularEaseOut" Property="Width" Duration="{StaticResource MyNet.Timespan.Underline}" />
+                    <DoubleTransition Easing="CircularEaseOut" Property="Width" Duration="{StaticResource MyNet.Animation.Underline}" />
                 </Transitions>
             </Setter>
         </Style>

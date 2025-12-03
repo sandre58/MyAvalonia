@@ -38,7 +38,7 @@
             <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
             <Setter Property="my:ThemeAssist.ActiveForeground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
             <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
@@ -186,7 +186,7 @@
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
-                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
+                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <Calendar Name="PART_Calendar"
                                                   my:ThemeAssist.PrimaryColor="{TemplateBinding my:PopupAssist.PrimaryColor}"
                                                   Background="Transparent"
@@ -473,7 +473,7 @@
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
-                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
+                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <Calendar Name="PART_Calendar"
                                                   my:ThemeAssist.PrimaryColor="{TemplateBinding my:ThemeAssist.PrimaryColor}"
                                                   Background="Transparent"

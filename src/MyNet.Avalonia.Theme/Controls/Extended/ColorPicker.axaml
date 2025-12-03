@@ -42,7 +42,7 @@
             <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
             <Setter Property="my:ThemeAssist.ActiveForeground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
             <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
@@ -205,10 +205,10 @@
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
-                                    <Border Padding="{StaticResource MyNet.Padding.Container}"
+                                    <Border Padding="{StaticResource MyNet.Padding.Surface}"
                                             HorizontalAlignment="Stretch"
                                             ClipToBounds="True"
-                                            CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
+                                            CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <ColorView Name="PART_Previewer"
                                                    Width="{TemplateBinding my:PopupAssist.Width}"
                                                    Height="{TemplateBinding my:PopupAssist.Height}"
@@ -530,10 +530,10 @@
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
-                                    <Border Padding="{StaticResource MyNet.Padding.Container}"
+                                    <Border Padding="{StaticResource MyNet.Padding.Surface}"
                                             HorizontalAlignment="Stretch"
                                             ClipToBounds="True"
-                                            CornerRadius="{StaticResource MyNet.CornerRadius.Popup}">
+                                            CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <ColorView Name="PART_Previewer"
                                                    Width="{TemplateBinding my:PopupAssist.Width}"
                                                    Height="{TemplateBinding my:PopupAssist.Height}"

@@ -17,16 +17,16 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type ColorSpectrum}" TargetType="ColorSpectrum">
-        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Container}" />
-        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Container}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Container}" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="my:SliderAssist.ThumbTheme" Value="{StaticResource MyNet.Theme.Thumb.Embedded.ColorSpectrum}" />
         <Setter Property="my:SliderAssist.ThumbSize" Value="16" />
         <Setter Property="ClipToBounds" Value="False" />
 
         <Style Selector="^">
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Container.Border}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
         </Style>
         <Setter Property="Template">
             <Setter.Value>

@@ -19,14 +19,14 @@ using MyNet.Avalonia.Demo.ViewModels.Dialogs;
 using MyNet.Avalonia.Demo.Views;
 using MyNet.Avalonia.Demo.Views.Dialogs;
 using MyNet.Avalonia.Theme;
-using MyNet.Avalonia.UI.Busy;
-using MyNet.Avalonia.UI.Clipboard;
-using MyNet.Avalonia.UI.Commands;
-using MyNet.Avalonia.UI.Dialogs;
-using MyNet.Avalonia.UI.Schedulers;
-using MyNet.Avalonia.UI.Services;
-using MyNet.Avalonia.UI.Theming;
-using MyNet.Avalonia.UI.Toasting;
+using MyNet.Avalonia.Extended.Busy;
+using MyNet.Avalonia.Extended.Clipboard;
+using MyNet.Avalonia.Extended.Commands;
+using MyNet.Avalonia.Extended.Dialogs;
+using MyNet.Avalonia.Extended.Schedulers;
+using MyNet.Avalonia.Extended.Services;
+using MyNet.Avalonia.Extended.Theming;
+using MyNet.Avalonia.Extended.Toasting;
 using MyNet.UI.Commands;
 using MyNet.UI.Extensions;
 using MyNet.UI.Loading;
@@ -96,7 +96,7 @@ public class App : Application
 
     private static void InitializeResources()
     {
-        UI.ResourceLocator.Initialize();
+        Extended.ResourceLocator.Initialize();
         Controls.ResourceLocator.Initialize();
         TranslationService.RegisterResources(nameof(CountryResources), CountryResources.ResourceManager);
         TranslationService.RegisterResources(nameof(DemoResources), DemoResources.ResourceManager);

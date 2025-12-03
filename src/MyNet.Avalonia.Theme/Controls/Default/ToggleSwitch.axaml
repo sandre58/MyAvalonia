@@ -9,14 +9,14 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Cursor" Value="Arrow" />
-        <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.ToggleSwitch.Medium}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.ToggleSwitch.Medium}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="OnContent" Value="{x:Null}" />
         <Setter Property="OffContent" Value="{x:Null}" />
         <Setter Property="KnobTransitions">
             <Transitions>
-                <DoubleTransition Easing="CubicEaseOut" Property="Canvas.Left" Duration="{StaticResource MyNet.Timespan.Switch}" />
+                <DoubleTransition Easing="CubicEaseOut" Property="Canvas.Left" Duration="{StaticResource MyNet.Animation.Switch}" />
             </Transitions>
         </Setter>
         <Setter Property="Focusable" Value="True" />
@@ -46,7 +46,7 @@
                                 CornerRadius="{TemplateBinding CornerRadius}">
                             <Border.Transitions>
                                 <Transitions>
-                                    <BrushTransition Property="Background" Duration="{StaticResource MyNet.Timespan.Switch}" />
+                                    <BrushTransition Property="Background" Duration="{StaticResource MyNet.Animation.Switch}" />
                                 </Transitions>
                             </Border.Transitions>
                         </Border>
@@ -153,7 +153,7 @@
 
         <!-- Sizes -->
         <Style Selector="^.Small">
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.ToggleSwitch.Small}" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.ToggleSwitch.Small}" />
             <Style Selector="^ /template/ Panel#PART_RootPanel">
                 <Setter Property="Width" Value="{StaticResource MyNet.Width.ToggleSwitch.Small}" />
                 <Setter Property="Height" Value="{StaticResource MyNet.Height.ToggleSwitch.Small}" />
@@ -169,7 +169,7 @@
             </Style>
         </Style>
         <Style Selector="^.Large">
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.ToggleSwitch.Large}" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.ToggleSwitch.Large}" />
             <Style Selector="^ /template/ Panel#PART_RootPanel">
                 <Setter Property="Width" Value="{StaticResource MyNet.Width.ToggleSwitch.Large}" />
                 <Setter Property="Height" Value="{StaticResource MyNet.Height.ToggleSwitch.Large}" />
@@ -197,7 +197,7 @@
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
-                                <BrushTransition Property="Background" Duration="{StaticResource MyNet.Timespan.Switch}" />
+                                <BrushTransition Property="Background" Duration="{StaticResource MyNet.Animation.Switch}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
@@ -301,7 +301,7 @@
                                         CornerRadius="{TemplateBinding CornerRadius}">
                                     <Border.Transitions>
                                         <Transitions>
-                                            <BrushTransition Property="Background" Duration="{StaticResource MyNet.Timespan.Switch}" />
+                                            <BrushTransition Property="Background" Duration="{StaticResource MyNet.Animation.Switch}" />
                                         </Transitions>
                                     </Border.Transitions>
                                 </Border>
@@ -366,7 +366,7 @@
         <Style Selector="^:not(.no-transitions) /template/ Panel#MovingKnobs">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="CircularEaseOut" Property="Canvas.Left" Duration="{StaticResource MyNet.Timespan.Switch}" />
+                    <DoubleTransition Easing="CircularEaseOut" Property="Canvas.Left" Duration="{StaticResource MyNet.Animation.Switch}" />
                 </Transitions>
             </Setter>
         </Style>

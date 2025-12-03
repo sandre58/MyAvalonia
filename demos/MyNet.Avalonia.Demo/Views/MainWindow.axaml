@@ -12,14 +12,11 @@
                    d:DesignWidth="800"
                    x:DataType="vm:MainViewModel"
                    Icon="/Assets/Demo.ico"
-                   IsFullScreenButtonVisible="{OnPlatform True,
-                                                          macOS=False}"
-                   IsManagedResizerVisible="{OnPlatform False,
-                                                        Linux=True}"
+                   IsFullScreenButtonVisible="{OnPlatform True, macOS=False}"
+                   IsManagedResizerVisible="{OnPlatform False, Linux=True}"
                    mc:Ignorable="d">
     <my:ExtendedWindow.RightContent>
-        <StackPanel Margin="{my:Thickness Medium,
-                                          Horizontal}"
+        <StackPanel Margin="{my:Thickness Medium, Horizontal}"
                     VerticalAlignment="Center"
                     Classes="Small"
                     Orientation="Horizontal">
@@ -34,8 +31,7 @@
                         <Image x:Name="Image" Width="24"
                                Cursor="Hand" Classes.NotSelected="{Binding !$parent[ListBoxItem].IsSelected}"
                                Source="{Binding Converter={x:Static c:CultureToBitmapConverter.Default}}"
-                               ToolTip.Tip="{my:Translation DisplayName,
-                                                        Casing=Title}">
+                               ToolTip.Tip="{my:Translation DisplayName, Casing=Title}">
                             <Image.Styles>
                                 <Style Selector="Image.NotSelected">
                                     <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Disabled}" />
@@ -47,8 +43,7 @@
             </ListBox>
 
             <!-- Theme -->
-            <StackPanel Margin="{my:Thickness Default,
-                                              Horizontal}"
+            <StackPanel Margin="{my:Thickness Default, Horizontal}"
                         VerticalAlignment="Center"
                         Classes="Medium"
                         Orientation="Horizontal">

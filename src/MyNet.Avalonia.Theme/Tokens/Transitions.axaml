@@ -1,0 +1,7 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    x:ClassModifier="internal">
+    <SineEaseInOut x:Key="MyNet.Transition.SineEaseInOut.NavigationMenu" />
+    <Easing x:Key="MyNet.Transition.Easing.SplitView">0.1,0.9,0.2,1.0</Easing>
+</ResourceDictionary>

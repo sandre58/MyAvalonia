@@ -171,7 +171,7 @@
                         <Carousel x:Name="PART_Carousel" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Carousel.PageTransition>
                                 <CompositePageTransition>
-                                    <CrossFade Duration="{StaticResource MyNet.Timespan.Fade}" />
+                                    <CrossFade Duration="{StaticResource MyNet.Animation.Fade}" />
                                 </CompositePageTransition>
                             </Carousel.PageTransition>
                             <my:ClockTimeComponent x:Name="PART_Hour"
@@ -221,7 +221,7 @@
         </Style>
 
         <Style Selector="^.Solid">
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Container.Background}" />
+            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
             <Setter Property="my:ItemsAssist.Foreground" Value="{my:Brush $self.Background, Contrast=True}" />
 
             <Style Selector="^.Inverse">

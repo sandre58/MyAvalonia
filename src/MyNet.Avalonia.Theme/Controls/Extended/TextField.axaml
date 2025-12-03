@@ -101,8 +101,8 @@
             <Style Selector="^:not(.no-transitions)">
                 <Setter Property="Transitions">
                     <Transitions>
-                        <DoubleTransition Easing="CircularEaseOut" Property="CurrentFloatingScale" Duration="{StaticResource MyNet.Timespan.Slide}" />
-                        <DoubleTransition Easing="CircularEaseOut" Property="CurrentFloatingOffset" Duration="{StaticResource MyNet.Timespan.Slide}" />
+                        <DoubleTransition Easing="CircularEaseOut" Property="CurrentFloatingScale" Duration="{StaticResource MyNet.Animation.Slide}" />
+                        <DoubleTransition Easing="CircularEaseOut" Property="CurrentFloatingOffset" Duration="{StaticResource MyNet.Animation.Slide}" />
                     </Transitions>
                 </Setter>
             </Style>

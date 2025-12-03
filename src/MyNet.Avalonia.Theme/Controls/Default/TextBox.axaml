@@ -40,7 +40,7 @@
             <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.CornerRadius.Control}" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="SelectionBrush" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Overlay}}" />
             <Setter Property="SelectionForegroundBrush" Value="{Binding $self.Foreground}" />
             <Setter Property="CaretBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />

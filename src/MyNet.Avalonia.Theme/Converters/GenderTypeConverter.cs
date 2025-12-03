@@ -34,7 +34,7 @@ public sealed class GenderTypeConverter : IValueConverter
             ? AvaloniaProperty.UnsetValue
             : _mode switch
             {
-                Mode.Brush => ThemeResources.GetBrush(genderType.ToString()),
+                Mode.Brush => ThemeResourceProvider.GetBrush(genderType.ToString()),
                 Mode.Icon => Enum.TryParse<IconData>($"Gender{genderType}", out var iconData) ? iconData.ToIcon() : IconData.GenderMaleFemale.ToIcon(),
                 _ => AvaloniaProperty.UnsetValue,
             };

@@ -188,7 +188,7 @@ public class CodeBlock : ContentControl
     {
         var result = new Run(line)
         {
-            Foreground = Avalonia.ResourceLocator.TryGetResource<IBrush>($"MyNet.Brush.Code.{type}", ActualThemeVariant)
+            Foreground = Avalonia.ResourceLocator.TryGetResource<IBrush>($"MyNet.Brush.CodeBlock.{type}", ActualThemeVariant)
         };
 
         return result;

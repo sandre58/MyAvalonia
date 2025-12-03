@@ -11,11 +11,9 @@
         <Setter Property="Foreground" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Tertiary}}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Tertiary}}" />
-        <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
 
         <Style Selector="^.Close">
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{DynamicResource MyNet.Color.Button.Close.Hover}" />
+            <Setter Property="my:ThemeAssist.HoverBackground" Value="{DynamicResource MyNet.Brush.Button.Close.Hover}" />
             <Setter Property="my:ThemeAssist.HoverForeground" Value="White" />
             <Setter Property="my:ThemeAssist.RippleColor" Value="White" />
         </Style>
