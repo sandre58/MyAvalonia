@@ -14,11 +14,11 @@
 
         <Style Selector="^">
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="my:ThemeAssist.SecondaryColor" Value="{DynamicResource MyNet.Brush.Control.Border}" />
-            <Setter Property="Background" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="Foreground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.SecondaryColor)}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Control.Background}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+            <Setter Property="Background" Value="{my:ThemeRole}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
         </Style>
 
         <Setter Property="Template">
@@ -109,16 +109,16 @@
         </Style>
 
         <Style Selector="^:success">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Positive}" />
-            <Setter Property="my:ThemeAssist.SecondaryColor" Value="{DynamicResource MyNet.Brush.Positive}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Positive}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Positive}" />
         </Style>
         <Style Selector="^:warning">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Warning}" />
-            <Setter Property="my:ThemeAssist.SecondaryColor" Value="{DynamicResource MyNet.Brush.Warning}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Warning}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Warning}" />
         </Style>
         <Style Selector="^:error">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Negative}" />
-            <Setter Property="my:ThemeAssist.SecondaryColor" Value="{DynamicResource MyNet.Brush.Negative}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Negative}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Negative}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

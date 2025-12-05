@@ -1,6 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:c="using:MyNet.Avalonia.Theme.Converters"
+                    xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals"
                     xmlns:u="clr-namespace:MyNet.Utilities.DateTimes;assembly=MyNet.Utilities"
                     xmlns:my="http://mynet.com/avalonia"
                     x:CompileBindings="True">
@@ -11,7 +11,7 @@
         <Setter Property="Width" Value="55" />
 
         <Style Selector="^[IsActive=False]">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Watermark}" />
+            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.Medium}" />
         </Style>
     </ControlTheme>
 
@@ -22,13 +22,13 @@
         <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
         </Style>
 
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type my:TimeView}">
                 <HeaderedContentControl Classes="Headered Custom"
-                                        my:ThemeAssist.PrimaryColor="{TemplateBinding my:ThemeAssist.PrimaryColor}"
+                                        my:PaletteAssist.Primary="{TemplateBinding my:PaletteAssist.Primary}"
                                         Background="Transparent"
                                         HorizontalContentAlignment="Stretch"
                                         VerticalAlignment="Stretch"
@@ -96,7 +96,7 @@
                                       Hour="{TemplateBinding Hour, Mode=TwoWay}"
                                       Minute="{TemplateBinding Minute, Mode=TwoWay}"
                                       Second="{TemplateBinding Second, Mode=TwoWay}"
-                                      my:ThemeAssist.PrimaryColor="{TemplateBinding my:ThemeAssist.PrimaryColor}"
+                                      my:PaletteAssist.Primary="{TemplateBinding my:PaletteAssist.Primary}"
                                       TimeFormat="{TemplateBinding TimeFormat}"
                                       ShowSeconds="{TemplateBinding ShowSeconds}"
                                       SelectedComponent="{TemplateBinding SelectedComponent, Mode=TwoWay}"

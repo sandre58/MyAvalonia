@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia"
-                    xmlns:c="using:MyNet.Avalonia.Theme.Converters"
+                    xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals"
                     x:CompileBindings="True">
 
     <ControlTheme x:Key="{x:Type my:ClockTimeComponentCell}" TargetType="my:ClockTimeComponentCell">
@@ -140,13 +140,13 @@
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{my:Brush $self.Foreground}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Brush $self.Foreground}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="HandBrush" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="CenterBackground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="CenterBorderBrush" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="HandBrush" Value="{my:ThemeRole}" />
+            <Setter Property="CenterBackground" Value="{my:ThemeRole}" />
+            <Setter Property="CenterBorderBrush" Value="{my:ThemeRole}" />
             <Setter Property="CenterBorderThickness" Value="0" />
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
@@ -155,7 +155,7 @@
             <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:ItemsAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:ItemsAssist.Foreground)}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.(my:ItemsAssist.ActiveBackground), Contrast=True}" />
             <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
         </Style>
@@ -212,11 +212,11 @@
         </Setter>
 
         <Style Selector="^.Inverse">
-            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
         </Style>
 
         <Style Selector="^.Outlined">
-            <Setter Property="BorderBrush" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
             <Setter Property="BorderThickness" Value="3" />
         </Style>
 

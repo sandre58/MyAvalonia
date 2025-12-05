@@ -19,7 +19,7 @@
     <ControlTheme x:Key="{x:Type SelectableTextBlock}" TargetType="SelectableTextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="Cursor" Value="Ibeam" />
         <Setter Property="Focusable" Value="True" />
-        <Setter Property="SelectionBrush" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Overlay}}" />
+        <Setter Property="SelectionBrush" Value="{my:ThemeRole Opacity=Scrim}" />
         <Style Selector="^[IsEnabled=True]">
             <Setter Property="ContextFlyout" Value="{StaticResource MyNet.MenuFlyout.Embedded.SelectableTextBlock}" />
         </Style>

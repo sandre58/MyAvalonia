@@ -22,7 +22,7 @@ internal sealed partial class RadioButtonsPage : AutoBuildPage
         var item = new RadioButton
         {
             HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center,
-            Content = data.Color.Or(data.Size.OrEmpty()).Or("Default"),
+            Content = data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default"),
             GroupName = $"{data.Theme}_{data.Layout}_{data.Styles?.Humanize("_")}_{data.Size is not null}",
             IsChecked = RandomGenerator.ListItem([true, false, (bool?)null])
         };
@@ -32,9 +32,9 @@ internal sealed partial class RadioButtonsPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Circle", "Alternate")
-            .AddDefaultColors(false)
+            .AddDefaultRoles(false)
             .AddSizes("Small", "Medium", "Large")
         ];
 

@@ -8,10 +8,10 @@ using System;
 using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using MyNet.Avalonia.Controls.Assists;
+using MyNet.Avalonia.Controls.Behaviors;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Demo.Views.Samples;
-using MyNet.Avalonia.Enums;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -29,12 +29,12 @@ internal sealed partial class DropDownButtonsPage : AutoBuildPage
             HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center,
             Content = data.Theme.ContainsAny("rounded")
                         ? RandomGenerator.Enum<IconData>().ToIcon()
-                        : data.Color.Or(data.Size.OrEmpty()).Or("Default"),
+                        : data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default"),
             Flyout = new MenuFlyout
             {
                 ItemsSource = MenuHelper.RandomizeMenuItems(1, 3, 5, 3)
             },
-            [!PopupAssist.PlacementProperty] = PopupPlacement[!SelectingItemsControl.SelectedValueProperty]
+            [!PopupBehavior.PlacementProperty] = PopupPlacement[!SelectingItemsControl.SelectedValueProperty]
         };
 
         if (data.Theme.NotContainsAny("rounded"))
@@ -49,14 +49,14 @@ internal sealed partial class DropDownButtonsPage : AutoBuildPage
             .AddLayouts("Circle")
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultColors()
+            .AddDefaultRoles()
             .AddSizes("Small", "Medium", "Large")
             .AddCustomControls(CreateCustomControls()),
 
             new ControlThemeData("Rounded")
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultColors()
+            .AddDefaultRoles()
             .AddSizes("Small", "Medium", "Large")
         ];
 

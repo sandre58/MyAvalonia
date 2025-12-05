@@ -9,6 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Demo.Views.Samples;
+using MyNet.Avalonia.Theme.Palettes;
 
 namespace MyNet.Avalonia.Demo.Pages;
 
@@ -40,6 +41,6 @@ internal sealed partial class SplitViewsPage : AutoBuildPage
             new ControlThemeData()
             .AddStyles("Solid", "Outlined", "Transparent")
             .AddCartesianStyles("Solid", "Shadow")
-            .AddThemeColors().AddColors(Color.Dark)
+            .AddThemeRoles().AddRoles(ThemeRole.Dark)
         ];
 }

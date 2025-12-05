@@ -4,7 +4,7 @@
                     x:CompileBindings="True">
 
     <ControlTheme x:Key="{x:Type Expander}" TargetType="Expander" BasedOn="{StaticResource {x:Type HeaderedContentControl}}">
-        <Setter Property="my:ExpanderAssist.EnableShortcutKeys" Value="True"/>
+        <Setter Property="my:ExpanderBehavior.EnableShortcutKeys" Value="True"/>
         <Setter Property="Template">
             <ControlTemplate TargetType="Expander">
                 <Border Name="PART_Root"
@@ -111,12 +111,12 @@
         <!-- Layout -->
         <Style Selector="^:left, ^.Right">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="*" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -147,12 +147,12 @@
 
         <Style Selector="^:right, ^.Left">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="*" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -183,13 +183,13 @@
 
         <Style Selector="^:down, ^.Top">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </ColumnDefinitions>
@@ -213,13 +213,13 @@
 
         <Style Selector="^:up, ^.Bottom">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </ColumnDefinitions>
@@ -326,12 +326,12 @@
         <!-- Layout -->
         <Style Selector="^:left, ^.Right">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="*" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -362,12 +362,12 @@
 
         <Style Selector="^:right, ^.Left">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="*" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -398,13 +398,13 @@
 
         <Style Selector="^:down, ^.Top">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </ColumnDefinitions>
@@ -428,13 +428,13 @@
 
         <Style Selector="^:up, ^.Bottom">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </ColumnDefinitions>

@@ -7,9 +7,9 @@
 using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Media;
-using MyNet.Avalonia.Controls.Assists;
 using MyNet.Avalonia.Demo.Helpers;
-using MyNet.Avalonia.Enums;
+using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -30,7 +30,7 @@ internal sealed partial class ExpandersPage : AutoBuildPage
                 TextWrapping = TextWrapping.Wrap,
                 TextAlignment = TextAlignment.Justify
             },
-            Header = data.Color.Or(data.Size.OrEmpty()).Or("Default"),
+            Header = data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default"),
             IsExpanded = RandomGenerator.Bool(),
             VerticalAlignment = global::Avalonia.Layout.VerticalAlignment.Top,
             HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Left,
@@ -52,13 +52,13 @@ internal sealed partial class ExpandersPage : AutoBuildPage
             .AddCartesianStyles("Solid", "Outlined")
             .AddCartesianStyles("Light", "Outlined", "Headered")
             .AddCartesianStyles("Labelled", "Centered")
-            .AddAllColors(),
+            .AddAllRoles(),
 
             new ControlThemeData("Button")
             .AddLayouts("Circle")
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
-            .AddAllColors()
+            .AddAllRoles()
             .AddSizes("Small", "Medium", "Large")
         ];
 

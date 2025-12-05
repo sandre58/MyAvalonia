@@ -16,7 +16,7 @@ using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
-using MyNet.Avalonia.Controls.Assists;
+using MyNet.Avalonia.Controls.Behaviors;
 using MyNet.Avalonia.Controls.Resources;
 using MyNet.Avalonia.Extensions;
 using MyNet.Utilities.Suspending;
@@ -308,7 +308,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
         {
             e.Handled = true;
 
-            if (!TextFieldAssist.GetIsTextEditable(this))
+            if (!TextFieldBehavior.GetIsTextEditable(this))
                 TogglePopup();
         }
     }
@@ -420,7 +420,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
         if (IsDropDownOpen)
             return;
 
-        if (IsEnabled && TextFieldAssist.GetIsTextEditable(this) && TextBox is not null && e.NavigationMethod == NavigationMethod.Tab)
+        if (IsEnabled && TextFieldBehavior.GetIsTextEditable(this) && TextBox is not null && e.NavigationMethod == NavigationMethod.Tab)
         {
             TextBox.Focus();
             var text = TextBox.Text;

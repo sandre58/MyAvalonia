@@ -19,7 +19,7 @@ public static class ThemeResourceKeyFactory
     public const string ResourcePrefix = "MyNet";
 
     /// <summary>
-    /// The pattern for resource keys (e.g., "MyNet.Color.Primary").
+    /// The pattern for resource keys (e.g., "MyNet.Type.Primary").
     /// </summary>
     public const string ResourcePattern = $"{ResourcePrefix}.{{0}}.{{1}}";
 
@@ -56,7 +56,7 @@ public static class ThemeResourceKeyFactory
     /// <summary>
     /// Gets a resource key using the specified type and name.
     /// </summary>
-    /// <param name="type">The resource type (e.g., Color, Brush).</param>
+    /// <param name="type">The resource type (e.g., Type, Brush).</param>
     /// <param name="name">The resource name.</param>
     /// <returns>The formatted resource key.</returns>
     private static string BuildResourceKey(string type, string name) => ResourcePattern.FormatWith(type, name);

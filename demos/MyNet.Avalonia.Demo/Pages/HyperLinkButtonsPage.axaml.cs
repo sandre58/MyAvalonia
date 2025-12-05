@@ -20,7 +20,7 @@ internal sealed partial class HyperLinkButtonsPage : AutoBuildPage
         var item = new HyperlinkButton
         {
             HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center,
-            Content = data.Color.Or(data.Size.OrEmpty()).Or("Default")
+            Content = data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default")
         };
 
         return item;
@@ -28,9 +28,9 @@ internal sealed partial class HyperLinkButtonsPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddStyles("Text")
-            .AddDefaultColors()
+            .AddDefaultRoles()
         ];
 
     private void Icon_SelectionChanged(object? sender, SelectionChangedEventArgs e)

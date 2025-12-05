@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using MyNet.Avalonia.Controls.Assists;
+using MyNet.Avalonia.Controls.Behaviors;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Demo.Views.Samples;
 using MyNet.Utilities;
@@ -25,13 +25,13 @@ internal sealed partial class ToggleSplitButtonsPage : AutoBuildPage
         var item = new ToggleSplitButton
         {
             HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center,
-            Content = data.Color.Or(data.Size.OrEmpty()).Or("Default"),
+            Content = data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default"),
             IsChecked = RandomGenerator.Bool(),
             Flyout = new MenuFlyout
             {
                 ItemsSource = MenuHelper.RandomizeMenuItems(1, 3, 5, 3)
             },
-            [!PopupAssist.PlacementProperty] = PopupPlacement[!SelectingItemsControl.SelectedValueProperty]
+            [!PopupBehavior.PlacementProperty] = PopupPlacement[!SelectingItemsControl.SelectedValueProperty]
         };
 
         if (data.Theme.NotContainsAny("rounded"))
@@ -46,7 +46,7 @@ internal sealed partial class ToggleSplitButtonsPage : AutoBuildPage
             .AddLayouts("Circle")
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultColors()
+            .AddDefaultRoles()
             .AddSizes("Small", "Medium", "Large")
             .AddCustomControls(CreateCustomControls())
         ];

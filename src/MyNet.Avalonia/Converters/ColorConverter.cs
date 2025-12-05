@@ -13,29 +13,29 @@ using MyNet.Avalonia.Extensions;
 
 namespace MyNet.Avalonia.Converters;
 
-public sealed class ColorConverter : IValueConverter
+public class ColorConverter : IValueConverter
 {
-    private enum Mode
-    {
-        None,
+    /// <summary>
+    /// Gets or sets the opacity key or value to apply.
+    /// </summary>
+    public double? Opacity { get; set; }
 
-        Contrast,
+    /// <summary>
+    /// Gets or sets a value indicating whether to use the contrast brush.
+    /// </summary>
+    public bool Contrast { get; set; }
 
-        Darken,
+    /// <summary>
+    /// Gets or sets the darken amount (0.0 to 1.0).
+    /// </summary>
+    public double? Darken { get; set; }
 
-        Lighten
-    }
+    /// <summary>
+    /// Gets or sets the lighten amount (0.0 to 1.0).
+    /// </summary>
+    public double? Lighten { get; set; }
 
-    public static readonly ColorConverter Default = new(Mode.None);
-    public static readonly ColorConverter Contrast = new(Mode.Contrast);
-    public static readonly ColorConverter Darken = new(Mode.Darken);
-    public static readonly ColorConverter Lighten = new(Mode.Lighten);
-
-    private readonly Mode _mode;
-
-    private ColorConverter(Mode mode) => _mode = mode;
-
-    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public virtual object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not SolidColorBrush and not Color and not string) return AvaloniaProperty.UnsetValue;
 
@@ -46,25 +46,10 @@ public sealed class ColorConverter : IValueConverter
             string s => s.ToColor().GetValueOrDefault(),
             _ => Colors.White
         };
-        var opacity = value is SolidColorBrush brush ? brush.Opacity : 1.0D;
+        var opacity = Opacity ?? (value is SolidColorBrush brush && brush.Opacity < 1.0 ? brush.Opacity : (double?)null);
 
-        return _mode switch
-        {
-            Mode.Contrast => IdealTextColor(Color.FromArgb(System.Convert.ToByte(255 * opacity), color.R, color.G, color.B)),
-            Mode.Darken => color.Darken(parameter is not null ? System.Convert.ToInt32(parameter, CultureInfo.InvariantCulture) : 1),
-            Mode.Lighten => color.Lighten(parameter is not null ? System.Convert.ToInt32(parameter, CultureInfo.InvariantCulture) : 1),
-            Mode.None => color,
-            _ => throw new InvalidOperationException()
-        };
+        return color.Apply(new ColorInterpolation(opacity, Contrast, Darken, Lighten));
     }
 
-    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => AvaloniaProperty.UnsetValue;
-
-    private static Color IdealTextColor(Color bg)
-    {
-        const int nThreshold = 86;
-        var bgDelta = System.Convert.ToInt32((bg.R * 0.299) + (bg.G * 0.587) + (bg.B * 0.114));
-        var foreColor = 255 - bgDelta < nThreshold ? Colors.Black : Colors.White;
-        return foreColor;
-    }
+    public virtual object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => AvaloniaProperty.UnsetValue;
 }

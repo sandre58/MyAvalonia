@@ -2,9 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style Selector=":is(Control).Secondary">
-        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Secondary}" />
+        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
     </Style>
     <Style Selector=":is(Control).Tertiary">
-        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Tertiary}" />
+        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.Medium}" />
     </Style>
 </Styles>

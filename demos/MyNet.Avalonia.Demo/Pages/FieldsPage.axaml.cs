@@ -15,12 +15,13 @@ using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Styling;
-using MyNet.Avalonia.Controls.Assists;
+using MyNet.Avalonia.Controls.Behaviors;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Demo.Resources;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme;
+using MyNet.Avalonia.Theme.Assists;
 using MyNet.Humanizer;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -180,7 +181,7 @@ internal sealed partial class FieldsPage : Page
             new ControlData<DatePicker>(() => new DatePicker
             {
                 Width = 220,
-                [!DateTimePickerAssist.OverrideWatermarkProperty] = UseDateWatermark[!ToggleButton.IsCheckedProperty],
+                [!DateTimePickerBehavior.OverrideWatermarkProperty] = UseDateWatermark[!ToggleButton.IsCheckedProperty],
                 [!DatePicker.DayVisibleProperty] = ShowDay[!ToggleButton.IsCheckedProperty],
                 [!DatePicker.MonthVisibleProperty] = ShowMonth[!ToggleButton.IsCheckedProperty],
                 [!DatePicker.YearVisibleProperty] = ShowYear[!ToggleButton.IsCheckedProperty]
@@ -191,7 +192,7 @@ internal sealed partial class FieldsPage : Page
             new ControlData<TimePicker>(() => new TimePicker
             {
                 Width = 220,
-                [!DateTimePickerAssist.OverrideWatermarkProperty] = UseTimeWatermark[!ToggleButton.IsCheckedProperty],
+                [!DateTimePickerBehavior.OverrideWatermarkProperty] = UseTimeWatermark[!ToggleButton.IsCheckedProperty],
                 [!TimePicker.UseSecondsProperty] = UseSeconds[!ToggleButton.IsCheckedProperty],
                 [!TimePicker.ClockIdentifierProperty] = TimeMode[!SelectingItemsControl.SelectedValueProperty]
             },
@@ -343,7 +344,7 @@ internal sealed partial class FieldsPage : Page
                     control[!TextFieldAssist.ShowClearButtonProperty] = ShowClearButton[!ToggleButton.IsCheckedProperty];
                     control[!TextFieldAssist.ShowClipboardButtonProperty] = ShowClipboardButton[!ToggleButton.IsCheckedProperty];
                     control[!TextFieldAssist.ShowRevealButtonProperty] = IsPassword[!ToggleButton.IsCheckedProperty];
-                    control[!TextFieldAssist.IsTextEditableProperty] = IsEditable[!ToggleButton.IsCheckedProperty];
+                    control[!TextFieldBehavior.IsTextEditableProperty] = IsEditable[!ToggleButton.IsCheckedProperty];
 
                     Grid.SetRow(control, row);
                     Grid.SetColumn(control, column);

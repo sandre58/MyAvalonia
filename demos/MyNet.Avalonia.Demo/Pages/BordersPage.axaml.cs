@@ -19,10 +19,6 @@ internal sealed partial class BordersPage : AutoBuildPage
     {
         var item = new Border
         {
-            Child = new TextBlock
-            {
-                Text = data.Color.Or(data.Size.OrEmpty()).Or("Default")
-            },
             Height = 150,
             Width = 250
         };
@@ -32,10 +28,11 @@ internal sealed partial class BordersPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData("Card")
-            .AddAllColors()
-            .AddStyles("Light", "Solid", "Outlined")
-            .AddCartesianStyles("Light", "Shadow Hover")
+            new ControlThemeData("Card", DefaultStyleDisplay.WithRoles)
+            .AddAllRoles()
+            .AddStyles("Light", "Outlined")
+            .AddCartesianStyles("Outlined", "Light")
+            .AddCartesianStyles("Outlined", "Solid")
             .AddCartesianStyles("Solid", "Shadow Hover")
             .AddCartesianStyles("Outlined", "Shadow Hover"),
 

@@ -1,0 +1,123 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="PopupAssist.cs" company="Stéphane ANDRE">
+// Copyright (c) Stéphane ANDRE. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using Avalonia;
+using Avalonia.Media;
+
+namespace MyNet.Avalonia.Theme.Assists;
+
+public static class PopupAssist
+{
+    #region Background
+
+    /// <summary>
+    /// Provides Background Property for attached PopupBehavior element.
+    /// </summary>
+    public static readonly AttachedProperty<IBrush> BackgroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("Background", typeof(PopupAssist));
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="BackgroundProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="BackgroundProperty"/>.</param>
+    public static void SetBackground(StyledElement element, IBrush value) => element.SetValue(BackgroundProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="BackgroundProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static IBrush GetBackground(StyledElement element) => element.GetValue(BackgroundProperty);
+
+    #endregion
+
+    #region Foreground
+
+    /// <summary>
+    /// Provides Foreground Property for attached PopupBehavior element.
+    /// </summary>
+    public static readonly AttachedProperty<IBrush> ForegroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("Foreground", typeof(PopupAssist));
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="ForegroundProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="ForegroundProperty"/>.</param>
+    public static void SetForeground(StyledElement element, IBrush value) => element.SetValue(ForegroundProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="ForegroundProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static IBrush GetForeground(StyledElement element) => element.GetValue(ForegroundProperty);
+
+    #endregion
+
+    #region PrimaryColor
+
+    /// <summary>
+    /// Provides PrimaryColor Property for attached PopupBehavior element.
+    /// </summary>
+    public static readonly AttachedProperty<IBrush> PrimaryColorProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("PrimaryColor", typeof(PopupAssist));
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PrimaryColorProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="PrimaryColorProperty"/>.</param>
+    public static void SetPrimaryColor(StyledElement element, IBrush value) => element.SetValue(PrimaryColorProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PrimaryColorProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static IBrush GetPrimaryColor(StyledElement element) => element.GetValue(PrimaryColorProperty);
+
+    #endregion
+
+    #region Height
+
+    /// <summary>
+    /// Provides Height Property for attached PopupBehavior element.
+    /// </summary>
+    public static readonly AttachedProperty<double> HeightProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("Height", typeof(PopupAssist), double.NaN);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="HeightProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="HeightProperty"/>.</param>
+    public static void SetHeight(StyledElement element, double value) => element.SetValue(HeightProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="HeightProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetHeight(StyledElement element) => element.GetValue(HeightProperty);
+
+    #endregion
+
+    #region Width
+
+    /// <summary>
+    /// Provides Width Property for attached PopupBehavior element.
+    /// </summary>
+    public static readonly AttachedProperty<double> WidthProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("Width", typeof(PopupAssist), double.NaN);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="WidthProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="WidthProperty"/>.</param>
+    public static void SetWidth(StyledElement element, double value) => element.SetValue(WidthProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="WidthProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetWidth(StyledElement element) => element.GetValue(WidthProperty);
+
+    #endregion
+}

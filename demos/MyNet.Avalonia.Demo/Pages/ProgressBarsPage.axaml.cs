@@ -40,14 +40,14 @@ internal sealed partial class ProgressBarsPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Circle")
             .AddStyles("Shadow")
-            .AddDefaultColors(false)
+            .AddDefaultRoles(false)
             .AddSizes("Small", "Medium", "Large"),
 
-            new ControlThemeData("Circular", defaultStyleDisplay: DefaultStyleDisplay.WithColors)
-            .AddDefaultColors(false)
+            new ControlThemeData("Circular", defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
+            .AddDefaultRoles(false)
             .AddSizes("Small", "Medium", "Large")
         ];
 

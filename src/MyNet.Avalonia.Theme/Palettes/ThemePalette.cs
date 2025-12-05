@@ -1,84 +1,139 @@
-ï»¿// -----------------------------------------------------------------------
-// <copyright file="ThemePalette.cs" company="StÃ©phane ANDRE">
-// Copyright (c) StÃ©phane ANDRE. All rights reserved.
+// -----------------------------------------------------------------------
+// <copyright file="ThemePalette.cs" company="Stéphane ANDRE">
+// Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Linq;
 using Avalonia.Media;
-using Avalonia.Styling;
-using MyNet.Observable;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Palettes;
 
 /// <summary>
-/// Represents a complete set of color palettes for a theme variant (Dark, Light, HighContrast, etc.).
-/// Contains all color palettes needed to style an application: base colors, semantic colors, and specialized palettes.
-/// Implements INotifyPropertyChanged via ObservableObject to support reactive bindings.
+/// Defines the base color palette for surfaces, backgrounds, borders, and other UI elements in a theme variant.
+/// Colors in this palette adapt to the Light or Dark theme variant and provide consistent styling for common UI components.
 /// </summary>
-public class ThemePalette(ThemeVariant variant) : ObservableObject
+public class ThemePalette
 {
-    public ThemeVariant Variant { get; } = variant;
+    /// <summary>
+    /// Gets the background color for the main application surface.
+    /// </summary>
+    public required Color ApplicationBackground { get; init; }
 
     /// <summary>
-    /// Gets or sets the base theme palette containing application, surface, and control colors.
+    /// Gets the foreground color for the main application surface.
     /// </summary>
-    public required BaseThemePalette Base { get; set; }
+    public required Color ApplicationForeground { get; init; }
 
     /// <summary>
-    /// Gets or sets the success (positive) color palette with shades.
+    /// Gets the background color for general surfaces.
     /// </summary>
-    public required ColorPalette Success { get; set; }
+    public required Color SurfaceBackground { get; init; }
 
     /// <summary>
-    /// Gets or sets the warning color palette with shades.
+    /// Gets the background color for dark surfaces.
     /// </summary>
-    public required ColorPalette Warning { get; set; }
+    public required Color SurfaceBackgroundDark { get; init; }
 
     /// <summary>
-    /// Gets or sets the error (negative) color palette with shades.
+    /// Gets the border color for surfaces.
     /// </summary>
-    public required ColorPalette Error { get; set; }
+    public required Color SurfaceBorder { get; init; }
 
     /// <summary>
-    /// Gets or sets the information color palette with shades.
+    /// Gets the background color for controls.
     /// </summary>
-    public required ColorPalette Information { get; set; }
+    public required Color ControlBackground { get; init; }
 
     /// <summary>
-    /// Gets or sets the neutral color palette with shades.
+    /// Gets the background color for light controls.
     /// </summary>
-    public required ColorPalette Neutral { get; set; }
+    public required Color ControlBackgroundLight { get; init; }
 
     /// <summary>
-    /// Gets or sets the gender-specific color palette.
+    /// Gets the border color for controls.
     /// </summary>
-    public required GenderPalette Gender { get; set; }
+    public required Color ControlBorder { get; init; }
 
     /// <summary>
-    /// Gets or sets the code block syntax highlighting color palette.
+    /// Gets the border color for controls when hovered.
     /// </summary>
-    public required CodeBlockPalette CodeBlock { get; set; }
+    public required Color ControlBorderHover { get; init; }
 
     /// <summary>
-    /// Converts the entire theme palette to a read-only dictionary suitable for use as resource dictionary keys and values.
+    /// Gets the border color for controls when focused.
     /// </summary>
-    /// <returns>A dictionary containing all theme colors from all palettes with their corresponding resource keys.</returns>
-    public IReadOnlyDictionary<string, Color> ToResourceDictionary()
-    {
-        var dictionary = new Dictionary<string, Color>();
+    public required Color ControlBorderFocus { get; init; }
 
-        dictionary.AddRange(Base.ToResourceDictionary());
-        dictionary.AddRange(Success.ToResourceDictionary(nameof(Success)));
-        dictionary.AddRange(Warning.ToResourceDictionary(nameof(Warning)));
-        dictionary.AddRange(Error.ToResourceDictionary(nameof(Error)));
-        dictionary.AddRange(Information.ToResourceDictionary(nameof(Information)));
-        dictionary.AddRange(Neutral.ToResourceDictionary(nameof(Neutral)));
-        dictionary.AddRange(Gender.ToResourceDictionary());
-        dictionary.AddRange(CodeBlock.ToResourceDictionary());
+    /// <summary>
+    /// Gets the background color for overlays.
+    /// </summary>
+    public required Color OverlayBackground { get; init; }
 
-        return dictionary;
-    }
+    /// <summary>
+    /// Gets the background color for dialogs.
+    /// </summary>
+    public required Color DialogBackground { get; init; }
+
+    /// <summary>
+    /// Gets the background color for popups.
+    /// </summary>
+    public required Color PopupBackground { get; init; }
+
+    /// <summary>
+    /// Gets the border color for popups.
+    /// </summary>
+    public required Color PopupBorder { get; init; }
+
+    /// <summary>
+    /// Gets the foreground color for popups.
+    /// </summary>
+    public required Color PopupForeground { get; init; }
+
+    /// <summary>
+    /// Gets the background color for tooltips.
+    /// </summary>
+    public required Color ToolTipBackground { get; init; }
+
+    /// <summary>
+    /// Gets the border color for tooltips.
+    /// </summary>
+    public required Color ToolTipBorder { get; init; }
+
+    /// <summary>
+    /// Gets the background color for the close button when hovered.
+    /// </summary>
+    public required Color ButtonCloseBackgroundHover { get; init; }
+
+    /// <summary>
+    /// Gets the color used to indicate validation errors.
+    /// </summary>
+    public required Color ValidationError { get; init; }
+
+    /// <summary>
+    /// Converts the base theme palette to a read-only dictionary suitable for use as resource dictionary keys and values.
+    /// </summary>
+    /// <returns>A dictionary containing all base theme colors with their corresponding resource keys.</returns>
+    public IReadOnlyDictionary<string, object> ToResourceDictionary() => new Dictionary<string, object>
+        {
+            { "Application.Background", ApplicationBackground },
+            { "Application.Foreground", ApplicationForeground },
+            { "Surface.Background", SurfaceBackground },
+            { "Surface.Background.Dark", SurfaceBackgroundDark },
+            { "Surface.Border", SurfaceBorder },
+            { "Control.Background", ControlBackground },
+            { "Control.Background.Light", ControlBackgroundLight },
+            { "Control.Border", ControlBorder },
+            { "Control.Border.Hover", ControlBorderHover },
+            { "Control.Border.Focus", ControlBorderFocus },
+            { "Overlay.Background", OverlayBackground },
+            { "Dialog.Background", DialogBackground },
+            { "Popup.Background", PopupBackground },
+            { "Popup.Border", PopupBorder },
+            { "Popup.Foreground", PopupForeground },
+            { "ToolTip.Background", ToolTipBackground },
+            { "ToolTip.Border", ToolTipBorder },
+            { "Button.Close.Background.Hover", ButtonCloseBackgroundHover },
+            { "Validation.Error", ValidationError }
+        };
 }

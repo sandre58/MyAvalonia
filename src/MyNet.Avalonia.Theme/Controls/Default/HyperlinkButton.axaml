@@ -19,12 +19,12 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Primary}" />
         <Setter Property="Padding" Value="3 3 3 1" />
-        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Secondary}" />
+        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
             <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:ThemeRole}" />
         </Style>
         
         <Setter Property="Template">
@@ -60,8 +60,8 @@
 
         <!-- Visited -->
         <Style Selector="^:visited">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Tertiary}" />
-            <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.Medium}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole}" />
         </Style>
 
         <!-- Focus -->
@@ -73,8 +73,8 @@
 
         <!-- Style -->
         <Style Selector="^.Text">
-            <Setter Property="my:ThemeAssist.SecondaryColor" Value="{Binding $parent[TemplatedControl].Foreground}" />
-            <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.SecondaryColor)}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{Binding $parent[TemplatedControl].Foreground}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Secondary}" />
         </Style>
 
     </ControlTheme>

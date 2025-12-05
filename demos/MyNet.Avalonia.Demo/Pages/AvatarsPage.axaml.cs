@@ -11,7 +11,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Demo.Helpers;
-using MyNet.Avalonia.Enums;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -27,7 +27,7 @@ internal sealed partial class AvatarsPage : AutoBuildPage
         var item = new Avatar
         {
             HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center,
-            Content = RandomGenerator.Bool() ? data.Color.Or(data.Size.OrEmpty()).Or("Default").GetInitials() : RandomGenerator.Enum<IconData>().ToIcon(),
+            Content = RandomGenerator.Bool() ? data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default").GetInitials() : RandomGenerator.Enum<IconData>().ToIcon(),
             Source = RandomGenerator.Bool() ? new Bitmap(AssetLoader.Open(new Uri($"avares://MyNet.Avalonia.Demo/Assets/Images/avatar_{RandomGenerator.Int(1, 7)}.png"))) : null,
             [!Avatar.ShowBackgroundProperty] = ShowBackground[!global::Avalonia.Controls.Primitives.ToggleButton.IsCheckedProperty],
         };
@@ -37,10 +37,10 @@ internal sealed partial class AvatarsPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-           new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+           new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
                                       .AddLayouts("Circle")
                                       .AddStyles("Shadow")
-                                      .AddAllColors()
+                                      .AddAllRoles()
                                       .AddSizes("ExtraSmall", "Small", "Medium", "Large", "ExtraLarge")
         ];
 }

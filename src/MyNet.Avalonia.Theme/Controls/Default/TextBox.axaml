@@ -22,36 +22,36 @@
         <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
         <Setter Property="my:IconAssist.Alignment" Value="Left" />
         <Setter Property="my:IconAssist.Margin" Value="{my:Thickness Default, Right}" />
-        <Setter Property="my:IconAssist.Opacity" Value="{StaticResource MyNet.Opacity.Secondary}" />
+        <Setter Property="my:IconAssist.Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
         <Setter Property="my:TextFieldAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
         <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Inner.Medium}" />
         <Setter Property="my:TextFieldAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.SubCaption}" />
         <Setter Property="my:TextFieldAssist.WatermarkFontSize" Value="{Binding $self.FontSize}" />
         <Setter Property="my:TextFieldAssist.FloatingScale" Value="0.75" />
         <Setter Property="my:TextFieldAssist.FloatingOffset" Value="12" />
-        <Setter Property="my:ProxyAssist.Enable" Value="True" />
+        <Setter Property="my:ProxyBehavior.Enable" Value="True" />
         <Setter Property="UseFloatingWatermark" Value="False" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
             <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="SelectionBrush" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Overlay}}" />
+            <Setter Property="SelectionBrush" Value="{my:ThemeRole Opacity=Scrim}" />
             <Setter Property="SelectionForegroundBrush" Value="{Binding $self.Foreground}" />
-            <Setter Property="CaretBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="CaretBrush" Value="{my:ThemeRole}" />
+            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
+            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />
+            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border.Hover}" />
-            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
-            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
-            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
+            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
+            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
+            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.Medium}}" />
             <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
         </Style>
 
@@ -115,7 +115,7 @@
                                                   InnerForeground="{TemplateBinding (my:TextFieldAssist.InnerForeground)}"
                                                   InnerLeftContent="{TemplateBinding InnerLeftContent}"
                                                   InnerRightContent="{TemplateBinding InnerRightContent}"
-                                                  Proxy="{TemplateBinding (my:ProxyAssist.Proxy)}"
+                                                  Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
                                                   UseFloatingWatermark="{TemplateBinding UseFloatingWatermark}"
                                                   Watermark="{TemplateBinding Watermark}"
                                                   WatermarkFontSize="{TemplateBinding (my:TextFieldAssist.WatermarkFontSize)}">
@@ -169,7 +169,7 @@
                                     <!-- Reveal Button -->
                                     <ToggleButton Name="PART_RevealButton"
                                                   Grid.Column="4"
-                                                  my:ThemeAssist.TertiaryColor="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
+                                                  my:PaletteAssist.Tertiary="{TemplateBinding (my:PaletteAssist.Primary)}"
                                                   Classes="Stretch ExtraSmall no-disablable"
                                                   Content="{StaticResource MyNet.Geometry.Eye}"
                                                   IsChecked="{TemplateBinding RevealPassword, Mode=TwoWay}"
@@ -284,8 +284,8 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
             <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
         </Style>
 
@@ -384,7 +384,7 @@
                                               InnerForeground="{TemplateBinding (my:TextFieldAssist.InnerForeground)}"
                                               InnerLeftContent="{TemplateBinding InnerLeftContent}"
                                               InnerRightContent="{TemplateBinding InnerRightContent}"
-                                              Proxy="{TemplateBinding (my:ProxyAssist.Proxy)}"
+                                              Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
                                               UseFloatingWatermark="{TemplateBinding UseFloatingWatermark}"
                                               Watermark="{TemplateBinding Watermark}"
                                               WatermarkFontSize="{TemplateBinding (my:TextFieldAssist.WatermarkFontSize)}">
@@ -441,7 +441,7 @@
                                 <ToggleButton Name="PART_RevealButton"
                                               Grid.Column="4"
                                               Margin="{my:Thickness Small, Left}"
-                                              my:ThemeAssist.TertiaryColor="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
+                                              my:PaletteAssist.Tertiary="{TemplateBinding (my:PaletteAssist.Primary)}"
                                               Classes="no-disablable"
                                               Content="{StaticResource MyNet.Geometry.Eye}"
                                               IsChecked="{TemplateBinding RevealPassword, Mode=TwoWay}"

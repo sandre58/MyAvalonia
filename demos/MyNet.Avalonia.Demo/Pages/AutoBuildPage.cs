@@ -6,15 +6,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using Avalonia.Threading;
-using MyNet.Avalonia.Controls.Assists;
 using MyNet.Avalonia.Demo.Helpers;
+using MyNet.Avalonia.Theme.Assists;
 using MyNet.Utilities.Logging;
 using PropertyChanged;
 

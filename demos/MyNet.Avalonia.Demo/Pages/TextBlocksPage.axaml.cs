@@ -17,16 +17,16 @@ internal sealed partial class TextBlocksPage : AutoBuildPage
 
     protected override Control CreateControl(ControlData data)
     {
-        var item = new TextBlock { HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center, Text = data.Color.Or(data.Size.OrEmpty()).Or("Default") };
+        var item = new TextBlock { HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center, Text = data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default") };
 
         return item;
     }
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddStyles("Secondary", "Tertiary", "Underline", "Delete", "Disablable")
-            .AddDefaultColors()
+            .AddDefaultRoles()
             .AddAllSizes()
         ];
 }

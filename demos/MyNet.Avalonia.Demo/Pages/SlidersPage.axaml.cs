@@ -10,9 +10,9 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
-using MyNet.Avalonia.Controls.Assists;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Theme.Assists;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
 
@@ -63,8 +63,8 @@ internal sealed partial class SlidersPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
-            .AddThemeColors(false)
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
+            .AddThemeRoles(false)
             .AddCustomControls(() =>
             {
                 var verticalSliders = CreateColorSliders();

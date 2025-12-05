@@ -29,7 +29,7 @@ public class GenderPalette
     /// Converts the gender palette to a read-only dictionary suitable for use as resource dictionary keys and values.
     /// </summary>
     /// <returns>A dictionary containing all gender colors with their corresponding resource keys.</returns>
-    public IReadOnlyDictionary<string, Color> ToResourceDictionary(string prefix = nameof(ThemePalette.Gender)) => new Dictionary<string, Color>
+    public IReadOnlyDictionary<string, object> ToResourceDictionary(string prefix = nameof(ThemeVariantColors.Gender)) => new Dictionary<string, object>
         {
             { nameof(Male).WithPrefix(prefix), Male },
             { nameof(Female).WithPrefix(prefix), Female }

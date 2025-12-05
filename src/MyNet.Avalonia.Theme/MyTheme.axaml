@@ -6,9 +6,9 @@
         <ResourceDictionary>
             
             <ResourceDictionary.ThemeDictionaries>
-                <ResourceInclude x:Key="Default" Source="avares://MyNet.Avalonia.Theme/Themes/Default.axaml" />
-<!--                <ResourceInclude x:Key="{x:Static themes:DarkThemePalette.Variant}" Source="avares://MyNet.Avalonia.Theme/Themes/Dark.axaml" />
-                <ResourceInclude x:Key="{x:Static themes:LightThemePalette.Variant}" Source="avares://MyNet.Avalonia.Theme/Themes/Light.axaml" />-->
+                <ResourceInclude x:Key="Dark" Source="avares://MyNet.Avalonia.Theme/Themes/Dark.axaml" />
+                <ResourceInclude x:Key="Light" Source="avares://MyNet.Avalonia.Theme/Themes/Light.axaml" />
+                <ResourceInclude x:Key="{x:Static themes:ThemeVariantProvider.HighContrast}" Source="avares://MyNet.Avalonia.Theme/Themes/HighContrast.axaml" />
             </ResourceDictionary.ThemeDictionaries>
 
             <ResourceDictionary.MergedDictionaries>

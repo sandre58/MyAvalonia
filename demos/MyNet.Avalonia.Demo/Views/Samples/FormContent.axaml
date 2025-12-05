@@ -61,8 +61,8 @@
 
             <!-- Gender with ComboBox instead -->
             <ListBox my:FormItem.Label="{my:Icon GenderMaleFemale}"
-                     my:ItemsAssist.UseDisplayMember="False"
-                     my:ItemsAssist.EnumSourceType="{x:Type u:GenderType}"
+                     my:ItemsBehavior.UseDisplayMember="False"
+                     my:ItemsBehavior.EnumSourceType="{x:Type u:GenderType}"
                      Classes="Gender"
                      SelectedValue="{Binding Gender}" />
 

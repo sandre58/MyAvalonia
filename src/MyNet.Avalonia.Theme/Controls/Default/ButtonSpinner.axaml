@@ -70,12 +70,12 @@
 
         <Style Selector="^[(my|SpinnerAssist.Layout)=Horizontal]">
             <Style Selector="^ /template/ Grid#PART_Buttons">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="*" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -101,12 +101,12 @@
 
         <Style Selector="^[(my|SpinnerAssist.Layout)=Vertical]">
             <Style Selector="^ /template/ Grid#PART_Buttons">
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </ColumnDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />

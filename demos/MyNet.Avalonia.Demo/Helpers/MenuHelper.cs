@@ -7,7 +7,7 @@
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Input;
-using MyNet.Avalonia.Enums;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities.Generator;
 using MyNet.Utilities.Helpers;

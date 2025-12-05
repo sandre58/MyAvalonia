@@ -11,10 +11,10 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using MyNet.Avalonia.Controls;
-using MyNet.Avalonia.Controls.Assists;
 using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.Demo.Helpers;
-using MyNet.Avalonia.Enums;
+using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -35,7 +35,7 @@ internal sealed partial class BannersPage : AutoBuildPage
                 Text = SentenceGenerator.Paragraph(RandomGenerator.Int(8, 12), RandomGenerator.Int(1, 2)),
                 TextWrapping = TextWrapping.Wrap
             },
-            Header = data.Color.Or(data.Size.OrEmpty()).Or("Default"),
+            Header = data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default"),
             MaxWidth = 500
         };
 
@@ -50,7 +50,7 @@ internal sealed partial class BannersPage : AutoBuildPage
             .AddStyles("Light", "Solid", "Outlined")
             .AddCartesianStyles("Solid", "Shadow")
             .AddCartesianStyles("Light", "Outlined")
-            .AddDefaultColors()
+            .AddDefaultRoles()
             .AddCustomControls([.. Enum.GetValues<Severity>().Except([Severity.Custom]).Select(x => new Banner
             {
                 Severity = x,

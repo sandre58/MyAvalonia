@@ -18,8 +18,7 @@
                OpenPaneLength="300"
                PanePlacement="Right">
         <SplitView.Pane>
-            <my:PlaceholderContentControl my:IconAssist.Icon="{my:Icon CircleOffOutline,
-                                                                       Size=80}"
+            <my:PlaceholderContentControl my:IconAssist.Icon="{my:Icon CircleOffOutline, Size=80}"
                                           Classes="Watermark ExtraLarge"
                                           Content="{Binding Icons.SelectedItem}"
                                           Placeholder="{my:Resource SelectItem}">
@@ -68,28 +67,20 @@
 
                 <my:Pagination Command="{ReflectionBinding Icons.Paging.MoveToPageCommand}"
                                CommandParameter="{Binding $self.CurrentPage}"
-                               CurrentPage="{ReflectionBinding Icons.Paging.CurrentPage,
-                                                               Mode=OneWay,
-                                                               UpdateSourceTrigger=PropertyChanged}"
+                               CurrentPage="{ReflectionBinding Icons.Paging.CurrentPage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                DockPanel.Dock="Right"
-                               PageSize="{ReflectionBinding Icons.Paging.PageSize,
-                                                            Mode=TwoWay}"
+                               PageSize="{ReflectionBinding Icons.Paging.PageSize, Mode=TwoWay}"
                                PageSizeOptions="10,20,30,50,75,100,150,200,300,500,750,1000"
                                ShowPageSizeSelector="True"
                                ShowQuickJump="True"
-                               TotalCount="{ReflectionBinding Icons.Paging.TotalItems,
-                                                              Mode=OneWay}" />
-                <TextBox Margin="{my:Thickness Default,
-                                               Right}"
+                               TotalCount="{ReflectionBinding Icons.Paging.TotalItems, Mode=OneWay}" />
+                <TextBox Margin="{my:Thickness Default, Right}"
                          HorizontalAlignment="Stretch"
                          my:IconAssist.Icon="{my:Icon Magnify}"
                          my:TextFieldAssist.ShowClearButton="True"
                          Classes="Large"
                          FontSize="{StaticResource MyNet.Font.Size.Caption}"
-                         Text="{ReflectionBinding Icons.Filters.Value,
-                                                  Delay=50,
-                                                  Mode=TwoWay,
-                                                  UpdateSourceTrigger=PropertyChanged}"
+                         Text="{ReflectionBinding Icons.Filters.Value, Delay=50, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Watermark="{my:Resource Search}" />
 
             </DockPanel>
@@ -98,7 +89,7 @@
                      Grid.Column="0"
                      HorizontalAlignment="Stretch"
                      VerticalAlignment="Stretch"
-                     my:ScrollViewerAssist.RefreshOnScroll="True"
+                     my:ScrollViewerBehavior.RefreshOnScroll="True"
                      ItemsSource="{Binding Icons.PagedItems}"
                      SelectedItem="{Binding Icons.SelectedItem}"
                      Theme="{StaticResource MyNet.Theme.ListBox.Cards}">

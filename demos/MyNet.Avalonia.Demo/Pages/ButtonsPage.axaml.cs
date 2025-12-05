@@ -6,10 +6,10 @@
 
 using System.Collections.Generic;
 using Avalonia.Controls;
-using MyNet.Avalonia.Controls.Assists;
 using MyNet.Avalonia.Demo.Helpers;
-using MyNet.Avalonia.Enums;
 using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -29,7 +29,7 @@ internal sealed partial class ButtonsPage : AutoBuildPage
                         ? RandomGenerator.Enum<IconData>().ToIcon()
                         : data.Theme.ContainsAny("icon", "tool")
                         ? RandomGenerator.Enum<IconData>().ToGeometry()
-                        : data.Color.Or(data.Size.OrEmpty()).Or("Default")
+                        : data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default")
         };
 
         if (data.Theme.NotContainsAny("icon", "tool", "rounded"))
@@ -44,13 +44,13 @@ internal sealed partial class ButtonsPage : AutoBuildPage
             .AddLayouts("Circle")
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultColors()
+            .AddDefaultRoles()
             .AddSizes("Small", "Medium", "Large"),
 
             new ControlThemeData("Rounded")
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultColors()
+            .AddDefaultRoles()
             .AddSizes("Small", "Medium", "Large")
             .AddCustomControls(() =>
             {
@@ -76,8 +76,8 @@ internal sealed partial class ButtonsPage : AutoBuildPage
                 return [control, control1];
             }),
 
-            new ControlThemeData("Icon", DefaultStyleDisplay.WithColors)
-            .AddDefaultColors()
+            new ControlThemeData("Icon", DefaultStyleDisplay.WithRoles)
+            .AddDefaultRoles()
             .AddSizes("ExtraSmall", "Small", "Medium", "Large", "ExtraLarge"),
 
             new("Embedded.Tool")

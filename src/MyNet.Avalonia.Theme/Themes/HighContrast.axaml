@@ -1,0 +1,76 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:ClassModifier="internal"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    
+    <!-- Application -->
+    <Color x:Key="MyNet.Color.Application.Background">Black</Color>
+    <Color x:Key="MyNet.Color.Application.Foreground">White</Color>
+
+    <!-- Surfaces -->
+    <Color x:Key="MyNet.Color.Surface.Background">#0A0A0A</Color>
+    <Color x:Key="MyNet.Color.Surface.Background.Dark">Black</Color>
+    <Color x:Key="MyNet.Color.Surface.Border">Yellow</Color>
+
+    <!-- Overlay -->
+    <Color x:Key="MyNet.Color.Overlay.Background">#CC000000</Color>
+
+    <!-- Dialog -->
+    <Color x:Key="MyNet.Color.Dialog.Background">#0F0F0F</Color>
+
+    <!-- Popup -->
+    <Color x:Key="MyNet.Color.Popup.Background">Black</Color>
+    <Color x:Key="MyNet.Color.Popup.Border">Transparent</Color>
+    <Color x:Key="MyNet.Color.Popup.Foreground">White</Color>
+    
+    <!-- ToolTip -->
+    <Color x:Key="MyNet.Color.ToolTip.Background">Yellow</Color>
+    <Color x:Key="MyNet.Color.ToolTip.Border">Black</Color>
+
+    <!-- Controls -->
+    <Color x:Key="MyNet.Color.Control.Background">#1A1A1A</Color>
+    <Color x:Key="MyNet.Color.Control.Background.Light">#2A2A2A</Color>
+    <Color x:Key="MyNet.Color.Control.Border">White</Color>
+    <Color x:Key="MyNet.Color.Control.Border.Hover">Cyan</Color>
+    <Color x:Key="MyNet.Color.Control.Border.Focus">Yellow</Color>
+
+    <!-- Specifics -->
+    <Color x:Key="MyNet.Color.Button.Close.Hover">Red</Color>
+
+    <!-- Validation -->
+    <Color x:Key="MyNet.Color.Validation.Error">Red</Color>
+
+    <!-- States -->
+    <Color x:Key="MyNet.Color.Success">LimeGreen</Color>
+    <Color x:Key="MyNet.Color.Error">Orange</Color>
+    <Color x:Key="MyNet.Color.Warning">Red</Color>
+    <Color x:Key="MyNet.Color.Information">Cyan</Color>
+    <Color x:Key="MyNet.Color.Neutral">LightGray</Color>
+    
+    <!-- CodeBlock -->
+    <Color x:Key="MyNet.Color.CodeBlock.Unknown">White</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Space">Transparent</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Comment">LimeGreen</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Tag">Cyan</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Quote">Yellow</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.AttributeValue">Magenta</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.AttributeKey">Orange</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Brace">Red</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Entity">Aqua</Color>
+
+    <!-- Gender -->
+    <Color x:Key="MyNet.Color.Gender.Female">DodgerBlue</Color>
+    <Color x:Key="MyNet.Color.Gender.Male">HotPink</Color>
+
+    <!-- Opacity Levels -->
+    <sys:Double x:Key="MyNet.Opacity.Elevation.High">0.7</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Elevation.Medium">0.56</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Elevation.Low">0.45</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Scrim">0.40</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Disabled">0.38</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Drag">0.32</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Pressed">0.24</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Focus">0.16</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Hover">0.12</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Overlay">0.08</sys:Double>
+</ResourceDictionary>

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Avalonia.Controls;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Demo.Resources;
-using MyNet.Avalonia.Enums;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -49,32 +49,32 @@ internal sealed partial class ToggleSwitchesPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
-            .AddDefaultColors(false)
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
+            .AddDefaultRoles(false)
             .AddSizes("Small", "Medium", "Large"),
 
-            new ControlThemeData("Inner", defaultStyleDisplay: DefaultStyleDisplay.WithColors)
-            .AddDefaultColors(false)
+            new ControlThemeData("Inner", defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
+            .AddDefaultRoles(false)
             .AddSizes("Small", "Medium", "Large"),
 
-            new ControlThemeData("Alternate", defaultStyleDisplay: DefaultStyleDisplay.WithColors)
-            .AddDefaultColors(),
+            new ControlThemeData("Alternate", defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
+            .AddDefaultRoles(),
 
-            new ControlThemeData("Button", defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData("Button", defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Circle")
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultColors(false)
+            .AddDefaultRoles(false)
             .AddSizes("Small", "Medium", "Large"),
 
-            new ControlThemeData("Button.Rounded", DefaultStyleDisplay.WithColors)
+            new ControlThemeData("Button.Rounded", DefaultStyleDisplay.WithRoles)
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultColors(false)
+            .AddDefaultRoles(false)
             .AddSizes("Small", "Medium", "Large"),
 
-            new ControlThemeData("Button.Icon", DefaultStyleDisplay.WithColors)
-            .AddDefaultColors(false)
+            new ControlThemeData("Button.Icon", DefaultStyleDisplay.WithRoles)
+            .AddDefaultRoles(false)
             .AddSizes("ExtraSmall", "Small", "Medium", "Large", "ExtraLarge")
         ];
 }

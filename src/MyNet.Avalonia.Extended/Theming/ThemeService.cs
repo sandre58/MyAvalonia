@@ -7,81 +7,71 @@
 using System;
 using Avalonia.Media;
 using MyNet.Avalonia.Extensions;
-using MyNet.Avalonia.Theming;
+using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming;
 using MyNet.UI.Theming;
 
 namespace MyNet.Avalonia.Extended.Theming;
 
 /// <summary>
-/// Service for managing application avaloniaTheme (Dark/Light/HighContrast) and brand colors (Primary/Accent).
+/// Service for managing application myTheme (Dark/Light/HighContrast) and brand colors (Primary/Accent).
 /// Integrates with MyNet.Avalonia.Theme.MyTheme for hot-reload support.
 /// </summary>
-public class ThemeService(IAvaloniaTheme avaloniaTheme) : IThemeService
+public class ThemeService(IMyTheme myTheme) : IThemeService
 {
     /// <summary>
-    /// Event raised when the avaloniaTheme changes.
+    /// Event raised when the myTheme changes.
     /// </summary>
     public event EventHandler<ThemeChangedEventArgs>? ThemeChanged;
 
     /// <summary>
-    /// Gets the current avaloniaTheme configuration.
+    /// Gets the current myTheme configuration.
     /// </summary>
     public UI.Theming.Theme CurrentTheme
     {
         get
         {
-            var primary = avaloniaTheme.GetPrimaryPair();
-            var accent = avaloniaTheme.GetAccentPair();
+            var primary = myTheme.Primary;
+            var accent = myTheme.Accent;
             return new()
             {
-                Base = avaloniaTheme.GetThemeName() switch
-                {
-                    "Dark" => ThemeBase.Dark,
-                    "Light" => ThemeBase.Light,
-                    "HighContrast" => ThemeBase.Dark, // Map HighContrast to Dark for legacy compatibility
-                    _ => ThemeBase.Inherit
-                },
-                PrimaryColor = primary.Color.ToHex(),
-                PrimaryForegroundColor = primary.ForegroundColor?.ToHex(),
-                AccentColor = accent.Color.ToHex(),
-                AccentForegroundColor = accent.ForegroundColor?.ToHex()
+                Base = Enum.TryParse<ThemeBase>(myTheme.Theme, out var baseTheme) ? baseTheme : ThemeBase.Inherit,
+                PrimaryColor = primary.Base.ToHex(),
+                PrimaryForegroundColor = primary.Foreground.ToHex(),
+                AccentColor = accent.Foreground.ToHex(),
+                AccentForegroundColor = accent.Foreground.ToHex()
             };
         }
     }
 
     /// <summary>
-    /// Applies a avaloniaTheme configuration to the application.
+    /// Applies a myTheme configuration to the application.
     /// </summary>
-    /// <param name="theme">The avaloniaTheme to apply.</param>
+    /// <param name="theme">The myTheme to apply.</param>
     public void ApplyTheme(UI.Theming.Theme theme)
     {
         if (theme.Base is not null)
         {
-            avaloniaTheme.SetTheme(theme.Base switch
-            {
-                ThemeBase.Dark => nameof(ThemeBase.Dark),
-                ThemeBase.Light => nameof(ThemeBase.Light),
-                _ => null
-            });
+            myTheme.Theme = theme.Base.ToString();
         }
 
         if (theme.PrimaryColor is not null)
         {
             var primaryColor = theme.PrimaryColor.ToColor();
-            var foregroundColor = theme.PrimaryForegroundColor;
+            var foregroundColor = theme.PrimaryForegroundColor.ToColor();
             if (primaryColor.HasValue)
             {
-                avaloniaTheme.SetPrimary(primaryColor.Value, foregroundColor?.ToColor());
+                myTheme.Primary = new ColorShades(primaryColor.Value, foregroundColor);
             }
         }
 
         if (theme.AccentColor is not null)
         {
             var accentColor = theme.AccentColor.ToColor();
-            var foregroundColor = theme.AccentForegroundColor;
+            var foregroundColor = theme.AccentForegroundColor.ToColor();
             if (accentColor.HasValue)
             {
-                avaloniaTheme.SetAccent(accentColor.Value, foregroundColor?.ToColor());
+                myTheme.Accent = new ColorShades(accentColor.Value, foregroundColor);
             }
         }
 
@@ -89,7 +79,7 @@ public class ThemeService(IAvaloniaTheme avaloniaTheme) : IThemeService
     }
 
     /// <summary>
-    /// Adds a base avaloniaTheme extension (not implemented - for future use).
+    /// Adds a base myTheme extension (not implemented - for future use).
     /// </summary>
     public IThemeService AddBaseExtension(IThemeExtension extension) => this;
 

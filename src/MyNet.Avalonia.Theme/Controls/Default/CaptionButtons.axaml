@@ -8,7 +8,7 @@
         <Setter Property="Height" Value="28" />
         <Setter Property="Width" Value="28" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="Foreground" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Tertiary}}" />
+        <Setter Property="Foreground" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.Medium}}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
 

@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:c="using:MyNet.Avalonia.Theme.Converters"
+                    xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals"
                     xmlns:my="http://mynet.com/avalonia">
 
     <ControlTheme x:Key="{x:Type my:FormItem}" TargetType="my:FormItem">
@@ -9,8 +9,7 @@
             <ControlTemplate TargetType="my:FormItem">
                 <StackPanel>
                     <StackPanel Name="PART_LabelPanel"
-                                Margin="{my:Thickness Default,
-                                                      Bottom}"
+                                Margin="{my:Thickness Default, Bottom}"
                                 HorizontalAlignment="{TemplateBinding LabelAlignment}"
                                 VerticalAlignment="Center"
                                 Orientation="Horizontal">

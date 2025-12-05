@@ -36,9 +36,9 @@ internal sealed partial class ClocksPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
                                 .AddStyles("Solid", "Outlined")
                                 .AddCartesianStyles("Solid", "Outlined", "Shadow")
-                                .AddThemeColors()
+                                .AddThemeRoles()
         ];
 }

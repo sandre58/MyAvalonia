@@ -41,7 +41,7 @@
             <Setter Property="my:IconAssist.Margin" Value="{my:Thickness Medium, Bottom}" />
 
             <Style Selector="^ /template/ ContentPresenter#PART_PlaceholderPresenter">
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Watermark}" />
+                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.Medium}" />
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="my:ClassesAssist.AddClasses" Value="Caption" />

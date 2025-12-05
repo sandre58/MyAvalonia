@@ -92,31 +92,31 @@
 
         <!-- Styles -->
         <Style Selector="^.Outlined">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Background" Value="Transparent" />
 
             <Style Selector="^.Solid">
-                <Setter Property="my:ThemeAssist.SecondaryColor" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-                <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.SecondaryColor)}" />
+                <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
+                <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
             </Style>
 
             <Style Selector="^.Light">
-                <Setter Property="my:ThemeAssist.SecondaryColor" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-                <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.SecondaryColor)}" />
+                <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
+                <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
             </Style>
         </Style>
 
         <Style Selector="^.Solid">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-            <Setter Property="Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="Foreground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
+            <Setter Property="Background" Value="{my:ThemeRole}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
         </Style>
 
         <Style Selector="^.Light">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-            <Setter Property="Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
+            <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
         </Style>
 
         <Style Selector="^:success">
@@ -128,9 +128,9 @@
                     </Template>
                 </Setter.Value>
             </Setter>
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Positive}" />
-            <Setter Property="Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="Foreground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Positive}" />
+            <Setter Property="Background" Value="{my:ThemeRole}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="ClipToBounds" Value="False" />
         </Style>
@@ -143,9 +143,9 @@
                     </Template>
                 </Setter.Value>
             </Setter>
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Warning}" />
-            <Setter Property="Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="Foreground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Warning}" />
+            <Setter Property="Background" Value="{my:ThemeRole}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="ClipToBounds" Value="False" />
         </Style>
@@ -158,9 +158,9 @@
                     </Template>
                 </Setter.Value>
             </Setter>
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Negative}" />
-            <Setter Property="Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="Foreground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Negative}" />
+            <Setter Property="Background" Value="{my:ThemeRole}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="ClipToBounds" Value="False" />
         </Style>
@@ -173,9 +173,9 @@
                     </Template>
                 </Setter.Value>
             </Setter>
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Information}" />
-            <Setter Property="Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="Foreground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Information}" />
+            <Setter Property="Background" Value="{my:ThemeRole}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="ClipToBounds" Value="False" />
         </Style>

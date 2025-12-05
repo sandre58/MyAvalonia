@@ -11,8 +11,8 @@
         <Setter Property="Focusable" Value="False" />
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{Binding $parent[Control].(TextElement.Foreground)}" />
-            <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeBrush $parent[Control].(TextElement.Foreground)}" />
+            <Setter Property="Foreground" Value="{my:ThemeBrush $self.(my:PaletteAssist.Primary)}" />
         </Style>
 
         <Style Selector="^.Underline">

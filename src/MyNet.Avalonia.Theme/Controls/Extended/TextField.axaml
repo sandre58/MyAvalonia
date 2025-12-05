@@ -12,12 +12,12 @@
         <Setter Property="ActiveForeground" Value="{DynamicResource MyNet.Brush.Primary}" />
         <Setter Property="InactiveForeground">
             <Setter.Value>
-                <SolidColorBrush Opacity="{StaticResource MyNet.Opacity.Watermark}" Color="{DynamicResource MyNet.Color.Application.Foreground}" />
+                <SolidColorBrush Opacity="{StaticResource MyNet.Opacity.Elevation.Medium}" Color="{DynamicResource MyNet.Color.Application.Foreground}" />
             </Setter.Value>
         </Setter>
         <Setter Property="InnerForeground">
             <Setter.Value>
-                <SolidColorBrush Opacity="{StaticResource MyNet.Opacity.Secondary}" Color="{DynamicResource MyNet.Color.Application.Foreground}" />
+                <SolidColorBrush Opacity="{StaticResource MyNet.Opacity.Elevation.High}" Color="{DynamicResource MyNet.Color.Application.Foreground}" />
             </Setter.Value>
         </Setter>
         <Setter Property="InnerFontSize" Value="{StaticResource MyNet.Font.Size}" />

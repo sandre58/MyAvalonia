@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Input;
 using Avalonia.VisualTree;
-using MyNet.Avalonia.Controls.Assists;
+using MyNet.Avalonia.Controls.Behaviors;
 using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Extended.Controls.Primitives;
@@ -140,7 +140,7 @@ public partial class OverlayDialogHost
         if (!IsAnimationDisabled) _ = MaskAppearAnimation.RunAsync(mask);
 
         var element = control.GetVisualDescendants().OfType<InputElement>()
-                             .FirstOrDefault(FocusAssist.GetDialogFocusHint);
+                             .FirstOrDefault(FocusBehavior.GetDialogFocusHint);
         element ??= control.GetVisualDescendants().OfType<InputElement>().FirstOrDefault(a => a.Focusable);
         _ = element?.Focus();
         _modalCount++;

@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <NeutralLanguage>fr</NeutralLanguage>
         <Product>My .NET Avalonia</Product>
         <PackageIcon>MyAvalonia.png</PackageIcon>
         <Description>Extensions and helpers for Avalonia UI development: controls, theming, reactive programming, and integration with MyNet libraries.</Description>

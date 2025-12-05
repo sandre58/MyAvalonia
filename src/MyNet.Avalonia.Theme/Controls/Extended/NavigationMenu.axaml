@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:c="using:MyNet.Avalonia.Theme.Converters"
+                    xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals"
                     xmlns:my="http://mynet.com/avalonia">
 
     <DataTemplate x:Key="MyNet.DataTemplates.NavigationMenuItem.Icon" x:DataType="StreamGeometry">
@@ -123,8 +123,7 @@
                                 <!-- Header -->
                                 <ContentPresenter Name="PART_HeaderPresenter"
                                                   Grid.Column="1"
-                                                  Margin="{my:Thickness Medium,
-                                                                        Right}"
+                                                  Margin="{my:Thickness Medium, Right}"
                                                   Content="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}"
                                                   ContentTemplate="{Binding HeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"
                                                   IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}" />
@@ -162,8 +161,8 @@
                             RenderTransformOrigin="0.5,0">
                 <ItemsPresenter.Transitions>
                     <Transitions>
-                        <DoubleTransition Property="Height" Duration="0.1" />
-                        <TransformOperationsTransition Property="RenderTransform" Duration="0.1" />
+                        <DoubleTransition Property="Height" Duration="{StaticResource MyNet.Animation.Slide}" />
+                        <TransformOperationsTransition Property="RenderTransform" Duration="{StaticResource MyNet.Animation.Slide}" />
                     </Transitions>
                 </ItemsPresenter.Transitions>
             </ItemsPresenter>
@@ -175,7 +174,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
         <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Brush $self.Foreground}" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
         <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.Foreground}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
@@ -285,7 +284,7 @@
 
         <!-- Separator -->
         <Style Selector="^[IsSeparator=True]">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
             <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
             <Setter Property="Margin" Value="{my:Thickness Top=10, Bottom=2}" />
             <Setter Property="Template">
@@ -296,7 +295,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}"
-                            Opacity="{StaticResource MyNet.Opacity.Secondary}">
+                            Opacity="{StaticResource MyNet.Opacity.Elevation.High}">
 
                         <Grid Name="PART_RootGrid" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
@@ -314,8 +313,7 @@
                             <!-- Header -->
                             <ContentPresenter Name="PART_HeaderPresenter"
                                               Grid.Column="1"
-                                              Margin="{my:Thickness Medium,
-                                                                    Right}"
+                                              Margin="{my:Thickness Medium, Right}"
                                               HorizontalAlignment="Center"
                                               Content="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}"
                                               ContentTemplate="{Binding HeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"

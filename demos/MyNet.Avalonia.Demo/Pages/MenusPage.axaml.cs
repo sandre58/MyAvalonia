@@ -12,7 +12,7 @@ using Avalonia.Input;
 using Avalonia.Media.Imaging;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Demo.Views.Samples;
-using MyNet.Avalonia.Enums;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.Geography;

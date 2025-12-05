@@ -19,8 +19,8 @@
         </Setter>
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{my:Brush $parent[TemplatedControl].Foreground}" />
-            <Setter Property="Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Brush $parent[TemplatedControl].Foreground}" />
+            <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
             <Setter Property="Height" Value="1" />
             <Setter Property="MinHeight" Value="1" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />

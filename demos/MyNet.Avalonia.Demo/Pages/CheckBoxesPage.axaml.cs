@@ -18,9 +18,9 @@ internal sealed partial class CheckBoxesPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Circle", "Alternate")
-            .AddDefaultColors(false)
+            .AddDefaultRoles(false)
             .AddSizes("Small", "Medium", "Large")
         ];
 
@@ -29,7 +29,7 @@ internal sealed partial class CheckBoxesPage : AutoBuildPage
         var item = new CheckBox
         {
             HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center,
-            Content = data.Color.Or(data.Size.OrEmpty()).Or("Default"),
+            Content = data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default"),
             IsChecked = true
         };
 

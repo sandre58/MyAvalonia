@@ -159,16 +159,16 @@ internal sealed class OpacityData : ObservableObject
 
     public OpacityData(string displayName, string brushName)
     {
-        DisplayName = displayName;
-        Name = ThemeResourceKeyFactory.Opacity(displayName);
-        _brushName = brushName;
-        Brush = ThemeResourceProvider.GetBrush(brushName);
-        Opacity = ThemeResourceProvider.GetOpacity(Name);
+        //DisplayName = displayName;
+        //Name = ThemeResourceKeyFactory.Opacity(displayName);
+        //_brushName = brushName;
+        //Brush = ThemeResourceProvider.GetBrush(brushName);
+        //Opacity = ThemeResourceProvider.GetOpacity(Name);
 
         ThemeManager.ThemeChanged += ThemeManager_ThemeChanged;
     }
 
-    private void ThemeManager_ThemeChanged(object? sender, ThemeChangedEventArgs e) => Brush = ThemeResourceProvider.GetBrush(_brushName);
+    private void ThemeManager_ThemeChanged(object? sender, ThemeChangedEventArgs e) { }//=> Brush = ThemeResourceProvider.GetBrush(_brushName);
 
     public string DisplayName { get; }
 

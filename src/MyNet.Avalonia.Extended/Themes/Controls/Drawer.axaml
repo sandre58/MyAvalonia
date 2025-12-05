@@ -14,8 +14,8 @@
         <Setter Property="Focusable" Value="false" />
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
-            <Setter Property="Background" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
+            <Setter Property="Background" Value="{my:ThemeRole}" />
         </Style>
 
         <Setter Property="Template">

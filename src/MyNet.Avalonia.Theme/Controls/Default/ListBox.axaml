@@ -25,7 +25,7 @@
         <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[ListBox].(my:IconAssist.Alignment)}" />
         <Setter Property="my:IconAssist.Margin" Value="{Binding $parent[ListBox].(my:IconAssist.Margin)}" />
         <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[ListBox].(my:IconAssist.Opacity)}" />
-        <Setter Property="my:ItemsAssist.OverrideContentTemplate" Value="True" />
+        <Setter Property="my:ItemsBehavior.OverrideContentTemplate" Value="True" />
         <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -167,11 +167,11 @@
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
             <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.Foreground}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.(my:ItemsAssist.ActiveBackground), Contrast=True}" />
             <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.Foreground}" />
         </Style>
@@ -186,7 +186,7 @@
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <Border ClipToBounds="{TemplateBinding ClipToBounds}" CornerRadius="{TemplateBinding CornerRadius}">
                         <ScrollViewer Name="PART_ScrollViewer"
-                                      my:ScrollViewerAssist.RefreshOnScroll="{TemplateBinding my:ScrollViewerAssist.RefreshOnScroll}"
+                                      my:ScrollViewerBehavior.RefreshOnScroll="{TemplateBinding my:ScrollViewerBehavior.RefreshOnScroll}"
                                       AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                                       HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
                                       IsDeferredScrollingEnabled="{TemplateBinding (ScrollViewer.IsDeferredScrollingEnabled)}"
@@ -219,13 +219,13 @@
         </Setter>
 
         <Style Selector="^">
-            <Setter Property="my:ItemsAssist.Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="my:ItemsAssist.Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
             <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.Foreground}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.(my:ItemsAssist.ActiveBackground), Contrast=True}" />
             <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.Foreground}" />
         </Style>
@@ -283,13 +283,13 @@
             <Setter Property="my:ItemsAssist.BorderThickness" Value="1.4" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.Foreground}" />
         </Style>
 
         <Style Selector="^.Light">
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Opacity=Focus}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.Foreground}" />
         </Style>
 
@@ -333,7 +333,7 @@
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
                         <ScrollViewer Name="PART_ScrollViewer"
-                                      my:ScrollViewerAssist.RefreshOnScroll="{TemplateBinding my:ScrollViewerAssist.RefreshOnScroll}"
+                                      my:ScrollViewerBehavior.RefreshOnScroll="{TemplateBinding my:ScrollViewerBehavior.RefreshOnScroll}"
                                       AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                                       HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
                                       IsDeferredScrollingEnabled="{TemplateBinding (ScrollViewer.IsDeferredScrollingEnabled)}"
@@ -414,7 +414,7 @@
 
     <!-- Tabs -->
     <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Tab" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Secondary}" />
+        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
 
         <!-- Hover -->
         <Style Selector="^:not(:disabled):pointerover">
@@ -445,8 +445,8 @@
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.Foreground}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 0 2" />
         </Style>
 
@@ -460,7 +460,7 @@
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
                         <ScrollViewer Name="PART_ScrollViewer"
-                                      my:ScrollViewerAssist.RefreshOnScroll="{TemplateBinding my:ScrollViewerAssist.RefreshOnScroll}"
+                                      my:ScrollViewerBehavior.RefreshOnScroll="{TemplateBinding my:ScrollViewerBehavior.RefreshOnScroll}"
                                       AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                                       HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
                                       IsDeferredScrollingEnabled="{TemplateBinding (ScrollViewer.IsDeferredScrollingEnabled)}"
@@ -534,7 +534,7 @@
 
     <!-- Icon -->
     <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Icon" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Secondary}" />
+        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
         <Setter Property="FocusAdorner">
             <FocusAdornerTemplate>
                 <Ellipse Theme="{StaticResource MyNet.Theme.Ellipse.Focus}" />
@@ -593,7 +593,7 @@
         </Setter>
 
         <Style Selector="^">
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
         </Style>
 
         <Setter Property="Template">
@@ -606,7 +606,7 @@
                         ClipToBounds="False"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <ScrollViewer Name="PART_ScrollViewer"
-                                  my:ScrollViewerAssist.RefreshOnScroll="{TemplateBinding my:ScrollViewerAssist.RefreshOnScroll}"
+                                  my:ScrollViewerBehavior.RefreshOnScroll="{TemplateBinding my:ScrollViewerBehavior.RefreshOnScroll}"
                                   AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                                   ClipToBounds="False"
                                   HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"

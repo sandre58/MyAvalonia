@@ -6,7 +6,7 @@
 
 using System;
 using Avalonia.Controls;
-using MyNet.Avalonia.Controls.Assists;
+using MyNet.Avalonia.Controls.Behaviors;
 
 namespace MyNet.Avalonia.Controls.Proxy;
 
@@ -14,11 +14,11 @@ public sealed class TimePickerDefaultProxy : IControlProxy
 {
     private readonly global::Avalonia.Controls.TimePicker _control;
 
-    public bool IsEmpty() => _control.SelectedTime is null && !DateTimePickerAssist.GetOverrideWatermark(_control);
+    public bool IsEmpty() => _control.SelectedTime is null && !DateTimePickerBehavior.GetOverrideWatermark(_control);
 
     public bool IsFocused() => _control.IsKeyboardFocusWithin;
 
-    public bool IsActive() => !IsEmpty() || DateTimePickerAssist.GetOverrideWatermark(_control);
+    public bool IsActive() => !IsEmpty() || DateTimePickerBehavior.GetOverrideWatermark(_control);
 
     public event EventHandler? IsEmptyChanged;
 
@@ -29,7 +29,7 @@ public sealed class TimePickerDefaultProxy : IControlProxy
     public TimePickerDefaultProxy(global::Avalonia.Controls.TimePicker control)
     {
         _control = control ?? throw new ArgumentNullException(nameof(control));
-        _ = DateTimePickerAssist.OverrideWatermarkProperty.Changed.Subscribe(e =>
+        _ = DateTimePickerBehavior.OverrideWatermarkProperty.Changed.Subscribe(e =>
         {
             if (e.Sender is global::Avalonia.Controls.TimePicker timePicker && timePicker == _control)
             {

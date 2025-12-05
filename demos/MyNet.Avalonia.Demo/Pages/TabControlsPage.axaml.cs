@@ -10,11 +10,11 @@ using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using MyNet.Avalonia.Controls.Assists;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Demo.Views.Samples;
-using MyNet.Avalonia.Enums;
 using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -49,7 +49,7 @@ internal sealed partial class TabControlsPage : AutoBuildPage
             _ = item.Items.Add(tabItem);
         });
 
-        if (data is { Layout: "Header Inverse", Color: null })
+        if (data is { Layout: "Header Inverse", Role: null })
             item.AddClasses("Primary");
 
         return item;
@@ -57,12 +57,12 @@ internal sealed partial class TabControlsPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Header", "Header Inverse")
             .AddStyles("Solid", "Light", "Outlined")
             .AddCartesianStyles("Solid", "Light", "Outlined")
             .AddCartesianStyles("Circle", "Solid")
-            .AddThemeColors(false)
+            .AddThemeRoles(false)
             .AddCustomControls(() =>
             {
                 var item = new TabControl
@@ -86,8 +86,8 @@ internal sealed partial class TabControlsPage : AutoBuildPage
                 return [item];
             }),
 
-            new ControlThemeData("Indicator", defaultStyleDisplay: DefaultStyleDisplay.WithColors)
-            .AddThemeColors(false)
+            new ControlThemeData("Indicator", defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
+            .AddThemeRoles(false)
         ];
 
     private void Layout_SelectionChanged(object? sender, SelectionChangedEventArgs e)

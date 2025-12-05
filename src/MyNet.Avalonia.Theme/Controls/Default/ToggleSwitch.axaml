@@ -27,10 +27,10 @@
         </Setter>
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
             <Setter Property="my:ThemeAssist.IndicatorColor" Value="{DynamicResource MyNet.Brush.Control.Background.Light}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
             <Setter Property="my:ThemeAssist.ActiveIndicatorColor" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.(my:ThemeAssist.IndicatorColor), Opacity={StaticResource MyNet.Opacity.Hover}}" />
         </Style>
@@ -126,7 +126,7 @@
             </Style>
             <Style Selector="^ /template/ ContentPresenter#PART_OffContentPresenter">
                 <Setter Property="IsVisible" Value="True" />
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Secondary}" />
+                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
             </Style>
         </Style>
 
@@ -148,7 +148,7 @@
         
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
         </Style>
 
         <!-- Sizes -->
@@ -383,7 +383,7 @@
 
         <!-- Pressed -->
         <Style Selector="^:pressed /template/ Ellipse#RippleThumb">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Active}" />
+            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Focus}" />
         </Style>
 
         <!-- Checked -->
@@ -391,7 +391,7 @@
             <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:Brush $self.(my:ThemeAssist.ActiveIndicatorColor)}" />
 
             <Style Selector="^ /template/ Border#PART_MainBorder">
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Active}" />
+                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Focus}" />
             </Style>
         </Style>
         
@@ -406,8 +406,8 @@
         <Setter Property="OffContentTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $self.(my:ThemeAssist.TertiaryColor)}" />
+            <Setter Property="my:PaletteAssist.Tertiary" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole Tertiary}" />
             <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
         </Style>
         
@@ -521,7 +521,7 @@
 
         <!-- Styles -->
         <Style Selector="^.Solid">
-            <Setter Property="Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Opacity=0.25}" />
+            <Setter Property="Background" Value="{my:ThemeRole Opacity=Pressed}" />
             <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
 
             <Style Selector="^:checked">

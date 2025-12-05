@@ -8,37 +8,65 @@ using System;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
-using MyNet.Avalonia.Enums;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Converters;
 
+/// <summary>
+/// Converts a <see cref="GenderType"/> value to a theme brush or icon, depending on the converter mode.
+/// Supports both brush and icon conversion for gender-based theming in the UI.
+/// </summary>
 public sealed class GenderTypeConverter : IValueConverter
 {
     private enum Mode
     {
+        /// <summary>
+        /// Converts to a theme brush.
+        /// </summary>
         Brush,
 
+        /// <summary>
+        /// Converts to an icon.
+        /// </summary>
         Icon
     }
 
+    /// <summary>
+    /// Gets a converter instance for brush conversion.
+    /// </summary>
     public static readonly GenderTypeConverter Brush = new(Mode.Brush);
+
+    /// <summary>
+    /// Gets a converter instance for icon conversion.
+    /// </summary>
     public static readonly GenderTypeConverter Icon = new(Mode.Icon);
 
     private readonly Mode _mode;
 
     private GenderTypeConverter(Mode mode) => _mode = mode;
 
+    /// <summary>
+    /// Converts a <see cref="GenderType"/> value to a theme brush or icon, depending on the converter mode.
+    /// </summary>
+    /// <param name="value">The gender type value to convert.</param>
+    /// <param name="targetType">The target type of the binding.</param>
+    /// <param name="parameter">Optional converter parameter.</param>
+    /// <param name="culture">The culture to use in the converter.</param>
+    /// <returns>A theme brush or icon corresponding to the gender type, or <see cref="AvaloniaProperty.UnsetValue"/> if conversion fails.</returns>
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value is not GenderType genderType
             ? AvaloniaProperty.UnsetValue
             : _mode switch
             {
-                Mode.Brush => ThemeResourceProvider.GetBrush(genderType.ToString()),
+                Mode.Brush => MyTheme.Current.GetBrush($"Gender.{genderType}"),
                 Mode.Icon => Enum.TryParse<IconData>($"Gender{genderType}", out var iconData) ? iconData.ToIcon() : IconData.GenderMaleFemale.ToIcon(),
                 _ => AvaloniaProperty.UnsetValue,
             };
 
+    /// <summary>
+    /// Not supported. Always returns <see cref="AvaloniaProperty.UnsetValue"/>.
+    /// </summary>
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         => AvaloniaProperty.UnsetValue;
 }

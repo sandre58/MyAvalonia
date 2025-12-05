@@ -140,7 +140,7 @@
         <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
         <Setter Property="my:IconAssist.Alignment" Value="Left" />
         <Setter Property="my:IconAssist.Margin" Value="{my:Thickness Default, Right}" />
-        <Setter Property="my:IconAssist.Opacity" Value="{StaticResource MyNet.Opacity.Secondary}" />
+        <Setter Property="my:IconAssist.Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
         <Setter Property="my:TextFieldAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
         <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Inner.Medium}" />
         <Setter Property="my:TextFieldAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.SubCaption}" />
@@ -155,7 +155,7 @@
         <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem}" />
         <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
-        <Setter Property="my:ProxyAssist.Enable" Value="True" />
+        <Setter Property="my:ProxyBehavior.Enable" Value="True" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
@@ -166,19 +166,19 @@
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
+            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />
+            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border.Hover}" />
             <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
-            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
-            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
-            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
+            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
+            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
+            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.Medium}}" />
             <Setter Property="my:PopupAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
             <Setter Property="my:PopupAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
-            <Setter Property="my:PopupAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{my:ThemeRole}" />
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
@@ -250,7 +250,7 @@
                                                   InnerForeground="{TemplateBinding (my:TextFieldAssist.InnerForeground)}"
                                                   InnerLeftContent="{TemplateBinding (my:TextFieldAssist.InnerLeftContent)}"
                                                   InnerRightContent="{TemplateBinding (my:TextFieldAssist.InnerRightContent)}"
-                                                  Proxy="{TemplateBinding (my:ProxyAssist.Proxy)}"
+                                                  Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
                                                   UseFloatingWatermark="{TemplateBinding (my:TextFieldAssist.UseFloatingWatermark)}"
                                                   Watermark="{TemplateBinding Watermark}"
                                                   WatermarkFontSize="{TemplateBinding (my:TextFieldAssist.WatermarkFontSize)}">
@@ -259,14 +259,14 @@
                                         <TextBox Name="PART_TextBox"
                                                  HorizontalAlignment="Stretch"
                                                  VerticalAlignment="Stretch"
-                                                 CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
+                                                 CaretBrush="{TemplateBinding (my:PaletteAssist.Primary)}"
                                                  Classes="no-disablable"
                                                  DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                 Focusable="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
-                                                 IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
-                                                 IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                 SelectionBrush="{my:Brush $parent[my:DateTimePicker].(my:ThemeAssist.PrimaryColor),
-                                                                           Opacity={StaticResource MyNet.Opacity.Overlay}}"
+                                                 Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                 IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                 IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
+                                                 SelectionBrush="{my:Brush $parent[my:DateTimePicker].(my:PaletteAssist.Primary),
+                                                                           Opacity={StaticResource MyNet.Opacity.Scrim}}"
                                                  SelectionForegroundBrush="{TemplateBinding Foreground}"
                                                  Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
                                     </my:TextField>
@@ -291,7 +291,7 @@
                                     <!-- Time button -->
                                     <ToggleButton Name="PART_Button"
                                                   Grid.Column="5"
-                                                  my:ThemeAssist.TertiaryColor="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
+                                                  my:PaletteAssist.Tertiary="{TemplateBinding (my:PaletteAssist.Primary)}"
                                                   Classes="Stretch no-disablable"
                                                   Content="{StaticResource MyNet.Geometry.Clock}"
                                                   IsChecked="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
@@ -327,7 +327,7 @@
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <Grid ColumnDefinitions="*,Auto,*">
                                             <my:Calendar Name="{x:Static my:DateTimePicker.PartCalendar}"
-                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:PopupAssist.PrimaryColor}"
+                                                         my:PaletteAssist.Primary="{TemplateBinding my:PopupAssist.PrimaryColor}"
                                                          Background="Transparent"
                                                          BorderThickness="0"
                                                          FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
@@ -374,20 +374,20 @@
 
         <!-- With clear button -->
         <Style Selector="^[(my|TextFieldAssist.ShowClearButton)=True]">
-            <Style Selector="^[(my|ProxyAssist.IsEmpty)=False] /template/ Button#PART_ClearButton">
+            <Style Selector="^[(my|ProxyBehavior.IsEmpty)=False] /template/ Button#PART_ClearButton">
                 <Setter Property="IsVisible" Value="True" />
             </Style>
         </Style>
 
         <!-- With clipboard button -->
         <Style Selector="^[(my|TextFieldAssist.ShowClipboardButton)=True]">
-            <Style Selector="^[(my|ProxyAssist.IsEmpty)=False] /template/ Button#PART_ClipboardButton">
+            <Style Selector="^[(my|ProxyBehavior.IsEmpty)=False] /template/ Button#PART_ClipboardButton">
                 <Setter Property="IsVisible" Value="True" />
             </Style>
         </Style>
 
         <!-- Is Read only -->
-        <Style Selector="^[(my|TextFieldAssist.IsTextEditable)=False]">
+        <Style Selector="^[(my|TextFieldBehavior.IsTextEditable)=False]">
             <Setter Property="Cursor" Value="Arrow" />
         </Style>
 
@@ -426,8 +426,8 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
             <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:PopupAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
         </Style>
@@ -525,7 +525,7 @@
                                               InnerForeground="{TemplateBinding (my:TextFieldAssist.InnerForeground)}"
                                               InnerLeftContent="{TemplateBinding (my:TextFieldAssist.InnerLeftContent)}"
                                               InnerRightContent="{TemplateBinding (my:TextFieldAssist.InnerRightContent)}"
-                                              Proxy="{TemplateBinding (my:ProxyAssist.Proxy)}"
+                                              Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
                                               UseFloatingWatermark="{TemplateBinding (my:TextFieldAssist.UseFloatingWatermark)}"
                                               Watermark="{TemplateBinding Watermark}"
                                               WatermarkFontSize="{TemplateBinding (my:TextFieldAssist.WatermarkFontSize)}">
@@ -534,14 +534,14 @@
                                     <TextBox Name="PART_TextBox"
                                              HorizontalAlignment="Stretch"
                                              VerticalAlignment="Stretch"
-                                             CaretBrush="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
+                                             CaretBrush="{TemplateBinding (my:PaletteAssist.Primary)}"
                                              Classes="no-disablable"
                                              DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                             Focusable="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
-                                             IsHitTestVisible="{TemplateBinding (my:TextFieldAssist.IsTextEditable)}"
-                                             IsReadOnly="{Binding !(my:TextFieldAssist.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                             SelectionBrush="{my:Brush $parent[my:DateTimePicker].(my:ThemeAssist.PrimaryColor),
-                                                                       Opacity={StaticResource MyNet.Opacity.Overlay}}"
+                                             Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                             IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                             IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
+                                             SelectionBrush="{my:Brush $parent[my:DateTimePicker].(my:PaletteAssist.Primary),
+                                                                       Opacity={StaticResource MyNet.Opacity.Scrim}}"
                                              SelectionForegroundBrush="{TemplateBinding Foreground}"
                                              Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
 
@@ -573,7 +573,7 @@
                                               Grid.Column="5"
                                               Margin="{my:Thickness Small,
                                                                     Left}"
-                                              my:ThemeAssist.TertiaryColor="{TemplateBinding (my:ThemeAssist.PrimaryColor)}"
+                                              my:PaletteAssist.Tertiary="{TemplateBinding (my:PaletteAssist.Primary)}"
                                               Classes="no-disablable"
                                               Content="{StaticResource MyNet.Geometry.Clock}"
                                               IsChecked="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
@@ -621,7 +621,7 @@
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <Grid ColumnDefinitions="*, Auto, *">
                                             <my:Calendar Name="{x:Static my:DateTimePicker.PartCalendar}"
-                                                         my:ThemeAssist.PrimaryColor="{TemplateBinding my:PopupAssist.PrimaryColor}"
+                                                         my:PaletteAssist.Primary="{TemplateBinding my:PopupAssist.PrimaryColor}"
                                                          Background="Transparent"
                                                          BorderThickness="0"
                                                          FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"

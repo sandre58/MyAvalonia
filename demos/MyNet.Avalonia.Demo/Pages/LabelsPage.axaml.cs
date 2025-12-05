@@ -17,7 +17,7 @@ internal sealed partial class LabelsPage : AutoBuildPage
 
     protected override Control CreateControl(ControlData data)
     {
-        var item = new Label { HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center, Content = data.Color.Or(data.Size.OrEmpty()).Or("Default") };
+        var item = new Label { HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center, Content = data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default") };
 
         if (data.Theme.ContainsAny("tag"))
             item.Classes.Add("CanAddIcon");
@@ -26,15 +26,15 @@ internal sealed partial class LabelsPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors).AddStyles("Secondary", "Tertiary")
-                                                                                     .AddAllColors()
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles).AddStyles("Secondary", "Tertiary")
+                                                                                     .AddAllRoles()
                                                                                      .AddAllSizes(),
 
            new ControlThemeData("Tag").AddLayouts("Circle")
                                       .AddStyles("Light", "Solid", "Outlined")
                                       .AddCartesianStyles("Solid", "Shadow")
                                       .AddCartesianStyles("Light", "Outlined")
-                                      .AddAllColors()
+                                      .AddAllRoles()
                                       .AddSizes("Small", "Medium", "Large"),
 
            new("Code")

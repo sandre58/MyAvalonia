@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <!-- Resources -->
+        <ResourceInclude Source="avares://MyNet.Avalonia.Theme/ResourceDictionaries/Brushes.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/ResourceDictionaries/Icons.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/ResourceDictionaries/IconTemplates.axaml" />
     </ResourceDictionary.MergedDictionaries>

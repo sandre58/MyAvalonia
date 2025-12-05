@@ -12,7 +12,7 @@ using Avalonia.Layout;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.Demo.Helpers;
-using MyNet.Avalonia.Enums;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -33,13 +33,13 @@ internal sealed partial class BadgesPage : AutoBuildPage
             Content = new Button
             {
                 Width = 100,
-                Content = data.Color.Or(data.Size.OrEmpty()).Or("Default"),
+                Content = data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default"),
             },
             Header = RandomGenerator.Enum<HorizontalAlignment>() switch
             {
                 HorizontalAlignment.Left => RandomGenerator.Int(0, 200),
                 HorizontalAlignment.Right => RandomGenerator.Enum<IconData>().ToIcon(),
-                HorizontalAlignment.Center => data.Color.Or(data.Size.OrEmpty()).Or("Default"),
+                HorizontalAlignment.Center => data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default"),
                 HorizontalAlignment.Stretch => RandomGenerator.Int(1000, 9999),
                 _ => throw new InvalidOperationException(),
             }
@@ -50,11 +50,11 @@ internal sealed partial class BadgesPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-           new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+           new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
                                       .AddLayouts("Circle")
                                       .AddStyles("Light", "Outlined", "Shadow")
                                       .AddCartesianStyles("Light", "Outlined")
-                                      .AddDefaultColors(false)
+                                      .AddDefaultRoles(false)
                                       .AddSizes("Medium", "Large")
         ];
 

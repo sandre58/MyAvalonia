@@ -7,7 +7,7 @@
     <DataTemplate x:Key="MyNet.DataTemplate.DataGrid.AreAllSelected">
         <CheckBox HorizontalAlignment="Center"
                   Classes="Circle"
-                  IsChecked="{Binding $parent[DataGrid].(my:DataGridAssist.AreAllSelected)}"
+                  IsChecked="{Binding $parent[DataGrid].(my:DataGridBehavior.AreAllSelected)}"
                   Theme="{StaticResource MyNet.Theme.ToggleButton.CheckBox}"
                   ToolTip.Tip="{my:Resource SelectAll}" />
     </DataTemplate>
@@ -134,7 +134,7 @@
 
             <Style Selector="^:current">
                 <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                    <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Overlay}" />
+                    <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Scrim}" />
                 </Style>
             </Style>
             <Style Selector="^:focus">
@@ -193,7 +193,7 @@
                                     <ContentPresenter Name="PART_Content"
                                                       Content="{TemplateBinding Content}"
                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                      Opacity="{StaticResource MyNet.Opacity.Secondary}" />
+                                                      Opacity="{StaticResource MyNet.Opacity.Elevation.High}" />
                                     <PathIcon Name="SortIcon"
                                               Grid.Column="1"
                                               Classes="Glyph"
@@ -256,7 +256,7 @@
         </Style>
 
         <Style Selector="^:dragIndicator">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Overlay}" />
+            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Scrim}" />
         </Style>
     </ControlTheme>
 
@@ -546,7 +546,7 @@
         <Style Selector="^">
 
             <!-- DataGrid -->
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
             <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
@@ -576,14 +576,14 @@
             <Setter Property="my:DataGridAssist.RowCornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:DataGridAssist.UseAlternateRowBackground" Value="True" />
             <Setter Property="RowBackground" Value="Transparent" />
-            <Setter Property="my:DataGridAssist.AlternateRowBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Alternate}}" />
+            <Setter Property="my:DataGridAssist.AlternateRowBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
             <Setter Property="my:DataGridAssist.RowForeground" Value="{Binding $self.Foreground}" />
             <Setter Property="my:DataGridAssist.RowBorderBrush" Value="{Binding $self.HorizontalGridLinesBrush}" />
             <Setter Property="my:DataGridAssist.RowBorderThickness" Value="0" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ThemeAssist.HoverForeground" Value="{Binding $self.Foreground}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
             <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="Transparent" />
             <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
 
@@ -594,8 +594,8 @@
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="1" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Scrim}}" />
         </Style>
 
         <Setter Property="Template">

@@ -14,11 +14,12 @@ using Avalonia.Layout;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
 using Avalonia.Styling;
-using MyNet.Avalonia.Controls.Assists;
-using MyNet.Avalonia.Enums;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme;
+using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
+using MyNet.Avalonia.Theme.Palettes;
 using MyNet.Humanizer;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -28,32 +29,11 @@ namespace MyNet.Avalonia.Demo.Helpers;
 
 internal enum DefaultStyleDisplay
 {
-    WithColors,
+    WithRoles,
 
-    WithoutColors,
+    WithoutRoles,
 
     Hidden
-}
-
-internal enum Color
-{
-    Primary,
-
-    Accent,
-
-    Dark,
-
-    Inverse,
-
-    Positive,
-
-    Negative,
-
-    Warning,
-
-    Information,
-
-    Neutral
 }
 
 internal enum FontSize
@@ -109,7 +89,7 @@ internal static class BuildHelper
             // Styles
             if (theme.DefaultStyleDisplay != DefaultStyleDisplay.Hidden)
             {
-                BuildStyle(layoutGrid, layoutRow, theme, create, layout, null, theme.DefaultStyleDisplay == DefaultStyleDisplay.WithColors);
+                BuildStyle(layoutGrid, layoutRow, theme, create, layout, null, theme.DefaultStyleDisplay == DefaultStyleDisplay.WithRoles);
                 layoutRow++;
             }
 
@@ -204,18 +184,18 @@ internal static class BuildHelper
         }
     }
 
-    private static void BuildColor(Grid grid, int row, int column, Func<ControlData, Control> create, string? themeName, string? layout, string[]? styles, string? color)
+    private static void BuildColor(Grid grid, int row, int column, Func<ControlData, Control> create, string? themeName, string? layout, string[]? styles, ThemeRole? role)
     {
-        var item = CreateControl(create, themeName, layout, styles, color);
+        var item = CreateControl(create, themeName, layout, styles, role);
 
         Grid.SetColumn(item, column);
         Grid.SetRow(item, row);
         grid.Children.Add(item);
     }
 
-    private static Control CreateControl(Func<ControlData, Control> create, string? themeName = null, string? layout = null, string[]? styles = null, string? color = null, string? size = null)
+    private static Control CreateControl(Func<ControlData, Control> create, string? themeName = null, string? layout = null, string[]? styles = null, ThemeRole? role = null, string? size = null)
     {
-        var item = create(new ControlData(themeName, layout, styles, color, size));
+        var item = create(new ControlData(themeName, layout, styles, role, size));
         item.Margin = new Thickness(10);
 
         if (!string.IsNullOrEmpty(themeName))
@@ -225,14 +205,14 @@ internal static class BuildHelper
                 item.Theme = theme;
         }
 
+        if (role.HasValue)
+            ThemeAssist.SetRole(item, role.Value);
+
         if (!string.IsNullOrEmpty(layout))
             item.AddClasses(layout);
 
         if (styles is not null)
             item.AddClasses(styles);
-
-        if (!string.IsNullOrEmpty(color))
-            item.AddClasses(color);
 
         if (!string.IsNullOrEmpty(size))
             item.AddClasses(size);
@@ -273,9 +253,9 @@ internal static class BuildHelper
         });
 }
 
-internal sealed record ControlData(string? Theme = null, string? Layout = null, string[]? Styles = null, string? Color = null, string? Size = null);
+internal sealed record ControlData(string? Theme = null, string? Layout = null, string[]? Styles = null, ThemeRole? Role = null, string? Size = null);
 
-internal sealed class ControlThemeData(string? name = null, DefaultStyleDisplay defaultStyleDisplay = DefaultStyleDisplay.WithoutColors)
+internal sealed class ControlThemeData(string? name = null, DefaultStyleDisplay defaultStyleDisplay = DefaultStyleDisplay.WithoutRoles)
 {
     public string? Name { get; } = name;
 
@@ -285,7 +265,7 @@ internal sealed class ControlThemeData(string? name = null, DefaultStyleDisplay 
 
     public List<string[]> Styles { get; } = [];
 
-    public List<string> Colors { get; } = [];
+    public List<ThemeRole> Colors { get; } = [];
 
     public List<string> Sizes { get; } = [];
 
@@ -351,31 +331,29 @@ internal sealed class ControlThemeData(string? name = null, DefaultStyleDisplay 
         return this;
     }
 
-    public ControlThemeData AddDefaultColors(bool withPrimaryColor = true)
+    public ControlThemeData AddDefaultRoles(bool withPrimaryRole = true)
     {
-        var colors = new List<Color> { Color.Primary, Color.Accent, Color.Inverse, Color.Positive, Color.Negative, Color.Warning, Color.Information };
+        var colors = new List<ThemeRole> { ThemeRole.Primary, ThemeRole.Accent, ThemeRole.Inverse, ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information };
 
-        if (!withPrimaryColor)
-            colors = [.. colors.Except([Color.Primary])];
-        return AddColors(colors.ToArray());
+        if (!withPrimaryRole)
+            colors = [.. colors.Except([ThemeRole.Primary])];
+        return AddRoles([.. colors]);
     }
 
-    public ControlThemeData AddThemeColors(bool withPrimaryColor = true)
+    public ControlThemeData AddThemeRoles(bool withPrimaryRole = true)
     {
-        var colors = new List<Color> { Color.Primary, Color.Accent, Color.Inverse };
+        var colors = new List<ThemeRole> { ThemeRole.Primary, ThemeRole.Accent, ThemeRole.Inverse };
 
-        if (!withPrimaryColor)
-            colors = [.. colors.Except([Color.Primary])];
-        return AddColors(colors.ToArray());
+        if (!withPrimaryRole)
+            colors = [.. colors.Except([ThemeRole.Primary])];
+        return AddRoles([.. colors]);
     }
 
-    public ControlThemeData AddAllColors() => AddColors(Enum.GetValues<Color>());
+    public ControlThemeData AddAllRoles() => AddRoles([ThemeRole.Primary, ThemeRole.Accent, ThemeRole.Inverse, ThemeRole.Dark, ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information]);
 
-    public ControlThemeData AddColors(params Color[] colors) => AddColors(colors.Select(x => x.ToString()).ToArray());
-
-    public ControlThemeData AddColors(params string[] colors)
+    public ControlThemeData AddRoles(params ThemeRole[] roles)
     {
-        Colors.AddRange(colors);
+        Colors.AddRange(roles);
         return this;
     }
 

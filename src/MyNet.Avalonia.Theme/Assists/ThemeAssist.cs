@@ -6,74 +6,32 @@
 
 using Avalonia;
 using Avalonia.Media;
+using MyNet.Avalonia.Theme.Palettes;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
 public static class ThemeAssist
 {
-    #region PrimaryColor
+    #region Role
 
     /// <summary>
-    /// Provides PrimaryColor Property for attached ThemeAssist element.
+    /// Defines the Role attached property for assigning a semantic color role to a control.
     /// </summary>
-    public static readonly AttachedProperty<IBrush?> PrimaryColorProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("PrimaryColor", typeof(ThemeAssist));
+    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, ThemeRole>("Role", typeof(ThemeAssist), ThemeRole.Default);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="PrimaryColorProperty"/>.
+    /// Gets the theme role for the specified control.
     /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="PrimaryColorProperty"/>.</param>
-    public static void SetPrimaryColor(StyledElement element, IBrush? value) => element.SetValue(PrimaryColorProperty, value);
+    /// <param name="element">The control to query.</param>
+    /// <returns>The assigned theme role.</returns>
+    public static ThemeRole GetRole(AvaloniaObject element) => element.GetValue(RoleProperty);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="PrimaryColorProperty"/>.
+    /// Sets the theme role for the specified control.
     /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush? GetPrimaryColor(StyledElement element) => element.GetValue(PrimaryColorProperty);
-
-    #endregion
-
-    #region SecondaryColor
-
-    /// <summary>
-    /// Provides SecondaryColor Property for attached ThemeAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush?> SecondaryColorProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("SecondaryColor", typeof(ThemeAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="SecondaryColorProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="SecondaryColorProperty"/>.</param>
-    public static void SetSecondaryColor(StyledElement element, IBrush? value) => element.SetValue(SecondaryColorProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="SecondaryColorProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush? GetSecondaryColor(StyledElement element) => element.GetValue(SecondaryColorProperty);
-
-    #endregion
-
-    #region TertiaryColor
-
-    /// <summary>
-    /// Provides TertiaryColor Property for attached ThemeAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush?> TertiaryColorProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("TertiaryColor", typeof(ThemeAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="TertiaryColorProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="TertiaryColorProperty"/>.</param>
-    public static void SetTertiaryColor(StyledElement element, IBrush? value) => element.SetValue(TertiaryColorProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="TertiaryColorProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush? GetTertiaryColor(StyledElement element) => element.GetValue(TertiaryColorProperty);
+    /// <param name="element">The control to update.</param>
+    /// <param name="value">The theme role to assign.</param>
+    public static void SetRole(AvaloniaObject element, ThemeRole value) => element.SetValue(RoleProperty, value);
 
     #endregion
 

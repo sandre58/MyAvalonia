@@ -9,7 +9,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $parent[my:Calendar].(my:ThemeAssist.PrimaryColor)}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $parent[my:Calendar].(my:PaletteAssist.Primary)}" />
         <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="Template">
@@ -76,7 +76,7 @@
             <Setter Property="CornerRadius" Value="0" />
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Overlay}" />
+                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Scrim}" />
             </Style>
         </Style>
 
@@ -95,13 +95,13 @@
         </Style>
 
         <Style Selector="^:inactive /template/ Panel#PART_RootPanel">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Tertiary}" />
+            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.Medium}" />
         </Style>
 
         <Style Selector="^:preview-start-date, ^:preview-end-date">
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Secondary}" />
+                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
             </Style>
         </Style>
 
@@ -139,13 +139,13 @@
                            VerticalAlignment="Center"
                            x:DataType="x:String"
                            FontSize="{StaticResource MyNet.Font.Size.SubCaption}"
-                           Opacity="{StaticResource MyNet.Opacity.Secondary}"
+                           Opacity="{StaticResource MyNet.Opacity.Elevation.High}"
                            Text="{Binding}" />
             </Template>
         </Setter>
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
             <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
         </Style>

@@ -7,7 +7,7 @@
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Tag}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
-        <Setter Property="my:ItemsAssist.OverrideContentTemplate" Value="True" />
+        <Setter Property="my:ItemsBehavior.OverrideContentTemplate" Value="True" />
         <Setter Property="Template">
             <ControlTemplate TargetType="my:Tag">
                 <Border Name="PART_Border"
@@ -30,8 +30,7 @@
                                           UseLayoutRounding="True" />
                         <Button Name="PART_CloseButton"
                                 Grid.Column="1"
-                                Margin="{my:Thickness Small,
-                                                      Left}"
+                                Margin="{my:Thickness Small, Left}"
                                 Classes="no-disablable Small"
                                 Command="{TemplateBinding CloseCommand}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"

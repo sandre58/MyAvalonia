@@ -11,10 +11,10 @@ using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Media;
-using MyNet.Avalonia.Controls.Assists;
 using MyNet.Avalonia.Demo.Helpers;
-using MyNet.Avalonia.Enums;
 using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Observable.Translatables;
 using MyNet.Utilities;
@@ -80,14 +80,14 @@ internal sealed partial class ListBoxesPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
-            .AddThemeColors(false),
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
+            .AddThemeRoles(false),
 
-            new ControlThemeData("Cards", defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData("Cards", defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Circle")
             .AddStyles("Transparent", "Outlined", "Shadow")
             .AddCartesianStyles("Transparent", "Outlined", "Light")
-            .AddThemeColors(false)
+            .AddThemeRoles(false)
             .AddSizes("Small", "Medium", "Large")
             .AddCustomControls(() =>
             {
@@ -112,10 +112,10 @@ internal sealed partial class ListBoxesPage : AutoBuildPage
                 return [item, item2];
             }),
 
-            new ControlThemeData("Toggle", defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData("Toggle", defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddStyles("Spacing", "Shadow", "Vertical")
             .AddCartesianStyles("Spacing", "Shadow", "Vertical")
-            .AddThemeColors(false)
+            .AddThemeRoles(false)
             .AddSizes("Small", "Medium", "Large")
             .AddCustomControls(() =>
             {
@@ -151,13 +151,13 @@ internal sealed partial class ListBoxesPage : AutoBuildPage
                 return [item];
             }),
 
-            new ControlThemeData("Tabs", defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData("Tabs", defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddStyles("Vertical")
-            .AddThemeColors(false),
+            .AddThemeRoles(false),
 
-            new ControlThemeData("Icon", DefaultStyleDisplay.WithColors)
+            new ControlThemeData("Icon", DefaultStyleDisplay.WithRoles)
             .AddStyles("Vertical")
-            .AddThemeColors(false)
+            .AddThemeRoles(false)
             .AddSizes("Small", "Medium", "Large")
         ];
 }

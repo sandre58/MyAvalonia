@@ -4,8 +4,8 @@
                     x:CompileBindings="True">
 
     <ControlTheme x:Key="MyNet.Theme.Button.Embedded.SplitButton" TargetType="Button">
-        <Setter Property="my:PopupAssist.EnableShortcutKeys" Value="True"/>
-        <Setter Property="my:PopupAssist.AutoFocusOnOpening" Value="True"/>
+        <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
+        <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
         <Setter Property="Template">
             <ControlTemplate TargetType="Button">
                 <Panel Name="PART_RootPanel">
@@ -64,7 +64,7 @@
             </Style>
         </Style>
 
-        <Style Selector="^[(my|ProxyAssist.IsActive)=True]">
+        <Style Selector="^[(my|ProxyBehavior.IsActive)=True]">
             <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.ActiveForeground)}" />
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
@@ -86,7 +86,7 @@
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Button}" />
         <Setter Property="FontWeight" Value="{StaticResource MyNet.Font.Weight.Button}" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="my:PopupAssist.Placement" Value="BottomEdgeAlignedRight" />
+        <Setter Property="my:PopupBehavior.Placement" Value="BottomEdgeAlignedRight" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="FocusAdorner">
             <FocusAdornerTemplate>
@@ -95,14 +95,14 @@
         </Setter>
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:PaletteAssist.Tertiary" Value="{DynamicResource MyNet.Brush.Primary}" />
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
             <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ThemeAssist.HoverForeground" Value="{Binding $self.Foreground}" />
             <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $self.(my:ThemeAssist.TertiaryColor)}" />
+            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole Tertiary}" />
             <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
         </Style>
 
@@ -202,10 +202,10 @@
             <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.ActiveForeground)}" />
 
             <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                <Setter Property="my:ProxyAssist.IsActive" Value="True" />
+                <Setter Property="my:ProxyBehavior.IsActive" Value="True" />
             </Style>
             <Style Selector="^ /template/ Button#PART_PrimaryButton">
-                <Setter Property="my:ProxyAssist.IsActive" Value="True" />
+                <Setter Property="my:ProxyBehavior.IsActive" Value="True" />
             </Style>
 
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
@@ -217,7 +217,7 @@
         <Style Selector="^:checked">
             <Style Selector="^ /template/ Button#PART_PrimaryButton">
                 <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.ActiveForeground)}" />
-                <Setter Property="my:ProxyAssist.IsActive" Value="True" />
+                <Setter Property="my:ProxyBehavior.IsActive" Value="True" />
             </Style>
         </Style>
 
@@ -234,12 +234,12 @@
         <!-- Layout -->
         <Style Selector="^.Left">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="*" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -267,12 +267,12 @@
         </Style>
         <Style Selector="^.Right">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="*" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -300,14 +300,14 @@
         </Style>
         <Style Selector="^.Top">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </ColumnDefinitions>
@@ -333,14 +333,14 @@
         </Style>
         <Style Selector="^.Bottom">
             <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridAssist.RowDefinitions">
+                <Setter Property="my:GridBehavior.RowDefinitions">
                     <RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </RowDefinitions>
                 </Setter>
-                <Setter Property="my:GridAssist.ColumnDefinitions">
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
                     <ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </ColumnDefinitions>
@@ -369,17 +369,17 @@
         <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
             <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronDown}" />
         </Style>
-        <Style Selector="^[(my|PopupAssist.Placement)=Right], ^[(my|PopupAssist.Placement)=RightEdgeAlignedTop], ^[(my|PopupAssist.Placement)=RightEdgeAlignedBottom]">
+        <Style Selector="^[(my|PopupBehavior.Placement)=Right], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedBottom]">
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronRight}" />
             </Style>
         </Style>
-        <Style Selector="^[(my|PopupAssist.Placement)=Left], ^[(my|PopupAssist.Placement)=LeftEdgeAlignedTop], ^[(my|PopupAssist.Placement)=LeftEdgeAlignedBottom]">
+        <Style Selector="^[(my|PopupBehavior.Placement)=Left], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedBottom]">
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronLeft}" />
             </Style>
         </Style>
-        <Style Selector="^[(my|PopupAssist.Placement)=Top], ^[(my|PopupAssist.Placement)=TopEdgeAlignedLeft], ^[(my|PopupAssist.Placement)=TopEdgeAlignedRight]">
+        <Style Selector="^[(my|PopupBehavior.Placement)=Top], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedLeft], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedRight]">
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronUp}" />
             </Style>
@@ -387,27 +387,27 @@
 
         <!-- Styles -->
         <Style Selector="^.Outlined">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Control.Border}" />
-            <Setter Property="my:ThemeAssist.SecondaryColor" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.(my:ThemeAssist.SecondaryColor)}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.(my:ThemeAssist.SecondaryColor), Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
+            <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeRole Secondary}" />
+            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.(my:PaletteAssist.Secondary), Opacity={StaticResource MyNet.Opacity.Hover}}" />
 
             <Style Selector="^.Solid">
-                <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Control.Border}" />
-                <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.TertiaryColor)}" />
+                <Setter Property="my:PaletteAssist.Tertiary" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+                <Setter Property="BorderBrush" Value="{my:ThemeRole Tertiary}" />
             </Style>
 
             <Style Selector="^.Light">
-                <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Control.Border}" />
-                <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.TertiaryColor)}" />
+                <Setter Property="my:PaletteAssist.Tertiary" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+                <Setter Property="BorderBrush" Value="{my:ThemeRole Tertiary}" />
             </Style>
 
             <Style Selector="^.Text">
-                <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Control.Border}" />
-                <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.TertiaryColor)}" />
+                <Setter Property="my:PaletteAssist.Tertiary" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+                <Setter Property="BorderBrush" Value="{my:ThemeRole Tertiary}" />
             </Style>
 
             <Style Selector="^ /template/ Button#PART_PrimaryButton">
@@ -424,30 +424,30 @@
         </Style>
 
         <Style Selector="^.Text">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="my:ThemeAssist.HoverForeground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole}" />
+            <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeRole}" />
 
             <Style Selector="^.Light">
-                <Setter Property="my:ThemeAssist.SecondaryColor" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
-                <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.SecondaryColor)}" />
-                <Setter Property="my:ThemeAssist.HoverForeground" Value="{Binding $self.(my:ThemeAssist.SecondaryColor)}" />
+                <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
+                <Setter Property="Foreground" Value="{my:ThemeRole Secondary}" />
+                <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeRole Secondary}" />
             </Style>
         </Style>
 
         <Style Selector="^.Solid">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="Background" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="Foreground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
-            <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Control.Background}" />
+            <Setter Property="Background" Value="{my:ThemeRole}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
+            <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeRole Contrast=True}" />
         </Style>
 
         <Style Selector="^.Light">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Control.Background}" />
+            <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
+            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeRole Opacity=Hover}" />
+            <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeRole}" />
         </Style>
 
         <!-- Sizes -->

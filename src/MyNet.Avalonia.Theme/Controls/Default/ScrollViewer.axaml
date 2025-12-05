@@ -24,9 +24,9 @@
     <!-- Thumb -->
     <ControlTheme x:Key="MyNet.Theme.Thumb.Embedded.ScrollBar" TargetType="{x:Type Thumb}" BasedOn="{StaticResource MyNet.Theme.Thumb.Border}">
         <Setter Property="CornerRadius" Value="24" />
-        <Setter Property="Background" Value="{my:Brush $parent[ScrollBar].BorderBrush, Opacity={StaticResource MyNet.Opacity.Filled}}" />
+        <Setter Property="Background" Value="{my:Brush $parent[ScrollBar].BorderBrush, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $parent[ScrollBar].BorderBrush, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $parent[ScrollBar].BorderBrush, Opacity={StaticResource MyNet.Opacity.Active}}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $parent[ScrollBar].BorderBrush, Opacity={StaticResource MyNet.Opacity.Focus}}" />
 
         <Style Selector="^:not(.no-transitions)">
             <Setter Property="Transitions">
@@ -55,7 +55,7 @@
                                           Height="{TemplateBinding my:ScrollViewerAssist.ActiveThumbThickness}"
                                           Margin="1 0 0 0"
                                           Padding="0"
-                                          my:ThemeAssist.PrimaryColor="{Binding $parent[ScrollBar].BorderBrush}"
+                                          my:PaletteAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="Text"
                                           Content="{my:Icon ChevronLeft,
                                                             Size=8}"
@@ -90,7 +90,7 @@
                                           Height="{TemplateBinding my:ScrollViewerAssist.ActiveThumbThickness}"
                                           Margin="0 0 1 0"
                                           Padding="0"
-                                          my:ThemeAssist.PrimaryColor="{Binding $parent[ScrollBar].BorderBrush}"
+                                          my:PaletteAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="Text"
                                           Content="{my:Icon ChevronRight,
                                                             Size=8}"
@@ -125,7 +125,7 @@
                                           Height="{TemplateBinding my:ScrollViewerAssist.ActiveThumbThickness}"
                                           Margin="0 0 0 1"
                                           Padding="0"
-                                          my:ThemeAssist.PrimaryColor="{Binding $parent[ScrollBar].BorderBrush}"
+                                          my:PaletteAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="Text"
                                           Content="{my:Icon ChevronUp,
                                                             Size=8}"
@@ -161,7 +161,7 @@
                                           Height="{TemplateBinding my:ScrollViewerAssist.ActiveThumbThickness}"
                                           Margin="0 1 0 0"
                                           Padding="0"
-                                          my:ThemeAssist.PrimaryColor="{Binding $parent[ScrollBar].BorderBrush}"
+                                          my:PaletteAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="Text"
                                           Content="{my:Icon ChevronDown,
                                                             Size=8}"

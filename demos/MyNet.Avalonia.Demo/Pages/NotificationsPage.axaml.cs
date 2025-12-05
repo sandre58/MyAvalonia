@@ -14,8 +14,9 @@ using Avalonia.Interactivity;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Demo.Resources;
 using MyNet.Avalonia.Demo.Views.Samples;
-using MyNet.Avalonia.Templates;
 using MyNet.Avalonia.Extended.Toasting;
+using MyNet.Avalonia.Templates;
+using MyNet.Avalonia.Theme.Palettes;
 using MyNet.Observable;
 using MyNet.UI.Notifications;
 using MyNet.UI.Toasting.Settings;
@@ -50,7 +51,7 @@ internal sealed partial class NotificationsPage : AutoBuildPage, IDisposable
         var item = new Button
         {
             HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center,
-            Content = data.Color.Or("Default")
+            Content = data.Role.ToString().Or("Default")
         };
 
         item.Click += (sender, _) =>
@@ -62,11 +63,11 @@ internal sealed partial class NotificationsPage : AutoBuildPage, IDisposable
                 ClosingStrategy = (ToastClosingStrategy)ClosingStrategy.SelectedValue!,
                 FreezeOnMouseEnter = FreezeOnMouseEnter.IsChecked.IsTrue()
             };
-            var severity = data.Color switch
+            var severity = data.Role switch
             {
-                "Positive" => NotificationSeverity.Success,
-                "Warning" => NotificationSeverity.Warning,
-                "Negative" => NotificationSeverity.Error,
+                ThemeRole.Success => NotificationSeverity.Success,
+                ThemeRole.Warning => NotificationSeverity.Warning,
+                ThemeRole.Error => NotificationSeverity.Error,
                 _ => NotificationSeverity.Information
             };
 
@@ -82,7 +83,7 @@ internal sealed partial class NotificationsPage : AutoBuildPage, IDisposable
         => [
             new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.Hidden)
             .AddStyles("Solid")
-            .AddColors(Color.Positive, Color.Negative, Color.Warning, Color.Information)
+            .AddRoles(ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information)
             .AddCustomControls(() =>
             {
                 var item = new Button

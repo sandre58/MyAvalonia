@@ -17,31 +17,31 @@
         </Style>
 
         <Style Selector="^.Outlined">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
             <Setter Property="Fill" Value="Transparent" />
             <Setter Property="StrokeThickness" Value="1" />
-            <Setter Property="Stroke" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="Stroke" Value="{my:ThemeRole}" />
 
             <Style Selector="^.Solid">
-                <Setter Property="my:ThemeAssist.SecondaryColor" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-                <Setter Property="Stroke" Value="{Binding $self.(my:ThemeAssist.SecondaryColor)}" />
+                <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
+                <Setter Property="Stroke" Value="{my:ThemeRole Secondary}" />
             </Style>
 
             <Style Selector="^.Light">
-                <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-                <Setter Property="Stroke" Value="{Binding $self.(my:ThemeAssist.SecondaryColor)}" />
+                <Setter Property="my:PaletteAssist.Tertiary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
+                <Setter Property="Stroke" Value="{my:ThemeRole Secondary}" />
             </Style>
         </Style>
 
         <Style Selector="^.Solid">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-            <Setter Property="Fill" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="TextElement.Foreground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
+            <Setter Property="Fill" Value="{my:ThemeRole}" />
+            <Setter Property="TextElement.Foreground" Value="{my:ThemeRole Contrast=True}" />
         </Style>
 
         <Style Selector="^.Light">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-            <Setter Property="Fill" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
+            <Setter Property="Fill" Value="{my:ThemeRole Opacity=Overlay}" />
         </Style>
         
         <Style Selector="^.Hover:pointerover">

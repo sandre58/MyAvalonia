@@ -14,7 +14,7 @@
         <Setter Property="CornerRadius" Value="{Binding $parent[DatePicker].(my:ItemsAssist.CornerRadius)}" />
         <Setter Property="Background" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderBrush)}" />
-        <Setter Property="Foreground" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
+        <Setter Property="Foreground" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.Medium}}" />
         <Setter Property="BorderThickness" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderThickness)}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBackground)}" />
         <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBorderBrush)}" />
@@ -150,7 +150,7 @@
         <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
         <Setter Property="my:IconAssist.Alignment" Value="Left" />
         <Setter Property="my:IconAssist.Margin" Value="{my:Thickness Default, Right}" />
-        <Setter Property="my:IconAssist.Opacity" Value="{StaticResource MyNet.Opacity.Secondary}" />
+        <Setter Property="my:IconAssist.Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
         <Setter Property="my:TextFieldAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
         <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Inner.Medium}" />
         <Setter Property="my:TextFieldAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.SubCaption}" />
@@ -158,8 +158,8 @@
         <Setter Property="my:TextFieldAssist.Watermark" Value="{x:Static sys:String.Empty}" />
         <Setter Property="my:TextFieldAssist.FloatingScale" Value="0.75" />
         <Setter Property="my:TextFieldAssist.FloatingOffset" Value="12" />
-        <Setter Property="my:TextFieldAssist.UpdateValueOnKeyboard" Value="True" />
-        <Setter Property="my:TextFieldAssist.UpdateValueOnMouseWheel" Value="True" />
+        <Setter Property="my:TextFieldBehavior.UpdateValueOnKeyboard" Value="True" />
+        <Setter Property="my:TextFieldBehavior.UpdateValueOnMouseWheel" Value="True" />
         <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
         <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Center" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
@@ -168,36 +168,36 @@
         <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Small}" />
         <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
-        <Setter Property="my:ProxyAssist.Enable" Value="True" />
+        <Setter Property="my:ProxyBehavior.Enable" Value="True" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
         <Setter Property="my:DateTimePickerAssist.WatermarkDay" Value="{my:Resource Day}" />
         <Setter Property="my:DateTimePickerAssist.WatermarkMonth" Value="{my:Resource Month}" />
         <Setter Property="my:DateTimePickerAssist.WatermarkYear" Value="{my:Resource Year}" />
-        <Setter Property="my:DateTimePickerAssist.OverrideWatermark" Value="True" />
-        <Setter Property="my:GlobalizationAssist.UpdateOnCultureChanged" Value="True" />
-        <Setter Property="my:PopupAssist.EnableShortcutKeys" Value="True"/>
-        <Setter Property="my:PopupAssist.AutoFocusOnOpening" Value="True"/>
+        <Setter Property="my:DateTimePickerBehavior.OverrideWatermark" Value="True" />
+        <Setter Property="my:GlobalizationBehavior.UpdateOnCultureChanged" Value="True" />
+        <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
+        <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
 
         <Style Selector="^">
             <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
+            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />
+            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border.Hover}" />
             <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
-            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
-            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Secondary}}" />
-            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Watermark}}" />
+            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
+            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
+            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.Medium}}" />
             <Setter Property="my:PopupAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
             <Setter Property="my:PopupAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
-            <Setter Property="my:PopupAssist.PrimaryColor" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PopupAssist.PrimaryColor" Value="{my:ThemeRole}" />
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0.5" />
@@ -275,7 +275,7 @@
                                                       InnerForeground="{TemplateBinding (my:TextFieldAssist.InnerForeground)}"
                                                       InnerLeftContent="{TemplateBinding (my:TextFieldAssist.InnerLeftContent)}"
                                                       InnerRightContent="{TemplateBinding (my:TextFieldAssist.InnerRightContent)}"
-                                                      Proxy="{TemplateBinding (my:ProxyAssist.Proxy)}"
+                                                      Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
                                                       UseFloatingWatermark="{TemplateBinding (my:TextFieldAssist.UseFloatingWatermark)}"
                                                       Watermark="{TemplateBinding (my:TextFieldAssist.Watermark)}"
                                                       WatermarkFontSize="{TemplateBinding (my:TextFieldAssist.WatermarkFontSize)}">
@@ -394,7 +394,7 @@
 
         <!-- With clear button -->
         <Style Selector="^[(my|TextFieldAssist.ShowClearButton)=True]">
-            <Style Selector="^[(my|ProxyAssist.IsEmpty)=False] /template/ Button#PART_ClearButton">
+            <Style Selector="^[(my|ProxyBehavior.IsEmpty)=False] /template/ Button#PART_ClearButton">
                 <Setter Property="IsVisible" Value="True" />
             </Style>
         </Style>
@@ -417,18 +417,18 @@
 
         <!-- No date -->
         <Style Selector="^:hasnodate">
-            <Style Selector="^[(my|DateTimePickerAssist.OverrideWatermark)=False] /template/ Grid#PART_ButtonContentGrid">
+            <Style Selector="^[(my|DateTimePickerBehavior.OverrideWatermark)=False] /template/ Grid#PART_ButtonContentGrid">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
 
             <Style Selector="^[(my|TextFieldAssist.UseFloatingWatermark)=False]">
-                <Style Selector="^[(my|DateTimePickerAssist.OverrideWatermark)=True] /template/ Button#PART_FlyoutButton > my|TextField">
+                <Style Selector="^[(my|DateTimePickerBehavior.OverrideWatermark)=True] /template/ Button#PART_FlyoutButton > my|TextField">
                     <Setter Property="InactiveForeground" Value="Transparent" />
                 </Style>
             </Style>
 
             <Style Selector="^ /template/ Button#PART_FlyoutButton > my|TextField TextBlock">
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Watermark}" />
+                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.Medium}" />
             </Style>
         </Style>
 
@@ -451,8 +451,8 @@
 
         <!-- Colors -->
         <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Filled}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Active}}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
+            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
             <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:PopupAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
         </Style>
@@ -556,7 +556,7 @@
                                                   InnerForeground="{TemplateBinding (my:TextFieldAssist.InnerForeground)}"
                                                   InnerLeftContent="{TemplateBinding (my:TextFieldAssist.InnerLeftContent)}"
                                                   InnerRightContent="{TemplateBinding (my:TextFieldAssist.InnerRightContent)}"
-                                                  Proxy="{TemplateBinding (my:ProxyAssist.Proxy)}"
+                                                  Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
                                                   UseFloatingWatermark="{TemplateBinding (my:TextFieldAssist.UseFloatingWatermark)}"
                                                   Watermark="{TemplateBinding (my:TextFieldAssist.Watermark)}"
                                                   WatermarkFontSize="{TemplateBinding (my:TextFieldAssist.WatermarkFontSize)}">

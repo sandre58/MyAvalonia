@@ -3,6 +3,11 @@
                     xmlns:my="http://mynet.com/avalonia"
                     x:CompileBindings="True">
 
+    <my:BrushConverter x:Key="MyNet.Converter.Brush.Lighten.High" Lighten="2" />
+    <my:BrushConverter x:Key="MyNet.Converter.Brush.Lighten.Low" Lighten="1" />
+    <my:BrushConverter x:Key="MyNet.Converter.Brush.Darken.High" Darken="2" />
+    <my:BrushConverter x:Key="MyNet.Converter.Brush.Darken.Low" Darken="1" />
+
     <ControlTheme x:Key="{x:Type ColorPreviewer}" TargetType="ColorPreviewer">
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -24,12 +29,12 @@
                                     Background="{DynamicResource MyNet.Brush.Transparency.Small}" />
                             <Border Name="PART_AccentDecrement2Border"
                                     Grid.Column="0"
-                                    Background="{TemplateBinding HsvColor, Converter={x:Static my:BrushConverter.Lighten}, ConverterParameter='2'}"
+                                    Background="{TemplateBinding HsvColor, Converter={StaticResource MyNet.Converter.Brush.Lighten.High}}"
                                     CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Left}}"
                                     Tag="2" />
                             <Border Name="PART_AccentDecrement1Border"
                                     Grid.Column="1"
-                                    Background="{TemplateBinding HsvColor, Converter={x:Static my:BrushConverter.Lighten}, ConverterParameter='1'}"
+                                    Background="{TemplateBinding HsvColor, Converter={StaticResource MyNet.Converter.Brush.Lighten.Low}}"
                                     Tag="1" />
                         </Grid>
                         <!-- Right accent colors -->
@@ -45,11 +50,11 @@
                                     Background="{DynamicResource MyNet.Brush.Transparency.Small}" />
                             <Border Name="PART_AccentIncrement1Border"
                                     Grid.Column="0"
-                                    Background="{TemplateBinding HsvColor, Converter={x:Static my:BrushConverter.Darken}, ConverterParameter='1'}"
+                                    Background="{TemplateBinding HsvColor, Converter={StaticResource MyNet.Converter.Brush.Darken.Low}}"
                                     Tag="-1" />
                             <Border Name="PART_AccentIncrement2Border"
                                     Grid.Column="1"
-                                    Background="{TemplateBinding HsvColor, Converter={x:Static my:BrushConverter.Darken}, ConverterParameter='2'}"
+                                    Background="{TemplateBinding HsvColor, Converter={StaticResource MyNet.Converter.Brush.Darken.High}}"
                                     CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Right}}"
                                     Tag="-2" />
                         </Grid>

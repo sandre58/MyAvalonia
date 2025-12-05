@@ -21,9 +21,9 @@
 
         <Style Selector="^">
             <Setter Property="MaskBackground" Value="{DynamicResource MyNet.Brush.Application.Background}" />
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="BadgeForeground" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Contrast=True}" />
-            <Setter Property="Background" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="BadgeForeground" Value="{my:ThemeRole Contrast=True}" />
+            <Setter Property="Background" Value="{my:ThemeRole}" />
         </Style>
 
         <Setter Property="Template">
@@ -96,22 +96,22 @@
 
         <!-- Styles -->
         <Style Selector="^.Outlined">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="my:ThemeAssist.SecondaryColor" Value="{my:Brush $self.MaskBackground, Contrast=True}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{my:Brush $self.MaskBackground, Contrast=True}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
-            <Setter Property="BadgeForeground" Value="{Binding $self.(my:ThemeAssist.SecondaryColor)}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
+            <Setter Property="BadgeForeground" Value="{my:ThemeRole Secondary}" />
 
             <Style Selector="^.Light">
-                <Setter Property="my:ThemeAssist.TertiaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
-                <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.TertiaryColor)}" />
+                <Setter Property="my:PaletteAssist.Tertiary" Value="{DynamicResource MyNet.Brush.Primary}" />
+                <Setter Property="BorderBrush" Value="{my:ThemeRole Tertiary}" />
             </Style>
         </Style>
 
         <Style Selector="^.Light">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="Background" Value="{my:Brush $self.(my:ThemeAssist.PrimaryColor), Opacity={StaticResource MyNet.Opacity.Filled}}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
             <Setter Property="BadgeForeground" Value="{my:Brush $self.MaskBackground, Contrast=True}" />
         </Style>
 

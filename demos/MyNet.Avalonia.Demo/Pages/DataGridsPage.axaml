@@ -108,7 +108,7 @@
         <DataGrid my:DataGridAssist.ShowCellSelection="{Binding #ShowCellSelection.IsChecked}"
                   my:DataGridAssist.ShowSelection="{Binding #ShowSelection.IsChecked}"
                   my:DataGridAssist.UseAlternateRowBackground="{Binding #UseAlternateRowBackground.IsChecked}"
-                  my:DataGridAssist.UseAreAllSelected="True"
+                  my:DataGridBehavior.UseAreAllSelected="True"
                   CanUserReorderColumns="{Binding #CanUserReorderColumns.IsChecked}"
                   CanUserResizeColumns="{Binding #CanUserResizeColumns.IsChecked}"
                   CanUserSortColumns="{Binding #CanUserSortColumns.IsChecked}"

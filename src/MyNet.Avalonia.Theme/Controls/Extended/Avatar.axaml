@@ -15,8 +15,8 @@
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
 
         <Style Selector="^">
-            <Setter Property="my:ThemeAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="Background" Value="{Binding $self.(my:ThemeAssist.PrimaryColor)}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Control.Background}" />
+            <Setter Property="Background" Value="{my:ThemeRole}" />
             <Setter Property="Foreground" Value="{my:Brush $self.Background, Contrast=True}" />
         </Style>
 

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Demo.Helpers;
-using MyNet.Avalonia.Enums;
+using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -28,7 +28,7 @@ internal sealed partial class ToggleButtonsPage : AutoBuildPage
                         ? RandomGenerator.Enum<IconData>().ToIcon()
                         : data.Theme.ContainsAny("icon")
                         ? RandomGenerator.Enum<IconData>().ToGeometry()
-                        : data.Color.Or(data.Size.OrEmpty()).Or("Default"),
+                        : data.Role.ToString().Or(data.Size.OrEmpty()).Or("Default"),
             IsChecked = RandomGenerator.Bool()
         };
 
@@ -40,21 +40,21 @@ internal sealed partial class ToggleButtonsPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithColors)
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Circle")
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultColors()
+            .AddDefaultRoles()
             .AddSizes("Small", "Medium", "Large"),
 
-            new ControlThemeData("Rounded", DefaultStyleDisplay.WithColors)
+            new ControlThemeData("Rounded", DefaultStyleDisplay.WithRoles)
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultColors()
+            .AddDefaultRoles()
             .AddSizes("Small", "Medium", "Large"),
 
-            new ControlThemeData("Icon", DefaultStyleDisplay.WithColors)
-            .AddDefaultColors()
+            new ControlThemeData("Icon", DefaultStyleDisplay.WithRoles)
+            .AddDefaultRoles()
             .AddSizes("ExtraSmall", "Small", "Medium", "Large", "ExtraLarge")
         ];
 

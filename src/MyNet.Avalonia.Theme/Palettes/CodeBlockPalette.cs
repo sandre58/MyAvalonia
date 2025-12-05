@@ -64,7 +64,7 @@ public class CodeBlockPalette
     /// Converts the code block palette to a read-only dictionary suitable for use as resource dictionary keys and values.
     /// </summary>
     /// <returns>A dictionary containing all code block colors with their corresponding resource keys.</returns>
-    public IReadOnlyDictionary<string, Color> ToResourceDictionary(string prefix = nameof(ThemePalette.CodeBlock)) => new Dictionary<string, Color>
+    public IReadOnlyDictionary<string, object> ToResourceDictionary(string prefix = nameof(ThemeVariantColors.CodeBlock)) => new Dictionary<string, object>
         {
             { nameof(Unknown).WithPrefix(prefix), Unknown },
             { nameof(Space).WithPrefix(prefix), Space },
