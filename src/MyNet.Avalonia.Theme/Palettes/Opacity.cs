@@ -15,17 +15,17 @@ public enum Opacity
     /// <summary>
     /// Opacity for high elevation surfaces.
     /// </summary>
-    ElevationHigh,
+    High,
 
     /// <summary>
     /// Opacity for medium elevation surfaces.
     /// </summary>
-    ElevationMedium,
+    Medium,
 
     /// <summary>
     /// Opacity for low elevation surfaces.
     /// </summary>
-    ElevationLow,
+    Low,
 
     /// <summary>
     /// Opacity for disabled UI elements.

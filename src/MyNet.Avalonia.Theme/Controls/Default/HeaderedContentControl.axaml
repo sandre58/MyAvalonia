@@ -278,7 +278,7 @@
             <Setter Property="Padding" Value="0" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
+            <Setter Property="my:HeaderAssist.Opacity" Value="{StaticResource MyNet.Opacity.High}" />
             <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Bottom}" />
             <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
 
@@ -350,7 +350,7 @@
         <Style Selector="^.Watermark">
             <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
             <Setter Property="my:HeaderAssist.Foreground" Value="{my:Brush $self.Foreground}" />
-            <Setter Property="my:HeaderAssist.Opacity" Value="{StaticResource MyNet.Opacity.Elevation.Medium}" />
+            <Setter Property="my:HeaderAssist.Opacity" Value="{StaticResource MyNet.Opacity.Medium}" />
         </Style>
 
         <Style Selector="^.Regular">

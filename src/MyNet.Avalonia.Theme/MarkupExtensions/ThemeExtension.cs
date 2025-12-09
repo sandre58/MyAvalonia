@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia.Markup.Xaml;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -18,18 +17,12 @@ namespace MyNet.Avalonia.Theme.MarkupExtensions;
 /// <Border Background="{theme Path=Primary}" />
 /// </code>
 /// </example>
-public class ThemeExtension(string path) : MarkupExtension
+public class ThemeExtension(string path) : ThemeBrushExtension(path)
 {
-    /// <summary>
-    /// Gets or sets the resource path for the theme brush.
-    /// </summary>
-    [ConstructorArgument("path")]
-    public string Path { get; set; } = path;
-
     /// <summary>
     /// Provides the value for the markup extension, returning the theme brush for the specified path.
     /// </summary>
     /// <param name="serviceProvider">The service provider for the markup extension.</param>
     /// <returns>The theme brush instance for the specified path.</returns>
-    public override object ProvideValue(IServiceProvider serviceProvider) => MyTheme.Current.GetBrush(Path);
+    public override object ProvideValue(IServiceProvider serviceProvider) => MyTheme.Current.GetBrush(ProvidePath(), Opacity?.ToString() ?? CustomOpacity, Contrast);
 }

@@ -9,11 +9,8 @@
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         <Setter Property="TextWrapping" Value="NoWrap" />
         <Setter Property="Focusable" Value="False" />
-
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeBrush $parent[Control].(TextElement.Foreground)}" />
-            <Setter Property="Foreground" Value="{my:ThemeBrush $self.(my:PaletteAssist.Primary)}" />
-        </Style>
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
+        <Setter Property="Foreground" Value="{my:ThemeRole}" />
 
         <Style Selector="^.Underline">
             <Setter Property="TextDecorations" Value="Underline" />

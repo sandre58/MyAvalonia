@@ -53,17 +53,17 @@ public class OpacityLevels
     /// <summary>
     /// Gets the opacity level for low elevation surfaces.
     /// </summary>
-    public double ElevationLow { get; init; }
+    public double Low { get; init; }
 
     /// <summary>
     /// Gets the opacity level for medium elevation surfaces.
     /// </summary>
-    public double ElevationMedium { get; init; }
+    public double Medium { get; init; }
 
     /// <summary>
     /// Gets the opacity level for high elevation surfaces.
     /// </summary>
-    public double ElevationHigh { get; init; }
+    public double High { get; init; }
 
     /// <summary>
     /// Converts the opacity levels to a resource dictionary for use in theming and resource lookups.
@@ -80,8 +80,8 @@ public class OpacityLevels
             [nameof(Drag).WithPrefix(prefix)] = Drag,
             [nameof(Scrim).WithPrefix(prefix)] = Scrim,
             [nameof(Disabled).WithPrefix(prefix)] = Disabled,
-            ["Elevation.Low".WithPrefix(prefix)] = ElevationLow,
-            ["Elevation.Medium".WithPrefix(prefix)] = ElevationMedium,
-            ["Elevation.High".WithPrefix(prefix)] = ElevationHigh,
+            [nameof(Low).WithPrefix(prefix)] = Low,
+            [nameof(Medium).WithPrefix(prefix)] = Medium,
+            [nameof(High).WithPrefix(prefix)] = High,
         };
 }

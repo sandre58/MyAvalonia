@@ -14,14 +14,14 @@
     <PackageVersion Include="Avalonia.Desktop" Version="11.3.9" />
     <PackageVersion Include="Avalonia.iOS" Version="11.3.8" />
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.14" />
-    <PackageVersion Include="MyNet.Humanizer" Version="14.2.0" />
-    <PackageVersion Include="MyNet.Observable" Version="14.2.0" />
-    <PackageVersion Include="MyNet.Utilities" Version="14.2.0" />
-    <PackageVersion Include="MyNet.Utilities.Generator.Extensions" Version="14.2.0" />
-    <PackageVersion Include="MyNet.Utilities.Geography.Extensions" Version="14.2.0" />
-    <PackageVersion Include="MyNet.Utilities.Localization.Extensions" Version="14.2.0" />
-    <PackageVersion Include="MyNet.Utilities.Logging.NLog" Version="14.2.0" />
-    <PackageVersion Include="MyNet.UI" Version="14.2.0" />
+    <PackageVersion Include="MyNet.Humanizer" Version="14.3.0" />
+    <PackageVersion Include="MyNet.Observable" Version="14.3.0" />
+    <PackageVersion Include="MyNet.Utilities" Version="14.3.0" />
+    <PackageVersion Include="MyNet.Utilities.Generator.Extensions" Version="14.3.0" />
+    <PackageVersion Include="MyNet.Utilities.Geography.Extensions" Version="14.3.0" />
+    <PackageVersion Include="MyNet.Utilities.Localization.Extensions" Version="14.3.0" />
+    <PackageVersion Include="MyNet.Utilities.Logging.NLog" Version="14.3.0" />
+    <PackageVersion Include="MyNet.UI" Version="14.3.0" />
     <PackageVersion Include="System.Reactive" Version="7.0.0-preview.1" />
     <PackageVersion Include="Fody" Version="6.9.3" />
     <PackageVersion Include="PropertyChanged.Fody" Version="4.1.0" />

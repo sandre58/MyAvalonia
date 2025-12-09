@@ -11,7 +11,7 @@
         <Setter Property="Width" Value="55" />
 
         <Style Selector="^[IsActive=False]">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.Medium}" />
+            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Medium}" />
         </Style>
     </ControlTheme>
 

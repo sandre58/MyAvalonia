@@ -19,7 +19,7 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Primary}" />
         <Setter Property="Padding" Value="3 3 3 1" />
-        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
+        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.High}" />
 
         <Style Selector="^">
             <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
@@ -60,7 +60,7 @@
 
         <!-- Visited -->
         <Style Selector="^:visited">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.Medium}" />
+            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Medium}" />
             <Setter Property="Foreground" Value="{my:ThemeRole}" />
         </Style>
 

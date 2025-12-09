@@ -6,11 +6,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Media;
-using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Theme.Helpers;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Palettes;
@@ -23,6 +23,7 @@ public class BrushSet
 {
     private readonly ColorTransition _colorTransition;
     private readonly Dictionary<double, SolidColorBrush> _brushes = [];
+    private readonly Dictionary<double, SolidColorBrush> _contrastedBrushes = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BrushSet"/> class with the specified color, transition duration, and easing.
@@ -31,7 +32,7 @@ public class BrushSet
     /// <param name="contrastedColor">The color to use for the contrast brush (optional; defaults to the contrasting color of the current color).</param>
     /// <param name="colorTransitionDuration">The duration of the color transition animation.</param>
     /// <param name="colorTransitionEasing">The easing function for the color transition animation.</param>
-    public BrushSet(Color color, Color? contrastedColor, TimeSpan colorTransitionDuration, Easing colorTransitionEasing)
+    public BrushSet(Color color, Color contrastedColor, TimeSpan colorTransitionDuration, Easing colorTransitionEasing)
     {
         _colorTransition = new ColorTransition
         {
@@ -40,15 +41,9 @@ public class BrushSet
             Property = SolidColorBrush.ColorProperty
         };
 
-        Color = color;
-        Brush = CreateBrush();
-        Contrast = CreateContrastBrush(contrastedColor);
+        Brush = CreateBrush(color);
+        Contrast = CreateBrush(contrastedColor);
     }
-
-    /// <summary>
-    /// Gets the current color of the brush set.
-    /// </summary>
-    public Color Color { get; private set; }
 
     /// <summary>
     /// Gets the main brush for the brush set, using the current color and full opacity.
@@ -70,12 +65,38 @@ public class BrushSet
     {
         if (_brushes.TryGetValue(opacity, out var existing)) return existing;
 
-        // Create new brush with color transition animation
-        var newBrush = CreateBrush(opacity);
+        using (ThemePerformanceLogger.MeasureTime(maxBeforeWarning: 1.Milliseconds()))
+        {
+            // Create new brush with color transition animation
+            var newBrush = CreateBrush(Brush.Color, opacity);
 
-        _brushes.AddOrUpdate(opacity, newBrush);
+            _brushes.AddOrUpdate(opacity, newBrush);
+            Debug.WriteLine($"[BrushSet] Created new opacity brush ({opacity:F2}) (Total opacity variants: {_brushes.Count})");
 
-        return newBrush;
+            return newBrush;
+        }
+    }
+
+    /// <summary>
+    /// Gets a brush with the specified opacity, using the current color and animated transitions.
+    /// If a brush with the requested opacity already exists, it is returned; otherwise, a new one is created and cached.
+    /// </summary>
+    /// <param name="opacity">The opacity value for the brush (0.0 to 1.0).</param>
+    /// <returns>A <see cref="SolidColorBrush"/> with the specified opacity.</returns>
+    public SolidColorBrush GetContrastedOpacityBrush(double opacity)
+    {
+        if (_contrastedBrushes.TryGetValue(opacity, out var existing)) return existing;
+
+        using (ThemePerformanceLogger.MeasureTime(maxBeforeWarning: 1.Milliseconds()))
+        {
+            // Create new brush with color transition animation
+            var newBrush = CreateBrush(Contrast.Color, opacity);
+
+            _contrastedBrushes.AddOrUpdate(opacity, newBrush);
+            Debug.WriteLine($"[BrushSet] Created new contrasted opacity brush ({opacity:F2}) (Total opacity variants: {_contrastedBrushes.Count})");
+
+            return newBrush;
+        }
     }
 
     /// <summary>
@@ -83,34 +104,28 @@ public class BrushSet
     /// </summary>
     /// <param name="newColor">The new color to apply to the brush set.</param>
     /// <param name="contrastedColor">The color to use for the contrast brush (optional; defaults to the contrasting color of the current color).</param>
-    public void UpdateColor(Color newColor, Color? contrastedColor = null)
+    public void UpdateColor(Color newColor, Color contrastedColor)
     {
-        if (Color != newColor)
-        {
-            Color = newColor;
-            Brush.Color = newColor;
-            Contrast.Color = contrastedColor ?? newColor.ContrastingForegroundColor();
+        Brush.Color = newColor;
+        Contrast.Color = contrastedColor;
 
-            // Update all opacity brushes
-            foreach (var brush in _brushes.Values)
-            {
-                brush.Color = newColor;
-            }
+        // Update all opacity brushes
+        foreach (var brush in _brushes.Values)
+        {
+            brush.Color = newColor;
+        }
+
+        foreach (var brush in _contrastedBrushes.Values)
+        {
+            brush.Color = contrastedColor;
         }
     }
 
     /// <summary>
     /// Creates a new <see cref="SolidColorBrush"/> with the current color, specified opacity, and color transition animation.
     /// </summary>
+    /// <param name="color">Color of the brush.</param>
     /// <param name="opacity">The opacity value for the brush (optional; defaults to 1.0).</param>
     /// <returns>A new <see cref="SolidColorBrush"/> instance.</returns>
-    private SolidColorBrush CreateBrush(double? opacity = null) => new(Color) { Opacity = opacity ?? 1.0, Transitions = [_colorTransition] };
-
-    /// <summary>
-    /// Creates a new <see cref="SolidColorBrush"/> with a color that contrasts with the current color, for accessibility purposes.
-    /// </summary>
-    /// <param name="contrastedColor">The color to use for the contrast brush (optional; defaults to the contrasting color of the current color).</param>
-    /// <param name="opacity">The opacity value for the contrast brush (optional; defaults to 1.0).</param>
-    /// <returns>A new <see cref="SolidColorBrush"/> instance with a contrasting color.</returns>
-    private SolidColorBrush CreateContrastBrush(Color? contrastedColor = null, double? opacity = null) => new(contrastedColor ?? Color.FromArgb(Convert.ToByte(255 * opacity, CultureInfo.InvariantCulture), Color.R, Color.G, Color.B).ContrastingForegroundColor()) { Opacity = opacity ?? 1.0, Transitions = [_colorTransition] };
+    private SolidColorBrush CreateBrush(Color color, double opacity = 1.0) => new(color) { Opacity = opacity , Transitions = [_colorTransition] };
 }

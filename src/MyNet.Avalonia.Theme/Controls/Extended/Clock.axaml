@@ -36,7 +36,7 @@
                         <my:ClockTicks Margin="{TemplateBinding Padding}"
                                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                        HourTickForeground="{TemplateBinding TickBrush}"
-                                       MinuteTickForeground="{my:Brush TickBrush, RelativeSource={RelativeSource TemplatedParent}, Opacity={StaticResource MyNet.Opacity.Elevation.High}}"
+                                       MinuteTickForeground="{my:Brush TickBrush, RelativeSource={RelativeSource TemplatedParent}, Opacity={StaticResource MyNet.Opacity.High}}"
                                        ShowHourTicks="{TemplateBinding ShowHourTicks}"
                                        ShowMinuteTicks="{TemplateBinding ShowMinuteTicks}" />
                         <UniformGrid IsVisible="{TemplateBinding ShowHourHand}" Rows="2">
@@ -80,7 +80,7 @@
         </Setter>
 
         <Style Selector="^.Inverse">
-            <Setter Property="TickBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
+            <Setter Property="TickBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
         </Style>
 
         <Style Selector="^.Outlined">

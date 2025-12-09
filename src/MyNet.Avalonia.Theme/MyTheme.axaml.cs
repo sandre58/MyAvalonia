@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using Avalonia;
 using Avalonia.Animation.Easings;
@@ -13,6 +14,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Styling;
 using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Theme.Helpers;
 using MyNet.Avalonia.Theme.Palettes;
 using MyNet.Avalonia.Theme.Theming;
 using MyNet.Utilities;
@@ -212,26 +214,44 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// <summary>
     /// Injects all accent brand palette resources into the ResourceDictionary, including base color, foreground, and all shades.
     /// </summary>
-    private void AddOrUpdatePrimaryShades() => AddOrUpdateColorShades(Primary, nameof(Primary));
+    private void AddOrUpdatePrimaryShades()
+    {
+        using (ThemePerformanceLogger.MeasureTime())
+            AddOrUpdateColorShades(Primary, nameof(Primary));
+    }
 
     /// <summary>
     /// Injects all primary brand palette resources into the ResourceDictionary, including base color, foreground, and all shades.
     /// </summary>
-    private void AddOrUpdateAccentShades() => AddOrUpdateColorShades(Accent, nameof(Accent));
+    private void AddOrUpdateAccentShades()
+    {
+        using (ThemePerformanceLogger.MeasureTime())
+            AddOrUpdateColorShades(Accent, nameof(Accent));
+    }
 
     /// <summary>
     /// Injects a dictionary of colors into the ResourceDictionary.
     /// </summary>
     private void UpdateBrushesFromCurrentTheme()
     {
-        foreach (var (key, obj) in GetActiveThemeDictionary())
+        using (ThemePerformanceLogger.MeasureTime())
         {
-            if (obj is Color color)
+            var count = 0;
+
+            foreach (var (key, obj) in GetActiveThemeDictionary())
             {
-                var colorKey = key?.ToString()?.Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase);
-                if (!string.IsNullOrEmpty(colorKey))
-                    AddOrUpdateBrush(colorKey, color, null);
+                if (obj is Color color)
+                {
+                    var colorKey = key?.ToString()?.Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase);
+                    if (!string.IsNullOrEmpty(colorKey))
+                    {
+                        AddOrUpdateBrush(colorKey, color, null);
+                        count++;
+                    }
+                }
             }
+
+            Debug.WriteLine($"UpdateBrushesFromCurrentTheme processed {count} brushes");
         }
     }
 
@@ -242,9 +262,17 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// <param name="name">The name of the color group.</param>
     private void AddOrUpdateColorShades(ColorShades shades, string name)
     {
-        foreach (var (key, color) in shades.ToResourceDictionary(name))
+        using (ThemePerformanceLogger.MeasureTime())
         {
-            AddOrUpdateColorAndBrush(key, color, shades.Foreground);
+            var count = 0;
+
+            foreach (var (key, color) in shades.ToResourceDictionary(name))
+            {
+                AddOrUpdateColorAndBrush(key, color, shades.Foreground);
+                count++;
+            }
+
+            Debug.WriteLine($"AddOrUpdateColorShades({name}) processed {count} shades");
         }
     }
 
@@ -281,7 +309,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     private void AddOrUpdateBrush(string key, Color color, Color? contrastedColor)
     {
         var fullBrushKey = ThemeResourceKeyFactory.Brush(key);
-        var brush = _brushManager.RegisterBrush(fullBrushKey, color, contrastedColor);
+        var brush = _brushManager.Register(fullBrushKey, color, contrastedColor, Enum.GetValues<Opacity>().Select(opacity => (double)GetOpacity(opacity.ToString())!));
         Resources.AddOrUpdate(fullBrushKey, brush);
     }
 
@@ -333,14 +361,11 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// <param name="path">The resource path for the brush.</param>
     /// <param name="opacityKey">Optional opacity key or value.</param>
     /// <param name="contrast">If true, returns the contrast brush for accessibility.</param>
-    /// <param name="darken">Optional amount to darken the brush.</param>
-    /// <param name="lighten">Optional amount to lighten the brush.</param>
     /// <returns>The brush instance.</returns>
-    public SolidColorBrush GetBrush(string path, string? opacityKey = null, bool contrast = false, double? darken = null, double? lighten = null)
+    public SolidColorBrush GetBrush(string path, string? opacityKey = null, bool contrast = false)
     {
         var opacity = GetOpacity(opacityKey);
-
-        return _brushManager.GetBrush(ThemeResourceKeyFactory.Brush(path), new ColorInterpolation(opacity, contrast, darken, lighten));
+        return _brushManager.Get(ThemeResourceKeyFactory.Brush(path), opacity, contrast);
     }
 
     /// <summary>
@@ -349,14 +374,11 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// <param name="brush">The brush instance to search for.</param>
     /// <param name="opacityKey">Optional opacity key or value.</param>
     /// <param name="contrast">If true, returns the contrast brush for accessibility.</param>
-    /// <param name="darken">Optional amount to darken the brush.</param>
-    /// <param name="lighten">Optional amount to lighten the brush.</param>
     /// <returns>The brush instance with the specified opacity or contrast.</returns>
-    public SolidColorBrush GetBrush(SolidColorBrush brush, string? opacityKey = null, bool contrast = false, double? darken = null, double? lighten = null)
+    public SolidColorBrush GetBrush(SolidColorBrush brush, string? opacityKey = null, bool contrast = false)
     {
         var opacity = GetOpacity(opacityKey);
-
-        return _brushManager.GetBrush(brush, new ColorInterpolation(opacity, contrast, darken, lighten));
+        return _brushManager.Get(brush, opacity, contrast);
     }
 
     /// <summary>
@@ -385,7 +407,9 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     private void OnResourcedAccessed()
     {
-        AvaloniaXamlLoader.Load(_serviceProvider, this);
+        using (ThemePerformanceLogger.MeasureTime())
+            AvaloniaXamlLoader.Load(_serviceProvider, this);
+
         AddOrUpdateAccentShades();
         AddOrUpdatePrimaryShades();
         UpdateBrushesFromCurrentTheme();

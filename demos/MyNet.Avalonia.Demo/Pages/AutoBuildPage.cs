@@ -6,12 +6,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Utilities.Logging;
@@ -61,35 +63,45 @@ internal abstract class AutoBuildPage : Page, IDisposable
 
             LogManager.Debug($"[PERF] AutoBuildPage ({GetType().Name}) - Building {themes.Count} theme sections");
 
-            // Build controls progressively
-            var sectionIndex = 0;
-            foreach (var item in themes)
+            // Build controls progressively with small batches to keep UI responsive
+            // Larger batches = faster but may freeze UI
+            // Smaller batches = slower but smoother UI
+            var batchSize = 2; // Process 2 sections at a time (good compromise)
+
+            for (var i = 0; i < themes.Count; i += batchSize)
             {
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    LogManager.Debug($"[PERF] AutoBuildPage ({GetType().Name}) - Build cancelled at section {sectionIndex}");
+                    LogManager.Debug($"[PERF] AutoBuildPage ({GetType().Name}) - Build cancelled at section {i}");
                     return;
                 }
 
-                sectionIndex++;
+                var batch = themes.Skip(i).Take(batchSize);
 
-                // Build each theme section on the UI thread with low priority
+                // Build batch on the UI thread with normal priority
                 await Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     if (cancellationToken.IsCancellationRequested)
                         return;
 
-                    using (PerformanceMonitor.Measure($"AutoBuildPage ({GetType().Name}) - Build section '{item.Name}'"))
+                    foreach (var item in batch)
                     {
-                        var container = BuildThemeSection(item);
-                        root.Children.Add(container);
+                        using (PerformanceMonitor.Measure($"AutoBuildPage ({GetType().Name}) - Build section '{item.Name}'"))
+                        {
+                            var container = BuildThemeSection(item);
+                            root.Children.Add(container);
+                        }
                     }
                 },
-                DispatcherPriority.Background);
+                DispatcherPriority.Normal);
 
-                // Small delay to allow UI to update and remain responsive
-                await Task.Delay(10, cancellationToken).ConfigureAwait(false);
+                // Small delay to allow UI to update between batches
+                await Task.Delay(1, cancellationToken).ConfigureAwait(false);
             }
+
+            // Log total visual elements created
+            var totalControls = root.GetVisualDescendants().Count();
+            LogManager.Debug($"[PERF] AutoBuildPage ({GetType().Name}) - Total visual elements created: {totalControls}");
         }
     }
 

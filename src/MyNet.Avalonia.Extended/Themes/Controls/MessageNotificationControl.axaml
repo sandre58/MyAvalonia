@@ -58,7 +58,7 @@
         </Style>
         <Style Selector="^[Severity=Information] /template/ PathIcon#PART_Icon">
             <Setter Property="Data" Value="{StaticResource MyNet.Geometry.InformationVariantCircle}" />
-            <Setter Property="Foreground" Value="{StaticResource MyNet.Brush.Information}" />
+            <Setter Property="Foreground" Value="{my:Theme Information}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

@@ -414,7 +414,7 @@
 
     <!-- Tabs -->
     <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Tab" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
+        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.High}" />
 
         <!-- Hover -->
         <Style Selector="^:not(:disabled):pointerover">
@@ -534,7 +534,7 @@
 
     <!-- Icon -->
     <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Icon" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
+        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.High}" />
         <Setter Property="FocusAdorner">
             <FocusAdornerTemplate>
                 <Ellipse Theme="{StaticResource MyNet.Theme.Ellipse.Focus}" />

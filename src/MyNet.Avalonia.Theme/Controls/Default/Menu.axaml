@@ -176,7 +176,7 @@
                                        VerticalAlignment="Center"
                                        FontSize="{StaticResource MyNet.Font.Size.SubCaption}"
                                        Foreground="{TemplateBinding Foreground}"
-                                       Opacity="{StaticResource MyNet.Opacity.Elevation.High}"
+                                       Opacity="{StaticResource MyNet.Opacity.High}"
                                        Text="{TemplateBinding InputGesture, Converter={StaticResource KeyGestureConverter}}" />
                             <PathIcon Name="PART_ExpandIcon"
                                       Grid.Column="4"

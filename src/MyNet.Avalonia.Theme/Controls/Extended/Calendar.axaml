@@ -95,13 +95,13 @@
         </Style>
 
         <Style Selector="^:inactive /template/ Panel#PART_RootPanel">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.Medium}" />
+            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Medium}" />
         </Style>
 
         <Style Selector="^:preview-start-date, ^:preview-end-date">
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
+                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.High}" />
             </Style>
         </Style>
 
@@ -139,7 +139,7 @@
                            VerticalAlignment="Center"
                            x:DataType="x:String"
                            FontSize="{StaticResource MyNet.Font.Size.SubCaption}"
-                           Opacity="{StaticResource MyNet.Opacity.Elevation.High}"
+                           Opacity="{StaticResource MyNet.Opacity.High}"
                            Text="{Binding}" />
             </Template>
         </Setter>

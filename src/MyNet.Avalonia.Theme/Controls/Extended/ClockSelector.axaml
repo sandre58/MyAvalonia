@@ -212,7 +212,7 @@
         </Setter>
 
         <Style Selector="^.Inverse">
-            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
         </Style>
 
         <Style Selector="^.Outlined">

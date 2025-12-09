@@ -14,7 +14,7 @@
         <Setter Property="Focusable" Value="false" />
 
         <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Popup.Background}" />
             <Setter Property="Background" Value="{my:ThemeRole}" />
         </Style>
 

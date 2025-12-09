@@ -4,8 +4,8 @@
     xmlns:my="http://mynet.com/avalonia">
     <!--  Add Resources Here  -->
     <ControlTheme x:Key="{x:Type my:ExtendedView}" TargetType="{x:Type my:ExtendedView}">
-        <Setter Property="Background" Value="{DynamicResource MyNet.Brushes.Application.Background}" />
-        <Setter Property="Foreground" Value="{DynamicResource MyNet.Brushes.Application.Foreground}" />
+        <Setter Property="Background" Value="{my:Theme Application.Background}" />
+        <Setter Property="Foreground" Value="{my:Theme Application.Foreground}" />
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
         <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />
         <Setter Property="my:OverlayDialogHost.IsModalStatusScope" Value="True" />

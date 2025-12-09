@@ -168,7 +168,7 @@
         <Setter Property="FocusAdorner" Value="{x:Null}" />
         <Setter Property="my:IconAssist.Alignment" Value="Left" />
         <Setter Property="my:IconAssist.Margin" Value="{my:Thickness Default, Right}" />
-        <Setter Property="my:IconAssist.Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
+        <Setter Property="my:IconAssist.Opacity" Value="{StaticResource MyNet.Opacity.High}" />
         <Setter Property="my:TextFieldAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
         <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Inner.Medium}" />
         <Setter Property="my:TextFieldAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.SubCaption}" />
@@ -193,7 +193,7 @@
         <Style Selector="^">
             <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.Medium}}" />
+            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Medium}}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
@@ -203,8 +203,8 @@
             <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
             <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border.Hover}" />
             <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
-            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
-            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
+            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
+            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
             <Setter Property="my:PopupAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
             <Setter Property="my:PopupAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
             <Setter Property="my:PopupAssist.PrimaryColor" Value="{my:ThemeRole}" />
@@ -319,7 +319,7 @@
                                               Classes="Glyph DropDown"
                                               Focusable="False"
                                               IsHitTestVisible="False"
-                                              Opacity="{StaticResource MyNet.Opacity.Elevation.Medium}"
+                                              Opacity="{StaticResource MyNet.Opacity.Medium}"
                                               UseLayoutRounding="False" />
                                 </Grid>
                             </my:Ripple>
@@ -620,7 +620,7 @@
                                           Classes="Glyph DropDown"
                                           Focusable="False"
                                           IsHitTestVisible="False"
-                                          Opacity="{StaticResource MyNet.Opacity.Elevation.Medium}"
+                                          Opacity="{StaticResource MyNet.Opacity.Medium}"
                                           UseLayoutRounding="False" />
                             </Grid>
                         </Border>

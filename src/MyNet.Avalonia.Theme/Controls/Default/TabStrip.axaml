@@ -360,7 +360,7 @@
 
     <!-- Tabs -->
     <ControlTheme x:Key="MyNet.Theme.TabStripItem.Tab" TargetType="TabStripItem" BasedOn="{StaticResource {x:Type TabStripItem}}">
-        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
+        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.High}" />
 
         <!-- Hover -->
         <Style Selector="^:not(:disabled):pointerover">
@@ -454,7 +454,7 @@
 
     <!-- Icon -->
     <ControlTheme x:Key="MyNet.Theme.TabStripItem.Icon" TargetType="TabStripItem" BasedOn="{StaticResource {x:Type TabStripItem}}">
-        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Elevation.High}" />
+        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.High}" />
         <Setter Property="FocusAdorner">
             <FocusAdornerTemplate>
                 <Ellipse Theme="{StaticResource MyNet.Theme.Ellipse.Focus}" />

@@ -295,7 +295,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}"
-                            Opacity="{StaticResource MyNet.Opacity.Elevation.High}">
+                            Opacity="{StaticResource MyNet.Opacity.High}">
 
                         <Grid Name="PART_RootGrid" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>

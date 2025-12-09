@@ -193,7 +193,7 @@
                                     <ContentPresenter Name="PART_Content"
                                                       Content="{TemplateBinding Content}"
                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                      Opacity="{StaticResource MyNet.Opacity.Elevation.High}" />
+                                                      Opacity="{StaticResource MyNet.Opacity.High}" />
                                     <PathIcon Name="SortIcon"
                                               Grid.Column="1"
                                               Classes="Glyph"

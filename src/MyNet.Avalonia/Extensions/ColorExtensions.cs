@@ -348,4 +348,7 @@ public static class ColorExtensions
     }
 }
 
-public record ColorInterpolation(double? Opacity = null, bool Contrast = false, double? Darken = null, double? Lighten = null);
+public record ColorInterpolation(double? Opacity = null, bool Contrast = false, double? Darken = null, double? Lighten = null)
+{
+    public override string ToString() => $"Opacity: {Opacity}, Contrast: {Contrast}, Darken: {Darken}, Lighten: {Lighten}";
+}

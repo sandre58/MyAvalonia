@@ -63,9 +63,9 @@
     <Color x:Key="MyNet.Color.Gender.Male">#2986cc</Color>
 
     <!-- Opacity Levels -->
-    <sys:Double x:Key="MyNet.Opacity.Elevation.High">0.7</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Elevation.Medium">0.56</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Elevation.Low">0.45</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.High">0.7</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Medium">0.56</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Low">0.45</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Scrim">0.40</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Disabled">0.38</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Drag">0.32</sys:Double>

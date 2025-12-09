@@ -20,19 +20,20 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Focusable" Value="True" />
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
-            <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Control.Border}" />
-            <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Control.Background}" />
-            <Setter Property="Background" Value="{my:Theme Control.Background}" />
-            <Setter Property="Foreground" Value="{my:ThemeBrush $parent[TemplatedControl].Foreground}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush $self.Foreground, Opacity=Hover}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush $self.Foreground}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole Tertiary}" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeBrush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
-            <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeBrush $self.Foreground}" />
-        </Style>
+        <!-- Default colors -->
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
+        <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Control.Border}" />
+        <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Control.Background}" />
+
+        <!-- Default Theme -->
+        <Setter Property="Background" Value="{my:ThemeRole}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeBrush Foreground}" />
+
+        <!-- Used by Toggle and Split Button -->
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole Tertiary}" />
+        <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveBackground), Contrast=True}" />
 
         <Setter Property="FocusAdorner">
             <FocusAdornerTemplate>
@@ -90,7 +91,9 @@
 
         <!-- Hover -->
         <Style Selector="^:not(:disabled):pointerover">
-            <Setter Property="Foreground" Value="{my:ThemeBrush $self.(my:ThemeAssist.HoverForeground)}" />
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
 
             <Style Selector="^.Shadow /template/ Border#PART_MainBorder">
                 <Setter Property="my:ShadowAssist.Darken" Value="True" />
@@ -103,7 +106,9 @@
 
         <!-- Active (for button with state "selected") -->
         <Style Selector="^:selected, ^.Selected">
-            <Setter Property="Foreground" Value="{my:ThemeBrush $self.(my:ThemeAssist.ActiveForeground)}" />
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
 
             <Style Selector="^.Shadow /template/ Border#PART_MainBorder">
                 <Setter Property="my:ShadowAssist.Darken" Value="True" />
@@ -115,60 +120,64 @@
 
         </Style>
 
-        <Style Selector="^.Outlined">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Border}" />
-            <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Application.Foreground}" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeRole Secondary}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeRole Secondary, Opacity=Hover}" />
+        <!-- Solid -->
+        <Style Selector="^.Solid">
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
+            <Setter Property="Background" Value="{my:ThemeRole}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
 
-            <Style Selector="^.Solid">
-                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Control.Border}" />
-                <Setter Property="BorderBrush" Value="{my:ThemeRole Tertiary}" />
-            </Style>
-
-            <Style Selector="^.Light">
-                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Control.Border}" />
-                <Setter Property="BorderBrush" Value="{my:ThemeRole Tertiary}" />
-            </Style>
-
-            <Style Selector="^.Text">
-                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Control.Border}" />
-                <Setter Property="BorderBrush" Value="{my:ThemeRole Tertiary}" />
+            <Style Selector="^:selected, ^.Selected">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground)}" />
             </Style>
         </Style>
 
+        <!-- Text -->
         <Style Selector="^.Text">
             <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Application.Foreground}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{my:ThemeRole}" />
-            <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeRole}" />
+        </Style>
 
-            <Style Selector="^.Light">
+        <!-- Light -->
+        <Style Selector="^.Light">
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
+            <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
+            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeRole Opacity=Hover}" />
+            <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeRole}" />
+
+            <Style Selector="^.Text">
                 <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Application.Foreground}" />
                 <Setter Property="Foreground" Value="{my:ThemeRole Secondary}" />
                 <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeRole Secondary}" />
             </Style>
         </Style>
 
-        <Style Selector="^.Solid">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
-            <Setter Property="Background" Value="{my:ThemeRole}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
-            <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeRole Contrast=True}" />
+        <!-- Outlined -->
+        <Style Selector="^.Outlined">
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Border}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
 
-            <Style Selector="^:selected, ^.Selected">
-                <Setter Property="Foreground" Value="{my:ThemeBrush $self.(my:ThemeAssist.ActiveForeground)}" />
+            <Style Selector="^.Solid">
+                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Control.Background}" />
+                <Setter Property="Background" Value="{my:ThemeRole Secondary}" />
+                <Setter Property="Foreground" Value="{my:ThemeRole Secondary, Contrast=True}" />
+                <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeRole Secondary, Contrast=True}" />
             </Style>
-        </Style>
 
-        <Style Selector="^.Light">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
-            <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeRole Opacity=Hover}" />
-            <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeRole}" />
+            <Style Selector="^.Light">
+                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Control.Background}" />
+                <Setter Property="Background" Value="{my:ThemeRole Secondary, Opacity=Overlay}" />
+                <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeRole Secondary, Opacity=Hover}" />
+                <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeRole Secondary}" />
+            </Style>
+
+            <Style Selector="^.Text">
+                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Application.Foreground}" />
+                <Setter Property="Foreground" Value="{my:ThemeRole Tertiary}" />
+                <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeRole Tertiary}" />
+            </Style>
         </Style>
 
         <!-- Sizes -->
@@ -298,10 +307,11 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.Button.Icon" TargetType="Button" BasedOn="{StaticResource MyNet.Theme.Button.Rounded}">
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{my:ThemeRole}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush $self.Foreground}" />
-        <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Elevation.High}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Small}" />
@@ -312,10 +322,6 @@
                 <Ellipse Theme="{StaticResource MyNet.Theme.Ellipse.Focus}" />
             </FocusAdornerTemplate>
         </Setter>
-
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{Binding $parent[TemplatedControl].Foreground}" />
-        </Style>
 
         <Setter Property="Template">
             <ControlTemplate TargetType="Button">
@@ -373,17 +379,18 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.Button.Embedded.Tool" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{my:ThemeBrush $parent[TemplatedControl].Foreground}" />
-        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush $self.Foreground, Opacity=Hover}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush $self.Foreground}" />
-        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeBrush $self.Foreground}" />
+        <Setter Property="Foreground" Value="{my:ThemeRole}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeBrush Foreground}" />
         <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Tool}" />
         <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Tool}" />
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Elevation.High}" />
+        <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
         <Setter Property="ContentTemplate">
             <DataTemplate DataType="{x:Type sys:Object}">
                 <PathIcon Width="{StaticResource MyNet.Size.Icon.Tool}"

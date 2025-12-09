@@ -54,7 +54,7 @@
             <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.ExtraLarge}" />
         </Style>
         <Style Selector="^.Light">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Elevation.High}}" />
+            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
             <Setter Property="BorderBrush" Value="{Binding $self.Background}" />
         </Style>
     </ControlTheme>

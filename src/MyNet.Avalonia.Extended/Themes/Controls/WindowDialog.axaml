@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
     <ControlTheme x:Key="{x:Type my:WindowDialog}" TargetType="my:WindowDialog">
-        <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Dialog.Background}" />
-        <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource MyNet.Brush.Dialog.Background}" />
-        <Setter Property="Foreground" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
+        <Setter Property="Background" Value="{my:Theme Dialog.Background}" />
+        <Setter Property="TransparencyBackgroundFallback" Value="{my:Theme Dialog.Background}" />
+        <Setter Property="Foreground" Value="{my:Theme Application.Foreground}" />
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
         <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />
         <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="1" />
