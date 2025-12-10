@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Avalonia;
 using Avalonia.Animation.Easings;
@@ -13,7 +12,6 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Styling;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Helpers;
 using MyNet.Avalonia.Theme.Palettes;
 using MyNet.Avalonia.Theme.Theming;
@@ -251,7 +249,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
                 }
             }
 
-            Debug.WriteLine($"UpdateBrushesFromCurrentTheme processed {count} brushes");
+            ThemePerformanceLogger.Debug($"UpdateBrushesFromCurrentTheme processed {count} brushes");
         }
     }
 
@@ -272,7 +270,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
                 count++;
             }
 
-            Debug.WriteLine($"AddOrUpdateColorShades({name}) processed {count} shades");
+            ThemePerformanceLogger.Debug($"AddOrUpdateColorShades({name}) processed {count} shades");
         }
     }
 
@@ -309,7 +307,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     private void AddOrUpdateBrush(string key, Color color, Color? contrastedColor)
     {
         var fullBrushKey = ThemeResourceKeyFactory.Brush(key);
-        var brush = _brushManager.Register(fullBrushKey, color, contrastedColor, Enum.GetValues<Opacity>().Select(opacity => (double)GetOpacity(opacity.ToString())!));
+        var brush = _brushManager.Register(fullBrushKey, color, contrastedColor);
         Resources.AddOrUpdate(fullBrushKey, brush);
     }
 

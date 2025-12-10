@@ -7,20 +7,25 @@
     <DataTemplate x:Key="MyNet.DataTemplate.PathIcon" DataType="{x:Type media:Geometry}">
         <PathIcon Data="{Binding}" />
     </DataTemplate>
-    
+
     <DataTemplate x:Key="MyNet.DataTemplate.Icon" DataType="{x:Type sys:Object}">
-        <HeaderedContentControl HorizontalContentAlignment="{Binding $parent[ContentControl].HorizontalContentAlignment}"
-                                VerticalContentAlignment="{Binding $parent[ContentControl].VerticalContentAlignment}"
-                                my:HeaderAssist.Opacity="{Binding $parent[TemplatedControl].(my:IconAssist.Opacity)}"
-                                my:HeaderAssist.Padding="{Binding $parent[TemplatedControl].(my:IconAssist.Margin)}"
-                                Classes="Labelled Centered"
-                                Classes.Bottom="{Binding $parent[TemplatedControl].(my:IconAssist.Alignment), Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static my:Position.Bottom}}"
-                                Classes.Left="{Binding $parent[TemplatedControl].(my:IconAssist.Alignment), Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static my:Position.Left}}"
-                                Classes.Right="{Binding $parent[TemplatedControl].(my:IconAssist.Alignment), Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static my:Position.Right}}"
-                                Classes.Top="{Binding $parent[TemplatedControl].(my:IconAssist.Alignment), Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static my:Position.Top}}"
-                                Content="{Binding}"
-                                Header="{Binding $parent[TemplatedControl].(my:IconAssist.Icon)}"
-                                HeaderTemplate="{Binding $parent[TemplatedControl].(my:IconAssist.IconTemplate)}" />
+        <DockPanel LastChildFill="True">
+            <ContentPresenter Name="PART_Icon"
+                              DockPanel.Dock="{Binding $parent[TemplatedControl].(my:IconAssist.Alignment), Converter={x:Static my:PositionToDockConverter.Default}}"
+                              Padding="{Binding $parent[TemplatedControl].(my:IconAssist.Margin)}"
+                              HorizontalContentAlignment="Center"
+                              VerticalContentAlignment="Center"
+                              Content="{Binding $parent[TemplatedControl].(my:IconAssist.Icon)}"
+                              ContentTemplate="{Binding $parent[TemplatedControl].(my:IconAssist.IconTemplate)}"
+                              IsVisible="{Binding $parent[TemplatedControl].(my:IconAssist.Icon), Converter={x:Static my:NullConverter.IsNotNull}}"
+                              Opacity="{Binding $parent[TemplatedControl].(my:IconAssist.Opacity)}"
+                              RecognizesAccessKey="True" />
+            <ContentPresenter Name="PART_Content"
+                              HorizontalContentAlignment="{Binding $parent[ContentControl].HorizontalContentAlignment}"
+                              VerticalContentAlignment="{Binding $parent[ContentControl].VerticalContentAlignment}"
+                              Content="{Binding}"
+                              RecognizesAccessKey="True" />
+        </DockPanel>
     </DataTemplate>
 
     <DataTemplate x:Key="MyNet.DataTemplate.Icon.Left" DataType="{x:Type sys:Object}">
@@ -35,7 +40,7 @@
                         <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="$parent[TemplatedControl].(my:IconAssist.IconTemplate)" />
                     </MultiBinding>
                 </ContentControl.IsVisible>
-        </ContentControl>
+            </ContentControl>
             <ContentControl Grid.Column="1" Content="{Binding}" />
         </Grid>
     </DataTemplate>

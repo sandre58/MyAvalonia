@@ -9,7 +9,6 @@
 
     <!-- Surfaces -->
     <Color x:Key="MyNet.Color.Surface.Background">#0A0A0A</Color>
-    <Color x:Key="MyNet.Color.Surface.Background.Dark">Black</Color>
     <Color x:Key="MyNet.Color.Surface.Border">Yellow</Color>
 
     <!-- Overlay -->
@@ -40,7 +39,8 @@
     <!-- Validation -->
     <Color x:Key="MyNet.Color.Validation.Error">Red</Color>
 
-    <!-- States -->
+    <!-- Roles -->
+    <Color x:Key="MyNet.Color.Dark">Black</Color>
     <Color x:Key="MyNet.Color.Success">LimeGreen</Color>
     <Color x:Key="MyNet.Color.Error">Orange</Color>
     <Color x:Key="MyNet.Color.Warning">Red</Color>

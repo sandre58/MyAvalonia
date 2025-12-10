@@ -52,8 +52,14 @@ public enum ThemeRole
     /// </summary>
     Neutral,
 
+    /// <summary>
+    /// Represents a dark color scheme or theme option.
+    /// </summary>
     Dark,
 
+    /// <summary>
+    /// Represents an inverse color scheme, typically used for contrast against the parent element.
+    /// </summary>
     Inverse,
 
     /// <summary>

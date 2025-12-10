@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Media;
@@ -63,6 +62,7 @@ public class BrushSet
     /// <returns>A <see cref="SolidColorBrush"/> with the specified opacity.</returns>
     public SolidColorBrush GetOpacityBrush(double opacity)
     {
+        opacity = NormalizeOpacity(opacity);
         if (_brushes.TryGetValue(opacity, out var existing)) return existing;
 
         using (ThemePerformanceLogger.MeasureTime(maxBeforeWarning: 1.Milliseconds()))
@@ -71,7 +71,7 @@ public class BrushSet
             var newBrush = CreateBrush(Brush.Color, opacity);
 
             _brushes.AddOrUpdate(opacity, newBrush);
-            Debug.WriteLine($"[BrushSet] Created new opacity brush ({opacity:F2}) (Total opacity variants: {_brushes.Count})");
+            ThemePerformanceLogger.Debug($"[BrushSet] Created new opacity brush ({opacity:F2}) (Total opacity variants: {_brushes.Count})");
 
             return newBrush;
         }
@@ -85,6 +85,7 @@ public class BrushSet
     /// <returns>A <see cref="SolidColorBrush"/> with the specified opacity.</returns>
     public SolidColorBrush GetContrastedOpacityBrush(double opacity)
     {
+        opacity = NormalizeOpacity(opacity);
         if (_contrastedBrushes.TryGetValue(opacity, out var existing)) return existing;
 
         using (ThemePerformanceLogger.MeasureTime(maxBeforeWarning: 1.Milliseconds()))
@@ -93,7 +94,7 @@ public class BrushSet
             var newBrush = CreateBrush(Contrast.Color, opacity);
 
             _contrastedBrushes.AddOrUpdate(opacity, newBrush);
-            Debug.WriteLine($"[BrushSet] Created new contrasted opacity brush ({opacity:F2}) (Total opacity variants: {_contrastedBrushes.Count})");
+            ThemePerformanceLogger.Debug($"[BrushSet] Created new contrasted opacity brush ({opacity:F2}) (Total opacity variants: {_contrastedBrushes.Count})");
 
             return newBrush;
         }
@@ -122,10 +123,21 @@ public class BrushSet
     }
 
     /// <summary>
+    /// Normalizes an opacity value to the range [0, 1] and rounds to three decimals for consistent caching.
+    /// </summary>
+    /// <param name="opacity">The opacity value to normalize.</param>
+    /// <returns>The normalized opacity value.</returns>
+    private static double NormalizeOpacity(double opacity)
+    {
+        var clamped = Math.Clamp(opacity, 0d, 1d);
+        return Math.Round(clamped, 3, MidpointRounding.AwayFromZero);
+    }
+
+    /// <summary>
     /// Creates a new <see cref="SolidColorBrush"/> with the current color, specified opacity, and color transition animation.
     /// </summary>
     /// <param name="color">Color of the brush.</param>
     /// <param name="opacity">The opacity value for the brush (optional; defaults to 1.0).</param>
     /// <returns>A new <see cref="SolidColorBrush"/> instance.</returns>
-    private SolidColorBrush CreateBrush(Color color, double opacity = 1.0) => new(color) { Opacity = opacity , Transitions = [_colorTransition] };
+    private SolidColorBrush CreateBrush(Color color, double opacity = 1.0) => new(color) { Opacity = opacity, Transitions = [_colorTransition] };
 }

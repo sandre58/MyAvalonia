@@ -9,14 +9,14 @@ using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
-using MyNet.Avalonia.Theme.Converters;
+using MyNet.Avalonia.Theme.Converters.Internals;
 using MyNet.Avalonia.Theme.Palettes;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
 /// <summary>
-/// Markup extension for binding to theme brushes with optional opacity, contrast, darken, and lighten settings.
-/// Allows XAML to reference theme brushes by path and apply opacity, contrast, or color transformations dynamically.
+/// Base markup extension for binding to theme brushes with optional opacity, contrast, darken, and lighten settings.
+/// Allows XAML to reference theme brushes by resource path and apply color transformations dynamically.
 /// </summary>
 public abstract class ThemeBrushExtensionBase : MarkupExtension
 {
@@ -50,12 +50,31 @@ public abstract class ThemeBrushExtensionBase : MarkupExtension
         TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
     };
 
+    /// <summary>
+    /// Provides the parameters for the theme brush conversion, including opacity and contrast.
+    /// </summary>
+    /// <returns>A <see cref="ThemeBrushParameters"/> instance.</returns>
     protected virtual ThemeBrushParameters? ProvideBrushParameters() => new(Opacity?.ToString() ?? CustomOpacity, Contrast);
 
+    /// <summary>
+    /// Provides the resource path for the theme brush.
+    /// </summary>
+    /// <returns>The resource path string.</returns>
     protected virtual string ProvidePath() => string.Empty;
 
+    /// <summary>
+    /// Provides the relative source for the binding.
+    /// </summary>
+    /// <returns>The <see cref="RelativeSource"/> instance, or null.</returns>
     protected virtual RelativeSource? ProvideRelativeSource() => null;
 
+    /// <summary>
+    /// Resolves a type from the XAML type resolver service.
+    /// </summary>
+    /// <param name="ctx">The service provider context.</param>
+    /// <param name="namespacePrefix">The namespace prefix (optional).</param>
+    /// <param name="type">The type name to resolve.</param>
+    /// <returns>The resolved <see cref="Type"/>.</returns>
     private static Type ResolveType(IServiceProvider ctx, string? namespacePrefix, string type)
     {
         var tr = ctx.GetRequiredService<IXamlTypeResolver>();

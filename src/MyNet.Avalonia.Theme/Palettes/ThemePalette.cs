@@ -16,6 +16,11 @@ namespace MyNet.Avalonia.Theme.Palettes;
 public class ThemePalette
 {
     /// <summary>
+    /// Gets the background color for dark surfaces.
+    /// </summary>
+    public required Color Dark { get; init; }
+
+    /// <summary>
     /// Gets the background color for the main application surface.
     /// </summary>
     public required Color ApplicationBackground { get; init; }
@@ -29,11 +34,6 @@ public class ThemePalette
     /// Gets the background color for general surfaces.
     /// </summary>
     public required Color SurfaceBackground { get; init; }
-
-    /// <summary>
-    /// Gets the background color for dark surfaces.
-    /// </summary>
-    public required Color SurfaceBackgroundDark { get; init; }
 
     /// <summary>
     /// Gets the border color for surfaces.
@@ -116,10 +116,10 @@ public class ThemePalette
     /// <returns>A dictionary containing all base theme colors with their corresponding resource keys.</returns>
     public IReadOnlyDictionary<string, object> ToResourceDictionary() => new Dictionary<string, object>
         {
+            { nameof(Dark), Dark },
             { "Application.Background", ApplicationBackground },
             { "Application.Foreground", ApplicationForeground },
             { "Surface.Background", SurfaceBackground },
-            { "Surface.Background.Dark", SurfaceBackgroundDark },
             { "Surface.Border", SurfaceBorder },
             { "Control.Background", ControlBackground },
             { "Control.Background.Light", ControlBackgroundLight },

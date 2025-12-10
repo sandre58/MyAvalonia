@@ -5,6 +5,8 @@
 // -----------------------------------------------------------------------
 
 using System;
+using Avalonia.Markup.Xaml;
+using Avalonia.Markup.Xaml.MarkupExtensions;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -17,12 +19,25 @@ namespace MyNet.Avalonia.Theme.MarkupExtensions;
 /// <Border Background="{theme Path=Primary}" />
 /// </code>
 /// </example>
-public class ThemeExtension(string path) : ThemeBrushExtension(path)
+public class ThemeExtension(string path) : ThemeBrushExtensionBase
 {
     /// <summary>
+    /// Gets or sets the resource path for the theme brush.
+    /// </summary>
+    [ConstructorArgument("path")]
+    public string Path { get; set; } = path;
+
+    /// <summary>
     /// Provides the value for the markup extension, returning the theme brush for the specified path.
+    /// If opacity or contrast is specified, returns a transformed brush; otherwise, returns a dynamic resource reference.
     /// </summary>
     /// <param name="serviceProvider">The service provider for the markup extension.</param>
     /// <returns>The theme brush instance for the specified path.</returns>
-    public override object ProvideValue(IServiceProvider serviceProvider) => MyTheme.Current.GetBrush(ProvidePath(), Opacity?.ToString() ?? CustomOpacity, Contrast);
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        var hasTransform = Opacity.HasValue || !string.IsNullOrWhiteSpace(CustomOpacity) || Contrast;
+        return hasTransform
+            ? MyTheme.Current.GetBrush(Path, Opacity?.ToString() ?? CustomOpacity, Contrast)
+            : new DynamicResourceExtension(ThemeResourceKeyFactory.Brush(Path)).ProvideValue(serviceProvider);
+    }
 }

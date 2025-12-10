@@ -99,7 +99,7 @@ internal abstract class AutoBuildPage : Page, IDisposable
                 await Task.Delay(1, cancellationToken).ConfigureAwait(false);
             }
 
-            // Log total visual elements created
+            // Debug total visual elements created
             var totalControls = root.GetVisualDescendants().Count();
             LogManager.Debug($"[PERF] AutoBuildPage ({GetType().Name}) - Total visual elements created: {totalControls}");
         }

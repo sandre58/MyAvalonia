@@ -8,14 +8,31 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
+using MyNet.Utilities;
 using MyNet.Utilities.Logging;
 
 namespace MyNet.Avalonia.Theme.Helpers;
 
+/// <summary>
+/// Provides utilities for logging and measuring performance in theme-related operations.
+/// Allows conditional logging and timing of code blocks to help diagnose performance issues in theming logic.
+/// </summary>
 internal static class ThemePerformanceLogger
 {
+    /// <summary>
+    /// Gets or sets a value indicating whether performance logs are enabled.
+    /// When false, all logging and timing operations are disabled.
+    /// </summary>
     public static bool EnablePerformanceLogs { get; set; }
 
+    /// <summary>
+    /// Measures the execution time of a code block and logs the result if performance logging is enabled.
+    /// Returns a disposable that should be used in a <c>using</c> statement to delimit the measured scope.
+    /// </summary>
+    /// <param name="title">A descriptive title for the log entry. If empty, the caller's method name is used.</param>
+    /// <param name="maxBeforeWarning">Optional threshold for warning-level logs.</param>
+    /// <param name="maxBeforeError">Optional threshold for error-level logs.</param>
+    /// <returns>A disposable that ends the timing when disposed.</returns>
     public static IDisposable MeasureTime(string title = "", TimeSpan? maxBeforeWarning = null, TimeSpan? maxBeforeError = null)
     {
         if (!EnablePerformanceLogs)
@@ -39,4 +56,10 @@ internal static class ThemePerformanceLogger
                 : maxBeforeError.HasValue && x >= maxBeforeError.Value ? PerformanceTraceLevel.Error : PerformanceTraceLevel.Debug),
             title);
     }
+
+    /// <summary>
+    /// Logs a debug message if performance logging is enabled.
+    /// </summary>
+    /// <param name="message">The message to log.</param>
+    public static void Debug(string message) => EnablePerformanceLogs.IfTrue(() => LogManager.Debug(message));
 }

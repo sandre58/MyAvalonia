@@ -9,7 +9,6 @@
 
     <!-- Surfaces -->
     <Color x:Key="MyNet.Color.Surface.Background">#F6F6F6</Color>
-    <Color x:Key="MyNet.Color.Surface.Background.Dark">#CACACA</Color>
     <Color x:Key="MyNet.Color.Surface.Border">#DADADA</Color>
 
     <!-- Overlay -->
@@ -40,7 +39,8 @@
     <!-- Validation -->
     <Color x:Key="MyNet.Color.Validation.Error">#A1260D</Color>
 
-    <!-- States -->
+    <!-- Roles -->
+    <Color x:Key="MyNet.Color.Dark">#CACACA</Color>
     <Color x:Key="MyNet.Color.Success">#388A34</Color>
     <Color x:Key="MyNet.Color.Error">#A1260D</Color>
     <Color x:Key="MyNet.Color.Warning">#DD6E00</Color>
