@@ -19,7 +19,7 @@
         <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
         <Setter Property="my:IconAssist.Alignment" Value="Left" />
         <Setter Property="my:IconAssist.Margin" Value="{my:Thickness Default, Right}" />
-        <Setter Property="my:IconAssist.Opacity" Value="{StaticResource MyNet.Opacity.High}" />
+        <Setter Property="my:IconAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
         <Setter Property="my:TextFieldAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
         <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Inner.Medium}" />
         <Setter Property="my:TextFieldAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.SubCaption}" />
@@ -37,25 +37,25 @@
             <my:DarkColorPalette />
         </Setter>
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />
-            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border.Hover}" />
-            <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
-            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
-            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
-            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Medium}}" />
-            <Setter Property="my:PopupAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
-            <Setter Property="my:PopupAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
-            <Setter Property="my:PopupAssist.PrimaryColor" Value="{my:ThemeRole}" />
-        </Style>
+        <!-- Default Theme -->
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="Background" Value="{my:Theme Control.Background}" />
+        <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:ThemeBrush Foreground, Opacity=High}" />
+        <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:ThemeBrush Foreground, Opacity=High}" />
+        <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:ThemeBrush Foreground, Opacity=Medium}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+        <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Theme Control.Border.Hover}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
+        <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />
+        <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
+        <Setter Property="my:PopupAssist.Background" Value="{my:Theme Popup.Background}" />
+        <Setter Property="my:PopupAssist.Foreground" Value="{my:Theme Popup.Foreground}" />
+        <Setter Property="my:PopupAssist.Role" Value="{Binding $self.(my:ThemeAssist.Role)}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="my:ColorPicker">
@@ -138,13 +138,13 @@
                                                      Grid.Column="1"
                                                      HorizontalAlignment="Stretch"
                                                      VerticalAlignment="Stretch"
-                                                     CaretBrush="{TemplateBinding (my:PaletteAssist.Primary)}"
+                                                     CaretBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                      Classes="no-disablable"
                                                      DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
                                                      Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
                                                      IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
                                                      IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                     SelectionBrush="{my:Brush $parent[my:ColorPicker].(my:PaletteAssist.Primary), Opacity={StaticResource MyNet.Opacity.Scrim}}"
+                                                     SelectionBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
                                                      SelectionForegroundBrush="{TemplateBinding Foreground}"
                                                      Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                                      Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
@@ -172,7 +172,7 @@
                                     <!-- Color button -->
                                     <ToggleButton Name="PART_Button"
                                                   Grid.Column="5"
-                                                  my:PaletteAssist.Tertiary="{TemplateBinding (my:PaletteAssist.Primary)}"
+                                                  my:ThemeAssist.ActiveBackground="{my:ThemeRole, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                   Classes="Stretch no-disablable"
                                                   Content="{StaticResource MyNet.Geometry.Palette}"
                                                   IsChecked="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
@@ -210,6 +210,7 @@
                                             ClipToBounds="True"
                                             CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <ColorView Name="PART_Previewer"
+                                                   my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}"
                                                    Width="{TemplateBinding my:PopupAssist.Width}"
                                                    Height="{TemplateBinding my:PopupAssist.Height}"
                                                    ColorModel="{TemplateBinding ColorModel}"
@@ -312,13 +313,13 @@
         <!-- Error -->
         <Style Selector="^:error">
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
-            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
+            <Setter Property="BorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Theme Validation.Error}" />
 
             <Style Selector="^ /template/ my|Underline#PART_Underline">
-                <Setter Property="ActiveBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
+                <Setter Property="ActiveBrush" Value="{my:Theme Validation.Error}" />
             </Style>
 
             <Style Selector="^ /template/ Border#PART_BorderUnderText">
@@ -327,11 +328,11 @@
         </Style>
 
         <!-- Colors -->
-        <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:PopupAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+        <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
+            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+            <Setter Property="my:PopupAssist.Role" Value="Primary" />
         </Style>
 
         <!-- Styles -->
@@ -370,7 +371,7 @@
 
         <Style Selector="^">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+            <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="Transparent" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="Transparent" />
             <Setter Property="my:ThemeAssist.RippleColor" Value="Transparent" />
@@ -448,13 +449,13 @@
                                                  Grid.Column="1"
                                                  HorizontalAlignment="Stretch"
                                                  VerticalAlignment="Stretch"
-                                                 CaretBrush="{TemplateBinding (my:PaletteAssist.Primary)}"
+                                                 CaretBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                  Classes="no-disablable"
                                                  DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
                                                  Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
                                                  IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
                                                  IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                 SelectionBrush="{my:Brush $parent[my:ColorPicker].(my:PaletteAssist.Primary), Opacity={StaticResource MyNet.Opacity.Scrim}}"
+                                                 SelectionBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
                                                  SelectionForegroundBrush="{TemplateBinding Foreground}"
                                                  Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                                  Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
@@ -485,7 +486,7 @@
                                 <ToggleButton Name="PART_Button"
                                               Grid.Column="5"
                                               Margin="{my:Thickness Small, Left}"
-                                              my:PaletteAssist.Tertiary="{TemplateBinding (my:PaletteAssist.Primary)}"
+                                              my:ThemeAssist.ActiveBackground="{my:ThemeRole, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                               Classes="no-disablable"
                                               Content="{StaticResource MyNet.Geometry.Palette}"
                                               IsChecked="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
@@ -529,17 +530,19 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
+                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                     <Border Padding="{StaticResource MyNet.Padding.Surface}"
                                             HorizontalAlignment="Stretch"
                                             ClipToBounds="True"
                                             CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <ColorView Name="PART_Previewer"
+                                                   my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}"
                                                    Width="{TemplateBinding my:PopupAssist.Width}"
                                                    Height="{TemplateBinding my:PopupAssist.Height}"
                                                    ColorModel="{TemplateBinding ColorModel}"
                                                    ColorSpectrumComponents="{TemplateBinding ColorSpectrumComponents}"
                                                    ColorSpectrumShape="{TemplateBinding ColorSpectrumShape}"
+                                                   Foreground="{TemplateBinding (my:PopupAssist.Foreground)}"
                                                    HexInputAlphaPosition="{TemplateBinding HexInputAlphaPosition}"
                                                    HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                                    IsAccentColorsVisible="{TemplateBinding IsAccentColorsVisible}"
@@ -595,7 +598,7 @@
             <Setter Property="BorderThickness" Value="0 0 0 1" />
         </Style>
 
-        <Style Selector="^.Inverse">
+        <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
             <Setter Property="Background" Value="Transparent" />
         </Style>
 

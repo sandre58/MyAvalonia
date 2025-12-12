@@ -11,7 +11,7 @@
         <Setter Property="Width" Value="55" />
 
         <Style Selector="^[IsActive=False]">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Medium}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
         </Style>
     </ControlTheme>
 
@@ -20,15 +20,13 @@
         <Setter Property="MinHeight" Value="250" />
         <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H2}" />
         <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
-
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-        </Style>
+        
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type my:TimeView}">
                 <HeaderedContentControl Classes="Headered Custom"
-                                        my:PaletteAssist.Primary="{TemplateBinding my:PaletteAssist.Primary}"
+                                        my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                         Background="Transparent"
                                         HorizontalContentAlignment="Stretch"
                                         VerticalAlignment="Stretch"
@@ -77,8 +75,7 @@
                             <Separator Grid.Column="5" Margin="{my:Thickness Default, Horizontal}" IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static u:TimeFormat.TwelveHour}}" />
                             <ListBox Grid.Column="6"
                                      FontSize="{TemplateBinding FontSize}"
-                                     Theme="{StaticResource MyNet.Theme.ListBox.Cards}"
-                                     Classes="Vertical Inverse Light Transparent Small"
+                                     Classes="Cards Vertical Inverse Light Transparent Small"
                                      SelectedValue="{TemplateBinding IsAm, Mode=TwoWay}"
                                      SelectedValueBinding="{ReflectionBinding DataContext}"
                                      IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static u:TimeFormat.TwelveHour}}">
@@ -96,7 +93,7 @@
                                       Hour="{TemplateBinding Hour, Mode=TwoWay}"
                                       Minute="{TemplateBinding Minute, Mode=TwoWay}"
                                       Second="{TemplateBinding Second, Mode=TwoWay}"
-                                      my:PaletteAssist.Primary="{TemplateBinding my:PaletteAssist.Primary}"
+                                      my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                       TimeFormat="{TemplateBinding TimeFormat}"
                                       ShowSeconds="{TemplateBinding ShowSeconds}"
                                       SelectedComponent="{TemplateBinding SelectedComponent, Mode=TwoWay}"

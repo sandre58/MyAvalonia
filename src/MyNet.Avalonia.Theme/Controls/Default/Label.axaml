@@ -39,7 +39,7 @@
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
         <Setter Property="Foreground" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+        <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Small}" />
         <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily.Code}" />
@@ -81,7 +81,7 @@
 
         <!-- Styles -->
         <Style Selector="^.Outlined">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Border}" />
             <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="1" />
@@ -89,12 +89,12 @@
             <Setter Property="Foreground" Value="{my:ThemeRole Secondary}" />
 
             <Style Selector="^.Solid">
-                <Setter Property="my:PaletteAssist.Tertiary" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Control.Border}" />
                 <Setter Property="BorderBrush" Value="{my:ThemeRole Tertiary}" />
             </Style>
 
             <Style Selector="^.Light">
-                <Setter Property="my:PaletteAssist.Tertiary" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Control.Border}" />
                 <Setter Property="BorderBrush" Value="{my:ThemeRole Tertiary}" />
             </Style>
         </Style>

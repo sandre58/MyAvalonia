@@ -25,7 +25,7 @@
         </HeaderedContentControl>
 
         <!-- Fields -->
-        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <ScrollViewer>
             <StackPanel Name="Root" Classes="Large">
                 <HeaderedContentControl Background="Transparent" Classes="H6" Header="Calendar">
                     <StackPanel Classes="Large" Grid.IsSharedSizeScope="True" Orientation="Horizontal">

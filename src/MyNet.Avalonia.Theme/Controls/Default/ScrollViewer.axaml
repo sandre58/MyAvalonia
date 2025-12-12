@@ -198,7 +198,7 @@
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{Binding $self.Foreground}" />
+        <Setter Property="BorderBrush" Value="{my:ThemeBrush Foreground}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Template">

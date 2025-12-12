@@ -49,69 +49,69 @@
                     <HeaderedContentControl Classes="SubCaption" Header="ColorView">
                         <StackPanel Classes="Large">
                             <!--<HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource Tabs}">
-                                <ListBox SelectionMode="Multiple,Toggle">
-                                    <ListBoxItem Name="IsColorSpectrumVisible"
-                                                 Content="{my:Icon Palette}"
-                                                 IsSelected="True"
-                                                 ToolTip.Tip="{my:Resource Spectrum}" />
-                                    <ListBoxItem Name="IsColorPaletteVisible"
-                                                 Content="{my:Icon PaletteSwatchVariant}"
-                                                 IsSelected="True"
-                                                 ToolTip.Tip="{my:Resource Palette}" />
-                                    <ListBoxItem Name="IsColorComponentsVisible"
-                                                 Content="{my:Icon TuneVariant}"
-                                                 IsSelected="True"
-                                                 ToolTip.Tip="{my:Resource Components}" />
-                                </ListBox>
+                            <ListBox SelectionMode="Multiple,Toggle">
+                            <ListBoxItem Name="IsColorSpectrumVisible"
+                            Content="{my:Icon Palette}"
+                            IsSelected="True"
+                            ToolTip.Tip="{my:Resource Spectrum}" />
+                            <ListBoxItem Name="IsColorPaletteVisible"
+                            Content="{my:Icon PaletteSwatchVariant}"
+                            IsSelected="True"
+                            ToolTip.Tip="{my:Resource Palette}" />
+                            <ListBoxItem Name="IsColorComponentsVisible"
+                            Content="{my:Icon TuneVariant}"
+                            IsSelected="True"
+                            ToolTip.Tip="{my:Resource Components}" />
+                            </ListBox>
                             </HeaderedContentControl>
                             <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource IsColorPreviewVisible}">
-                                <ToggleSwitch Name="IsColorPreviewVisible" IsChecked="True" />
+                            <ToggleSwitch Name="IsColorPreviewVisible" IsChecked="True" />
                             </HeaderedContentControl>
                             <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource IsAccentColorsVisible}">
-                                <ToggleSwitch Name="IsAccentColorsVisible1" IsChecked="True" />
+                            <ToggleSwitch Name="IsAccentColorsVisible1" IsChecked="True" />
                             </HeaderedContentControl>
                             <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource Shape}">
-                                <ListBox Name="ColorSpectrumShape1" SelectedIndex="0" SelectedValueBinding="{ReflectionBinding DataContext}">
-                                    <ListBoxItem Content="{my:Icon CheckboxBlank}" DataContext="{x:Static ColorSpectrumShape.Box}" ToolTip.Tip="{my:Resource ColorSpectrumShapeBox}" />
-                                    <ListBoxItem Content="{my:Icon CheckboxBlankCircle}" DataContext="{x:Static ColorSpectrumShape.Ring}" ToolTip.Tip="{my:Resource ColorSpectrumShapeRing}" />
-                                </ListBox>
+                            <ListBox Name="ColorSpectrumShape1" SelectedIndex="0" SelectedValueBinding="{ReflectionBinding DataContext}">
+                            <ListBoxItem Content="{my:Icon CheckboxBlank}" DataContext="{x:Static ColorSpectrumShape.Box}" ToolTip.Tip="{my:Resource ColorSpectrumShapeBox}" />
+                            <ListBoxItem Content="{my:Icon CheckboxBlankCircle}" DataContext="{x:Static ColorSpectrumShape.Ring}" ToolTip.Tip="{my:Resource ColorSpectrumShapeRing}" />
+                            </ListBox>
                             </HeaderedContentControl>
                             <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource IsColorSpectrumSliderVisible}">
-                                <ToggleSwitch Name="IsColorSpectrumSliderVisible" IsChecked="True" />
+                            <ToggleSwitch Name="IsColorSpectrumSliderVisible" IsChecked="True" />
                             </HeaderedContentControl>
                             <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource IsAlphaVisible}">
-                                <ToggleSwitch Name="IsAlphaVisible" IsChecked="True" />
+                            <ToggleSwitch Name="IsAlphaVisible" IsChecked="True" />
                             </HeaderedContentControl>
                             <ComboBox Name="Palette"
-                                      DisplayMemberBinding="{ReflectionBinding DisplayName}"
-                                      ItemsSource="{x:Static data:Collections.Palettes}"
-                                      PlaceholderText="{my:Resource Palette}"
-                                      SelectedIndex="7"
-                                      SelectedValueBinding="{ReflectionBinding Item}" />
+                            DisplayMemberBinding="{ReflectionBinding DisplayName}"
+                            ItemsSource="{x:Static data:Collections.Palettes}"
+                            PlaceholderText="{my:Resource Palette}"
+                            SelectedIndex="7"
+                            SelectedValueBinding="{ReflectionBinding Item}" />
                             <NumericUpDown Name="PaletteColumnCount"
-                                           Maximum="30"
-                                           Minimum="1"
-                                           Watermark="{my:Resource PaletteColumnCount}"
-                                           Value="16" />
+                            Maximum="30"
+                            Minimum="1"
+                            Watermark="{my:Resource PaletteColumnCount}"
+                            Value="16" />
                             <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource IsColorModelVisible}">
-                                <ToggleSwitch Name="IsColorModelVisible" IsChecked="True" />
+                            <ToggleSwitch Name="IsColorModelVisible" IsChecked="True" />
                             </HeaderedContentControl>
                             <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource Model}">
-                                <ListBox Name="ColorModel"
-                                         DisplayMemberBinding="{ReflectionBinding Display}"
-                                         ItemTemplate="{x:Null}"
-                                         ItemsSource="{my:EnumSource {x:Type ColorModel}}"
-                                         SelectedIndex="0"
-                                         SelectedValueBinding="{ReflectionBinding Value}" />
+                            <ListBox Name="ColorModel"
+                            DisplayMemberBinding="{ReflectionBinding Display}"
+                            ItemTemplate="{x:Null}"
+                            ItemsSource="{my:EnumSource {x:Type ColorModel}}"
+                            SelectedIndex="0"
+                            SelectedValueBinding="{ReflectionBinding Value}" />
                             </HeaderedContentControl>
                             <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource IsHexInputVisible}">
-                                <ToggleSwitch Name="IsHexInputVisible" IsChecked="True" />
+                            <ToggleSwitch Name="IsHexInputVisible" IsChecked="True" />
                             </HeaderedContentControl>
                             <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource Components}">
-                                <ListBox SelectionMode="Multiple,Toggle">
-                                    <ListBoxItem Name="IsComponentSliderVisible" Content="Slider" IsSelected="True" />
-                                    <ListBoxItem Name="IsComponentTextInputVisible" Content="Numeric" IsSelected="True" />
-                                </ListBox>
+                            <ListBox SelectionMode="Multiple,Toggle">
+                            <ListBoxItem Name="IsComponentSliderVisible" Content="Slider" IsSelected="True" />
+                            <ListBoxItem Name="IsComponentTextInputVisible" Content="Numeric" IsSelected="True" />
+                            </ListBox>
                             </HeaderedContentControl>-->
                         </StackPanel>
                     </HeaderedContentControl>
@@ -167,8 +167,7 @@
                         <StackPanel HorizontalAlignment="Left" Spacing="{StaticResource MyNet.Spacing.Medium}">
                             <ListBox Grid.Column="6"
                                      HorizontalAlignment="Center"
-                                     Theme="{StaticResource MyNet.Theme.ListBox.Cards}"
-                                     Classes="Inverse Light Transparent"
+                                     Classes="Cards Inverse Light Transparent"
                                      SelectedValue="{Binding #clockSelector1.IsAm, Mode=TwoWay}"
                                      SelectedValueBinding="{ReflectionBinding DataContext}">
                                 <ListBoxItem DataContext="{x:True}" Content="{my:Resource Am, Casing=AllCaps}" />
@@ -187,13 +186,13 @@
                     <StackPanel Classes="Large" Orientation="Horizontal">
                         <Border Theme="{StaticResource MyNet.Theme.Border.Popup}">
                             <my:TimeView Classes="Primary"
-                                              ShowSeconds="{Binding #UseSeconds2.IsChecked}"
-                                              TimeFormat="{Binding #TimeFormat2.SelectedValue}" />
+                                         ShowSeconds="{Binding #UseSeconds2.IsChecked}"
+                                         TimeFormat="{Binding #TimeFormat2.SelectedValue}" />
                         </Border>
                         <Border Theme="{StaticResource MyNet.Theme.Border.Popup}">
                             <my:TimeView Classes="Accent"
-                                              ShowSeconds="{Binding #UseSeconds2.IsChecked}"
-                                              TimeFormat="{Binding #TimeFormat2.SelectedValue}" />
+                                         ShowSeconds="{Binding #UseSeconds2.IsChecked}"
+                                         TimeFormat="{Binding #TimeFormat2.SelectedValue}" />
                         </Border>
                     </StackPanel>
                 </HeaderedContentControl>

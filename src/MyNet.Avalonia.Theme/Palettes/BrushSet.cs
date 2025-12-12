@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Media;
-using MyNet.Avalonia.Theme.Helpers;
+using MyNet.Avalonia.Helpers;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Palettes;
@@ -65,13 +65,13 @@ public class BrushSet
         opacity = NormalizeOpacity(opacity);
         if (_brushes.TryGetValue(opacity, out var existing)) return existing;
 
-        using (ThemePerformanceLogger.MeasureTime(maxBeforeWarning: 1.Milliseconds()))
+        using (PerformanceMonitor.Measure(maxBeforeWarning: 1.Milliseconds()))
         {
             // Create new brush with color transition animation
             var newBrush = CreateBrush(Brush.Color, opacity);
 
             _brushes.AddOrUpdate(opacity, newBrush);
-            ThemePerformanceLogger.Debug($"[BrushSet] Created new opacity brush ({opacity:F2}) (Total opacity variants: {_brushes.Count})");
+            PerformanceMonitor.Debug($"[BrushSet] Created new opacity brush ({opacity:F2}) (Total opacity variants: {_brushes.Count})");
 
             return newBrush;
         }
@@ -88,13 +88,13 @@ public class BrushSet
         opacity = NormalizeOpacity(opacity);
         if (_contrastedBrushes.TryGetValue(opacity, out var existing)) return existing;
 
-        using (ThemePerformanceLogger.MeasureTime(maxBeforeWarning: 1.Milliseconds()))
+        using (PerformanceMonitor.Measure(maxBeforeWarning: 1.Milliseconds()))
         {
             // Create new brush with color transition animation
             var newBrush = CreateBrush(Contrast.Color, opacity);
 
             _contrastedBrushes.AddOrUpdate(opacity, newBrush);
-            ThemePerformanceLogger.Debug($"[BrushSet] Created new contrasted opacity brush ({opacity:F2}) (Total opacity variants: {_contrastedBrushes.Count})");
+            PerformanceMonitor.Debug($"[BrushSet] Created new contrasted opacity brush ({opacity:F2}) (Total opacity variants: {_contrastedBrushes.Count})");
 
             return newBrush;
         }

@@ -43,7 +43,7 @@ public static class ThemeAssist
     /// <summary>
     /// Provides InheritedForeground Property for attached ThemeAssist element.
     /// </summary>
-    public static readonly AttachedProperty<IBrush?> InheritedForegroundProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, AvaloniaObject, IBrush?>("InheritedForeground", inherits: true);
+    public static readonly AttachedProperty<IBrush?> InheritedForegroundProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, TextElement, IBrush?>("InheritedForeground", inherits: true);
 
     /// <summary>
     /// Accessor for Attached  <see cref="InheritedForegroundProperty"/>.

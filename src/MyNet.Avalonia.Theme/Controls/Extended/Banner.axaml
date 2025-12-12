@@ -12,7 +12,7 @@
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="my:HeaderAssist.Foreground" Value="{Binding $self.Foreground}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
         <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Bottom}" />
         <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Caption}" />
         <Setter Property="my:HeaderAssist.FontFamily" Value="{Binding $self.FontFamily}" />

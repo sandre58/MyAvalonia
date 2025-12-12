@@ -19,7 +19,7 @@
         <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
         <Setter Property="my:IconAssist.Alignment" Value="Left" />
         <Setter Property="my:IconAssist.Margin" Value="{my:Thickness Default, Right}" />
-        <Setter Property="my:IconAssist.Opacity" Value="{StaticResource MyNet.Opacity.High}" />
+        <Setter Property="my:IconAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
         <Setter Property="my:TextFieldAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
         <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Inner.Medium}" />
         <Setter Property="my:TextFieldAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.SubCaption}" />
@@ -33,19 +33,19 @@
 
         <Style Selector="^">
             <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+            <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
+            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
             <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />
             <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border.Hover}" />
-            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
-            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
-            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Medium}}" />
-            <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
+            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Theme Control.Border.Hover}" />
+            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:ThemeBrush Foreground, Opacity=High}" />
+            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:ThemeBrush Foreground, Opacity=High}" />
+            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:ThemeBrush Foreground, Opacity=Medium}" />
+            <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeBrush Foreground}" />
         </Style>
 
         <Setter Property="Template">
@@ -209,13 +209,13 @@
         <!-- Error -->
         <Style Selector="^:error">
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
-            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
+            <Setter Property="BorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Theme Validation.Error}" />
 
             <Style Selector="^ /template/ my|Underline#PART_Underline">
-                <Setter Property="ActiveBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
+                <Setter Property="ActiveBrush" Value="{my:Theme Validation.Error}" />
             </Style>
 
             <Style Selector="^ /template/ Border#PART_BorderUnderText">
@@ -224,9 +224,9 @@
         </Style>
 
         <!-- Colors -->
-        <Style Selector="^.Inverse">
-            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
+        <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
+            <Setter Property="BorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
         </Style>
 
         <!-- Style -->

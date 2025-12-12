@@ -14,7 +14,7 @@
                                 VerticalAlignment="Center"
                                 Orientation="Horizontal">
                         <Label Classes="no-disablable" Name="PART_Label" Content="{TemplateBinding Label}" Target="{Binding #PART_ContentPresenter.Content}" />
-                        <TextBlock Foreground="{DynamicResource MyNet.Brush.Validation.Error}" IsVisible="{TemplateBinding IsRequired}" Text="*" />
+                        <TextBlock Foreground="{my:Theme Validation.Error}" IsVisible="{TemplateBinding IsRequired}" Text="*" />
                     </StackPanel>
                     <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                 </StackPanel>
@@ -36,7 +36,7 @@
                                         VerticalAlignment="{Binding #PART_ContentPresenter.Bounds.Height, Converter={x:Static c:FormContentHeightToAlignmentConverter.Default}}"
                                         Orientation="Horizontal">
                                 <Label Classes="no-disablable" Name="PART_Label" Content="{TemplateBinding Label}" />
-                                <TextBlock Foreground="{DynamicResource MyNet.Brush.Validation.Error}" IsVisible="{TemplateBinding IsRequired}" Text="*" />
+                                <TextBlock Foreground="{my:Theme Validation.Error}" IsVisible="{TemplateBinding IsRequired}" Text="*" />
                             </StackPanel>
                         </Border>
                         <ContentPresenter Name="PART_ContentPresenter"
@@ -99,7 +99,7 @@
             <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
             <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 1" />
             <Setter Property="my:HeaderAssist.BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{Binding $self.Foreground}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
         </Style>
 
         <Setter Property="Template">

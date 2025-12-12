@@ -55,7 +55,7 @@ public static class ExpanderBehavior
 
     private static void OnExpanderKeyDown(object? sender, KeyEventArgs e)
     {
-        if (sender is not Expander ctrl)
+        if (sender is not Expander ctrl || !ctrl.IsFocused || !ctrl.IsKeyboardFocusWithin)
             return;
 
         switch (e.Key)

@@ -3,6 +3,7 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:my="http://mynet.com/avalonia"
                      xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
                      ClipToBounds="False"
                      mc:Ignorable="d">
@@ -21,7 +22,7 @@
                             Width="100"
                             Height="100"
                             Background="{DynamicResource MyNet.Brush.Control.Background}"
-                            BorderBrush="{DynamicResource MyNet.Brush.Control.Border}"
+                            BorderBrush="{my:Theme Control.Border}"
                             BorderThickness="1">
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
@@ -37,7 +38,7 @@
                                 Width="100"
                                 Height="100"
                                 Background="{DynamicResource MyNet.Brush.Control.Background}"
-                                BorderBrush="{DynamicResource MyNet.Brush.Control.Border}"
+                                BorderBrush="{my:Theme Control.Border}"
                                 BorderThickness="1">
                             <TextBlock HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
@@ -55,7 +56,7 @@
                                 Width="100"
                                 Height="100"
                                 Background="{DynamicResource MyNet.Brush.Control.Background}"
-                                BorderBrush="{DynamicResource MyNet.Brush.Control.Border}"
+                                BorderBrush="{my:Theme Control.Border}"
                                 BorderThickness="1">
                             <TextBlock HorizontalAlignment="Center"
                                        VerticalAlignment="Center"

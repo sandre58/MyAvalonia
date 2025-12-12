@@ -6,7 +6,7 @@
                      xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
                      ClipToBounds="False"
                      mc:Ignorable="d">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+    <ScrollViewer>
         <StackPanel Name="Root" Classes="Large" Grid.IsSharedSizeScope="True" />
     </ScrollViewer>
 </pages:AutoBuildPage>

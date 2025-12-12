@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using Avalonia.Animation.Easings;
 using Avalonia.Media;
 using MyNet.Avalonia.Extensions;
-using MyNet.Avalonia.Theme.Helpers;
+using MyNet.Avalonia.Helpers;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Palettes;
@@ -64,7 +64,7 @@ public class BrushManager(TimeSpan colorTransitionDuration, Easing colorTransiti
     /// <exception cref="KeyNotFoundException">Thrown if the key does not exist in the manager.</exception>
     public SolidColorBrush Get(string key, double? opacity = null, bool contrast = false)
     {
-        using (ThemePerformanceLogger.MeasureTime($"[BrushManager] GetBrush(key: '{key}', Opacity: {opacity}, Contrast: {contrast})", 1.Milliseconds()))
+        using (PerformanceMonitor.Measure($"[BrushManager] GetBrush(key: '{key}', Opacity: {opacity}, Contrast: {contrast})", 1.Milliseconds()))
             return !_sets.TryGetValue(key, out var set) ? new SolidColorBrush(Colors.Transparent) : ResolveBrushFromSet(set, opacity, contrast);
     }
 
@@ -78,7 +78,7 @@ public class BrushManager(TimeSpan colorTransitionDuration, Easing colorTransiti
     public SolidColorBrush Get(SolidColorBrush brush, double? opacity = null, bool contrast = false)
     {
         var computedOpacity = opacity.HasValue ? opacity.Value * brush.Opacity : brush.Opacity;
-        using (ThemePerformanceLogger.MeasureTime($"[BrushManager] Get Brush({brush.Color}, Opacity: {computedOpacity}, Contrast: {contrast})", 1.Milliseconds()))
+        using (PerformanceMonitor.Measure($"[BrushManager] Get Brush({brush.Color}, Opacity: {computedOpacity}, Contrast: {contrast})", 1.Milliseconds()))
         {
             return _reverse.TryGetValue(brush, out var registration)
                 ? ResolveBrushFromSet(registration.Set, computedOpacity, contrast || registration.IsContrast)

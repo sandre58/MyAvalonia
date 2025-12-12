@@ -105,7 +105,7 @@
         </Style>
 
         <!-- Active (for button with state "selected") -->
-        <Style Selector="^:selected, ^.Selected">
+        <Style Selector="^:selected, ^:checked, ^.Selected">
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
             </Style>
@@ -124,10 +124,8 @@
         <Style Selector="^.Solid">
             <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
             <Setter Property="Background" Value="{my:ThemeRole}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
-
-            <Style Selector="^:selected, ^.Selected">
-                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground)}" />
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
             </Style>
         </Style>
 
@@ -278,7 +276,7 @@
         </Style>
 
         <!-- Active -->
-        <Style Selector="^:selected">
+        <Style Selector="^:selected, ^:checked, ^.Selected">
             <Style Selector="^.Shadow /template/ Ellipse#PART_MainEllipse">
                 <Setter Property="my:ShadowAssist.Darken" Value="True" />
             </Style>

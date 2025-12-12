@@ -79,7 +79,7 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^.Inverse">
+        <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
             <Setter Property="TickBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
         </Style>
 
@@ -93,7 +93,7 @@
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
             <Setter Property="TickBrush" Value="{my:Brush $self.Background, Contrast=True}" />
 
-            <Style Selector="^.Inverse">
+            <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
                 <Setter Property="Background" Value="{my:Brush $self.Foreground}" />
                 <Setter Property="HourHandBrush" Value="{my:Brush $self.Background, Contrast=True}" />
                 <Setter Property="MinuteHandBrush" Value="{my:Brush $self.Background, Contrast=True}" />

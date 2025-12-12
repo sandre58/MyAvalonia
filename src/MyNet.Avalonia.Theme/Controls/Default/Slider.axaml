@@ -152,7 +152,7 @@
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
             <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:ThemeRole}" />
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+            <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
         </Style>
 
         <Style Selector="^:horizontal">
@@ -352,14 +352,14 @@
         </Style>
 
         <!-- Colors -->
-        <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
+        <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
+            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
         </Style>
 
         <!-- Error -->
         <Style Selector="^:error /template/ Thumb#thumb">
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
+            <Setter Property="BorderBrush" Value="{my:Theme Validation.Error}" />
         </Style>
     </ControlTheme>
 

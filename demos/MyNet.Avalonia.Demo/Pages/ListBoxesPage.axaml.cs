@@ -31,13 +31,18 @@ internal sealed partial class ListBoxesPage : AutoBuildPage
     {
         ListBox item;
 
-        if (data.Theme.ContainsAny("Toggle", "Cards", "Icon", "Tabs"))
+        if (data.Theme.ContainsAny("Toggle", "Icon", "Tabs") || !string.IsNullOrEmpty(data.Layout) || data.Styles?.Length > 0 || !string.IsNullOrEmpty(data.Size))
         {
             item = new ListBox
             {
                 SelectionMode = SelectionMode.Toggle,
                 HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Center
             };
+
+            if (!data.Theme.ContainsAny("Toggle", "Icon", "Tabs"))
+            {
+                item.AddClasses("Cards");
+            }
 
             var items = Enum.GetValues<DayOfWeek>().Take(4).Select(x =>
             {
@@ -81,12 +86,10 @@ internal sealed partial class ListBoxesPage : AutoBuildPage
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
             new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
-            .AddThemeRoles(false),
-
-            new ControlThemeData("Cards", defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Circle")
-            .AddStyles("Transparent", "Outlined", "Shadow")
-            .AddCartesianStyles("Transparent", "Outlined", "Light")
+            .AddStyles("Cards", "Solid", "Outlined", "Text")
+            .AddCartesianStyles("Solid", "Outlined", "Light")
+            .AddCartesianStyles("Solid", "Shadow")
             .AddThemeRoles(false)
             .AddSizes("Small", "Medium", "Large")
             .AddCustomControls(() =>
@@ -99,7 +102,7 @@ internal sealed partial class ListBoxesPage : AutoBuildPage
                      SelectionMode = SelectionMode.Multiple,
                      ItemTemplate = (DataTemplate?)this.FindResource("MyNet.DataTemplate.Country.Large")
                 };
-                item.AddClasses("Outlined");
+                item.AddClasses("Cards Outlined");
 
                 var item2 = new ListBox
                 {

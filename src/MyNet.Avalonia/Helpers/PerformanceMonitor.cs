@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ThemePerformanceLogger.cs" company="Stéphane ANDRE">
+// <copyright file="PerformanceMonitor.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -11,19 +11,25 @@ using System.Reactive.Disposables;
 using MyNet.Utilities;
 using MyNet.Utilities.Logging;
 
-namespace MyNet.Avalonia.Theme.Helpers;
+#pragma warning disable CS0162 // Unreachable code detected
+namespace MyNet.Avalonia.Helpers;
 
 /// <summary>
 /// Provides utilities for logging and measuring performance in theme-related operations.
 /// Allows conditional logging and timing of code blocks to help diagnose performance issues in theming logic.
 /// </summary>
-internal static class ThemePerformanceLogger
+public static class PerformanceMonitor
 {
     /// <summary>
     /// Gets or sets a value indicating whether performance logs are enabled.
     /// When false, all logging and timing operations are disabled.
     /// </summary>
-    public static bool EnablePerformanceLogs { get; set; }
+    private const bool IsEnabled =
+#if DEBUG
+        false;
+#else
+        false;
+#endif
 
     /// <summary>
     /// Measures the execution time of a code block and logs the result if performance logging is enabled.
@@ -33,9 +39,9 @@ internal static class ThemePerformanceLogger
     /// <param name="maxBeforeWarning">Optional threshold for warning-level logs.</param>
     /// <param name="maxBeforeError">Optional threshold for error-level logs.</param>
     /// <returns>A disposable that ends the timing when disposed.</returns>
-    public static IDisposable MeasureTime(string title = "", TimeSpan? maxBeforeWarning = null, TimeSpan? maxBeforeError = null)
+    public static IDisposable Measure(string title = "", TimeSpan? maxBeforeWarning = null, TimeSpan? maxBeforeError = null)
     {
-        if (!EnablePerformanceLogs)
+        if (!IsEnabled)
         {
             return Disposable.Empty;
         }
@@ -61,5 +67,6 @@ internal static class ThemePerformanceLogger
     /// Logs a debug message if performance logging is enabled.
     /// </summary>
     /// <param name="message">The message to log.</param>
-    public static void Debug(string message) => EnablePerformanceLogs.IfTrue(() => LogManager.Debug(message));
+    public static void Debug(string message) => IsEnabled.IfTrue(() => LogManager.Debug(message));
 }
+#pragma warning restore CS0162 // Unreachable code detected

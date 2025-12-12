@@ -171,10 +171,10 @@
 
     <ControlTheme x:Key="{x:Type my:NavigationMenuItem}" TargetType="my:NavigationMenuItem">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
-        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
+        <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
         <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Brush $self.Foreground}" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
         <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.Foreground}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
@@ -240,7 +240,7 @@
 
             <!-- Disabled -->
             <Style Selector="^:disabled /template/ Border#PART_MainBorder">
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Disabled}" />
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Disabled}" />
             </Style>
         </Style>
 
@@ -284,7 +284,7 @@
 
         <!-- Separator -->
         <Style Selector="^[IsSeparator=True]">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
+            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
             <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
             <Setter Property="Margin" Value="{my:Thickness Top=10, Bottom=2}" />
             <Setter Property="Template">

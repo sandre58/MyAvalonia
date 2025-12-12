@@ -354,7 +354,7 @@
                 <Separator />
                 <TextBlock TextWrapping="Wrap">
                     <Run Text="• Fields marked with" />
-                    <Run FontWeight="Bold" Foreground="{DynamicResource MyNet.Brush.Validation.Error}" Text="*" />
+                    <Run FontWeight="Bold" Foreground="{my:Theme Validation.Error}" Text="*" />
                     <Run Text="are required and must be filled before submission" />
                 </TextBlock>
                 <TextBlock Text="• Your password must be at least 8 characters long and contain uppercase, lowercase, numbers, and special characters" TextWrapping="Wrap" />

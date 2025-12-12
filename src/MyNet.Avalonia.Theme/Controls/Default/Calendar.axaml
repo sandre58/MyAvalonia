@@ -10,8 +10,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $parent[Calendar].(my:PaletteAssist.Primary)}" />
-        <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
+        <Setter Property="my:ThemeAssist.Role" Value="{Binding $parent[Calendar].(my:ThemeAssist.Role)}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="PART_RootPanel">
@@ -63,7 +62,9 @@
 
         <!-- Active -->
         <Style Selector="^:selected">
-            <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.ActiveForeground)}" />
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
                 <Setter Property="Opacity" Value="1" />
@@ -72,15 +73,15 @@
 
         <Style Selector="^:today">
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.ActiveBackground)}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeBrush (my:ThemeAssist.ActiveBackground)}" />
         </Style>
 
         <Style Selector="^:inactive /template/ Panel#PART_RootPanel">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Medium}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
         </Style>
 
         <Style Selector="^:blackout /template/ Panel#PART_RootPanel">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Disabled}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Disabled}" />
         </Style>
     </ControlTheme>
 
@@ -99,8 +100,7 @@
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="DayTitleTemplate">
             <Template>
-                <TextBlock Margin="{my:Thickness Default,
-                                                 Bottom}"
+                <TextBlock Margin="{my:Thickness Default, Bottom}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            x:DataType="x:String"
@@ -172,11 +172,9 @@
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="ClipToBounds" Value="False" />
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-        </Style>
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="Background" Value="{my:Theme Surface.Background}" />
+        <Setter Property="BorderBrush" Value="{my:Theme Surface.Border}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="Calendar">
@@ -184,7 +182,7 @@
                     <CalendarItem Name="PART_CalendarItem"
                                   Padding="{TemplateBinding Padding}"
                                   my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                                  my:PaletteAssist.Primary="{TemplateBinding my:PaletteAssist.Primary}"
+                                  my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                   Background="{TemplateBinding Background}"
                                   BorderBrush="{TemplateBinding BorderBrush}"
                                   BorderThickness="{TemplateBinding BorderThickness}"

@@ -8,11 +8,7 @@
         <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
         <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Tertiary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole Tertiary}" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
-        </Style>
+        <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="DropDownButton">
@@ -68,6 +64,21 @@
                 </Panel>
             </ControlTemplate>
         </Setter>
+
+        <!-- Styles -->
+        <Style Selector="^.Solid">
+            <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Foreground" Value="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.Outlined.Text">
+            <Style Selector="^[(my|ThemeAssist.Role)=Default], ^[(my|ThemeAssist.Role)=Custom]">
+                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
+                <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
+                <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
+            </Style>
+        </Style>
 
         <!-- Layout -->
         <Style Selector="^.Left">
@@ -189,7 +200,12 @@
 
         <!-- IsOpen -->
         <Style Selector="^:flyout-open">
-            <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.ActiveForeground)}" />
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
+            <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
 
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="RenderTransform" Value="rotate(180deg)" />
@@ -203,13 +219,6 @@
                 <Setter Property="Opacity" Value="1" />
             </Style>
 
-        </Style>
-
-        <!-- Styles -->
-        <Style Selector="^.Solid">
-            <Style Selector="^:flyout-open">
-                <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.ActiveForeground)}" />
-            </Style>
         </Style>
 
         <!-- Sizes -->

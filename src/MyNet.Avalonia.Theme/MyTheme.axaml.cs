@@ -12,7 +12,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Styling;
-using MyNet.Avalonia.Theme.Helpers;
+using MyNet.Avalonia.Helpers;
 using MyNet.Avalonia.Theme.Palettes;
 using MyNet.Avalonia.Theme.Theming;
 using MyNet.Utilities;
@@ -214,7 +214,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     private void AddOrUpdatePrimaryShades()
     {
-        using (ThemePerformanceLogger.MeasureTime())
+        using (PerformanceMonitor.Measure())
             AddOrUpdateColorShades(Primary, nameof(Primary));
     }
 
@@ -223,7 +223,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     private void AddOrUpdateAccentShades()
     {
-        using (ThemePerformanceLogger.MeasureTime())
+        using (PerformanceMonitor.Measure())
             AddOrUpdateColorShades(Accent, nameof(Accent));
     }
 
@@ -232,7 +232,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     private void UpdateBrushesFromCurrentTheme()
     {
-        using (ThemePerformanceLogger.MeasureTime())
+        using (PerformanceMonitor.Measure())
         {
             var count = 0;
 
@@ -249,7 +249,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
                 }
             }
 
-            ThemePerformanceLogger.Debug($"UpdateBrushesFromCurrentTheme processed {count} brushes");
+            PerformanceMonitor.Debug($"UpdateBrushesFromCurrentTheme processed {count} brushes");
         }
     }
 
@@ -260,7 +260,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// <param name="name">The name of the color group.</param>
     private void AddOrUpdateColorShades(ColorShades shades, string name)
     {
-        using (ThemePerformanceLogger.MeasureTime())
+        using (PerformanceMonitor.Measure())
         {
             var count = 0;
 
@@ -270,7 +270,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
                 count++;
             }
 
-            ThemePerformanceLogger.Debug($"AddOrUpdateColorShades({name}) processed {count} shades");
+            PerformanceMonitor.Debug($"AddOrUpdateColorShades({name}) processed {count} shades");
         }
     }
 
@@ -405,7 +405,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     private void OnResourcedAccessed()
     {
-        using (ThemePerformanceLogger.MeasureTime())
+        using (PerformanceMonitor.Measure())
             AvaloniaXamlLoader.Load(_serviceProvider, this);
 
         AddOrUpdateAccentShades();

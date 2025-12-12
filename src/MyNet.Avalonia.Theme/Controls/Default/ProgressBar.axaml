@@ -267,8 +267,8 @@
         </Style>
 
         <!-- Colors -->
-        <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
+        <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
+            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
         </Style>
 
         <!-- Sizes -->
@@ -369,8 +369,8 @@
         </Style>
 
         <!-- Colors -->
-        <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
+        <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
+            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
         </Style>
 
         <!-- Sizes -->

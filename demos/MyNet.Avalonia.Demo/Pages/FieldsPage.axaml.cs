@@ -22,6 +22,7 @@ using MyNet.Avalonia.Demo.Resources;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Theme.Palettes;
 using MyNet.Humanizer;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -328,7 +329,7 @@ internal sealed partial class FieldsPage : Page
                     var control = controlMetadata.Create();
                     if (!string.IsNullOrEmpty(key))
                     {
-                        var themeKey = BuildHelper.ThemeKeyPattern.FormatWith(controlMetadata.Name, key);
+                        var themeKey = ThemeResourceKeyFactory.Theme(controlMetadata.Name, key);
                         if (Application.Current!.TryGetResource(themeKey, null, out var value) && value is ControlTheme t)
                             control.Theme = t;
                     }
@@ -374,7 +375,7 @@ internal sealed partial class FieldsPage : Page
         });
 
     private void UseTheme_SelectionChanged(object? sender, SelectionChangedEventArgs e)
-        => BuildHelper.AddClassesOnChildren<TemplatedControl>(Root, [string.Empty, "Accent", "Inverse"], UseTheme?.SelectedIndex ?? 0);
+        => BuildHelper.ExecuteOnChildren<TemplatedControl>(Root, x => UseTheme?.SelectedValue?.IfIs<ThemeRole>(y => ThemeAssist.SetRole(x, y)));
 
     private void Icon_SelectionChanged(object? sender, SelectionChangedEventArgs e)
         => BuildHelper.AddIconOnChildren<TemplatedControl>(Root, Icon?.SelectedIndex ?? 0);

@@ -14,7 +14,7 @@
         <Setter Property="CornerRadius" Value="{Binding $parent[DatePicker].(my:ItemsAssist.CornerRadius)}" />
         <Setter Property="Background" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderBrush)}" />
-        <Setter Property="Foreground" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.Medium}}" />
+        <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}, Opacity=Medium}" />
         <Setter Property="BorderThickness" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderThickness)}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBackground)}" />
         <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBorderBrush)}" />
@@ -50,7 +50,6 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        BoxShadow="{DynamicResource DateTimePickerFlyoutBoxShadow}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
                         <Grid Name="ContentPanel" RowDefinitions="*,Auto" Margin="{TemplateBinding Padding}">
@@ -97,11 +96,11 @@
                                 <Rectangle Name="PART_FirstSpacer"
                                            Width="0"
                                            HorizontalAlignment="Center"
-                                           Fill="{DynamicResource MyNet.Brush.Surface.Border}" />
+                                           Fill="{my:Theme Surface.Border}" />
                                 <Rectangle Name="PART_SecondSpacer"
                                            Width="0"
                                            HorizontalAlignment="Center"
-                                           Fill="{DynamicResource MyNet.Brush.Surface.Border}" />
+                                           Fill="{my:Theme Surface.Border}" />
                             </Grid>
 
                             <Grid Name="AcceptDismissGrid" Grid.Row="1" ColumnDefinitions="*,Auto,*" Margin="0 3 0 0">
@@ -150,7 +149,7 @@
         <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
         <Setter Property="my:IconAssist.Alignment" Value="Left" />
         <Setter Property="my:IconAssist.Margin" Value="{my:Thickness Default, Right}" />
-        <Setter Property="my:IconAssist.Opacity" Value="{StaticResource MyNet.Opacity.High}" />
+        <Setter Property="my:IconAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
         <Setter Property="my:TextFieldAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
         <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Inner.Medium}" />
         <Setter Property="my:TextFieldAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.SubCaption}" />
@@ -180,35 +179,33 @@
         <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
         <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
 
-        <Style Selector="^">
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />
-            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border.Hover}" />
-            <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $self.Foreground}" />
-            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
-            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
-            <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Medium}}" />
-            <Setter Property="my:PopupAssist.Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
-            <Setter Property="my:PopupAssist.Foreground" Value="{DynamicResource MyNet.Brush.Popup.Foreground}" />
-            <Setter Property="my:PopupAssist.PrimaryColor" Value="{my:ThemeRole}" />
-            <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0.5" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:PopupAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
-            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:PopupAssist.PrimaryColor)}" />
-            <Setter Property="my:ItemsAssist.RippleColor" Value="{Binding $self.(my:PopupAssist.Foreground)}" />
-        </Style>
+        <!-- Default Theme -->
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="Background" Value="{my:Theme Control.Background}" />
+        <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:ThemeBrush Foreground, Opacity=High}" />
+        <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:ThemeBrush Foreground, Opacity=High}" />
+        <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:ThemeBrush Foreground, Opacity=Medium}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+        <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Theme Control.Border.Hover}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
+        <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />
+        <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
+        <Setter Property="my:PopupAssist.Background" Value="{my:Theme Popup.Background}" />
+        <Setter Property="my:PopupAssist.Foreground" Value="{my:Theme Popup.Foreground}" />
+        <Setter Property="my:PopupAssist.Role" Value="{Binding $self.(my:ThemeAssist.Role)}" />
+        <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
+        <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:PopupAssist.Foreground), Opacity=Hover}" />
+        <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:PopupAssist.Foreground)}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:PopupAssist.Foreground)}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="DatePicker">
@@ -359,7 +356,8 @@
                                WindowManagerAddShadowHint="False">
                             <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                 <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                    <DatePickerPresenter Name="PART_PickerPresenter" Foreground="{TemplateBinding (my:PopupAssist.Foreground)}" />
+                                    <DatePickerPresenter Name="PART_PickerPresenter" Foreground="{TemplateBinding (my:PopupAssist.Foreground)}"
+                                                         my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}" />
                                 </Border>
                             </Border>
                         </Popup>
@@ -428,20 +426,20 @@
             </Style>
 
             <Style Selector="^ /template/ Button#PART_FlyoutButton > my|TextField TextBlock">
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Medium}" />
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
             </Style>
         </Style>
 
         <!-- Error -->
         <Style Selector="^:error">
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
-            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
+            <Setter Property="BorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Theme Validation.Error}" />
 
             <Style Selector="^ /template/ my|Underline#PART_Underline">
-                <Setter Property="ActiveBrush" Value="{DynamicResource MyNet.Brush.Validation.Error}" />
+                <Setter Property="ActiveBrush" Value="{my:Theme Validation.Error}" />
             </Style>
 
             <Style Selector="^ /template/ Border#PART_BorderUnderText">
@@ -450,11 +448,11 @@
         </Style>
 
         <!-- Colors -->
-        <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
-            <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Focus}}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:PopupAssist.PrimaryColor" Value="{DynamicResource MyNet.Brush.Primary}" />
+        <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
+            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+            <Setter Property="my:PopupAssist.Role" Value="Primary" />
         </Style>
 
         <!-- Styles -->
@@ -493,7 +491,7 @@
 
         <Style Selector="^">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+            <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="Transparent" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="Transparent" />
             <Setter Property="my:ThemeAssist.RippleColor" Value="Transparent" />
@@ -652,9 +650,10 @@
                                Placement="Bottom"
                                PlacementTarget="{TemplateBinding}"
                                WindowManagerAddShadowHint="False">
-                            <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
+                            <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                 <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                    <DatePickerPresenter Name="PART_PickerPresenter" />
+                                    <DatePickerPresenter Name="PART_PickerPresenter" Foreground="{TemplateBinding (my:PopupAssist.Foreground)}"
+                                                         my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}" />
                                 </Border>
                             </Border>
                         </Popup>
@@ -684,7 +683,7 @@
             <Setter Property="BorderThickness" Value="0 0 0 1" />
         </Style>
 
-        <Style Selector="^.Inverse">
+        <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
             <Setter Property="Background" Value="Transparent" />
         </Style>
 

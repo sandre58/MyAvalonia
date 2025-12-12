@@ -102,6 +102,28 @@ public static class ItemsAssist
 
     #endregion
 
+    #region Opacity
+
+    /// <summary>
+    /// Provides Opacity Property for attached ItemsAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<double> OpacityProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("Opacity", typeof(ItemsAssist), 1.0D);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="OpacityProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="OpacityProperty"/>.</param>
+    public static void SetOpacity(StyledElement element, double value) => element.SetValue(OpacityProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="OpacityProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetOpacity(StyledElement element) => element.GetValue(OpacityProperty);
+
+    #endregion
+
     #region HoverBackground
 
     /// <summary>
@@ -168,6 +190,28 @@ public static class ItemsAssist
 
     #endregion
 
+    #region HoverOpacity
+
+    /// <summary>
+    /// Provides HoverOpacity Property for attached ItemsAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<double> HoverOpacityProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("HoverOpacity", typeof(ItemsAssist), 1.0D);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="HoverOpacityProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="HoverOpacityProperty"/>.</param>
+    public static void SetHoverOpacity(StyledElement element, double value) => element.SetValue(HoverOpacityProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="HoverOpacityProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetHoverOpacity(StyledElement element) => element.GetValue(HoverOpacityProperty);
+
+    #endregion
+
     #region ActiveBackground
 
     /// <summary>
@@ -231,6 +275,28 @@ public static class ItemsAssist
     /// </summary>
     /// <param name="element">Target element.</param>
     public static IBrush? GetActiveForeground(StyledElement element) => element.GetValue(ActiveForegroundProperty);
+
+    #endregion
+
+    #region ActiveOpacity
+
+    /// <summary>
+    /// Provides ActiveOpacity Property for attached ItemsAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<double> ActiveOpacityProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("ActiveOpacity", typeof(ItemsAssist), 1.0D);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="ActiveOpacityProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="ActiveOpacityProperty"/>.</param>
+    public static void SetActiveOpacity(StyledElement element, double value) => element.SetValue(ActiveOpacityProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="ActiveOpacityProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetActiveOpacity(StyledElement element) => element.GetValue(ActiveOpacityProperty);
 
     #endregion
 

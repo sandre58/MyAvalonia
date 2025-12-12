@@ -15,7 +15,7 @@
 
         <!-- Disabled -->
         <Style Selector="^:not(.no-disablable):disabled">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Disabled}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Disabled}" />
         </Style>
     </Style>
 </Styles>

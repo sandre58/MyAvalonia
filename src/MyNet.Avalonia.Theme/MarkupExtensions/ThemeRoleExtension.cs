@@ -4,8 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Documents;
 using Avalonia.Data;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
+using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Converters.Internals;
 using MyNet.Avalonia.Theme.Palettes;
 
@@ -35,14 +41,54 @@ public class ThemeRoleExtension : ThemeBrushExtensionBase
     public ThemeRoleExtension() { }
 
     /// <summary>
-    /// Provides the parameters for the theme brush conversion, including palette color type, opacity, and contrast.
+    /// Gets or sets the relative source for the binding. Default is self.
     /// </summary>
-    /// <returns>A <see cref="ThemeRoleParameters"/> instance.</returns>
-    protected override ThemeBrushParameters? ProvideBrushParameters() => new ThemeRoleParameters(Type, Opacity?.ToString() ?? CustomOpacity, Contrast);
+    public RelativeSource RelativeSource { get; set; } = new RelativeSource(RelativeSourceMode.Self);
 
     /// <summary>
-    /// Provides the relative source for the binding. Always returns self.
+    /// Provides the value for the markup extension, returning a binding to the theme brush with the specified options.
     /// </summary>
-    /// <returns>The <see cref="RelativeSource"/> instance.</returns>
-    protected override RelativeSource? ProvideRelativeSource() => new(RelativeSourceMode.Self);
+    /// <param name="serviceProvider">The service provider for the markup extension.</param>
+    /// <returns>A binding to the theme brush with the specified opacity and contrast settings.</returns>
+    public override object ProvideValue(IServiceProvider serviceProvider) => new MultiBinding
+    {
+        Bindings =
+        {
+            new Binding($"(my:{nameof(ThemeAssist)}.Role)")
+            {
+                Mode = BindingMode.OneWay,
+                RelativeSource = RelativeSource,
+                NameScope = new WeakReference<INameScope?>(serviceProvider.GetService<INameScope>()),
+                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
+            },
+            new Binding($"(my:{nameof(PaletteAssist)}.{Type})")
+            {
+                Mode = BindingMode.OneWay,
+                RelativeSource = RelativeSource,
+                NameScope = new WeakReference<INameScope?>(serviceProvider.GetService<INameScope>()),
+                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
+            },
+            new Binding()
+            {
+                Mode = BindingMode.OneWay,
+                RelativeSource = RelativeSource
+            }
+        },
+        Converter = ThemeConverter.Default,
+        ConverterParameter = new ThemeRoleParameters(Type, Opacity?.ToString() ?? CustomOpacity, Contrast)
+    };
+
+    /// <summary>
+    /// Resolves a type from the XAML type resolver service.
+    /// </summary>
+    /// <param name="ctx">The service provider context.</param>
+    /// <param name="namespacePrefix">The namespace prefix (optional).</param>
+    /// <param name="type">The type name to resolve.</param>
+    /// <returns>The resolved <see cref="Type"/>.</returns>
+    private static Type ResolveType(IServiceProvider ctx, string? namespacePrefix, string type)
+    {
+        var tr = ctx.GetRequiredService<IXamlTypeResolver>();
+        var name = string.IsNullOrEmpty(namespacePrefix) ? type : $"{namespacePrefix}:{type}";
+        return tr.Resolve(name);
+    }
 }

@@ -7,7 +7,7 @@
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="InactiveHeight" Value="0" />
         <Setter Property="ActiveHeight" Value="2" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+        <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
         <Setter Property="ActiveBrush" Value="{DynamicResource MyNet.Brush.Primary}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Bottom" />

@@ -9,8 +9,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $parent[my:Calendar].(my:PaletteAssist.Primary)}" />
-        <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
+        <Setter Property="my:ThemeAssist.Role" Value="{Binding $parent[my:Calendar].(my:ThemeAssist.Role)}" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -76,13 +75,15 @@
             <Setter Property="CornerRadius" Value="0" />
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Scrim}" />
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Scrim}" />
             </Style>
         </Style>
 
         <!-- Active -->
         <Style Selector="^:selected, ^:start-date, ^:end-date">
-            <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.ActiveForeground)}" />
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
                 <Setter Property="Opacity" Value="1" />
@@ -91,17 +92,17 @@
 
         <Style Selector="^:today">
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:ThemeAssist.ActiveBackground)}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeBrush (my:ThemeAssist.ActiveBackground)}" />
         </Style>
 
         <Style Selector="^:inactive /template/ Panel#PART_RootPanel">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Medium}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
         </Style>
 
         <Style Selector="^:preview-start-date, ^:preview-end-date">
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.High}" />
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
             </Style>
         </Style>
 
@@ -114,7 +115,7 @@
         </Style>
 
         <Style Selector="^:blackout /template/ Panel#PART_RootPanel">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Disabled}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Disabled}" />
         </Style>
     </ControlTheme>
 
@@ -133,8 +134,7 @@
         <Setter Property="MinHeight" Value="250" />
         <Setter Property="DayTitleTemplate">
             <Template>
-                <TextBlock Margin="{my:Thickness Default,
-                                                 Bottom}"
+                <TextBlock Margin="{my:Thickness Default, Bottom}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            x:DataType="x:String"
@@ -144,11 +144,9 @@
             </Template>
         </Setter>
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-        </Style>
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="Background" Value="{my:Theme Surface.Background}" />
+        <Setter Property="BorderBrush" Value="{my:Theme Surface.Border}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="my:Calendar">
@@ -180,25 +178,20 @@
                                         Grid.Column="0"
                                         HorizontalAlignment="Stretch"
                                         Classes="Text Small no-disablable"
-                                        Content="{my:Translation DisplayDateContext,
-                                                                 Casing=Title,
-                                                                 RelativeSource={RelativeSource TemplatedParent}}"
+                                        Content="{my:Translation DisplayDateContext, Casing=Title, RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False" />
                                 <Button Name="{x:Static my:Calendar.PartYearButton}"
                                         Grid.Column="1"
                                         HorizontalAlignment="Stretch"
                                         Classes="Text Small no-disablable"
-                                        Content="{ReflectionBinding DisplayDateContext.Year,
-                                                                    FallbackValue='',
-                                                                    RelativeSource={RelativeSource TemplatedParent}}"
+                                        Content="{ReflectionBinding DisplayDateContext.Year, FallbackValue='', RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False" />
                                 <Button Name="{x:Static my:Calendar.PartHeaderButton}"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="2"
                                         HorizontalAlignment="Stretch"
                                         Classes="Text Small no-disablable"
-                                        Content="{my:Translation DisplayDateContext,
-                                                                 RelativeSource={RelativeSource TemplatedParent}}"
+                                        Content="{my:Translation DisplayDateContext, RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False"
                                         IsVisible="False" />
                             </Grid>

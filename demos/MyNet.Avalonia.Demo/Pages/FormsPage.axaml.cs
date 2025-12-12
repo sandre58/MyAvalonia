@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using MyNet.Avalonia.Demo.Helpers;
+using MyNet.Avalonia.Helpers;
 
 namespace MyNet.Avalonia.Demo.Pages;
 

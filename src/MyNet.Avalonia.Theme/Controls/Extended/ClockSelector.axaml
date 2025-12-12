@@ -156,7 +156,7 @@
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:ItemsAssist.Foreground)}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole}" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.(my:ItemsAssist.ActiveBackground), Contrast=True}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
             <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
         </Style>
 
@@ -211,7 +211,7 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^.Inverse">
+        <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
             <Setter Property="my:ItemsAssist.Foreground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
         </Style>
 
@@ -224,7 +224,7 @@
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
             <Setter Property="my:ItemsAssist.Foreground" Value="{my:Brush $self.Background, Contrast=True}" />
 
-            <Style Selector="^.Inverse">
+            <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
                 <Setter Property="Background" Value="{my:Brush $self.Foreground}" />
                 <Setter Property="HandBrush" Value="{my:Brush $self.Background, Contrast=True}" />
                 <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Brush $self.Background, Contrast=True}" />

@@ -11,10 +11,10 @@
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="Transparent" />
         <Setter Property="my:ThemeAssist.ActiveBackground" Value="Transparent" />
-        <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{Binding $self.Foreground}" />
+        <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeBrush Foreground}" />
     </ControlTheme>
 
-    <ControlTheme x:Key="MyNet.Theme.ListBox.ColorPalette" TargetType="ListBox" BasedOn="{StaticResource MyNet.Theme.ListBox.Cards}">
+    <ControlTheme x:Key="MyNet.Theme.ListBox.ColorPalette" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
@@ -25,7 +25,8 @@
         <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.Padding" Value="0" />
-        <Setter Property="my:ItemsAssist.Margin" Value="1" />
+        <Setter Property="my:ItemsAssist.Margin" Value="1" />        
+        <Setter Property="my:ClassesAssist.AddClasses" Value="Cards" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="ItemTemplate">
             <DataTemplate DataType="{x:Type Color}" />

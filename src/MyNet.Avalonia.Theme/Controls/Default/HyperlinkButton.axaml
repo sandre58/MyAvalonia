@@ -17,16 +17,14 @@
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Button}" />
         <Setter Property="FontWeight" Value="{StaticResource MyNet.Font.Weight.Button}" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Primary}" />
         <Setter Property="Padding" Value="3 3 3 1" />
-        <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.High}" />
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:ThemeRole}" />
-        </Style>
-        
+        <!-- Default Theme -->
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
+        <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:ThemeRole}" />
+
         <Setter Property="Template">
             <ControlTemplate TargetType="HyperlinkButton">
                 <Panel>
@@ -60,7 +58,7 @@
 
         <!-- Visited -->
         <Style Selector="^:visited">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Medium}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
             <Setter Property="Foreground" Value="{my:ThemeRole}" />
         </Style>
 
@@ -73,7 +71,7 @@
 
         <!-- Style -->
         <Style Selector="^.Text">
-            <Setter Property="my:PaletteAssist.Secondary" Value="{Binding $parent[TemplatedControl].Foreground}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{my:ThemeBrush (TextElement.Foreground), RelativeSource={RelativeSource AncestorType=Control}}" />
             <Setter Property="Foreground" Value="{my:ThemeRole Secondary}" />
         </Style>
 

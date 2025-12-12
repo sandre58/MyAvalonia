@@ -28,7 +28,7 @@
         </Setter>
         <Setter Property="ErrorTemplate">
             <DataTemplate>
-                <ItemsControl x:DataType="DataValidationErrors" Foreground="{DynamicResource MyNet.Brush.Validation.Error}" ItemsSource="{Binding}">
+                <ItemsControl x:DataType="DataValidationErrors" Foreground="{my:Theme Validation.Error}" ItemsSource="{Binding}">
                     <ItemsControl.Styles>
                         <Style Selector="TextBlock">
                             <Setter Property="TextWrapping" Value="Wrap" />
@@ -74,7 +74,7 @@
                             <ItemsControl x:DataType="collections:IEnumerable" ItemsSource="{Binding}" />
                         </ToolTip>
                     </ToolTip.Tip>
-                    <PathIcon Classes="Small" Data="{Binding (my:IconAssist.Icon), RelativeSource={RelativeSource AncestorType={x:Type DataValidationErrors}}}" Foreground="{DynamicResource MyNet.Brush.Validation.Error}" />
+                    <PathIcon Classes="Small" Data="{Binding (my:IconAssist.Icon), RelativeSource={RelativeSource AncestorType={x:Type DataValidationErrors}}}" Foreground="{my:Theme Validation.Error}" />
                 </Panel>
             </DataTemplate>
         </Setter>
@@ -112,7 +112,7 @@
                             <ItemsControl x:DataType="collections:IEnumerable" ItemsSource="{Binding}" />
                         </ToolTip>
                     </ToolTip.Tip>
-                    <Path Data="M15 0 L15 15 L0 0 Z" Fill="{DynamicResource MyNet.Brush.Validation.Error}" />
+                    <Path Data="M15 0 L15 15 L0 0 Z" Fill="{my:Theme Validation.Error}" />
                 </Panel>
             </DataTemplate>
         </Setter>

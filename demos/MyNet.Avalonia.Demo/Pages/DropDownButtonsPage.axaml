@@ -43,7 +43,7 @@
         </HeaderedContentControl>
 
         <!-- Fields -->
-        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <ScrollViewer>
             <StackPanel Name="Root" Classes="Large" Grid.IsSharedSizeScope="True" />
         </ScrollViewer>
 

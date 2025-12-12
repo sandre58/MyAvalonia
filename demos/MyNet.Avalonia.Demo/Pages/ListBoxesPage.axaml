@@ -17,7 +17,7 @@
                        Margin="{StaticResource MyNet.Margins.Default.Horizontal}"
                        VerticalAlignment="Center"
                        Source="{Binding Converter={x:Static c:CountryToBitmapConverter.To16}}" />
-                <TextBlock Text="{my:Translation}" />
+                <TextBlock Text="{my:Translation}" Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="MyNet.DataTemplate.Country.Large" DataType="{x:Type geo:Country}">
@@ -27,11 +27,12 @@
                            HorizontalAlignment="Center"
                            VerticalAlignment="Top"
                            Text="{my:Translation}"
-                           TextWrapping="Wrap" />
+                           TextWrapping="Wrap"
+                           Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
             </Grid>
         </DataTemplate>
     </pages:Page.Resources>
-    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+    <ScrollViewer>
         <Grid>
             <StackPanel Name="Root"
                         HorizontalAlignment="Stretch"

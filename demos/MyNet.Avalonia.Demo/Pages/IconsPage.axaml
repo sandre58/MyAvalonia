@@ -92,7 +92,7 @@
                      my:ScrollViewerBehavior.RefreshOnScroll="True"
                      ItemsSource="{Binding Icons.PagedItems}"
                      SelectedItem="{Binding Icons.SelectedItem}"
-                     Theme="{StaticResource MyNet.Theme.ListBox.Cards}">
+                     Classes="Cards">
                 <ListBox.ItemContainerTheme>
                     <ControlTheme TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                         <Setter Property="ToolTip.Tip" Value="{ReflectionBinding DisplayName}" />

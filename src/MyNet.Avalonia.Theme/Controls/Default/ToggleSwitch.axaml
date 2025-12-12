@@ -126,7 +126,7 @@
             </Style>
             <Style Selector="^ /template/ ContentPresenter#PART_OffContentPresenter">
                 <Setter Property="IsVisible" Value="True" />
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.High}" />
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
             </Style>
         </Style>
 
@@ -147,8 +147,8 @@
         </Style>
         
         <!-- Colors -->
-        <Style Selector="^.Inverse">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
+        <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
+            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
         </Style>
 
         <!-- Sizes -->
@@ -276,7 +276,7 @@
 
         <Style Selector="^">
             <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="my:ThemeAssist.IndicatorColor" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+            <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:Theme Control.Border}" />
             <Setter Property="my:ThemeAssist.ActiveIndicatorColor" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground)}" />
             <Setter Property="Foreground" Value="{my:Brush $self.(my:ThemeAssist.IndicatorColor), Contrast=True}" />
         </Style>
@@ -378,12 +378,12 @@
 
         <!-- Hover -->
         <Style Selector="^:pointerover /template/ Ellipse#RippleThumb">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Hover}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Hover}" />
         </Style>
 
         <!-- Pressed -->
         <Style Selector="^:pressed /template/ Ellipse#RippleThumb">
-            <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Focus}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Focus}" />
         </Style>
 
         <!-- Checked -->
@@ -391,7 +391,7 @@
             <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:Brush $self.(my:ThemeAssist.ActiveIndicatorColor)}" />
 
             <Style Selector="^ /template/ Border#PART_MainBorder">
-                <Setter Property="Opacity" Value="{StaticResource MyNet.Opacity.Focus}" />
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Focus}" />
             </Style>
         </Style>
         

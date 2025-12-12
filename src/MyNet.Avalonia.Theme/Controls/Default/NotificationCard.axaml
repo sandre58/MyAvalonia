@@ -15,7 +15,7 @@
         <Style Selector="^">
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Control.Border}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Control.Border}" />
             <Setter Property="Background" Value="{my:ThemeRole}" />
             <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
             <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />

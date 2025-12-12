@@ -54,6 +54,11 @@ public static class ThemeResourceKeyFactory
     public const string GeometryKey = "Geometry";
 
     /// <summary>
+    /// The key for themes.
+    /// </summary>
+    public const string ThemeKey = "Theme";
+
+    /// <summary>
     /// Gets a resource key using the specified type and name.
     /// </summary>
     /// <param name="type">The resource type (e.g., Type, Brush).</param>
@@ -88,6 +93,14 @@ public static class ThemeResourceKeyFactory
     /// <param name="name">The opacity name.</param>
     /// <returns>The formatted opacity resource key.</returns>
     public static string Opacity(string name) => BuildResourceKey(OpacityKey, name);
+
+    /// <summary>
+    /// Gets a theme key for the specified name.
+    /// </summary>
+    /// <param name="control">The control type.</param>
+    /// <param name="name">The control layout name.</param>
+    /// <returns>The formatted theme key.</returns>
+    public static string Theme(string control, string? name = null) => BuildResourceKey(ThemeKey, !string.IsNullOrEmpty(name) ? $"{control}.{name}" : control);
 
     /// <summary>
     /// Gets a pattern for a resource key of the specified type.

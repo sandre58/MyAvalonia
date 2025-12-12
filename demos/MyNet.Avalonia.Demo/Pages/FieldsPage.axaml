@@ -7,6 +7,7 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:my="http://mynet.com/avalonia"
                      xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+                     xmlns:p="using:MyNet.Avalonia.Theme.Palettes"
                      ClipToBounds="False"
                      mc:Ignorable="d">
     <pages:Page.Resources>
@@ -18,7 +19,7 @@
                        VerticalAlignment="Center"
                        DockPanel.Dock="Left"
                        Source="{Binding Converter={x:Static c:CountryToBitmapConverter.To16}}" />
-                <TextBlock Text="{my:Translation}" />
+                <TextBlock Text="{my:Translation}" Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
             </DockPanel>
         </DataTemplate>
     </pages:Page.Resources>
@@ -47,10 +48,10 @@
                     </HeaderedContentControl>
 
                     <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource Theme}">
-                        <ListBox Name="UseTheme" SelectedIndex="0" SelectionChanged="UseTheme_SelectionChanged">
-                            <ListBoxItem Content="Default" />
-                            <ListBoxItem Content="Accent" />
-                            <ListBoxItem Content="Inverse" />
+                        <ListBox Name="UseTheme" SelectedIndex="0" SelectedValueBinding="{ReflectionBinding DataContext}" SelectionChanged="UseTheme_SelectionChanged">
+                            <ListBoxItem Content="Default" DataContext="{x:Static p:ThemeRole.Primary}" />
+                            <ListBoxItem Content="Accent" DataContext="{x:Static p:ThemeRole.Accent}" />
+                            <ListBoxItem Content="Inverse" DataContext="{x:Static p:ThemeRole.Inverse}" />
                         </ListBox>
                     </HeaderedContentControl>
 
