@@ -639,4 +639,16 @@
   <data name="AllowTapRangeSelection" xml:space="preserve">
     <value>Allow tag range</value>
   </data>
+  <data name="DefaultTheme" xml:space="preserve">
+    <value>Default theme</value>
+  </data>
+  <data name="CustomControls" xml:space="preserve">
+    <value>Custom control(s)</value>
+  </data>
+  <data name="DefaultStyle" xml:space="preserve">
+    <value>Default style</value>
+  </data>
+  <data name="ControlSizes" xml:space="preserve">
+    <value>Sizes</value>
+  </data>
 </root>

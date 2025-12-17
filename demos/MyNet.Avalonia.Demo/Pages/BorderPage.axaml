@@ -1,0 +1,44 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.BorderPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            my:ViewModelAssist.AutoWire="True"
+            x:DataType="vm:ButtonPageViewModel"
+            x:Name="RootPage"
+            ClipToBounds="False"
+            mc:Ignorable="d">
+    <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                             MinItemWidth="200"
+                             MinItemHeight="130"
+                             IsActive="{Binding #RootPage.IsActive}">
+
+        <!-- Template for standard controls -->
+        <ctrl:ControlThemeViewer.ControlTemplate>
+            <DataTemplate x:DataType="ctrl:ControlDescription">
+                <Border  Width="190" Height="130" Theme="{Binding Theme}"
+                         my:ThemeAssist.Role="{Binding Role}"
+                         my:ClassesAssist.Classes="{Binding Classes}"
+                         ToolTip.Tip="{Binding Content}" />
+            </DataTemplate>
+        </ctrl:ControlThemeViewer.ControlTemplate>
+
+        <!-- Custom content for the Custom tab (optional) -->
+        <!-- If you do not define CustomContent, the tab will not appear -->
+        <ctrl:ControlThemeViewer.CustomContent>
+            <StackPanel Spacing="20" Margin="20">
+                <HeaderedContentControl Header="Popup" Classes="Labelled Regular">
+                    <StackPanel Classes="Large">
+                        <Border Width="190" Height="120" Theme="{StaticResource MyNet.Theme.Border.Popup}" />
+                    </StackPanel>
+                </HeaderedContentControl>
+            </StackPanel>
+        </ctrl:ControlThemeViewer.CustomContent>
+
+    </ctrl:ControlThemeViewer>
+</pages:Page>

@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
 using Avalonia.Collections;
@@ -14,7 +15,7 @@ namespace MyNet.Avalonia.Theme.Assists;
 
 public static class ClassesAssist
 {
-    public static readonly AttachedProperty<string> ClassesProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("Classes", typeof(ClassesAssist));
+    public static readonly AttachedProperty<object> ClassesProperty = AvaloniaProperty.RegisterAttached<StyledElement, object>("Classes", typeof(ClassesAssist));
 
     public static readonly AttachedProperty<StyledElement> ClassSourceProperty = AvaloniaProperty.RegisterAttached<StyledElement, StyledElement>("ClassSource", typeof(ClassesAssist));
 
@@ -43,16 +44,15 @@ public static class ClassesAssist
         target.Classes.AddRange(nonPseudoClasses);
     }
 
-    public static void SetClasses(AvaloniaObject obj, string value) => obj.SetValue(ClassesProperty, value);
+    public static void SetClasses(AvaloniaObject obj, object value) => obj.SetValue(ClassesProperty, value);
 
-    public static string GetClasses(AvaloniaObject obj) => obj.GetValue(ClassesProperty);
+    public static object GetClasses(AvaloniaObject obj) => obj.GetValue(ClassesProperty);
 
     private static void OnClassesChanged(StyledElement sender, AvaloniaPropertyChangedEventArgs value)
     {
-        var @class = value.GetNewValue<string?>();
-        if (@class is null) return;
+        var classes = value.NewValue is IEnumerable<string> classesEnumerable ? classesEnumerable.ToArray() : (value.NewValue as string)?.Split([' '], StringSplitOptions.RemoveEmptyEntries);
+        if (classes is null) return;
         sender.Classes.Clear();
-        var classes = @class.Split([' '], StringSplitOptions.RemoveEmptyEntries);
         sender.Classes.AddRange(classes);
     }
 

@@ -639,4 +639,16 @@
   <data name="AllowTapRangeSelection" xml:space="preserve">
     <value>Sélection d'une plage</value>
   </data>
+  <data name="DefaultTheme" xml:space="preserve">
+    <value>Thème par défaut</value>
+  </data>
+  <data name="CustomControls" xml:space="preserve">
+    <value>Contrôle(s) personnalisé(s)</value>
+  </data>
+  <data name="DefaultStyle" xml:space="preserve">
+    <value>Style par défaut</value>
+  </data>
+  <data name="ControlSizes" xml:space="preserve">
+    <value>Tailles</value>
+  </data>
 </root>

@@ -76,6 +76,8 @@ public class App : Application
     private static void RegisterViewAndViewModels(ServiceProvider services)
     {
         // Register the views for the view models to improve performances (avoiding reflection at runtime)
+        RegisterViewAndViewModel<ButtonPageViewModel, ButtonPage>(services);
+        RegisterViewAndViewModel<BorderPageViewModel, BorderPage>(services);
         RegisterViewAndViewModel<LoginDialogViewModel, LoginDialogView>(services);
         RegisterViewAndViewModel<DataGridsViewModel, DataGridsPage>(services);
         RegisterViewAndViewModel<DialogsViewModel, DialogsPage>(services);
@@ -97,7 +99,7 @@ public class App : Application
     private static void InitializeResources()
     {
         Extended.ResourceLocator.Initialize();
-        Controls.ResourceLocator.Initialize();
+        Avalonia.Controls.ResourceLocator.Initialize();
         TranslationService.RegisterResources(nameof(CountryResources), CountryResources.ResourceManager);
         TranslationService.RegisterResources(nameof(DemoResources), DemoResources.ResourceManager);
         TranslationService.RegisterResources(nameof(FormResources), FormResources.ResourceManager);

@@ -1,0 +1,173 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+                    x:CompileBindings="False">
+
+    <ControlTheme x:Key="{x:Type ctrl:ControlThemeViewer}" TargetType="ctrl:ControlThemeViewer">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <TabControl ItemsSource="{TemplateBinding CombinedItems}">
+
+                    <!-- Customisation du header des TabItem avec DataTemplates typés -->
+                    <TabControl.ItemContainerTheme>
+                        <ControlTheme TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                            <Setter Property="HeaderTemplate">
+                                <DataTemplate>
+                                    <ContentControl Content="{Binding}">
+                                        <ContentControl.DataTemplates>
+                                            <!-- Header pour ControlThemeDescription -->
+                                            <DataTemplate DataType="ctrl:ControlThemeDescription">
+                                                <Grid MinWidth="150">
+                                                    <StackPanel HorizontalAlignment="Center" 
+                                                                Orientation="Horizontal" 
+                                                                IsVisible="{Binding DisplayName, Converter={x:Static my:NullConverter.IsNotNull}}" 
+                                                                Spacing="{StaticResource MyNet.Spacing.Medium}">
+                                                        <PathIcon Data="{StaticResource MyNet.Geometry.Shape}" />
+                                                        <TextBlock Text="{Binding DisplayName}" />
+                                                    </StackPanel>
+                                                    <TextBlock HorizontalAlignment="Center" 
+                                                               FontStyle="Italic" 
+                                                               Text="{my:Resource DefaultTheme}" 
+                                                               IsVisible="{Binding DisplayName, Converter={x:Static my:NullConverter.IsNull}}" />
+                                                </Grid>
+                                            </DataTemplate>
+
+                                            <!-- Header pour CustomTabItem -->
+                                            <DataTemplate DataType="ctrl:CustomTabItem">
+                                                <StackPanel HorizontalAlignment="Center" 
+                                                            Orientation="Horizontal"
+                                                            Spacing="{StaticResource MyNet.Spacing.Medium}">
+                                                    <PathIcon Data="{StaticResource MyNet.Geometry.StarOutline}" />
+                                                    <TextBlock Text="{my:Resource CustomControls}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ContentControl.DataTemplates>
+                                    </ContentControl>
+                                </DataTemplate>
+                            </Setter>
+                        </ControlTheme>
+                    </TabControl.ItemContainerTheme>
+
+                    <!-- DataTemplates uniquement pour le content -->
+                    <TabControl.DataTemplates>
+                        
+                        <!-- DataTemplate pour ControlThemeDescription content -->
+                        <DataTemplate DataType="ctrl:ControlThemeDescription">
+                            <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                                <ItemsRepeater ItemsSource="{Binding Layouts}">
+                                    <ItemsRepeater.Layout>
+                                        <StackLayout Orientation="Vertical" Spacing="{StaticResource MyNet.Spacing.ExtraLarge}" />
+                                    </ItemsRepeater.Layout>
+                                    <ItemsRepeater.ItemTemplate>
+                                        <DataTemplate DataType="ctrl:ControlLayoutDescription">
+                                            <HeaderedContentControl Header="{Binding}" Background="Transparent">
+                                                <HeaderedContentControl.HeaderTemplate>
+                                                    <DataTemplate DataType="ctrl:ControlLayoutDescription">
+                                                        <Grid>
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                        IsVisible="{Binding DisplayName, Converter={x:Static my:NullConverter.IsNotNull}}" 
+                                                                        Spacing="{StaticResource MyNet.Spacing.Medium}">
+                                                                <PathIcon Data="{StaticResource MyNet.Geometry.TuneVerticalVariant}" />
+                                                                <TextBlock Text="{Binding DisplayName}" />
+                                                            </StackPanel>
+                                                            <TextBlock FontStyle="Italic" 
+                                                                       Text="{my:Resource DefaultTheme}" 
+                                                                       IsVisible="{Binding DisplayName, Converter={x:Static my:NullConverter.IsNull}}" />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </HeaderedContentControl.HeaderTemplate>
+
+                                                <StackPanel Margin="{my:Thickness ExtraLarge, Left}" Classes="Large">
+                                                    <ItemsRepeater ItemsSource="{Binding Styles}">
+                                                        <ItemsRepeater.Layout>
+                                                            <StackLayout Orientation="Vertical" Spacing="{StaticResource MyNet.Spacing.Large}" />
+                                                        </ItemsRepeater.Layout>
+                                                        <ItemsRepeater.ItemTemplate>
+                                                            <DataTemplate DataType="ctrl:ControlStyleDescription">
+                                                                <HeaderedContentControl Header="{Binding}" Classes="Labelled Regular">
+                                                                    <HeaderedContentControl.HeaderTemplate>
+                                                                        <DataTemplate DataType="ctrl:ControlStyleDescription">
+                                                                            <Grid>
+                                                                                <StackPanel Orientation="Horizontal" 
+                                                                                            IsVisible="{Binding DisplayName, Converter={x:Static my:NullConverter.IsNotNull}}" 
+                                                                                            Spacing="{StaticResource MyNet.Spacing.Medium}">
+                                                                                    <PathIcon Data="{StaticResource MyNet.Geometry.Palette}" Classes="Small" />
+                                                                                    <TextBlock Text="{Binding DisplayName}" />
+                                                                                    <Button Classes="Clipboard no-disablable" 
+                                                                                            CommandParameter="{Binding DisplayName, Mode=OneWay}" 
+                                                                                            Theme="{StaticResource MyNet.Theme.Button.Embedded.Tool}" />
+                                                                                </StackPanel>
+                                                                                <TextBlock FontStyle="Italic" 
+                                                                                           Text="{my:Resource DefaultStyle}" 
+                                                                                           IsVisible="{Binding DisplayName, Converter={x:Static my:NullConverter.IsNull}}" />
+                                                                            </Grid>
+                                                                        </DataTemplate>
+                                                                    </HeaderedContentControl.HeaderTemplate>
+
+                                                                    <Panel>
+                                                                        <ItemsRepeater ItemsSource="{Binding Controls}">
+                                                                            <ItemsRepeater.Layout>
+                                                                                <UniformGridLayout MinItemWidth="{Binding $parent[ctrl:ControlThemeViewer].MinItemWidth}"
+                                                                                                   MinItemHeight="{Binding $parent[ctrl:ControlThemeViewer].MinItemHeight}"
+                                                                                                   ItemsJustification="Start"
+                                                                                                   MinColumnSpacing="{StaticResource MyNet.Spacing.Medium}"
+                                                                                                   MinRowSpacing="{StaticResource MyNet.Spacing.Medium}" />
+                                                                            </ItemsRepeater.Layout>
+
+                                                                            <ItemsRepeater.ItemTemplate>
+                                                                                <DataTemplate DataType="ctrl:ControlDescription">
+                                                                                    <ContentControl Content="{Binding}" 
+                                                                                                    ContentTemplate="{Binding $parent[ctrl:ControlThemeViewer].ControlTemplate}"
+IsEnabled="{Binding $parent[ctrl:ControlThemeViewer].IsActive}" />
+                                                                                </DataTemplate>
+                                                                            </ItemsRepeater.ItemTemplate>
+                                                                        </ItemsRepeater>
+                                                                    </Panel>
+                                                                </HeaderedContentControl>
+                                                            </DataTemplate>
+                                                        </ItemsRepeater.ItemTemplate>
+                                                    </ItemsRepeater>
+
+                                                    <HeaderedContentControl Header="{my:Resource ControlSizes}" my:IconAssist.Icon="{my:Icon FormatSize}" Classes="Labelled Regular">
+                                                        <Panel>
+                                                            <ItemsRepeater ItemsSource="{Binding Sizes}">
+                                                                <ItemsRepeater.Layout>
+                                                                    <UniformGridLayout MinItemWidth="{Binding $parent[ctrl:ControlThemeViewer].MinItemWidth}"
+                                                                                       MinItemHeight="{Binding $parent[ctrl:ControlThemeViewer].MinItemHeight}"
+                                                                                       ItemsJustification="Start"
+                                                                                       MinColumnSpacing="{StaticResource MyNet.Spacing.Medium}"
+                                                                                       MinRowSpacing="{StaticResource MyNet.Spacing.Medium}" />
+                                                                </ItemsRepeater.Layout>
+
+                                                                <ItemsRepeater.ItemTemplate>
+                                                                    <DataTemplate DataType="ctrl:ControlDescription">
+                                                                        <ContentControl Content="{Binding}" 
+                                                                                        ContentTemplate="{Binding $parent[ctrl:ControlThemeViewer].ControlTemplate}"
+IsEnabled="{Binding $parent[ctrl:ControlThemeViewer].IsActive}" />
+                                                                    </DataTemplate>
+                                                                </ItemsRepeater.ItemTemplate>
+                                                            </ItemsRepeater>
+                                                        </Panel>
+                                                    </HeaderedContentControl>
+                                                </StackPanel>
+                                            </HeaderedContentControl>
+                                        </DataTemplate>
+                                    </ItemsRepeater.ItemTemplate>
+                                </ItemsRepeater>
+                            </ScrollViewer>
+                        </DataTemplate>
+
+                        <!-- DataTemplate pour CustomTabItem content -->
+                        <DataTemplate DataType="ctrl:CustomTabItem">
+                            <ContentControl Content="{Binding Content}" IsEnabled="{Binding $parent[ctrl:ControlThemeViewer].IsActive}" />
+                        </DataTemplate>
+                        
+                    </TabControl.DataTemplates>
+                    
+                </TabControl>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

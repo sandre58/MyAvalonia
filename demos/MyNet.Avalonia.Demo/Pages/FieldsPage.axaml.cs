@@ -116,10 +116,10 @@ internal sealed partial class FieldsPage : Page
             x => x.SelectedIndex = RandomGenerator.Int(0, x.ItemCount - 1),
             x => x.SelectedItem = null),
 
-            new ControlData<Controls.MultiComboBox>(() => new Controls.MultiComboBox
+            new ControlData<Avalonia.Controls.MultiComboBox>(() => new Avalonia.Controls.MultiComboBox
                 {
                 Width = 200,
-                [!Controls.MultiComboBox.WatermarkProperty] = Watermark[!TextBox.TextProperty],
+                [!Avalonia.Controls.MultiComboBox.WatermarkProperty] = Watermark[!TextBox.TextProperty],
                 ItemsSource = EnumClass.GetAll<Country>(),
                 ItemTemplate = (DataTemplate?)this.FindResource("MyNet.DataTemplate.Country"),
                 SelectedItemTemplate = (DataTemplate?)this.FindResource("MyNet.DataTemplate.Country")
@@ -127,12 +127,12 @@ internal sealed partial class FieldsPage : Page
             x => x.SelectedItems = new AvaloniaList<object?>(RandomGenerator.ListItems(x.Items.ToList(), RandomGenerator.Int(2, 5))),
             x => x.SelectedItems = null),
 
-            new ControlData<Controls.TagBox>(() =>
+            new ControlData<Avalonia.Controls.TagBox>(() =>
             {
-                var item = new Controls.TagBox
+                var item = new Avalonia.Controls.TagBox
                 {
                     Width = 200,
-                    [!Controls.TagBox.WatermarkProperty] = Watermark[!TextBox.TextProperty],
+                    [!Avalonia.Controls.TagBox.WatermarkProperty] = Watermark[!TextBox.TextProperty],
                 };
                 return item;
             },
@@ -170,10 +170,10 @@ internal sealed partial class FieldsPage : Page
             x => x.SelectedDate = RandomGenerator.Date(DateTime.Today.AddYears(-1), DateTime.Today.AddYears(1)),
             x => x.Text = string.Empty),
 
-            new ControlData<Controls.CalendarDatePicker>(() => new Controls.CalendarDatePicker
+            new ControlData<Avalonia.Controls.CalendarDatePicker>(() => new Avalonia.Controls.CalendarDatePicker
             {
                 Width = 150,
-                [!Controls.CalendarDatePicker.WatermarkProperty] = Watermark[!TextBox.TextProperty]
+                [!Avalonia.Controls.CalendarDatePicker.WatermarkProperty] = Watermark[!TextBox.TextProperty]
             },
             x => x.SelectedValue = RandomGenerator.Date(DateTime.Today.AddYears(-1), DateTime.Today.AddYears(1)),
             x => x.SelectedValue = null,
@@ -200,16 +200,16 @@ internal sealed partial class FieldsPage : Page
             x => x.SelectedTime = RandomGenerator.Date(DateTime.Today.AddYears(-1), DateTime.Today.AddYears(1)).TimeOfDay,
             x => x.SelectedTime = null),
 
-            new ControlData<Controls.TimePicker>(() => new Controls.TimePicker
+            new ControlData<Avalonia.Controls.TimePicker>(() => new Avalonia.Controls.TimePicker
             {
                 Width = 110,
-                [!Controls.TimePicker.WatermarkProperty] = Watermark[!TextBox.TextProperty]
+                [!Avalonia.Controls.TimePicker.WatermarkProperty] = Watermark[!TextBox.TextProperty]
             },
             x => x.SelectedValue = RandomGenerator.Date(DateTime.Today.AddYears(-1), DateTime.Today.AddYears(1)).TimeOfDay,
             x => x.SelectedValue = null,
             "MyTimePicker"),
 
-            new ControlData<Controls.DateTimePicker>(() => new Controls.DateTimePicker
+            new ControlData<Avalonia.Controls.DateTimePicker>(() => new Avalonia.Controls.DateTimePicker
             {
                 Width = 220,
                 NeedConfirmation = RandomGenerator.Bool(),
@@ -218,7 +218,7 @@ internal sealed partial class FieldsPage : Page
             x => x.SelectedDate = RandomGenerator.Date(DateTime.Today.AddYears(-1), DateTime.Today.AddYears(1)),
             x => x.SelectedDate = null),
 
-            new ControlData<Controls.DateRangePicker>(() => new Controls.DateRangePicker
+            new ControlData<Avalonia.Controls.DateRangePicker>(() => new Avalonia.Controls.DateRangePicker
             {
                 Width = 200,
                 [!DatePickerBase.WatermarkProperty] = Watermark[!TextBox.TextProperty]
@@ -234,7 +234,7 @@ internal sealed partial class FieldsPage : Page
                 x.SelectedEndDate = null;
             }),
 
-            new ControlData<Controls.TimeRangePicker>(() => new Controls.TimeRangePicker
+            new ControlData<Avalonia.Controls.TimeRangePicker>(() => new Avalonia.Controls.TimeRangePicker
             {
                 Width = 140,
                 [!TimePickerBase.WatermarkProperty] = Watermark[!TextBox.TextProperty]
@@ -250,10 +250,10 @@ internal sealed partial class FieldsPage : Page
                 x.EndTime = null;
             }),
 
-            new ControlData<Controls.ColorPicker>(() => new Controls.ColorPicker
+            new ControlData<Avalonia.Controls.ColorPicker>(() => new Avalonia.Controls.ColorPicker
             {
                 Width = 150,
-                [!Controls.ColorPicker.WatermarkProperty] = Watermark[!TextBox.TextProperty]
+                [!Avalonia.Controls.ColorPicker.WatermarkProperty] = Watermark[!TextBox.TextProperty]
             },
             x => x.SelectedValue = RandomGenerator.Color().ToColor().GetValueOrDefault(),
             x => x.SelectedValue = default)

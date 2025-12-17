@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia"
-                    xmlns:sys="clr-namespace:System;assembly=netstandard"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
                     x:CompileBindings="True">
 
     <ControlTheme x:Key="{x:Type Button}" TargetType="Button">
@@ -296,7 +296,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.Button.Icon" TargetType="Button" BasedOn="{StaticResource MyNet.Theme.Button.Rounded}">
-        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=TemplatedControl}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{my:ThemeRole}" />
         <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Foreground}" />
@@ -369,6 +369,7 @@
 
     <ControlTheme x:Key="MyNet.Theme.Button.Embedded.Tool" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{my:ThemeRole}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />

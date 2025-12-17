@@ -58,8 +58,8 @@
 
                 <!-- Default Controls -->
                 <my:NavigationMenuItem IsSeparator="True" Padding="1" Header="{my:Resource Default}" />
-                <my:NavigationMenuItem CommandParameter="{x:Type pages:BordersPage}" Header="{my:Resource Border}" Icon="{StaticResource MyNet.Geometry.CardOutline}" />
-                <my:NavigationMenuItem CommandParameter="{x:Type pages:ButtonsPage}" Header="{my:Resource Button}" Icon="{StaticResource MyNet.Geometry.ButtonCursor}" />
+                <my:NavigationMenuItem CommandParameter="{x:Type pages:BorderPage}" Header="{my:Resource Border}" Icon="{StaticResource MyNet.Geometry.CardOutline}" />
+                <my:NavigationMenuItem CommandParameter="{x:Type pages:ButtonPage}" Header="{my:Resource Button}" Icon="{StaticResource MyNet.Geometry.ButtonCursor}" />
                 <my:NavigationMenuItem CommandParameter="{x:Type pages:CalendarsPage}" Header="{my:Resource Calendar}" Icon="{StaticResource MyNet.Geometry.Calendar}" />
                 <my:NavigationMenuItem CommandParameter="{x:Type pages:CarouselsPage}" Header="{my:Resource Carousel}" Icon="{StaticResource MyNet.Geometry.ViewCarousel}" />
                 <my:NavigationMenuItem CommandParameter="{x:Type pages:CheckBoxesPage}" Header="{my:Resource CheckBox}" Icon="{StaticResource MyNet.Geometry.CheckboxMultipleMarked}" />

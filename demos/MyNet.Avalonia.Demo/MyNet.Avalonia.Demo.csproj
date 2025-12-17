@@ -32,6 +32,22 @@
     </ItemGroup>
 
     <ItemGroup>
+      <AvaloniaXaml Remove="Theme\Controls\ControlThemeViewer.axaml" />
+      <AvaloniaXaml Remove="Theme\Styles\Settings.axaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AvaloniaResource Include="Theme\Controls\ControlThemeViewer.axaml" />
+      <AvaloniaResource Include="Theme\Styles\Settings.axaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Pages\BorderPage.axaml.cs">
+        <DependentUpon>BorderPage.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="Pages\ButtonPage.axaml.cs">
+        <DependentUpon>ButtonPage.axaml</DependentUpon>
+      </Compile>
       <Compile Update="Pages\TimePickersPage.axaml.cs">
         <DependentUpon>TimePickersPage.axaml</DependentUpon>
       </Compile>
@@ -56,5 +72,9 @@
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>FormResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Behaviors\" />
     </ItemGroup>
 </Project>

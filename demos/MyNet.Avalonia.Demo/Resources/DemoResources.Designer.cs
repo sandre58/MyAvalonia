@@ -313,11 +313,29 @@ namespace MyNet.Avalonia.Demo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tailles.
+        /// </summary>
+        internal static string ControlSizes {
+            get {
+                return ResourceManager.GetString("ControlSizes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pays.
         /// </summary>
         internal static string Country {
             get {
                 return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contrôle(s) personnalisé(s).
+        /// </summary>
+        internal static string CustomControls {
+            get {
+                return ResourceManager.GetString("CustomControls", resourceCulture);
             }
         }
         
@@ -480,6 +498,24 @@ namespace MyNet.Avalonia.Demo.Resources {
         internal static string DayOfWeekWednesday {
             get {
                 return ResourceManager.GetString("DayOfWeekWednesday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Style par défaut.
+        /// </summary>
+        internal static string DefaultStyle {
+            get {
+                return ResourceManager.GetString("DefaultStyle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thème par défaut.
+        /// </summary>
+        internal static string DefaultTheme {
+            get {
+                return ResourceManager.GetString("DefaultTheme", resourceCulture);
             }
         }
         

@@ -1,0 +1,52 @@
+﻿<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.ButtonPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            mc:Ignorable="d"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            my:ViewModelAssist.AutoWire="True"
+            x:DataType="vm:ButtonPageViewModel"
+            x:Name="RootPage"
+            ClipToBounds="False">
+
+    <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}" 
+                             MinItemWidth="100" 
+                             MinItemHeight="50"  
+                             IsActive="{Binding #RootPage.IsActive}">
+
+        <!-- Template for standard controls -->
+        <ctrl:ControlThemeViewer.ControlTemplate>
+            <DataTemplate x:DataType="ctrl:ControlDescription">
+                <Button Theme="{Binding Theme}"
+                        my:ThemeAssist.Role="{Binding Role}"
+                        my:ClassesAssist.Classes="{Binding Classes}"
+                        ToolTip.Tip="{Binding Content}">
+                    <Button.Content>
+                        <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
+                            <Binding Path="ContentType" />
+                            <Binding Path="Content" />
+                        </MultiBinding>
+                    </Button.Content>
+                </Button>
+            </DataTemplate>
+        </ctrl:ControlThemeViewer.ControlTemplate>
+
+        <!-- Custom content for the Custom tab (optional) -->
+        <!-- If you do not define CustomContent, the tab will not appear -->
+        <ctrl:ControlThemeViewer.CustomContent>
+            <StackPanel Spacing="20" Margin="20">
+                <HeaderedContentControl Header="Embedded.Tool" Classes="Labelled Regular">
+                    <StackPanel Classes="Large">
+                        <Button Content="{StaticResource MyNet.Geometry.PlusCircle}" Theme="{StaticResource MyNet.Theme.Button.Embedded.Tool}" />
+                    </StackPanel>
+                </HeaderedContentControl>
+            </StackPanel>
+        </ctrl:ControlThemeViewer.CustomContent>
+
+    </ctrl:ControlThemeViewer>
+</pages:Page>
