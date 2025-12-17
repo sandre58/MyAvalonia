@@ -8,13 +8,9 @@
         <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
+        <Setter Property="Foreground" Value="{my:ThemeBrush Background, Contrast=True}" />
 
         <!-- Styles -->
-        <Style Selector="^.Solid">
-            <Setter Property="Background" Value="{my:ThemeRole Opacity=Pressed}" />
-            <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
-        </Style>
-
         <Style Selector="^.Outlined.Text">
             <Style Selector="^[(my|ThemeAssist.Role)=Default], ^[(my|ThemeAssist.Role)=Custom]">
                 <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
@@ -26,17 +22,13 @@
 
     <ControlTheme x:Key="MyNet.Theme.ToggleButton.Rounded" TargetType="ToggleButton" BasedOn="{StaticResource MyNet.Theme.Button.Rounded}">
         <Setter Property="Cursor" Value="Arrow" />
-
+        
         <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
+        <Setter Property="Foreground" Value="{my:ThemeBrush Background, Contrast=True}" />
 
         <!-- Styles -->
-        <Style Selector="^.Solid">
-            <Setter Property="Background" Value="{my:ThemeRole Opacity=Pressed}" />
-            <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
-        </Style>
-
         <Style Selector="^.Outlined.Text">
             <Style Selector="^[(my|ThemeAssist.Role)=Default], ^[(my|ThemeAssist.Role)=Custom]">
                 <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
@@ -205,8 +197,8 @@
 
         <!-- Colors -->
         <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
-            <Setter Property="BorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+            <Setter Property="BorderBrush" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Foreground, Opacity=Hover}" />
         </Style>
 
         <!-- Sizes -->
@@ -225,9 +217,9 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
-        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
-        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:Foreground}" />
         <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Tool}" />
         <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Tool}" />
         <Setter Property="MinHeight" Value="0" />

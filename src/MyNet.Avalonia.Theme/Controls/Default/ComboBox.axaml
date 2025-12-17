@@ -66,15 +66,15 @@
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-        <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:ThemeBrush Foreground, Opacity=High}" />
-        <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:ThemeBrush Foreground, Opacity=High}" />
-        <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:ThemeBrush Foreground, Opacity=Medium}" />
-        <Setter Property="PlaceholderForeground" Value="{my:ThemeBrush Foreground, Opacity=Medium}" />
-        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+        <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Foreground, Opacity=High}" />
+        <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Foreground, Opacity=High}" />
+        <Setter Property="my:TextFieldAssist.WatermarkForeground" Value="{my:Foreground, Opacity=Medium}" />
+        <Setter Property="PlaceholderForeground" Value="{my:Foreground, Opacity=Medium}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
         <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Theme Control.Border.Hover}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
-        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeBrush Foreground}" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:Foreground}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Foreground, Opacity=Focus}" />
         <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />
         <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
         <Setter Property="my:PopupAssist.Background" Value="{my:Theme Popup.Background}" />
@@ -339,9 +339,9 @@
 
         <!-- Colors -->
         <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
-            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+            <Setter Property="Background" Value="{my:Foreground, Opacity=Overlay}" />
+            <Setter Property="BorderBrush" Value="{my:Foreground, Opacity=Focus}" />
+            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{my:Foreground, Opacity=Hover}" />
             <Setter Property="my:PopupAssist.Role" Value="Primary" />
         </Style>
 

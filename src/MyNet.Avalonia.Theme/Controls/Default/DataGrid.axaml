@@ -162,8 +162,8 @@
         <Setter Property="FontFamily" Value="{Binding $parent[DataGrid].(my:HeaderAssist.FontFamily)}" />
         <Setter Property="Padding" Value="{Binding $parent[DataGrid].(my:HeaderAssist.Padding)}" />
         <Setter Property="Opacity" Value="{Binding $parent[DataGrid].(my:HeaderAssist.Opacity)}" />
-        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Foreground}" />
         <Setter Property="HorizontalContentAlignment" Value="{Binding $parent[DataGrid].(my:HeaderAssist.HorizontalAlignment)}" />
         <Setter Property="VerticalContentAlignment" Value="{Binding $parent[DataGrid].(my:HeaderAssist.VerticalAlignment)}" />
         <Setter Property="Tag" Value="{Binding $parent[DataGrid].CanUserSortColumns}" />
@@ -278,8 +278,8 @@
         <Setter Property="SeparatorBrush" Value="{Binding $parent[DataGrid].(my:HeaderAssist.BorderBrush)}" />
         <Setter Property="Background" Value="{Binding $parent[DataGrid].(my:HeaderAssist.Background)}" />
         <Setter Property="Foreground" Value="{Binding $parent[DataGrid].(my:HeaderAssist.Foreground)}" />
-        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Foreground}" />
         <Setter Property="AreSeparatorsVisible" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -577,13 +577,13 @@
             <Setter Property="my:DataGridAssist.RowCornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:DataGridAssist.UseAlternateRowBackground" Value="True" />
             <Setter Property="RowBackground" Value="Transparent" />
-            <Setter Property="my:DataGridAssist.AlternateRowBackground" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
-            <Setter Property="my:DataGridAssist.RowForeground" Value="{my:ThemeBrush Foreground}" />
+            <Setter Property="my:DataGridAssist.AlternateRowBackground" Value="{my:Foreground, Opacity=Overlay}" />
+            <Setter Property="my:DataGridAssist.RowForeground" Value="{my:Foreground}" />
             <Setter Property="my:DataGridAssist.RowBorderBrush" Value="{my:ThemeBrush HorizontalGridLinesBrush}" />
             <Setter Property="my:DataGridAssist.RowBorderThickness" Value="0" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
             <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+            <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
             <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="Transparent" />
             <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveBackground), Contrast=True}" />

@@ -211,7 +211,7 @@
         </Setter>
 
         <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
-            <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush Foreground, Opacity=High}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground, Opacity=High}" />
         </Style>
 
         <Style Selector="^.Outlined">

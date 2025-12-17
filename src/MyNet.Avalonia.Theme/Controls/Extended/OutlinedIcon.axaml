@@ -57,8 +57,8 @@
         </Style>
 
         <Style Selector="^.Hover">
-            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Medium}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Medium}" />
+            <Setter Property="Background" Value="{my:Foreground, Opacity=Medium}" />
+            <Setter Property="BorderBrush" Value="{my:Foreground, Opacity=Medium}" />
             <Setter Property="ActiveBackground" Value="{my:ThemeRole}" />
             <Setter Property="ActiveBorderBrush" Value="{my:ThemeRole}" />
         </Style>

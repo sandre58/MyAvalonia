@@ -173,10 +173,10 @@
     <ControlTheme x:Key="{x:Type my:NavigationMenuItem}" TargetType="my:NavigationMenuItem">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
-        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
-        <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Foreground, Opacity=Focus}" />
+        <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Foreground}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Menu}" />
@@ -285,7 +285,7 @@
 
         <!-- Separator -->
         <Style Selector="^[IsSeparator=True]">
-            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
+            <Setter Property="Background" Value="{my:Foreground, Opacity=Overlay}" />
             <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
             <Setter Property="Margin" Value="{my:Thickness Top=10, Bottom=2}" />
             <Setter Property="Template">

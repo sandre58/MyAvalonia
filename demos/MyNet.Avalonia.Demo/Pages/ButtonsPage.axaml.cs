@@ -40,16 +40,16 @@ internal sealed partial class ButtonsPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData()
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Circle")
-            .AddStyles("Light", "Solid", "Outlined", "Text")
-            .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
+            .AddStyles("Light", "Outlined", "Text", "Shadow")
+            .AddCartesianStyles("Light", "Outlined", "Text")
             .AddDefaultRoles()
             .AddSizes("Small", "Medium", "Large"),
 
-            new ControlThemeData("Rounded")
-            .AddStyles("Light", "Solid", "Outlined", "Text")
-            .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
+            new ControlThemeData("Rounded", defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
+            .AddStyles("Light", "Outlined", "Text", "Shadow")
+            .AddCartesianStyles("Light", "Outlined", "Text")
             .AddDefaultRoles()
             .AddSizes("Small", "Medium", "Large")
             .AddCustomControls(() =>

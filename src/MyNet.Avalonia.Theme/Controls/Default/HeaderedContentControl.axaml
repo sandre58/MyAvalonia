@@ -15,7 +15,7 @@
         <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
         <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
         <Setter Property="my:HeaderAssist.BorderBrush" Value="Transparent" />
-        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
         <Setter Property="my:HeaderAssist.CornerRadius" Value="0" />
         <Setter Property="my:HeaderAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface}" />
@@ -335,13 +335,13 @@
 
         <Style Selector="^.Watermark">
             <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
             <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
         </Style>
 
         <Style Selector="^.Regular">
             <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
         </Style>
 
         <!-- Sizes -->

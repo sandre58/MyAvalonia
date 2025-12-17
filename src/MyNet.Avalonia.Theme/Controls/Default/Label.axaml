@@ -99,13 +99,13 @@
             <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
 
             <Style Selector="^.Text">
-            <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Application.Foreground}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{my:Foreground AncestorType=TemplatedControl}" />
                 <Setter Property="Foreground" Value="{my:ThemeRole Secondary}" />
             </Style>
         </Style>
 
         <Style Selector="^.Light">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Application.Foreground}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=TemplatedControl}" />
             <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
             <Setter Property="Foreground" Value="{my:ThemeRole}" />
         </Style>

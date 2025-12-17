@@ -11,7 +11,7 @@
         <Setter Property="Padding" Value="{my:Thickness Default}" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
 
-        <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -78,7 +78,7 @@
         </Setter>
 
         <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
-            <Setter Property="TickBrush" Value="{my:ThemeBrush Foreground, Opacity=High}" />
+            <Setter Property="TickBrush" Value="{my:Foreground, Opacity=High}" />
         </Style>
 
         <Style Selector="^.Outlined">

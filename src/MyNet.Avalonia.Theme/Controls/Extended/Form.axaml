@@ -98,7 +98,7 @@
         <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
         <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 1" />
         <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:Theme Surface.Border}" />
-        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="my:FormGroup">

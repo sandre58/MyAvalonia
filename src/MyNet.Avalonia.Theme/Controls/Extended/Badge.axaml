@@ -97,7 +97,7 @@
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="BadgeForeground" Value="{my:ThemeBrush Foreground}" />
+            <Setter Property="BadgeForeground" Value="{my:Foreground}" />
         </Style>
 
         <Style Selector="^.Light">

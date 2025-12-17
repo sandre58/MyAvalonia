@@ -174,14 +174,14 @@
         <Setter Property="my:ThemeAssist.Role" Value="Primary" />
         <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
         <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
         <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-        <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
+        <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
         <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole}" />
         <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
-        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:Foreground}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="ListBox">
@@ -269,22 +269,22 @@
         </Style>
 
         <Style Selector="^.Solid">
-            <Setter Property="my:ItemsAssist.Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
+            <Setter Property="my:ItemsAssist.Background" Value="{my:Foreground, Opacity=Overlay}" />
         </Style>
 
         <Style Selector="^.Outlined">
             <Setter Property="my:ItemsAssist.BorderThickness" Value="1.4" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Foreground, Opacity=Focus}" />
             <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Foreground}" />
         </Style>
 
         <Style Selector="^.Text">
-            <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush Foreground, Opacity=High}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground, Opacity=High}" />
             <Setter Property="my:ItemsAssist.HoverBackground" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
             <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeRole}" />
@@ -292,7 +292,7 @@
 
         <Style Selector="^.Light">
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Opacity=Focus}" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Foreground}" />
         </Style>
 
         <!-- Layouts -->
@@ -447,7 +447,7 @@
         <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
         <Setter Property="my:ItemsAssist.HoverBackground" Value="Transparent" />
         <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
         <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
         <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />

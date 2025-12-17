@@ -10,6 +10,8 @@
 
         <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
+        <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
+        <Setter Property="Foreground" Value="{my:ThemeBrush Background, Contrast=True}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="DropDownButton">
@@ -68,7 +70,12 @@
 
         <!-- Styles -->
         <Style Selector="^.Solid">
-            <Setter Property="Background" Value="{my:ThemeRole}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
+            <Setter Property="Background" Value="{my:ThemeRole CustomOpacity='tata'}" />
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
+            </Style>
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="Foreground" Value="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
             </Style>

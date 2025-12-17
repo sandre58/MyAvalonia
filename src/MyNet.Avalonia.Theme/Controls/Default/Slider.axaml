@@ -351,8 +351,8 @@
 
         <!-- Colors -->
         <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
-            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
+            <Setter Property="Background" Value="{my:Foreground, Opacity=Overlay}" />
+            <Setter Property="BorderBrush" Value="{my:Foreground, Opacity=Focus}" />
         </Style>
 
         <!-- Error -->

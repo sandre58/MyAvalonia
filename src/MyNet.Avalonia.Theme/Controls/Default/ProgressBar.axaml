@@ -265,7 +265,7 @@
 
         <!-- Colors -->
         <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
-            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
+            <Setter Property="Background" Value="{my:Foreground, Opacity=Overlay}" />
         </Style>
 
         <!-- Sizes -->
@@ -364,7 +364,7 @@
 
         <!-- Colors -->
         <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
-            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
+            <Setter Property="Background" Value="{my:Foreground, Opacity=Overlay}" />
         </Style>
 
         <!-- Sizes -->

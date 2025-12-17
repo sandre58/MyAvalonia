@@ -71,7 +71,7 @@
 
         <!-- Style -->
         <Style Selector="^.Text">
-            <Setter Property="my:PaletteAssist.Secondary" Value="{my:ThemeBrush (TextElement.Foreground), RelativeSource={RelativeSource AncestorType=Control}}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{my:Foreground, AncestorType=Control}" />
             <Setter Property="Foreground" Value="{my:ThemeRole Secondary}" />
         </Style>
 

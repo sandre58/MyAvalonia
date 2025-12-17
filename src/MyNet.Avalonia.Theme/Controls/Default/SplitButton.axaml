@@ -105,9 +105,9 @@
 
         <!-- Default Theme -->
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
-        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
-        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:Foreground}" />
         <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole Tertiary}" />
         <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveBackground), Contrast=True}" />
 

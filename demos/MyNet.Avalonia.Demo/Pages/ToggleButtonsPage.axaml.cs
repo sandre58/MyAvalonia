@@ -42,14 +42,14 @@ internal sealed partial class ToggleButtonsPage : AutoBuildPage
         => [
             new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Circle")
-            .AddStyles("Light", "Solid", "Outlined", "Text")
-            .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
+            .AddStyles("Light", "Outlined", "Text", "Shadow")
+            .AddCartesianStyles("Light", "Outlined", "Text")
             .AddDefaultRoles()
             .AddSizes("Small", "Medium", "Large"),
 
             new ControlThemeData("Rounded", DefaultStyleDisplay.WithRoles)
-            .AddStyles("Light", "Solid", "Outlined", "Text")
-            .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
+            .AddStyles("Light", "Outlined", "Text", "Shadow")
+            .AddCartesianStyles("Light", "Outlined", "Text")
             .AddDefaultRoles()
             .AddSizes("Small", "Medium", "Large"),
 
