@@ -20,7 +20,7 @@
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeRole}" />
             <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Contrast=True}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background.Dark}" />
+            <Setter Property="my:ThemeAssist.Role" Value="Dark" />
             <Setter Property="ClipToBounds" Value="False" />
 
             <Style Selector="^ > ScrollViewer">
@@ -48,7 +48,7 @@
                     <Setter Property="Background" Value="Transparent" />
                     <Setter Property="BorderBrush" Value="Transparent" />
                     <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
-                    <Setter Property="my:HeaderAssist.Opacity" Value="{StaticResource MyNet.Opacity.High}" />
+                    <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
                     <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Small, Bottom}" />
                     <Setter Property="my:HeaderAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
                     <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Caption}" />
@@ -56,7 +56,7 @@
                     <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Contrast=True}" />
                     <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
                     <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Center" />
-                    <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background.Dark}" />
+                    <Setter Property="my:ThemeAssist.Role" Value="Dark" />
                 </Style>
             </Style>
 

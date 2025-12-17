@@ -45,7 +45,7 @@ internal sealed partial class DropDownButtonsPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData()
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Circle")
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
@@ -53,7 +53,7 @@ internal sealed partial class DropDownButtonsPage : AutoBuildPage
             .AddSizes("Small", "Medium", "Large")
             .AddCustomControls(CreateCustomControls()),
 
-            new ControlThemeData("Rounded")
+            new ControlThemeData("Rounded", DefaultStyleDisplay.WithRoles)
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
             .AddDefaultRoles()

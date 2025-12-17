@@ -13,6 +13,7 @@
         <Setter Property="Background" Value="{Binding $parent[TabControl].(my:ItemsAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $parent[TabControl].(my:ItemsAssist.BorderBrush)}" />
         <Setter Property="BorderThickness" Value="{Binding $parent[TabControl].(my:ItemsAssist.BorderThickness)}" />
+        <Setter Property="my:ItemsAssist.Foreground" Value="{Binding $parent[TabControl].(my:ItemsAssist.Foreground)}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{Binding $parent[TabControl].(my:ItemsAssist.HoverBackground)}" />
         <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="{Binding $parent[TabControl].(my:ItemsAssist.HoverBorderBrush)}" />
         <Setter Property="my:ThemeAssist.HoverForeground" Value="{Binding $parent[TabControl].(my:ItemsAssist.HoverForeground)}" />
@@ -82,7 +83,7 @@
         </Setter>
 
         <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Foreground" Value="{Binding $parent[TabControl].(my:ItemsAssist.Foreground)}" />
+            <Setter Property="Foreground" Value="{my:ThemeBrush (my:ItemsAssist.Foreground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
         </Style>
 
         <!-- Hover -->
@@ -90,7 +91,7 @@
             <Setter Property="Opacity" Value="1" />
 
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Foreground" Value="{Binding $parent[TabItem].(my:ThemeAssist.HoverForeground)}" />
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
             </Style>
 
             <Style Selector="^ /template/ Border#PART_MainBorder">
@@ -105,9 +106,8 @@
         <!-- Selected -->
         <Style Selector="^:selected">
             <Setter Property="Opacity" Value="1" />
-
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Foreground" Value="{Binding $parent[TabItem].(my:ThemeAssist.ActiveForeground)}" />
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
             </Style>
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
@@ -164,24 +164,22 @@
         <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
-            <Setter Property="my:ItemsAssist.Foreground" Value="{Binding $self.(my:HeaderAssist.Foreground)}" />
-            <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
-            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 2" />
-            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 0 2" />
-        </Style>
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
+        <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:Theme Surface.Border}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
+        <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.HoverBackground" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
+        <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
+        <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 2" />
+        <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 0 2" />
         <Setter Property="Template">
             <ControlTemplate TargetType="TabControl">
                 <Border Name="PART_Root"
@@ -312,9 +310,9 @@
             <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.Background" Value="{my:Brush $self.(my:ItemsAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Overlay}}" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:HeaderAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:HeaderAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.Background" Value="{my:ThemeBrush (my:ItemsAssist.Foreground), Opacity=Overlay}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
         </Style>
@@ -326,19 +324,19 @@
             <Setter Property="my:ItemsAssist.BorderThickness" Value="1.4" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:HeaderAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Brush $self.(my:HeaderAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Focus}}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Focus}" />
             <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Brush $self.(my:HeaderAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
         </Style>
 
         <Style Selector="^.Light">
             <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Small}" />
             <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:HeaderAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Hover}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Opacity=Focus}" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:HeaderAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
 
 
             <Style Selector="^:not(.Outlined)">
@@ -352,7 +350,7 @@
 
         <Style Selector="^.Header">
             <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
-            <Setter Property="my:HeaderAssist.Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
+            <Setter Property="my:HeaderAssist.Background" Value="{my:Theme Control.Background}" />
             <Setter Property="my:HeaderAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
 
@@ -364,20 +362,28 @@
                 <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
             </Style>
 
-            <Style Selector="^.Primary.Inverse">
-                <Setter Property="my:HeaderAssist.Background" Value="{DynamicResource MyNet.Brush.Primary}" />
-                <Setter Property="my:PaletteAssist.Primary" Value="{my:Brush $self.(my:HeaderAssist.Background), Contrast=True}" />
-                <Setter Property="my:HeaderAssist.Foreground" Value="{my:Brush $self.(my:HeaderAssist.Background), Contrast=True}" />
-                <Setter Property="my:ItemsAssist.Foreground" Value="{my:Brush $self.(my:HeaderAssist.Background), Contrast=True}" />
-                <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Brush $self.(my:HeaderAssist.Background), Contrast=True}" />
-            </Style>
+            <Style Selector="^.Inverse">
+                <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeRole}" />
+                <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:Theme Surface.Border}" />
+                <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
 
-            <Style Selector="^.Accent.Inverse">
-                <Setter Property="my:HeaderAssist.Background" Value="{DynamicResource MyNet.Brush.Accent}" />
-                <Setter Property="my:PaletteAssist.Primary" Value="{my:Brush $self.(my:HeaderAssist.Background), Contrast=True}" />
-                <Setter Property="my:HeaderAssist.Foreground" Value="{my:Brush $self.(my:HeaderAssist.Background), Contrast=True}" />
-                <Setter Property="my:ItemsAssist.Foreground" Value="{my:Brush $self.(my:HeaderAssist.Background), Contrast=True}" />
-                <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Brush $self.(my:HeaderAssist.Background), Contrast=True}" />
+                <Style Selector="^.Outlined">
+                    <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                </Style>
+
+                <Style Selector="^.Light">
+                    <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True, Opacity=Focus}" />
+                </Style>
+
+                <Style Selector="^.Solid">
+                    <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                    <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
+                </Style>
+
             </Style>
 
             <Style Selector="^.Shadow">
@@ -600,22 +606,20 @@
         <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
-            <Setter Property="my:ItemsAssist.Foreground" Value="{Binding $self.(my:HeaderAssist.Foreground)}" />
-            <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:HeaderAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
-            <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:HeaderAssist.Foreground)}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Brush $self.(my:HeaderAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Focus}}" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
-            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
-        </Style>
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
+        <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:Theme Surface.Border}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
+        <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Hover}" />
+        <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
+        <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Focus}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
+        <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="TabControl">
                 <Border Name="PART_Root"

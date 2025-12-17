@@ -2,12 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
     <ControlTheme x:Key="{x:Type Separator}" TargetType="Separator">
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Margin" Value="{my:Thickness Default}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Height" Value="1" />
+        <Setter Property="MinHeight" Value="1" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="PART_RootBorder"
@@ -18,14 +19,11 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Brush $parent[TemplatedControl].Foreground}" />
-            <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
-            <Setter Property="Height" Value="1" />
-            <Setter Property="MinHeight" Value="1" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
+        <Setter Property="Background" Value="{my:ThemeRole Opacity=Medium}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
 
         <Style Selector="^.Vertical">
             <Setter Property="Height" Value="NaN" />

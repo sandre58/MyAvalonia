@@ -10,12 +10,8 @@
         <Setter Property="Padding" Value="{my:Thickness Small}" />
         <Setter Property="MinWidth" Value="32" />
         <Setter Property="MinHeight" Value="32" />
-        <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{my:ThemeRole}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeRole}" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{DynamicResource MyNet.Brush.Primary}" />
-        <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
+        <Setter Property="my:ThemeAssist.Role" Value="{Binding $parent[my:Pagination].(my:ThemeAssist.Role)}" />
 
         <Style Selector="^:left">
             <Setter Property="Content">
@@ -59,6 +55,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type my:Pagination}" TargetType="my:Pagination">
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
         <Setter Property="PageButtonTheme" Value="{StaticResource {x:Type my:PaginationButton}}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="my:Pagination">
@@ -66,33 +63,33 @@
                     <my:PaginationButton Name="{x:Static my:Pagination.PartPreviousButton}"
                                          Classes="Small"
                                          Content="{my:Icon ChevronLeft}"
+                                         my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                          Theme="{TemplateBinding PageButtonTheme}"
                                          ToolTip.Tip="{my:Resource PreviousPage}" />
                     <StackPanel Name="{x:Static my:Pagination.PartButtonPanel}" Orientation="Horizontal" />
                     <my:PaginationButton Name="{x:Static my:Pagination.PartNextButton}"
                                          Classes="Small"
                                          Content="{my:Icon ChevronRight}"
+                                         my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                          Theme="{TemplateBinding PageButtonTheme}"
                                          ToolTip.Tip="{my:Resource NextPage}" />
                     <NumericUpDown x:Name="{x:Static my:Pagination.PartQuickJumpInput}"
                                    Width="65"
-                                   Margin="{my:Thickness Default,
-                                                         Left}"
+                                   Margin="{my:Thickness Default, Left}"
                                    VerticalAlignment="Stretch"
                                    VerticalContentAlignment="Center"
                                    Classes="no-disablable"
-                                   InnerRightContent="{my:Translation PageCount,
-                                                                      RelativeSource={RelativeSource Mode=TemplatedParent},
-                                                                      Format='/ #'}"
+                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                   InnerRightContent="{my:Translation PageCount, RelativeSource={RelativeSource Mode=TemplatedParent}, Format='/ #'}"
                                    IsVisible="{TemplateBinding ShowQuickJump}"
                                    Maximum="{TemplateBinding PageCount, Converter={x:Static my:IntToDecimalConverter.Default}}"
                                    Minimum="1"
                                    ShowButtonSpinner="False" />
-                    <DropDownButton Margin="{my:Thickness Default,
-                                                          Left}"
+                    <DropDownButton Margin="{my:Thickness Default, Left}"
                                     VerticalAlignment="Stretch"
                                     my:PopupBehavior.Placement="BottomEdgeAlignedLeft"
                                     Classes="no-disablable"
+                                    my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                     Content="{TemplateBinding PageSize}"
                                     FontSize="{StaticResource MyNet.Font.Size}"
                                     IsVisible="{TemplateBinding ShowPageSizeSelector}">
@@ -119,6 +116,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.theme.Pagination.Compact" TargetType="{x:Type my:Pagination}">
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
         <Setter Property="DisplayCurrentPageInQuickJumper" Value="True" />
         <Setter Property="Template">
             <ControlTemplate TargetType="my:Pagination">
@@ -126,6 +124,7 @@
                     <my:PaginationButton Name="{x:Static my:Pagination.PartPreviousButton}"
                                          Classes="Small"
                                          Content="{my:Icon ChevronLeft}"
+                                         my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                          Theme="{TemplateBinding PageButtonTheme}"
                                          ToolTip.Tip="{my:Resource PreviousPage}" />
                     <NumericUpDown x:Name="{x:Static my:Pagination.PartQuickJumpInput}"
@@ -133,15 +132,15 @@
                                    VerticalAlignment="Stretch"
                                    VerticalContentAlignment="Center"
                                    Classes="no-disablable"
-                                   InnerRightContent="{my:Translation PageCount,
-                                                                      RelativeSource={RelativeSource Mode=TemplatedParent},
-                                                                      Format='/ #'}"
+                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                   InnerRightContent="{my:Translation PageCount, RelativeSource={RelativeSource Mode=TemplatedParent}, Format='/ #'}"
                                    Maximum="{TemplateBinding PageCount, Converter={x:Static my:IntToDecimalConverter.Default}}"
                                    Minimum="1"
                                    ShowButtonSpinner="False"
                                    Value="{Binding CurrentPage, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:IntToDecimalConverter.Default}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <my:PaginationButton Name="{x:Static my:Pagination.PartNextButton}"
                                          Classes="Small"
+                                         my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                          Content="{my:Icon ChevronRight}"
                                          Theme="{TemplateBinding PageButtonTheme}"
                                          ToolTip.Tip="{my:Resource NextPage}" />

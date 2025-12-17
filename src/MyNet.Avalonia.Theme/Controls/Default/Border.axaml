@@ -78,6 +78,15 @@
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
         <Setter Property="Margin" Value="{StaticResource MyNet.Margin.Popup}" />
+
+        <Style Selector="^:not(.no-transitions)">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="{StaticResource MyNet.Animation.Fade}" Easing="CircularEaseOut" />
+                    <TransformOperationsTransition Property="RenderTransform" Duration="{StaticResource MyNet.Animation.Slide}" Easing="CircularEaseOut" />
+                </Transitions>
+            </Setter>
+        </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.Border.State" TargetType="Border">

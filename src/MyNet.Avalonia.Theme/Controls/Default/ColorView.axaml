@@ -8,10 +8,6 @@
         <Setter Property="AutomationProperties.Name" Value="{Binding Converter={x:Static my:StringConverter.Default}, DataType={x:Type Color}}" />
         <Setter Property="Background" Value="{Binding Converter={x:Static my:BrushConverter.Default}, DataType={x:Type Color}}" />
         <Setter Property="BorderThickness" Value="1.4" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="Transparent" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="Transparent" />
-        <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeBrush Foreground}" />
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ListBox.ColorPalette" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
@@ -25,8 +21,9 @@
         <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.Padding" Value="0" />
-        <Setter Property="my:ItemsAssist.Margin" Value="1" />        
-        <Setter Property="my:ClassesAssist.AddClasses" Value="Cards" />
+        <Setter Property="my:ItemsAssist.Margin" Value="1" />
+        <Setter Property="my:ClassesAssist.AddClasses" Value="Cards Outlined" />
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="ItemTemplate">
             <DataTemplate DataType="{x:Type Color}" />
@@ -46,6 +43,7 @@
         <Setter Property="Palette">
             <my:DarkColorPalette />
         </Setter>
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type ColorView}">
                 <Grid RowDefinitions="*,Auto">
@@ -53,6 +51,7 @@
                     <TabControl Name="PART_TabControl"
                                 Grid.Row="0"
                                 Padding="{my:Thickness Medium, Top}"
+                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                 Classes="no-disablable Uniform"
                                 SelectedIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
                         <my:HeaderAssist.IsVisible>
@@ -154,18 +153,18 @@
                                     <!-- RGB / HSV -->
                                     <ListBox VerticalAlignment="Stretch"
                                              Classes="no-disablable Uniform"
-                                             DisplayMemberBinding="{ReflectionBinding Display}"
+                                             my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                             my:ItemsBehavior.UseDisplayMember="True"
+                                             my:ItemsBehavior.EnumSourceType="{x:Type ColorModel}"
                                              IsVisible="{TemplateBinding IsColorModelVisible}"
-                                             ItemTemplate="{x:Null}"
-                                             ItemsSource="{my:EnumSource {x:Type ColorModel}}"
                                              SelectedValue="{Binding ColorModel, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                             SelectedValueBinding="{ReflectionBinding Value}"
                                              Theme="{StaticResource MyNet.Theme.ListBox.Toggle}" />
 
                                     <!-- Hex Value -->
                                     <TextBox Name="PART_HexTextBox"
                                              Grid.Column="1"
                                              Width="130"
+                                             my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                              Margin="{my:Thickness Medium, Left}"
                                              HorizontalAlignment="Stretch"
                                              my:TextFieldAssist.ShowClipboardButton="True"
@@ -192,6 +191,7 @@
                                         <DockPanel>
                                             <NumericUpDown Name="Component1NumericUpDown"
                                                            Classes="no-disablable"
+                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                                            IsVisible="{TemplateBinding IsComponentTextInputVisible}"
                                                            Maximum="{Binding Maximum, ElementName=Component1Slider}"
                                                            Minimum="{Binding Minimum, ElementName=Component1Slider}"
@@ -209,6 +209,7 @@
                                     <HeaderedContentControl Name="Component2HeaderedContentControl" Grid.Row="1">
                                         <DockPanel>
                                             <NumericUpDown Classes="no-disablable"
+                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                                            Maximum="{Binding Maximum, ElementName=Component2Slider}"
                                                            Minimum="{Binding Minimum, ElementName=Component2Slider}"
                                                            Value="{Binding Value, ElementName=Component2Slider}">
@@ -225,6 +226,7 @@
                                             <NumericUpDown Classes="no-disablable"
                                                            FormatString="P0"
                                                            Increment="0.01"
+                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                                            Maximum="{Binding Maximum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
                                                            Minimum="{Binding Minimum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
                                                            Value="{Binding Value, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
@@ -251,6 +253,7 @@
                                     <HeaderedContentControl Name="Component3HeaderedContentControl" Grid.Row="2">
                                         <DockPanel>
                                             <NumericUpDown Classes="no-disablable"
+                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                                            Maximum="{Binding Maximum, ElementName=Component3Slider}"
                                                            Minimum="{Binding Minimum, ElementName=Component3Slider}"
                                                            Value="{Binding Value, ElementName=Component3Slider}">
@@ -266,6 +269,7 @@
                                             </NumericUpDown>
                                             <NumericUpDown Classes="no-disablable"
                                                            FormatString="P0"
+                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                                            Increment="0.01"
                                                            Maximum="{Binding Maximum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
                                                            Minimum="{Binding Minimum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
@@ -294,6 +298,7 @@
                                         <DockPanel>
                                             <NumericUpDown Name="AlphaComponentNumericUpDown"
                                                            Classes="no-disablable"
+                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                                            IsEnabled="{TemplateBinding IsAlphaEnabled}"
                                                            Maximum="{Binding Maximum, ElementName=AlphaComponentSlider}"
                                                            Minimum="{Binding Minimum, ElementName=AlphaComponentSlider}"
@@ -310,6 +315,7 @@
                                             </NumericUpDown>
                                             <NumericUpDown Classes="no-disablable"
                                                            FormatString="P0"
+                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                                            Increment="0.01"
                                                            Maximum="{Binding Maximum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
                                                            Minimum="{Binding Minimum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
@@ -397,6 +403,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ColorView.Simple" TargetType="ColorView">
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
         <Setter Property="Width" Value="260" />
         <Setter Property="ColorSpectrumComponents" Value="SaturationValue" />
         <Setter Property="IsAccentColorsVisible" Value="False" />
@@ -441,6 +448,7 @@
                         <!-- Hexa Value -->
                         <TextBox Name="PART_HexTextBox"
                                  Grid.Column="1"
+                                 my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                  Width="100"
                                  Margin="{my:Thickness Medium, Left}"
                                  HorizontalAlignment="Stretch"
@@ -481,6 +489,7 @@
                         </Grid.IsVisible>
                         <DockPanel>
                             <NumericUpDown Name="Component1NumericUpDown"
+                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                            Classes="no-disablable"
                                            IsVisible="{TemplateBinding IsComponentTextInputVisible}"
                                            Maximum="{Binding Maximum, ElementName=Component1Slider}"
@@ -505,6 +514,7 @@
                         </Grid.IsVisible>
                         <DockPanel>
                             <NumericUpDown Classes="no-disablable"
+                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                            Maximum="{Binding Maximum, ElementName=Component2Slider}"
                                            Minimum="{Binding Minimum, ElementName=Component2Slider}"
                                            Value="{Binding Value, ElementName=Component2Slider}">
@@ -519,6 +529,7 @@
                                 </NumericUpDown.IsVisible>
                             </NumericUpDown>
                             <NumericUpDown Classes="no-disablable"
+                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                            FormatString="P0"
                                            Increment="0.01"
                                            Maximum="{Binding Maximum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
@@ -553,6 +564,7 @@
                         </Grid.IsVisible>
                         <DockPanel>
                             <NumericUpDown Classes="no-disablable"
+                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                            Maximum="{Binding Maximum, ElementName=Component3Slider}"
                                            Minimum="{Binding Minimum, ElementName=Component3Slider}"
                                            Value="{Binding Value, ElementName=Component3Slider}">
@@ -567,6 +579,7 @@
                                 </NumericUpDown.IsVisible>
                             </NumericUpDown>
                             <NumericUpDown Classes="no-disablable"
+                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                            FormatString="P0"
                                            Increment="0.01"
                                            Maximum="{Binding Maximum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
@@ -604,6 +617,7 @@
                         </Grid.IsVisible>
                         <DockPanel>
                             <NumericUpDown Name="AlphaComponentNumericUpDown"
+                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                            Classes="no-disablable"
                                            IsEnabled="{TemplateBinding IsAlphaEnabled}"
                                            Maximum="{Binding Maximum, ElementName=AlphaComponentSlider}"
@@ -620,6 +634,7 @@
                                 </NumericUpDown.IsVisible>
                             </NumericUpDown>
                             <NumericUpDown Classes="no-disablable"
+                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                            FormatString="P0"
                                            Increment="0.01"
                                            Maximum="{Binding Maximum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"

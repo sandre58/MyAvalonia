@@ -138,9 +138,9 @@
         <Setter Property="Focusable" Value="True" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+        
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Brush $self.Foreground}" />
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
@@ -151,14 +151,13 @@
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.Foreground" Value="{DynamicResource MyNet.Brush.Control.Border.Focus}" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Brush $self.(my:ItemsAssist.Foreground), Opacity={StaticResource MyNet.Opacity.Hover}}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Theme Control.Border.Focus}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:ItemsAssist.Foreground), Opacity=Hover}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{Binding $self.(my:ItemsAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:ItemsAssist.Foreground)}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
             <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
-        </Style>
 
         <Setter Property="Template">
             <ControlTemplate TargetType="my:ClockSelector">
@@ -212,25 +211,17 @@
         </Setter>
 
         <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
-            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush Foreground, Opacity=High}" />
         </Style>
 
         <Style Selector="^.Outlined">
-            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
+            <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Surface.Border}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
             <Setter Property="BorderThickness" Value="3" />
         </Style>
 
         <Style Selector="^.Solid">
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Brush $self.Background, Contrast=True}" />
-
-            <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
-                <Setter Property="Background" Value="{my:Brush $self.Foreground}" />
-                <Setter Property="HandBrush" Value="{my:Brush $self.Background, Contrast=True}" />
-                <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Brush $self.Background, Contrast=True}" />
-                <Setter Property="CenterBackground" Value="{my:Brush $self.Background, Contrast=True}" />
-                <Setter Property="CenterBorderBrush" Value="{my:Brush $self.Background, Contrast=True}" />
-            </Style>
+            <Setter Property="Background" Value="{my:Theme Surface.Background}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

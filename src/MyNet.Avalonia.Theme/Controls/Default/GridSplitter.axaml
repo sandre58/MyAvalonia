@@ -11,7 +11,7 @@
         <Setter Property="Background" Value="{my:Theme Control.Border}" />
         <Setter Property="PreviewContent">
             <Template>
-                <Rectangle Fill="{DynamicResource MyNet.Brush.Primary}" />
+                <Rectangle Fill="{my:Theme Primary}" />
             </Template>
         </Setter>
         <Setter Property="Template">

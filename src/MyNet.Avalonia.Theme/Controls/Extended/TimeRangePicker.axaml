@@ -331,6 +331,7 @@
 
                         <Panel Name="PART_PopupContainer">
                             <Popup Name="PART_Popup"
+                                   my:PopupBehavior.EnableSlide="True"
                                    HorizontalOffset="-2"
                                    InheritsTransform="True"
                                    IsLightDismissEnabled="True"
@@ -342,7 +343,7 @@
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <DockPanel>
                                             <Button HorizontalAlignment="Stretch"
-                                                    my:PaletteAssist.Primary="{DynamicResource MyNet.Brush.Positive}"
+                                                    my:PaletteAssist.Primary="{my:Theme Positive}"
                                                     Command="{Binding $parent[my:TimeRangePicker].Confirm}"
                                                     Content="{my:Icon Check}"
                                                     DockPanel.Dock="Bottom"
@@ -648,6 +649,7 @@
 
                         <Panel Name="PART_PopupContainer">
                             <Popup Name="PART_Popup"
+                                   my:PopupBehavior.EnableSlide="True"
                                    HorizontalOffset="-2"
                                    InheritsTransform="True"
                                    IsLightDismissEnabled="True"
@@ -659,7 +661,7 @@
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <DockPanel>
                                             <Button HorizontalAlignment="Stretch"
-                                                    my:PaletteAssist.Primary="{DynamicResource MyNet.Brush.Positive}"
+                                                    my:PaletteAssist.Primary="{my:Theme Positive}"
                                                     Command="{Binding $parent[my:TimeRangePicker].Confirm}"
                                                     Content="{my:Icon Check}"
                                                     DockPanel.Dock="Bottom"

@@ -12,7 +12,6 @@
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
         <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Bottom}" />
         <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Caption}" />
         <Setter Property="my:HeaderAssist.FontFamily" Value="{Binding $self.FontFamily}" />
@@ -24,9 +23,13 @@
         <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Icon.Left}" />
         <Setter Property="ClipToBounds" Value="True" />
 
-        <Style Selector="^">
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-        </Style>
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
+        <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Surface.Border}" />
+        <Setter Property="Background" Value="{my:ThemeRole}" />
+        <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Contrast=True}" />
+        <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
+        <Setter Property="BorderThickness" Value="0" />
 
         <Setter Property="Template">
             <ControlTemplate>
@@ -79,6 +82,7 @@
                                     VerticalAlignment="Top"
                                     Content="{StaticResource MyNet.Geometry.WindowClose}"
                                     IsVisible="False"
+                                    Foreground="{TemplateBinding Foreground}"
                                     Theme="{StaticResource MyNet.Theme.Button.Embedded.Tool}" />
                         </Grid>
                     </Border>
@@ -92,34 +96,26 @@
 
         <!-- Styles -->
         <Style Selector="^.Outlined">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Border}" />
             <Setter Property="Background" Value="Transparent" />
-
-            <Style Selector="^.Solid">
-                <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-                <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
-            </Style>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
+            <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
 
             <Style Selector="^.Light">
-                <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-                <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
+                <Setter Property="Background" Value="{my:ThemeRole Secondary, Opacity=Overlay}" />
             </Style>
-        </Style>
-
-        <Style Selector="^.Solid">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-            <Setter Property="Background" Value="{my:ThemeRole}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
         </Style>
 
         <Style Selector="^.Light">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
             <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
+            <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
         </Style>
 
         <Style Selector="^:success">
+            <Setter Property="my:ThemeAssist.Role" Value="Success" />
             <Setter Property="Header" Value="{my:Resource Success}" />
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
@@ -128,13 +124,11 @@
                     </Template>
                 </Setter.Value>
             </Setter>
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Positive}" />
-            <Setter Property="Background" Value="{my:ThemeRole}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="ClipToBounds" Value="False" />
         </Style>
         <Style Selector="^:warning">
+            <Setter Property="my:ThemeAssist.Role" Value="Warning" />
             <Setter Property="Header" Value="{my:Resource Warning}" />
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
@@ -143,13 +137,11 @@
                     </Template>
                 </Setter.Value>
             </Setter>
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Warning}" />
-            <Setter Property="Background" Value="{my:ThemeRole}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="ClipToBounds" Value="False" />
         </Style>
         <Style Selector="^:error">
+            <Setter Property="my:ThemeAssist.Role" Value="Error" />
             <Setter Property="Header" Value="{my:Resource Error}" />
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
@@ -158,13 +150,11 @@
                     </Template>
                 </Setter.Value>
             </Setter>
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Negative}" />
-            <Setter Property="Background" Value="{my:ThemeRole}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="ClipToBounds" Value="False" />
         </Style>
         <Style Selector="^:information">
+            <Setter Property="my:ThemeAssist.Role" Value="Information" />
             <Setter Property="Header" Value="{my:Resource Information}" />
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
@@ -173,9 +163,6 @@
                     </Template>
                 </Setter.Value>
             </Setter>
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Information}" />
-            <Setter Property="Background" Value="{my:ThemeRole}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="ClipToBounds" Value="False" />
         </Style>

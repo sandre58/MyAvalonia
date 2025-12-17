@@ -26,15 +26,13 @@
             </FocusAdornerTemplate>
         </Setter>
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="my:ThemeAssist.IndicatorColor" Value="{DynamicResource MyNet.Brush.Control.Background.Light}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
-            <Setter Property="my:ThemeAssist.ActiveIndicatorColor" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.(my:ThemeAssist.IndicatorColor), Opacity={StaticResource MyNet.Opacity.Hover}}" />
-        </Style>
-        
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="Background" Value="{my:Theme Control.Background}" />
+        <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:Theme Control.Background.Light}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
+        <Setter Property="my:ThemeAssist.ActiveIndicatorColor" Value="{my:ThemeBrush (my:ThemeAssist.ActiveBackground), Contrast=True}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush (my:ThemeAssist.IndicatorColor), Opacity=Hover}" />
+
         <Setter Property="Template">
             <ControlTemplate TargetType="ToggleSwitch">
                 <Grid ColumnDefinitions="Auto, *">
@@ -145,7 +143,7 @@
                 <Setter Property="Background" Value="{Binding $parent[TemplatedControl].(my:ThemeAssist.ActiveIndicatorColor)}" />
             </Style>
         </Style>
-        
+
         <!-- Colors -->
         <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
             <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
@@ -257,7 +255,7 @@
 
         <!-- Checked -->
         <Style Selector="^:checked">
-            <Setter Property="Foreground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
+            <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveBackground), Contrast=True}" />
         </Style>
 
         <!-- Sizes -->
@@ -274,13 +272,11 @@
     <ControlTheme x:Key="MyNet.Theme.ToggleSwitch.Alternate" TargetType="ToggleSwitch" BasedOn="{StaticResource {x:Type ToggleSwitch}}">
         <Setter Property="ClipToBounds" Value="False" />
 
-        <Style Selector="^">
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:Theme Control.Border}" />
-            <Setter Property="my:ThemeAssist.ActiveIndicatorColor" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground)}" />
-            <Setter Property="Foreground" Value="{my:Brush $self.(my:ThemeAssist.IndicatorColor), Contrast=True}" />
-        </Style>
-        
+        <Setter Property="Background" Value="{my:Theme Control.Background}" />
+        <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:Theme Control.Border}" />
+        <Setter Property="my:ThemeAssist.ActiveIndicatorColor" Value="{my:ThemeBrush (my:ThemeAssist.ActiveBackground)}" />
+        <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.IndicatorColor), Contrast=True}" />
+
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="PART_RootPanelBorder">
@@ -388,13 +384,13 @@
 
         <!-- Checked -->
         <Style Selector="^:checked">
-            <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:Brush $self.(my:ThemeAssist.ActiveIndicatorColor)}" />
+            <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:ThemeBrush (my:ThemeAssist.ActiveIndicatorColor)}" />
 
             <Style Selector="^ /template/ Border#PART_MainBorder">
                 <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Focus}" />
             </Style>
         </Style>
-        
+
         <!-- Layout -->
         <Style Selector="^.Left /template/ DockPanel#PART_RootPanelPanel > Viewbox">
             <Setter Property="DockPanel.Dock" Value="Right" />
@@ -405,17 +401,11 @@
         <Setter Property="OnContentTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
         <Setter Property="OffContentTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Tertiary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole Tertiary}" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
-        </Style>
-        
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="PART_RootPanelPanel">
 
-                    <Border Name="PART_Border"
+                    <Border Name="PART_MainBorder"
                             my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
@@ -506,31 +496,32 @@
             </ControlTemplate>
         </Setter>
 
-        <!-- Checked -->
-        <Style Selector="^:checked">
-            <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.ActiveForeground)}" />
-
-            <Style Selector="^.Shadow /template/ Border#PART_Border">
-                <Setter Property="my:ShadowAssist.Darken" Value="True" />
-            </Style>
-
-            <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="Opacity" Value="1" />
+        <!-- Hover -->
+        <Style Selector="^:not(:disabled):not(:checked):pointerover">
+            <Style Selector="^ /template/ ContentPresenter#PART_OffContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
             </Style>
         </Style>
 
-        <!-- Styles -->
-        <Style Selector="^.Solid">
-            <Setter Property="Background" Value="{my:ThemeRole Opacity=Pressed}" />
-            <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
+        <!-- Checked -->
+        <Style Selector="^:checked">
+            <Style Selector="^ /template/ ContentPresenter#PART_OnContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
+        </Style>
 
-            <Style Selector="^:checked">
-                <Setter Property="Foreground" Value="{Binding $self.(my:ThemeAssist.ActiveForeground)}" />
+        <!-- Solid -->
+        <Style Selector="^.Solid">
+            <Style Selector="^ /template/ ContentPresenter#PART_OnContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
             </Style>
         </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ToggleSwitch.Button.Rounded" TargetType="ToggleSwitch" BasedOn="{StaticResource MyNet.Theme.ToggleButton.Rounded}">
+        <Setter Property="OnContentTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
+        <Setter Property="OffContentTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
+
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="PART_RootPanelPanel">
@@ -622,6 +613,27 @@
                 </Panel>
             </ControlTemplate>
         </Setter>
+
+        <!-- Hover -->
+        <Style Selector="^:not(:disabled):not(:checked):pointerover">
+            <Style Selector="^ /template/ ContentPresenter#PART_OffContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
+        </Style>
+
+        <!-- Checked -->
+        <Style Selector="^:checked">
+            <Style Selector="^ /template/ ContentPresenter#PART_OnContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
+        </Style>
+
+        <!-- Solid -->
+        <Style Selector="^.Solid">
+            <Style Selector="^ /template/ ContentPresenter#PART_OnContentPresenter">
+                <Setter Property="Foreground" Value="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
+            </Style>
+        </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ToggleSwitch.Button.Icon" TargetType="ToggleSwitch" BasedOn="{StaticResource MyNet.Theme.ToggleButton.Icon}">

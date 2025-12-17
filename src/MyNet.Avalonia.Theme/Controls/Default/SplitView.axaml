@@ -10,11 +10,9 @@
         <Setter Property="CompactPaneLength" Value="48" />
         <Setter Property="ClipToBounds" Value="True" />
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-            <Setter Property="PaneBackground" Value="{my:ThemeRole}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Scrim}}" />
-        </Style>
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
+        <Setter Property="PaneBackground" Value="{my:ThemeRole}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Scrim}" />
 
         <Style Selector="^:left">
             <Setter Property="Template">
@@ -37,8 +35,7 @@
                                     <ContentPresenter Name="PART_PanePresenter"
                                                       Content="{TemplateBinding Pane}"
                                                       ContentTemplate="{TemplateBinding PaneTemplate}"
-                                                      Foreground="{my:Brush $parent[SplitView].PaneBackground,
-                                                                            Contrast=True}" />
+                                                      Foreground="{my:ThemeBrush PaneBackground, RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
                                 </Border>
                             </Panel>
 
@@ -121,8 +118,7 @@
                                 <ContentPresenter Name="PART_PanePresenter"
                                                   Content="{TemplateBinding Pane}"
                                                   ContentTemplate="{TemplateBinding PaneTemplate}"
-                                                  Foreground="{my:Brush $parent[SplitView].PaneBackground,
-                                                                            Contrast=True}" />
+                                                  Foreground="{my:ThemeBrush PaneBackground, RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
                             </Border>
                         </Panel>
 
@@ -223,13 +219,13 @@
         </Style>
 
         <Style Selector="^:lightDismiss /template/ Rectangle#LightDismissLayer">
-            <Setter Property="Fill" Value="{TemplateBinding my:ThemeAssist.HoverBackground}" />
+            <Setter Property="Fill" Value="{TemplateBinding (my:ThemeAssist.HoverBackground)}" />
         </Style>
-        
+
         <Style Selector="^:overlay:open /template/ Rectangle#LightDismissLayer">
             <Setter Property="IsVisible" Value="True" />
         </Style>
-        
+
         <Style Selector="^:compactoverlay:open /template/ Rectangle#LightDismissLayer">
             <Setter Property="IsVisible" Value="True" />
         </Style>
@@ -241,19 +237,19 @@
         </Style>
 
         <Style Selector="^.Outlined">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Border}" />
             <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="PaneBackground" Value="Transparent" />
         </Style>
 
         <Style Selector="^.Solid">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
             <Setter Property="PaneBackground" Value="{my:ThemeRole}" />
         </Style>
 
         <Style Selector="^.Light">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
             <Setter Property="PaneBackground" Value="{my:ThemeRole Opacity=Overlay}" />
         </Style>
     </ControlTheme>

@@ -16,7 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AvaloniaXaml Remove="ResourceDictionaries\Brushes.axaml" />
       <AvaloniaXaml Remove="Themes\HighContrast.axaml" />
     </ItemGroup>
 

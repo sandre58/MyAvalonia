@@ -24,13 +24,14 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.CheckBox.Embedded.DataGrid" TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
-        <Setter Property="my:ClassesAssist.Classes" Value="Alternate Inverse no-disablable" />
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
+        <Setter Property="my:ClassesAssist.Classes" Value="Alternate no-disablable" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource MyNet.Theme.DataValidationErrors.Glyph}" />
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.NumericUpDown.Embedded.DataGrid" TargetType="NumericUpDown" BasedOn="{StaticResource {x:Type NumericUpDown}}">
-        <Setter Property="my:ClassesAssist.Classes" Value="Inverse" />
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:IconAssist.IconTemplate" Value="{StaticResource MyNet.DataTemplate.PathIcon}" />
@@ -38,7 +39,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.TextBox.Embedded.DataGrid" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-        <Setter Property="my:ClassesAssist.Classes" Value="Inverse" />
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:IconAssist.IconTemplate" Value="{StaticResource MyNet.DataTemplate.PathIcon}" />
@@ -47,7 +48,7 @@
     <ControlTheme x:Key="DataGridCellTextBoxTheme" TargetType="TextBox" BasedOn="{StaticResource MyNet.Theme.TextBox.Embedded.DataGrid}" />
 
     <ControlTheme x:Key="MyNet.Theme.ComboBox.Embedded.DataGrid" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
-        <Setter Property="my:ClassesAssist.Classes" Value="Inverse" />
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:IconAssist.IconTemplate" Value="{StaticResource MyNet.DataTemplate.PathIcon}" />
@@ -55,7 +56,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.DatePicker.Embedded.DataGrid" TargetType="DatePicker" BasedOn="{StaticResource {x:Type DatePicker}}">
-        <Setter Property="my:ClassesAssist.Classes" Value="Inverse" />
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:IconAssist.IconTemplate" Value="{StaticResource MyNet.DataTemplate.PathIcon}" />
@@ -63,7 +64,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.CalendarDatePicker.Embedded.DataGrid" TargetType="my:CalendarDatePicker" BasedOn="{StaticResource {x:Type my:CalendarDatePicker}}">
-        <Setter Property="my:ClassesAssist.Classes" Value="Inverse" />
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:IconAssist.IconTemplate" Value="{StaticResource MyNet.DataTemplate.PathIcon}" />
@@ -71,7 +72,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.TimePicker.Embedded.DataGrid" TargetType="my:TimePicker" BasedOn="{StaticResource {x:Type my:TimePicker}}">
-        <Setter Property="my:ClassesAssist.Classes" Value="Inverse" />
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:IconAssist.IconTemplate" Value="{StaticResource MyNet.DataTemplate.PathIcon}" />
@@ -123,7 +124,7 @@
                                    Grid.Column="1"
                                    Width="1"
                                    VerticalAlignment="Stretch"
-                                   Fill="{DynamicResource MyNet.Brush.Surface.Border}" />
+                                   Fill="{my:Theme Surface.Border}" />
                     </Grid>
                 </Panel>
             </ControlTemplate>
@@ -134,7 +135,7 @@
 
             <Style Selector="^:current">
                 <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                    <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Scrim}" />
+                    <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Pressed}" />
                 </Style>
             </Style>
             <Style Selector="^:focus">
@@ -193,7 +194,7 @@
                                     <ContentPresenter Name="PART_Content"
                                                       Content="{TemplateBinding Content}"
                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                      Opacity="{StaticResource MyNet.Opacity.High}" />
+                                                      Opacity="{DynamicResource MyNet.Opacity.High}" />
                                     <PathIcon Name="SortIcon"
                                               Grid.Column="1"
                                               Classes="Glyph"
@@ -480,7 +481,7 @@
 
     <ControlTheme x:Key="{x:Type DataGridRowGroupHeader}" TargetType="DataGridRowGroupHeader">
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background.Dark}" />
+        <Setter Property="Background" Value="{my:Theme Surface.Background.Dark}" />
         <Setter Property="Margin" Value="{my:Thickness Top=10, Bottom=2}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Template">
@@ -539,19 +540,19 @@
         </Setter>
         <Setter Property="DropLocationIndicatorTemplate">
             <Template>
-                <Rectangle Width="2" Fill="{DynamicResource MyNet.Brush.Primary}" />
+                <Rectangle Width="2" Fill="{my:ThemeRole RelativeSource={RelativeSource AncestorType=DataGrid}}" />
             </Template>
         </Setter>
 
         <Style Selector="^">
 
             <!-- DataGrid -->
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:ThemeAssist.Role" Value="Primary" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
+            <Setter Property="BorderBrush" Value="{my:Theme Surface.Border}" />
             <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
-            <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-            <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
+            <Setter Property="HorizontalGridLinesBrush" Value="{my:Theme Surface.Border}" />
+            <Setter Property="VerticalGridLinesBrush" Value="{my:Theme Surface.Border}" />
 
             <!-- Headers -->
             <Setter Property="HeadersVisibility" Value="Column" />
@@ -565,10 +566,10 @@
             <Setter Property="my:HeaderAssist.Opacity" Value="1" />
             <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
             <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
-            <Setter Property="my:HeaderAssist.Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
+            <Setter Property="my:HeaderAssist.Background" Value="{my:Theme Control.Background}" />
             <Setter Property="my:HeaderAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Brush $self.(my:HeaderAssist.Background), Contrast=True}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
 
             <!-- Row -->
             <Setter Property="my:DataGridAssist.ShowSelection" Value="True" />
@@ -578,14 +579,14 @@
             <Setter Property="RowBackground" Value="Transparent" />
             <Setter Property="my:DataGridAssist.AlternateRowBackground" Value="{my:ThemeBrush Foreground, Opacity=Overlay}" />
             <Setter Property="my:DataGridAssist.RowForeground" Value="{my:ThemeBrush Foreground}" />
-            <Setter Property="my:DataGridAssist.RowBorderBrush" Value="{Binding $self.HorizontalGridLinesBrush}" />
+            <Setter Property="my:DataGridAssist.RowBorderBrush" Value="{my:ThemeBrush HorizontalGridLinesBrush}" />
             <Setter Property="my:DataGridAssist.RowBorderThickness" Value="0" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
             <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
             <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="Transparent" />
-            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.(my:ThemeAssist.ActiveBackground), Contrast=True}" />
+            <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveBackground), Contrast=True}" />
 
             <!-- Cell -->
             <Setter Property="my:DataGridAssist.ShowCellSelection" Value="False" />
@@ -594,8 +595,8 @@
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="1" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
-            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.Scrim}}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), Opacity=Focus}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), Opacity=Pressed}" />
         </Style>
 
         <Setter Property="Template">

@@ -9,8 +9,11 @@
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         <Setter Property="TextWrapping" Value="NoWrap" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
-        <Setter Property="Foreground" Value="{my:ThemeRole}" />
+
+
+        <Style Selector="^[(my|ThemeAssist.Role)=Primary], ^[(my|ThemeAssist.Role)=Accent], ^[(my|ThemeAssist.Role)=Success], ^[(my|ThemeAssist.Role)=Warning], ^[(my|ThemeAssist.Role)=Error], ^[(my|ThemeAssist.Role)=Information], ^[(my|ThemeAssist.Role)=Neutral], ^[(my|ThemeAssist.Role)=Custom]">
+            <Setter Property="Foreground" Value="{my:ThemeRole}" />
+        </Style>
 
         <Style Selector="^.Underline">
             <Setter Property="TextDecorations" Value="Underline" />

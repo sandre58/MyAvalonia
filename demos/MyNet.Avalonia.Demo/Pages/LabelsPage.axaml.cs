@@ -30,12 +30,11 @@ internal sealed partial class LabelsPage : AutoBuildPage
                                                                                      .AddAllRoles()
                                                                                      .AddAllSizes(),
 
-           new ControlThemeData("Tag").AddLayouts("Circle")
-                                      .AddStyles("Light", "Solid", "Outlined")
-                                      .AddCartesianStyles("Solid", "Shadow")
-                                      .AddCartesianStyles("Light", "Outlined")
-                                      .AddAllRoles()
-                                      .AddSizes("Small", "Medium", "Large"),
+           new ControlThemeData("Tag", DefaultStyleDisplay.WithRoles).AddLayouts("Circle")
+                                                                     .AddStyles("Light", "Outlined", "Outlined Text", "Shadow")
+                                                                     .AddCartesianStyles("Light", "Outlined")
+                                                                     .AddAllRoles()
+                                                                     .AddSizes("Small", "Medium", "Large"),
 
            new("Code")
         ];

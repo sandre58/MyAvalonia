@@ -68,5 +68,11 @@ public static class PerformanceMonitor
     /// </summary>
     /// <param name="message">The message to log.</param>
     public static void Debug(string message) => IsEnabled.IfTrue(() => LogManager.Debug(message));
+
+    /// <summary>
+    /// Logs a warning message if performance logging is enabled.
+    /// </summary>
+    /// <param name="message">The message to log.</param>
+    public static void Warning(string message) => IsEnabled.IfTrue(() => LogManager.Warning(message));
 }
 #pragma warning restore CS0162 // Unreachable code detected

@@ -4,7 +4,7 @@
                     xmlns:my="http://mynet.com/avalonia">
 
     <DataTemplate x:Key="MyNet.DataTemplates.NavigationMenuItem.Icon" x:DataType="StreamGeometry">
-        <my:OutlinedIcon Classes="Light Primary" Data="{Binding}" IsActive="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=my:NavigationMenuItem}, Path=IsActive, Mode=TwoWay}" />
+        <my:OutlinedIcon Data="{Binding}" my:ThemeAssist.Role="Primary" Classes="Hover" IsActive="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=my:NavigationMenuItem}, Path=IsActive, Mode=TwoWay}" />
     </DataTemplate>
 
     <!-- Menu -->
@@ -136,6 +136,7 @@
 
                                 <!-- Popup -->
                                 <Popup Name="PART_Popup"
+                                       my:PopupBehavior.EnableSlide="True"
                                        Grid.Column="0"
                                        IsLightDismissEnabled="True"
                                        Placement="RightEdgeAlignedTop"
@@ -173,9 +174,9 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
-        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Brush $self.Foreground}" />
+        <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground}" />
         <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
-        <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:Brush $self.Foreground}" />
+        <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeBrush Foreground}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Menu}" />
@@ -295,7 +296,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}"
-                            Opacity="{StaticResource MyNet.Opacity.High}">
+                            Opacity="{DynamicResource MyNet.Opacity.High}">
 
                         <Grid Name="PART_RootGrid" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>

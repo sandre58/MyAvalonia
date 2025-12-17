@@ -42,7 +42,7 @@ internal sealed partial class ToggleSplitButtonsPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData()
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
             .AddLayouts("Circle")
             .AddStyles("Light", "Solid", "Outlined", "Text")
             .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")

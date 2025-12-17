@@ -129,7 +129,7 @@
                                                 <Ellipse HorizontalAlignment="Stretch"
                                                          VerticalAlignment="Stretch"
                                                          my:ShadowAssist.ShadowDepth="Depth1"
-                                                         Fill="{DynamicResource MyNet.Brush.Transparency.Small}" />
+                                                         Fill="{my:Theme Transparency.Small}" />
                                                 <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:BrushConverter.Default}}" />
                                             </Grid>
 
@@ -173,6 +173,7 @@
                                     <ToggleButton Name="PART_Button"
                                                   Grid.Column="5"
                                                   my:ThemeAssist.ActiveBackground="{my:ThemeRole, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                  my:ThemeAssist.ActiveForeground="{my:ThemeRole, RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}"
                                                   Classes="Stretch no-disablable"
                                                   Content="{StaticResource MyNet.Geometry.Palette}"
                                                   IsChecked="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
@@ -197,6 +198,7 @@
 
                         <Panel Name="PART_PopupContainer">
                             <Popup Name="PART_Popup"
+                                   my:PopupBehavior.EnableSlide="True"
                                    HorizontalOffset="-2"
                                    InheritsTransform="True"
                                    IsLightDismissEnabled="True"
@@ -440,7 +442,7 @@
                                             <Ellipse HorizontalAlignment="Stretch"
                                                      VerticalAlignment="Stretch"
                                                      my:ShadowAssist.ShadowDepth="Depth1"
-                                                     Fill="{DynamicResource MyNet.Brush.Transparency.Small}" />
+                                                     Fill="{my:Theme Transparency.Small}" />
                                             <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:BrushConverter.Default}}" />
                                         </Grid>
 
@@ -487,6 +489,7 @@
                                               Grid.Column="5"
                                               Margin="{my:Thickness Small, Left}"
                                               my:ThemeAssist.ActiveBackground="{my:ThemeRole, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                              my:ThemeAssist.ActiveForeground="{my:ThemeRole, RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}"
                                               Classes="no-disablable"
                                               Content="{StaticResource MyNet.Geometry.Palette}"
                                               IsChecked="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
@@ -523,6 +526,7 @@
 
                         <Panel Name="PART_PopupContainer">
                             <Popup Name="PART_Popup"
+                                   my:PopupBehavior.EnableSlide="True"
                                    HorizontalOffset="-2"
                                    InheritsTransform="True"
                                    IsLightDismissEnabled="True"

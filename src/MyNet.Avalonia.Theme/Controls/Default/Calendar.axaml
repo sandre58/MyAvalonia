@@ -105,7 +105,7 @@
                            VerticalAlignment="Center"
                            x:DataType="x:String"
                            FontSize="{StaticResource MyNet.Font.Size.SubCaption}"
-                           Opacity="{StaticResource MyNet.Opacity.High}"
+                           Opacity="{DynamicResource MyNet.Opacity.High}"
                            Text="{Binding}" />
             </Template>
         </Setter>

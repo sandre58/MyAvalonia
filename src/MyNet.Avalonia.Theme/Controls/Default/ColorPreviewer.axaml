@@ -26,7 +26,7 @@
                                     Grid.ColumnSpan="2"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
-                                    Background="{DynamicResource MyNet.Brush.Transparency.Small}" />
+                                    Background="{my:Theme Transparency.Small}" />
                             <Border Name="PART_AccentDecrement2Border"
                                     Grid.Column="0"
                                     Background="{TemplateBinding HsvColor, Converter={StaticResource MyNet.Converter.Brush.Lighten.High}}"
@@ -47,7 +47,7 @@
                                     Grid.ColumnSpan="2"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
-                                    Background="{DynamicResource MyNet.Brush.Transparency.Small}" />
+                                    Background="{my:Theme Transparency.Small}" />
                             <Border Name="PART_AccentIncrement1Border"
                                     Grid.Column="0"
                                     Background="{TemplateBinding HsvColor, Converter={StaticResource MyNet.Converter.Brush.Darken.Low}}"
@@ -65,7 +65,7 @@
                                 my:ShadowAssist.ShadowDepth="{StaticResource MyNet.Shadow.Control}"
                                 CornerRadius="{TemplateBinding CornerRadius}">
                             <Panel>
-                                <Border Background="{DynamicResource MyNet.Brush.Transparency.Small}" CornerRadius="{TemplateBinding CornerRadius}" />
+                                <Border Background="{my:Theme Transparency.Small}" CornerRadius="{TemplateBinding CornerRadius}" />
                                 <Border HorizontalAlignment="Stretch"
                                         VerticalAlignment="Stretch"
                                         Background="{TemplateBinding HsvColor, Converter={x:Static my:BrushConverter.Default}}"
@@ -79,7 +79,7 @@
                             CornerRadius="{TemplateBinding CornerRadius}"
                             IsVisible="{Binding !IsAccentColorsVisible, RelativeSource={RelativeSource TemplatedParent}}">
                         <Panel>
-                            <Border Background="{DynamicResource MyNet.Brush.Transparency.Small}" CornerRadius="{TemplateBinding CornerRadius}" />
+                            <Border Background="{my:Theme Transparency.Small}" CornerRadius="{TemplateBinding CornerRadius}" />
                             <Border HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     Background="{TemplateBinding HsvColor, Converter={x:Static my:BrushConverter.Default}}"

@@ -127,7 +127,8 @@
                                         Margin="{my:Thickness Default}"
                                         IsDefault="True"
                                         Focusable="False"
-                                        Classes="Text Primary Small"
+                                        Classes="Text Small"
+                                        my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                         ToolTip.Tip="{my:Resource Validate}"
                                         Content="{my:Icon Check}" />
                                 <Button Name="PART_DismissButton"
@@ -217,13 +218,13 @@
         <Setter Property="my:PopupAssist.Role" Value="{Binding $self.(my:ThemeAssist.Role)}" />
         <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
         <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
+        <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0.5" />
         <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:PopupAssist.Foreground), Opacity=Hover}" />
         <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
         <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:PopupAssist.Foreground)}" />
-        <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole}" />
-        <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole Role='(my:PopupAssist.Role)'}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:PopupAssist.Foreground)}" />
         <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:PopupAssist.Foreground)}" />
 
         <Setter Property="Template">
@@ -394,6 +395,7 @@
                         </Border>
 
                         <Popup Name="PART_Popup"
+                               my:PopupBehavior.EnableSlide="True"
                                HorizontalOffset="3"
                                InheritsTransform="True"
                                IsLightDismissEnabled="True"
@@ -716,6 +718,7 @@
                         </Border>
 
                         <Popup Name="PART_Popup"
+                               my:PopupBehavior.EnableSlide="True"
                                HorizontalOffset="3"
                                InheritsTransform="True"
                                IsLightDismissEnabled="True"

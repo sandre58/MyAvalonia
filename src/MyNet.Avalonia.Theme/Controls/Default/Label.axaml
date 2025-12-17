@@ -12,11 +12,10 @@
         <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="Focusable" Value="False" />
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{Binding $parent[Control].(TextElement.Foreground)}" />
+        <Style Selector="^[(my|ThemeAssist.Role)=Primary], ^[(my|ThemeAssist.Role)=Accent], ^[(my|ThemeAssist.Role)=Success], ^[(my|ThemeAssist.Role)=Warning], ^[(my|ThemeAssist.Role)=Error], ^[(my|ThemeAssist.Role)=Information], ^[(my|ThemeAssist.Role)=Neutral], ^[(my|ThemeAssist.Role)=Custom]">
             <Setter Property="Foreground" Value="{my:ThemeRole}" />
         </Style>
-        
+
         <Setter Property="Template">
             <ControlTemplate TargetType="Label">
                 <ContentPresenter Name="PART_ContentPresenter"
@@ -36,9 +35,10 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.Label.Code" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-        <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-        <Setter Property="Foreground" Value="{my:Brush $parent[TemplatedControl].Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
+        <Setter Property="Background" Value="{my:Theme Control.Background}" />
+        <Setter Property="Foreground" Value="{my:ThemeRole Opacity=High}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Small}" />
@@ -46,15 +46,25 @@
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
     </ControlTheme>
 
-    <ControlTheme x:Key="MyNet.Theme.Label.Tag" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+    <ControlTheme x:Key="MyNet.Theme.Label.Tag" TargetType="Label">
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+        <Setter Property="ContentTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="UseLayoutRounding" Value="False" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Medium}" />
         <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
 
-        <Style Selector="^">
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-        </Style>
+        <!-- Default colors -->
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
+
+        <!-- Default Theme -->
+        <Setter Property="Background" Value="{my:ThemeRole}" />
+        <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="Label">
@@ -73,6 +83,7 @@
                                       Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
                                       FontSize="{TemplateBinding FontSize}"
+                                      Foreground="{TemplateBinding Foreground}"
                                       RecognizesAccessKey="True"
                                       UseLayoutRounding="True" />
                 </Border>
@@ -82,32 +93,21 @@
         <!-- Styles -->
         <Style Selector="^.Outlined">
             <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Border}" />
-            <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Application.Foreground}" />
-            <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Secondary}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
 
-            <Style Selector="^.Solid">
-                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Control.Border}" />
-                <Setter Property="BorderBrush" Value="{my:ThemeRole Tertiary}" />
+            <Style Selector="^.Text">
+            <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Application.Foreground}" />
+                <Setter Property="Foreground" Value="{my:ThemeRole Secondary}" />
             </Style>
-
-            <Style Selector="^.Light">
-                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Control.Border}" />
-                <Setter Property="BorderBrush" Value="{my:ThemeRole Tertiary}" />
-            </Style>
-        </Style>
-
-        <Style Selector="^.Solid">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="Background" Value="{my:ThemeRole}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
         </Style>
 
         <Style Selector="^.Light">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Control.Background}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Application.Foreground}" />
             <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole}" />
         </Style>
 
         <!-- Sizes -->

@@ -9,17 +9,10 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="WatermarkFontSize" Value="{StaticResource MyNet.Font.Size}" />
-        <Setter Property="ActiveForeground" Value="{DynamicResource MyNet.Brush.Primary}" />
-        <Setter Property="InactiveForeground">
-            <Setter.Value>
-                <SolidColorBrush Opacity="{StaticResource MyNet.Opacity.Medium}" Color="{DynamicResource MyNet.Color.Application.Foreground}" />
-            </Setter.Value>
-        </Setter>
-        <Setter Property="InnerForeground">
-            <Setter.Value>
-                <SolidColorBrush Opacity="{StaticResource MyNet.Opacity.High}" Color="{DynamicResource MyNet.Color.Application.Foreground}" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="ActiveForeground" Value="{my:ThemeRole}" />
+        <Setter Property="InactiveForeground" Value="{my:Theme Application.Foreground, Opacity=Medium}" />
+        <Setter Property="InnerForeground" Value="{my:Theme Application.Foreground, Opacity=High}" />
         <Setter Property="InnerFontSize" Value="{StaticResource MyNet.Font.Size}" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -40,13 +33,12 @@
                         <!-- Prefix -->
                         <ContentPresenter Name="PART_InnerLeft"
                                           Grid.Column="0"
-                                          Padding="{my:Thickness Default,
-                                                                 Right}"
+                                          Padding="{my:Thickness Default, Right}"
                                           VerticalAlignment="Center"
                                           Content="{TemplateBinding InnerLeftContent}"
                                           Focusable="False"
                                           Foreground="{TemplateBinding InnerForeground}"
-                                          TextBlock.FontSize="{TemplateBinding InnerFontSize}" />
+                                          TextElement.FontSize="{TemplateBinding InnerFontSize}" />
 
                         <!-- Text -->
                         <ContentPresenter Name="PART_ContentPresenter"
@@ -59,13 +51,12 @@
                         <!-- Suffix -->
                         <ContentPresenter Name="PART_InnerRight"
                                           Grid.Column="2"
-                                          Padding="{my:Thickness Default,
-                                                                 Left}"
+                                          Padding="{my:Thickness Default, Left}"
                                           VerticalAlignment="Center"
                                           Content="{TemplateBinding InnerRightContent}"
                                           Focusable="False"
                                           Foreground="{TemplateBinding InnerForeground}"
-                                          TextBlock.FontSize="{TemplateBinding InnerFontSize}" />
+                                          TextElement.FontSize="{TemplateBinding InnerFontSize}" />
                     </Grid>
                 </Grid>
             </ControlTemplate>

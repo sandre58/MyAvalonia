@@ -10,15 +10,14 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="BorderThickness" Value="0" />
 
-        <Style Selector="^">
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush Foreground, Opacity=Hover}" />
-            <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
-            <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="Transparent" />
-        </Style>
-        
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="{my:Theme Control.Background}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeRole Opacity=Hover}" />
+        <Setter Property="my:ThemeAssist.HoverBorderBrush" Value="Transparent" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole Opacity=Focus}" />
+        <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="Transparent" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">

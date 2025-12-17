@@ -4,20 +4,13 @@
     <ControlTheme x:Key="{x:Type my:OutlinedIcon}" TargetType="my:OutlinedIcon">
         <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Small}" />
         <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Small}" />
-        <Setter Property="StrokeThickness" Value="0.4" />
-        <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity=0.2}" />
-        <Setter Property="BorderBrush" Value="{my:Brush $self.Foreground}" />
-        <Setter Property="ActiveBackground" Value="{my:Brush $self.Foreground}" />
-        <Setter Property="ActiveBorderBrush" Value="{my:Brush $self.Foreground}" />
+
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
+        <Setter Property="Background" Value="{my:ThemeRole}" />
+        <Setter Property="ActiveBackground" Value="Transparent" />
+        <Setter Property="ActiveBorderBrush" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{Binding $parent[TemplatedControl].Foreground}" />
-            <Setter Property="my:PaletteAssist.Secondary" Value="{Binding $parent[TemplatedControl].Foreground}" />
-            <Setter Property="ActiveBackground" Value="{my:ThemeRole}" />
-            <Setter Property="ActiveBorderBrush" Value="{my:ThemeRole Secondary}" />
-        </Style>
-        
         <Setter Property="Template">
             <ControlTemplate TargetType="my:OutlinedIcon">
                 <Border Background="Transparent">
@@ -53,9 +46,21 @@
             <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.ExtraLarge}" />
             <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.ExtraLarge}" />
         </Style>
+
         <Style Selector="^.Light">
-            <Setter Property="Background" Value="{my:Brush $self.Foreground, Opacity={StaticResource MyNet.Opacity.High}}" />
-            <Setter Property="BorderBrush" Value="{Binding $self.Background}" />
+            <Setter Property="Background" Value="{my:ThemeRole Opacity=Medium}" />
+        </Style>
+
+        <Style Selector="^.Outlined">
+            <Setter Property="StrokeThickness" Value="0.4" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
+        </Style>
+
+        <Style Selector="^.Hover">
+            <Setter Property="Background" Value="{my:ThemeBrush Foreground, Opacity=Medium}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeBrush Foreground, Opacity=Medium}" />
+            <Setter Property="ActiveBackground" Value="{my:ThemeRole}" />
+            <Setter Property="ActiveBorderBrush" Value="{my:ThemeRole}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

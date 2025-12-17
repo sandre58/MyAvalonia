@@ -106,7 +106,7 @@
         </Style>
 
         <Style Selector="^ /template/ Border#PART_ContentContainer">
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Popup.Background}" />
+            <Setter Property="Background" Value="{my:Theme Popup.Background}" />
             <Setter Property="CornerRadius" Value="2" />
             <Setter Property="Padding" Value="4, 8" />
         </Style>
@@ -147,13 +147,11 @@
         </Setter>
         <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
-            <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:ThemeRole}" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
-        </Style>
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
+        <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:ThemeRole}" />
+        <Setter Property="Background" Value="{my:Theme Control.Background}" />
+        <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
 
         <Style Selector="^:horizontal">
             <Setter Property="Template">

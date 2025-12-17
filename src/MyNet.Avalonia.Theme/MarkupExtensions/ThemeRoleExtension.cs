@@ -30,6 +30,11 @@ public class ThemeRoleExtension : ThemeBrushExtensionBase
     public PaletteColor Type { get; set; } = PaletteColor.Primary;
 
     /// <summary>
+    /// Gets or sets the path to provide role.
+    /// </summary>
+    public string Role { get; set; } = $"(my:{nameof(ThemeAssist)}.Role)";
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="ThemeRoleExtension"/> class with the specified color type.
     /// </summary>
     /// <param name="type">The palette color type to use.</param>
@@ -54,7 +59,7 @@ public class ThemeRoleExtension : ThemeBrushExtensionBase
     {
         Bindings =
         {
-            new Binding($"(my:{nameof(ThemeAssist)}.Role)")
+            new Binding(Role)
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = RelativeSource,

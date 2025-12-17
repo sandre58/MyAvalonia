@@ -24,9 +24,9 @@
     <!-- Thumb -->
     <ControlTheme x:Key="MyNet.Theme.Thumb.Embedded.ScrollBar" TargetType="{x:Type Thumb}" BasedOn="{StaticResource MyNet.Theme.Thumb.Border}">
         <Setter Property="CornerRadius" Value="24" />
-        <Setter Property="Background" Value="{my:Brush $parent[ScrollBar].BorderBrush, Opacity={StaticResource MyNet.Opacity.Overlay}}" />
-        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Brush $parent[ScrollBar].BorderBrush, Opacity={StaticResource MyNet.Opacity.Hover}}" />
-        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Brush $parent[ScrollBar].BorderBrush, Opacity={StaticResource MyNet.Opacity.Focus}}" />
+        <Setter Property="Background" Value="{my:ThemeBrush BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}}, Opacity=Drag}" />
+        <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeBrush BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}}, Opacity=Hover}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeBrush BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}}, Opacity=Focus}" />
 
         <Style Selector="^:not(.no-transitions)">
             <Setter Property="Transitions">
@@ -55,10 +55,10 @@
                                           Height="{TemplateBinding my:ScrollViewerAssist.ActiveThumbThickness}"
                                           Margin="1 0 0 0"
                                           Padding="0"
+                                          my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                           my:PaletteAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="Text"
-                                          Content="{my:Icon ChevronLeft,
-                                                            Size=8}"
+                                          Content="{my:Icon ChevronLeft, Size=8}"
                                           Focusable="False"
                                           IsVisible="{TemplateBinding my:ScrollViewerAssist.ButtonsIsVisible}"
                                           Opacity="0"
@@ -90,10 +90,10 @@
                                           Height="{TemplateBinding my:ScrollViewerAssist.ActiveThumbThickness}"
                                           Margin="0 0 1 0"
                                           Padding="0"
+                                          my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                           my:PaletteAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="Text"
-                                          Content="{my:Icon ChevronRight,
-                                                            Size=8}"
+                                          Content="{my:Icon ChevronRight, Size=8}"
                                           Focusable="False"
                                           IsVisible="{TemplateBinding my:ScrollViewerAssist.ButtonsIsVisible}"
                                           Opacity="0"
@@ -125,10 +125,10 @@
                                           Height="{TemplateBinding my:ScrollViewerAssist.ActiveThumbThickness}"
                                           Margin="0 0 0 1"
                                           Padding="0"
+                                          my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                           my:PaletteAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="Text"
-                                          Content="{my:Icon ChevronUp,
-                                                            Size=8}"
+                                          Content="{my:Icon ChevronUp, Size=8}"
                                           Focusable="False"
                                           IsVisible="{TemplateBinding my:ScrollViewerAssist.ButtonsIsVisible}"
                                           Opacity="0"
@@ -161,10 +161,10 @@
                                           Height="{TemplateBinding my:ScrollViewerAssist.ActiveThumbThickness}"
                                           Margin="0 1 0 0"
                                           Padding="0"
+                                          my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                           my:PaletteAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="Text"
-                                          Content="{my:Icon ChevronDown,
-                                                            Size=8}"
+                                          Content="{my:Icon ChevronDown, Size=8}"
                                           Focusable="False"
                                           IsVisible="{TemplateBinding my:ScrollViewerAssist.ButtonsIsVisible}"
                                           Opacity="0"
@@ -197,8 +197,9 @@
     <ControlTheme x:Key="{x:Type ScrollViewer}" TargetType="ScrollViewer">
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{my:ThemeBrush Foreground}" />
+        <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Template">

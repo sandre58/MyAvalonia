@@ -345,8 +345,8 @@
         <!-- ============================================ -->
         <Border Padding="20"
                 my:FormItem.NoLabel="True"
-                Background="{DynamicResource MyNet.Brush.Information}"
-                BorderBrush="{DynamicResource MyNet.Brush.Information.Border}"
+                Background="{my:Theme Information}"
+                BorderBrush="{my:Theme Information.Border}"
                 BorderThickness="2"
                 CornerRadius="8">
             <StackPanel Spacing="10">

@@ -8,7 +8,7 @@
         <Setter Property="VerticalContentAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Focusable" Value="false" />
-        <Setter Property="RippleOpacity" Value="{StaticResource MyNet.Opacity.Pressed}" />
+        <Setter Property="RippleOpacity" Value="{DynamicResource MyNet.Opacity.Pressed}" />
         <Setter Property="RippleFill" Value="{my:ThemeBrush Foreground}" />
         <Setter Property="Template">
             <ControlTemplate>

@@ -124,9 +124,7 @@
         <Style Selector="^.Solid">
             <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
             <Setter Property="Background" Value="{my:ThemeRole}" />
-            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Foreground" Value="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
-            </Style>
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
         </Style>
 
         <!-- Text -->
@@ -400,6 +398,11 @@
 
         <!-- Hover -->
         <Style Selector="^:not(:disabled):pointerover">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <!-- Active (for button with state "selected") -->
+        <Style Selector="^:selected, ^:checked, ^.Selected">
             <Setter Property="Opacity" Value="1" />
         </Style>
 

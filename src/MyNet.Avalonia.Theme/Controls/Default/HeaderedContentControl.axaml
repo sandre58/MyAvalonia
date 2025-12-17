@@ -29,9 +29,7 @@
         <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Icon.Left}" />
         <Setter Property="ClipToBounds" Value="True" />
 
-        <Style Selector="^">
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-        </Style>
+        <Setter Property="Background" Value="{my:Theme Surface.Background}" />
 
         <Setter Property="Template">
             <ControlTemplate>
@@ -229,56 +227,44 @@
         </Style>
 
         <Style Selector="^.Outlined">
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Border}" />
             <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Background" Value="Transparent" />
 
-            <Style Selector="^:not(.Custom)">
-                <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-            </Style>
-
             <Style Selector="^.Solid">
-                <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-                <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
+                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Surface.Background}" />
+                <Setter Property="Background" Value="{my:ThemeRole Secondary}" />
             </Style>
 
             <Style Selector="^.Light">
-                <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-                <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
+                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Surface.Background}" />
+                <Setter Property="Background" Value="{my:ThemeRole Secondary}" />
             </Style>
         </Style>
 
         <Style Selector="^.Solid">
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
             <Setter Property="Background" Value="{my:ThemeRole}" />
             <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
-
-            <Style Selector="^:not(.Custom)">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-            </Style>
         </Style>
 
         <Style Selector="^.Light">
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
             <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
-
-            <Style Selector="^:not(.Custom)">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Background}" />
-            </Style>
         </Style>
 
         <Style Selector="^.Headered">
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Border}" />
             <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeRole}" />
             <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Contrast=True}" />
-
-            <Style Selector="^:not(.Custom)">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-            </Style>
         </Style>
 
         <Style Selector="^.Labelled">
             <Setter Property="Padding" Value="0" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.Opacity" Value="{StaticResource MyNet.Opacity.High}" />
+            <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
             <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Bottom}" />
             <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
 
@@ -349,13 +335,13 @@
 
         <Style Selector="^.Watermark">
             <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Brush $self.Foreground}" />
-            <Setter Property="my:HeaderAssist.Opacity" Value="{StaticResource MyNet.Opacity.Medium}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
+            <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
         </Style>
 
         <Style Selector="^.Regular">
             <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Brush $self.Foreground}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
         </Style>
 
         <!-- Sizes -->

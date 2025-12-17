@@ -16,7 +16,7 @@
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Medium}">
                     <Border MinWidth="24"
                             Padding="0"
-                            Background="{DynamicResource MyNet.Brush.Transparency.Small}"
+                            Background="{my:Theme Transparency.Small}"
                             ClipToBounds="True"
                             Theme="{StaticResource MyNet.Theme.Border.Card}">
                         <Border Background="{Binding Converter={x:Static my:BrushConverter.Default}}" />
@@ -41,6 +41,7 @@
                         <Flyout>
                             <ColorView Width="{TemplateBinding my:PopupAssist.Width}"
                                        Height="{TemplateBinding my:PopupAssist.Height}"
+                                       my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}"
                                        ColorModel="{TemplateBinding ColorModel}"
                                        ColorSpectrumComponents="{TemplateBinding ColorSpectrumComponents}"
                                        ColorSpectrumShape="{TemplateBinding ColorSpectrumShape}"
@@ -90,7 +91,7 @@
             <Setter Property="ContentTemplate">
                 <DataTemplate DataType="{x:Type Color}">
                     <Border Padding="0"
-                            Background="{DynamicResource MyNet.Brush.Transparency.Small}"
+                            Background="{my:Theme Transparency.Small}"
                             ClipToBounds="True"
                             Theme="{StaticResource MyNet.Theme.Border.Card}"
                             ToolTip.Tip="{my:Translation}">

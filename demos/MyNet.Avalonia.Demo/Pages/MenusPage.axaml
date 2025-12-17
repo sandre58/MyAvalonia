@@ -21,7 +21,7 @@
                     <Border Name="Border"
                             Width="100"
                             Height="100"
-                            Background="{DynamicResource MyNet.Brush.Control.Background}"
+                            Background="{my:Theme Control.Background}"
                             BorderBrush="{my:Theme Control.Border}"
                             BorderThickness="1">
                         <TextBlock HorizontalAlignment="Center"
@@ -37,7 +37,7 @@
                         <Border Name="Border2"
                                 Width="100"
                                 Height="100"
-                                Background="{DynamicResource MyNet.Brush.Control.Background}"
+                                Background="{my:Theme Control.Background}"
                                 BorderBrush="{my:Theme Control.Border}"
                                 BorderThickness="1">
                             <TextBlock HorizontalAlignment="Center"
@@ -55,7 +55,7 @@
                         <Border Name="Border3"
                                 Width="100"
                                 Height="100"
-                                Background="{DynamicResource MyNet.Brush.Control.Background}"
+                                Background="{my:Theme Control.Background}"
                                 BorderBrush="{my:Theme Control.Border}"
                                 BorderThickness="1">
                             <TextBlock HorizontalAlignment="Center"

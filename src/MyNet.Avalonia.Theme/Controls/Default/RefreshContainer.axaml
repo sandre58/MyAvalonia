@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
                     x:CompileBindings="True">
     <ControlTheme x:Key="{x:Type RefreshContainer}" TargetType="RefreshContainer">
         <Setter Property="Template">
@@ -27,15 +28,16 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="Height" Value="100" />
-        <Setter Property="Background" Value="{DynamicResource Transparent}" />
-        <Setter Property="Foreground" Value="{DynamicResource MyNet.Brush.Primary}" />
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{my:ThemeRole}" />
         <Setter Property="Content">
             <Template>
                 <Arc Name="PART_Icon"
                      Width="24"
                      Height="24"
                      StartAngle="0"
-                     Stroke="{DynamicResource MyNet.Brush.Primary}"
+                     Stroke="{TemplateBinding Foreground}"
                      StrokeLineCap="Round"
                      StrokeThickness="3"
                      SweepAngle="270" />

@@ -8,10 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
-using Avalonia.Media.Immutable;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Palettes;
 using MyNet.Utilities;
@@ -60,7 +58,7 @@ internal class ThemeConverter : IValueConverter, IMultiValueConverter
                 };
 
             case ThemeBrushParameters brushParameters:
-                if (value is not SolidColorBrush brush1) return AvaloniaProperty.UnsetValue;
+                if (value is not IBrush brush1) return AvaloniaProperty.UnsetValue;
                 return ResolveBrush(brush1, brushParameters);
 
             default:
@@ -80,16 +78,14 @@ internal class ThemeConverter : IValueConverter, IMultiValueConverter
     /// <param name="parameters">Parameters specifying opacity and contrast.</param>
     /// <returns>The resolved <see cref="IBrush"/>.</returns>
     private static IBrush ResolveBrush(IBrush? brush, ThemeBrushParameters parameters) => brush is null
-            ? Brushes.Transparent
-            : brush is SolidColorBrush solidBrush && (!string.IsNullOrEmpty(parameters.Opacity) || parameters.Contrast)
-            ? MyTheme.Current.GetBrush(solidBrush, parameters.Opacity, parameters.Contrast)
-            : brush;
+            ? BrushManager.FallbackBrush
+            : MyTheme.Current.GetBrush(brush, parameters.Opacity, parameters.Contrast);
 
     private static IBrush? ProvideInheritedForeground(StyledElement control)
     {
         var inheritedBrush = ThemeAssist.GetInheritedForeground(control);
 
-        return (inheritedBrush != Brushes.Transparent && inheritedBrush != Brushes.Black && inheritedBrush != Brushes.White) || control.Parent is null
+        return (inheritedBrush != Brushes.Black && inheritedBrush != Brushes.White) || control.Parent is null
             ? inheritedBrush
             : ProvideInheritedForeground(control.Parent);
     }

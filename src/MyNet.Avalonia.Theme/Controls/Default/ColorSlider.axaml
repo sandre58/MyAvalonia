@@ -24,7 +24,7 @@
                         <Grid Name="SliderContainer" Margin="{TemplateBinding Padding}">
                             <Border Height="{TemplateBinding my:SliderAssist.BarSize}"
                                     VerticalAlignment="Center"
-                                    Background="{DynamicResource MyNet.Brush.Transparency.Small}"
+                                    Background="{my:Theme Transparency.Small}"
                                     CornerRadius="{TemplateBinding CornerRadius}" />
                             <Border Height="{TemplateBinding my:SliderAssist.BarSize}"
                                     VerticalAlignment="Center"
@@ -76,7 +76,7 @@
                         <Grid Name="SliderContainer" Margin="{TemplateBinding Padding}">
                             <Border Width="{TemplateBinding my:SliderAssist.BarSize}"
                                     HorizontalAlignment="Center"
-                                    Background="{DynamicResource MyNet.Brush.Transparency.Small}"
+                                    Background="{my:Theme Transparency.Small}"
                                     CornerRadius="{TemplateBinding CornerRadius}" />
                             <Border Width="{TemplateBinding my:SliderAssist.BarSize}"
                                     HorizontalAlignment="Center"

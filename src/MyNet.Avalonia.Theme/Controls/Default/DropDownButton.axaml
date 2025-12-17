@@ -9,6 +9,7 @@
         <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
 
         <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
+        <Setter Property="Background" Value="{my:Theme Control.Background}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="DropDownButton">
@@ -67,6 +68,7 @@
 
         <!-- Styles -->
         <Style Selector="^.Solid">
+            <Setter Property="Background" Value="{my:ThemeRole}" />
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="Foreground" Value="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
             </Style>

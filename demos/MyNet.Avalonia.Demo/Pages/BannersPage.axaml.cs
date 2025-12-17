@@ -46,9 +46,8 @@ internal sealed partial class BannersPage : AutoBuildPage
 
     protected override IEnumerable<ControlThemeData> ProvideThemes()
         => [
-            new ControlThemeData()
-            .AddStyles("Light", "Solid", "Outlined")
-            .AddCartesianStyles("Solid", "Shadow")
+            new ControlThemeData(defaultStyleDisplay: DefaultStyleDisplay.WithRoles)
+            .AddStyles("Light", "Outlined", "Shadow")
             .AddCartesianStyles("Light", "Outlined")
             .AddDefaultRoles()
             .AddCustomControls([.. Enum.GetValues<Severity>().Except([Severity.Custom]).Select(x => new Banner

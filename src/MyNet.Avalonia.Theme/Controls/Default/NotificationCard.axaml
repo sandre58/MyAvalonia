@@ -12,14 +12,12 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="UseLayoutRounding" Value="True" />
 
-        <Style Selector="^">
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Control.Background}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
             <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Control.Border}" />
             <Setter Property="Background" Value="{my:ThemeRole}" />
             <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
             <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
-        </Style>
 
         <Setter Property="Template">
             <ControlTemplate TargetType="NotificationCard">
@@ -29,7 +27,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding CornerRadius}"
-                            Theme="{StaticResource MyNet.Theme.Border.Popup}">
+                            Theme="{StaticResource MyNet.Theme.Border.Popup}"
+                            Classes="no-transitions">
                         <Border Name="PART_RootBorder"
                                 Padding="{TemplateBinding Padding}"
                                 ClipToBounds="True"
@@ -109,16 +108,13 @@
         </Style>
 
         <Style Selector="^:success">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Positive}" />
-            <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Positive}" />
+        <Setter Property="my:ThemeAssist.Role" Value="Success" />
         </Style>
         <Style Selector="^:warning">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Warning}" />
-            <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Warning}" />
+        <Setter Property="my:ThemeAssist.Role" Value="Warning" />
         </Style>
         <Style Selector="^:error">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Negative}" />
-            <Setter Property="my:PaletteAssist.Secondary" Value="{DynamicResource MyNet.Brush.Negative}" />
+        <Setter Property="my:ThemeAssist.Role" Value="Error" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

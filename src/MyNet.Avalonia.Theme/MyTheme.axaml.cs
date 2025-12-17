@@ -232,6 +232,9 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     private void UpdateBrushesFromCurrentTheme()
     {
+        const string transparencyKey = "Transparency";
+        const string transparencySmallKey = "Transparency.Small";
+
         using (PerformanceMonitor.Measure())
         {
             var count = 0;
@@ -249,8 +252,35 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
                 }
             }
 
-            PerformanceMonitor.Debug($"UpdateBrushesFromCurrentTheme processed {count} brushes");
+            if (!Resources.ContainsKey(ThemeResourceKeyFactory.Brush(transparencyKey)))
+                Resources.Add(ThemeResourceKeyFactory.Brush(transparencyKey), createTransparencyBrush(20));
+
+            if (!Resources.ContainsKey(ThemeResourceKeyFactory.Brush(transparencySmallKey)))
+                Resources.Add(ThemeResourceKeyFactory.Brush(transparencySmallKey), createTransparencyBrush(8));
+
+            PerformanceMonitor.Debug($"UpdateBrushesFromCurrentTheme processed {count + 2} brushes");
         }
+
+        VisualBrush createTransparencyBrush(double size) => new(new Image
+        {
+            Height = size,
+            Width = size,
+            Source = new DrawingImage
+            {
+                Drawing = new DrawingGroup
+                {
+                    Children = [
+                                new GeometryDrawing() { Brush = Brushes.Transparent, Geometry = PathGeometry.Parse("M0,0 L2,0 2,2, 0,2Z") },
+                                new GeometryDrawing() { Brush = GetBrush("Application.Foreground", nameof(Opacity.Scrim)), Geometry = PathGeometry.Parse("M0,1 L2,1 2,2, 1,2 1,0 0,0Z") },
+                            ]
+                }
+            }
+        })
+        {
+            DestinationRect = new RelativeRect(0, 0, size, size, RelativeUnit.Absolute),
+            Stretch = Stretch.Uniform,
+            TileMode = TileMode.Tile,
+        };
     }
 
     /// <summary>
@@ -360,7 +390,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// <param name="opacityKey">Optional opacity key or value.</param>
     /// <param name="contrast">If true, returns the contrast brush for accessibility.</param>
     /// <returns>The brush instance.</returns>
-    public SolidColorBrush GetBrush(string path, string? opacityKey = null, bool contrast = false)
+    public IBrush GetBrush(string path, string? opacityKey = null, bool contrast = false)
     {
         var opacity = GetOpacity(opacityKey);
         return _brushManager.Get(ThemeResourceKeyFactory.Brush(path), opacity, contrast);
@@ -373,7 +403,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// <param name="opacityKey">Optional opacity key or value.</param>
     /// <param name="contrast">If true, returns the contrast brush for accessibility.</param>
     /// <returns>The brush instance with the specified opacity or contrast.</returns>
-    public SolidColorBrush GetBrush(SolidColorBrush brush, string? opacityKey = null, bool contrast = false)
+    public IBrush GetBrush(IBrush brush, string? opacityKey = null, bool contrast = false)
     {
         var opacity = GetOpacity(opacityKey);
         return _brushManager.Get(brush, opacity, contrast);

@@ -17,13 +17,10 @@
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Medium}" />
 
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
-        </Style>
-        
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="Background" Value="{my:Theme Control.Background}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
+
         <Setter Property="Template">
             <ControlTemplate TargetType="ProgressBar">
                 <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, *, Auto">
@@ -290,14 +287,11 @@
         <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Circular.Medium}" />
         <Setter Property="Height" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Medium}" />
         <Setter Property="Width" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Medium}" />
-
-        <Style Selector="^">
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
-            <Setter Property="Foreground" Value="{Binding $parent[TemplatedControl].Foreground}" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
-        </Style>
         
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="Background" Value="{my:Theme Control.Background}" />
+        <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
+
         <Setter Property="Template">
             <ControlTemplate TargetType="ProgressBar">
                 <Panel>

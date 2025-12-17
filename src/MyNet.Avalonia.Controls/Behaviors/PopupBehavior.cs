@@ -10,6 +10,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media.Transformation;
 using MyNet.Avalonia.Controls.Extensions;
 using MyNet.Utilities;
 
@@ -23,6 +24,78 @@ public static class PopupBehavior
         OpenOnFocusProperty.Changed.Subscribe(OpenOnFocusChangedCallback);
         EnableShortcutKeysProperty.Changed.Subscribe(OnEnableShortcutKeyChanged);
         AutoFocusOnOpeningProperty.Changed.Subscribe(OnAutoFocusOnOpeningChanged);
+        EnableSlideProperty.Changed.AddClassHandler<Popup>((popup, e) =>
+        {
+            if ((bool)e.NewValue!)
+            {
+                popup.Opened += OnPopupOpenedCallback;
+                popup.Closed += OnPopupClosedCallback;
+                popup.PropertyChanged += OnPopupPropertyChanged;
+
+                // Initialize child state if it already exists
+                if (popup.Child is Control child)
+                {
+                    InitializeControlForSlide(child);
+                }
+            }
+            else
+            {
+                popup.Opened -= OnPopupOpenedCallback;
+                popup.Closed -= OnPopupClosedCallback;
+                popup.PropertyChanged -= OnPopupPropertyChanged;
+            }
+        });
+
+        // Support for ContextMenu
+        EnableSlideProperty.Changed.AddClassHandler<ContextMenu>((contextMenu, e) =>
+        {
+            if ((bool)e.NewValue!)
+            {
+                // Initialize state immediately when slide is enabled
+                InitializeControlForSlide(contextMenu);
+                contextMenu.Opened += OnContextMenuOpenedCallback;
+                contextMenu.Closed += OnContextMenuClosedCallback;
+            }
+            else
+            {
+                contextMenu.Opened -= OnContextMenuOpenedCallback;
+                contextMenu.Closed -= OnContextMenuClosedCallback;
+            }
+        });
+
+        // Support for MenuFlyoutPresenter (used by MenuFlyout)
+        EnableSlideProperty.Changed.AddClassHandler<MenuFlyoutPresenter>((flyoutPresenter, e) =>
+        {
+            if ((bool)e.NewValue!)
+            {
+                // Initialize state immediately when slide is enabled
+                InitializeControlForSlide(flyoutPresenter);
+                flyoutPresenter.AttachedToVisualTree += OnFlyoutPresenterAttachedToVisualTree;
+                flyoutPresenter.DetachedFromVisualTree += OnFlyoutPresenterDetachedFromVisualTree;
+            }
+            else
+            {
+                flyoutPresenter.AttachedToVisualTree -= OnFlyoutPresenterAttachedToVisualTree;
+                flyoutPresenter.DetachedFromVisualTree -= OnFlyoutPresenterDetachedFromVisualTree;
+            }
+        });
+
+        // Support for FlyoutPresenter (used by Flyout)
+        EnableSlideProperty.Changed.AddClassHandler<FlyoutPresenter>((flyoutPresenter, e) =>
+        {
+            if ((bool)e.NewValue!)
+            {
+                // Initialize state immediately when slide is enabled
+                InitializeControlForSlide(flyoutPresenter);
+                flyoutPresenter.AttachedToVisualTree += OnFlyoutPresenterAttachedToVisualTree;
+                flyoutPresenter.DetachedFromVisualTree += OnFlyoutPresenterDetachedFromVisualTree;
+            }
+            else
+            {
+                flyoutPresenter.AttachedToVisualTree -= OnFlyoutPresenterAttachedToVisualTree;
+                flyoutPresenter.DetachedFromVisualTree -= OnFlyoutPresenterDetachedFromVisualTree;
+            }
+        });
     }
 
     #region Placement
@@ -255,4 +328,160 @@ public static class PopupBehavior
     }
 
     #endregion
+
+    #region EnableSlide
+
+    /// <summary>
+    /// Provides EnableSlide Property for attached PopupAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<bool> EnableSlideProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("EnableSlide", typeof(PopupBehavior), false);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="EnableSlideProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="EnableSlideProperty"/>.</param>
+    public static void SetEnableSlide(StyledElement element, bool value) => element.SetValue(EnableSlideProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="EnableSlideProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static bool GetEnableSlide(StyledElement element) => element.GetValue(EnableSlideProperty);
+
+    private static void OnPopupPropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+    {
+        if (sender is not Popup popup || e.Property.Name != nameof(Popup.Child) || popup.Child is not Control child)
+            return;
+
+        // When Child is set, immediately hide it to prevent flash
+        InitializeControlForSlide(child);
+    }
+
+    private static void OnPopupClosedCallback(object? sender, EventArgs e)
+    {
+        if (sender is not Popup popup || popup.Child is not Control child)
+            return;
+
+        ResetControlState(child);
+    }
+
+    private static void OnPopupOpenedCallback(object? sender, EventArgs e)
+    {
+        if (sender is not Popup popup || popup.Child is not Control child)
+            return;
+
+        ApplySlideAnimation(child, popup.Placement);
+    }
+
+    private static void OnContextMenuOpenedCallback(object? sender, EventArgs e)
+    {
+        if (sender is not ContextMenu contextMenu)
+            return;
+
+        ApplySlideAnimation(contextMenu, contextMenu.Placement);
+    }
+
+    private static void OnContextMenuClosedCallback(object? sender, EventArgs e)
+    {
+        if (sender is not ContextMenu contextMenu)
+            return;
+
+        ResetControlState(contextMenu);
+    }
+
+    private static void OnFlyoutPresenterAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+    {
+        if (sender is not Control flyoutPresenter)
+            return;
+
+        // For flyout presenters, try to get placement from parent flyout
+        var placement = GetFlyoutPlacement(flyoutPresenter);
+        ApplySlideAnimation(flyoutPresenter, placement);
+    }
+
+    private static void OnFlyoutPresenterDetachedFromVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+    {
+        if (sender is not Control flyoutPresenter)
+            return;
+
+        ResetControlState(flyoutPresenter);
+    }
+
+    private static PlacementMode GetFlyoutPlacement(Control flyoutPresenter)
+    {
+        // Try to find the parent flyout to get placement information
+        var parent = flyoutPresenter.Parent;
+        while (parent != null)
+        {
+            if (parent is Popup popup)
+                return popup.Placement;
+
+            parent = parent.Parent;
+        }
+
+        // Default to Custom if we can't determine placement
+        return PlacementMode.Custom;
+    }
+
+    private static void InitializeControlForSlide(Control control)
+    {
+        // Set initial hidden state for controls that don't have PropertyChanged events
+        control.Opacity = 0;
+        control.RenderTransform = TransformOperations.Parse("translateY(-20px)");
+    }
+
+    private static void ApplySlideAnimation(Control control, PlacementMode placement)
+    {
+        // Determine slide direction based on Placement property
+        var slideDirection = GetSlideDirectionFromPlacement(placement);
+        var offsetY = slideDirection == SlideDirection.Up ? 20 : -20;
+
+        // Set initial state immediately
+        control.Opacity = 0;
+        control.RenderTransform = TransformOperations.Parse($"translateY({offsetY}px)");
+
+        // Animate to final position using AXAML transitions
+        control.Opacity = 1;
+        control.RenderTransform = TransformOperations.Parse("translateY(0px)");
+    }
+
+    private static void ResetControlState(Control control)
+    {
+        // Reset to hidden state when control closes to prepare for next opening
+        control.Opacity = 0;
+        control.RenderTransform = TransformOperations.Parse("translateY(-20px)");
+    }
+
+    private static SlideDirection GetSlideDirectionFromPlacement(PlacementMode placement) => placement switch
+    {
+        // Top placements: popup appears above target, slide from top
+        PlacementMode.Top or
+        PlacementMode.TopEdgeAlignedLeft or
+        PlacementMode.TopEdgeAlignedRight => SlideDirection.Up,
+
+        // Bottom placements: popup appears below target, slide from bottom
+        PlacementMode.Bottom or
+        PlacementMode.BottomEdgeAlignedLeft or
+        PlacementMode.BottomEdgeAlignedRight => SlideDirection.Down,
+
+        // Side placements: default to slide down
+        PlacementMode.Left or
+        PlacementMode.LeftEdgeAlignedTop or
+        PlacementMode.LeftEdgeAlignedBottom or
+        PlacementMode.Right or
+        PlacementMode.RightEdgeAlignedTop or
+        PlacementMode.RightEdgeAlignedBottom => SlideDirection.Down,
+
+        // Auto/Custom/etc: default to slide down
+        _ => SlideDirection.Down
+    };
+
+    private enum SlideDirection
+    {
+        Up,
+        Down
+    }
 }
+
+#endregion

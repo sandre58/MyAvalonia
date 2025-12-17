@@ -168,6 +168,7 @@
 
                         <Panel Name="PART_PopupContainer">
                             <Popup Name="PART_Popup"
+                                   my:PopupBehavior.EnableSlide="True"
                                    MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
                                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
                                    HorizontalOffset="-2"
@@ -436,6 +437,7 @@
 
                         <Panel Name="PART_PopupContainer">
                             <Popup Name="PART_Popup"
+                                   my:PopupBehavior.EnableSlide="True"
                                    MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
                                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
                                    HorizontalOffset="-2"

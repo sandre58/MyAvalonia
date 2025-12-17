@@ -14,12 +14,12 @@
             <Setter Property="Background" Value="{my:ThemeRole Opacity=Pressed}" />
             <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
         </Style>
-        
+
         <Style Selector="^.Outlined.Text">
             <Style Selector="^[(my|ThemeAssist.Role)=Default], ^[(my|ThemeAssist.Role)=Custom]">
                 <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
-                <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
                 <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
+                <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
             </Style>
         </Style>
     </ControlTheme>
@@ -40,15 +40,15 @@
         <Style Selector="^.Outlined.Text">
             <Style Selector="^[(my|ThemeAssist.Role)=Default], ^[(my|ThemeAssist.Role)=Custom]">
                 <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
-                <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
                 <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
+                <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
             </Style>
         </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ToggleButton.Icon" TargetType="ToggleButton" BasedOn="{StaticResource MyNet.Theme.Button.Icon}">
         <Setter Property="Cursor" Value="Arrow" />
-        
+
         <Setter Property="my:ThemeAssist.Role" Value="Primary" />
         <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
         <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />

@@ -153,6 +153,7 @@
                                     <Button Name="PART_Button"
                                             Grid.Column="5"
                                             my:ThemeAssist.ActiveBackground="{my:ThemeRole, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                            my:ThemeAssist.ActiveForeground="{my:ThemeRole, RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}"
                                             Classes="Stretch no-disablable"
                                             Classes.Selected="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
                                             Content="{StaticResource MyNet.Geometry.Calendar}"
@@ -177,6 +178,7 @@
 
                         <Panel Name="PART_PopupContainer">
                             <Popup Name="PART_Popup"
+                                   my:PopupBehavior.EnableSlide="True"
                                    HorizontalOffset="-2"
                                    InheritsTransform="True"
                                    IsLightDismissEnabled="True"
@@ -428,6 +430,7 @@
                                               Grid.Column="5"
                                               Margin="{my:Thickness Small, Left}"
                                               my:ThemeAssist.ActiveBackground="{my:ThemeRole, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                              my:ThemeAssist.ActiveForeground="{my:ThemeRole, RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}"
                                               Classes="no-disablable"
                                               Classes.Selected="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
                                               Content="{StaticResource MyNet.Geometry.Calendar}"
@@ -464,6 +467,7 @@
 
                         <Panel Name="PART_PopupContainer">
                             <Popup Name="PART_Popup"
+                                   my:PopupBehavior.EnableSlide="True"
                                    HorizontalOffset="-2"
                                    InheritsTransform="True"
                                    IsLightDismissEnabled="True"

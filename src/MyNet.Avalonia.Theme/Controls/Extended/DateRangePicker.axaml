@@ -42,10 +42,10 @@
 
         <Style Selector="^">
             <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
-            <Setter Property="Background" Value="{DynamicResource MyNet.Brush.Control.Background}" />
+            <Setter Property="Background" Value="{my:Theme Control.Background}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{DynamicResource MyNet.Brush.Primary}" />
+            <Setter Property="my:ThemeAssist.Role" Value="Primary" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeBrush Foreground, Opacity=Focus}" />
             <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />
             <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
@@ -138,13 +138,13 @@
                                             <TextBox Name="PART_StartTextBox"
                                                      HorizontalAlignment="Stretch"
                                                      VerticalAlignment="Stretch"
-                                                     CaretBrush="{TemplateBinding (my:PaletteAssist.Primary)}"
+                                                     CaretBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                      Classes="no-disablable"
                                                      DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
                                                      Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
-                                                 IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                     IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
                                                      IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                     SelectionBrush="{my:Brush $parent[my:DateRangePicker].(my:PaletteAssist.Primary), Opacity={StaticResource MyNet.Opacity.Scrim}}"
+                                                     SelectionBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
                                                      SelectionForegroundBrush="{TemplateBinding Foreground}"
                                                      Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
                                             <TextBlock Grid.Column="1"
@@ -155,13 +155,13 @@
                                                      Grid.Column="2"
                                                      HorizontalAlignment="Stretch"
                                                      VerticalAlignment="Stretch"
-                                                     CaretBrush="{TemplateBinding (my:PaletteAssist.Primary)}"
+                                                     CaretBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                      Classes="no-disablable"
                                                      DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
                                                      Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
-                                                 IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                     IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
                                                      IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                     SelectionBrush="{my:Brush $parent[my:DateRangePicker].(my:PaletteAssist.Primary), Opacity={StaticResource MyNet.Opacity.Scrim}}"
+                                                     SelectionBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
                                                      SelectionForegroundBrush="{TemplateBinding Foreground}"
                                                      Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
                                         </Grid>
@@ -212,6 +212,7 @@
 
                         <Panel Name="PART_PopupContainer">
                             <Popup Name="PART_Popup"
+                                   my:PopupBehavior.EnableSlide="True"
                                    HorizontalOffset="-2"
                                    InheritsTransform="True"
                                    IsLightDismissEnabled="True"
@@ -448,13 +449,13 @@
                                         <TextBox Name="PART_StartTextBox"
                                                  HorizontalAlignment="Stretch"
                                                  VerticalAlignment="Stretch"
-                                                 CaretBrush="{TemplateBinding (my:PaletteAssist.Primary)}"
+                                                 CaretBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                  Classes="no-disablable"
                                                  DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
                                                  Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
                                                  IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
                                                  IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                 SelectionBrush="{my:Brush $parent[my:DateRangePicker].(my:PaletteAssist.Primary), Opacity={StaticResource MyNet.Opacity.Scrim}}"
+                                                 SelectionBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
                                                  SelectionForegroundBrush="{TemplateBinding Foreground}"
                                                  Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
                                         <TextBlock Grid.Column="1"
@@ -465,13 +466,13 @@
                                                  Grid.Column="2"
                                                  HorizontalAlignment="Stretch"
                                                  VerticalAlignment="Stretch"
-                                                 CaretBrush="{TemplateBinding (my:PaletteAssist.Primary)}"
+                                                 CaretBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                  Classes="no-disablable"
                                                  DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
                                                  Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
                                                  IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
                                                  IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                 SelectionBrush="{my:Brush $parent[my:DateRangePicker].(my:PaletteAssist.Primary), Opacity={StaticResource MyNet.Opacity.Scrim}}"
+                                                 SelectionBrush="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
                                                  SelectionForegroundBrush="{TemplateBinding Foreground}"
                                                  Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
                                     </Grid>
@@ -538,6 +539,7 @@
 
                         <Panel Name="PART_PopupContainer">
                             <Popup Name="PART_Popup"
+                                   my:PopupBehavior.EnableSlide="True"
                                    HorizontalOffset="-2"
                                    InheritsTransform="True"
                                    IsLightDismissEnabled="True"

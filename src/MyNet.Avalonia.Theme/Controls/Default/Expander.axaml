@@ -266,7 +266,8 @@
                                       Classes="no-disablable"
                                       IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}"
                                       IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
-                                      Theme="{TemplateBinding my:ExpanderAssist.ButtonTheme}">
+                                      Theme="{TemplateBinding my:ExpanderAssist.ButtonTheme}"
+                                      my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}">
 
                             <Grid ColumnDefinitions="*, Auto">
                                 <ContentPresenter Name="PART_HeaderPresenter"

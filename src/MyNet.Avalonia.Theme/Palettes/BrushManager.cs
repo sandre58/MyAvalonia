@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Avalonia.Animation.Easings;
 using Avalonia.Media;
+using Avalonia.Media.Immutable;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Helpers;
 using MyNet.Utilities;
@@ -21,6 +22,8 @@ namespace MyNet.Avalonia.Theme.Palettes;
 /// </summary>
 public class BrushManager(TimeSpan colorTransitionDuration, Easing colorTransitionEasing)
 {
+    public static readonly IBrush FallbackBrush = Brushes.Red;
+
     private readonly Dictionary<string, BrushSet> _sets = [];
     private readonly ConditionalWeakTable<ISolidColorBrush, BrushRegistration> _reverse = [];
 
@@ -62,10 +65,10 @@ public class BrushManager(TimeSpan colorTransitionDuration, Easing colorTransiti
     /// <param name="contrast">Whether to apply contrast transformation.</param>
     /// <returns>The <see cref="SolidColorBrush"/> associated with the key.</returns>
     /// <exception cref="KeyNotFoundException">Thrown if the key does not exist in the manager.</exception>
-    public SolidColorBrush Get(string key, double? opacity = null, bool contrast = false)
+    public IBrush Get(string key, double? opacity = null, bool contrast = false)
     {
         using (PerformanceMonitor.Measure($"[BrushManager] GetBrush(key: '{key}', Opacity: {opacity}, Contrast: {contrast})", 1.Milliseconds()))
-            return !_sets.TryGetValue(key, out var set) ? new SolidColorBrush(Colors.Transparent) : ResolveBrushFromSet(set, opacity, contrast);
+            return !_sets.TryGetValue(key, out var set) ? FallbackBrush : ResolveBrushFromSet(set, opacity, contrast);
     }
 
     /// <summary>
@@ -75,14 +78,27 @@ public class BrushManager(TimeSpan colorTransitionDuration, Easing colorTransiti
     /// <param name="opacity">The desired opacity value.</param>
     /// <param name="contrast">Whether to apply contrast transformation.</param>
     /// <returns>The matching <see cref="SolidColorBrush"/> with the specified transformations applied.</returns>
-    public SolidColorBrush Get(SolidColorBrush brush, double? opacity = null, bool contrast = false)
+    public IBrush Get(IBrush brush, double? opacity = null, bool contrast = false)
     {
-        var computedOpacity = opacity.HasValue ? opacity.Value * brush.Opacity : brush.Opacity;
-        using (PerformanceMonitor.Measure($"[BrushManager] Get Brush({brush.Color}, Opacity: {computedOpacity}, Contrast: {contrast})", 1.Milliseconds()))
+        switch (brush)
         {
-            return _reverse.TryGetValue(brush, out var registration)
-                ? ResolveBrushFromSet(registration.Set, computedOpacity, contrast || registration.IsContrast)
-                : new SolidColorBrush(contrast ? brush.Color.ContrastingForegroundColor() : brush.Color, computedOpacity);
+            case SolidColorBrush solidColorBrush:
+                var computedOpacity = opacity.HasValue ? opacity.Value * solidColorBrush.Opacity : solidColorBrush.Opacity;
+                using (PerformanceMonitor.Measure($"[BrushManager] Get Brush({solidColorBrush.Color}, Opacity: {computedOpacity}, Contrast: {contrast})", 1.Milliseconds()))
+                {
+                    return _reverse.TryGetValue(solidColorBrush, out var registration)
+                        ? ResolveBrushFromSet(registration.Set, computedOpacity, contrast || registration.IsContrast)
+                        : new SolidColorBrush(contrast ? solidColorBrush.Color.ContrastingForegroundColor() : solidColorBrush.Color, computedOpacity);
+                }
+
+            case IImmutableSolidColorBrush immutableSolidColorBrush:
+                var computedOpacity1 = opacity.HasValue ? opacity.Value * immutableSolidColorBrush.Opacity : immutableSolidColorBrush.Opacity;
+                PerformanceMonitor.Warning($"[BrushManager] Try to get ImmutableSolidColorBrush({immutableSolidColorBrush.Color}, Opacity: {computedOpacity1}, Contrast: {contrast})");
+                return new SolidColorBrush(contrast ? immutableSolidColorBrush.Color.ContrastingForegroundColor() : immutableSolidColorBrush.Color, computedOpacity1);
+
+            default:
+                PerformanceMonitor.Warning($"[BrushManager] Try to get Brush({brush})");
+                return brush;
         }
     }
 
@@ -101,11 +117,7 @@ public class BrushManager(TimeSpan colorTransitionDuration, Easing colorTransiti
     /// Registers the main and contrast brushes of a <see cref="BrushSet"/> in the reverse lookup table.
     /// </summary>
     /// <param name="set">The brush set to register.</param>
-    private void RegisterBrushSet(BrushSet set)
-    {
-        TrackBrush(set.Brush, set, false);
-        TrackBrush(set.Contrast, set, true);
-    }
+    private void RegisterBrushSet(BrushSet set) => TrackBrush(set.Brush, set, false);
 
     /// <summary>
     /// Tracks a brush in the reverse lookup table, associating it with its owning <see cref="BrushSet"/> and contrast status.

@@ -3,9 +3,9 @@
                     xmlns:my="http://mynet.com/avalonia"
                     x:CompileBindings="True">
     <ControlTheme x:Key="{x:Type ToolTip}" TargetType="ToolTip">
-        <Setter Property="Foreground" Value="{my:Brush $self.Background, Contrast=True}" />
-        <Setter Property="Background" Value="{DynamicResource MyNet.Brush.ToolTip.Background}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MyNet.Brush.ToolTip.Border}" />
+        <Setter Property="Foreground" Value="{my:ThemeBrush Background, Contrast=True}" />
+        <Setter Property="Background" Value="{my:Theme ToolTip.Background}" />
+        <Setter Property="BorderBrush" Value="{my:Theme ToolTip.Border}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.ToolTip}" />
         <Setter Property="Margin" Value="{StaticResource MyNet.Margin.ToolTip}" />

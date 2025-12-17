@@ -94,13 +94,11 @@
         <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Icon.Left}" />
         <Setter Property="ClipToBounds" Value="True" />
 
-        <Style Selector="^">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 1" />
-            <Setter Property="my:HeaderAssist.BorderBrush" Value="{DynamicResource MyNet.Brush.Surface.Border}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
-        </Style>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
+        <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 1" />
+        <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:Theme Surface.Border}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="my:FormGroup">
