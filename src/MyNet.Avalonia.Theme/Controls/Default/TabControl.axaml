@@ -20,7 +20,7 @@
         <Setter Property="my:ThemeAssist.ActiveBackground" Value="{Binding $parent[TabControl].(my:ItemsAssist.ActiveBackground)}" />
         <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{Binding $parent[TabControl].(my:ItemsAssist.ActiveBorderBrush)}" />
         <Setter Property="my:ThemeAssist.ActiveForeground" Value="{Binding $parent[TabControl].(my:ItemsAssist.ActiveForeground)}" />
-        <Setter Property="my:ThemeAssist.RippleColor" Value="{my:Foreground}" />
+        <Setter Property="my:ThemeAssist.RippleColor" Value="{Binding $parent[TabControl].(my:ItemsAssist.RippleColor)}" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="{Binding $parent[TabControl].(my:ItemsAssist.ShadowDepth)}" />
         <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[TabControl].(my:IconAssist.Alignment)}" />
         <Setter Property="my:IconAssist.Margin" Value="{Binding $parent[TabControl].(my:IconAssist.Margin)}" />
@@ -164,7 +164,7 @@
         <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
 
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
         <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:Theme Surface.Border}" />
@@ -178,8 +178,10 @@
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
         <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
         <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
+        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
         <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 2" />
         <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 0 2" />
+
         <Setter Property="Template">
             <ControlTemplate TargetType="TabControl">
                 <Border Name="PART_Root"
@@ -230,6 +232,8 @@
             <Setter Property="Orientation" Value="Vertical" />
         </Style>
         <Style Selector="^[TabStripPlacement=Left]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 2 0" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 2 0" />
             <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
             <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Top" />
             <Setter Property="my:ItemsAssist.Placement" Value="Right" />
@@ -246,6 +250,8 @@
             </Style>
         </Style>
         <Style Selector="^[TabStripPlacement=Right]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="2 0 0 0" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="2 0 0 0" />
             <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
             <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Top" />
             <Setter Property="my:ItemsAssist.Placement" Value="Left" />
@@ -262,6 +268,8 @@
             </Style>
         </Style>
         <Style Selector="^[TabStripPlacement=Top]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 2" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 0 2" />
             <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
             <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
             <Setter Property="my:ItemsAssist.Placement" Value="Bottom" />
@@ -278,6 +286,8 @@
             </Style>
         </Style>
         <Style Selector="^[TabStripPlacement=Bottom]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 2 0 0" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 2 0 0" />
             <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
             <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
             <Setter Property="my:ItemsAssist.Placement" Value="Top" />
@@ -291,6 +301,102 @@
                         </ItemsPanelTemplate>
                     </Setter.Value>
                 </Setter>
+            </Style>
+        </Style>
+
+        <!-- Styles -->
+        <Style Selector="^.Shadow">
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="my:ItemsAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Control}" />
+            <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Default}" />
+        </Style>
+
+        <Style Selector="^.Solid">
+            <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Small}" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
+            <Setter Property="my:ItemsAssist.Background" Value="{my:ThemeBrush (my:ItemsAssist.Foreground), Opacity=Overlay}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
+        </Style>
+
+        <Style Selector="^.Outlined">
+            <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Small}" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="1.4" />
+            <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Focus}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
+        </Style>
+
+        <Style Selector="^.Light">
+            <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Small}" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Opacity=Focus}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
+
+
+            <Style Selector="^:not(.Outlined)">
+                <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.Circle">
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="9999" />
+        </Style>
+
+        <Style Selector="^.Header">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
+            <Setter Property="my:HeaderAssist.Background" Value="{my:Theme Control.Background}" />
+            <Setter Property="my:HeaderAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
+
+            <Style Selector="^.Solid, ^.Outlined, ^.Light">
+                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Small}" />
+            </Style>
+
+            <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
+                <Setter Property="my:HeaderAssist.Background" Value="{my:Foreground, Opacity=Overlay}" />
+            </Style>
+
+            <Style Selector="^.Inverse">
+                <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeRole}" />
+                <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:Theme Surface.Border}" />
+                <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+
+                <Style Selector="^.Outlined">
+                    <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                </Style>
+
+                <Style Selector="^.Light">
+                    <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True, Opacity=Focus}" />
+                </Style>
+
+                <Style Selector="^.Solid">
+                    <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush (my:HeaderAssist.Background), Contrast=True}" />
+                    <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
+                </Style>
+
+            </Style>
+
+            <Style Selector="^.Shadow">
+                <Setter Property="ClipToBounds" Value="False" />
+                <Setter Property="my:HeaderAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Control}" />
+                <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
+                <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Small}" />
             </Style>
         </Style>
 
@@ -506,7 +612,7 @@
         <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
 
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
         <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:Theme Surface.Border}" />
@@ -520,6 +626,7 @@
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Focus}" />
         <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
         <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
+        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="TabControl">
                 <Border Name="PART_Root"

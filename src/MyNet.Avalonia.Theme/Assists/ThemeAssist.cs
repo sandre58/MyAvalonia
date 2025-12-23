@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using Avalonia;
-using Avalonia.Controls.Documents;
+using Avalonia.Controls;
 using Avalonia.Media;
 using MyNet.Avalonia.Theme.Palettes;
 
@@ -13,7 +13,7 @@ namespace MyNet.Avalonia.Theme.Assists;
 
 public static class ThemeAssist
 {
-    static ThemeAssist() => TextElement.ForegroundProperty.Changed.AddClassHandler<AvaloniaObject>((ctrl, args) => SetInheritedForeground(ctrl, args.NewValue as IBrush));
+    static ThemeAssist() => RoleProperty.Changed.AddClassHandler<AvaloniaObject>(OnRoleChangedCallback);
 
     #region Role
 
@@ -36,27 +36,13 @@ public static class ThemeAssist
     /// <param name="value">The theme role to assign.</param>
     public static void SetRole(AvaloniaObject element, ThemeRole value) => element.SetValue(RoleProperty, value);
 
-    #endregion
-
-    #region InheritedForeground
-
-    /// <summary>
-    /// Provides InheritedForeground Property for attached ThemeAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush?> InheritedForegroundProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, TextElement, IBrush?>("InheritedForeground", inherits: true);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="InheritedForegroundProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="InheritedForegroundProperty"/>.</param>
-    public static void SetInheritedForeground(AvaloniaObject element, IBrush? value) => element.SetValue(InheritedForegroundProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="InheritedForegroundProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush? GetInheritedForeground(AvaloniaObject element) => element.GetValue(InheritedForegroundProperty);
+    private static void OnRoleChangedCallback(AvaloniaObject avaloniaObject, AvaloniaPropertyChangedEventArgs args)
+    {
+        if (avaloniaObject is Control c)
+        {
+            c.Classes.Set("WithRole", args.GetNewValue<ThemeRole>() != ThemeRole.Default);
+        }
+    }
 
     #endregion
 

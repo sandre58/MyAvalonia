@@ -10,7 +10,10 @@
       "documentInternalElements": false
     },
     "orderingRules": {
-      "usingDirectivesPlacement": "outsideNamespace"
+      "usingDirectivesPlacement": "outsideNamespace",
+      "elementOrder": [
+        "constant"
+      ]
     }
   }
 }

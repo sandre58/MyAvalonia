@@ -12,7 +12,7 @@
         <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="Focusable" Value="False" />
 
-        <Style Selector="^[(my|ThemeAssist.Role)=Primary], ^[(my|ThemeAssist.Role)=Accent], ^[(my|ThemeAssist.Role)=Success], ^[(my|ThemeAssist.Role)=Warning], ^[(my|ThemeAssist.Role)=Error], ^[(my|ThemeAssist.Role)=Information], ^[(my|ThemeAssist.Role)=Neutral], ^[(my|ThemeAssist.Role)=Custom]">
+        <Style Selector="^.WithRole">
             <Setter Property="Foreground" Value="{my:ThemeRole}" />
         </Style>
 
@@ -35,7 +35,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.Label.Code" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=TemplatedControl}" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="Foreground" Value="{my:ThemeRole Opacity=High}" />
@@ -64,7 +64,6 @@
 
         <!-- Default Theme -->
         <Setter Property="Background" Value="{my:ThemeRole}" />
-        <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="Label">
@@ -91,6 +90,10 @@
         </Setter>
 
         <!-- Styles -->
+        <Style Selector="^.WithRole">
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
+        </Style>
+
         <Style Selector="^.Outlined">
             <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Border}" />
             <Setter Property="BorderThickness" Value="1" />
@@ -99,7 +102,7 @@
             <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
 
             <Style Selector="^.Text">
-            <Setter Property="my:PaletteAssist.Secondary" Value="{my:Foreground AncestorType=TemplatedControl}" />
+                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Foreground AncestorType=TemplatedControl}" />
                 <Setter Property="Foreground" Value="{my:ThemeRole Secondary}" />
             </Style>
         </Style>

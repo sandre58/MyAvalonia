@@ -11,7 +11,10 @@
         <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
-        <Setter Property="Foreground" Value="{my:ThemeBrush Background, Contrast=True}" />
+
+        <Style Selector="^.WithRole">
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+        </Style>
 
         <Setter Property="Template">
             <ControlTemplate TargetType="DropDownButton">

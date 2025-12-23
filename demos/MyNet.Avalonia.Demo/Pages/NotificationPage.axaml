@@ -1,0 +1,109 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.NotificationPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            xmlns:t="clr-namespace:MyNet.UI.Toasting.Settings;assembly=MyNet.UI"
+            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
+            x:DataType="vm:NotificationPageViewModel"
+            ClipToBounds="False"
+            mc:Ignorable="d">
+    <DockPanel>
+
+        <!-- Settings -->
+        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                <StackPanel>
+                    <Button my:IconAssist.Icon="{my:Icon CloseCircle}"
+                            Classes="Small Solid Negative"
+                            Command="{Binding ClearNotifications}"
+                            Content="{my:LocTextBlock Clear}" />
+                    <ComboBox Name="Placement"
+                              Margin="{my:Thickness Default, Top}"
+                              ItemsSource="{my:EnumSource {x:Type t:ToasterPosition}}"
+                              PlaceholderText="{my:Loc Placement}"
+                              SelectedValue="{Binding Placement}"
+                              SelectedValueBinding="{ReflectionBinding Value}" />
+                    <HeaderedContentControl Classes="Watermark" ClipToBounds="False" Header="{my:LocTextBlock OffsetX}">
+                        <Slider Name="OffsetX"
+                                IsSnapToTickEnabled="True"
+                                Maximum="300"
+                                Minimum="0"
+                                Value="{Binding OffsetX}" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Watermark" ClipToBounds="False" Header="{my:LocTextBlock OffsetY}">
+                        <Slider Name="OffsetY"
+                                IsSnapToTickEnabled="True"
+                                Maximum="300"
+                                Minimum="0"
+                                Value="{Binding OffsetY}" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Watermark" ClipToBounds="False" Header="{my:LocTextBlock Width}">
+                        <Slider Name="ToastWidth"
+                                IsSnapToTickEnabled="True"
+                                Maximum="800"
+                                Minimum="100"
+                                Value="{Binding ToastWidth}" />
+                    </HeaderedContentControl>
+                    <NumericUpDown Name="MaxItems"
+                                   Maximum="30"
+                                   Minimum="0"
+                                   Watermark="{my:Loc MaxItems}"
+                                   Value="{Binding MaxItems}" />
+                    <NumericUpDown Name="Duration"
+                                   my:TextFieldAssist.InnerRightContent="{my:LocTextBlock TimeUnitSecond, Casing=LowerCase}"
+                                   Maximum="60"
+                                   Minimum="0"
+                                   Watermark="{my:Loc DisplayDuration}"
+                                   Value="{Binding Duration}" />
+                    <ComboBox Name="ClosingStrategy"
+                              ItemsSource="{my:EnumSource {x:Type t:ToastClosingStrategy}}"
+                              PlaceholderText="{my:Loc ClosingStrategy}"
+                              SelectedValue="{Binding ClosingStrategy}"
+                              SelectedValueBinding="{ReflectionBinding Value}" />
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock FreezeOnMouseEnter}">
+                        <ToggleSwitch Name="FreezeOnMouseEnter" IsChecked="{Binding FreezeOnMouseEnter}" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ActivateOnClick}">
+                        <ToggleSwitch Name="OnClick" IsChecked="{Binding EnableOnClick}" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ActivateOnClose}">
+                        <ToggleSwitch Name="OnClose" IsChecked="{Binding EnableOnClose}" />
+                    </HeaderedContentControl>
+                </StackPanel>
+            </ScrollViewer>
+        </HeaderedContentControl>
+
+        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                                 MinItemWidth="100"
+                                 MinItemHeight="50"
+                                 IsActive="{Binding IsActive}">
+
+            <!-- Template for standard controls -->
+            <ctrl:ControlThemeViewer.ControlTemplate>
+                <DataTemplate x:DataType="ctrl:ControlDescription">
+                    <Button Theme="{Binding Theme}"
+                            my:ThemeAssist.Role="{Binding Role}"
+                            my:ClassesAssist.Classes="{Binding Classes}"
+                            Command="{ReflectionBinding DataContext.ShowNotificationCommand, RelativeSource={RelativeSource AncestorType={x:Type ctrl:ControlThemeViewer}}}"
+                            CommandParameter="{Binding Role}"
+                            ToolTip.Tip="{Binding Content}">
+                        <Button.Content>
+                            <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
+                                <Binding Path="ContentType" />
+                                <Binding Path="Content" />
+                            </MultiBinding>
+                        </Button.Content>
+                    </Button>
+                </DataTemplate>
+            </ctrl:ControlThemeViewer.ControlTemplate>
+
+        </ctrl:ControlThemeViewer>
+
+    </DockPanel>
+</pages:Page>

@@ -28,7 +28,7 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="Height" Value="100" />
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{my:ThemeRole}" />
         <Setter Property="Content">

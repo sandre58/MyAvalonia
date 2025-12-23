@@ -7,7 +7,7 @@
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="InactiveHeight" Value="0" />
         <Setter Property="ActiveHeight" Value="2" />
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="ActiveBrush" Value="{my:ThemeRole}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />

@@ -1,0 +1,50 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.TreeViewPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:countries="clr-namespace:MyNet.Utilities.Geography;assembly=MyNet.Utilities"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:data="clr-namespace:MyNet.Avalonia.Demo.Data"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            x:DataType="vm:TreeViewPageViewModel"
+            ClipToBounds="False"
+            mc:Ignorable="d">
+
+    <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                             MinItemWidth="500"
+                             MinItemHeight="800"
+                             IsActive="{Binding IsActive}">
+
+        <!-- Template for standard controls -->
+        <ctrl:ControlThemeViewer.ControlTemplate>
+            <DataTemplate x:DataType="ctrl:ControlDescription">
+                <TreeView Theme="{Binding Theme}"
+                          my:ThemeAssist.Role="{Binding Role}"
+                          my:ClassesAssist.Classes="{Binding Classes}"
+                          ItemsSource="{x:Static data:Collections.CountriesByAplha}">
+                    <TreeView.ItemTemplate>
+                        <TreeDataTemplate DataType="{x:Type data:CountriesWrapper}" ItemsSource="{Binding Item}">
+                            <TextBlock Text="{Binding DisplayName.Value}" />
+                        </TreeDataTemplate>
+                    </TreeView.ItemTemplate>
+                    <TreeView.DataTemplates>
+                        <TreeDataTemplate DataType="{x:Type countries:Country}">
+                            <StackPanel Classes="Medium" Orientation="Horizontal">
+                                <Image Width="16"
+                                       Height="16"
+                                       VerticalAlignment="Center"
+                                       Source="{Binding Converter={x:Static c:CountryToBitmapConverter.To16}}" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Converter={x:Static c:CountryToStringConverter.ToDisplayName}}" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </TreeDataTemplate>
+                    </TreeView.DataTemplates>
+                </TreeView>
+            </DataTemplate>
+        </ctrl:ControlThemeViewer.ControlTemplate>
+
+    </ctrl:ControlThemeViewer>
+</pages:Page>

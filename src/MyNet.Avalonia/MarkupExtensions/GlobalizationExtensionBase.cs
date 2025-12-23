@@ -5,82 +5,122 @@
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia;
 using Avalonia.Data;
+using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml;
 using MyNet.Utilities.Localization;
 
 namespace MyNet.Avalonia.MarkupExtensions;
 
-public abstract class GlobalizationExtensionBase<T> : MarkupExtension
-    where T : BindingBase
+/// <summary>
+/// Abstract base class for Avalonia markup extensions that provide globalization-aware bindings.
+/// This class enables automatic updates of bindings when the application's culture or time zone changes.
+/// </summary>
+/// <remarks>
+/// Derive from this class to create custom markup extensions that support localization and time zone awareness.
+/// The extension creates a <see cref="MultiBinding"/> that can react to culture and time zone changes by including
+/// the relevant properties from <see cref="UIContext.Globalization"/> as additional binding sources.
+/// </remarks>
+/// <param name="updateOnCultureChanged">Whether to update the binding when the culture changes.</param>
+/// <param name="updateOnTimeZoneChanged">Whether to update the binding when the time zone changes.</param>
+public abstract class GlobalizationExtensionBase(bool updateOnCultureChanged, bool updateOnTimeZoneChanged) : MarkupExtension
 {
-    protected GlobalizationExtensionBase(bool updateOnCultureChanged, bool updateOnTimeZoneChanged)
-    {
-        ResourceLocator.Initialize();
-        UpdateOnCultureChanged = updateOnCultureChanged;
-        UpdateOnTimeZoneChanged = updateOnTimeZoneChanged;
-    }
+    /// <summary>
+    /// Gets or sets the value to use when the binding target is null.
+    /// </summary>
+    public object? TargetNullValue { get; set; }
 
-    protected EventHandler? UpdateTargetHandler { get; private set; }
+    /// <summary>
+    /// Gets or sets the value to use when the binding cannot be resolved.
+    /// </summary>
+    public object? FallbackValue { get; set; }
 
-    protected T Binding
+    /// <summary>
+    /// Gets or sets a value indicating whether to update the binding when the culture changes.
+    /// </summary>
+    public bool UpdateOnCultureChanged { get; set; } = updateOnCultureChanged;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether to update the binding when the time zone changes.
+    /// </summary>
+    public bool UpdateOnTimeZoneChanged { get; set; } = updateOnTimeZoneChanged;
+
+    /// <summary>
+    /// Provides the value for the markup extension by creating a <see cref="MultiBinding"/> that reacts to culture and/or time zone changes.
+    /// </summary>
+    /// <param name="serviceProvider">The service provider for the markup extension.</param>
+    /// <returns>A <see cref="MultiBinding"/> instance configured for globalization support.</returns>
+    public override object ProvideValue(IServiceProvider serviceProvider) => CreateMultiBinding();
+
+    /// <summary>
+    /// Creates the <see cref="MultiBinding"/> instance with the appropriate bindings and converter.
+    /// </summary>
+    /// <returns>A configured <see cref="MultiBinding"/>.</returns>
+    protected virtual MultiBinding CreateMultiBinding()
     {
-        get
+        var multiBinding = new MultiBinding
         {
-            field ??= CreateBinding();
+            Converter = CreateConverter(),
+            ConverterParameter = CreateConverterParameter(),
+            Mode = BindingMode.OneWay
+        };
 
-            return field;
+        if (FallbackValue is not null)
+        {
+            multiBinding.FallbackValue = FallbackValue;
         }
-    }
 
-    protected abstract T CreateBinding();
+        if (TargetNullValue is not null)
+        {
+            multiBinding.TargetNullValue = TargetNullValue;
+        }
 
-    public object? TargetNullValue { get => Binding.TargetNullValue; set => Binding.TargetNullValue = value; }
-
-    public object? FallbackValue { get => Binding.FallbackValue; set => Binding.FallbackValue = value; }
-
-    public bool UpdateOnCultureChanged { get; set; }
-
-    public bool UpdateOnTimeZoneChanged { get; set; }
-
-    public override object ProvideValue(IServiceProvider serviceProvider)
-    {
-        var targetProvider = (IProvideValueTarget?)serviceProvider.GetService(typeof(IProvideValueTarget));
-        var targetElement = (AvaloniaObject?)targetProvider?.TargetObject;
-        var targetProperty = (AvaloniaProperty?)targetProvider?.TargetProperty;
-
-        if (targetElement is null || targetProperty is null) return Binding;
-
-        UpdateTargetHandler = handler;
+        if (CreateBinding() is IBinding binding)
+        {
+            multiBinding.Bindings.Add(binding);
+        }
 
         if (UpdateOnCultureChanged)
-            GlobalizationService.Current.CultureChanged += UpdateTargetHandler;
+        {
+            multiBinding.Bindings.Add(new Binding
+            {
+                Source = UIContext.Globalization,
+                Path = nameof(UIContext.Globalization.Culture),
+                Mode = BindingMode.OneWay
+            });
+        }
 
         if (UpdateOnTimeZoneChanged)
-            GlobalizationService.Current.TimeZoneChanged += UpdateTargetHandler;
-
-        return Binding;
-
-        void handler(object? o, EventArgs e)
         {
-            var expression = BindingOperations.GetBindingExpressionBase(targetElement, targetProperty);
-
-            if (expression is null)
+            multiBinding.Bindings.Add(new Binding
             {
-                return;
-            }
-
-            var wr = new WeakReference<BindingExpressionBase>(expression);
-            if (wr.TryGetTarget(out var target))
-            {
-                target.UpdateTarget();
-            }
-            else
-            {
-                GlobalizationService.Current.CultureChanged -= UpdateTargetHandler;
-                GlobalizationService.Current.TimeZoneChanged -= UpdateTargetHandler;
-            }
+                Source = UIContext.Globalization,
+                Path = nameof(UIContext.Globalization.TimeZone),
+                Mode = BindingMode.OneWay
+            });
         }
+
+        return multiBinding;
     }
+
+    /// <summary>
+    /// Creates the <see cref="IMultiValueConverter"/> to use for the multi-binding.
+    /// Must be implemented by derived classes.
+    /// </summary>
+    /// <returns>The multi-value converter.</returns>
+    protected abstract IMultiValueConverter CreateConverter();
+
+    /// <summary>
+    /// Creates the converter parameter to pass to the converter.
+    /// Can be overridden by derived classes to provide custom parameters.
+    /// </summary>
+    /// <returns>The converter parameter, or null if not needed.</returns>
+    protected virtual object? CreateConverterParameter() => null;
+
+    /// <summary>
+    /// Creates the main binding to use as the primary value in the multi-binding.
+    /// Must be implemented by derived classes.
+    /// </summary>
+    /// <returns>The main binding, or null if not needed.</returns>
+    protected abstract IBinding? CreateBinding();
 }

@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia">
 
-    <Style Selector=":is(Visual).Iconable, AutoCompleteBox, Button, CalendarDatePicker, CheckBox, ComboBox, ComboBoxItem, DatePicker, DropDownButton, HeaderedContentControl, HyperlinkButton, Label, NumericUpDown, RadioButton, RepeatButton, SplitButton, TabItem, TextBox, TimePicker, ToggleButton, ToggleSplitButton, ToggleSwitch, my|Badge, my|CalendarDatePicker, my|ColorPicker, my|CodeBlock, my|DateRangePicker, my|DateTimePicker, my|Tag, my|TagBox, my|MultiComboBox, my|MultiComboBoxItem, my|TimeRangePicker, my|TimePicker">
+    <Style Selector=":is(Visual).Iconable, AutoCompleteBox, Button, CalendarDatePicker, CheckBox, ComboBox, ComboBoxItem, DatePicker, DropDownButton, Expander, HeaderedContentControl, HyperlinkButton, Label, NumericUpDown, RadioButton, RepeatButton, SplitButton, TabItem, TextBox, TimePicker, ToggleButton, ToggleSplitButton, ToggleSwitch, my|Badge, my|Banner, my|CalendarDatePicker, my|ColorPicker, my|CodeBlock, my|DateRangePicker, my|DateTimePicker, my|Tag, my|TagBox, my|MultiComboBox, my|MultiComboBoxItem, my|TimeRangePicker, my|TimePicker">
         <Setter Property="my:IconAssist.Alignment" Value="Left" />
         <Setter Property="my:IconAssist.Margin" Value="{my:Thickness Default, Right}" />
         <Setter Property="my:IconAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />

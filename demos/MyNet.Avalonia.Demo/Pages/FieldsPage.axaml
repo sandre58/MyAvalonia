@@ -1,15 +1,21 @@
-<pages:AutoBuildPage x:Class="MyNet.Avalonia.Demo.Pages.FieldsPage"
-                     xmlns="https://github.com/avaloniaui"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:c="using:MyNet.Avalonia.Demo.Converters"
-                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                     xmlns:geo="using:MyNet.Utilities.Geography"
-                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:my="http://mynet.com/avalonia"
-                     xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
-                     xmlns:p="using:MyNet.Avalonia.Theme.Palettes"
-                     ClipToBounds="False"
-                     mc:Ignorable="d">
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.FieldsPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:c="using:MyNet.Avalonia.Demo.Converters"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:geo="using:MyNet.Utilities.Geography"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
+            xmlns:data="clr-namespace:MyNet.Avalonia.Demo.Data"
+            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
+            xmlns:p="using:MyNet.Avalonia.Theme.Palettes"
+            x:DataType="vm:FieldsPageViewModel"
+            ClipToBounds="False"
+            mc:Ignorable="d">
     <pages:Page.Resources>
         <DataTemplate x:Key="MyNet.DataTemplate.Country" DataType="{x:Type geo:Country}">
             <DockPanel>
@@ -19,85 +25,68 @@
                        VerticalAlignment="Center"
                        DockPanel.Dock="Left"
                        Source="{Binding Converter={x:Static c:CountryToBitmapConverter.To16}}" />
-                <TextBlock Text="{my:Translation}" Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
+                <TextBlock Text="{my:Translate}" Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
             </DockPanel>
         </DataTemplate>
     </pages:Page.Resources>
 
     <DockPanel>
-
         <!-- Settings -->
         <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
             <ScrollViewer HorizontalScrollBarVisibility="Hidden">
                 <StackPanel>
-
                     <!-- Common -->
-                    <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource Value}">
-                        <UniformGrid Columns="2">
-                            <Button my:IconAssist.Icon="{my:Icon FormatText}"
-                                    Classes="Small Solid Primary"
-                                    Click="RandomizeAll_Click"
-                                    Content="{my:Resource Randomize}"
-                                    CornerRadius="3 0 0 3" />
-                            <Button my:IconAssist.Icon="{my:Icon Close}"
-                                    Classes="Small Solid Negative"
-                                    Click="ClearAll_Click"
-                                    Content="{my:Resource Clear}"
-                                    CornerRadius="0 3 3 0" />
-                        </UniformGrid>
-                    </HeaderedContentControl>
-
-                    <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource Theme}">
-                        <ListBox Name="UseTheme" SelectedIndex="0" SelectedValueBinding="{ReflectionBinding DataContext}" SelectionChanged="UseTheme_SelectionChanged">
-                            <ListBoxItem Content="Default" DataContext="{x:Static p:ThemeRole.Primary}" />
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Theme}">
+                        <ListBox Name="UseTheme" SelectedIndex="0" SelectedValueBinding="{ReflectionBinding DataContext}">
+                            <ListBoxItem Content="Default" DataContext="{x:Static p:ThemeRole.Default}" />
                             <ListBoxItem Content="Accent" DataContext="{x:Static p:ThemeRole.Accent}" />
                             <ListBoxItem Content="Inverse" DataContext="{x:Static p:ThemeRole.Inverse}" />
                         </ListBox>
                     </HeaderedContentControl>
 
-                    <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource IsEditable}">
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsEditable}">
                         <ToggleSwitch Name="IsEditable" IsChecked="True" />
                     </HeaderedContentControl>
 
-                    <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource IconLayout}">
-                        <ListBox Name="Icon" SelectedIndex="0" SelectionChanged="Icon_SelectionChanged">
-                            <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:Resource None}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Resource Left}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:Resource Right}" />
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock IconLayout}">
+                        <ListBox Name="IconLayout" SelectedIndex="0">
+                            <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:LocTextBlock None}" />
+                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
+                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
                         </ListBox>
                     </HeaderedContentControl>
 
                     <TextBox Name="Watermark"
                              Classes="ButtonRight"
                              Text="Watermark"
-                             Watermark="{my:Resource Watermark}">
+                             Watermark="{my:Loc Watermark}">
                         <my:IconAssist.Icon>
                             <ToggleButton Name="IsFloating"
                                           Classes="Stretch"
                                           Content="{StaticResource MyNet.Geometry.TextShort}"
                                           IsChecked="False"
                                           Theme="{StaticResource MyNet.Theme.ToggleButton.Embedded.Tool}"
-                                          ToolTip.Tip="{my:Resource Floating}" />
+                                          ToolTip.Tip="{my:LocTextBlock Floating}" />
                         </my:IconAssist.Icon>
                     </TextBox>
-                    <TextBox Name="InnerLeftContent" Watermark="{my:Resource Prefix}" />
-                    <TextBox Name="InnerRightContent" Watermark="{my:Resource Suffix}" />
-                    <TextBox Name="UnderText" Watermark="{my:Resource UnderText}" />
-                    <CheckBox Name="ShowClearButton" Content="{my:Resource ShowClearButton}" IsChecked="False" />
-                    <CheckBox Name="ShowClipboardButton" Content="{my:Resource ShowClipboardButton}" IsChecked="False" />
+                    <TextBox Name="InnerLeftContent" Watermark="{my:Loc Prefix}" />
+                    <TextBox Name="InnerRightContent" Watermark="{my:Loc Suffix}" />
+                    <TextBox Name="UnderText" Watermark="{my:Loc UnderText}" />
+                    <CheckBox Name="ShowClearButton" Content="{my:LocTextBlock ShowClearButton}" IsChecked="False" />
+                    <CheckBox Name="ShowClipboardButton" Content="{my:LocTextBlock ShowClipboardButton}" IsChecked="False" />
 
-                    <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource ShowError}">
-                        <ListBox Name="ShowError" SelectedIndex="0" SelectionChanged="ShowError_SelectionChanged">
-                            <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:Resource None}" />
-                            <ListBoxItem Content="{my:Icon FormatText}" ToolTip.Tip="{my:Resource Text}" />
-                            <ListBoxItem Content="{my:Icon AlertCircle}" ToolTip.Tip="{my:Resource Icon}" />
-                            <ListBoxItem Content="{my:Icon Triangle}" ToolTip.Tip="{my:Resource Glyph}" />
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock ShowError}">
+                        <ListBox Name="ShowError" SelectedIndex="0">
+                            <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:LocTextBlock None}" />
+                            <ListBoxItem Content="{my:Icon FormatText}" ToolTip.Tip="{my:LocTextBlock Text}" />
+                            <ListBoxItem Content="{my:Icon AlertCircle}" ToolTip.Tip="{my:LocTextBlock Icon}" />
+                            <ListBoxItem Content="{my:Icon Triangle}" ToolTip.Tip="{my:LocTextBlock Glyph}" />
                         </ListBox>
                     </HeaderedContentControl>
 
                     <!-- TextBox -->
                     <HeaderedContentControl Classes="SubCaption" Header="TextBox">
-                        <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource IsPassword}">
+                        <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsPassword}">
                             <ToggleSwitch Name="IsPassword" IsCheckedChanged="IsPassword_IsCheckedChanged" />
                         </HeaderedContentControl>
                     </HeaderedContentControl>
@@ -105,10 +94,10 @@
                     <!-- NumericUpDown -->
                     <HeaderedContentControl Classes="SubCaption" Header="NumericUpDown">
                         <StackPanel Spacing="{StaticResource MyNet.Spacing.Large}">
-                            <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource ShowButtons}">
+                            <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowButtons}">
                                 <ToggleSwitch Name="ShowButtonsSpinner" IsChecked="True" />
                             </HeaderedContentControl>
-                            <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource ButtonsPosition}">
+                            <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock ButtonsPosition}">
                                 <ListBox Name="NumericUpDownButtonsPosition"
                                          DisplayMemberBinding="{ReflectionBinding Display}"
                                          ItemTemplate="{x:Null}"
@@ -116,7 +105,7 @@
                                          SelectedIndex="1"
                                          SelectedValueBinding="{ReflectionBinding Value}" />
                             </HeaderedContentControl>
-                            <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource ButtonsLayout}">
+                            <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock ButtonsLayout}">
                                 <ListBox Name="NumericUpDownButtonsLayout"
                                          DisplayMemberBinding="{ReflectionBinding Display}"
                                          ItemTemplate="{x:Null}"
@@ -124,7 +113,7 @@
                                          SelectedIndex="0"
                                          SelectedValueBinding="{ReflectionBinding Value}" />
                             </HeaderedContentControl>
-                            <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource SwitchButtons}">
+                            <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock SwitchButtons}">
                                 <ToggleSwitch Name="SwitchButtonsSpinner" />
                             </HeaderedContentControl>
                         </StackPanel>
@@ -133,17 +122,17 @@
                     <!-- DatePicker -->
                     <HeaderedContentControl Classes="SubCaption" Header="DatePicker">
                         <StackPanel Spacing="{StaticResource MyNet.Spacing.Large}">
-                            <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource UseWatermark}">
+                            <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock UseWatermark}">
                                 <ToggleSwitch Name="UseDateWatermark" IsChecked="True" />
                             </HeaderedContentControl>
-                            <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource ShowDay}">
-                                <ToggleSwitch Name="ShowYear" IsChecked="True" />
+                            <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowDay}">
+                                <ToggleSwitch Name="ShowDay" IsChecked="True" />
                             </HeaderedContentControl>
-                            <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource ShowMonth}">
+                            <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowMonth}">
                                 <ToggleSwitch Name="ShowMonth" IsChecked="True" />
                             </HeaderedContentControl>
-                            <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource ShowYear}">
-                                <ToggleSwitch Name="ShowDay" IsChecked="True" />
+                            <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowYear}">
+                                <ToggleSwitch Name="ShowYear" IsChecked="True" />
                             </HeaderedContentControl>
                         </StackPanel>
                     </HeaderedContentControl>
@@ -151,13 +140,13 @@
                     <!-- TimePicker -->
                     <HeaderedContentControl Classes="SubCaption" Header="TimePicker">
                         <StackPanel Spacing="{StaticResource MyNet.Spacing.Large}">
-                            <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource UseWatermark}">
+                            <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock UseWatermark}">
                                 <ToggleSwitch Name="UseTimeWatermark" IsChecked="True" />
                             </HeaderedContentControl>
-                            <HeaderedContentControl Classes="Labelled Left Regular" Header="{my:Resource UseSeconds}">
+                            <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock UseSeconds}">
                                 <ToggleSwitch Name="UseSeconds" IsChecked="True" />
                             </HeaderedContentControl>
-                            <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource Mode}">
+                            <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Mode}">
                                 <ListBox Name="TimeMode" SelectedIndex="1" SelectedValueBinding="{ReflectionBinding DataContext}">
                                     <ListBoxItem Content="12HourClock" DataContext="12HourClock" />
                                     <ListBoxItem Content="24HourClock" DataContext="24HourClock" />
@@ -169,10 +158,336 @@
             </ScrollViewer>
         </HeaderedContentControl>
 
-        <!-- Fields -->
-        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-            <StackPanel Name="Root" Classes="Large" Grid.IsSharedSizeScope="True" />
-        </ScrollViewer>
+        <ScrollViewer Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="TextBox" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="AutoCompleteBox" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="ComboBox" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="MultiComboBox" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="TagBox" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="NumericUpDown" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="CalendarDatePicker" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="MyCalendarDatePicker" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="DatePicker" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="TimePicker" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="MyTimePicker" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="DateTimePicker" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="DateRangePicker" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="TimeRangePicker" />
+                    <ColumnDefinition Width="220" SharedSizeGroup="ColorPicker" />
+                </Grid.ColumnDefinitions>
 
+                <!-- Headers Row -->
+                <TextBlock Grid.Column="1" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">TextBox</TextBlock>
+                <TextBlock Grid.Column="2" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">AutoCompleteBox</TextBlock>
+                <TextBlock Grid.Column="3" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">ComboBox</TextBlock>
+                <TextBlock Grid.Column="4" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">MultiComboBox</TextBlock>
+                <TextBlock Grid.Column="5" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">TagBox</TextBlock>
+                <TextBlock Grid.Column="6" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">NumericUpDown</TextBlock>
+                <TextBlock Grid.Column="7" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">CalendarDatePicker</TextBlock>
+                <TextBlock Grid.Column="8" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">MyCalendarDatePicker</TextBlock>
+                <TextBlock Grid.Column="9" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">DatePicker</TextBlock>
+                <TextBlock Grid.Column="10" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">TimePicker</TextBlock>
+                <TextBlock Grid.Column="11" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">MyTimePicker</TextBlock>
+                <TextBlock Grid.Column="12" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">DateTimePicker</TextBlock>
+                <TextBlock Grid.Column="13" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">DateRangePicker</TextBlock>
+                <TextBlock Grid.Column="14" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">TimeRangePicker</TextBlock>
+                <TextBlock Grid.Column="15" Grid.Row="0" Classes="H5" HorizontalAlignment="Center">ColorPicker</TextBlock>
+
+                <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                                         MinItemWidth="4000"
+                                         MinItemHeight="40"
+                                         Grid.Row="1"
+                                         Grid.ColumnSpan="16"
+                                         IsActive="{Binding IsActive}">
+                    <ctrl:ControlThemeViewer.Styles>
+                        <Style Selector="TabItem">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                        <Style Selector="TextBox.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TextBox.Underline}" />
+                        </Style>
+                        <Style Selector="AutoCompleteBox.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.AutoCompleteBox.Underline}" />
+                        </Style>
+                        <Style Selector="ComboBox.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ComboBox.Underline}" />
+                        </Style>
+                        <Style Selector="my|MultiComboBox.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.MultiComboBox.Underline}" />
+                        </Style>
+                        <Style Selector="my|TagBox.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TagBox.Underline}" />
+                        </Style>
+                        <Style Selector="NumericUpDown.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.NumericUpDown.Underline}" />
+                        </Style>
+                        <Style Selector="CalendarDatePicker.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.CalendarDatePicker.Underline}" />
+                        </Style>
+                        <Style Selector="my|CalendarDatePicker.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.MyCalendarDatePicker.Underline}" />
+                        </Style>
+                        <Style Selector="DatePicker.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.DatePicker.Underline}" />
+                        </Style>
+                        <Style Selector="TimePicker.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TimePicker.Underline}" />
+                        </Style>
+                        <Style Selector="my|TimePicker.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.MyTimePicker.Underline}" />
+                        </Style>
+                        <Style Selector="my|DateTimePicker.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.DateTimePicker.Underline}" />
+                        </Style>
+                        <Style Selector="my|DateRangePicker.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.DateRangePicker.Underline}" />
+                        </Style>
+                        <Style Selector="my|TimeRangePicker.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TimeRangePicker.Underline}" />
+                        </Style>
+                        <Style Selector="my|ColorPicker.Underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ColorPicker.Underline}" />
+                        </Style>
+                    </ctrl:ControlThemeViewer.Styles>
+                    <ctrl:ControlThemeViewer.ControlTemplate>
+                        <DataTemplate x:DataType="ctrl:ControlDescription">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="220" SharedSizeGroup="TextBox" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="AutoCompleteBox" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="ComboBox" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="MultiComboBox" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="TagBox" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="NumericUpDown" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="CalendarDatePicker" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="MyCalendarDatePicker" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="DatePicker" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="TimePicker" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="MyTimePicker" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="DateTimePicker" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="DateRangePicker" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="TimeRangePicker" />
+                                    <ColumnDefinition Width="220" SharedSizeGroup="ColorPicker" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0"
+                                         Width="200"
+                                         HorizontalAlignment="Center"
+                                         my:ClassesAssist.Classes="{Binding Classes}"
+                                         my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                         Watermark="{Binding #Watermark.Text}"
+                                         InnerLeftContent="{Binding #InnerLeftContent.Text}"
+                                         InnerRightContent="{Binding #InnerRightContent.Text}"
+                                         UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                         IsReadOnly="{Binding #IsEditable.IsChecked, Converter={x:Static BoolConverters.Not}}"
+                                         my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                         my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                         my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                         b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <AutoCompleteBox Grid.Column="1" Width="200"
+                                                 HorizontalAlignment="Center"
+                                                 my:ClassesAssist.Classes="{Binding Classes}"
+                                                 my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                                 ItemsSource="{m:RandomCountries All=True}"
+                                                 ItemTemplate="{StaticResource MyNet.DataTemplate.Country}"
+                                                 Watermark="{Binding #Watermark.Text}"
+                                                 InnerLeftContent="{Binding #InnerLeftContent.Text}"
+                                                 InnerRightContent="{Binding #InnerRightContent.Text}"
+                                                 my:TextFieldBehavior.IsTextEditable="{Binding #IsEditable.IsChecked}"
+                                                 my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                                 my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                                 my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                                 my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                                 b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <ComboBox Grid.Column="2" Width="200"
+                                          HorizontalAlignment="Center"
+                                          my:ClassesAssist.Classes="{Binding Classes}"
+                                          my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                          ItemsSource="{m:RandomCountries All=True}"
+                                          ItemTemplate="{StaticResource MyNet.DataTemplate.Country}"
+                                          PlaceholderText="{Binding #Watermark.Text}"
+                                          IsEditable="{Binding #IsEditable.IsChecked}"
+                                          my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                          my:TextFieldAssist.InnerLeftContent="{Binding #InnerLeftContent.Text}"
+                                          my:TextFieldAssist.InnerRightContent="{Binding #InnerRightContent.Text}"
+                                          my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                          my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                          my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                          b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <my:MultiComboBox Grid.Column="3" Width="200"
+                                                  HorizontalAlignment="Center"
+                                                  my:ClassesAssist.Classes="{Binding Classes}"
+                                                  my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                                  ItemsSource="{m:RandomCountries All=True}"
+                                                  ItemTemplate="{StaticResource MyNet.DataTemplate.Country}"
+                                                  SelectedItemTemplate="{StaticResource MyNet.DataTemplate.Country}"
+                                                  Watermark="{Binding #Watermark.Text}"
+                                                  my:TextFieldBehavior.IsTextEditable="{Binding #IsEditable.IsChecked}"
+                                                  my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                                  my:TextFieldAssist.InnerLeftContent="{Binding #InnerLeftContent.Text}"
+                                                  my:TextFieldAssist.InnerRightContent="{Binding #InnerRightContent.Text}"
+                                                  my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                                  my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                                  my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                                  b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <my:TagBox Grid.Column="4" Width="200"
+                                           HorizontalAlignment="Center"
+                                           my:ClassesAssist.Classes="{Binding Classes}"
+                                           my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                           Watermark="{Binding #Watermark.Text}"
+                                           my:TextFieldBehavior.IsTextEditable="{Binding #IsEditable.IsChecked}"
+                                           my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                           my:TextFieldAssist.InnerLeftContent="{Binding #InnerLeftContent.Text}"
+                                           my:TextFieldAssist.InnerRightContent="{Binding #InnerRightContent.Text}"
+                                           my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                           my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                           b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <NumericUpDown Grid.Column="5" Width="140"
+                                               HorizontalAlignment="Center"
+                                               my:ClassesAssist.Classes="{Binding Classes}"
+                                               my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                               Watermark="{Binding #Watermark.Text}"
+                                               InnerLeftContent="{Binding #InnerLeftContent.Text}"
+                                               InnerRightContent="{Binding #InnerRightContent.Text}"
+                                               my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                               my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                               my:TextFieldBehavior.IsTextEditable="{Binding #IsEditable.IsChecked}"
+                                               ShowButtonSpinner="{Binding #ShowButtonsSpinner.IsChecked}"
+                                               ButtonSpinnerLocation="{Binding #NumericUpDownButtonsPosition.SelectedValue}"
+                                               my:SpinnerAssist.SwitchButtons="{Binding #SwitchButtonsSpinner.IsChecked}"
+                                               my:SpinnerAssist.Layout="{Binding #NumericUpDownButtonsLayout.SelectedValue}"
+                                               my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                               my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                               b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <CalendarDatePicker Grid.Column="6" Width="150"
+                                                    HorizontalAlignment="Center"
+                                                    my:ClassesAssist.Classes="{Binding Classes}"
+                                                    my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                                    Watermark="{Binding #Watermark.Text}"
+                                                    my:TextFieldBehavior.IsTextEditable="{Binding #IsEditable.IsChecked}"
+                                                    my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                                    my:TextFieldAssist.InnerLeftContent="{Binding #InnerLeftContent.Text}"
+                                                    my:TextFieldAssist.InnerRightContent="{Binding #InnerRightContent.Text}"
+                                                    my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                                    my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                                    my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                                    b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <my:CalendarDatePicker Grid.Column="7" Width="150"
+                                                       HorizontalAlignment="Center"
+                                                       my:ClassesAssist.Classes="{Binding Classes}"
+                                                       my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                                       Watermark="{Binding #Watermark.Text}"
+                                                       my:TextFieldBehavior.IsTextEditable="{Binding #IsEditable.IsChecked}"
+                                                       my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                                       my:TextFieldAssist.InnerLeftContent="{Binding #InnerLeftContent.Text}"
+                                                       my:TextFieldAssist.InnerRightContent="{Binding #InnerRightContent.Text}"
+                                                       my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                                       my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                                       my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                                       b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <DatePicker Grid.Column="8" Width="200"
+                                            HorizontalAlignment="Center"
+                                            my:ClassesAssist.Classes="{Binding Classes}"
+                                            my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                            DayVisible="{Binding #ShowDay.IsChecked}"
+                                            MonthVisible="{Binding #ShowMonth.IsChecked}"
+                                            YearVisible="{Binding #ShowYear.IsChecked}"
+                                            my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                            my:TextFieldAssist.InnerLeftContent="{Binding #InnerLeftContent.Text}"
+                                            my:TextFieldAssist.InnerRightContent="{Binding #InnerRightContent.Text}"
+                                            my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                            my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                            my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                            b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <TimePicker Grid.Column="9" Width="200"
+                                            HorizontalAlignment="Center"
+                                            my:ClassesAssist.Classes="{Binding Classes}"
+                                            my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                            UseSeconds="{Binding #UseSeconds.IsChecked}"
+                                            ClockIdentifier="{Binding #TimeMode.SelectedValue}"
+                                            my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                            my:TextFieldAssist.InnerLeftContent="{Binding #InnerLeftContent.Text}"
+                                            my:TextFieldAssist.InnerRightContent="{Binding #InnerRightContent.Text}"
+                                            my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                            my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                            my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                            b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <my:TimePicker Grid.Column="10" Width="110"
+                                               HorizontalAlignment="Center"
+                                               my:ClassesAssist.Classes="{Binding Classes}"
+                                               my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                               Watermark="{Binding #Watermark.Text}"
+                                               my:TextFieldBehavior.IsTextEditable="{Binding #IsEditable.IsChecked}"
+                                               my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                               my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                               b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <my:DateTimePicker Grid.Column="11" Width="200"
+                                                   HorizontalAlignment="Center"
+                                                   my:ClassesAssist.Classes="{Binding Classes}"
+                                                   my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                                   Watermark="{Binding #Watermark.Text}"
+                                                   my:TextFieldBehavior.IsTextEditable="{Binding #IsEditable.IsChecked}"
+                                                   my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                                   my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                                   my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                                   my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                                   b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <my:DateRangePicker Grid.Column="12" Width="200"
+                                                    HorizontalAlignment="Center"
+                                                    my:ClassesAssist.Classes="{Binding Classes}"
+                                                    my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                                    Watermark="{Binding #Watermark.Text}"
+                                                    my:TextFieldBehavior.IsTextEditable="{Binding #IsEditable.IsChecked}"
+                                                    my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                                    b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <my:TimeRangePicker Grid.Column="13" Width="200"
+                                                    HorizontalAlignment="Center"
+                                                    my:ClassesAssist.Classes="{Binding Classes}"
+                                                    my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                                    Watermark="{Binding #Watermark.Text}"
+                                                    my:TextFieldBehavior.IsTextEditable="{Binding #IsEditable.IsChecked}"
+                                                    my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                                    my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                                    my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                                    my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                                    b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+
+                                <my:ColorPicker Grid.Column="14" Width="150"
+                                                HorizontalAlignment="Center"
+                                                my:ClassesAssist.Classes="{Binding Classes}"
+                                                my:ThemeAssist.Role="{Binding #UseTheme.SelectedValue}"
+                                                Watermark="{Binding #Watermark.Text}"
+                                                my:TextFieldBehavior.IsTextEditable="{Binding #IsEditable.IsChecked}"
+                                                my:TextFieldAssist.UseFloatingWatermark="{Binding #IsFloating.IsChecked}"
+                                                my:TextFieldAssist.UnderText="{Binding #UnderText.Text}"
+                                                my:TextFieldAssist.ShowClearButton="{Binding #ShowClearButton.IsChecked}"
+                                                my:TextFieldAssist.ShowClipboardButton="{Binding #ShowClipboardButton.IsChecked}"
+                                                b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ctrl:ControlThemeViewer.ControlTemplate>
+                </ctrl:ControlThemeViewer>
+            </Grid>
+        </ScrollViewer>
     </DockPanel>
-</pages:AutoBuildPage>
+</pages:Page>

@@ -41,6 +41,8 @@
                     <Setter Property="Margin" Value="1 1 0 0" />
                     <Setter Property="HorizontalAlignment" Value="Stretch" />
                     <Setter Property="VerticalAlignment" Value="Stretch" />
+                    <Setter Property="IsReadOnly" Value="{Binding $parent[my:TagBox].(my:TextFieldBehavior.IsTextEditable), Converter={x:Static BoolConverters.Not}}" />
+                    <Setter Property="my:PaletteAssist.Primary" Value="{Binding $parent[my:TagBox].(my:PaletteAssist.Primary)}" />
                     <Setter Property="my:ThemeAssist.Role" Value="{Binding $parent[my:TagBox].(my:ThemeAssist.Role)}" />
                     <Setter Property="CaretBrush" Value="{my:ThemeRole}" />
                     <Setter Property="SelectionBrush" Value="{my:ThemeRole Opacity=Scrim}" />
@@ -50,7 +52,7 @@
         </Setter>
 
         <!-- Default Theme -->
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
         <Setter Property="BorderThickness" Value="0" />
@@ -148,7 +150,7 @@
 
                                     <!-- Clear button -->
                                     <Button Name="PART_ClearButton"
-                                            Grid.Column="3"
+                                            Grid.Column="2"
                                             Classes="Stretch ExtraSmall no-disablable"
                                             Command="{Binding $parent[my:TagBox].Clear}"
                                             Content="{StaticResource MyNet.Geometry.Close}"
@@ -371,7 +373,7 @@
 
                                 <!-- Clear button -->
                                 <Button Name="PART_ClearButton"
-                                        Grid.Column="3"
+                                        Grid.Column="2"
                                         Margin="{my:Thickness Small, Left}"
                                         Classes="no-disablable"
                                         Command="{Binding $parent[my:TagBox].Clear}"

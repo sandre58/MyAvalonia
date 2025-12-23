@@ -9,6 +9,7 @@
 
     <!-- Menu -->
     <ControlTheme x:Key="{x:Type my:NavigationMenu}" TargetType="my:NavigationMenu">
+        <Setter Property="Foreground" Value="{my:Theme Application.Foreground}" />
         <Setter Property="Grid.IsSharedSizeScope" Value="True" />
         <Setter Property="SubMenuIndent" Value="24" />
         <Setter Property="IconTemplate" Value="{StaticResource MyNet.DataTemplates.NavigationMenuItem.Icon}" />

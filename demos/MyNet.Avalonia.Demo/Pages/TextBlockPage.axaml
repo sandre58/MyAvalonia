@@ -1,0 +1,33 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.TextBlockPage"
+                     xmlns="https://github.com/avaloniaui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+                     mc:Ignorable="d"
+                     xmlns:my="http://mynet.com/avalonia"
+                     xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+                     xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+                     xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+                     x:DataType="vm:TextBlockPageViewModel"
+                     ClipToBounds="False">
+
+    <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                             MinItemWidth="100"
+                             MinItemHeight="50"
+                             IsActive="{Binding IsActive}">
+
+        <!-- Template for standard controls -->
+        <ctrl:ControlThemeViewer.ControlTemplate>
+            <DataTemplate x:DataType="ctrl:ControlDescription">
+                <TextBlock Theme="{Binding Theme}"
+                           my:ThemeAssist.Role="{Binding Role}"
+                           my:ClassesAssist.Classes="{Binding Classes}"
+                           ToolTip.Tip="{Binding Content}"
+                           Text="{Binding Content}" />
+            </DataTemplate>
+        </ctrl:ControlThemeViewer.ControlTemplate>
+
+    </ctrl:ControlThemeViewer>
+
+</pages:Page>

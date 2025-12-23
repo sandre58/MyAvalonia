@@ -10,5 +10,5 @@ namespace MyNet.Avalonia.Demo.ViewModels.Dialogs;
 
 internal sealed class LoginDialogViewModel : DialogViewModel
 {
-    public FormsViewModel Form { get; set; } = new();
+    public FormPageViewModel Form { get; set; } = new();
 }

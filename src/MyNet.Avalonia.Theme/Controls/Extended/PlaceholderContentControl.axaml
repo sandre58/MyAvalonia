@@ -44,7 +44,7 @@
                 <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="my:ClassesAssist.AddClasses" Value="Caption" />
+                <Setter Property="my:ClassesAssist.Classes" Value="Caption" />
                 <Setter Property="FontStyle" Value="Italic" />
             </Style>
 

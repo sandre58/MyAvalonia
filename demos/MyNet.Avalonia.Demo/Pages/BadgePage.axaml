@@ -1,0 +1,84 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.BadgePage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            ClipToBounds="False"
+            mc:Ignorable="d"
+            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
+            x:DataType="vm:BadgePageViewModel">
+    <DockPanel>
+
+        <!-- Settings -->
+        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                <StackPanel>
+                    <ComboBox Name="Position"
+                              Margin="{my:Thickness Default, Top}"
+                              ItemsSource="{my:EnumSource {x:Type my:CornerPosition}}"
+                              PlaceholderText="{my:Loc Position}"
+                              SelectedIndex="1" />
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock OffsetX}">
+                        <Slider Name="OffsetX"
+                                ClipToBounds="False"
+                                IsSnapToTickEnabled="True"
+                                Maximum="10"
+                                Minimum="-10"
+                                Value="0" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock OffsetY}">
+                        <Slider Name="OffsetY"
+                                ClipToBounds="False"
+                                IsSnapToTickEnabled="True"
+                                Maximum="10"
+                                Minimum="-10"
+                                Value="0" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsRounded}">
+                        <ToggleSwitch Name="IsRounded" />
+                    </HeaderedContentControl>
+                </StackPanel>
+            </ScrollViewer>
+        </HeaderedContentControl>
+
+        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                                 MinItemWidth="200"
+                                 MinItemHeight="70"
+                                 IsActive="{Binding IsActive}">
+
+            <!-- Template for standard controls -->
+            <ctrl:ControlThemeViewer.ControlTemplate>
+                <DataTemplate x:DataType="ctrl:ControlDescription">
+                    <my:Badge Theme="{Binding Theme}"
+                              my:ThemeAssist.Role="{Binding Role}"
+                              CornerPosition="{Binding #Position.SelectedIndex}"
+                              my:ClassesAssist.Classes="{Binding Classes}"
+                              IsRounded="{Binding #IsRounded.IsChecked}"
+                              OffsetX="{Binding #OffsetX.Value}"
+                              OffsetY="{Binding #OffsetY.Value}"
+                              Header="{m:RandomContent AllowImage=False, AllowNull=False}"
+                              ToolTip.Tip="{Binding Content}">
+                        <my:Badge.Content>
+                            <Button Width="100">
+                                <Button.Content>
+                                    <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
+                                        <Binding Path="ContentType" />
+                                        <Binding Path="Content" />
+                                    </MultiBinding>
+                                </Button.Content>
+                            </Button>
+                        </my:Badge.Content>
+                    </my:Badge>
+                </DataTemplate>
+            </ctrl:ControlThemeViewer.ControlTemplate>
+
+        </ctrl:ControlThemeViewer>
+
+    </DockPanel>
+</pages:Page>

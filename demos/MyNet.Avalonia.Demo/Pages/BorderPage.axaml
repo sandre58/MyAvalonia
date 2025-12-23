@@ -8,15 +8,13 @@
             xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-            my:ViewModelAssist.AutoWire="True"
             x:DataType="vm:ButtonPageViewModel"
-            x:Name="RootPage"
             ClipToBounds="False"
             mc:Ignorable="d">
     <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
                              MinItemWidth="200"
                              MinItemHeight="130"
-                             IsActive="{Binding #RootPage.IsActive}">
+                             IsActive="{Binding IsActive}">
 
         <!-- Template for standard controls -->
         <ctrl:ControlThemeViewer.ControlTemplate>
@@ -32,7 +30,7 @@
         <!-- If you do not define CustomContent, the tab will not appear -->
         <ctrl:ControlThemeViewer.CustomContent>
             <StackPanel Spacing="20" Margin="20">
-                <HeaderedContentControl Header="Popup" Classes="Labelled Regular">
+                <HeaderedContentControl Header="Popup" Classes="Text">
                     <StackPanel Classes="Large">
                         <Border Width="190" Height="120" Theme="{StaticResource MyNet.Theme.Border.Popup}" />
                     </StackPanel>

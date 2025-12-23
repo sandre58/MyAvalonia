@@ -191,7 +191,7 @@
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
 
         <!-- Default Theme -->
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
         <Setter Property="BorderThickness" Value="0" />
@@ -303,7 +303,7 @@
 
                                     <!-- Clear button -->
                                     <Button Name="PART_ClearButton"
-                                            Grid.Column="3"
+                                            Grid.Column="2"
                                             Classes="Stretch ExtraSmall no-disablable"
                                             Command="{Binding $parent[my:MultiComboBox].UnselectAll}"
                                             Content="{StaticResource MyNet.Geometry.Close}"
@@ -312,7 +312,7 @@
 
                                     <!-- DropDown Glyph -->
                                     <PathIcon Name="PART_ExpanderIcon"
-                                              Grid.Column="5"
+                                              Grid.Column="4"
                                               Margin="4 0 8 0"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
@@ -358,7 +358,7 @@
                                                     my:IconAssist.Icon="{my:Icon CheckAll}"
                                                     Classes="Text"
                                                     Command="{Binding $parent[my:MultiComboBox].SelectAll}"
-                                                    Content="{my:Resource SelectAll}"
+                                                    Content="{my:LocTextBlock SelectAll}"
                                                     CornerRadius="0"
                                                     DockPanel.Dock="Top"
                                                     FontSize="{Binding $parent[TemplatedControl].FontSize}"
@@ -604,7 +604,7 @@
 
                                 <!-- Clear button -->
                                 <Button Name="PART_ClearButton"
-                                        Grid.Column="3"
+                                        Grid.Column="2"
                                         Margin="{my:Thickness Small, Left}"
                                         Classes="no-disablable"
                                         Command="{Binding $parent[my:MultiComboBox].UnselectAll}"
@@ -614,7 +614,7 @@
 
                                 <!-- Glyph -->
                                 <PathIcon Name="PART_ExpanderIcon"
-                                          Grid.Column="5"
+                                          Grid.Column="4"
                                           Margin="4 0 8 0"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
@@ -672,7 +672,7 @@
                                                     my:IconAssist.Icon="{my:Icon CheckAll}"
                                                     Classes="Text"
                                                     Command="{Binding $parent[my:MultiComboBox].SelectAll}"
-                                                    Content="{my:Resource SelectAll}"
+                                                    Content="{my:LocTextBlock SelectAll}"
                                                     CornerRadius="0"
                                                     DockPanel.Dock="Top"
                                                     FontSize="{Binding $parent[TemplatedControl].FontSize}"

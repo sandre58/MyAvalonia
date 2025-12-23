@@ -15,8 +15,4 @@
         <AvaloniaResource Include="**/*.axaml" Exclude="MyTheme.axaml" />
     </ItemGroup>
 
-    <ItemGroup>
-      <AvaloniaXaml Remove="Themes\HighContrast.axaml" />
-    </ItemGroup>
-
 </Project>

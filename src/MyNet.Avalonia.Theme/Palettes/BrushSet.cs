@@ -65,13 +65,12 @@ public class BrushSet
         opacity = NormalizeOpacity(opacity);
         if (_brushes.TryGetValue(opacity, out var existing)) return existing;
 
-        using (PerformanceMonitor.Measure(maxBeforeWarning: 1.Milliseconds()))
+        using (PerformanceMonitor.Measure($"[BrushSet] Created new opacity brush ({opacity:F2}) (Current opacity variants: {_brushes.Count})", maxBeforeWarning: 1.Milliseconds()))
         {
             // Create new brush with color transition animation
             var newBrush = CreateBrush(Brush.Color, opacity);
 
             _brushes.AddOrUpdate(opacity, newBrush);
-            PerformanceMonitor.Debug($"[BrushSet] Created new opacity brush ({opacity:F2}) (Total opacity variants: {_brushes.Count})");
 
             return newBrush;
         }
@@ -88,13 +87,12 @@ public class BrushSet
         opacity = NormalizeOpacity(opacity);
         if (_contrastedBrushes.TryGetValue(opacity, out var existing)) return existing;
 
-        using (PerformanceMonitor.Measure(maxBeforeWarning: 1.Milliseconds()))
+        using (PerformanceMonitor.Measure($"[BrushSet] Created new contrasted opacity brush ({opacity:F2}) (Current opacity variants: {_contrastedBrushes.Count})", maxBeforeWarning: 1.Milliseconds()))
         {
             // Create new brush with color transition animation
             var newBrush = CreateBrush(Contrast.Color, opacity);
 
             _contrastedBrushes.AddOrUpdate(opacity, newBrush);
-            PerformanceMonitor.Debug($"[BrushSet] Created new contrasted opacity brush ({opacity:F2}) (Total opacity variants: {_contrastedBrushes.Count})");
 
             return newBrush;
         }

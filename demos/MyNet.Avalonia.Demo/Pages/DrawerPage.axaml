@@ -1,0 +1,25 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.DrawerPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            x:DataType="vm:DrawerPageViewModel"
+            ClipToBounds="False"
+            mc:Ignorable="d">
+    <DockPanel>
+
+        <!-- Settings -->
+        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                <StackPanel />
+            </ScrollViewer>
+        </HeaderedContentControl>
+
+        <StackPanel>
+            <Button Command="{Binding OpenCommand}" />
+        </StackPanel>
+    </DockPanel>
+</pages:Page>

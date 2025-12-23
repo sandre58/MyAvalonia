@@ -21,7 +21,7 @@
                             Theme="{StaticResource MyNet.Theme.Border.Card}">
                         <Border Background="{Binding Converter={x:Static my:BrushConverter.Default}}" />
                     </Border>
-                    <TextBlock Text="{my:Translation}" />
+                    <TextBlock Text="{my:Translate}" />
                 </StackPanel>
             </DataTemplate>
         </Setter>
@@ -94,7 +94,7 @@
                             Background="{my:Theme Transparency.Small}"
                             ClipToBounds="True"
                             Theme="{StaticResource MyNet.Theme.Border.Card}"
-                            ToolTip.Tip="{my:Translation}">
+                            ToolTip.Tip="{my:TranslateTextBlock}">
                         <Border Background="{Binding Converter={x:Static my:BrushConverter.Default}}" />
                     </Border>
                 </DataTemplate>

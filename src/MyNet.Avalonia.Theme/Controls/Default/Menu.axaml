@@ -93,7 +93,7 @@
 
     <!-- MenuItem -->
     <ControlTheme x:Key="{x:Type MenuItem}" TargetType="MenuItem">
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -506,39 +506,39 @@
     <MenuFlyout x:Key="MyNet.MenuFlyout.Text" x:DataType="sys:Object" FlyoutPresenterTheme="{StaticResource {x:Type MenuFlyoutPresenter}}">
         <MenuItem Name="MyNet.MenuItem.Cut"
                   Command="{Binding $parent[TextBox].Cut}"
-                  Header="{my:Resource Cut}"
+                  Header="{my:LocTextBlock Cut}"
                   Icon="{my:Icon ContentCut}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=cut}"
                   IsEnabled="{Binding $parent[TextBox].CanCut}" />
         <MenuItem Name="MyNet.MenuItem.Copy"
                   Command="{Binding $parent[TextBox].Copy}"
-                  Header="{my:Resource Copy}"
+                  Header="{my:LocTextBlock Copy}"
                   Icon="{my:Icon ContentCopy}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=copy}"
                   IsEnabled="{Binding $parent[TextBox].CanCopy}" />
         <MenuItem Name="MyNet.MenuItem.Paste"
                   Command="{Binding $parent[TextBox].Paste}"
-                  Header="{my:Resource Paste}"
+                  Header="{my:LocTextBlock Paste}"
                   Icon="{my:Icon ContentPaste}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=paste}"
                   IsEnabled="{Binding $parent[TextBox].CanPaste}" />
         <Separator />
         <MenuItem Name="MyNet.MenuItem.Undo"
                   Command="{Binding $parent[TextBox].Undo}"
-                  Header="{my:Resource Undo}"
+                  Header="{my:LocTextBlock Undo}"
                   Icon="{my:Icon Undo}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=undo}"
                   IsEnabled="{Binding $parent[TextBox].CanUndo}" />
         <MenuItem Name="MyNet.MenuItem.Redo"
                   Command="{Binding $parent[TextBox].Redo}"
-                  Header="{my:Resource Redo}"
+                  Header="{my:LocTextBlock Redo}"
                   Icon="{my:Icon Redo}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=redo}"
                   IsEnabled="{Binding $parent[TextBox].CanRedo}" />
         <Separator />
         <MenuItem Name="MyNet.MenuItem.SelectAll"
                   Command="{Binding $parent[TextBox].SelectAll}"
-                  Header="{my:Resource SelectAll}"
+                  Header="{my:LocTextBlock SelectAll}"
                   Icon="{my:Icon SelectAll}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=selectall}" />
     </MenuFlyout>
@@ -549,26 +549,26 @@
                 ItemContainerTheme="{StaticResource MyNet.Theme.MenuItem.Horizontal}">
         <MenuItem x:Name="MyNet.MenuItem.Horizontal.Cut"
                   Command="{Binding $parent[TextBox].Cut}"
-                  Header="{my:Resource Cut}"
+                  Header="{my:LocTextBlock Cut}"
                   IsEnabled="{Binding $parent[TextBox].CanCut}"
                   IsVisible="{Binding $parent[TextBox].CanCut}" />
         <MenuItem x:Name="MyNet.MenuItem.Horizontal.Copy"
                   Command="{Binding $parent[TextBox].Copy}"
-                  Header="{my:Resource Copy}"
+                  Header="{my:LocTextBlock Copy}"
                   IsEnabled="{Binding $parent[TextBox].CanCopy}"
                   IsVisible="{Binding $parent[TextBox].CanCopy}" />
         <MenuItem x:Name="MyNet.MenuItem.Horizontal.Paste"
                   Command="{Binding $parent[TextBox].Paste}"
-                  Header="{my:Resource Paste}"
+                  Header="{my:LocTextBlock Paste}"
                   IsEnabled="{Binding $parent[TextBox].CanPaste}" />
         <MenuItem x:Name="MyNet.MenuItem.Horizontal.Undo"
                   Command="{Binding $parent[TextBox].Undo}"
-                  Header="{my:Resource Undo}"
+                  Header="{my:LocTextBlock Undo}"
                   IsEnabled="{Binding $parent[TextBox].CanUndo}" />
         <MenuItem x:Name="MyNet.MenuItem.Horizontal.Redo"
                   Command="{Binding $parent[TextBox].Redo}"
-                  Header="{my:Resource Redo}"
+                  Header="{my:LocTextBlock Redo}"
                   IsEnabled="{Binding $parent[TextBox].CanRedo}" />
-        <MenuItem x:Name="MyNet.MenuItem.Horizontal.SelectAll" Command="{Binding $parent[TextBox].SelectAll}" Header="{my:Resource SelectAll}" />
+        <MenuItem x:Name="MyNet.MenuItem.Horizontal.SelectAll" Command="{Binding $parent[TextBox].SelectAll}" Header="{my:LocTextBlock SelectAll}" />
     </MenuFlyout>
 </ResourceDictionary>

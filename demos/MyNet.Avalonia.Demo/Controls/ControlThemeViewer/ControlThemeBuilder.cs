@@ -9,7 +9,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Styling;
-using DynamicData;
 using MyNet.Avalonia.Demo.Helpers;
 using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Palettes;
@@ -34,12 +33,12 @@ internal sealed class ControlThemeBuilder(string? name = null, ContentType defau
     /// <summary>
     /// Gets the list of layouts.
     /// </summary>
-    public List<ControlLayout> Layouts { get; } = [new ControlLayout(string.Empty, defaultContentType)];
+    public List<ControlLayout> Layouts { get; } = [new ControlLayout(string.Empty, "no-layout", defaultContentType)];
 
     /// <summary>
     /// Gets the list of style combinations.
     /// </summary>
-    public List<ControlStyle[]> Styles { get; } = [[new ControlStyle(string.Empty)]];
+    public List<ControlStyle[]> Styles { get; } = [[new ControlStyle(string.Empty, "no-style")]];
 
     /// <summary>
     /// Gets the list of size combinations.
@@ -49,7 +48,7 @@ internal sealed class ControlThemeBuilder(string? name = null, ContentType defau
     /// <summary>
     /// Gets the list of theme roles/colors.
     /// </summary>
-    public List<ThemeRole> Roles { get; } = [];
+    public List<ThemeRole> Roles { get; } = [ThemeRole.Default];
 
     /// <summary>
     /// Gets all combinations of a list of items.
@@ -86,7 +85,7 @@ internal sealed class ControlThemeBuilder(string? name = null, ContentType defau
     /// <returns>The current builder instance.</returns>
     public ControlThemeBuilder AddLayouts(params string[] layouts)
     {
-        Layouts.AddRange(layouts.Select(x => new ControlLayout(x, defaultContentType)));
+        Layouts.AddRange(layouts.Select(x => new ControlLayout(x, x, defaultContentType)));
         return this;
     }
 
@@ -108,7 +107,7 @@ internal sealed class ControlThemeBuilder(string? name = null, ContentType defau
     /// <returns>The current builder instance.</returns>
     public ControlThemeBuilder AddStyles(params string[] styles)
     {
-        Styles.AddRange(styles.Select(x => new List<ControlStyle> { new(x) }.ToArray()));
+        Styles.AddRange(styles.Select(x => new List<ControlStyle> { new(x, x) }.ToArray()));
         return this;
     }
 
@@ -119,7 +118,7 @@ internal sealed class ControlThemeBuilder(string? name = null, ContentType defau
     /// <returns>The current builder instance.</returns>
     public ControlThemeBuilder AddCartesianStyles(params string[] styles)
     {
-        Styles.AddRange(GetCombinations(styles).Where(x => x.Count >= 2).Select(x => x.Select(y => new ControlStyle(y)).ToArray()));
+        Styles.AddRange(GetCombinations(styles).Where(x => x.Count >= 2).Select(x => x.Select(y => new ControlStyle(y, y)).ToArray()));
         return this;
     }
 
@@ -127,7 +126,7 @@ internal sealed class ControlThemeBuilder(string? name = null, ContentType defau
     /// Adds all default roles to the theme section.
     /// </summary>
     /// <returns>The current builder instance.</returns>
-    public ControlThemeBuilder AddDefaultRoles() => AddRoles([ThemeRole.Default, ThemeRole.Primary, ThemeRole.Accent, ThemeRole.Inverse, ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information]);
+    public ControlThemeBuilder AddDefaultRoles() => AddRoles([ThemeRole.Primary, ThemeRole.Accent, ThemeRole.Inverse, ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information]);
 
     /// <summary>
     /// Adds theme roles to the theme section.
@@ -139,7 +138,7 @@ internal sealed class ControlThemeBuilder(string? name = null, ContentType defau
     /// Adds all roles to the theme section.
     /// </summary>
     /// <returns>The current builder instance.</returns>
-    public ControlThemeBuilder AddAllRoles() => AddRoles([ThemeRole.Default, ThemeRole.Primary, ThemeRole.Accent, ThemeRole.Inverse, ThemeRole.Dark, ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information]);
+    public ControlThemeBuilder AddAllRoles() => AddRoles([ThemeRole.Primary, ThemeRole.Accent, ThemeRole.Inverse, ThemeRole.Dark, ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information]);
 
     /// <summary>
     /// Adds roles to the theme section.
@@ -181,19 +180,19 @@ internal sealed class ControlThemeBuilder(string? name = null, ContentType defau
         var theme = GetTheme(controlName, Name);
 
         return new(Name.OrEmpty(), theme, [.. Layouts.Select(layout => new ControlLayoutDescription(
-        layout.Value.OrEmpty(),
+        layout.DisplayName.OrEmpty(),
         [.. Styles.Select(styles => new ControlStyleDescription(
-            styles.Length == 0 ? string.Empty : string.Join(" ", styles.Select(x => x.Value)),
+            styles.Length == 0 ? string.Empty : string.Join(" ", styles.Select(x => x.DisplayName)),
             [.. Roles.Select(x => new ControlDescription(
                 theme,
                 x,
-                Classes: new List<string>([layout.Value]).Concat(styles.Select(x => x.Value)).ToArray(),
+                Classes: [.. new List<string>() { $"theme-{Name}" }.Concat(layout.Value.Split(" ").Concat(styles.SelectMany(x => x.Value.Split(" "))))],
                 ContentType: layout.ContentType,
                 Content: x))]))],
         [.. Sizes.Select(size => new ControlDescription(
             theme,
             ThemeRole.Default,
-            Classes: new List<string>([layout.Value, size.Value]).ToArray(),
+            Classes: [.. new List<string>() { $"theme-{Name}", size.Value }.Concat(layout.Value.Split(" "))],
             ContentType: layout.ContentType,
             Content: size.Value))]))]);
     }
@@ -249,12 +248,12 @@ internal sealed record ControlDescription(ControlTheme? Theme = null, ThemeRole 
 /// <summary>
 /// Represents a control layout value and its content type.
 /// </summary>
-internal readonly record struct ControlLayout(string Value, ContentType ContentType);
+internal readonly record struct ControlLayout(string DisplayName, string Value, ContentType ContentType);
 
 /// <summary>
 /// Represents a control style value.
 /// </summary>
-internal readonly record struct ControlStyle(string Value);
+internal readonly record struct ControlStyle(string DisplayName, string Value);
 
 /// <summary>
 /// Represents a control size value.
@@ -266,6 +265,11 @@ internal readonly record struct ControlSize(string Value);
 /// </summary>
 internal enum ContentType
 {
+    /// <summary>
+    /// No content.
+    /// </summary>
+    None,
+
     /// <summary>
     /// Text content.
     /// </summary>
@@ -290,4 +294,19 @@ internal enum ContentType
     /// Custom content.
     /// </summary>
     Custom,
+}
+
+/// <summary>
+/// Font size options for theme controls.
+/// </summary>
+internal enum FontSize
+{
+    SubCaption,
+    Caption,
+    H6,
+    H5,
+    H4,
+    H3,
+    H2,
+    H1
 }

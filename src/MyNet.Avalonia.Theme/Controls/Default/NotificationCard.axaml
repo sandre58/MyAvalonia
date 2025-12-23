@@ -12,12 +12,11 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="UseLayoutRounding" Value="True" />
 
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
-            <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Control.Border}" />
-            <Setter Property="Background" Value="{my:ThemeRole}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
+        <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Control.Border}" />
+        <Setter Property="Background" Value="{my:ThemeRole}" />
+        <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="NotificationCard">
@@ -107,14 +106,18 @@
             <Setter Property="IsVisible" Value="True" />
         </Style>
 
+        <Style Selector="^.WithRole">
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
+        </Style>
+
         <Style Selector="^:success">
-        <Setter Property="my:ThemeAssist.Role" Value="Success" />
+            <Setter Property="my:ThemeAssist.Role" Value="Success" />
         </Style>
         <Style Selector="^:warning">
-        <Setter Property="my:ThemeAssist.Role" Value="Warning" />
+            <Setter Property="my:ThemeAssist.Role" Value="Warning" />
         </Style>
         <Style Selector="^:error">
-        <Setter Property="my:ThemeAssist.Role" Value="Error" />
+            <Setter Property="my:ThemeAssist.Role" Value="Error" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

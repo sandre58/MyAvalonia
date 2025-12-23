@@ -20,16 +20,15 @@
         <Setter Property="my:HeaderAssist.Opacity" Value="1" />
         <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
         <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
-        <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Icon.Left}" />
+        <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
         <Setter Property="ClipToBounds" Value="True" />
 
         <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
         <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Surface.Border}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
         <Setter Property="Background" Value="{my:ThemeRole}" />
-        <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
-        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Contrast=True}" />
         <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderThickness" Value="1" />
 
         <Setter Property="Template">
             <ControlTemplate>
@@ -95,6 +94,17 @@
         </Style>
 
         <!-- Styles -->
+        <Style Selector="^.WithRole">
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
+        </Style>
+
+        <Style Selector="^.Light">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
+            <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
+        </Style>
+
         <Style Selector="^.Outlined">
             <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Border}" />
             <Setter Property="Background" Value="Transparent" />
@@ -108,15 +118,13 @@
             </Style>
         </Style>
 
-        <Style Selector="^.Light">
-            <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
-            <Setter Property="Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeBrush Foreground, RelativeSource={RelativeSource AncestorType=TemplatedControl}}" />
-        </Style>
-
         <Style Selector="^:success">
             <Setter Property="my:ThemeAssist.Role" Value="Success" />
-            <Setter Property="Header" Value="{my:Resource Success}" />
+            <Setter Property="Header">
+                <Template>
+                    <TextBlock Text="{my:Loc Success}" />
+                </Template>
+            </Setter>
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
                     <Template>
@@ -129,7 +137,11 @@
         </Style>
         <Style Selector="^:warning">
             <Setter Property="my:ThemeAssist.Role" Value="Warning" />
-            <Setter Property="Header" Value="{my:Resource Warning}" />
+            <Setter Property="Header">
+                <Template>
+                    <TextBlock Text="{my:Loc Warning}" />
+                </Template>
+            </Setter>
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
                     <Template>
@@ -142,7 +154,11 @@
         </Style>
         <Style Selector="^:error">
             <Setter Property="my:ThemeAssist.Role" Value="Error" />
-            <Setter Property="Header" Value="{my:Resource Error}" />
+            <Setter Property="Header">
+                <Template>
+                    <TextBlock Text="{my:Loc Error}" />
+                </Template>
+            </Setter>
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
                     <Template>
@@ -155,7 +171,11 @@
         </Style>
         <Style Selector="^:information">
             <Setter Property="my:ThemeAssist.Role" Value="Information" />
-            <Setter Property="Header" Value="{my:Resource Information}" />
+            <Setter Property="Header">
+                <Template>
+                    <TextBlock Text="{my:Loc Information}" />
+                </Template>
+            </Setter>
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
                     <Template>

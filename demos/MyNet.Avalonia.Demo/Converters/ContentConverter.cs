@@ -19,7 +19,7 @@ using MyNet.Utilities.Generator;
 
 namespace MyNet.Avalonia.Demo.Converters;
 
-internal class ContentConverter : IValueConverter, IMultiValueConverter
+internal sealed class ContentConverter : IValueConverter, IMultiValueConverter
 {
     /// <summary>
     /// Gets the default singleton instance of <see cref="ThemeConverter"/>.
@@ -34,12 +34,13 @@ internal class ContentConverter : IValueConverter, IMultiValueConverter
     /// <param name="parameter">A parameter describing the theme brush or role to resolve.</param>
     /// <param name="culture">The culture for conversion (not used).</param>
     /// <returns>The resolved <see cref="IBrush"/> or <see cref="AvaloniaProperty.UnsetValue"/> if conversion fails.</returns>
-    public virtual object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value], targetType, parameter, culture)!;
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value], targetType, parameter, culture)!;
 
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture) => values.GetByIndex(0) is not ContentType contentType
             ? AvaloniaProperty.UnsetValue
             : contentType switch
             {
+                ContentType.None => string.Empty,
                 ContentType.Icon => RandomGenerator.Enum<IconData>().ToIcon(),
                 ContentType.Geometry => RandomGenerator.Enum<IconData>().ToGeometry(),
                 _ => values.GetByIndex(1),

@@ -26,10 +26,17 @@
         <Setter Property="my:HeaderAssist.Opacity" Value="1" />
         <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
         <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
-        <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Icon.Left}" />
+        <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
         <Setter Property="ClipToBounds" Value="True" />
 
-        <Setter Property="Background" Value="{my:Theme Surface.Background}" />
+        <!-- Default colors -->
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
+        <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Control.Border}" />
+
+        <!-- Default Theme -->
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{my:ThemeRole}" />
+        <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
 
         <Setter Property="Template">
             <ControlTemplate>
@@ -89,6 +96,297 @@
                 </Border>
             </ControlTemplate>
         </Setter>
+
+        <!-- Styles -->
+        <Style Selector="^.WithRole">
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Contrast=True}" />
+        </Style>
+
+        <Style Selector="^.Transparent">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+        </Style>
+
+        <Style Selector="^.HeaderShadow">
+            <Setter Property="my:HeaderAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
+        </Style>
+
+        <Style Selector="^.Headered">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Border}" />
+            <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeRole}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+            <Style Selector="^.WithRole">
+                <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Contrast=True}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#PART_Header">
+                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.Text">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+            <Style Selector="^.WithRole">
+                <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.Light">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+
+            <Style Selector="^.Headered">
+                <Style Selector="^.WithRole">
+                    <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Contrast=True}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#PART_Header">
+                    <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Top}}" />
+                </Style>
+
+                <Style Selector="^.Left">
+                    <Style Selector="^ /template/ Border#PART_Header">
+                        <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Left}}" />
+                    </Style>
+                </Style>
+
+                <Style Selector="^.Right">
+                    <Style Selector="^ /template/ Border#PART_Header">
+                        <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Right}}" />
+                    </Style>
+                </Style>
+
+                <Style Selector="^.Bottom">
+                    <Style Selector="^ /template/ Border#PART_Header">
+                        <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Bottom}}" />
+                    </Style>
+                </Style>
+            </Style>
+
+            <Style Selector="^.Text">
+                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Foreground AncestorType=TemplatedControl}" />
+                <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Secondary}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.Outlined">
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Border}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+
+            <Style Selector="^.Solid">
+                <Setter Property="Background" Value="{my:Theme Surface.Background}" />
+            </Style>
+
+            <Style Selector="^.Light">
+                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Surface.Background}" />
+                <Setter Property="Background" Value="{my:ThemeRole Secondary, Opacity=Overlay}" />
+            </Style>
+
+            <Style Selector="^.Headered">
+                <Style Selector="^.WithRole">
+                    <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Contrast=True}" />
+                </Style>
+                <Style Selector="^ /template/ Border#PART_Header">
+                    <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Top}}" />
+                </Style>
+
+                <Style Selector="^.Left">
+                    <Style Selector="^ /template/ Border#PART_Header">
+                        <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Left}}" />
+                    </Style>
+                </Style>
+
+                <Style Selector="^.Right">
+                    <Style Selector="^ /template/ Border#PART_Header">
+                        <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Right}}" />
+                    </Style>
+                </Style>
+
+                <Style Selector="^.Bottom">
+                    <Style Selector="^ /template/ Border#PART_Header">
+                        <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Bottom}}" />
+                    </Style>
+                </Style>
+
+            </Style>
+
+            <Style Selector="^.Text">
+                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Foreground AncestorType=TemplatedControl}" />
+                <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Tertiary}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.Labelled">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+            <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Right}" />
+            <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize}" />
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions">
+                    <RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </RowDefinitions>
+                </Setter>
+                <Setter Property="my:GridBehavior.ColumnDefinitions">
+                    <ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </ColumnDefinitions>
+                </Setter>
+            </Style>
+            <Style Selector="^ /template/ Border#PART_Header">
+                <Setter Property="Width" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
+                <Setter Property="Height" Value="{x:Static x:Double.NaN}" />
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="1" />
+            </Style>
+
+            <Style Selector="^.Right">
+                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Left}" />
+            </Style>
+
+            <Style Selector="^.Top">
+                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Bottom}" />
+            </Style>
+
+            <Style Selector="^.Bottom">
+                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Top}" />
+            </Style>
+
+            <Style Selector="^.Headered">
+                <Setter Property="my:HeaderAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
+                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default}" />
+                <Setter Property="Padding" Value="{my:Thickness Medium, Top}" />
+
+                <Style Selector="^.Left">
+                    <Setter Property="Padding" Value="{my:Thickness Medium, Left}" />
+                </Style>
+
+                <Style Selector="^.Right">
+                    <Setter Property="Padding" Value="{my:Thickness Medium, Right}" />
+                </Style>
+
+                <Style Selector="^.Top">
+                    <Setter Property="Padding" Value="{my:Thickness Medium, Top}" />
+                </Style>
+
+                <Style Selector="^.Bottom">
+                    <Setter Property="Padding" Value="{my:Thickness Medium, Bottom}" />
+                </Style>
+
+            </Style>
+        </Style>
+
+        <Style Selector="^.HeaderLeft">
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
+        </Style>
+
+        <Style Selector="^.HeaderRight">
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Right" />
+        </Style>
+
+        <Style Selector="^.HeaderTop">
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Top" />
+        </Style>
+
+        <Style Selector="^.HeaderBottom">
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Bottom" />
+        </Style>
+
+        <Style Selector="^.HeaderCenter">
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="^.Centered">
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="^.Watermark">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Bottom}" />
+            <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
+            <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+
+            <Style Selector="^.Right">
+                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Left}" />
+            </Style>
+
+            <Style Selector="^.Left">
+                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Right}" />
+            </Style>
+
+            <Style Selector="^.Bottom">
+                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Top}" />
+            </Style>
+        </Style>
+
+        <!-- Sizes -->
+        <Style Selector="^.Small">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Small}" />
+            <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Label.Small}" />
+        </Style>
+        <Style Selector="^.Large">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Large}" />
+        </Style>
+
+        <!-- Font Sizes -->
+        <Style Selector="^.H1">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H1}" />
+        </Style>
+        <Style Selector="^.H2">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H2}" />
+        </Style>
+        <Style Selector="^.H3">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H3}" />
+        </Style>
+        <Style Selector="^.H4">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
+        </Style>
+        <Style Selector="^.H5">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H5}" />
+        </Style>
+        <Style Selector="^.H6">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H6}" />
+        </Style>
+        <Style Selector="^.Caption">
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Caption}" />
+        </Style>
 
         <!-- Layout -->
         <Style Selector="^.Left">
@@ -190,167 +488,6 @@
                 <Setter Property="Grid.Row" Value="0" />
                 <Setter Property="Grid.Column" Value="0" />
             </Style>
-        </Style>
-
-        <!-- Size -->
-        <Style Selector="^.H1">
-            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
-            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H1}" />
-        </Style>
-        <Style Selector="^.H2">
-            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
-            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H2}" />
-        </Style>
-        <Style Selector="^.H3">
-            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
-            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H3}" />
-        </Style>
-        <Style Selector="^.H4">
-            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
-            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
-        </Style>
-        <Style Selector="^.H5">
-            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
-            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H5}" />
-        </Style>
-        <Style Selector="^.H6">
-            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
-            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H6}" />
-        </Style>
-        <Style Selector="^.Caption">
-            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Caption}" />
-        </Style>
-
-        <!-- Styles -->
-        <Style Selector="^.HeaderShadow">
-            <Setter Property="my:HeaderAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
-        </Style>
-
-        <Style Selector="^.Outlined">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Border}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="Transparent" />
-
-            <Style Selector="^.Solid">
-                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Surface.Background}" />
-                <Setter Property="Background" Value="{my:ThemeRole Secondary}" />
-            </Style>
-
-            <Style Selector="^.Light">
-                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Surface.Background}" />
-                <Setter Property="Background" Value="{my:ThemeRole Secondary}" />
-            </Style>
-        </Style>
-
-        <Style Selector="^.Solid">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
-            <Setter Property="Background" Value="{my:ThemeRole}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
-        </Style>
-
-        <Style Selector="^.Light">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
-            <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
-        </Style>
-
-        <Style Selector="^.Headered">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Border}" />
-            <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeRole}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Contrast=True}" />
-        </Style>
-
-        <Style Selector="^.Labelled">
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Bottom}" />
-            <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
-
-            <Style Selector="^.Left">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Right}" />
-            </Style>
-
-            <Style Selector="^.Right">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Left}" />
-            </Style>
-
-            <Style Selector="^.Top">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Bottom}" />
-            </Style>
-
-            <Style Selector="^.Bottom">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default, Top}" />
-            </Style>
-
-            <Style Selector="^.Headered">
-                <Setter Property="my:HeaderAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Default}" />
-                <Setter Property="Padding" Value="{my:Thickness Medium, Top}" />
-
-                <Style Selector="^.Left">
-                    <Setter Property="Padding" Value="{my:Thickness Medium, Left}" />
-                </Style>
-
-                <Style Selector="^.Right">
-                    <Setter Property="Padding" Value="{my:Thickness Medium, Right}" />
-                </Style>
-
-                <Style Selector="^.Top">
-                    <Setter Property="Padding" Value="{my:Thickness Medium, Top}" />
-                </Style>
-
-                <Style Selector="^.Bottom">
-                    <Setter Property="Padding" Value="{my:Thickness Medium, Bottom}" />
-                </Style>
-
-            </Style>
-        </Style>
-
-        <Style Selector="^.HeaderLeft">
-            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
-        </Style>
-
-        <Style Selector="^.HeaderRight">
-            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Right" />
-        </Style>
-
-        <Style Selector="^.HeaderTop">
-            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Top" />
-        </Style>
-
-        <Style Selector="^.HeaderBottom">
-            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Bottom" />
-        </Style>
-
-        <Style Selector="^.HeaderCenter">
-            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
-            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Center" />
-        </Style>
-        <Style Selector="^.Centered">
-            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Center" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-        </Style>
-
-        <Style Selector="^.Watermark">
-            <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
-            <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
-        </Style>
-
-        <Style Selector="^.Regular">
-            <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
-        </Style>
-
-        <!-- Sizes -->
-        <Style Selector="^.Small">
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Small}" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Label.Small}" />
-        </Style>
-        <Style Selector="^.Large">
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Large}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

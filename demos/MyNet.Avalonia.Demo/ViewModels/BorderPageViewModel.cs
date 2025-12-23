@@ -9,7 +9,7 @@ using MyNet.Avalonia.Demo.Controls;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal class BorderPageViewModel : ControlPageViewModelBase
+internal sealed class BorderPageViewModel : AutoBuildPageViewModel
 {
     public BorderPageViewModel()
         : base(nameof(Border), [

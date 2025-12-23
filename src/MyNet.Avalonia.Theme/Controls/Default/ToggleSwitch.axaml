@@ -25,8 +25,8 @@
                 <Rectangle Classes="Inner" Theme="{StaticResource MyNet.Theme.Rectangle.Focus}" />
             </FocusAdornerTemplate>
         </Setter>
-
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:Theme Control.Background.Light}" />
         <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
@@ -509,13 +509,6 @@
                 <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
             </Style>
         </Style>
-
-        <!-- Solid -->
-        <Style Selector="^.Solid">
-            <Style Selector="^ /template/ ContentPresenter#PART_OnContentPresenter">
-                <Setter Property="Foreground" Value="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
-            </Style>
-        </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ToggleSwitch.Button.Rounded" TargetType="ToggleSwitch" BasedOn="{StaticResource MyNet.Theme.ToggleButton.Rounded}">
@@ -625,13 +618,6 @@
         <Style Selector="^:checked">
             <Style Selector="^ /template/ ContentPresenter#PART_OnContentPresenter">
                 <Setter Property="Foreground" Value="{my:ThemeBrush (my:ThemeAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-            </Style>
-        </Style>
-
-        <!-- Solid -->
-        <Style Selector="^.Solid">
-            <Style Selector="^ /template/ ContentPresenter#PART_OnContentPresenter">
-                <Setter Property="Foreground" Value="{my:ThemeRole RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
             </Style>
         </Style>
     </ControlTheme>

@@ -1,0 +1,92 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.CarouselPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            mc:Ignorable="d"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
+            x:DataType="vm:ButtonPageViewModel"
+            ClipToBounds="False">
+
+    <DockPanel>
+
+        <!-- Settings -->
+        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                <StackPanel>
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Type}">
+                        <ListBox Name="Type" SelectedIndex="0">
+                            <ListBoxItem Content="{my:LocTextBlock Dots}" />
+                            <ListBoxItem Content="{my:LocTextBlock Columnar}" />
+                            <ListBoxItem Content="{my:LocTextBlock Lines}" />
+                        </ListBox>
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Position}">
+                        <ListBox Name="Position" SelectedIndex="1">
+                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
+                            <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:LocTextBlock Center}" />
+                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
+                        </ListBox>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </ScrollViewer>
+        </HeaderedContentControl>
+
+        <!-- Fields -->
+        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                                 MinItemWidth="850"
+                                 MinItemHeight="550"
+                                 IsActive="{Binding IsActive}">
+
+            <!-- Template for standard controls -->
+            <ctrl:ControlThemeViewer.ControlTemplate>
+                <DataTemplate x:DataType="ctrl:ControlDescription">
+                    <Carousel Theme="{Binding Theme}"
+                              my:ThemeAssist.Role="{Binding Role}"
+                              b:SettingsBehavior.CarouselType="{Binding #Type.SelectedIndex}"
+                              b:SettingsBehavior.IndicatorHorizontalAlignmentClass="{Binding #Position.SelectedIndex}"
+                              my:ClassesAssist.Classes="{Binding Classes}"
+                              Width="600"
+                              Height="400"
+                              ToolTip.Tip="{Binding Content}">
+                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
+                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        </Border>
+                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
+                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        </Border>
+                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
+                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        </Border>
+                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
+                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        </Border>
+                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
+                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        </Border>
+                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
+                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        </Border>
+                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
+                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        </Border>
+                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
+                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        </Border>
+                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
+                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        </Border>
+                    </Carousel>
+                </DataTemplate>
+            </ctrl:ControlThemeViewer.ControlTemplate>
+
+        </ctrl:ControlThemeViewer>
+
+    </DockPanel>
+</pages:Page>

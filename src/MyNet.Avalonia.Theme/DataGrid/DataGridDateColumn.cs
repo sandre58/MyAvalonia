@@ -14,6 +14,7 @@ using Avalonia.Interactivity;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Converters;
+using MyNet.Humanizer;
 using MyNet.Utilities;
 using MyNet.Utilities.Helpers;
 using MyNet.Utilities.Localization;
@@ -103,21 +104,33 @@ public class DataGridDateColumn : DataGridBoundColumn<CalendarDatePicker, Conten
     {
         if (element is not ContentControl { ContentTemplate: null } contentControl)
             return;
-        var dataTemplate = new FuncDataTemplate<DateTime?>((_, _) =>
+        contentControl.ContentTemplate = new FuncDataTemplate<TimeSpan?>((_, _) => new TextBlock
         {
-            var item = new TextBlock
+            [!TextBlock.TextProperty] = new MultiBinding
             {
-                [!TextBlock.TextProperty] = new Binding { Converter = new DateTimeConverter(DateTimeConverter.DateTimeConverterKind.Default, Humanizer.LetterCasing.Title), ConverterParameter = Format }
-            };
-            applyBinding(null, EventArgs.Empty);
-
-            GlobalizationService.Current.CultureChanged -= applyBinding;
-            GlobalizationService.Current.CultureChanged += applyBinding;
-            return item;
-
-            void applyBinding(object? sender, EventArgs e) => item[!TextBlock.TextProperty] = new Binding { Converter = new DateTimeConverter(DateTimeConverter.DateTimeConverterKind.Default, Humanizer.LetterCasing.Title), ConverterParameter = Format };
+                Converter = new DateTimeConverter(DateTimeConverterKind.Default, LetterCasing.Title),
+                ConverterParameter = Format,
+                Mode = BindingMode.OneWay,
+                Bindings =
+                {
+                    new Binding
+                    {
+                        Mode = BindingMode.OneWay,
+                    },
+                    new Binding
+                    {
+                        Source = UIContext.Globalization,
+                        Path = nameof(UIContext.Globalization.Culture),
+                        Mode = BindingMode.OneWay
+                    },
+                    new Binding
+                    {
+                        Source = UIContext.Globalization,
+                        Path = nameof(UIContext.Globalization.TimeZone),
+                        Mode = BindingMode.OneWay
+                    }
+                }
+            }
         });
-
-        contentControl.ContentTemplate = dataTemplate;
     }
 }

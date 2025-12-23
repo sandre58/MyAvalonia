@@ -22,7 +22,7 @@ namespace MyNet.Avalonia.Demo.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class DemoResources {
+    internal sealed class DemoResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -637,6 +637,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Position de l&apos;entête.
+        /// </summary>
+        internal static string HeaderLayout {
+            get {
+                return ResourceManager.GetString("HeaderLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entêtes.
         /// </summary>
         internal static string HeadersVisibility {
@@ -1056,6 +1065,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         internal static string PlacementFlyout {
             get {
                 return ResourceManager.GetString("PlacementFlyout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position de la popup.
+        /// </summary>
+        internal static string PopupPlacement {
+            get {
+                return ResourceManager.GetString("PopupPlacement", resourceCulture);
             }
         }
         

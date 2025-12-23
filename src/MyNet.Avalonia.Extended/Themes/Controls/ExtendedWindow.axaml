@@ -133,7 +133,7 @@
                     <Button Name="PART_FullScreenButton" Theme="{StaticResource MyNet.Theme.Button.Caption}" ToolTip.ShowDelay="1000">
                         <PathIcon Name="PART_FullScreenButtonIcon" Classes="ExtraSmall" Data="{StaticResource MyNet.Geometry.ArrowExpand}" />
                     </Button>
-                    <Button Name="PART_MinimizeButton" Theme="{StaticResource MyNet.Theme.Button.Caption}" ToolTip.Tip="{my:Resource Minimize}">
+                    <Button Name="PART_MinimizeButton" Theme="{StaticResource MyNet.Theme.Button.Caption}" ToolTip.Tip="{my:LocTextBlock Minimize}">
                         <PathIcon Classes="ExtraSmall" Data="{StaticResource MyNet.Geometry.WindowMinimize}" />
                     </Button>
                     <Button Name="PART_RestoreButton" Theme="{StaticResource MyNet.Theme.Button.Caption}">
@@ -142,7 +142,7 @@
                     <Button Name="PART_CloseButton"
                             Classes="Close"
                             Theme="{StaticResource MyNet.Theme.Button.Caption}"
-                            ToolTip.Tip="{my:Resource Close}">
+                            ToolTip.Tip="{my:LocTextBlock Close}">
                         <PathIcon Classes="ExtraSmall" Data="{StaticResource MyNet.Geometry.WindowClose}" />
                     </Button>
                 </StackPanel>
@@ -151,17 +151,29 @@
 
         <Style Selector="^">
             <Style Selector="^ /template/ Button#PART_RestoreButton">
-                <Setter Property="ToolTip.Tip" Value="{my:Resource Maximize}" />
+                <Setter Property="ToolTip.Tip">
+                    <Template>
+                        <TextBlock Text="{my:Loc Maximize}" />
+                    </Template>
+                </Setter>
             </Style>
             <Style Selector="^ /template/ Button#PART_FullScreenButton">
-                <Setter Property="ToolTip.Tip" Value="{my:Resource FullScreen}" />
+                <Setter Property="ToolTip.Tip">
+                    <Template>
+                        <TextBlock Text="{my:Loc FullScreen}" />
+                    </Template>
+                </Setter>
             </Style>
         </Style>
 
         <Style Selector="^:maximized">
 
             <Style Selector="^ /template/ Button#PART_RestoreButton">
-                <Setter Property="ToolTip.Tip" Value="{my:Resource Restore}" />
+                <Setter Property="ToolTip.Tip">
+                    <Template>
+                        <TextBlock Text="{my:Loc Restore}" />
+                    </Template>
+                </Setter>
             </Style>
 
             <Style Selector="^ /template/ PathIcon#PART_RestoreButtonIcon">
@@ -171,7 +183,11 @@
 
         <Style Selector="^:fullscreen">
             <Style Selector="^ /template/ Button#PART_FullScreenButton">
-                <Setter Property="ToolTip.Tip" Value="{my:Resource NoFullScreen}" />
+                <Setter Property="ToolTip.Tip">
+                    <Template>
+                        <TextBlock Text="{my:Loc NoFullScreen}" />
+                    </Template>
+                </Setter>
             </Style>
 
             <Style Selector="^ /template/ PathIcon#PART_FullScreenButtonIcon">

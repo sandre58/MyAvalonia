@@ -8,9 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Documents;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
-using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Palettes;
 using MyNet.Utilities;
 
@@ -21,7 +22,7 @@ namespace MyNet.Avalonia.Theme.Converters.Internals;
 /// Supports conversion from theme parameters to the correct <see cref="IBrush"/> instance, including opacity and contrast transformations.
 /// Used by markup extensions and bindings to resolve theme resources dynamically.
 /// </summary>
-internal class ThemeConverter : IValueConverter, IMultiValueConverter
+internal sealed class ThemeConverter : IValueConverter, IMultiValueConverter
 {
     /// <summary>
     /// Gets the default singleton instance of <see cref="ThemeConverter"/>.
@@ -36,7 +37,7 @@ internal class ThemeConverter : IValueConverter, IMultiValueConverter
     /// <param name="parameter">A parameter describing the theme brush or role to resolve.</param>
     /// <param name="culture">The culture for conversion (not used).</param>
     /// <returns>The resolved <see cref="IBrush"/> or <see cref="AvaloniaProperty.UnsetValue"/> if conversion fails.</returns>
-    public virtual object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value], targetType, parameter, culture)!;
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value], targetType, parameter, culture)!;
 
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
@@ -47,15 +48,21 @@ internal class ThemeConverter : IValueConverter, IMultiValueConverter
         {
             case ThemeRoleParameters roleParameters:
                 if (value is not ThemeRole role) return AvaloniaProperty.UnsetValue;
-                var brush = values.GetByIndex(1) as IBrush;
-                var inheritedBrush = values.GetByIndex(2) is StyledElement control ? ProvideInheritedForeground(control) : null;
 
-                return role switch
+                switch (role)
                 {
-                    ThemeRole.Default or ThemeRole.Custom => ResolveBrush(brush, roleParameters),
-                    ThemeRole.Inverse => ResolveBrush(inheritedBrush, roleParameters),
-                    _ => MyTheme.Current.GetBrush(role.ToString(), roleParameters.Opacity, roleParameters.Contrast)
-                };
+                    case ThemeRole.Default:
+                    case ThemeRole.Custom:
+                        if (values.GetByIndex(1) is not IBrush brush) return AvaloniaProperty.UnsetValue;
+                        return ResolveBrush(brush, roleParameters);
+
+                    case ThemeRole.Inverse:
+                        var inheritedBrush = values.GetByIndex(2) is Control control && control.Parent is Control parent ? TextElement.GetForeground(parent) : null;
+                        return ResolveBrush(inheritedBrush, roleParameters);
+
+                    default:
+                        return MyTheme.Current.GetBrush(role.ToString(), roleParameters.Opacity, roleParameters.Contrast);
+                }
 
             case ThemeBrushParameters brushParameters:
                 if (value is not IBrush brush1) return AvaloniaProperty.UnsetValue;
@@ -80,15 +87,6 @@ internal class ThemeConverter : IValueConverter, IMultiValueConverter
     private static IBrush ResolveBrush(IBrush? brush, ThemeBrushParameters parameters) => brush is null
             ? BrushManager.FallbackBrush
             : MyTheme.Current.GetBrush(brush, parameters.Opacity, parameters.Contrast);
-
-    private static IBrush? ProvideInheritedForeground(StyledElement control)
-    {
-        var inheritedBrush = ThemeAssist.GetInheritedForeground(control);
-
-        return (inheritedBrush != Brushes.Black && inheritedBrush != Brushes.White) || control.Parent is null
-            ? inheritedBrush
-            : ProvideInheritedForeground(control.Parent);
-    }
 }
 
 /// <summary>

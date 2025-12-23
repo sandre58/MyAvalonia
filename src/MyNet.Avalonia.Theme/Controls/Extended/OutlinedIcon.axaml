@@ -4,8 +4,8 @@
     <ControlTheme x:Key="{x:Type my:OutlinedIcon}" TargetType="my:OutlinedIcon">
         <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Small}" />
         <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Small}" />
-
-        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
+        
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=TemplatedControl}" />
         <Setter Property="Background" Value="{my:ThemeRole}" />
         <Setter Property="ActiveBackground" Value="Transparent" />
         <Setter Property="ActiveBorderBrush" Value="Transparent" />

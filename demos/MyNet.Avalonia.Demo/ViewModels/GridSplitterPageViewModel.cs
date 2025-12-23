@@ -1,0 +1,13 @@
+// -----------------------------------------------------------------------
+// <copyright file="GridSplitterPageViewModel.cs" company="Stéphane ANDRE">
+// Copyright (c) Stéphane ANDRE. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using MyNet.UI.ViewModels.Workspace;
+
+namespace MyNet.Avalonia.Demo.ViewModels;
+
+internal sealed class GridSplitterPageViewModel : PageViewModel
+{
+}

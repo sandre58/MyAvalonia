@@ -651,4 +651,10 @@
   <data name="ControlSizes" xml:space="preserve">
     <value>Tailles</value>
   </data>
+  <data name="HeaderLayout" xml:space="preserve">
+    <value>Position de l'entête</value>
+  </data>
+  <data name="PopupPlacement" xml:space="preserve">
+    <value>Position de la popup</value>
+  </data>
 </root>

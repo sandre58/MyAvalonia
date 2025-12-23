@@ -31,7 +31,7 @@
                         <Image x:Name="Image" Width="24"
                                Cursor="Hand" Classes.NotSelected="{Binding !$parent[ListBoxItem].IsSelected}"
                                Source="{Binding Converter={x:Static c:CultureToBitmapConverter.Default}}"
-                               ToolTip.Tip="{my:Translation DisplayName, Casing=Title}">
+                               ToolTip.Tip="{my:TranslateTextBlock DisplayName, Casing=Title}">
                             <Image.Styles>
                                 <Style Selector="Image.NotSelected">
                                     <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Disabled}" />
@@ -51,13 +51,13 @@
                         Command="{Binding IsLightCommand}"
                         Content="{StaticResource MyNet.Geometry.WeatherSunny}"
                         Theme="{StaticResource MyNet.Theme.Button.Icon}"
-                        ToolTip.Tip="{my:Resource Light}" />
+                        ToolTip.Tip="{my:LocTextBlock Light}" />
                 <ToggleSwitch Classes="Small Inverse" IsChecked="{Binding IsDark}" />
                 <Button Classes="Small"
                         Command="{Binding IsDarkCommand}"
                         Content="{StaticResource MyNet.Geometry.WeatherNight}"
                         Theme="{StaticResource MyNet.Theme.Button.Icon}"
-                        ToolTip.Tip="{my:Resource Dark}" />
+                        ToolTip.Tip="{my:LocTextBlock Dark}" />
             </StackPanel>
         </StackPanel>
     </my:ExtendedWindow.RightContent>

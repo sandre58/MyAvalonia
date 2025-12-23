@@ -9,7 +9,7 @@
                   Classes="Circle"
                   IsChecked="{Binding $parent[DataGrid].(my:DataGridBehavior.AreAllSelected)}"
                   Theme="{StaticResource MyNet.Theme.ToggleButton.CheckBox}"
-                  ToolTip.Tip="{my:Resource SelectAll}" />
+                  ToolTip.Tip="{my:LocTextBlock SelectAll}" />
     </DataTemplate>
 
     <ControlTheme x:Key="MyNet.Theme.TextBlock.Embedded.DataGrid" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">

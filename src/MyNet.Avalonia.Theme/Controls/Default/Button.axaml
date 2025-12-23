@@ -29,7 +29,6 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{my:ThemeRole}" />
         <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
-        <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
         <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Foreground}" />
         <Setter Property="my:ThemeAssist.RippleColor" Value="{my:Foreground}" />
@@ -124,6 +123,10 @@
 
         </Style>
 
+        <Style Selector="^.WithRole">
+            <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
+        </Style>
+
         <!-- Text -->
         <Style Selector="^.Text">
             <Setter Property="BorderThickness" Value="0" />
@@ -184,8 +187,12 @@
         </Style>
 
         <!-- Specifics -->
-        <Style Selector="^.Clipboard">
-            <Setter Property="ToolTip.Tip" Value="{my:Resource CopyInClipBoard}" />
+        <Style Selector="^.Clipboard">            
+            <Setter Property="ToolTip.Tip">
+                <Template>
+                    <TextBlock Text="{my:Loc CopyInClipBoard}" />
+                </Template>
+            </Setter>
             <Setter Property="Command" Value="{x:Static my:ClipboardManager.CopyTextCommand}" />
             <Setter Property="Content">
                 <Setter.Value>
@@ -298,7 +305,6 @@
     <ControlTheme x:Key="MyNet.Theme.Button.Icon" TargetType="Button" BasedOn="{StaticResource MyNet.Theme.Button.Rounded}">
         <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=TemplatedControl}" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{my:ThemeRole}" />
         <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Foreground}" />
         <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
         <Setter Property="BorderThickness" Value="0" />
@@ -311,6 +317,10 @@
                 <Ellipse Theme="{StaticResource MyNet.Theme.Ellipse.Focus}" />
             </FocusAdornerTemplate>
         </Setter>
+
+        <Style Selector="^.WithRole">
+            <Setter Property="Foreground" Value="{my:ThemeRole}" />
+        </Style>
 
         <Setter Property="Template">
             <ControlTemplate TargetType="Button">
@@ -368,7 +378,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.Button.Embedded.Tool" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=TemplatedControl}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{my:ThemeRole}" />

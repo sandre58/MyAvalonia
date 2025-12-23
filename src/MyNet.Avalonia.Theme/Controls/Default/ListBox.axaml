@@ -171,7 +171,7 @@
         </Setter>
 
         <!-- Default Theme -->
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
         <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
         <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
@@ -181,7 +181,7 @@
         <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole}" />
         <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
-        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:Foreground}" />
+        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="ListBox">
@@ -442,7 +442,7 @@
         <!-- Default theme -->
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
+        <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
         <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
         <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
         <Setter Property="my:ItemsAssist.HoverBackground" Value="Transparent" />
@@ -596,10 +596,8 @@
                 <StackPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
         </Setter>
-
-        <Style Selector="^">
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
-        </Style>
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="ListBox">

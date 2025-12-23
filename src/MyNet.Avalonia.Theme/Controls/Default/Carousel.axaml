@@ -4,6 +4,7 @@
                     x:CompileBindings="True">
 
     <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Embedded.Carousel.Dot" TargetType="ListBoxItem">
+        <Setter Property="my:PaletteAssist.Primary" Value="{Binding $parent[Carousel].(my:PaletteAssist.Primary)}" />
         <Setter Property="my:ThemeAssist.Role" Value="{Binding $parent[Carousel].(my:ThemeAssist.Role)}" />
         <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
         <Setter Property="Foreground" Value="{my:Foreground AncestorType={x:Type Carousel}}" />
@@ -62,7 +63,7 @@
     <ControlTheme x:Key="MyNet.Theme.Button.Embedded.Carousel" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Margin" Value="{my:Thickness Medium}" />
-        <Setter Property="my:ClassesAssist.AddClasses" Value="Text" />
+        <Setter Property="my:ClassesAssist.Classes" Value="Text" />
         <Setter Property="ContentTemplate">
             <DataTemplate  DataType="{x:Type Geometry}">
                 <PathIcon Data="{Binding}" />
@@ -93,7 +94,7 @@
         <Setter Property="my:SpinnerAssist.ButtonTheme" Value="{StaticResource MyNet.Theme.Button.Embedded.Carousel}" />
         <Setter Property="my:SpinnerAssist.DecreaseContent" Value="{StaticResource MyNet.Geometry.ChevronLeft}" />
         <Setter Property="my:SpinnerAssist.IncreaseContent" Value="{StaticResource MyNet.Geometry.ChevronRight}" />
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="Carousel">
                 <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="*, Auto">
@@ -161,15 +162,15 @@
         </Style>
 
         <!-- Layout -->
-        <Style Selector="^.Left /template/ ListBox#PART_ItemsPresenter2">
+        <Style Selector="^.IndicatorLeft /template/ ListBox#PART_ItemsPresenter2">
             <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
 
-        <Style Selector="^.Center /template/ ListBox#PART_ItemsPresenter2">
+        <Style Selector="^.IndicatorCenter /template/ ListBox#PART_ItemsPresenter2">
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
 
-        <Style Selector="^.Right /template/ ListBox#PART_ItemsPresenter2">
+        <Style Selector="^.IndicatorRight /template/ ListBox#PART_ItemsPresenter2">
             <Setter Property="HorizontalAlignment" Value="Right" />
         </Style>
     </ControlTheme>

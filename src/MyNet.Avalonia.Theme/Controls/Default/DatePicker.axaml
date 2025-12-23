@@ -63,7 +63,7 @@
                                             <Setter Property="ContentTemplate">
                                                 <Setter.Value>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{my:Translation Casing=Title}" />
+                                                        <TextBlock Text="{my:Translate Casing=Title}" />
                                                     </DataTemplate>
                                                 </Setter.Value>
                                             </Setter>
@@ -112,7 +112,7 @@
                                         Focusable="False"
                                         Classes="Text Small"
                                         my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                        ToolTip.Tip="{my:Resource Validate}"
+                                        ToolTip.Tip="{my:LocTextBlock Validate}"
                                         Content="{my:Icon Check}" />
                                 <Button Name="PART_DismissButton"
                                         Grid.Column="2"
@@ -121,7 +121,7 @@
                                         HorizontalAlignment="Stretch"
                                         Margin="{my:Thickness Default}"
                                         Classes="Text Small"
-                                        ToolTip.Tip="{my:Resource Cancel}"
+                                        ToolTip.Tip="{my:LocTextBlock Cancel}"
                                         Content="{my:Icon Close}" />
                             </Grid>
                         </Grid>
@@ -172,16 +172,16 @@
         <Setter Property="Focusable" Value="True" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
-        <Setter Property="my:DateTimePickerAssist.WatermarkDay" Value="{my:Resource Day}" />
-        <Setter Property="my:DateTimePickerAssist.WatermarkMonth" Value="{my:Resource Month}" />
-        <Setter Property="my:DateTimePickerAssist.WatermarkYear" Value="{my:Resource Year}" />
+        <Setter Property="my:DateTimePickerAssist.WatermarkDay" Value="{my:Loc Day}" />
+        <Setter Property="my:DateTimePickerAssist.WatermarkMonth" Value="{my:Loc Month}" />
+        <Setter Property="my:DateTimePickerAssist.WatermarkYear" Value="{my:Loc Year}" />
         <Setter Property="my:DateTimePickerBehavior.OverrideWatermark" Value="True" />
         <Setter Property="my:GlobalizationBehavior.UpdateOnCultureChanged" Value="True" />
         <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
         <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
 
         <!-- Default Theme -->
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
         <Setter Property="BorderThickness" Value="0" />

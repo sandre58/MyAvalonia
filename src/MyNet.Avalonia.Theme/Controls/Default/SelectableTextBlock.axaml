@@ -6,12 +6,12 @@
 
     <MenuFlyout x:Key="MyNet.MenuFlyout.Embedded.SelectableTextBlock" x:DataType="sys:Object" Placement="Bottom">
         <MenuItem Command="{Binding $parent[SelectableTextBlock].Copy}"
-                  Header="{my:Resource Copy}"
+                  Header="{my:LocTextBlock Copy}"
                   Icon="{my:Icon ContentCopy}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=copy}"
                   IsEnabled="{Binding $parent[SelectableTextBlock].CanCopy}" />
         <MenuItem Command="{Binding $parent[SelectableTextBlock].SelectAll}"
-                  Header="{my:Resource SelectAll}"
+                  Header="{my:LocTextBlock SelectAll}"
                   Icon="{my:Icon SelectAll}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=selectall}" />
     </MenuFlyout>
@@ -19,6 +19,7 @@
     <ControlTheme x:Key="{x:Type SelectableTextBlock}" TargetType="SelectableTextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="Cursor" Value="Ibeam" />
         <Setter Property="Focusable" Value="True" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="SelectionBrush" Value="{my:ThemeRole Opacity=Scrim}" />
         <Style Selector="^[IsEnabled=True]">
             <Setter Property="ContextFlyout" Value="{StaticResource MyNet.MenuFlyout.Embedded.SelectableTextBlock}" />

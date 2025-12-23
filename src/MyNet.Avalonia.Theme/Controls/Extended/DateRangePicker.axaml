@@ -45,7 +45,7 @@
             <Setter Property="Background" Value="{my:Theme Control.Background}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:Foreground, Opacity=Focus}" />
             <Setter Property="my:ThemeAssist.ActiveForeground" Value="{my:ThemeRole}" />
             <Setter Property="my:ThemeAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
@@ -232,7 +232,7 @@
                                                          IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
                                                 <my:Calendar.Styles>
                                                     <Style Selector="my|CalendarDayButton">
-                                                        <Setter Property="my:ClassesAssist.AddClasses" Value="Range" />
+                                                        <Setter Property="my:ClassesAssist.Classes" Value="Range" />
                                                     </Style>
                                                 </my:Calendar.Styles>
                                             </my:Calendar>
@@ -247,7 +247,7 @@
                                                          IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
                                                 <my:Calendar.Styles>
                                                     <Style Selector="my|CalendarDayButton">
-                                                        <Setter Property="my:ClassesAssist.AddClasses" Value="Range" />
+                                                        <Setter Property="my:ClassesAssist.Classes" Value="Range" />
                                                     </Style>
                                                 </my:Calendar.Styles>
                                             </my:Calendar>
@@ -559,7 +559,7 @@
                                                          IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
                                                 <my:Calendar.Styles>
                                                     <Style Selector="my|CalendarDayButton">
-                                                        <Setter Property="my:ClassesAssist.AddClasses" Value="Range" />
+                                                        <Setter Property="my:ClassesAssist.Classes" Value="Range" />
                                                     </Style>
                                                 </my:Calendar.Styles>
                                             </my:Calendar>
@@ -574,7 +574,7 @@
                                                          IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
                                                 <my:Calendar.Styles>
                                                     <Style Selector="my|CalendarDayButton">
-                                                        <Setter Property="my:ClassesAssist.AddClasses" Value="Range" />
+                                                        <Setter Property="my:ClassesAssist.Classes" Value="Range" />
                                                     </Style>
                                                 </my:Calendar.Styles>
                                             </my:Calendar>

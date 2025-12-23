@@ -14,6 +14,6 @@ internal sealed partial class IconsPage : Page
     {
         InitializeComponent();
 
-        DataContext = new IconsViewModel();
+        DataContext = new IconsPageViewModel();
     }
 }

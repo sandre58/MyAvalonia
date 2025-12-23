@@ -19,10 +19,13 @@
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="CornerPosition" Value="TopRight" />
 
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
+        <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Primary}" />
         <Setter Property="MaskBackground" Value="{my:Theme Application.Background}" />
         <Setter Property="BadgeForeground" Value="{my:ThemeRole Contrast=True}" />
         <Setter Property="Background" Value="{my:ThemeRole}" />
+        <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
+        <Setter Property="BorderThickness" Value="1" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type my:Badge}">
@@ -93,16 +96,17 @@
         </Style>
 
         <!-- Styles -->
-        <Style Selector="^.Outlined">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
-            <Setter Property="BadgeForeground" Value="{my:Foreground}" />
-        </Style>
 
         <Style Selector="^.Light">
+            <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
             <Setter Property="BadgeForeground" Value="{my:ThemeBrush MaskBackground, Contrast=True}" />
+        </Style>
+
+        <Style Selector="^.Outlined">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
+            <Setter Property="BadgeForeground" Value="{my:Foreground}" />
         </Style>
 
         <!-- Sizes -->

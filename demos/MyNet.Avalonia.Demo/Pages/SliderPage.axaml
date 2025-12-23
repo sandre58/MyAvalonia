@@ -1,0 +1,143 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.SliderPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            mc:Ignorable="d"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
+            x:DataType="vm:SliderPageViewModel"
+            ClipToBounds="False">
+
+    <DockPanel>
+        <!-- Settings -->
+        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
+            <ScrollViewer>
+                <StackPanel>
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Orientation}">
+                        <ListBox Name="Orientation"
+                                 DisplayMemberBinding="{ReflectionBinding Display}"
+                                 ItemTemplate="{x:Null}"
+                                 ItemsSource="{my:EnumSource {x:Type Orientation}}"
+                                 SelectedIndex="0"
+                                 SelectedValueBinding="{ReflectionBinding Value}"
+                                 SelectionChanged="Orientation_SelectionChanged" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsDirectionReversed}">
+                        <ToggleSwitch Name="IsDirectionReversed" />
+                    </HeaderedContentControl>
+                    <ComboBox Name="TickPlacement"
+                              DisplayMemberBinding="{ReflectionBinding Display}"
+                              ItemsSource="{my:EnumSource {x:Type TickPlacement}}"
+                              PlaceholderText="{my:Loc TickPlacement}"
+                              SelectedIndex="0"
+                              SelectedValueBinding="{ReflectionBinding Value}" />
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock TickMode}">
+                        <ListBox Name="TickMode"
+                                 DisplayMemberBinding="{ReflectionBinding Display}"
+                                 ItemTemplate="{x:Null}"
+                                 ItemsSource="{my:EnumSource {x:Type my:TickMode}}"
+                                 SelectedIndex="0"
+                                 SelectedValueBinding="{ReflectionBinding Value}" />
+                    </HeaderedContentControl>
+                    <NumericUpDown Name="TickFrequency"
+                                   Maximum="100"
+                                   Minimum="0"
+                                   Watermark="{my:Loc TickFrequency}"
+                                   Value="20" />
+                    <NumericUpDown Name="TickLength"
+                                   Maximum="20"
+                                   Minimum="1"
+                                   Watermark="{my:Loc TickLength}"
+                                   Value="4" />
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsSnapToTickEnabled}">
+                        <ToggleSwitch Name="IsSnapToTickEnabled" />
+                    </HeaderedContentControl>
+                    <UniformGrid Columns="2">
+                        <NumericUpDown Name="Minimum"
+                                       Margin="{my:Thickness Default, Right}"
+                                       Maximum="1000"
+                                       Minimum="-1000"
+                                       Watermark="{my:Loc Minimum}"
+                                       Value="0" />
+                        <NumericUpDown Name="Maximum"
+                                       Margin="{my:Thickness Default, Left}"
+                                       Maximum="1000"
+                                       Minimum="-1000"
+                                       Watermark="{my:Loc Maximum}"
+                                       Value="100" />
+                    </UniformGrid>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowValueOnMouseOver}">
+                        <ToggleSwitch Name="ShowValue" IsChecked="True" />
+                    </HeaderedContentControl>
+                </StackPanel>
+            </ScrollViewer>
+        </HeaderedContentControl>
+
+        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                                 MinItemWidth="300"
+                                 MinItemHeight="300"
+                                 IsActive="{Binding IsActive}">
+
+            <ctrl:ControlThemeViewer.ControlTemplate>
+                <DataTemplate x:DataType="ctrl:ControlDescription">
+                    <Slider Theme="{Binding Theme}"
+                            my:ThemeAssist.Role="{Binding Role}"
+                            my:ClassesAssist.Classes="{Binding Classes}"
+                            Orientation="{Binding #Orientation.SelectedValue}"
+                            IsDirectionReversed="{Binding #IsDirectionReversed.IsChecked}"
+                            TickPlacement="{Binding #TickPlacement.SelectedValue}"
+                            TickFrequency="{Binding #TickFrequency.Value}"
+                            IsSnapToTickEnabled="{Binding #IsSnapToTickEnabled.IsChecked}"
+                            my:SliderAssist.TickMode="{Binding #TickMode.SelectedValue}"
+                            my:SliderAssist.ShowValueOnMouseOver="{Binding #ShowValue.IsChecked}"
+                            my:SliderAssist.TickLength="{Binding #TickLength.Value}"
+                            Minimum="{Binding #Minimum.Value}"
+                            Maximum="{Binding #Maximum.Value}"
+                            Width="250"
+                            Height="80"
+                            ToolTip.Tip="{Binding Content}" />
+                </DataTemplate>
+            </ctrl:ControlThemeViewer.ControlTemplate>
+
+            <!-- Custom content for Color Sliders -->
+            <ctrl:ControlThemeViewer.CustomContent>
+                <StackPanel Spacing="20">
+                    <ColorSlider Width="300"
+                                 Orientation="Horizontal"
+                                 ColorModel="Hsva"
+                                 ColorComponent="Component1" />
+                    <ColorSlider Width="300"
+                                 Orientation="Horizontal"
+                                 ColorModel="Hsva"
+                                 ColorComponent="Component2" />
+                    <ColorSlider Width="300"
+                                 Orientation="Horizontal"
+                                 ColorModel="Hsva"
+                                 ColorComponent="Component3" />
+                    <ColorSlider Width="300"
+                                 Orientation="Horizontal"
+                                 ColorModel="Rgba"
+                                 ColorComponent="Component1" />
+                    <ColorSlider Width="300"
+                                 Orientation="Horizontal"
+                                 ColorModel="Rgba"
+                                 ColorComponent="Component2" />
+                    <ColorSlider Width="300"
+                                 Orientation="Horizontal"
+                                 ColorModel="Rgba"
+                                 ColorComponent="Component3" />
+                    <ColorSlider Width="300"
+                                 Orientation="Horizontal"
+                                 ColorModel="Rgba"
+                                 ColorComponent="Alpha" />
+                </StackPanel>
+            </ctrl:ControlThemeViewer.CustomContent>
+
+        </ctrl:ControlThemeViewer>
+
+    </DockPanel>
+</pages:Page>

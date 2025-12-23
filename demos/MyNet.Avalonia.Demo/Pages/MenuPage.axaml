@@ -1,0 +1,74 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.MenuPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            mc:Ignorable="d"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            x:DataType="vm:MenuPageViewModel"
+            ClipToBounds="False">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <Grid IsEnabled="{Binding IsActive}">
+            <StackPanel HorizontalAlignment="Stretch" Classes="Large" Grid.IsSharedSizeScope="True">
+
+                <!-- Menu -->
+                <HeaderedContentControl Classes="Text H2" Header="Menu">
+                    <Menu Name="Menu" />
+                </HeaderedContentControl>
+
+                <!-- ContextMenu -->
+                <HeaderedContentControl Classes="Text H2" Header="ContextMenu">
+                    <Border Name="Border"
+                            Width="100"
+                            Height="100"
+                            Background="{my:Theme Control.Background}"
+                            BorderBrush="{my:Theme Control.Border}"
+                            BorderThickness="1">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="Right click to show Context Menu"
+                                   TextWrapping="Wrap" />
+                    </Border>
+                </HeaderedContentControl>
+
+                <!-- MenuFlyout -->
+                <HeaderedContentControl Classes="Text H2" Header="MenuFlyout">
+                    <StackPanel Classes="Large" Orientation="Horizontal">
+                        <Border Name="Border2"
+                                Width="100"
+                                Height="100"
+                                Background="{my:Theme Control.Background}"
+                                BorderBrush="{my:Theme Control.Border}"
+                                BorderThickness="1">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="Right click to show Menu Flyout"
+                                       TextWrapping="Wrap" />
+                        </Border>
+                        <DropDownButton Name="DropDownButton" Content="Menu Flyout" />
+                    </StackPanel>
+                </HeaderedContentControl>
+
+                <!-- Flyout -->
+                <HeaderedContentControl Classes="Text H2" Header="Flyout">
+                    <StackPanel Classes="Large" Orientation="Horizontal">
+                        <Border Name="Border3"
+                                Width="100"
+                                Height="100"
+                                Background="{my:Theme Control.Background}"
+                                BorderBrush="{my:Theme Control.Border}"
+                                BorderThickness="1">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="Right click to show Flyout"
+                                       TextWrapping="Wrap" />
+                        </Border>
+                        <DropDownButton Name="DropDownButton2" Content="Flyout" />
+                    </StackPanel>
+                </HeaderedContentControl>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</pages:Page>

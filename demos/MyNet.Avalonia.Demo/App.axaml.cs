@@ -5,33 +5,30 @@
 // -----------------------------------------------------------------------
 
 using System.IO;
+using System.Linq;
 using System.Reactive.Concurrency;
+using System.Reflection;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Clipboard;
-using MyNet.Avalonia.Demo.Pages;
 using MyNet.Avalonia.Demo.Resources;
-using MyNet.Avalonia.Demo.Services;
 using MyNet.Avalonia.Demo.ViewModels;
-using MyNet.Avalonia.Demo.ViewModels.Dialogs;
 using MyNet.Avalonia.Demo.Views;
-using MyNet.Avalonia.Demo.Views.Dialogs;
-using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Extended.Busy;
 using MyNet.Avalonia.Extended.Clipboard;
 using MyNet.Avalonia.Extended.Commands;
-using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.Avalonia.Extended.Schedulers;
 using MyNet.Avalonia.Extended.Services;
 using MyNet.Avalonia.Extended.Theming;
 using MyNet.Avalonia.Extended.Toasting;
+using MyNet.Avalonia.Theme;
 using MyNet.UI.Commands;
-using MyNet.UI.Extensions;
 using MyNet.UI.Loading;
 using MyNet.UI.Locators;
 using MyNet.UI.Navigation;
+using MyNet.UI.Navigation.Models;
 using MyNet.UI.Notifications;
 using MyNet.UI.Services;
 using MyNet.UI.Theming;
@@ -46,65 +43,6 @@ namespace MyNet.Avalonia.Demo;
 [DoNotNotify]
 public class App : Application
 {
-    private static void RegisterViewModels(ServiceCollection collection)
-        => collection.AddSingleton<MainViewModel>();
-
-    private static void InitializeServices(ServiceProvider services)
-    {
-        // Logging
-        Utilities.Logging.NLog.Logger.LoadConfiguration($"{Directory.GetCurrentDirectory()}/config/NLog.config");
-
-        var viewModelLocator = services.GetRequiredService<IViewModelLocator>();
-        var busyFactory = services.GetRequiredService<IBusyServiceFactory>();
-        LogManager.Initialize(services.GetRequiredService<ILogger>());
-        ViewModelManager.Initialize(services.GetRequiredService<IViewModelResolver>(), viewModelLocator);
-        ViewManager.Initialize(services.GetRequiredService<IViewResolver>(), services.GetRequiredService<IViewLocator>());
-        ThemeManager.Initialize(services.GetRequiredService<IThemeService>());
-        NavigationManager.Initialize(services.GetRequiredService<INavigationService>(), viewModelLocator);
-        ToasterManager.Initialize(services.GetRequiredService<IToasterService>());
-        ClipboardManager.Initialize(services.GetRequiredService<IClipboardService>());
-        DrawerManager.Initialize(services.GetRequiredService<IViewResolver>(), services.GetRequiredService<IViewLocator>());
-        //DialogManager.Initialize(dialogService, messageBoxFactory, services.GetRequiredService<IViewResolver>(), services.GetRequiredService<IViewLocator>(), viewModelLocator);
-        WindowDialogManager.Initialize(services.GetRequiredService<IViewResolver>(), services.GetRequiredService<IViewLocator>(), viewModelLocator);
-
-        BusyManager.Initialize(busyFactory);
-        AppBusyManager.Initialize(busyFactory);
-        CommandsManager.Initialize(services.GetRequiredService<ICommandFactory>());
-        MyNet.UI.Threading.Scheduler.Initialize(services.GetRequiredService<IScheduler>());
-    }
-
-    private static void RegisterViewAndViewModels(ServiceProvider services)
-    {
-        // Register the views for the view models to improve performances (avoiding reflection at runtime)
-        RegisterViewAndViewModel<ButtonPageViewModel, ButtonPage>(services);
-        RegisterViewAndViewModel<BorderPageViewModel, BorderPage>(services);
-        RegisterViewAndViewModel<LoginDialogViewModel, LoginDialogView>(services);
-        RegisterViewAndViewModel<DataGridsViewModel, DataGridsPage>(services);
-        RegisterViewAndViewModel<DialogsViewModel, DialogsPage>(services);
-        RegisterViewAndViewModel<DrawersViewModel, DrawersPage>(services);
-        RegisterViewAndViewModel<IconsViewModel, IconsPage>(services);
-        RegisterViewAndViewModel<MainViewModel, MainView>(services);
-        RegisterViewAndViewModel<ThemeViewModel, ThemePage>(services);
-    }
-
-    private static void RegisterViewAndViewModel<TViewModel, TView>(ServiceProvider services)
-    {
-        var viewResolver = services.GetRequiredService<IViewResolver>();
-        var viewModelResolver = services.GetRequiredService<IViewResolver>();
-
-        viewResolver.Register<TViewModel, TView>();
-        viewModelResolver.Register<TViewModel, TView>();
-    }
-
-    private static void InitializeResources()
-    {
-        Extended.ResourceLocator.Initialize();
-        Avalonia.Controls.ResourceLocator.Initialize();
-        TranslationService.RegisterResources(nameof(CountryResources), CountryResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(DemoResources), DemoResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(FormResources), FormResources.ResourceManager);
-    }
-
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
@@ -112,13 +50,12 @@ public class App : Application
         // Register all the services needed for the application to run
         var collection = new ServiceCollection();
         RegisterServices(collection);
-        RegisterViewModels(collection);
+        RegisterPageViewModels(collection);
 
         // Creates a ServiceProvider containing services from the provided IServiceCollection
         var services = collection.BuildServiceProvider();
 
         InitializeServices(services);
-        RegisterViewAndViewModels(services);
 
         InitializeResources();
 
@@ -133,29 +70,60 @@ public class App : Application
                 break;
         }
 
-        _ = NavigationManager.NavigateTo<HomePage>();
+        _ = NavigationManager.NavigateTo<HomePageViewModel>();
 
         base.OnFrameworkInitializationCompleted();
     }
 
     private void RegisterServices(ServiceCollection collection)
         => collection.AddSingleton<ILogger, Utilities.Logging.NLog.Logger>()
-                     .AddSingleton<IViewModelResolver, ViewModelResolver>()
                      .AddSingleton<IViewModelLocator, ViewModelLocator>()
-                     .AddSingleton<IViewLocator, ViewLocator>()
-                     .AddSingleton<IViewResolver, ViewResolver>()
                      .AddSingleton<IThemeService>(new ThemeService(MyTheme.Current))
                      .AddSingleton<INotificationsManager, NotificationsManager>()
                      .AddSingleton<INavigationService, NavigationService>()
                      .AddSingleton<IToasterService>(new ToasterService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
                      .AddSingleton<IClipboardService>(new ClipboardService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
+                     // .AddSingleton<IDialogService, OverlayDialogService>()
+                     .AddScoped<IBusyServiceFactory, BusyServiceFactory>()
+                     // .AddScoped<IMessageBoxFactory, MessageBoxFactory>()
+                     .AddScoped<IScheduler, AvaloniaScheduler>(_ => AvaloniaScheduler.Current)
+                     .AddScoped<ICommandFactory, AvaloniaCommandFactory>()
+                     .AddScoped<IAppCommandsService, AppCommandsService>();
 
-            // .AddSingleton<IDialogService, OverlayDialogService>()
-     .AddScoped<IBusyServiceFactory, BusyServiceFactory>()
+    private static void RegisterPageViewModels(ServiceCollection collection)
+    {
+        collection.AddSingleton<MainViewModel>();
+        foreach (var viewModelType in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsAssignableTo(typeof(INavigationPage))))
+        {
+            collection.AddSingleton(viewModelType);
+        }
+    }
 
-               // .AddScoped<IMessageBoxFactory, MessageBoxFactory>()
-.AddScoped<IScheduler, AvaloniaScheduler>(_ => AvaloniaScheduler.Current)
-  .AddScoped<ICommandFactory, AvaloniaCommandFactory>()
-          .AddScoped<IAppCommandsService, AppCommandsService>()
-  ;
+    private static void InitializeServices(ServiceProvider services)
+    {
+        // Logging
+        Utilities.Logging.NLog.Logger.LoadConfiguration($"{Directory.GetCurrentDirectory()}/config/NLog.config");
+
+        var viewModelLocator = services.GetRequiredService<IViewModelLocator>();
+        var busyFactory = services.GetRequiredService<IBusyServiceFactory>();
+        LogManager.Initialize(services.GetRequiredService<ILogger>());
+        ViewModelManager.Initialize(null!, viewModelLocator);
+        ThemeManager.Initialize(services.GetRequiredService<IThemeService>());
+        NavigationManager.Initialize(services.GetRequiredService<INavigationService>(), viewModelLocator);
+        ToasterManager.Initialize(services.GetRequiredService<IToasterService>());
+        ClipboardManager.Initialize(services.GetRequiredService<IClipboardService>());
+        BusyManager.Initialize(busyFactory);
+        AppBusyManager.Initialize(busyFactory);
+        CommandsManager.Initialize(services.GetRequiredService<ICommandFactory>());
+        UI.Threading.Scheduler.Initialize(services.GetRequiredService<IScheduler>());
+    }
+
+    private static void InitializeResources()
+    {
+        Extended.ResourceLocator.Initialize();
+        Avalonia.Controls.ResourceLocator.Initialize();
+        TranslationService.RegisterResources(nameof(CountryResources), CountryResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(DemoResources), DemoResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(FormResources), FormResources.ResourceManager);
+    }
 }

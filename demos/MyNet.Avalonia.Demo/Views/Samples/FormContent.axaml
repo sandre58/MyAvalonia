@@ -8,27 +8,27 @@
              xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
              d:DesignHeight="1200"
              d:DesignWidth="1000"
-             x:DataType="vm:FormsViewModel"
+             x:DataType="vm:FormPageViewModel"
              mc:Ignorable="d">
     <my:Form LabelPosition="Left" LabelWidth="*" HorizontalAlignment="Stretch">
 
         <!-- ============================================ -->
         <!-- ACCOUNT INFORMATION SECTION -->
         <!-- ============================================ -->
-        <my:FormGroup Header="{my:Resource AccountInformation}">
+        <my:FormGroup Header="{my:LocTextBlock AccountInformation}">
             <!-- Username with icon -->
             <TextBox my:FormItem.IsRequired="True"
                      my:FormItem.Label="{my:Icon Account}"
                      Classes="StretchH"
                      Text="{Binding Login}"
-                     Watermark="{my:Resource Username}" />
+                     Watermark="{my:Loc Username}" />
 
             <!-- Email with validation icon -->
             <TextBox my:FormItem.IsRequired="True"
                      my:FormItem.Label="{my:Icon Email}"
                      Classes="StretchH"
                      Text="{Binding Email}"
-                     Watermark="{my:Resource Email}" />
+                     Watermark="{my:Loc Email}" />
 
             <!-- Password fields side by side -->
             <Grid my:FormItem.IsRequired="True" my:FormItem.Label="{my:Icon Lock}" ColumnDefinitions="*,10,*">
@@ -36,27 +36,27 @@
                          PasswordChar="*"
                          my:TextFieldAssist.ShowRevealButton="True"
                          Text="{Binding Password}"
-                         Watermark="{my:Resource Password}" />
+                         Watermark="{my:Loc Password}" />
                 <TextBox Grid.Column="2"
                          Classes="StretchH"
                          PasswordChar="*"
                          my:TextFieldAssist.ShowRevealButton="True"
                          Text="{Binding ConfirmPassword}"
-                         Watermark="{my:Resource ConfirmPassword}" />
+                         Watermark="{my:Loc ConfirmPassword}" />
             </Grid>
         </my:FormGroup>
 
         <!-- ============================================ -->
         <!-- PERSONAL INFORMATION SECTION -->
         <!-- ============================================ -->
-        <my:FormGroup Header="{my:Resource PersonalInformation}">
+        <my:FormGroup Header="{my:LocTextBlock PersonalInformation}">
             <!-- Name fields in horizontal layout -->
             <Grid my:FormItem.IsRequired="True" my:FormItem.Label="{my:Icon CardAccountDetails}" ColumnDefinitions="*,10,*">
-                <TextBox Classes="StretchH" Text="{Binding FirstName}" Watermark="{my:Resource FirstName}" />
+                <TextBox Classes="StretchH" Text="{Binding FirstName}" Watermark="{my:Loc FirstName}" />
                 <TextBox Grid.Column="2"
                          Classes="StretchH"
                          Text="{Binding LastName}"
-                         Watermark="{my:Resource LastName}" />
+                         Watermark="{my:Loc LastName}" />
             </Grid>
 
             <!-- Gender with ComboBox instead -->
@@ -69,14 +69,14 @@
             <!-- Birth Date with Calendar (without InnerLeftContent) -->
             <my:CalendarDatePicker Width="200" my:FormItem.Label="{my:Icon Calendar}"
                                    SelectedValue="{Binding BirthDate}"
-                                   Watermark="{my:Resource BirthDate}" />
+                                   Watermark="{my:Loc BirthDate}" />
             <DatePicker Width="200" my:FormItem.Label="{my:Icon Calendar}"
                         SelectedDate="{Binding BirthDate}"
-                        my:TextFieldAssist.Watermark="{my:Resource BirthDate}" />
+                        my:TextFieldAssist.Watermark="{my:Loc BirthDate}" />
 
             <!-- Phone Number -->
             <TextBox Width="300"
-                     my:FormItem.Label="{my:Resource PhoneNumber}"
+                     my:FormItem.Label="{my:LocTextBlock PhoneNumber}"
                      Text="{Binding PhoneNumber}"
                      Watermark="+33 6 12 34 56 78">
                 <TextBox.InnerLeftContent>
@@ -87,9 +87,9 @@
             <!-- Country -->
             <ComboBox Width="300"
                       my:FormItem.IsRequired="True"
-                      my:FormItem.Label="{my:Resource Country}"
+                      my:FormItem.Label="{my:LocTextBlock Country}"
                       ItemsSource="{Binding Countries}"
-                      PlaceholderText="{my:Resource ChooseCountry}"
+                      PlaceholderText="{my:Loc ChooseCountry}"
                       SelectedItem="{Binding SelectedCountry}" />
         </my:FormGroup>
 
@@ -128,9 +128,9 @@
         <Expander Header="Professional Information" IsExpanded="False">
             <my:FormGroup>
                 <ComboBox Width="300"
-                          my:FormItem.Label="{my:Resource Role}"
+                          my:FormItem.Label="{my:LocTextBlock Role}"
                           ItemsSource="{Binding Roles}"
-                          PlaceholderText="{my:Resource SelectRole}"
+                          PlaceholderText="{my:Loc SelectRole}"
                           SelectedItem="{Binding SelectedRole}" />
 
                 <TextBox Width="450"
@@ -279,7 +279,7 @@
         <!-- ============================================ -->
         <!-- ADDITIONAL DETAILS SECTION -->
         <!-- ============================================ -->
-        <Expander Header="{my:Resource AdditionalDetails}" IsExpanded="False">
+        <Expander Header="{my:LocTextBlock AdditionalDetails}" IsExpanded="False">
             <my:FormGroup>
                 <!-- Bio with multiline TextBox -->
                 <TextBox Width="450"

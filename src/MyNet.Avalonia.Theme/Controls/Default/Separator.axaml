@@ -18,8 +18,8 @@
                         CornerRadius="{TemplateBinding CornerRadius}" />
             </ControlTemplate>
         </Setter>
-
-        <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
+        
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=TemplatedControl}" />
         <Setter Property="Background" Value="{my:ThemeRole Opacity=Medium}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />

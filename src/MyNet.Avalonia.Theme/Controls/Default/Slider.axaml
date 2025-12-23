@@ -146,8 +146,8 @@
             </FocusAdornerTemplate>
         </Setter>
         <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
-
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="my:ThemeAssist.ActiveBackground" Value="{my:ThemeRole}" />
         <Setter Property="my:ThemeAssist.IndicatorColor" Value="{my:ThemeRole}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />

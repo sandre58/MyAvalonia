@@ -1,0 +1,51 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.AvatarPage"
+                     xmlns="https://github.com/avaloniaui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:my="http://mynet.com/avalonia"
+                     xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+                     ClipToBounds="False"
+                     mc:Ignorable="d"
+                     xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+                     xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+                     xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+                     xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
+                     x:DataType="vm:AvatarPageViewModel">
+
+    <DockPanel>
+
+        <!-- Settings -->
+        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                <StackPanel>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowBackground}">
+                        <ToggleSwitch Name="ShowBackground" IsChecked="True" />
+                    </HeaderedContentControl>
+                </StackPanel>
+            </ScrollViewer>
+        </HeaderedContentControl>
+        
+        <!-- Fields -->
+        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                                 MinItemWidth="150"
+                                 MinItemHeight="150"
+                                 IsActive="{Binding IsActive}">
+
+            <!-- Template for standard controls -->
+            <ctrl:ControlThemeViewer.ControlTemplate>
+                <DataTemplate x:DataType="ctrl:ControlDescription">
+                    <my:Avatar Theme="{Binding Theme}"
+                               my:ThemeAssist.Role="{Binding Role}"
+                               my:ClassesAssist.Classes="{Binding Classes}"
+                               ShowBackground="{Binding #ShowBackground.IsChecked}"
+                               Source="{m:RandomImage}"
+                               Content="{m:RandomContent AllowNumber=False, AllowImage=False, AllowText=False, AllowNull=False}"
+                               ToolTip.Tip="{Binding Content}" />
+                </DataTemplate>
+            </ctrl:ControlThemeViewer.ControlTemplate>
+
+        </ctrl:ControlThemeViewer>
+
+    </DockPanel>
+</pages:Page>

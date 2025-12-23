@@ -4,7 +4,7 @@
 
     <Style Selector=":is(ListBox).Gender">
         <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ListBox.Toggle}" />
-        <Setter Property="my:ClassesAssist.AddClasses" Value="Uniform" />
+        <Setter Property="my:ClassesAssist.Classes" Value="Uniform" />
 
         <Style Selector="^ ListBoxItem">
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="{ReflectionBinding Value, Converter={x:Static my:GenderTypeConverter.Brush}}" />

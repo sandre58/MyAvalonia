@@ -1,0 +1,73 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.ClockPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            mc:Ignorable="d"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
+            x:DataType="vm:ButtonPageViewModel"
+            ClipToBounds="False">
+
+    <DockPanel>
+
+        <!-- Settings -->
+        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                <StackPanel>
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Hands}">
+                        <ListBox SelectionMode="Multiple,Toggle">
+                            <ListBoxItem Name="ShowHourHands" Content="{my:LocTextBlock Hours}" IsSelected="True" />
+                            <ListBoxItem Name="ShowMinuteHands" Content="{my:LocTextBlock Minutes}" IsSelected="True" />
+                            <ListBoxItem Name="ShowSecondHands" Content="{my:LocTextBlock Seconds}" IsSelected="True" />
+                        </ListBox>
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Ticks}">
+                        <ListBox SelectionMode="Multiple,Toggle">
+                            <ListBoxItem Name="ShowHourTicks" Content="{my:LocTextBlock Hours}" IsSelected="True" />
+                            <ListBoxItem Name="ShowMinuteTicks" Content="{my:LocTextBlock Minutes}" IsSelected="True" />
+                        </ListBox>
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsSmooth}">
+                        <ToggleSwitch Name="IsSmooth" IsChecked="False" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock LiveUpdate}">
+                        <ToggleSwitch Name="LiveUpdate" IsChecked="True" />
+                    </HeaderedContentControl>
+                </StackPanel>
+            </ScrollViewer>
+        </HeaderedContentControl>
+
+        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                                 MinItemWidth="180"
+                                 MinItemHeight="180"
+                                 IsActive="{Binding IsActive}">
+
+            <!-- Template for standard controls -->
+            <ctrl:ControlThemeViewer.ControlTemplate>
+                <DataTemplate x:DataType="ctrl:ControlDescription">
+                    <my:Clock Theme="{Binding Theme}"
+                              my:ThemeAssist.Role="{Binding Role}"
+                              my:ClassesAssist.Classes="{Binding Classes}"
+                              Height="150"
+                              Width="150"
+                              IsSmooth="{Binding #IsSmooth.IsChecked}"
+                              ShowHourHand="{Binding #ShowHourHands.IsSelected}"
+                              ShowHourTicks="{Binding #ShowHourTicks.IsSelected}"
+                              ShowMinuteHand="{Binding #ShowMinuteHands.IsSelected}"
+                              ShowMinuteTicks="{Binding #ShowMinuteTicks.IsSelected}"
+                              ShowSecondHand="{Binding #ShowSecondHands.IsSelected}"
+                              LiveUpdate="{Binding #LiveUpdate.IsChecked}"
+                              ToolTip.Tip="{Binding Content}" />
+                </DataTemplate>
+            </ctrl:ControlThemeViewer.ControlTemplate>
+
+        </ctrl:ControlThemeViewer>
+
+    </DockPanel>
+</pages:Page>

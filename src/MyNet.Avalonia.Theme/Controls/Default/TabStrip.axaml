@@ -165,8 +165,8 @@
                 <Rectangle Theme="{StaticResource MyNet.Theme.Rectangle.Focus}" />
             </FocusAdornerTemplate>
         </Setter>
-
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
         <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
         <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />

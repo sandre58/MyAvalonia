@@ -7,13 +7,13 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             xmlns:sys="clr-namespace:System;assembly=netstandard"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
-            x:DataType="vm:IconsViewModel"
+            x:DataType="vm:IconsPageViewModel"
             ClipToBounds="False"
             mc:Ignorable="d">
 
     <SplitView Classes="Dark Shadow"
                DisplayMode="Inline"
-               IsEnabled="{Binding $parent[pages:IconsPage].IsActive}"
+               IsEnabled="{Binding IsActive}"
                IsPaneOpen="True"
                OpenPaneLength="300"
                PanePlacement="Right">
@@ -21,13 +21,12 @@
             <my:PlaceholderContentControl my:IconAssist.Icon="{my:Icon CircleOffOutline, Size=80}"
                                           Classes="Watermark ExtraLarge"
                                           Content="{Binding Icons.SelectedItem}"
-                                          Placeholder="{my:Resource SelectItem}">
+                                          Placeholder="{my:LocTextBlock SelectItem}">
                 <my:PlaceholderContentControl.ContentTemplate>
                     <DataTemplate x:DataType="{x:Type vm:IconBuilderData}">
                         <HeaderedContentControl HorizontalContentAlignment="Stretch"
                                                 my:HeaderAssist.HorizontalAlignment="Center"
-                                                Background="Transparent"
-                                                Classes="H2"
+                                                Classes="Text H2"
                                                 Header="{Binding DisplayName}">
                             <HeaderedContentControl.HeaderTemplate>
                                 <DataTemplate>
@@ -81,7 +80,7 @@
                          Classes="Large"
                          FontSize="{StaticResource MyNet.Font.Size.Caption}"
                          Text="{ReflectionBinding Icons.Filters.Value, Delay=50, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Watermark="{my:Resource Search}" />
+                         Watermark="{my:Loc Search}" />
 
             </DockPanel>
 

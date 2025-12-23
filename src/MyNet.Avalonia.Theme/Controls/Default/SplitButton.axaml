@@ -413,7 +413,7 @@
         </Style>
 
         <Style Selector="^.Text">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Application.Foreground}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=TemplatedControl}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{my:ThemeRole}" />
         </Style>
@@ -425,7 +425,7 @@
             <Setter Property="my:ThemeAssist.RippleColor" Value="{my:ThemeRole}" />
 
             <Style Selector="^.Text">
-                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Application.Foreground}" />
+                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Foreground AncestorType=TemplatedControl}" />
                 <Setter Property="Foreground" Value="{my:ThemeRole Secondary}" />
                 <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeRole Secondary}" />
             </Style>
@@ -452,7 +452,7 @@
             </Style>
 
             <Style Selector="^.Text">
-                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Application.Foreground}" />
+                <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Foreground AncestorType=TemplatedControl}" />
                 <Setter Property="Foreground" Value="{my:ThemeRole Tertiary}" />
                 <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:ThemeRole Tertiary}" />
             </Style>

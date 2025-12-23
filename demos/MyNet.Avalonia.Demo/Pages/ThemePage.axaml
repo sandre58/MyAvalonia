@@ -8,8 +8,7 @@
             xmlns:theme="clr-namespace:MyNet.UI.Theming;assembly=MyNet.UI"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:sys="clr-namespace:System;assembly=netstandard"
-            my:ViewModelAssist.AutoWire="True"
-            x:DataType="vm:ThemeViewModel"
+            x:DataType="vm:ThemePageViewModel"
             ClipToBounds="False"
             mc:Ignorable="d">
     <pages:Page.Resources>
@@ -19,7 +18,7 @@
                       IsReadOnly="True"
                       ItemsSource="{Binding}">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="70" Header="{my:Resource Brush}">
+                    <DataGridTemplateColumn Width="70" Header="{my:LocTextBlock Brush}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type vm:BrushData}">
                                 <Border Width="50"
@@ -31,9 +30,9 @@
                     </DataGridTemplateColumn>
                     <my:DataGridTextColumn Width="*"
                                            Binding="{Binding Name, DataType=vm:BrushData}"
-                                           Header="{my:Resource Name}"
+                                           Header="{my:LocTextBlock Name}"
                                            ShowClipboardButton="True" />
-                    <DataGridTemplateColumn Width="2*" Header="{my:Resource ResourceKey}">
+                    <DataGridTemplateColumn Width="2*" Header="{my:LocTextBlock ResourceKey}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type vm:BrushData}">
                                 <Grid ColumnDefinitions="*,Auto,30">
@@ -46,7 +45,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="150" Header="{my:Resource Hexa}">
+                    <DataGridTemplateColumn Width="150" Header="{my:LocTextBlock Hexa}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type vm:BrushData}">
                                 <Grid ColumnDefinitions="110,Auto">
@@ -56,9 +55,9 @@
                                                  Fill="{my:Brush Color}"
                                                  Theme="{StaticResource MyNet.Theme.Ellipse.Card}" />
                                         <StackPanel>
-                                            <TextBlock Text="{my:Translation Color}" />
+                                            <TextBlock Text="{my:Translate Color}" />
                                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Small}">
-                                                <TextBlock Classes="Secondary SubCaption" Text="{my:Resource Opacity}" />
+                                                <TextBlock Classes="Secondary SubCaption" Text="{my:Loc Opacity}" />
                                                 <TextBlock Classes="Secondary SubCaption" Text=": " />
                                                 <TextBlock Classes="Secondary SubCaption" Text="{Binding Opacity}" />
                                             </StackPanel>
@@ -66,7 +65,7 @@
                                     </StackPanel>
                                     <Button Grid.Column="1"
                                             Classes="Clipboard"
-                                            CommandParameter="{my:Translation Color}"
+                                            CommandParameter="{my:Translate Color}"
                                             Theme="{StaticResource MyNet.Theme.Button.Embedded.Tool}" />
                                 </Grid>
                             </DataTemplate>
@@ -84,21 +83,21 @@
         <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
             <ScrollViewer HorizontalScrollBarVisibility="Hidden">
                 <StackPanel>
-                    <HeaderedContentControl Classes="Labelled Watermark" Header="{my:Resource Theme}">
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Theme}">
                         <ListBox SelectedValue="{Binding CurrentBase}" SelectedValueBinding="{ReflectionBinding DataContext}">
-                            <ListBoxItem my:IconAssist.Icon="{my:Icon WeatherSunny}" Content="{my:Resource Light}" DataContext="{x:Static theme:ThemeBase.Light}" />
-                            <ListBoxItem my:IconAssist.Icon="{my:Icon WeatherNight}" Content="{my:Resource Dark}" DataContext="{x:Static theme:ThemeBase.Dark}" />
+                            <ListBoxItem my:IconAssist.Icon="{my:Icon WeatherSunny}" Content="{my:LocTextBlock Light}" DataContext="{x:Static theme:ThemeBase.Light}" />
+                            <ListBoxItem my:IconAssist.Icon="{my:Icon WeatherNight}" Content="{my:LocTextBlock Dark}" DataContext="{x:Static theme:ThemeBase.Dark}" />
                         </ListBox>
                     </HeaderedContentControl>
-                    <my:ColorPicker my:TextFieldAssist.ShowClipboardButton="True" Watermark="{my:Resource PrimaryColor}" SelectedValue="{Binding CurrentPrimaryColor}" />
-                    <my:ColorPicker my:TextFieldAssist.ShowClipboardButton="True" Watermark="{my:Resource AccentColor}" SelectedValue="{Binding CurrentAccentColor}" />
+                    <my:ColorPicker my:TextFieldAssist.ShowClipboardButton="True" Watermark="{my:Loc PrimaryColor}" SelectedValue="{Binding CurrentPrimaryColor}" />
+                    <my:ColorPicker my:TextFieldAssist.ShowClipboardButton="True" Watermark="{my:Loc AccentColor}" SelectedValue="{Binding CurrentAccentColor}" />
                 </StackPanel>
             </ScrollViewer>
         </HeaderedContentControl>
 
-        <TabControl IsEnabled="{Binding $parent[pages:ThemePage].IsActive}">
-            <TabItem Content="{Binding ThemeBrushes}" ContentTemplate="{StaticResource MyNet.DataTemplates.Brushes}" Header="{my:Resource Theme}" />
-            <TabItem Content="{Binding AccentBrushes}" ContentTemplate="{StaticResource MyNet.DataTemplates.Brushes}" Header="{my:Resource Accent}" />
+        <TabControl IsEnabled="{Binding IsActive}">
+            <TabItem Content="{Binding ThemeBrushes}" ContentTemplate="{StaticResource MyNet.DataTemplates.Brushes}" Header="{my:LocTextBlock Theme}" />
+            <TabItem Content="{Binding AccentBrushes}" ContentTemplate="{StaticResource MyNet.DataTemplates.Brushes}" Header="{my:LocTextBlock Accent}" />
         </TabControl>
     </DockPanel>
 </pages:Page>

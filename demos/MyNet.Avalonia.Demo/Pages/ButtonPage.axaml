@@ -9,44 +9,71 @@
             xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-            my:ViewModelAssist.AutoWire="True"
+            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:ButtonPageViewModel"
-            x:Name="RootPage"
             ClipToBounds="False">
 
-    <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}" 
-                             MinItemWidth="100" 
-                             MinItemHeight="50"  
-                             IsActive="{Binding #RootPage.IsActive}">
+    <DockPanel>
+        <!-- Settings -->
+        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                <StackPanel>
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock IconLayout}">
+                        <ListBox Name="IconLayout" SelectedIndex="0">
+                            <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:LocTextBlock None}" />
+                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
+                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
+                            <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:LocTextBlock Top}" />
+                            <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
+                        </ListBox>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </ScrollViewer>
+        </HeaderedContentControl>
 
-        <!-- Template for standard controls -->
-        <ctrl:ControlThemeViewer.ControlTemplate>
-            <DataTemplate x:DataType="ctrl:ControlDescription">
-                <Button Theme="{Binding Theme}"
-                        my:ThemeAssist.Role="{Binding Role}"
-                        my:ClassesAssist.Classes="{Binding Classes}"
-                        ToolTip.Tip="{Binding Content}">
-                    <Button.Content>
-                        <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
-                            <Binding Path="ContentType" />
-                            <Binding Path="Content" />
-                        </MultiBinding>
-                    </Button.Content>
-                </Button>
-            </DataTemplate>
-        </ctrl:ControlThemeViewer.ControlTemplate>
+        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                                 MinItemWidth="100"
+                                 MinItemHeight="50"
+                                 IsActive="{Binding IsActive}">
 
-        <!-- Custom content for the Custom tab (optional) -->
-        <!-- If you do not define CustomContent, the tab will not appear -->
-        <ctrl:ControlThemeViewer.CustomContent>
-            <StackPanel Spacing="20" Margin="20">
-                <HeaderedContentControl Header="Embedded.Tool" Classes="Labelled Regular">
-                    <StackPanel Classes="Large">
-                        <Button Content="{StaticResource MyNet.Geometry.PlusCircle}" Theme="{StaticResource MyNet.Theme.Button.Embedded.Tool}" />
-                    </StackPanel>
-                </HeaderedContentControl>
-            </StackPanel>
-        </ctrl:ControlThemeViewer.CustomContent>
+            <!-- Template for standard controls -->
+            <ctrl:ControlThemeViewer.ControlTemplate>
+                <DataTemplate x:DataType="ctrl:ControlDescription">
+                    <Button Theme="{Binding Theme}"
+                            my:ThemeAssist.Role="{Binding Role}"
+                            b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}"
+                            my:ClassesAssist.Classes="{Binding Classes}"
+                            ToolTip.Tip="{Binding Content}">
+                        <Button.Content>
+                            <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
+                                <Binding Path="ContentType" />
+                                <Binding Path="Content" />
+                            </MultiBinding>
+                        </Button.Content>
+                    </Button>
+                </DataTemplate>
+            </ctrl:ControlThemeViewer.ControlTemplate>
 
-    </ctrl:ControlThemeViewer>
+            <!-- Custom content for the Custom tab (optional) -->
+            <ctrl:ControlThemeViewer.CustomContent>
+                <StackPanel Spacing="20" Margin="20">
+                    <HeaderedContentControl Header="Embedded.Tool" Classes="Text">
+                        <StackPanel Classes="Large" Orientation="Horizontal">
+                            <Button Content="{StaticResource MyNet.Geometry.PlusCircle}" Theme="{StaticResource MyNet.Theme.Button.Embedded.Tool}" />
+                        </StackPanel>
+                    </HeaderedContentControl>
+
+                    <HeaderedContentControl Header="Rounded" Classes="Text">
+                        <StackPanel Classes="Large" Orientation="Horizontal">
+                            <Button Content="Top" Classes="IconTop" Theme="{StaticResource MyNet.Theme.Button.Rounded}" my:IconAssist.Icon="{m:RandomIcon}" Width="50" Height="50" />
+                            <Button Content="Bottom" Classes="IconBottom Outlined" my:ThemeAssist.Role="Primary" Theme="{StaticResource MyNet.Theme.Button.Rounded}" my:IconAssist.Icon="{m:RandomIcon}" Width="60" Height="60" />
+                        </StackPanel>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </ctrl:ControlThemeViewer.CustomContent>
+
+        </ctrl:ControlThemeViewer>
+
+    </DockPanel>
 </pages:Page>

@@ -58,7 +58,7 @@
                                         <Setter Property="ContentTemplate">
                                             <Setter.Value>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{my:Translation Casing=Title}" />
+                                                    <TextBlock Text="{my:Translate Casing=Title}" />
                                                 </DataTemplate>
                                             </Setter.Value>
                                         </Setter>
@@ -162,7 +162,7 @@
         <Setter Property="IsTodayHighlighted" Value="True" />
 
         <!-- Default Theme -->
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
         <Setter Property="BorderThickness" Value="0" />

@@ -70,7 +70,7 @@ public static class GlobalizationBehavior
             UpdateDatePicker(datepicker);
     }
 
-    private static void UpdateTimePicker(global::Avalonia.Controls.TimePicker timePicker) => timePicker.ClockIdentifier = GlobalizationService.Current.Culture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? "24HourClock" : "12HourClock";
+    private static void UpdateTimePicker(global::Avalonia.Controls.TimePicker timePicker) => timePicker.ClockIdentifier = UIContext.Globalization.Culture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? "24HourClock" : "12HourClock";
 
     private static void UpdateCalendarDatePicker(global::Avalonia.Controls.CalendarDatePicker calendarDatePicker)
     {

@@ -9,6 +9,7 @@
         <Setter Property="Padding" Value="4" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="my:ThemeAssist.Role" Value="{Binding $parent[Calendar].(my:ThemeAssist.Role)}" />
         <Setter Property="Template">
@@ -59,6 +60,10 @@
                 </Panel>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^.WithRole">
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+        </Style>
 
         <!-- Active -->
         <Style Selector="^:selected">
@@ -135,7 +140,7 @@
                                     Classes="Text Small no-disablable">
                                 <Button.ContentTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{my:Translation Casing=Title}" />
+                                        <TextBlock Text="{my:Translate Casing=Title}" />
                                     </DataTemplate>
                                 </Button.ContentTemplate>
                             </Button>
@@ -171,8 +176,8 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="ClipToBounds" Value="False" />
-
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Surface.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Surface.Border}" />
 

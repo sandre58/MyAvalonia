@@ -10,8 +10,14 @@
         <Setter Property="CompactPaneLength" Value="48" />
         <Setter Property="ClipToBounds" Value="True" />
 
-        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
+        <!-- Default colors -->
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
+        <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Control.Border}" />
+
+        <!-- Default Theme -->
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="PaneBackground" Value="{my:ThemeRole}" />
+        <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Foreground, Opacity=Scrim}" />
 
         <Style Selector="^:left">
@@ -34,8 +40,7 @@
                                 <Border ClipToBounds="True">
                                     <ContentPresenter Name="PART_PanePresenter"
                                                       Content="{TemplateBinding Pane}"
-                                                      ContentTemplate="{TemplateBinding PaneTemplate}"
-                                                      Foreground="{my:ThemeBrush PaneBackground, RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
+                                                      ContentTemplate="{TemplateBinding PaneTemplate}" />
                                 </Border>
                             </Panel>
 
@@ -117,8 +122,7 @@
                             <Border ClipToBounds="True">
                                 <ContentPresenter Name="PART_PanePresenter"
                                                   Content="{TemplateBinding Pane}"
-                                                  ContentTemplate="{TemplateBinding PaneTemplate}"
-                                                  Foreground="{my:ThemeBrush PaneBackground, RelativeSource={RelativeSource Mode=TemplatedParent}, Contrast=True}" />
+                                                  ContentTemplate="{TemplateBinding PaneTemplate}" />
                             </Border>
                         </Panel>
 
@@ -230,10 +234,26 @@
             <Setter Property="IsVisible" Value="True" />
         </Style>
 
+        <Style Selector="^.WithRole">
+            <Style Selector="^ /template/ ContentPresenter#PART_PanePresenter">
+                <Setter Property="Foreground" Value="{my:ThemeRole Contrast=True}" />
+            </Style>
+        </Style>
+
         <Style Selector="^.Transparent">
+            <Setter Property="PaneBackground" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="my:PaletteAssist.Primary" Value="Transparent" />
-            <Setter Property="my:PaletteAssist.Secondary" Value="Transparent" />
+            <Style Selector="^ /template/ ContentPresenter#PART_PanePresenter">
+                <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.Light">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="PaneBackground" Value="{my:ThemeRole Opacity=Overlay}" />
+            <Style Selector="^ /template/ ContentPresenter#PART_PanePresenter">
+                <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+            </Style>
         </Style>
 
         <Style Selector="^.Outlined">
@@ -241,16 +261,18 @@
             <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="PaneBackground" Value="Transparent" />
-        </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_PanePresenter">
+                <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+            </Style>
 
-        <Style Selector="^.Solid">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
-            <Setter Property="PaneBackground" Value="{my:ThemeRole}" />
-        </Style>
+            <Style Selector="^.Solid">
+                <Setter Property="PaneBackground" Value="{my:Theme Surface.Background}" />
+            </Style>
 
-        <Style Selector="^.Light">
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Surface.Background}" />
-            <Setter Property="PaneBackground" Value="{my:ThemeRole Opacity=Overlay}" />
+            <Style Selector="^.Light">
+                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Surface.Background}" />
+                <Setter Property="PaneBackground" Value="{my:ThemeRole Secondary, Opacity=Overlay}" />
+            </Style>
         </Style>
     </ControlTheme>
 </ResourceDictionary>

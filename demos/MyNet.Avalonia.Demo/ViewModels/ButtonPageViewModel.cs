@@ -9,7 +9,7 @@ using MyNet.Avalonia.Demo.Controls;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal class ButtonPageViewModel : ControlPageViewModelBase
+internal sealed class ButtonPageViewModel : AutoBuildPageViewModel
 {
     public ButtonPageViewModel()
         : base(nameof(Button), [

@@ -2,17 +2,23 @@
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:my="http://mynet.com/avalonia"
+             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+             xmlns:views="clr-namespace:MyNet.Avalonia.Demo.Views"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+             xmlns:vmDialogs="clr-namespace:MyNet.Avalonia.Demo.ViewModels.Dialogs"
+             xmlns:viewsDialogs="clr-namespace:MyNet.Avalonia.Demo.Views.Dialogs"
              RequestedThemeVariant="Dark">
+
+    <!-- Local resources -->
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-
-                <!-- Local resources -->
-                <ResourceInclude Source="avares://MyNet.Avalonia.Demo/Theme/Controls/ControlThemeViewer.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Demo/Controls/ControlThemeViewer/ControlThemeViewer.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
     </Application.Resources>
+    
+    <!-- Styles -->
     <Application.Styles>
 
         <!-- My theme and styles -->
@@ -20,6 +26,180 @@
         <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Default.axaml" />
 
         <!-- Local styles -->
-        <StyleInclude Source="avares://MyNet.Avalonia.Demo/Theme/Styles/Settings.axaml" />
+        <StyleInclude Source="Styles/Settings.axaml" />
     </Application.Styles>
+
+    <!-- Page DataTemplates -->
+    <Application.DataTemplates>
+        <!-- Main Views -->
+        <DataTemplate DataType="vm:MainViewModel">
+            <views:MainView />
+        </DataTemplate>
+
+        <!-- Pages -->
+        <DataTemplate DataType="vm:HomePageViewModel">
+            <pages:HomePage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:ButtonPageViewModel">
+            <pages:ButtonPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:BorderPageViewModel">
+            <pages:BorderPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:CheckBoxPageViewModel">
+            <pages:CheckBoxPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:RadioButtonPageViewModel">
+            <pages:RadioButtonPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:ToggleButtonPageViewModel">
+            <pages:ToggleButtonPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:AvatarPageViewModel">
+            <pages:AvatarPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:BadgePageViewModel">
+            <pages:BadgePage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:BannerPageViewModel">
+            <pages:BannerPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:CalendarPageViewModel">
+            <pages:CalendarPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:CarouselPageViewModel">
+            <pages:CarouselPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:ClockPageViewModel">
+            <pages:ClockPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:ColorPickerPageViewModel">
+            <pages:ColorPickerPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:DataGridPageViewModel">
+            <pages:DataGridPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:DialogPageViewModel">
+            <pages:DialogPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:DrawerPageViewModel">
+            <pages:DrawerPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:DropDownButtonPageViewModel">
+            <pages:DropDownButtonPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:ExpanderPageViewModel">
+            <pages:ExpanderPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:FieldsPageViewModel">
+            <pages:FieldsPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:GridSplitterPageViewModel">
+            <pages:GridSplitterPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:HeaderedContentControlPageViewModel">
+            <pages:HeaderedContentControlPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:HyperLinkButtonPageViewModel">
+            <pages:HyperLinkButtonPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:IconsPageViewModel">
+            <pages:IconsPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:LabelPageViewModel">
+            <pages:LabelPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:ListBoxPageViewModel">
+            <pages:ListBoxPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:MenuPageViewModel">
+            <pages:MenuPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:NotificationPageViewModel">
+            <pages:NotificationPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:ProgressBarPageViewModel">
+            <pages:ProgressBarPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:SelectableTextBlockPageViewModel">
+            <pages:SelectableTextBlockPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:SliderPageViewModel">
+            <pages:SliderPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:SplitButtonPageViewModel">
+            <pages:SplitButtonPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:SplitViewPageViewModel">
+            <pages:SplitViewPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:TabControlPageViewModel">
+            <pages:TabControlPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:TextBlockPageViewModel">
+            <pages:TextBlockPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:ThemePageViewModel">
+            <pages:ThemePage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:TimePickerPageViewModel">
+            <pages:TimePickerPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:ToggleSplitButtonPageViewModel">
+            <pages:ToggleSplitButtonPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:ToggleSwitchPageViewModel">
+            <pages:ToggleSwitchPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:TreeViewPageViewModel">
+            <pages:TreeViewPage />
+        </DataTemplate>
+
+        <!-- Dialogs -->
+        <DataTemplate DataType="vmDialogs:LoginDialogViewModel">
+            <viewsDialogs:LoginDialogView />
+        </DataTemplate>
+
+        <DataTemplate DataType="vmDialogs:PerfDialogViewModel">
+            <viewsDialogs:PerfDialogView />
+        </DataTemplate>
+    </Application.DataTemplates>
 </Application>

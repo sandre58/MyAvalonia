@@ -22,7 +22,7 @@
         <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.Padding" Value="0" />
         <Setter Property="my:ItemsAssist.Margin" Value="1" />
-        <Setter Property="my:ClassesAssist.AddClasses" Value="Cards Outlined" />
+        <Setter Property="my:ClassesAssist.Classes" Value="Cards Outlined" />
         <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="ItemTemplate">
@@ -43,7 +43,7 @@
         <Setter Property="Palette">
             <my:DarkColorPalette />
         </Setter>
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type ColorView}">
                 <Grid RowDefinitions="*,Auto">
@@ -129,7 +129,7 @@
                                         <Setter Property="ClipToBounds" Value="False" />
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                         <Setter Property="Margin" Value="{my:Thickness Default, Vertical}" />
-                                        <Setter Property="my:ClassesAssist.Classes" Value="Labelled Watermark" />
+                                        <Setter Property="my:ClassesAssist.Classes" Value="Watermark" />
                                     </Style>
 
                                     <Style Selector="NumericUpDown">
@@ -174,7 +174,7 @@
                                              IsVisible="{TemplateBinding IsHexInputVisible}"
                                              MaxLength="8"
                                              UseFloatingWatermark="True"
-                                             Watermark="{my:Resource Hexadecimal}" />
+                                             Watermark="{my:Loc Hexadecimal}" />
                                 </Grid>
 
                                 <Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto">
@@ -364,30 +364,30 @@
         </Setter>
         <Style Selector="^[ColorModel=Rgba]">
             <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Red}" />
+                <Setter Property="Header" Value="{my:Loc Red}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Green}" />
+                <Setter Property="Header" Value="{my:Loc Green}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Blue}" />
+                <Setter Property="Header" Value="{my:Loc Blue}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Alpha}" />
+                <Setter Property="Header" Value="{my:Loc Alpha}" />
             </Style>
         </Style>
         <Style Selector="^[ColorModel=Hsva]">
             <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Hue}" />
+                <Setter Property="Header" Value="{my:Loc Hue}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Saturation}" />
+                <Setter Property="Header" Value="{my:Loc Saturation}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Value}" />
+                <Setter Property="Header" Value="{my:Loc Value}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Alpha}" />
+                <Setter Property="Header" Value="{my:Loc Alpha}" />
             </Style>
             <Style Selector="^ /template/ NumericUpDown#Component1NumericUpDown">
                 <Setter Property="FormatString" Value="#°" />
@@ -403,7 +403,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ColorView.Simple" TargetType="ColorView">
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Width" Value="260" />
         <Setter Property="ColorSpectrumComponents" Value="SaturationValue" />
         <Setter Property="IsAccentColorsVisible" Value="False" />
@@ -417,7 +417,7 @@
                             <Setter Property="ClipToBounds" Value="False" />
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             <Setter Property="Margin" Value="{my:Thickness Default, Vertical}" />
-                            <Setter Property="my:ClassesAssist.Classes" Value="Labelled Watermark" />
+                            <Setter Property="my:ClassesAssist.Classes" Value="Watermark" />
                         </Style>
 
                         <Style Selector="NumericUpDown">
@@ -459,7 +459,7 @@
                                  IsVisible="{TemplateBinding IsHexInputVisible}"
                                  MaxLength="8"
                                  UseFloatingWatermark="True"
-                                 Watermark="{my:Resource Hexadecimal}" />
+                                 Watermark="{my:Loc Hexadecimal}" />
                     </Grid>
 
                     <ColorSpectrum Name="ColorSpectrum"
@@ -669,30 +669,30 @@
         </Setter>
         <Style Selector="^[ColorModel=Rgba]">
             <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Red}" />
+                <Setter Property="Header" Value="{my:Loc Red}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Green}" />
+                <Setter Property="Header" Value="{my:Loc Green}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Blue}" />
+                <Setter Property="Header" Value="{my:Loc Blue}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Alpha}" />
+                <Setter Property="Header" Value="{my:Loc Alpha}" />
             </Style>
         </Style>
         <Style Selector="^[ColorModel=Hsva]">
             <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Hue}" />
+                <Setter Property="Header" Value="{my:Loc Hue}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Saturation}" />
+                <Setter Property="Header" Value="{my:Loc Saturation}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Value}" />
+                <Setter Property="Header" Value="{my:Loc Value}" />
             </Style>
             <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
-                <Setter Property="Header" Value="{my:Resource Alpha}" />
+                <Setter Property="Header" Value="{my:Loc Alpha}" />
             </Style>
             <Style Selector="^ /template/ NumericUpDown#Component1NumericUpDown">
                 <Setter Property="FormatString" Value="#°" />

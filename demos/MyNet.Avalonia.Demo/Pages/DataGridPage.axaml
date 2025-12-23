@@ -1,0 +1,191 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.DataGridPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:c="using:MyNet.Avalonia.Demo.Converters"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:geo="using:MyNet.Utilities.Geography"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:models="clr-namespace:MyNet.Utilities.Geography;assembly=MyNet.Utilities"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            x:Name="local"
+            x:DataType="vm:DataGridPageViewModel"
+            ClipToBounds="False"
+            mc:Ignorable="d">
+    <pages:Page.Resources>
+        <DataTemplate x:Key="MyNet.DataTemplate.Country" DataType="{x:Type geo:Country}">
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Medium}">
+                <Image Width="16"
+                       Height="16"
+                       Margin="{StaticResource MyNet.Margins.Default.Horizontal}"
+                       VerticalAlignment="Center"
+                       Source="{Binding Converter={x:Static c:CountryToBitmapConverter.To16}}" />
+                <TextBlock Text="{my:Translate}" />
+            </StackPanel>
+        </DataTemplate>
+    </pages:Page.Resources>
+
+    <DockPanel>
+        <!-- Settings -->
+        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                <StackPanel>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock CanUserSortColumns}">
+                        <ToggleSwitch Name="CanUserSortColumns" IsChecked="True" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock CanUserReorderColumns}">
+                        <ToggleSwitch Name="CanUserReorderColumns" IsChecked="True" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock CanUserResizeColumns}">
+                        <ToggleSwitch Name="CanUserResizeColumns" IsChecked="True" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ReadOnly}">
+                        <ToggleSwitch Name="IsReadOnly" IsChecked="False" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock HeadersVisibility}">
+                        <ListBox Name="HeadersVisibility" SelectedIndex="1" SelectedValueBinding="{ReflectionBinding DataContext}">
+                            <ListBoxItem Content="{my:Icon CircleOffOutline}" DataContext="{x:Static DataGridHeadersVisibility.None}" ToolTip.Tip="{my:LocTextBlock DataGridHeadersVisibilityNone}" />
+                            <ListBoxItem Content="{my:Icon TableRow}" DataContext="{x:Static DataGridHeadersVisibility.Column}" ToolTip.Tip="{my:LocTextBlock DataGridHeadersVisibilityColumn}" />
+                            <ListBoxItem Content="{my:Icon TableColumn}" DataContext="{x:Static DataGridHeadersVisibility.Row}" ToolTip.Tip="{my:LocTextBlock DataGridHeadersVisibilityRow}" />
+                            <ListBoxItem Content="{my:Icon TableHeadersEye}" DataContext="{x:Static DataGridHeadersVisibility.All}" ToolTip.Tip="{my:LocTextBlock DataGridHeadersVisibilityAll}" />
+                        </ListBox>
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Watermark" ClipToBounds="False" Header="{my:LocTextBlock ColumnHeaderHeight}">
+                        <Slider Name="ColumnHeaderHeight"
+                                IsSnapToTickEnabled="True"
+                                Maximum="100"
+                                Minimum="0"
+                                Value="35" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Watermark" ClipToBounds="False" Header="{my:LocTextBlock RowHeaderWidth}">
+                        <Slider Name="RowHeaderWidth"
+                                IsSnapToTickEnabled="True"
+                                Maximum="100"
+                                Minimum="0"
+                                Value="35" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Watermark" ClipToBounds="False" Header="{my:LocTextBlock RowHeight}">
+                        <Slider Name="RowHeight"
+                                IsSnapToTickEnabled="True"
+                                Maximum="100"
+                                Minimum="0"
+                                Value="40" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock GridLinesVisibility}">
+                        <ListBox Name="GridLinesVisibility" SelectedIndex="0" SelectedValueBinding="{ReflectionBinding DataContext}">
+                            <ListBoxItem Content="{my:Icon CircleOffOutline}" DataContext="{x:Static DataGridGridLinesVisibility.None}" ToolTip.Tip="{my:LocTextBlock DataGridGridLinesVisibilityNone}" />
+                            <ListBoxItem Content="{my:Icon BorderHorizontal}" DataContext="{x:Static DataGridGridLinesVisibility.Horizontal}" ToolTip.Tip="{my:LocTextBlock DataGridGridLinesVisibilityHorizontal}" />
+                            <ListBoxItem Content="{my:Icon BorderVertical}" DataContext="{x:Static DataGridGridLinesVisibility.Vertical}" ToolTip.Tip="{my:LocTextBlock DataGridGridLinesVisibilityVertical}" />
+                            <ListBoxItem Content="{my:Icon TableHeadersEye}" DataContext="{x:Static DataGridGridLinesVisibility.All}" ToolTip.Tip="{my:LocTextBlock DataGridGridLinesVisibilityAll}" />
+                        </ListBox>
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock SelectionMode}">
+                        <ListBox Name="SelectionMode" SelectedIndex="0" SelectedValueBinding="{ReflectionBinding DataContext}">
+                            <ListBoxItem Content="{my:Icon CheckboxMultipleMarked}" DataContext="{x:Static DataGridSelectionMode.Extended}" ToolTip.Tip="{my:LocTextBlock DataGridSelectionModeExtended}" />
+                            <ListBoxItem Content="{my:Icon CheckboxMarked}" DataContext="{x:Static DataGridSelectionMode.Single}" ToolTip.Tip="{my:LocTextBlock DataGridSelectionModeSingle}" />
+                        </ListBox>
+                    </HeaderedContentControl>
+                    <NumericUpDown Name="FrozenColumnCount"
+                                   Maximum="5"
+                                   Minimum="0"
+                                   Watermark="{my:Loc FrozenColumnCount}"
+                                   Value="0" />
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock UseAlternateRowBackground}">
+                        <ToggleSwitch Name="UseAlternateRowBackground" IsChecked="True" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowSelection}">
+                        <ToggleSwitch Name="ShowSelection" IsChecked="True" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowCellSelection}">
+                        <ToggleSwitch Name="ShowCellSelection" IsChecked="False" />
+                    </HeaderedContentControl>
+                </StackPanel>
+            </ScrollViewer>
+        </HeaderedContentControl>
+
+        <DataGrid my:DataGridAssist.ShowCellSelection="{Binding #ShowCellSelection.IsChecked}"
+                  my:DataGridAssist.ShowSelection="{Binding #ShowSelection.IsChecked}"
+                  my:DataGridAssist.UseAlternateRowBackground="{Binding #UseAlternateRowBackground.IsChecked}"
+                  my:DataGridBehavior.UseAreAllSelected="True"
+                  CanUserReorderColumns="{Binding #CanUserReorderColumns.IsChecked}"
+                  CanUserResizeColumns="{Binding #CanUserResizeColumns.IsChecked}"
+                  CanUserSortColumns="{Binding #CanUserSortColumns.IsChecked}"
+                  ColumnHeaderHeight="{Binding #ColumnHeaderHeight.Value}"
+                  FrozenColumnCount="{Binding #FrozenColumnCount.Value}"
+                  GridLinesVisibility="{Binding #GridLinesVisibility.SelectedValue}"
+                  HeadersVisibility="{Binding #HeadersVisibility.SelectedValue}"
+                  IsEnabled="{ReflectionBinding IsActive}"
+                  IsReadOnly="{Binding #IsReadOnly.IsChecked}"
+                  ItemsSource="{Binding Fixtures}"
+                  RowHeaderWidth="{Binding #RowHeaderWidth.Value}"
+                  RowHeight="{Binding #RowHeight.Value}"
+                  SelectionMode="{Binding #SelectionMode.SelectedValue}">
+            <DataGrid.RowTheme>
+                <ControlTheme TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                    <Setter Property="IsSelected" Value="{ReflectionBinding IsSelected, Mode=OneWayToSource}" />
+                </ControlTheme>
+            </DataGrid.RowTheme>
+            <DataGrid.Columns>
+                <!--<my:DataGridCheckBoxColumn Width="60" Binding="{Binding IsSelected}" HeaderTemplate="{StaticResource MyNet.DataTemplate.DataGrid.AreAllSelected}" />-->
+                <my:DataGridDateColumn Width="2*"
+                                       x:DataType="{x:Type vm:SelectedFixture}"
+                                       Binding="{ReflectionBinding Item.Date}"
+                                       Header="{my:LocTextBlock Date}"
+                                       Icon="{StaticResource MyNet.Geometry.Calendar}"
+                                       IsReadOnly="False"
+                                       Watermark="{my:Loc Date}" />
+                <my:DataGridTimeColumn Width="*"
+                                       x:DataType="{x:Type vm:SelectedFixture}"
+                                       Binding="{ReflectionBinding Item.Time}"
+                                       Header="{my:LocTextBlock Time}"
+                                       Icon="{StaticResource MyNet.Geometry.Clock}"
+                                       IsReadOnly="False"
+                                       Watermark="{my:Loc Time}" />
+                <my:DataGridComboBoxColumn Width="3*"
+                                           x:DataType="{x:Type vm:SelectedFixture}"
+                                           Binding="{ReflectionBinding Item.Home}"
+                                           ContentTemplate="{StaticResource MyNet.DataTemplate.Country}"
+                                           Header="{my:LocTextBlock HomeTeam}"
+                                           ItemsSource="{my:EnumClassSource EnumType={x:Type models:Country}, OrderByDisplay=True}" />
+                <my:DataGridNumericColumn Width="70"
+                                          x:DataType="{x:Type vm:SelectedFixture}"
+                                          Binding="{ReflectionBinding Item.HomeScore}"
+                                          Increment="1"
+                                          Maximum="10"
+                                          Minimum="0" />
+                <my:DataGridNumericColumn Width="70"
+                                          x:DataType="{x:Type vm:SelectedFixture}"
+                                          Binding="{ReflectionBinding Item.AwayScore}"
+                                          Increment="1"
+                                          Maximum="15"
+                                          Minimum="0" />
+                <my:DataGridComboBoxColumn Width="3*"
+                                           x:DataType="{x:Type vm:SelectedFixture}"
+                                           Binding="{ReflectionBinding Item.Away}"
+                                           ContentTemplate="{StaticResource MyNet.DataTemplate.Country}"
+                                           Header="{my:LocTextBlock AwayTeam}"
+                                           IsReadOnly="False"
+                                           ItemsSource="{my:EnumClassSource EnumType={x:Type models:Country}, OrderByDisplay=True}" />
+                <my:DataGridTextColumn Width="3*"
+                                       x:DataType="{x:Type vm:SelectedFixture}"
+                                       Binding="{ReflectionBinding Item.Venue}"
+                                       Header="{my:LocTextBlock Venue}"
+                                       Icon="{StaticResource MyNet.Geometry.Stadium}"
+                                       ShowClearButton="True"
+                                       ShowClipboardButton="True"
+                                       Watermark="{my:Loc Venue}" />
+                <my:DataGridComboBoxColumn Width="2*"
+                                           x:DataType="{x:Type vm:SelectedFixture}"
+                                           Binding="{ReflectionBinding Item.Referee}"
+                                           Header="{my:LocTextBlock Referee}"
+                                           Icon="{StaticResource MyNet.Geometry.Whistle}"
+                                           ItemsSource="{Binding #local.((vm:DataGridPageViewModel)DataContext).AvailableReferees, FallbackValue={x:Null}}"
+                                           ShowClearButton="True"
+                                           ShowClipboardButton="True"
+                                           Watermark="{my:Loc Referee}" />
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </DockPanel>
+</pages:Page>

@@ -17,32 +17,21 @@
                               VerticalContentAlignment="Center"
                               Content="{Binding $parent[TemplatedControl].(my:IconAssist.Icon)}"
                               ContentTemplate="{Binding $parent[TemplatedControl].(my:IconAssist.IconTemplate)}"
-                              IsVisible="{Binding $parent[TemplatedControl].(my:IconAssist.Icon), Converter={x:Static my:NullConverter.IsNotNull}}"
                               Opacity="{Binding $parent[TemplatedControl].(my:IconAssist.Opacity)}"
-                              RecognizesAccessKey="True" />
+                              RecognizesAccessKey="True">
+                              <ContentPresenter.IsVisible>
+                                  <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                      <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="$parent[TemplatedControl].(my:IconAssist.Icon)" />
+                                      <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="$parent[TemplatedControl].(my:IconAssist.IconTemplate)" />
+                                  </MultiBinding>
+                              </ContentPresenter.IsVisible>
+            </ContentPresenter>
             <ContentPresenter Name="PART_Content"
                               HorizontalContentAlignment="{Binding $parent[ContentControl].HorizontalContentAlignment}"
                               VerticalContentAlignment="{Binding $parent[ContentControl].VerticalContentAlignment}"
                               Content="{Binding}"
                               RecognizesAccessKey="True" />
         </DockPanel>
-    </DataTemplate>
-
-    <DataTemplate x:Key="MyNet.DataTemplate.Icon.Left" DataType="{x:Type sys:Object}">
-        <Grid ColumnDefinitions="Auto,*">
-            <ContentControl Margin="{Binding $parent[TemplatedControl].(my:IconAssist.Margin)}"
-                            Content="{Binding $parent[TemplatedControl].(my:IconAssist.Icon)}"
-                            ContentTemplate="{Binding $parent[TemplatedControl].(my:IconAssist.IconTemplate)}"
-                            Opacity="{Binding $parent[TemplatedControl].(my:IconAssist.Opacity)}">
-                <ContentControl.IsVisible>
-                    <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                        <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="$parent[TemplatedControl].(my:IconAssist.Icon)" />
-                        <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="$parent[TemplatedControl].(my:IconAssist.IconTemplate)" />
-                    </MultiBinding>
-                </ContentControl.IsVisible>
-            </ContentControl>
-            <ContentControl Grid.Column="1" Content="{Binding}" />
-        </Grid>
     </DataTemplate>
 
 </ResourceDictionary>

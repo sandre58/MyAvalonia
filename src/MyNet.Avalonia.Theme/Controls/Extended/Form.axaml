@@ -91,7 +91,7 @@
         <Setter Property="my:HeaderAssist.Opacity" Value="1" />
         <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
         <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
-        <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Icon.Left}" />
+        <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
         <Setter Property="ClipToBounds" Value="True" />
 
         <Setter Property="Background" Value="Transparent" />

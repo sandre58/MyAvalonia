@@ -6,9 +6,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using Avalonia;
-using Avalonia.Data.Converters;
 using MyNet.Humanizer;
 using MyNet.Utilities;
 using MyNet.Utilities.Helpers;
@@ -16,25 +17,126 @@ using MyNet.Utilities.Localization;
 
 namespace MyNet.Avalonia.Converters;
 
-public sealed class DateTimeConverter(DateTimeConverter.DateTimeConverterKind target, LetterCasing letterCasing = LetterCasing.Normal) : IValueConverter, IMultiValueConverter
+/// <summary>
+/// Specifies the kind of date/time conversion to apply.
+/// </summary>
+public enum DateTimeConverterKind
 {
-    public enum DateTimeConverterKind
+    /// <summary>
+    /// No conversion; uses the original value.
+    /// </summary>
+    Default,
+
+    /// <summary>
+    /// Converts to the current culture's date/time.
+    /// </summary>
+    Current,
+
+    /// <summary>
+    /// Converts to local time.
+    /// </summary>
+    Local,
+
+    /// <summary>
+    /// Converts to UTC time.
+    /// </summary>
+    Utc
+}
+
+/// <summary>
+/// Converts date and time values to localized, formatted strings for UI display.
+/// Supports conversion to local, UTC, or current culture time, and custom time zones.
+/// </summary>
+/// <remarks>
+/// This converter is designed for advanced date/time localization scenarios in Avalonia applications.
+/// It supports formatting, casing, and time zone conversion, and can be used in both single and multi-value bindings.
+/// </remarks>
+/// <example>
+/// <code>
+/// <!-- Usage in XAML -->
+/// <TextBlock Text="{Binding MyDate, Converter={x:Static my:DateTimeConverter.Default}}" />
+/// <TextBlock Text="{Binding MyDate, Converter={x:Static my:DateTimeConverter.ToLocal}}" />
+/// <TextBlock Text="{Binding MyDate, Converter={x:Static my:DateTimeConverter.ToUtc}}" />
+/// </code>
+/// </example>
+/// <remarks>
+/// Initializes a new instance of the <see cref="DateTimeConverter"/> class.
+/// </remarks>
+/// <param name="dateTimeConverterKind">The kind of date/time conversion to apply.</param>
+/// <param name="casing">The casing to apply to the result.</param>
+/// <param name="culture">A custom culture to use for localization. If null, uses the provided culture parameter.</param>
+public sealed class DateTimeConverter(DateTimeConverterKind dateTimeConverterKind = DateTimeConverterKind.Default, LetterCasing casing = LetterCasing.Normal, CultureInfo? culture = null) : LocalizableConverter(casing, culture)
+{
+    private static readonly ReadOnlyDictionary<DateTimeConverterKind, DateTimeConverter> Converters = Enum.GetValues<DateTimeConverterKind>().ToDictionary(c => c, c => new DateTimeConverter(c)).AsReadOnly();
+
+    /// <summary>
+    /// Gets the default date/time converter (no conversion).
+    /// </summary>
+    public static readonly DateTimeConverter Default = Converters[DateTimeConverterKind.Default];
+
+    /// <summary>
+    /// Gets a converter that converts to local time.
+    /// </summary>
+    public static readonly DateTimeConverter ToLocal = Converters[DateTimeConverterKind.Local];
+
+    /// <summary>
+    /// Gets a converter that converts to UTC time.
+    /// </summary>
+    public static readonly DateTimeConverter ToUtc = Converters[DateTimeConverterKind.Utc];
+
+    /// <summary>
+    /// Gets a converter that converts to the current culture's date/time.
+    /// </summary>
+    public static readonly DateTimeConverter ToCurrent = Converters[DateTimeConverterKind.Current];
+
+    /// <summary>
+    /// Gets or sets the custom time zone to use for conversion. If null, uses the default or specified kind.
+    /// </summary>
+    public TimeZoneInfo? TimeZone { get; set; }
+
+    /// <summary>
+    /// Converts multiple values to a localized, formatted date/time string.
+    /// </summary>
+    /// <param name="values">The values to convert (date/time, format, culture, time zone).</param>
+    /// <param name="targetType">The target type.</param>
+    /// <param name="parameter">The format string or additional parameter.</param>
+    /// <param name="culture">The culture to use for localization.</param>
+    /// <returns>The converted string value.</returns>
+    public override object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
-        Default,
+        var value = values.GetByIndex(0);
+        var format = values.GetByIndex(1) as string ?? parameter as string ?? Format;
+        var effectiveCulture = values.OfType<CultureInfo>().FirstOrDefault() ?? Culture ?? culture;
+        var effectiveTimeZone = values.OfType<TimeZoneInfo>().FirstOrDefault() ?? TimeZone;
 
-        Current,
-
-        Local,
-
-        Utc
+        try
+        {
+            return Convert(value, format, effectiveCulture, effectiveTimeZone);
+        }
+        catch (FormatException ex)
+        {
+            return $"[Format error: {ex.Message}]";
+        }
     }
 
-    public static readonly DateTimeConverter Default = new(DateTimeConverterKind.Default);
-    public static readonly DateTimeConverter ToLocal = new(DateTimeConverterKind.Local);
-    public static readonly DateTimeConverter ToUtc = new(DateTimeConverterKind.Utc);
-    public static readonly DateTimeConverter ToCurrent = new(DateTimeConverterKind.Current);
+    /// <summary>
+    /// Converts a value to a localized, formatted date/time string.
+    /// </summary>
+    /// <param name="value">The value to convert.</param>
+    /// <param name="format">The format string to use.</param>
+    /// <param name="culture">The culture to use for localization.</param>
+    /// <returns>The converted string value.</returns>
+    public override object? Convert(object? value, string? format, CultureInfo culture) => Convert(value, format, culture, TimeZone);
 
-    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    /// <summary>
+    /// Converts a value to a localized, formatted date/time string, with a custom time zone.
+    /// </summary>
+    /// <param name="value">The value to convert (DateTime, DateTimeOffset, DateOnly, TimeSpan, TimeOnly).</param>
+    /// <param name="format">The format string to use.</param>
+    /// <param name="culture">The culture to use for localization.</param>
+    /// <param name="customTimeZone">The custom time zone to use for conversion.</param>
+    /// <returns>The converted string value.</returns>
+    public string? Convert(object? value, string? format, CultureInfo culture, TimeZoneInfo? customTimeZone)
     {
         DateTime? dateToConvert = value switch
         {
@@ -46,22 +148,17 @@ public sealed class DateTimeConverter(DateTimeConverter.DateTimeConverterKind ta
             _ => null
         };
 
-        if (!dateToConvert.HasValue) return AvaloniaProperty.UnsetValue;
+        if (!dateToConvert.HasValue) return null;
 
-        var finalDate = target switch
+        var effectiveDate = dateTimeConverterKind switch
         {
-            DateTimeConverterKind.Utc => dateToConvert.Value.ToUniversalTime(),
-            DateTimeConverterKind.Local => dateToConvert.Value.ToLocalTime(),
             DateTimeConverterKind.Current => GlobalizationService.Current.Convert(dateToConvert.Value),
-            DateTimeConverterKind.Default => dateToConvert.Value,
-            _ => throw new InvalidOperationException()
+            DateTimeConverterKind.Local => dateToConvert.Value.ToLocalTime(),
+            DateTimeConverterKind.Utc => dateToConvert.Value.ToUniversalTime(),
+            _ => customTimeZone is not null ? GlobalizationService.Current.ConvertToTimeZone(dateToConvert.Value, customTimeZone) : dateToConvert.Value
         };
 
-        var format = parameter is not null ? DateTimeHelper.TranslateDatePattern(parameter.ToString().OrEmpty(), culture) : null;
-        return finalDate.ToString(format, culture).ApplyCase(letterCasing);
+        var translatedFormat = !string.IsNullOrEmpty(format) ? DateTimeHelper.TranslateDatePattern(format, culture) : null;
+        return effectiveDate.ToString(translatedFormat, culture);
     }
-
-    public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture) => Convert(values.Count > 0 ? values[0] : null, targetType, values.Count > 1 ? values[1] : null, culture);
-
-    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotSupportedException();
 }

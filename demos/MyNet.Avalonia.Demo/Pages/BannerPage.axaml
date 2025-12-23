@@ -1,0 +1,69 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.BannerPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            ClipToBounds="False"
+            mc:Ignorable="d"
+            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
+            x:DataType="vm:BannerPageViewModel">
+
+    <DockPanel>
+
+        <!-- Settings -->
+        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowClearButton}">
+                        <ToggleSwitch Name="ShowClearButton" IsChecked="True" />
+                    </HeaderedContentControl>
+                    <Button Content="{my:LocTextBlock Restore}" my:IconAssist.Icon="{my:Icon Refresh}" Click="Restore_Click" />
+                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock IconLayout}">
+                        <ListBox Name="IconLayout" SelectedIndex="0">
+                            <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:LocTextBlock None}" />
+                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
+                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
+                            <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:LocTextBlock Top}" />
+                            <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
+                        </ListBox>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </ScrollViewer>
+        </HeaderedContentControl>
+
+        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
+                                 MinItemWidth="300"
+                                 MinItemHeight="100"
+                                 IsActive="{Binding IsActive}">
+
+            <!-- Template for standard controls -->
+            <ctrl:ControlThemeViewer.ControlTemplate>
+                <DataTemplate x:DataType="ctrl:ControlDescription">
+                    <my:Banner Theme="{Binding Theme}"
+                               my:ThemeAssist.Role="{Binding Role}"
+                               my:ClassesAssist.Classes="{Binding Classes}"
+                               b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}"
+                               CanClose="{Binding #ShowClearButton.IsChecked}"
+                               MaxWidth="500"
+                               ToolTip.Tip="{Binding Content}">
+                        <my:Banner.Header>
+                            <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
+                                <Binding Path="ContentType" />
+                                <Binding Path="Content" />
+                            </MultiBinding>
+                        </my:Banner.Header>
+                        <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                    </my:Banner>
+                </DataTemplate>
+            </ctrl:ControlThemeViewer.ControlTemplate>
+
+        </ctrl:ControlThemeViewer>
+
+    </DockPanel>
+</pages:Page>

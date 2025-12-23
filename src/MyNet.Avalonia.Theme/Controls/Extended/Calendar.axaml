@@ -8,6 +8,7 @@
         <Setter Property="Padding" Value="4" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="my:ThemeAssist.Role" Value="{Binding $parent[my:Calendar].(my:ThemeAssist.Role)}" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
@@ -60,14 +61,18 @@
             </ControlTemplate>
         </Setter>
 
+        <Style Selector="^.WithRole">
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+        </Style>
+
         <Style Selector="^.Range">
             <Setter Property="Margin" Value="{my:Thickness Small, Vertical}" />
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="my:ClassesAssist.AddClasses" Value="no-transitions" />
+                <Setter Property="my:ClassesAssist.Classes" Value="no-transitions" />
             </Style>
             <Style Selector="^ /template/ Border#PART_HoverBorder">
-                <Setter Property="my:ClassesAssist.AddClasses" Value="no-transitions" />
+                <Setter Property="my:ClassesAssist.Classes" Value="no-transitions" />
             </Style>
         </Style>
 
@@ -144,7 +149,7 @@
             </Template>
         </Setter>
 
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Surface.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Surface.Border}" />
 
@@ -178,20 +183,20 @@
                                         Grid.Column="0"
                                         HorizontalAlignment="Stretch"
                                         Classes="Text Small no-disablable"
-                                        Content="{my:Translation DisplayDateContext, Casing=Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Content="{my:TranslateTextBlock DisplayDateContext, Format='MMM', Casing=Title, RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False" />
                                 <Button Name="{x:Static my:Calendar.PartYearButton}"
                                         Grid.Column="1"
                                         HorizontalAlignment="Stretch"
                                         Classes="Text Small no-disablable"
-                                        Content="{ReflectionBinding DisplayDateContext.Year, FallbackValue='', RelativeSource={RelativeSource TemplatedParent}}"
+                                        Content="{my:TranslateTextBlock DisplayDateContext, Format='yyyy', FallbackValue='', RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False" />
                                 <Button Name="{x:Static my:Calendar.PartHeaderButton}"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="2"
                                         HorizontalAlignment="Stretch"
                                         Classes="Text Small no-disablable"
-                                        Content="{my:Translation DisplayDateContext, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Content="{my:TranslateTextBlock DisplayDateContext, RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False"
                                         IsVisible="False" />
                             </Grid>

@@ -29,13 +29,14 @@
         <Setter Property="MinHeight" Value="250" />
         <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H2}" />
         <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
-
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type my:TimeView}">
-                <HeaderedContentControl Classes="Headered"
-                                        my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                <HeaderedContentControl my:PaletteAssist.Primary="{Binding $parent[my:TimeView].(my:PaletteAssist.Primary)}"
+                                        my:ThemeAssist.Role="{Binding $parent[my:TimeView].(my:ThemeAssist.Role)}"
+                                        Classes="Headered"
                                         Background="Transparent"
                                         HorizontalContentAlignment="Stretch"
                                         VerticalAlignment="Stretch"
@@ -89,8 +90,8 @@
                                      SelectedValue="{TemplateBinding IsAm, Mode=TwoWay}"
                                      SelectedValueBinding="{ReflectionBinding DataContext}"
                                      IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static u:TimeFormat.TwelveHour}}">
-                                <ListBoxItem DataContext="{x:True}" Content="{my:Resource Am, Casing=AllCaps}" />
-                                <ListBoxItem DataContext="{x:False}" Content="{my:Resource Pm, Casing=AllCaps}" />
+                                <ListBoxItem DataContext="{x:True}" Content="{my:LocTextBlock Am, Casing=AllCaps}" />
+                                <ListBoxItem DataContext="{x:False}" Content="{my:LocTextBlock Pm, Casing=AllCaps}" />
                             </ListBox>
                         </Grid>
                     </HeaderedContentControl.Header>
