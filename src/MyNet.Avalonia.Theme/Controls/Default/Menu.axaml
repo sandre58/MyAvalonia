@@ -9,6 +9,7 @@
 
     <!-- ScrollViewer -->
     <ControlTheme x:Key="MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Menu" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="ContentTemplate" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
     </ControlTheme>
     <ControlTheme x:Key="MyNet.Theme.ScrollViewer.Embedded.Menu" TargetType="ScrollViewer">

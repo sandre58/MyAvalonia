@@ -45,6 +45,7 @@ internal sealed class DataGridPageViewModel : PageViewModel
             _fixtures.ToObservableChangeSet().WhenPropertyChanged(x => x.IsSelected).Subscribe(_ => OnPropertyChanged(nameof(AreAllSelected)))
         ]);
     }
+    protected override string CreateTitle() => "DataGrid";
 
     public bool? AreAllSelected
     {

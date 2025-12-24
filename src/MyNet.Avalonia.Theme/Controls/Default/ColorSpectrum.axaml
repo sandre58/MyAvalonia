@@ -39,8 +39,7 @@
                                     CornerRadius="{TemplateBinding CornerRadius}"
                                     IsVisible="{TemplateBinding Shape, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static ColorSpectrumShape.Box}}" />
 
-                            <Ellipse my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                                     Fill="{my:Theme Transparency.Small}"
+                            <Ellipse Fill="{my:Theme Transparency.Small}"
                                      IsVisible="{TemplateBinding Shape, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static ColorSpectrumShape.Ring}}"
                                      Stroke="{TemplateBinding BorderBrush}" />
 

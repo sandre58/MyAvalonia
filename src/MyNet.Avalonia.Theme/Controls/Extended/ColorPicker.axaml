@@ -41,7 +41,7 @@
         <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Foreground, Opacity=High}" />
         <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Foreground, Opacity=High}" />
@@ -126,11 +126,15 @@
 
                                             <!-- Preview -->
                                             <Grid Width="{Binding $self.Bounds.Height}" Margin="{my:Thickness Small, Right=5}" IsVisible="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}">
+                                                <Border IsHitTestVisible="False"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Background="{my:Theme Transparency.Small}"
+                                                        CornerRadius="999"
+                                                        my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}" />
                                                 <Ellipse HorizontalAlignment="Stretch"
                                                          VerticalAlignment="Stretch"
-                                                         my:ShadowAssist.ShadowDepth="Depth1"
-                                                         Fill="{my:Theme Transparency.Small}" />
-                                                <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:BrushConverter.Default}}" />
+                                                         Fill="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:BrushConverter.Default}}" />
                                             </Grid>
 
                                             <!-- Text -->
@@ -342,13 +346,6 @@
             <Setter Property="BorderThickness" Value="1" />
         </Style>
 
-        <Style Selector="^.Transparent">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="my:ThemeAssist.HoverBackground" Value="Transparent" />
-            <Setter Property="my:ThemeAssist.ActiveBackground" Value="Transparent" />
-            <Setter Property="my:ThemeAssist.RippleColor" Value="Transparent" />
-        </Style>
-
         <!-- Layouts -->
         <Style Selector="^.Circle">
             <Setter Property="Padding" Value="8 0 0 0" />
@@ -439,11 +436,15 @@
 
                                         <!-- Preview -->
                                         <Grid Width="{Binding $self.Bounds.Height}" Margin="{my:Thickness Small, Right=5}" IsVisible="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}">
+                                            <Border IsHitTestVisible="False"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch"
+                                                    Background="{my:Theme Transparency.Small}"
+                                                    CornerRadius="999"
+                                                    my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}" />
                                             <Ellipse HorizontalAlignment="Stretch"
                                                      VerticalAlignment="Stretch"
-                                                     my:ShadowAssist.ShadowDepth="Depth1"
-                                                     Fill="{my:Theme Transparency.Small}" />
-                                            <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:BrushConverter.Default}}" />
+                                                     Fill="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:BrushConverter.Default}}" />
                                         </Grid>
 
                                         <!-- Text -->

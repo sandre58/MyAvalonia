@@ -104,7 +104,9 @@
         <Setter Property="my:PaletteAssist.Tertiary" Value="{my:Theme Primary}" />
 
         <!-- Default Theme -->
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
+        <Setter Property="BorderBrush" Value="{my:ThemeRole Secondary}" />
         <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
         <Setter Property="my:ThemeAssist.HoverForeground" Value="{my:Foreground}" />
         <Setter Property="my:ThemeAssist.RippleColor" Value="{my:Foreground}" />
@@ -394,6 +396,8 @@
 
         <!-- Styles -->
         <Style Selector="^.Solid">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
             <Setter Property="Background" Value="{my:ThemeRole}" />
             <Setter Property="Foreground" Value="{my:ThemeRole, Contrast=True}" />
@@ -413,12 +417,16 @@
         </Style>
 
         <Style Selector="^.Text">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=TemplatedControl}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{my:ThemeRole}" />
         </Style>
 
         <Style Selector="^.Light">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Control.Background}" />
             <Setter Property="Background" Value="{my:ThemeRole Opacity=Overlay}" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="{my:ThemeRole Opacity=Hover}" />

@@ -311,6 +311,7 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Small}" />
         <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Small}" />
+        <Setter Property="ContentTemplate" Value="{x:Null}" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="FocusAdorner">
             <FocusAdornerTemplate>

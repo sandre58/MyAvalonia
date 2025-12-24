@@ -49,8 +49,7 @@
             <Setter Property="BorderBrush" Value="{my:ThemeRole}" />
 
             <Style Selector="^.Solid">
-                <Setter Property="my:PaletteAssist.Secondary" Value="{my:Theme Surface.Background}" />
-                <Setter Property="Background" Value="{my:ThemeRole Secondary}" />
+                <Setter Property="Background" Value="{my:Theme Surface.Background}" />
             </Style>
 
             <Style Selector="^.Light">

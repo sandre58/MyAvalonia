@@ -37,7 +37,7 @@
         <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Foreground, Opacity=High}" />
         <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Foreground, Opacity=High}" />
@@ -296,9 +296,6 @@
         <!-- Styles -->
         <Style Selector="^.Outlined">
             <Setter Property="BorderThickness" Value="1" />
-        </Style>
-
-        <Style Selector="^.Transparent">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="Transparent" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="Transparent" />

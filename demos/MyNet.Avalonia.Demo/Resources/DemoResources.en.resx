@@ -657,4 +657,13 @@
   <data name="PopupPlacement" xml:space="preserve">
     <value>Popup placement</value>
   </data>
+  <data name="RightClickHere" xml:space="preserve">
+    <value>Right-click here</value>
+  </data>
+  <data name="OpenMenu" xml:space="preserve">
+    <value>Open menu</value>
+  </data>
+  <data name="ShowFlyout" xml:space="preserve">
+    <value>Show flyout</value>
+  </data>
 </root>

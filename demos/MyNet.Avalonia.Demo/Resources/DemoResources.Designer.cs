@@ -22,7 +22,7 @@ namespace MyNet.Avalonia.Demo.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal sealed class DemoResources {
+    internal class DemoResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -988,6 +988,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ouvrir le menu.
+        /// </summary>
+        internal static string OpenMenu {
+            get {
+                return ResourceManager.GetString("OpenMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Longueur du volet ouvert.
         /// </summary>
         internal static string OpenPaneLength {
@@ -1132,6 +1141,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clic droit ici.
+        /// </summary>
+        internal static string RightClickHere {
+            get {
+                return ResourceManager.GetString("RightClickHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Largeur des entêtes de ligne.
         /// </summary>
         internal static string RowHeaderWidth {
@@ -1236,6 +1254,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         internal static string ShowError {
             get {
                 return ResourceManager.GetString("ShowError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Afficher la popup.
+        /// </summary>
+        internal static string ShowFlyout {
+            get {
+                return ResourceManager.GetString("ShowFlyout", resourceCulture);
             }
         }
         

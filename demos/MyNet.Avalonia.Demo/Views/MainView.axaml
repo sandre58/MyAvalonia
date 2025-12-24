@@ -40,8 +40,7 @@
                                       Padding="0"
                                       Classes="Text"
                                       Content="{my:Icon Menu, Size=26}"
-                                      IsChecked="{Binding #menu.IsHorizontalCollapsed}"
-                                      Theme="{StaticResource {x:Type Button}}" />
+                                      IsChecked="{Binding #menu.IsHorizontalCollapsed}" />
                     </Grid>
                 </my:NavigationMenu.Header>
 

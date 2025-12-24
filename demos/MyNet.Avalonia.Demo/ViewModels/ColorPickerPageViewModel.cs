@@ -10,4 +10,5 @@ namespace MyNet.Avalonia.Demo.ViewModels;
 
 internal sealed class ColorPickerPageViewModel : PageViewModel
 {
+    protected override string CreateTitle() => "ColorPicker";
 }

@@ -6,14 +6,14 @@
     <PackageVersion Include="Avalonia" Version="11.3.10" />
     <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.3.10" />
     <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.Android" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Android" Version="11.3.10" />
     <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="11.3.10" />
     <PackageVersion Include="Avalonia.Controls.DataGrid" Version="11.3.10" />
     <PackageVersion Include="Avalonia.Controls.ItemsRepeater" Version="11.1.5" />
-    <PackageVersion Include="Avalonia.Browser" Version="11.3.8" />
-    <PackageVersion Include="Avalonia.Skia" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Browser" Version="11.3.10" />
+    <PackageVersion Include="Avalonia.Skia" Version="11.3.10" />
     <PackageVersion Include="Avalonia.Desktop" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.iOS" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.iOS" Version="11.3.10" />
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.14" />
     <PackageVersion Include="MyNet.Humanizer" Version="15.0.0" />
     <PackageVersion Include="MyNet.Observable" Version="15.0.0" />

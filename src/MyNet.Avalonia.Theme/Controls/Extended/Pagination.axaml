@@ -4,6 +4,7 @@
                     xmlns:sys="clr-namespace:System;assembly=netstandard">
 
     <ControlTheme x:Key="{x:Type my:PaginationButton}" TargetType="my:PaginationButton" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="ContentTemplate" Value="{x:Null}" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Content" Value="{Binding $self.Page}" />
         <Setter Property="Margin" Value="{my:Thickness Left=1, Right=1}" />

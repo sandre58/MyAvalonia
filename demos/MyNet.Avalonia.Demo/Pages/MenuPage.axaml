@@ -4,71 +4,108 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
-            mc:Ignorable="d"
+            xmlns:samples="using:MyNet.Avalonia.Demo.Views.Samples"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:MenuPageViewModel"
-            ClipToBounds="False">
+            mc:Ignorable="d">
+
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
-        <Grid IsEnabled="{Binding IsActive}">
-            <StackPanel HorizontalAlignment="Stretch" Classes="Large" Grid.IsSharedSizeScope="True">
+        <StackPanel Classes="Large" IsEnabled="{Binding IsActive}">
 
-                <!-- Menu -->
-                <HeaderedContentControl Classes="Text H2" Header="Menu">
-                    <Menu Name="Menu" />
-                </HeaderedContentControl>
+            <!-- Menu Section -->
+            <HeaderedContentControl Classes="Text H2" Header="Menu">
+                <Border Theme="{StaticResource MyNet.Theme.Border.Card}" Classes="Outlined Solid">
+                    <Menu Name="Menu" ItemsSource="{m:MainMenuItems}" />
+                </Border>
+            </HeaderedContentControl>
 
-                <!-- ContextMenu -->
-                <HeaderedContentControl Classes="Text H2" Header="ContextMenu">
-                    <Border Name="Border"
-                            Width="100"
-                            Height="100"
+            <!-- ContextMenu Section -->
+            <HeaderedContentControl Classes="Text H2" Header="ContextMenu">
+                <Border Name="ContextMenuBorder"
+                        Width="200"
+                        Height="150"
+                        Theme="{StaticResource MyNet.Theme.Border.Card}"
+                        Classes="Outlined Solid"
+                        Background="{my:Theme Control.Background}"
+                        my:ThemeAssist.Role="Primary"
+                        BorderThickness="2">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="{StaticResource MyNet.Spacing.Medium}">
+                        <PathIcon Data="{StaticResource MyNet.Geometry.MouseRightClick}" Classes="ExtraLarge" Foreground="{my:Theme Primary}" />
+                        <TextBlock HorizontalAlignment="Center" Text="{my:Loc RightClickHere}" TextWrapping="Wrap" TextAlignment="Center" />
+                    </StackPanel>
+                    <Border.ContextMenu>
+                        <ContextMenu ItemsSource="{m:RandomMenuItems}" />
+                    </Border.ContextMenu>
+                </Border>
+            </HeaderedContentControl>
+
+            <!-- MenuFlyout Section -->
+            <HeaderedContentControl Classes="Text H2" Header="MenuFlyout">
+                <UniformGrid Columns="2" Rows="1">
+                    <Border Name="MenuFlyoutBorder"
+                            Width="200"
+                            Height="150"
+                            Theme="{StaticResource MyNet.Theme.Border.Card}"
                             Background="{my:Theme Control.Background}"
-                            BorderBrush="{my:Theme Control.Border}"
-                            BorderThickness="1">
-                        <TextBlock HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="Right click to show Context Menu"
-                                   TextWrapping="Wrap" />
+                            Classes="Outlined Solid"
+                            my:ThemeAssist.Role="Accent"
+                            BorderThickness="2">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="{StaticResource MyNet.Spacing.Medium}">
+                            <PathIcon Data="{StaticResource MyNet.Geometry.MouseRightClick}" Classes="ExtraLarge" Foreground="{my:Theme Accent}" />
+                            <TextBlock HorizontalAlignment="Center" Text="{my:Loc RightClickHere}" TextWrapping="Wrap" TextAlignment="Center" />
+                        </StackPanel>
+                        <Border.ContextFlyout>
+                            <MenuFlyout ItemsSource="{m:RandomMenuItems}" />
+                        </Border.ContextFlyout>
                     </Border>
-                </HeaderedContentControl>
 
-                <!-- MenuFlyout -->
-                <HeaderedContentControl Classes="Text H2" Header="MenuFlyout">
-                    <StackPanel Classes="Large" Orientation="Horizontal">
-                        <Border Name="Border2"
-                                Width="100"
-                                Height="100"
-                                Background="{my:Theme Control.Background}"
-                                BorderBrush="{my:Theme Control.Border}"
-                                BorderThickness="1">
-                            <TextBlock HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="Right click to show Menu Flyout"
-                                       TextWrapping="Wrap" />
-                        </Border>
-                        <DropDownButton Name="DropDownButton" Content="Menu Flyout" />
-                    </StackPanel>
-                </HeaderedContentControl>
+                    <DropDownButton Name="MenuFlyoutDropDown"
+                                    Content="{my:LocTextBlock OpenMenu}"
+                                    my:IconAssist.Icon="{my:Icon Menu}"
+                                    HorizontalAlignment="Center">
+                        <DropDownButton.Flyout>
+                            <MenuFlyout ItemsSource="{m:RandomMenuItems}" />
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                </UniformGrid>
+            </HeaderedContentControl>
 
-                <!-- Flyout -->
-                <HeaderedContentControl Classes="Text H2" Header="Flyout">
-                    <StackPanel Classes="Large" Orientation="Horizontal">
-                        <Border Name="Border3"
-                                Width="100"
-                                Height="100"
-                                Background="{my:Theme Control.Background}"
-                                BorderBrush="{my:Theme Control.Border}"
-                                BorderThickness="1">
-                            <TextBlock HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="Right click to show Flyout"
-                                       TextWrapping="Wrap" />
-                        </Border>
-                        <DropDownButton Name="DropDownButton2" Content="Flyout" />
-                    </StackPanel>
-                </HeaderedContentControl>
-            </StackPanel>
-        </Grid>
+            <!-- Flyout Section -->
+            <HeaderedContentControl Classes="Text H2" Header="Flyout">
+                <UniformGrid Columns="2" Rows="1">
+                    <Border Name="FlyoutBorder"
+                            Width="200"
+                            Height="150"
+                            Theme="{StaticResource MyNet.Theme.Border.Card}"
+                            Background="{my:Theme Control.Background}"
+                            Classes="Outlined Solid"
+                            my:ThemeAssist.Role="Success"
+                            BorderThickness="2">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="{StaticResource MyNet.Spacing.Medium}">
+                            <PathIcon Data="{StaticResource MyNet.Geometry.MouseRightClick}" Classes="ExtraLarge" Foreground="{my:Theme Success}" />
+                            <TextBlock HorizontalAlignment="Center" Text="{my:Loc RightClickHere}" TextWrapping="Wrap" TextAlignment="Center" />
+                        </StackPanel>
+                        <Border.ContextFlyout>
+                            <Flyout>
+                                <samples:LargeContent1 />
+                            </Flyout>
+                        </Border.ContextFlyout>
+                    </Border>
+
+                    <DropDownButton Name="FlyoutDropDown"
+                                    Content="{my:LocTextBlock ShowFlyout}"
+                                    my:IconAssist.Icon="{my:Icon InformationOutline}"
+                                    HorizontalAlignment="Center">
+                        <DropDownButton.Flyout>
+                            <Flyout>
+                                <samples:LargeContent1 />
+                            </Flyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                </UniformGrid>
+            </HeaderedContentControl>
+        </StackPanel>
     </ScrollViewer>
 </pages:Page>

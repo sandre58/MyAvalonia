@@ -111,6 +111,7 @@
                                         IsDefault="True"
                                         Focusable="False"
                                         Classes="Text Small"
+                                        my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
                                         my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                         ToolTip.Tip="{my:LocTextBlock Validate}"
                                         Content="{my:Icon Check}" />
@@ -184,7 +185,7 @@
         <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="{my:Theme Control.Background}" />
         <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Foreground, Opacity=High}" />
         <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Foreground, Opacity=High}" />
@@ -360,8 +361,10 @@
                                WindowManagerAddShadowHint="False">
                             <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                 <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                    <DatePickerPresenter Name="PART_PickerPresenter" Foreground="{TemplateBinding (my:PopupAssist.Foreground)}"
-                                                         my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}" />
+                                    <DatePickerPresenter Name="PART_PickerPresenter"
+                                                         Foreground="{TemplateBinding (my:PopupAssist.Foreground)}"
+                                                         my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}"
+                                                         my:PaletteAssist.Primary="{TemplateBinding my:PaletteAssist.Primary}" />
                                 </Border>
                             </Border>
                         </Popup>
@@ -452,6 +455,9 @@
         </Style>
 
         <!-- Colors -->
+        <Style Selector="^[(my|ThemeAssist.Role)=Default]">
+            <Setter Property="my:PopupAssist.Role" Value="Primary" />
+        </Style>
         <Style Selector="^[(my|ThemeAssist.Role)=Inverse]">
             <Setter Property="Background" Value="{my:Foreground, Opacity=Overlay}" />
             <Setter Property="BorderBrush" Value="{my:Foreground, Opacity=Focus}" />
@@ -462,9 +468,6 @@
         <!-- Styles -->
         <Style Selector="^.Outlined">
             <Setter Property="BorderThickness" Value="1" />
-        </Style>
-
-        <Style Selector="^.Transparent">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="my:ThemeAssist.HoverBackground" Value="Transparent" />
             <Setter Property="my:ThemeAssist.ActiveBackground" Value="Transparent" />
@@ -658,7 +661,8 @@
                             <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding (my:PopupAssist.Background)}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                 <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                     <DatePickerPresenter Name="PART_PickerPresenter" Foreground="{TemplateBinding (my:PopupAssist.Foreground)}"
-                                                         my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}" />
+                                                         my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}"
+                                                         my:PaletteAssist.Primary="{TemplateBinding my:PaletteAssist.Primary}" />
                                 </Border>
                             </Border>
                         </Popup>

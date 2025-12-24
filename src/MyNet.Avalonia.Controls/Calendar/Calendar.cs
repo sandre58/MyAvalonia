@@ -1016,7 +1016,12 @@ public class Calendar : TemplatedControl
             _hoverStart = date;
     }
 
-    private void OnDayPointerReleased(object? sender, PointerReleasedEventArgs e) => OnDayButtonClick(sender, e);
+    private void OnDayPointerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        if (sender is not CalendarDayButton cell || AllowTapRangeSelection) return;
+
+        OnDayButtonClick(sender, e);
+    }
 
     private void OnDayButtonClick(object? sender, RoutedEventArgs e)
     {

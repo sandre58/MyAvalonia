@@ -76,7 +76,7 @@ public class CalendarDateButton : Button
     {
         DateContext = context;
         DataContext = context.ToDate();
-        Content = context.ToString();
+        SetCurrentValue(ContentProperty, context.ToString());
         IsToday = context.IsSimilar(DateTime.Today);
     }
 

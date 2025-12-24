@@ -137,7 +137,6 @@
                                         <Setter Property="Width" Value="90" />
                                         <Setter Property="Margin" Value="{my:Thickness Medium, Left}" />
                                         <Setter Property="AllowSpin" Value="True" />
-                                        <Setter Property="my:ClassesAssist.Classes" Value="Outlined" />
                                     </Style>
 
                                     <Style Selector="ColorSlider">
@@ -169,7 +168,7 @@
                                              HorizontalAlignment="Stretch"
                                              my:TextFieldAssist.ShowClipboardButton="True"
                                              AutomationProperties.Name="Hexadecimal Color"
-                                             Classes="no-disablable Outlined"
+                                             Classes="no-disablable"
                                              InnerLeftContent="#"
                                              IsVisible="{TemplateBinding IsHexInputVisible}"
                                              MaxLength="8"
@@ -425,7 +424,7 @@
                             <Setter Property="Width" Value="90" />
                             <Setter Property="Margin" Value="{my:Thickness Medium, Left}" />
                             <Setter Property="AllowSpin" Value="True" />
-                            <Setter Property="my:ClassesAssist.Classes" Value="Outlined no-disablable" />
+                            <Setter Property="my:ClassesAssist.Classes" Value="no-disablable" />
                         </Style>
 
                         <Style Selector="ColorSlider">
@@ -454,7 +453,7 @@
                                  HorizontalAlignment="Stretch"
                                  my:TextFieldAssist.ShowClipboardButton="True"
                                  AutomationProperties.Name="Hexadecimal Color"
-                                 Classes="no-disablable Outlined"
+                                 Classes="no-disablable"
                                  InnerLeftContent="#"
                                  IsVisible="{TemplateBinding IsHexInputVisible}"
                                  MaxLength="8"

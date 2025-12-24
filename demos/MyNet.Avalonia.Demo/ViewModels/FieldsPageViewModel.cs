@@ -13,7 +13,7 @@ internal sealed class FieldsPageViewModel : AutoBuildPageViewModel
     public FieldsPageViewModel()
     : base("Fields", [
         new ControlThemeBuilder()
-            .AddStyles("Outlined", "Outlined Transparent", "Circle", "Circle Outlined", "Circle Outlined Transparent", "Underline")
+            .AddStyles("Outlined", "Circle", "Circle Outlined", "Underline")
     ])
     { }
 }

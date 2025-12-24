@@ -4,10 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using MyNet.UI.ViewModels.Workspace;
-
 namespace MyNet.Avalonia.Demo.ViewModels;
 
 internal sealed class TimePickerPageViewModel : PageViewModel
 {
+    protected override string CreateTitle() => "TimePicker";
 }

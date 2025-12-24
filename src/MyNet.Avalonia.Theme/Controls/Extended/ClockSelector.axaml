@@ -161,10 +161,12 @@
         <Setter Property="Template">
             <ControlTemplate TargetType="my:ClockSelector">
                 <Grid>
-                    <Ellipse my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                             Fill="{TemplateBinding Background}"
-                             Stroke="{TemplateBinding BorderBrush}"
-                             StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
+                    <Border IsHitTestVisible="False"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="999"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}" />
                     <Grid Margin="{TemplateBinding Padding}">
                         <Carousel x:Name="PART_Carousel" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Carousel.PageTransition>
