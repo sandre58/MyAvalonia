@@ -1,0 +1,30 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <ControlTheme x:Key="{x:Type ContentControl}" TargetType="ContentControl">
+            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+            <Setter Property="HorizontalContentAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+            <Setter Property="VerticalContentAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+            <Setter Property="Focusable" Value="false" />
+
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <ContentPresenter Name="PART_ContentPresenter"
+                                      Padding="{TemplateBinding Padding}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+    </Styles.Resources>
+</Styles>

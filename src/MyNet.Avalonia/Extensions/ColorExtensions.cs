@@ -21,10 +21,16 @@ public static class ColorExtensions
     public static Color Apply(this Color color, ColorInterpolation colorInterpolation)
     {
         if (colorInterpolation.Darken.HasValue)
-            color = color.Darken();
+        {
+            var amount = Math.Max(1, (int)(colorInterpolation.Darken.Value * 5));
+            color = color.Darken(amount);
+        }
 
         if (colorInterpolation.Lighten.HasValue)
-            color = color.Lighten();
+        {
+            var amount = Math.Max(1, (int)(colorInterpolation.Lighten.Value * 5));
+            color = color.Lighten(amount);
+        }
 
         if (colorInterpolation.Contrast)
             color = color.ContrastingForegroundColor();

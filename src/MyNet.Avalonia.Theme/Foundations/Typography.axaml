@@ -1,0 +1,103 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <Style Selector=":is(Control):not(HeaderedContentControl):not(TabControl):not(my|PlaceholderContentControl)">
+
+        <Style Selector="^.h1">
+            <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size.H1}" />
+            <Setter Property="TextElement.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+        </Style>
+
+        <Style Selector="^.h2">
+            <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size.H2}" />
+            <Setter Property="TextElement.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+        </Style>
+
+        <Style Selector="^.h3">
+            <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size.H3}" />
+            <Setter Property="TextElement.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+        </Style>
+
+        <Style Selector="^.h4">
+            <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
+            <Setter Property="TextElement.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+        </Style>
+
+        <Style Selector="^.h5">
+            <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size.H5}" />
+            <Setter Property="TextElement.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+        </Style>
+
+        <Style Selector="^.h6">
+            <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size.H6}" />
+            <Setter Property="TextElement.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+        </Style>
+
+        <Style Selector="^.font-caption">
+            <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
+        </Style>
+
+        <Style Selector="^.font-sub-caption">
+            <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+        </Style>
+
+        <Style Selector="^.text-regular">
+            <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size}" />
+            <Setter Property="TextElement.FontWeight" Value="{StaticResource MyNet.Font.Weight}" />
+        </Style>
+
+        <Style Selector="^.text-helper">
+            <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+        </Style>
+
+        <Style Selector="^.text-watermark">
+            <Setter Property="TextElement.FontSize" Value="{Binding $parent[Control].(TextElement.FontSize), Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+        </Style>
+
+    </Style>
+
+    <Style Selector=":is(HeaderedContentControl), :is(TabControl)">
+        <Style Selector="^.header-h1">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H1}" />
+        </Style>
+        <Style Selector="^.header-h2">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H2}" />
+        </Style>
+        <Style Selector="^.header-h3">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H3}" />
+        </Style>
+        <Style Selector="^.header-h4">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
+        </Style>
+        <Style Selector="^.header-h5">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H5}" />
+        </Style>
+        <Style Selector="^.header-h6">
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H6}" />
+        </Style>
+        <Style Selector="^.header-caption">
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
+        </Style>
+        <Style Selector="^.header-sub-caption">
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+        </Style>
+        <Style Selector="^.header-watermark">
+            <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $parent[Control].(TextElement.FontSize), Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
+            <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+        </Style>
+    </Style>
+
+
+    <Style Selector=".text-wrapping TextBlock">
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+</Styles>

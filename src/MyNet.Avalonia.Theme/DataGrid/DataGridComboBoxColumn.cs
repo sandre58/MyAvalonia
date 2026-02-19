@@ -15,12 +15,12 @@ namespace MyNet.Avalonia.Theme.DataGrid;
 
 public class DataGridComboBoxColumn : DataGridBoundColumn<ComboBox, ContentControl>
 {
-    private IBinding? _selectedValueBinding;
+    private BindingBase? _selectedValueBinding;
 
     public DataGridComboBoxColumn()
         : base(global::Avalonia.Controls.Primitives.SelectingItemsControl.SelectedItemProperty, ContentControl.ContentProperty) { }
 
-    public virtual IBinding? SelectedValueBinding
+    public virtual BindingBase? SelectedValueBinding
     {
         get => _selectedValueBinding;
         set
@@ -55,14 +55,14 @@ public class DataGridComboBoxColumn : DataGridBoundColumn<ComboBox, ContentContr
     /// <summary>
     /// Provides DisplayMemberBinding Property.
     /// </summary>
-    public static readonly StyledProperty<IBinding?> DisplayMemberBindingProperty = ItemsControl.DisplayMemberBindingProperty.AddOwner<DataGridComboBoxColumn>();
+    public static readonly StyledProperty<BindingBase?> DisplayMemberBindingProperty = ItemsControl.DisplayMemberBindingProperty.AddOwner<DataGridComboBoxColumn>();
 
     /// <summary>
     /// Gets or sets the DisplayMemberBinding property.
     /// </summary>
     [AssignBinding]
     [InheritDataTypeFromItems(nameof(ItemsSource))]
-    public IBinding? DisplayMemberBinding
+    public BindingBase? DisplayMemberBinding
     {
         get => GetValue(DisplayMemberBindingProperty);
         set => SetValue(DisplayMemberBindingProperty, value);
@@ -81,7 +81,7 @@ public class DataGridComboBoxColumn : DataGridBoundColumn<ComboBox, ContentContr
     {
         base.SynchronizeEditingControlProperties(control);
 
-        DataGridHelper.SynchronizeColumnProperty(this, control, ComboBox.PlaceholderTextProperty, WatermarkProperty);
+        DataGridHelper.SynchronizeColumnProperty(this, control, ComboBox.PlaceholderTextProperty, PlaceholderTextProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, ItemsControl.ItemTemplateProperty, ContentTemplateProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, ComboBox.SelectionBoxItemTemplateProperty, ContentTemplateProperty);
 

@@ -1,0 +1,74 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT OUTLINEDICON THEME                                -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type my:OutlinedIcon}" TargetType="my:OutlinedIcon">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            
+            <Setter Property="my:PaletteAssist.Background" Value="{my:Foreground AncestorType=Control, Opacity=Medium}" />
+            <Setter Property="my:PaletteAssist.Border" Value="{my:Foreground AncestorType=Control, Opacity=High}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=Control}" />
+            <Setter Property="Background" Value="{my:ThemeRole Background}" />
+            <Setter Property="ActiveBackground" Value="Transparent" />
+            <Setter Property="ActiveBorderBrush" Value="Transparent" />
+            <Setter Property="Focusable" Value="False" />
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="my:OutlinedIcon">
+                    <Border Background="Transparent">
+                        <Viewbox Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                            <Path Name="PART_Fill"
+                                  Data="{TemplateBinding Data}"
+                                  Fill="{TemplateBinding Background}"
+                                  Stretch="Uniform"
+                                  Stroke="{TemplateBinding BorderBrush}"
+                                  StrokeJoin="Round"
+                                  StrokeThickness="{TemplateBinding StrokeThickness}" />
+                        </Viewbox>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+            <Style Selector="^:active /template/ Path#PART_Fill">
+                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActiveBackground}" />
+                <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActiveBorderBrush}" />
+            </Style>
+        </ControlTheme>
+
+    </Styles.Resources>
+
+    <Style Selector="my|OutlinedIcon">
+
+        <Style Selector="^.is-activable">
+            <Setter Property="Background" Value="{my:Foreground, Opacity=Medium}" />
+            <Setter Property="BorderBrush" Value="{my:Foreground, Opacity=Medium}" />
+            <Setter Property="ActiveBackground" Value="{my:ThemeRole Primary}" />
+            <Setter Property="ActiveBorderBrush" Value="{my:ThemeRole Primary}" />
+        </Style>
+
+        <Style Selector="^.size-xs">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+        </Style>
+        <Style Selector="^.size-sm">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+        </Style>
+        <Style Selector="^.size-xl">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Xl}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Xl}" />
+        </Style>
+    </Style>
+</Styles>

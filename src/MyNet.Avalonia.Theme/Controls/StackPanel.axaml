@@ -1,0 +1,46 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Styles.Resources>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT STACKPANEL THEME                                  -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type StackPanel}" TargetType="{x:Type StackPanel}">
+            <Setter Property="Focusable" Value="False" />
+        </ControlTheme>
+
+    </Styles.Resources>
+
+    <Style Selector=":is(StackPanel)">
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        
+        <Style Selector="^.size-xxs">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xxs}" />
+        </Style>
+        <Style Selector="^.size-xs">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
+        </Style>
+        <Style Selector="^.size-sm">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Md}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Lg}" />
+        </Style>
+        <Style Selector="^.size-xl">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xl}" />
+        </Style>
+        <Style Selector="^.size-xxl">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xxl}" />
+        </Style>
+        <Style Selector="^.size-xxxl">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xxxl}" />
+        </Style>
+
+    </Style>
+</Styles>

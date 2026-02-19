@@ -11,21 +11,19 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Interactivity;
-using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Converters;
 using MyNet.Humanizer;
 using MyNet.Utilities;
 using MyNet.Utilities.Helpers;
-using MyNet.Utilities.Localization;
-using CalendarDatePicker = MyNet.Avalonia.Controls.CalendarDatePicker;
+using CalendarDatePickerEx = MyNet.Avalonia.Controls.CalendarDatePickerEx;
 
 namespace MyNet.Avalonia.Theme.DataGrid;
 
-public class DataGridDateColumn : DataGridBoundColumn<CalendarDatePicker, ContentControl>
+public class DataGridDateColumn : DataGridBoundColumn<CalendarDatePickerEx, ContentControl>
 {
     public DataGridDateColumn()
-        : base(CalendarDatePicker.SelectedValueProperty, ContentControl.ContentProperty) => Format = nameof(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
+        : base(CalendarDatePickerEx.SelectedValueProperty, ContentControl.ContentProperty) => Format = nameof(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 
     #region FirstDayOfWeek
 
@@ -63,7 +61,7 @@ public class DataGridDateColumn : DataGridBoundColumn<CalendarDatePicker, Conten
 
     #endregion
 
-    protected override void PrepareEditingControl(CalendarDatePicker editingElement, RoutedEventArgs editingEventArgs)
+    protected override void PrepareEditingControl(CalendarDatePickerEx editingElement, RoutedEventArgs editingEventArgs)
     {
         base.PrepareEditingControl(editingElement, editingEventArgs);
 
@@ -90,15 +88,15 @@ public class DataGridDateColumn : DataGridBoundColumn<CalendarDatePicker, Conten
     {
         base.SynchronizeEditingControlProperties(control);
 
-        DataGridHelper.SynchronizeColumnProperty(this, control, DatePickerBase.WatermarkProperty, WatermarkProperty);
+        DataGridHelper.SynchronizeColumnProperty(this, control, DatePickerBase.PlaceholderTextProperty, PlaceholderTextProperty);
 
         DataGridHelper.SynchronizeColumnProperty(this, control, FirstDayOfWeekProperty);
-        ((CalendarDatePicker)control).DisplayFormat = DateTimeHelper.TranslateDatePattern(Format.OrEmpty(), CultureInfo.CurrentCulture);
+        ((CalendarDatePickerEx)control).DisplayFormat = DateTimeHelper.TranslateDatePattern(Format.OrEmpty(), CultureInfo.CurrentCulture);
     }
 
-    protected override void ResetValue(CalendarDatePicker control, object uneditedValue) => control.SelectedValue = (DateTime?)uneditedValue;
+    protected override void ResetValue(CalendarDatePickerEx control, object uneditedValue) => control.SelectedValue = (DateTime?)uneditedValue;
 
-    protected override object? GetValue(CalendarDatePicker control) => control.SelectedValue;
+    protected override object? GetValue(CalendarDatePickerEx control) => control.SelectedValue;
 
     private void SynchronizeDataTemplate(Control element)
     {

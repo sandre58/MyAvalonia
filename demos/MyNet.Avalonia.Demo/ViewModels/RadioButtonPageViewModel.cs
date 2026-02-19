@@ -5,18 +5,20 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class RadioButtonPageViewModel : AutoBuildPageViewModel
+internal sealed class RadioButtonPageViewModel : ControlCatalogViewModel
 {
     public RadioButtonPageViewModel()
-        : base(nameof(RadioButton), [
-            new ControlThemeBuilder()
-            .AddLayouts("Circle", "Alternate")
-            .AddDefaultRoles()
-            .AddSizes("Small", "Medium", "Large")
-        ])
-    { }
+        : base(nameof(RadioButton),
+            [
+                new ControlThemeBuilder()
+                    .AddShapes("shape-circle", "shape-alternate")
+                    .AddDefaultSizes()
+                    .AddDefaultRoles()
+            ])
+    {
+    }
 }

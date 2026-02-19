@@ -9,7 +9,6 @@ using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Threading;
 using Avalonia.Threading;
-using MyNet.Utilities.Localization;
 
 namespace MyNet.Avalonia.Extended.Schedulers;
 

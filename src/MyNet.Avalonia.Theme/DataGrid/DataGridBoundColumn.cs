@@ -100,22 +100,22 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
 
     #endregion
 
-    #region Watermark
+    #region PlaceholderText
 
     /// <summary>
-    /// Provides Watermark Property.
+    /// Provides PlaceholderText Property.
     /// </summary>
     [SuppressMessage("AvaloniaProperty", "AVP1002", Justification = "Generic avalonia property is expected here.")]
     [SuppressMessage("Roslynator", "RCS1158:Static member in generic type should use a type parameter", Justification = "Generic avalonia property is expected here.")]
-    public static readonly AttachedProperty<string?> WatermarkProperty = TextFieldAssist.WatermarkProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
+    public static readonly AttachedProperty<string?> PlaceholderTextProperty = TextFieldAssist.PlaceholderTextProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
 
     /// <summary>
-    /// Gets or sets the Watermark property.
+    /// Gets or sets the PlaceholderText property.
     /// </summary>
-    public string? Watermark
+    public string? PlaceholderText
     {
-        get => GetValue(WatermarkProperty);
-        set => SetValue(WatermarkProperty, value);
+        get => GetValue(PlaceholderTextProperty);
+        set => SetValue(PlaceholderTextProperty, value);
     }
 
     #endregion
@@ -379,7 +379,7 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
     protected virtual void SynchronizeEditingControlProperties(Control control)
     {
         SynchronizeFontProperties(control);
-        DataGridHelper.SynchronizeColumnProperty(this, control, WatermarkProperty);
+        DataGridHelper.SynchronizeColumnProperty(this, control, PlaceholderTextProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, InnerLeftContentProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, InnerRightContentProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, IconProperty);

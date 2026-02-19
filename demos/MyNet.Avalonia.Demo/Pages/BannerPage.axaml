@@ -5,65 +5,95 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
-            ClipToBounds="False"
-            mc:Ignorable="d"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
-            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
-            x:DataType="vm:BannerPageViewModel">
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            x:DataType="vm:BannerPageViewModel"
+            x:Name="Root"
+            ClipToBounds="False"
+            mc:Ignorable="d">
 
-    <DockPanel>
+    <v:ControlCatalogView ShowContent="False">
 
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowClearButton}">
-                        <ToggleSwitch Name="ShowClearButton" IsChecked="True" />
-                    </HeaderedContentControl>
-                    <Button Content="{my:LocTextBlock Restore}" my:IconAssist.Icon="{my:Icon Refresh}" Click="Restore_Click" />
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock IconLayout}">
-                        <ListBox Name="IconLayout" SelectedIndex="0">
-                            <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:LocTextBlock None}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:LocTextBlock Top}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <my:Banner Theme="{Binding Appearance.ActiveTheme}"
+                           my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                           my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                           my:IconAssist.Icon="{Binding IconProvider.Icon}"
+                           CanClose="{Binding #CanClose.IsChecked}"
+                           MaxWidth="500"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                    <my:Banner.Header>
+                        <TextBlock Text="{Binding ContentProvider.Content}" />
+                    </my:Banner.Header>
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="300"
-                                 MinItemHeight="100"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <my:Banner Theme="{Binding Theme}"
+                           my:ThemeAssist.Role="{Binding Role}"
+                           my:ClassesAssist.Classes="{Binding Classes}"
+                           MaxWidth="500">
+                    <my:Banner.Header>
+                        <TextBlock Text="{Binding Converter={x:Static c:ContentConverter.Default}}" />
+                    </my:Banner.Header>
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-            <!-- Template for standard controls -->
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <my:Banner Theme="{Binding Theme}"
-                               my:ThemeAssist.Role="{Binding Role}"
-                               my:ClassesAssist.Classes="{Binding Classes}"
-                               b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}"
-                               CanClose="{Binding #ShowClearButton.IsChecked}"
-                               MaxWidth="500"
-                               ToolTip.Tip="{Binding Content}">
-                        <my:Banner.Header>
-                            <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
-                                <Binding Path="ContentType" />
-                                <Binding Path="Content" />
-                            </MultiBinding>
-                        </my:Banner.Header>
-                        <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
-                    </my:Banner>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <ListBox my:FormItem.Label="{my:LocObject Layout}" SelectedValue="{Binding #Root.DataContext.PositionClassProvider.SelectedClass, Mode=TwoWay}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem Content="{my:Icon DockLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="position-left" />
+                    <ListBoxItem Content="{my:Icon DockRight}" ToolTip.Tip="{my:Loc Right}" DataContext="position-right" />
+                    <ListBoxItem Content="{my:Icon DockTop}" ToolTip.Tip="{my:Loc Top}" DataContext="position-top" />
+                    <ListBoxItem Content="{my:Icon DockBottom}" ToolTip.Tip="{my:Loc Bottom}" DataContext="position-bottom" />
+                </ListBox>
 
-        </ctrl:ControlThemeViewer>
+                <ListBox my:FormItem.Label="{my:LocObject HeaderPosition}" SelectedValue="{Binding #Root.DataContext.HeaderAlignmentClassProvider.SelectedClass, Mode=TwoWay}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="align-header-left" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:Loc Right}" DataContext="align-header-right" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:Loc Top}" DataContext="align-header-top" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:Loc Bottom}" DataContext="align-header-bottom" />
+                    <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:Loc Center}" DataContext="align-header-middle" />
+                </ListBox>
 
-    </DockPanel>
+                <ToggleSwitch Name="CanClose" my:FormItem.Label="{my:LocObject ShowClearButton}" IsChecked="True" />
+                <Button Content="{my:Loc Restore}"
+                        my:IconAssist.Icon="{my:Icon Refresh}"
+                        Click="Restore_Click"
+                        my:FormItem.NoLabel="True" />
+            </my:Form>
+        </v:ControlCatalogView.Settings>
+
+        <v:ControlCatalogView.CustomContent>
+            <StackPanel>
+                <my:Banner MaxWidth="500" Severity="Custom">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+                <my:Banner MaxWidth="500" Severity="Success">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+                <my:Banner MaxWidth="500" Severity="Error">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+                <my:Banner MaxWidth="500" Severity="Warning">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+                <my:Banner MaxWidth="500" Severity="Information">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+            </StackPanel>
+        </v:ControlCatalogView.CustomContent>
+
+    </v:ControlCatalogView>
 </pages:Page>

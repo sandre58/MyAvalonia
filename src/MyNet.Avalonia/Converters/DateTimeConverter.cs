@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using Avalonia;
 using MyNet.Humanizer;
 using MyNet.Utilities;
 using MyNet.Utilities.Helpers;

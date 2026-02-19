@@ -1,0 +1,40 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <ControlTheme x:Key="{x:Type TextBlock}" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+            <Setter Property="TextWrapping" Value="NoWrap" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="my:PaletteAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
+        </ControlTheme>
+
+    </Styles.Resources>
+
+    <Style Selector=":is(TextBlock)">
+        <Style Selector="^[(my|ThemeAssist.HasRole)=True]">
+            <Setter Property="Foreground" Value="{my:ThemeRole Foreground}" />
+        </Style>
+
+        <Style Selector="^.variant-underline">
+            <Setter Property="TextDecorations" Value="Underline" />
+        </Style>
+
+        <Style Selector="^.variant-delete">
+            <Setter Property="TextDecorations" Value="StrikeThrough" />
+        </Style>
+
+        <Style Selector="^.variant-underline.variant-delete">
+            <Setter Property="TextDecorations">
+                <TextDecorationCollection>
+                    <TextDecoration Location="Underline" />
+                    <TextDecoration Location="Strikethrough" />
+                </TextDecorationCollection>
+            </Setter>
+        </Style>
+
+    </Style>
+</Styles>

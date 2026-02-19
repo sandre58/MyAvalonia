@@ -5,9 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Avalonia.Input;
-using MyNet.Avalonia.Commands;
 
 namespace MyNet.Avalonia.Clipboard;
 
@@ -15,16 +13,7 @@ public static class ClipboardManager
 {
     private static IClipboardService? _clipboardService;
 
-    public static ICommand? CopyTextCommand { get; set; }
-
-    public static ICommand? CopyCommand { get; set; }
-
-    public static void Initialize(IClipboardService clipboardService)
-    {
-        _clipboardService = clipboardService;
-        CopyTextCommand = ActionCommand.Create<string>(async x => await CopyTextAsync(x).ConfigureAwait(false));
-        CopyCommand = ActionCommand.Create<IAsyncDataTransfer>(async x => await CopyAsync(x).ConfigureAwait(false));
-    }
+    public static void Initialize(IClipboardService clipboardService) => _clipboardService = clipboardService;
 
     public static async Task CopyAsync(IAsyncDataTransfer content)
     {

@@ -6,11 +6,10 @@
 
 using Avalonia.Data;
 using Avalonia.Data.Converters;
-using Avalonia.Markup.Xaml;
+using Avalonia.Metadata;
 using MyNet.Avalonia.Converters;
 using MyNet.Humanizer;
 using MyNet.Observable.Translatables;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.MarkupExtensions;
 
@@ -75,7 +74,7 @@ public class LocExtension : GlobalizationExtensionBase
     /// Creates the main binding for the translation.
     /// </summary>
     /// <returns>A binding to a <see cref="Localizable"/> instance.</returns>
-    protected override IBinding? CreateBinding() => new Binding
+    protected override BindingBase? CreateBinding() => new Binding
     {
         Source = new Localizable(Key, Filename),
         Mode = BindingMode.OneTime

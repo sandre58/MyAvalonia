@@ -1,7 +1,11 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:my="http://mynet.com/avalonia">
-    <ControlTheme x:Key="{x:Type my:OverlayDialogHost}" TargetType="my:OverlayDialogHost">
-        <Setter Property="OverlayMaskBrush" Value="{my:Theme Overlay.Background}" />
-    </ControlTheme>
-</ResourceDictionary>
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <ControlTheme x:Key="{x:Type my:OverlayDialogHost}" TargetType="my:OverlayDialogHost">
+            <Setter Property="OverlayMaskBrush" Value="{my:Theme Overlay.Background, Opacity=Scrim}" />
+        </ControlTheme>
+
+    </Styles.Resources>
+</Styles>

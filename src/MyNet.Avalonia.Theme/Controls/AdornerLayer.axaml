@@ -1,0 +1,15 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <ControlTheme x:Key="{x:Type AdornerLayer}" TargetType="AdornerLayer">
+            <Setter Property="DefaultFocusAdorner">
+                <FocusAdornerTemplate>
+                    <Rectangle Classes="kind-focus" />
+                </FocusAdornerTemplate>
+            </Setter>
+        </ControlTheme>
+
+    </Styles.Resources>
+</Styles>

@@ -5,10 +5,12 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Metadata;
 using MyNet.Avalonia.Theme.Enums;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
@@ -43,10 +45,10 @@ public class IconExtension : MarkupExtension
     public string Data { get; set; }
 
     /// <summary>
-    /// Gets or sets the predefined icon size category. Default is <see cref="IconSize.Default"/>.
+    /// Gets or sets the predefined icon size category.
     /// </summary>
     [ConstructorArgument("size")]
-    public IconSize DefinedSize { get; set; } = IconSize.Default;
+    public IconSize? DefinedSize { get; set; }
 
     /// <summary>
     /// Gets or sets an explicit icon size in device-independent units. If set, overrides <see cref="DefinedSize"/>.
@@ -75,9 +77,9 @@ public class IconExtension : MarkupExtension
             result.Width = Size.Value;
             result.Height = Size.Value;
         }
-        else
+        else if (DefinedSize.HasValue)
         {
-            result.Classes.Add(DefinedSize.ToString());
+            result.Classes.Add($"size-{DefinedSize.ToString()?.ToLower(CultureInfo.CurrentCulture)}");
         }
 
         return result;

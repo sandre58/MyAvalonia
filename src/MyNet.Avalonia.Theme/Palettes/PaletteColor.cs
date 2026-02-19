@@ -12,6 +12,21 @@ namespace MyNet.Avalonia.Theme.Palettes;
 public enum PaletteColor
 {
     /// <summary>
+    /// Background palette color.
+    /// </summary>
+    Background,
+
+    /// <summary>
+    /// Border palette color.
+    /// </summary>
+    Border,
+
+    /// <summary>
+    /// Foreground palette color.
+    /// </summary>
+    Foreground,
+
+    /// <summary>
     /// Primary palette color.
     /// </summary>
     Primary,

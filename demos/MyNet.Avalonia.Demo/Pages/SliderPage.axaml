@@ -6,138 +6,144 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:SliderPageViewModel"
+            Name="Root"
             ClipToBounds="False">
 
-    <DockPanel>
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer>
-                <StackPanel>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Orientation}">
-                        <ListBox Name="Orientation"
-                                 DisplayMemberBinding="{ReflectionBinding Display}"
-                                 ItemTemplate="{x:Null}"
-                                 ItemsSource="{my:EnumSource {x:Type Orientation}}"
-                                 SelectedIndex="0"
-                                 SelectedValueBinding="{ReflectionBinding Value}"
-                                 SelectionChanged="Orientation_SelectionChanged" />
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsDirectionReversed}">
-                        <ToggleSwitch Name="IsDirectionReversed" />
-                    </HeaderedContentControl>
-                    <ComboBox Name="TickPlacement"
-                              DisplayMemberBinding="{ReflectionBinding Display}"
-                              ItemsSource="{my:EnumSource {x:Type TickPlacement}}"
-                              PlaceholderText="{my:Loc TickPlacement}"
-                              SelectedIndex="0"
-                              SelectedValueBinding="{ReflectionBinding Value}" />
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock TickMode}">
-                        <ListBox Name="TickMode"
-                                 DisplayMemberBinding="{ReflectionBinding Display}"
-                                 ItemTemplate="{x:Null}"
-                                 ItemsSource="{my:EnumSource {x:Type my:TickMode}}"
-                                 SelectedIndex="0"
-                                 SelectedValueBinding="{ReflectionBinding Value}" />
-                    </HeaderedContentControl>
-                    <NumericUpDown Name="TickFrequency"
-                                   Maximum="100"
-                                   Minimum="0"
-                                   Watermark="{my:Loc TickFrequency}"
-                                   Value="20" />
-                    <NumericUpDown Name="TickLength"
-                                   Maximum="20"
-                                   Minimum="1"
-                                   Watermark="{my:Loc TickLength}"
-                                   Value="4" />
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsSnapToTickEnabled}">
-                        <ToggleSwitch Name="IsSnapToTickEnabled" />
-                    </HeaderedContentControl>
-                    <UniformGrid Columns="2">
-                        <NumericUpDown Name="Minimum"
-                                       Margin="{my:Thickness Default, Right}"
-                                       Maximum="1000"
-                                       Minimum="-1000"
-                                       Watermark="{my:Loc Minimum}"
-                                       Value="0" />
-                        <NumericUpDown Name="Maximum"
-                                       Margin="{my:Thickness Default, Left}"
-                                       Maximum="1000"
-                                       Minimum="-1000"
-                                       Watermark="{my:Loc Maximum}"
-                                       Value="100" />
-                    </UniformGrid>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowValueOnMouseOver}">
-                        <ToggleSwitch Name="ShowValue" IsChecked="True" />
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="300"
-                                 MinItemHeight="300"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <Slider Theme="{Binding Appearance.ActiveTheme}"
+                        my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                        my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                        Orientation="{Binding #Root.DataContext.Orientation}"
+                        IsDirectionReversed="{Binding #IsDirectionReversed.IsChecked}"
+                        TickPlacement="{Binding #TickPlacement.SelectedValue}"
+                        TickFrequency="{Binding #TickFrequency.Value}"
+                        IsSnapToTickEnabled="{Binding #IsSnapToTickEnabled.IsChecked}"
+                        my:SliderAssist.TickMode="{Binding #TickMode.SelectedValue}"
+                        my:SliderAssist.ShowValueOnMouseOver="{Binding #ShowValue.IsChecked}"
+                        my:SliderAssist.TickLength="{Binding #TickLength.Value}"
+                        Minimum="{Binding #Minimum.Value}"
+                        Maximum="{Binding #Maximum.Value}"
+                        Width="{Binding #Root.DataContext.Width}"
+                        Height="{Binding #Root.DataContext.Height}"
+                        Value="30"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" />
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <Slider Theme="{Binding Theme}"
-                            my:ThemeAssist.Role="{Binding Role}"
-                            my:ClassesAssist.Classes="{Binding Classes}"
-                            Orientation="{Binding #Orientation.SelectedValue}"
-                            IsDirectionReversed="{Binding #IsDirectionReversed.IsChecked}"
-                            TickPlacement="{Binding #TickPlacement.SelectedValue}"
-                            TickFrequency="{Binding #TickFrequency.Value}"
-                            IsSnapToTickEnabled="{Binding #IsSnapToTickEnabled.IsChecked}"
-                            my:SliderAssist.TickMode="{Binding #TickMode.SelectedValue}"
-                            my:SliderAssist.ShowValueOnMouseOver="{Binding #ShowValue.IsChecked}"
-                            my:SliderAssist.TickLength="{Binding #TickLength.Value}"
-                            Minimum="{Binding #Minimum.Value}"
-                            Maximum="{Binding #Maximum.Value}"
-                            Width="250"
-                            Height="80"
-                            ToolTip.Tip="{Binding Content}" />
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <Slider Theme="{Binding Theme}"
+                        my:ThemeAssist.Role="{Binding Role}"
+                        my:ClassesAssist.Classes="{Binding Classes}"
+                        Orientation="Horizontal"
+                        Minimum="0"
+                        Maximum="100"
+                        Value="50"
+                        Width="250" />
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-            <!-- Custom content for Color Sliders -->
-            <ctrl:ControlThemeViewer.CustomContent>
-                <StackPanel Spacing="20">
-                    <ColorSlider Width="300"
-                                 Orientation="Horizontal"
-                                 ColorModel="Hsva"
-                                 ColorComponent="Component1" />
-                    <ColorSlider Width="300"
-                                 Orientation="Horizontal"
-                                 ColorModel="Hsva"
-                                 ColorComponent="Component2" />
-                    <ColorSlider Width="300"
-                                 Orientation="Horizontal"
-                                 ColorModel="Hsva"
-                                 ColorComponent="Component3" />
-                    <ColorSlider Width="300"
-                                 Orientation="Horizontal"
-                                 ColorModel="Rgba"
-                                 ColorComponent="Component1" />
-                    <ColorSlider Width="300"
-                                 Orientation="Horizontal"
-                                 ColorModel="Rgba"
-                                 ColorComponent="Component2" />
-                    <ColorSlider Width="300"
-                                 Orientation="Horizontal"
-                                 ColorModel="Rgba"
-                                 ColorComponent="Component3" />
-                    <ColorSlider Width="300"
-                                 Orientation="Horizontal"
-                                 ColorModel="Rgba"
-                                 ColorComponent="Alpha" />
-                </StackPanel>
-            </ctrl:ControlThemeViewer.CustomContent>
+        <v:ControlCatalogView.CustomContent>
+            <StackPanel>
+                <ColorSlider Width="300"
+                             Orientation="Horizontal"
+                             ColorModel="Hsva"
+                             ColorComponent="Component1" />
+                <ColorSlider Width="300"
+                             Orientation="Horizontal"
+                             ColorModel="Hsva"
+                             ColorComponent="Component2" />
+                <ColorSlider Width="300"
+                             Orientation="Horizontal"
+                             ColorModel="Hsva"
+                             ColorComponent="Component3" />
+                <ColorSlider Width="300"
+                             Orientation="Horizontal"
+                             ColorModel="Rgba"
+                             ColorComponent="Component1" />
+                <ColorSlider Width="300"
+                             Orientation="Horizontal"
+                             ColorModel="Rgba"
+                             ColorComponent="Component2" />
+                <ColorSlider Width="300"
+                             Orientation="Horizontal"
+                             ColorModel="Rgba"
+                             ColorComponent="Component3" />
+                <ColorSlider Width="300"
+                             Orientation="Horizontal"
+                             ColorModel="Rgba"
+                             ColorComponent="Alpha" />
+            </StackPanel>
+        </v:ControlCatalogView.CustomContent>
 
-        </ctrl:ControlThemeViewer>
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <ListBox my:FormItem.Label="{my:LocObject Orientation}" SelectedValue="{Binding #Root.DataContext.Orientation}" SelectedValueBinding="{ReflectionBinding DataContext}"
+                         IsVisible="{Binding #Root.DataContext.Playground.Appearance.SelectedTheme, Converter={x:Static my:NullConverter.IsNull}}">
+                    <ListBoxItem my:IconAssist.Icon="{my:Icon BorderHorizontal}" Content="{my:Loc OrientationHorizontal}" DataContext="{x:Static Orientation.Horizontal}" />
+                    <ListBoxItem my:IconAssist.Icon="{my:Icon BorderVertical}" Content="{my:Loc OrientationVertical}" DataContext="{x:Static Orientation.Vertical}" />
+                </ListBox>
+                <ToggleSwitch Name="IsDirectionReversed" my:FormItem.Label="{my:LocObject IsDirectionReversed}"
+                              OnContent=""
+                              OffContent=""
+                              IsChecked="False" />
+                <ComboBox Name="TickPlacement"
+                          my:FormItem.Label="{my:LocObject TickPlacement}"
+                          DisplayMemberBinding="{ReflectionBinding Display}"
+                          ItemsSource="{my:EnumSource {x:Type TickPlacement}}"
+                          SelectedIndex="0"
+                          SelectedValueBinding="{ReflectionBinding Value}"
+                          SelectedValue="{x:Static TickPlacement.None}" />
+                <ComboBox Name="TickMode"
+                          my:FormItem.Label="{my:LocObject TickMode}"
+                          DisplayMemberBinding="{ReflectionBinding Display}"
+                          ItemTemplate="{x:Null}"
+                          ItemsSource="{my:EnumSource {x:Type my:TickMode}}"
+                          SelectedIndex="0"
+                          SelectedValueBinding="{ReflectionBinding Value}"
+                          SelectedValue="{x:Static my:TickMode.Values}" />
+                <NumericUpDown Name="TickFrequency"
+                               my:FormItem.Label="{my:LocObject TickFrequency}"
+                               Maximum="100"
+                               Minimum="0"
+                               Value="20" />
+                <NumericUpDown Name="TickLength"
+                               my:FormItem.Label="{my:LocObject TickLength}"
+                               Maximum="20"
+                               Minimum="1"
+                               Value="5" />
+                <ToggleSwitch Name="IsSnapToTickEnabled"
+                              my:FormItem.Label="{my:LocObject IsSnapToTickEnabled}"
+                              OnContent=""
+                              OffContent=""
+                              IsChecked="False" />
+                <NumericUpDown Name="Minimum"
+                               my:FormItem.Label="{my:LocObject Minimum}"
+                               Maximum="1000"
+                               Minimum="-1000"
+                               Value="0" />
+                <NumericUpDown Name="Maximum"
+                               my:FormItem.Label="{my:LocObject Maximum}"
+                               Maximum="1000"
+                               Minimum="-1000"
+                               Value="100" />
+                <ToggleSwitch Name="ShowValue"
+                              my:FormItem.Label="{my:LocObject ShowValueOnMouseOver}"
+                              OnContent=""
+                              OffContent=""
+                              IsChecked="True" />
+            </my:Form>
+        </v:ControlCatalogView.Settings>
 
-    </DockPanel>
+    </v:ControlCatalogView>
 </pages:Page>

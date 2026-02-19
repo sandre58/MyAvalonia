@@ -9,8 +9,8 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Extended.Controls.Primitives;
+using MyNet.Avalonia.Extensions;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
 

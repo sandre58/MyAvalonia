@@ -5,20 +5,19 @@
 // -----------------------------------------------------------------------
 
 using MyNet.Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class BadgePageViewModel : AutoBuildPageViewModel
+internal sealed class BadgePageViewModel : ControlCatalogViewModel
 {
     public BadgePageViewModel()
         : base(nameof(Badge), [
             new ControlThemeBuilder()
-            .AddLayouts("Circle")
-            .AddStyles("Light", "Outlined", "Shadow")
-            .AddCartesianStyles("Light", "Outlined")
-            .AddDefaultRoles()
-            .AddSizes("Medium", "Large")
+            .AddShapes("shape-circle")
+            .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-transparent", "shadow-control")
+            .AddAllRoles()
+            .AddDefaultSizes()
         ])
     { }
 }

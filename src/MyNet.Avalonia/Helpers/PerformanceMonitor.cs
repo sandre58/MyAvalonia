@@ -18,17 +18,28 @@ namespace MyNet.Avalonia.Helpers;
 /// Provides utilities for logging and measuring performance in theme-related operations.
 /// Allows conditional logging and timing of code blocks to help diagnose performance issues in theming logic.
 /// </summary>
+[Flags]
+public enum PerformanceCategory
+{
+    None = 0,
+    Brushes = 1,
+    Pages = 2,
+    Theme = 4,
+    Controls = 8,
+    All = None | Brushes | Pages | Theme | Controls,
+}
+
 public static class PerformanceMonitor
 {
     /// <summary>
-    /// Gets or sets a value indicating whether performance logs are enabled.
-    /// When false, all logging and timing operations are disabled.
+    /// Gets or sets categories enabled for performance monitoring. Use bit flags to combine categories.
+    /// Defaults to <see cref="PerformanceCategory.All"/> in DEBUG builds, otherwise <see cref="PerformanceCategory.None"/>.
     /// </summary>
-    private const bool IsEnabled =
+    public static PerformanceCategory EnabledCategories { get; set; } =
 #if DEBUG
-        false;
+        PerformanceCategory.None;
 #else
-        false;
+        PerformanceCategory.None;
 #endif
 
     /// <summary>
@@ -38,10 +49,11 @@ public static class PerformanceMonitor
     /// <param name="title">A descriptive title for the log entry. If empty, the caller's method name is used.</param>
     /// <param name="maxBeforeWarning">Optional threshold for warning-level logs.</param>
     /// <param name="maxBeforeError">Optional threshold for error-level logs.</param>
+    /// <param name="category">The category of the performance measurement.</param>
     /// <returns>A disposable that ends the timing when disposed.</returns>
-    public static IDisposable Measure(string title = "", TimeSpan? maxBeforeWarning = null, TimeSpan? maxBeforeError = null)
+    public static IDisposable Measure(string title = "", TimeSpan? maxBeforeWarning = null, TimeSpan? maxBeforeError = null, PerformanceCategory category = PerformanceCategory.All)
     {
-        if (!IsEnabled)
+        if ((EnabledCategories & category) == 0)
         {
             return Disposable.Empty;
         }
@@ -67,12 +79,16 @@ public static class PerformanceMonitor
     /// Logs a debug message if performance logging is enabled.
     /// </summary>
     /// <param name="message">The message to log.</param>
-    public static void Debug(string message) => IsEnabled.IfTrue(() => LogManager.Debug(message));
+    /// <param name="category">The category of the performance measurement.</param>
+    public static void Debug(string message, PerformanceCategory category = PerformanceCategory.All)
+        => ((EnabledCategories & category) != 0).IfTrue(() => LogManager.Debug(message));
 
     /// <summary>
     /// Logs a warning message if performance logging is enabled.
     /// </summary>
     /// <param name="message">The message to log.</param>
-    public static void Warning(string message) => IsEnabled.IfTrue(() => LogManager.Warning(message));
+    /// <param name="category">The category of the performance measurement.</param>
+    public static void Warning(string message, PerformanceCategory category = PerformanceCategory.All)
+        => ((EnabledCategories & category) != 0).IfTrue(() => LogManager.Warning(message));
 }
 #pragma warning restore CS0162 // Unreachable code detected

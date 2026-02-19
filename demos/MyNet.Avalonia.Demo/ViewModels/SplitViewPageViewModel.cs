@@ -5,20 +5,17 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class SplitViewPageViewModel : AutoBuildPageViewModel
+internal sealed class SplitViewPageViewModel : ControlCatalogViewModel
 {
     public SplitViewPageViewModel()
         : base(nameof(SplitView), [
             new ControlThemeBuilder()
-            .AddStyles("Light", "Outlined", "Shadow")
-            .AddCartesianStyles("Light", "Outlined")
-            .AddCartesianStyles("Outlined", "Solid")
-            .AddThemeRoles().AddRoles(ThemeRole.Dark)
+            .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-transparent", "shadow-surface")
+            .AddThemeRoles()
         ])
     { }
 }

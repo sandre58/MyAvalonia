@@ -53,7 +53,7 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
 
     public static readonly StyledProperty<IDataTemplate?> SelectedItemTemplateProperty = AvaloniaProperty.Register<MultiComboBox, IDataTemplate?>(nameof(SelectedItemTemplate));
 
-    public static readonly StyledProperty<string?> WatermarkProperty = TextBox.WatermarkProperty.AddOwner<MultiComboBox>();
+    public static readonly StyledProperty<string?> PlaceholderTextProperty = TextBox.PlaceholderTextProperty.AddOwner<MultiComboBox>();
 
     private readonly CompositeDisposable _subscriptionsOnOpen = [];
     private Popup? _popup;
@@ -141,10 +141,10 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
         set => SetValue(SelectedItemTemplateProperty, value);
     }
 
-    public string? Watermark
+    public string? PlaceholderText
     {
-        get => GetValue(WatermarkProperty);
-        set => SetValue(WatermarkProperty, value);
+        get => GetValue(PlaceholderTextProperty);
+        set => SetValue(PlaceholderTextProperty, value);
     }
 
     public event EventHandler? DropDownClosed;
@@ -188,7 +188,7 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
         {
             if (_popup?.IsInsidePopup(source) == true)
             {
-                if (UpdateSelectionFromEventSource(e.Source))
+                if (UpdateSelectionFromEvent((Control)source, e))
                 {
                     e.Handled = true;
                 }
@@ -213,7 +213,7 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
             _popup.Closed -= PopupClosed;
         }
 
-        _popup = e.NameScope.Get<Popup>("PART_Popup");
+        _popup = e.NameScope.Get<Popup>(PartPopup);
         _popup.Opened += PopupOpened;
         _popup.Closed += PopupClosed;
     }
@@ -268,7 +268,7 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
             }
             else if (e.Key == Key.Space || e.Key == Key.Enter)
             {
-                UpdateSelectionFromEventSource(e.Source, true, e.KeyModifiers.HasFlag(KeyModifiers.Shift), ctrl);
+                UpdateSelectionFromEvent((Control)e.Source!, e);
             }
         }
     }

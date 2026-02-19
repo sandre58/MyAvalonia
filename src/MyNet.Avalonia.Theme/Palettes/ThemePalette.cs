@@ -15,40 +15,78 @@ namespace MyNet.Avalonia.Theme.Palettes;
 /// </summary>
 public class ThemePalette
 {
-    /// <summary>
-    /// Gets the background color for dark surfaces.
-    /// </summary>
-    public required Color Dark { get; init; }
+    // Surfaces
 
     /// <summary>
-    /// Gets the background color for the main application surface.
+    /// Gets the background color for surface level 0 (Header background).
     /// </summary>
-    public required Color ApplicationBackground { get; init; }
+    public required Color SurfaceLevel0 { get; init; }
 
     /// <summary>
-    /// Gets the foreground color for the main application surface.
+    /// Gets the background color for surface level 1 (Application background).
     /// </summary>
-    public required Color ApplicationForeground { get; init; }
+    public required Color SurfaceLevel1 { get; init; }
 
     /// <summary>
-    /// Gets the background color for general surfaces.
+    /// Gets the background color for surface level 2 (Popup, Dialog).
     /// </summary>
-    public required Color SurfaceBackground { get; init; }
+    public required Color SurfaceLevel2 { get; init; }
 
     /// <summary>
-    /// Gets the border color for surfaces.
+    /// Gets the background color for surface level 3 (Container background).
+    /// </summary>
+    public required Color SurfaceLevel3 { get; init; }
+
+    /// <summary>
+    /// Gets the background color for surface level 4 (Control background).
+    /// </summary>
+    public required Color SurfaceLevel4 { get; init; }
+
+    /// <summary>
+    /// Gets the background color for surface level 5 (Surface secondary).
+    /// </summary>
+    public required Color SurfaceLevel5 { get; init; }
+
+    /// <summary>
+    /// Gets the inverse surface color (Tooltip).
+    /// </summary>
+    public required Color SurfaceInverse { get; init; }
+
+    /// <summary>
+    /// Gets the border color for all surfaces.
     /// </summary>
     public required Color SurfaceBorder { get; init; }
 
-    /// <summary>
-    /// Gets the background color for controls.
-    /// </summary>
-    public required Color ControlBackground { get; init; }
+    // Foreground
 
     /// <summary>
-    /// Gets the background color for light controls.
+    /// Gets the primary foreground color.
     /// </summary>
-    public required Color ControlBackgroundLight { get; init; }
+    public required Color ForegroundPrimary { get; init; }
+
+    /// <summary>
+    /// Gets the secondary foreground color.
+    /// </summary>
+    public required Color ForegroundSecondary { get; init; }
+
+    /// <summary>
+    /// Gets the tertiary foreground color.
+    /// </summary>
+    public required Color ForegroundTertiary { get; init; }
+
+    /// <summary>
+    /// Gets the inverse foreground color.
+    /// </summary>
+    public required Color ForegroundInverse { get; init; }
+
+    // Divider
+
+    /// <summary>
+    /// Gets the divider color.
+    /// </summary>
+    public required Color Divider { get; init; }
+
+    // Controls
 
     /// <summary>
     /// Gets the border color for controls.
@@ -65,45 +103,21 @@ public class ThemePalette
     /// </summary>
     public required Color ControlBorderFocus { get; init; }
 
+    // Overlay
+
     /// <summary>
     /// Gets the background color for overlays.
     /// </summary>
     public required Color OverlayBackground { get; init; }
 
-    /// <summary>
-    /// Gets the background color for dialogs.
-    /// </summary>
-    public required Color DialogBackground { get; init; }
-
-    /// <summary>
-    /// Gets the background color for popups.
-    /// </summary>
-    public required Color PopupBackground { get; init; }
-
-    /// <summary>
-    /// Gets the border color for popups.
-    /// </summary>
-    public required Color PopupBorder { get; init; }
-
-    /// <summary>
-    /// Gets the foreground color for popups.
-    /// </summary>
-    public required Color PopupForeground { get; init; }
-
-    /// <summary>
-    /// Gets the background color for tooltips.
-    /// </summary>
-    public required Color ToolTipBackground { get; init; }
-
-    /// <summary>
-    /// Gets the border color for tooltips.
-    /// </summary>
-    public required Color ToolTipBorder { get; init; }
+    // Specifics
 
     /// <summary>
     /// Gets the background color for the close button when hovered.
     /// </summary>
-    public required Color ButtonCloseBackgroundHover { get; init; }
+    public required Color ButtonCloseHover { get; init; }
+
+    // Validation
 
     /// <summary>
     /// Gets the color used to indicate validation errors.
@@ -116,24 +130,82 @@ public class ThemePalette
     /// <returns>A dictionary containing all base theme colors with their corresponding resource keys.</returns>
     public IReadOnlyDictionary<string, object> ToResourceDictionary() => new Dictionary<string, object>
         {
-            { nameof(Dark), Dark },
-            { "Application.Background", ApplicationBackground },
-            { "Application.Foreground", ApplicationForeground },
-            { "Surface.Background", SurfaceBackground },
+            // Surfaces
+            { "Surface.Level0", SurfaceLevel0 },
+            { "Surface.Level1", SurfaceLevel1 },
+            { "Surface.Level2", SurfaceLevel2 },
+            { "Surface.Level3", SurfaceLevel3 },
+            { "Surface.Level4", SurfaceLevel4 },
+            { "Surface.Level5", SurfaceLevel5 },
+            { "Surface.Inverse", SurfaceInverse },
             { "Surface.Border", SurfaceBorder },
-            { "Control.Background", ControlBackground },
-            { "Control.Background.Light", ControlBackgroundLight },
+
+            // Foreground
+            { "Foreground.Primary", ForegroundPrimary },
+            { "Foreground.Secondary", ForegroundSecondary },
+            { "Foreground.Tertiary", ForegroundTertiary },
+            { "Foreground.Inverse", ForegroundInverse },
+
+            // Divider
+            { "Divider", Divider },
+
+            // Controls
             { "Control.Border", ControlBorder },
             { "Control.Border.Hover", ControlBorderHover },
             { "Control.Border.Focus", ControlBorderFocus },
+
+            // Overlay
             { "Overlay.Background", OverlayBackground },
-            { "Dialog.Background", DialogBackground },
-            { "Popup.Background", PopupBackground },
-            { "Popup.Border", PopupBorder },
-            { "Popup.Foreground", PopupForeground },
-            { "ToolTip.Background", ToolTipBackground },
-            { "ToolTip.Border", ToolTipBorder },
-            { "Button.Close.Background.Hover", ButtonCloseBackgroundHover },
+
+            // Specifics
+            { "Button.Close.Hover", ButtonCloseHover },
+
+            // Validation
             { "Validation.Error", ValidationError }
         };
+
+    /// <summary>
+    /// Creates a ThemePalette instance from a resource dictionary.
+    /// </summary>
+    /// <param name="dictionary">The resource dictionary containing color definitions.</param>
+    /// <returns>A new ThemePalette instance.</returns>
+    public static ThemePalette FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary)
+    {
+        var defaultColor = Colors.Gray;
+        return new ThemePalette
+        {
+            // Surfaces
+            SurfaceLevel0 = (Color)dictionary.GetValueOrDefault("Surface.Level0", defaultColor),
+            SurfaceLevel1 = (Color)dictionary.GetValueOrDefault("Surface.Level1", defaultColor),
+            SurfaceLevel2 = (Color)dictionary.GetValueOrDefault("Surface.Level2", defaultColor),
+            SurfaceLevel3 = (Color)dictionary.GetValueOrDefault("Surface.Level3", defaultColor),
+            SurfaceLevel4 = (Color)dictionary.GetValueOrDefault("Surface.Level4", defaultColor),
+            SurfaceLevel5 = (Color)dictionary.GetValueOrDefault("Surface.Level5", defaultColor),
+            SurfaceInverse = (Color)dictionary.GetValueOrDefault("Surface.Inverse", defaultColor),
+            SurfaceBorder = (Color)dictionary.GetValueOrDefault("Surface.Border", defaultColor),
+
+            // Foreground
+            ForegroundPrimary = (Color)dictionary.GetValueOrDefault("Foreground.Primary", defaultColor),
+            ForegroundSecondary = (Color)dictionary.GetValueOrDefault("Foreground.Secondary", defaultColor),
+            ForegroundTertiary = (Color)dictionary.GetValueOrDefault("Foreground.Tertiary", defaultColor),
+            ForegroundInverse = (Color)dictionary.GetValueOrDefault("Foreground.Inverse", defaultColor),
+
+            // Divider
+            Divider = (Color)dictionary.GetValueOrDefault("Divider", defaultColor),
+
+            // Controls
+            ControlBorder = (Color)dictionary.GetValueOrDefault("Control.Border", defaultColor),
+            ControlBorderHover = (Color)dictionary.GetValueOrDefault("Control.Border.Hover", defaultColor),
+            ControlBorderFocus = (Color)dictionary.GetValueOrDefault("Control.Border.Focus", defaultColor),
+
+            // Overlay
+            OverlayBackground = (Color)dictionary.GetValueOrDefault("Overlay.Background", defaultColor),
+
+            // Specifics
+            ButtonCloseHover = (Color)dictionary.GetValueOrDefault("Button.Close.Hover", defaultColor),
+
+            // Validation
+            ValidationError = (Color)dictionary.GetValueOrDefault("Validation.Error", defaultColor)
+        };
+    }
 }

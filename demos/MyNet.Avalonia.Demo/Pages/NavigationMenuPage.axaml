@@ -1,0 +1,91 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.NavigationMenuPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            x:DataType="vm:NavigationMenuPageViewModel"
+            Name="Root"
+            mc:Ignorable="d">
+
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
+
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <my:NavigationMenu Name="menu"
+                                   Theme="{Binding Appearance.ActiveTheme}"
+                                   my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                                   my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                                   CollapseWidth="{Binding #CollapseWidth.Value}"
+                                   ExpandWidth="{Binding #ExpandWidth.Value}"
+                                   SubMenuIndent="{Binding #SubMenuIndent.Value}">
+                    <my:NavigationMenu.Header>
+                        <ToggleButton Margin="0 0 0 10" IsChecked="{Binding #menu.IsHorizontalCollapsed}" Content="{my:Icon Menu}" />
+                    </my:NavigationMenu.Header>
+                    <my:NavigationMenuItem Header="{my:Loc Home}" Icon="{StaticResource MyNet.Geometry.Home}" />
+                    <my:NavigationMenuItem Header="{my:Loc Dashboard}" Icon="{StaticResource MyNet.Geometry.ViewDashboard}">
+                        <my:NavigationMenuItem Header="{my:Loc Statistics}" Icon="{StaticResource MyNet.Geometry.ChartLine}" />
+                        <my:NavigationMenuItem Header="{my:Loc Reports}" Icon="{StaticResource MyNet.Geometry.FileDocument}" />
+                    </my:NavigationMenuItem>
+                    <my:NavigationMenuItem Header="{my:Loc Settings}" Icon="{StaticResource MyNet.Geometry.Cog}">
+                        <my:NavigationMenuItem Header="{my:Loc General}" Icon="{StaticResource MyNet.Geometry.Tune}" />
+                        <my:NavigationMenuItem Header="{my:Loc Advanced}" Icon="{StaticResource MyNet.Geometry.TuneVariant}" />
+                    </my:NavigationMenuItem>
+                    <my:NavigationMenuItem Header="{my:Loc Help}" Icon="{StaticResource MyNet.Geometry.Help}" />
+                </my:NavigationMenu>
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
+
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <my:NavigationMenu Name="menu"
+                                   Theme="{Binding Theme}"
+                                   my:ThemeAssist.Role="{Binding Role}"
+                                   my:ClassesAssist.Classes="{Binding Classes}">
+                    <my:NavigationMenu.Header>
+                        <ToggleButton Margin="0 0 0 10" Content="{my:Icon Menu}" />
+                    </my:NavigationMenu.Header>
+                    <my:NavigationMenuItem Header="{my:Loc Home}"
+                                           Icon="{StaticResource MyNet.Geometry.Home}" />
+                    <my:NavigationMenuItem Header="{my:Loc Dashboard}" Icon="{StaticResource MyNet.Geometry.ViewDashboard}">
+                        <my:NavigationMenuItem Header="{my:Loc Statistics}" Icon="{StaticResource MyNet.Geometry.ChartLine}" />
+                        <my:NavigationMenuItem Header="{my:Loc Reports}" Icon="{StaticResource MyNet.Geometry.FileDocument}" />
+                    </my:NavigationMenuItem>
+                    <my:NavigationMenuItem Header="{my:Loc Settings}" Icon="{StaticResource MyNet.Geometry.Cog}">
+                        <my:NavigationMenuItem Header="{my:Loc General}" Icon="{StaticResource MyNet.Geometry.Tune}" />
+                        <my:NavigationMenuItem Header="{my:Loc Advanced}" Icon="{StaticResource MyNet.Geometry.TuneVariant}" />
+                    </my:NavigationMenuItem>
+                    <my:NavigationMenuItem Header="{my:Loc Help}" Icon="{StaticResource MyNet.Geometry.Help}" />
+                </my:NavigationMenu>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
+
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+
+                <NumericUpDown Name="CollapseWidth" Maximum="200"
+                               Minimum="40"
+                               Value="50"
+                               my:FormItem.Label="{my:LocObject CollapseWidth}" />
+
+                <NumericUpDown Name="ExpandWidth" Maximum="500"
+                               Minimum="200"
+                               Value="300"
+                               my:FormItem.Label="{my:LocObject ExpandWidth}" />
+
+                <NumericUpDown Name="SubMenuIndent" Maximum="50"
+                               Minimum="0"
+                               Value="24"
+                               my:FormItem.Label="{my:LocObject SubMenuIndent}" />
+
+            </my:Form>
+        </v:ControlCatalogView.Settings>
+
+    </v:ControlCatalogView>
+
+</pages:Page>

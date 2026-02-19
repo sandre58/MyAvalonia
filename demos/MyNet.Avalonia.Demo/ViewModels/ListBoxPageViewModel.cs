@@ -5,37 +5,52 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class ListBoxPageViewModel : AutoBuildPageViewModel
+internal sealed class ListBoxPageViewModel : ControlCatalogViewModel
 {
     public ListBoxPageViewModel()
         : base(nameof(ListBox), [
             new ControlThemeBuilder()
-            .AddLayouts("Cards", "Cards Circle")
-            .AddStyles("Solid", "Light", "Outlined", "Text")
-            .AddCartesianStyles("Solid", "Outlined", "Light")
-            .AddCartesianStyles("Solid", "Shadow")
-            .AddRoles([ThemeRole.Accent, ThemeRole.Inverse])
-            .AddSizes("Small", "Medium", "Large"),
+            .AddShapes("shape-circle-items")
+            .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
+            .AddVariants("variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items", "shadow-items")
+            .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
+            .AddThemeRoles()
+            .AddItemsThemeRoles()
+            .AddDefaultSizes(),
 
-            new ControlThemeBuilder("Toggle")
-            .AddStyles("Spacing", "Shadow", "Vertical")
-            .AddCartesianStyles("Spacing", "Shadow", "Vertical")
-            .AddRoles([ThemeRole.Accent, ThemeRole.Inverse])
-            .AddSizes("Small", "Medium", "Large"),
+            new ControlThemeBuilder(null, "kind-cards")
+            .AddShapes("shape-circle-items")
+            .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
+            .AddVariants("variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items", "shadow-items")
+            .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
+            .AddThemeRoles()
+            .AddItemsThemeRoles()
+            .AddDefaultSizes(),
+
+            new ControlThemeBuilder(null, "kind-toggle")
+            .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
+            .AddVariants("variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items", "shadow-items")
+            .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
+            .AddDefaultRoles()
+            .AddItemsThemeRoles()
+            .AddDefaultSizes(),
 
             new ControlThemeBuilder("Tabs")
-            .AddStyles("Vertical")
-            .AddRoles([ThemeRole.Accent, ThemeRole.Inverse]),
+            .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
+            .AddVariants("variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items", "shadow-items")
+            .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
+            .AddThemeRoles()
+            .AddItemsThemeRoles()
+            .AddDefaultSizes(),
 
             new ControlThemeBuilder("Icon")
-            .AddStyles("Vertical")
-            .AddRoles([ThemeRole.Accent, ThemeRole.Inverse])
-            .AddSizes("Small", "Medium", "Large")
+            .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
+            .AddItemsThemeRoles()
+            .AddDefaultSizes()
         ])
     { }
 }

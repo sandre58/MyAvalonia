@@ -14,11 +14,11 @@ public sealed class DatePickerProxy : IControlProxy
 {
     private readonly DatePicker _control;
 
-    public bool IsEmpty() => _control.SelectedDate is null && !DateTimePickerBehavior.GetOverrideWatermark(_control);
+    public bool IsEmpty() => _control.SelectedDate is null;
 
     public bool IsFocused() => _control.IsKeyboardFocusWithin;
 
-    public bool IsActive() => !IsEmpty() || DateTimePickerBehavior.GetOverrideWatermark(_control);
+    public bool IsActive() => !IsEmpty() || DateTimePickerBehavior.GetOverridePlaceholderText(_control);
 
     public event EventHandler? IsEmptyChanged;
 
@@ -29,7 +29,7 @@ public sealed class DatePickerProxy : IControlProxy
     public DatePickerProxy(DatePicker control)
     {
         _control = control ?? throw new ArgumentNullException(nameof(control));
-        _ = DateTimePickerBehavior.OverrideWatermarkProperty.Changed.Subscribe(e =>
+        _ = DateTimePickerBehavior.OverridePlaceholderTextProperty.Changed.Subscribe(e =>
         {
             if (e.Sender is DatePicker datePicker && datePicker == _control)
             {

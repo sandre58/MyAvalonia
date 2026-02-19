@@ -1,0 +1,39 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT RIPPLE THEME                                      -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type my:Ripple}" TargetType="my:Ripple">
+            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+            <Setter Property="HorizontalContentAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+            <Setter Property="VerticalContentAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="RippleOpacity" Value="{DynamicResource MyNet.Opacity.Pressed}" />
+            <Setter Property="RippleFill" Value="{my:Foreground}" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <ContentPresenter Name="PART_ContentPresenter"
+                                      Padding="{TemplateBinding Padding}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                </ControlTemplate>
+            </Setter>
+
+
+            <Style Selector="^.no-transitions">
+                <Setter Property="UseTransitions" Value="False" />
+            </Style>
+        </ControlTheme>
+
+    </Styles.Resources>
+</Styles>

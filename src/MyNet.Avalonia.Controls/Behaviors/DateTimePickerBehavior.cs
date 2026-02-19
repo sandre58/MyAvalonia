@@ -10,25 +10,25 @@ namespace MyNet.Avalonia.Controls.Behaviors;
 
 public static class DateTimePickerBehavior
 {
-    #region OverrideWatermark
+    #region OverridePlaceholderText
 
     /// <summary>
-    /// Provides OverrideWatermark Property for attached TextFieldBehavior element.
+    /// Provides OverridePlaceholderText Property for attached TextFieldBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<bool> OverrideWatermarkProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("OverrideWatermark", typeof(DateTimePickerBehavior), true);
+    public static readonly AttachedProperty<bool> OverridePlaceholderTextProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("OverridePlaceholderText", typeof(DateTimePickerBehavior), true);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="OverrideWatermarkProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="OverrideWatermarkProperty"/>.</param>
-    public static void SetOverrideWatermark(StyledElement element, bool value) => element.SetValue(OverrideWatermarkProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="OverrideWatermarkProperty"/>.
+    /// Accessor for Attached  <see cref="OverridePlaceholderTextProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static bool GetOverrideWatermark(StyledElement element) => element.GetValue(OverrideWatermarkProperty);
+    /// <param name="value">The value to set  <see cref="OverridePlaceholderTextProperty"/>.</param>
+    public static void SetOverridePlaceholderText(StyledElement element, bool value) => element.SetValue(OverridePlaceholderTextProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="OverridePlaceholderTextProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static bool GetOverridePlaceholderText(StyledElement element) => element.GetValue(OverridePlaceholderTextProperty);
 
     #endregion
 }

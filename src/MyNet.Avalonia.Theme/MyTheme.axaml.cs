@@ -5,6 +5,8 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using Avalonia;
 using Avalonia.Animation.Easings;
@@ -13,8 +15,9 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Styling;
 using MyNet.Avalonia.Helpers;
+using MyNet.Avalonia.Theme.Infrastructure;
 using MyNet.Avalonia.Theme.Palettes;
-using MyNet.Avalonia.Theme.Theming;
+using MyNet.Avalonia.Theme.TypeConverters;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme;
@@ -25,8 +28,8 @@ namespace MyNet.Avalonia.Theme;
 /// </summary>
 public class MyTheme : Styles, IResourceNode, IMyTheme
 {
-    private static readonly ColorShades DefaultPrimary = new(Color.Parse("#2196F3"));
-    private static readonly ColorShades DefaultAccent = new(Color.Parse("#FFC107"));
+    private static readonly ColorShades DefaultPrimary = new(Color.Parse("#1756BD"));
+    private static readonly ColorShades DefaultAccent = new(Color.Parse("#FFAE18"));
 
     private static MyTheme? _current;
     private readonly IServiceProvider? _serviceProvider;
@@ -67,17 +70,41 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     public event EventHandler? ThemeChanged;
 
-    #region Properties
-
-    /// <summary>
-    /// Gets or sets the duration of color transition animations when theme colors change. Default is 150 milliseconds.
-    /// </summary>
-    public TimeSpan ColorTransitionDuration { get; set; } = TimeSpan.FromMilliseconds(150);
+    #region Transition Properties
 
     /// <summary>
     /// Gets or sets the easing function used for color transition animations. Default is SineEaseOut for smooth transitions.
     /// </summary>
     public Easing ColorTransitionEasing { get; set; } = new SineEaseOut();
+
+    /// <summary>
+    /// Styled property for duration of color transition animations when theme colors change. Default is 150 milliseconds.
+    /// </summary>
+    private static readonly StyledProperty<TimeSpan> ColorTransitionDurationProperty = AvaloniaProperty.Register<MyTheme, TimeSpan>(nameof(ColorTransitionDuration), TimeSpan.FromMilliseconds(150));
+
+    /// <summary>
+    /// Gets or sets the duration of color transition animations when theme colors change. Default is 150 milliseconds.
+    /// </summary>
+    public TimeSpan ColorTransitionDuration
+    {
+        get => GetValue(ColorTransitionDurationProperty);
+        set => SetValue(ColorTransitionDurationProperty, value);
+    }
+
+    /// <summary>
+    /// Styled property for enabling or disabling color transitions.
+    /// </summary>
+    private static readonly StyledProperty<bool> TransitionIsEnabledProperty = AvaloniaProperty.Register<MyTheme, bool>(nameof(TransitionIsEnabled), true);
+
+    /// <summary>
+    /// Gets or sets a value indicating whether color transition animations are enabled. Default is true.
+    /// When disabled, color changes happen instantly without animation.
+    /// </summary>
+    public bool TransitionIsEnabled
+    {
+        get => GetValue(TransitionIsEnabledProperty);
+        set => SetValue(TransitionIsEnabledProperty, value);
+    }
 
     #endregion
 
@@ -86,13 +113,14 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// <summary>
     /// Styled property for the primary brand color palette.
     /// </summary>
-    private static readonly StyledProperty<ColorShades> PrimaryProperty =
-        AvaloniaProperty.Register<MyTheme, ColorShades>(nameof(Primary), DefaultPrimary);
+    private static readonly StyledProperty<ColorShades> PrimaryProperty = AvaloniaProperty.Register<MyTheme, ColorShades>(nameof(Primary), DefaultPrimary);
 
     /// <summary>
     /// Gets or sets the primary brand color palette with automatic shade generation. Used for main actions, headers, and accent UI elements.
     /// Changing this property updates all primary-dependent resources and triggers the ThemeChanged event.
+    /// Can be set from XAML using a hex color string (e.g., Primary="#124378").
     /// </summary>
+    [TypeConverter(typeof(ColorShadesTypeConverter))]
     public ColorShades Primary
     {
         get => GetValue(PrimaryProperty);
@@ -106,13 +134,14 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// <summary>
     /// Styled property for the accent brand color palette.
     /// </summary>
-    private static readonly StyledProperty<ColorShades> AccentProperty =
-        AvaloniaProperty.Register<MyTheme, ColorShades>(nameof(Accent), DefaultAccent);
+    private static readonly StyledProperty<ColorShades> AccentProperty = AvaloniaProperty.Register<MyTheme, ColorShades>(nameof(Accent), DefaultAccent);
 
     /// <summary>
     /// Gets or sets the accent brand color palette with automatic shade generation. Used for highlights, floating action buttons, and secondary actions.
     /// Changing this property updates all accent-dependent resources and triggers the ThemeChanged event.
+    /// Can be set from XAML using a hex color string (e.g., Accent="#FFAE18").
     /// </summary>
+    [TypeConverter(typeof(ColorShadesTypeConverter))]
     public ColorShades Accent
     {
         get => GetValue(AccentProperty);
@@ -205,6 +234,43 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
         Resources.ThemeDictionaries.AddOrUpdate(theme.Variant, rd);
     }
 
+    /// <summary>
+    /// Applies a complete theme to MyTheme, updating Primary, Accent, and all theme variant colors.
+    /// </summary>
+    /// <param name="completeTheme">The complete theme to apply.</param>
+    /// <exception cref="ArgumentNullException">Thrown when completeTheme is null.</exception>
+    /// <example>
+    /// <code>
+    /// var theme = CompleteTheme.Create("#124378", "#FFAE18");
+    /// MyTheme.Current.ApplyTheme(theme);
+    /// </code>
+    /// </example>
+    public void ApplyTheme(CompleteTheme completeTheme)
+    {
+        ArgumentNullException.ThrowIfNull(completeTheme);
+
+        // Apply brand colors
+        Primary = completeTheme.Primary;
+        Accent = completeTheme.Accent;
+        Theme = completeTheme.ThemeVariant.Variant.Key.ToString();
+
+        // Force update of brushes
+        UpdateBrushesFromCurrentTheme();
+        RaiseThemeChanged();
+    }
+
+    /// <summary>
+    /// Gets the current theme variant colors for the active theme.
+    /// </summary>
+    /// <returns>The ThemeVariantColors for the current theme variant.</returns>
+    public ThemeVariantColors? GetCurrentThemeVariantColors()
+    {
+        var currentVariant = Application.Current?.ActualThemeVariant ?? ThemeVariant.Default;
+        return Resources.ThemeDictionaries.TryGetValue(currentVariant, out var rd) && rd is ResourceDictionary resourceDict
+            ? ThemeVariantColors.FromResourceDictionary(currentVariant, resourceDict.ToDictionary(x => x.Key.ToString().OrEmpty().Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase), x => x.Value!))
+            : null;
+    }
+
     #endregion
 
     #region Resource Injection
@@ -214,7 +280,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     private void AddOrUpdatePrimaryShades()
     {
-        using (PerformanceMonitor.Measure())
+        using (PerformanceMonitor.Measure("AddOrUpdatePrimaryShades", category: PerformanceCategory.Theme))
             AddOrUpdateColorShades(Primary, nameof(Primary));
     }
 
@@ -223,7 +289,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     private void AddOrUpdateAccentShades()
     {
-        using (PerformanceMonitor.Measure())
+        using (PerformanceMonitor.Measure("AddOrUpdateAccentShades", category: PerformanceCategory.Theme))
             AddOrUpdateColorShades(Accent, nameof(Accent));
     }
 
@@ -235,18 +301,20 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
         const string transparencyKey = "Transparency";
         const string transparencySmallKey = "Transparency.Small";
 
-        using (PerformanceMonitor.Measure())
+        using (PerformanceMonitor.Measure("UpdateBrushesFromCurrentTheme", category: PerformanceCategory.Theme))
         {
             var count = 0;
+            var activeTheme = GetActiveThemeDictionary();
 
-            foreach (var (key, obj) in GetActiveThemeDictionary())
+            foreach (var (key, obj) in activeTheme)
             {
                 if (obj is Color color)
                 {
                     var colorKey = key?.ToString()?.Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase);
                     if (!string.IsNullOrEmpty(colorKey))
                     {
-                        AddOrUpdateBrush(colorKey, color, null);
+                        var contrastedColor = GetContrastedColorForKey(colorKey, activeTheme);
+                        AddOrUpdateBrush(colorKey, color, contrastedColor);
                         count++;
                     }
                 }
@@ -258,7 +326,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
             if (!Resources.ContainsKey(ThemeResourceKeyFactory.Brush(transparencySmallKey)))
                 Resources.Add(ThemeResourceKeyFactory.Brush(transparencySmallKey), createTransparencyBrush(8));
 
-            PerformanceMonitor.Debug($"UpdateBrushesFromCurrentTheme processed {count + 2} brushes");
+            PerformanceMonitor.Debug($"UpdateBrushesFromCurrentTheme processed {count + 2} brushes", category: PerformanceCategory.Theme);
         }
 
         VisualBrush createTransparencyBrush(double size) => new(new Image
@@ -271,7 +339,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
                 {
                     Children = [
                                 new GeometryDrawing() { Brush = Brushes.Transparent, Geometry = PathGeometry.Parse("M0,0 L2,0 2,2, 0,2Z") },
-                                new GeometryDrawing() { Brush = GetBrush("Application.Foreground", nameof(Opacity.Scrim)), Geometry = PathGeometry.Parse("M0,1 L2,1 2,2, 1,2 1,0 0,0Z") },
+                                new GeometryDrawing() { Brush = GetBrush("Foreground.Primary", nameof(Opacity.Scrim)), Geometry = PathGeometry.Parse("M0,1 L2,1 2,2, 1,2 1,0 0,0Z") },
                             ]
                 }
             }
@@ -284,13 +352,28 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     }
 
     /// <summary>
+    /// Determines the appropriate contrasted color for a given color key based on theme conventions.
+    /// </summary>
+    /// <param name="colorKey">The color key to find a contrasted color for.</param>
+    /// <param name="themeDictionary">The active theme dictionary containing color definitions.</param>
+    /// <returns>The contrasted color if found; otherwise, null.</returns>
+    private static Color? GetContrastedColorForKey(string colorKey, ResourceDictionary themeDictionary)
+    {
+        var contrastedColorKey = ThemeResourceKeyFactory.ContrastedColor(colorKey);
+
+        return contrastedColorKey is null
+            ? null
+            : (Color?)(themeDictionary.TryGetResource(contrastedColorKey, null, out var obj) && obj is Color color ? color : null);
+    }
+
+    /// <summary>
     /// Injects a dictionary of colors into the ResourceDictionary. Each entry is injected on the UI thread.
     /// </summary>
     /// <param name="shades">Shades of the color to inject.</param>
     /// <param name="name">The name of the color group.</param>
     private void AddOrUpdateColorShades(ColorShades shades, string name)
     {
-        using (PerformanceMonitor.Measure())
+        using (PerformanceMonitor.Measure(category: PerformanceCategory.Theme))
         {
             var count = 0;
 
@@ -300,7 +383,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
                 count++;
             }
 
-            PerformanceMonitor.Debug($"AddOrUpdateColorShades({name}) processed {count} shades");
+            PerformanceMonitor.Debug($"AddOrUpdateColorShades({name}) processed {count} shades", category: PerformanceCategory.Theme);
         }
     }
 
@@ -389,11 +472,13 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// <param name="path">The resource path for the brush.</param>
     /// <param name="opacityKey">Optional opacity key or value.</param>
     /// <param name="contrast">If true, returns the contrast brush for accessibility.</param>
+    /// <param name="darken">Optional darken factor (value between 0.0 and 1.0).</param>
+    /// <param name="lighten">Optional lighten factor (value between 0.0 and 1.0).</param>
     /// <returns>The brush instance.</returns>
-    public IBrush GetBrush(string path, string? opacityKey = null, bool contrast = false)
+    public IBrush GetBrush(string path, string? opacityKey = null, bool contrast = false, double? darken = null, double? lighten = null)
     {
         var opacity = GetOpacity(opacityKey);
-        return _brushManager.Get(ThemeResourceKeyFactory.Brush(path), opacity, contrast);
+        return _brushManager.Get(ThemeResourceKeyFactory.Brush(path), opacity, contrast, darken, lighten);
     }
 
     /// <summary>
@@ -402,11 +487,13 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// <param name="brush">The brush instance to search for.</param>
     /// <param name="opacityKey">Optional opacity key or value.</param>
     /// <param name="contrast">If true, returns the contrast brush for accessibility.</param>
+    /// <param name="darken">Optional darken factor (value between 0.0 and 1.0).</param>
+    /// <param name="lighten">Optional lighten factor (value between 0.0 and 1.0).</param>
     /// <returns>The brush instance with the specified opacity or contrast.</returns>
-    public IBrush GetBrush(IBrush brush, string? opacityKey = null, bool contrast = false)
+    public IBrush GetBrush(IBrush brush, string? opacityKey = null, bool contrast = false, double? darken = null, double? lighten = null)
     {
         var opacity = GetOpacity(opacityKey);
-        return _brushManager.Get(brush, opacity, contrast);
+        return _brushManager.Get(brush, opacity, contrast, darken, lighten);
     }
 
     /// <summary>
@@ -417,14 +504,14 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     public double? GetOpacity(string? opacityKey)
     {
         double? opacity = null;
-        if (double.TryParse(opacityKey, out var result))
+        if (double.TryParse(opacityKey, CultureInfo.InvariantCulture, out var result))
         {
             opacity = result;
         }
         else if (!string.IsNullOrEmpty(opacityKey))
         {
             var fullOpacityKey = ThemeResourceKeyFactory.Opacity(opacityKey);
-            opacity = Resources.TryGetResource(fullOpacityKey, Application.Current?.ActualThemeVariant, out var obj) && obj is double d ? d : null;
+            opacity = TryGetResource(fullOpacityKey, Application.Current?.ActualThemeVariant, out var obj) && obj is double d ? d : null;
         }
 
         return opacity;
@@ -435,7 +522,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     private void OnResourcedAccessed()
     {
-        using (PerformanceMonitor.Measure())
+        using (PerformanceMonitor.Measure(category: PerformanceCategory.Theme))
             AvaloniaXamlLoader.Load(_serviceProvider, this);
 
         AddOrUpdateAccentShades();

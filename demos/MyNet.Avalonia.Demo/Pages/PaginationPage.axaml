@@ -1,0 +1,57 @@
+<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.PaginationPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            x:DataType="vm:PaginationPageViewModel"
+            Name="Root"
+            mc:Ignorable="d">
+
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
+
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <my:Pagination Theme="{Binding Appearance.ActiveTheme}"
+                               my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                               my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               TotalCount="300"
+                               PageSize="10"
+                               PageSizeOptions="5, 10, 20, 50, 100"
+                               ShowPageSizeSelector="{Binding #ShowPageSizeSelector.IsChecked}"
+                               ShowQuickJump="{Binding #ShowQuickJump.IsChecked}"
+                               CurrentPage="1" />
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
+
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <my:Pagination Theme="{Binding Theme}"
+                               my:ThemeAssist.Role="{Binding Role}"
+                               my:ClassesAssist.Classes="{Binding Classes}"
+                               PageSizeOptions="5, 10, 20, 50, 100"
+                               TotalCount="20"
+                               PageSize="5"
+                               CurrentPage="2" />
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
+
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+
+                <ToggleSwitch Name="ShowQuickJump" my:FormItem.Label="{my:LocObject ShowQuickJump}" IsChecked="True" />
+                <ToggleSwitch Name="ShowPageSizeSelector" my:FormItem.Label="{my:LocObject ShowPageSizeSelector}" IsChecked="True" />
+
+            </my:Form>
+        </v:ControlCatalogView.Settings>
+
+    </v:ControlCatalogView>
+
+</pages:Page>

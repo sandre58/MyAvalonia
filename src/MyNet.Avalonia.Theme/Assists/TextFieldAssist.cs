@@ -11,47 +11,47 @@ namespace MyNet.Avalonia.Theme.Assists;
 
 public static class TextFieldAssist
 {
-    #region Watermark
+    #region PlaceholderText
 
     /// <summary>
-    /// Provides Watermark Property for attached TextFieldBehavior element.
+    /// Provides PlaceholderText Property for attached TextFieldBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<string?> WatermarkProperty = AvaloniaProperty.RegisterAttached<StyledElement, string?>("Watermark", typeof(TextFieldAssist));
+    public static readonly AttachedProperty<string?> PlaceholderTextProperty = AvaloniaProperty.RegisterAttached<StyledElement, string?>("PlaceholderText", typeof(TextFieldAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="WatermarkProperty"/>.</param>
-    public static void SetWatermark(StyledElement element, string? value) => element.SetValue(WatermarkProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkProperty"/>.
+    /// Accessor for Attached  <see cref="PlaceholderTextProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static string? GetWatermark(StyledElement element) => element.GetValue(WatermarkProperty);
+    /// <param name="value">The value to set  <see cref="PlaceholderTextProperty"/>.</param>
+    public static void SetPlaceholderText(StyledElement element, string? value) => element.SetValue(PlaceholderTextProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PlaceholderTextProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static string? GetPlaceholderText(StyledElement element) => element.GetValue(PlaceholderTextProperty);
 
     #endregion
 
-    #region UseFloatingWatermark
+    #region UseFloatingPlaceholder
 
     /// <summary>
-    /// Provides UseFloatingWatermark Property for attached TextFieldBehavior element.
+    /// Provides UseFloatingPlaceholder Property for attached TextFieldBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<bool> UseFloatingWatermarkProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("UseFloatingWatermark", typeof(TextFieldAssist));
+    public static readonly AttachedProperty<bool> UseFloatingPlaceholderProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("UseFloatingPlaceholder", typeof(TextFieldAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="UseFloatingWatermarkProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="UseFloatingWatermarkProperty"/>.</param>
-    public static void SetUseFloatingWatermark(StyledElement element, bool value) => element.SetValue(UseFloatingWatermarkProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="UseFloatingWatermarkProperty"/>.
+    /// Accessor for Attached  <see cref="UseFloatingPlaceholderProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static bool GetUseFloatingWatermark(StyledElement element) => element.GetValue(UseFloatingWatermarkProperty);
+    /// <param name="value">The value to set  <see cref="UseFloatingPlaceholderProperty"/>.</param>
+    public static void SetUseFloatingPlaceholder(StyledElement element, bool value) => element.SetValue(UseFloatingPlaceholderProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="UseFloatingPlaceholderProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static bool GetUseFloatingPlaceholder(StyledElement element) => element.GetValue(UseFloatingPlaceholderProperty);
 
     #endregion
 
@@ -99,47 +99,47 @@ public static class TextFieldAssist
 
     #endregion
 
-    #region WatermarkForeground
+    #region PlaceholderForeground
 
     /// <summary>
-    /// Provides WatermarkForeground Property for attached TextFieldBehavior element.
+    /// Provides PlaceholderForeground Property for attached TextFieldBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<IBrush> WatermarkForegroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("WatermarkForeground", typeof(TextFieldAssist));
+    public static readonly AttachedProperty<IBrush> PlaceholderForegroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("PlaceholderForeground", typeof(TextFieldAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkForegroundProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="WatermarkForegroundProperty"/>.</param>
-    public static void SetWatermarkForeground(StyledElement element, IBrush value) => element.SetValue(WatermarkForegroundProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkForegroundProperty"/>.
+    /// Accessor for Attached  <see cref="PlaceholderForegroundProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static IBrush GetWatermarkForeground(StyledElement element) => element.GetValue(WatermarkForegroundProperty);
+    /// <param name="value">The value to set  <see cref="PlaceholderForegroundProperty"/>.</param>
+    public static void SetPlaceholderForeground(StyledElement element, IBrush value) => element.SetValue(PlaceholderForegroundProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PlaceholderForegroundProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static IBrush GetPlaceholderForeground(StyledElement element) => element.GetValue(PlaceholderForegroundProperty);
 
     #endregion
 
-    #region WatermarkFontSize
+    #region PlaceholderFontSize
 
     /// <summary>
-    /// Provides WatermarkFontSize Property for attached TextFieldBehavior element.
+    /// Provides PlaceholderFontSize Property for attached TextFieldBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<double> WatermarkFontSizeProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("WatermarkFontSize", typeof(TextFieldAssist));
+    public static readonly AttachedProperty<double> PlaceholderFontSizeProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("PlaceholderFontSize", typeof(TextFieldAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkFontSizeProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="WatermarkFontSizeProperty"/>.</param>
-    public static void SetWatermarkFontSize(StyledElement element, double value) => element.SetValue(WatermarkFontSizeProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkFontSizeProperty"/>.
+    /// Accessor for Attached  <see cref="PlaceholderFontSizeProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static double GetWatermarkFontSize(StyledElement element) => element.GetValue(WatermarkFontSizeProperty);
+    /// <param name="value">The value to set  <see cref="PlaceholderFontSizeProperty"/>.</param>
+    public static void SetPlaceholderFontSize(StyledElement element, double value) => element.SetValue(PlaceholderFontSizeProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PlaceholderFontSizeProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetPlaceholderFontSize(StyledElement element) => element.GetValue(PlaceholderFontSizeProperty);
 
     #endregion
 

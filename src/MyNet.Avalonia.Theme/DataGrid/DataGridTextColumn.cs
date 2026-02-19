@@ -39,7 +39,7 @@ public class DataGridTextColumn : DataGridBoundColumn<TextBox, TextBlock>
     {
         base.SynchronizeEditingControlProperties(control);
 
-        DataGridHelper.SynchronizeColumnProperty(this, control, TextBox.WatermarkProperty, WatermarkProperty);
+        DataGridHelper.SynchronizeColumnProperty(this, control, TextBox.PlaceholderTextProperty, PlaceholderTextProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, TextBox.InnerLeftContentProperty, InnerLeftContentProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, TextBox.InnerRightContentProperty, InnerRightContentProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, TextBox.TextAlignmentProperty, TextAlignmentProperty);

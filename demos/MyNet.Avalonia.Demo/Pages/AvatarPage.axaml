@@ -1,51 +1,50 @@
 <pages:Page x:Class="MyNet.Avalonia.Demo.Pages.AvatarPage"
-                     xmlns="https://github.com/avaloniaui"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:my="http://mynet.com/avalonia"
-                     xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
-                     ClipToBounds="False"
-                     mc:Ignorable="d"
-                     xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
-                     xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
-                     xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-                     xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
-                     x:DataType="vm:AvatarPageViewModel">
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
+            x:DataType="vm:AvatarPageViewModel"
+            x:Name="Root"
+            ClipToBounds="False"
+            mc:Ignorable="d">
 
-    <DockPanel>
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                <StackPanel>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowBackground}">
-                        <ToggleSwitch Name="ShowBackground" IsChecked="True" />
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
-        
-        <!-- Fields -->
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="150"
-                                 MinItemHeight="150"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <my:Avatar Theme="{Binding Appearance.ActiveTheme}"
+                           my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                           my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                           ShowBackground="{Binding #ShowBackground.IsChecked}"
+                           Source="{m:RandomImage AllowNull=False}"
+                           my:IconAssist.Icon="{Binding IconProvider.Icon}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-            <!-- Template for standard controls -->
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <my:Avatar Theme="{Binding Theme}"
-                               my:ThemeAssist.Role="{Binding Role}"
-                               my:ClassesAssist.Classes="{Binding Classes}"
-                               ShowBackground="{Binding #ShowBackground.IsChecked}"
-                               Source="{m:RandomImage}"
-                               Content="{m:RandomContent AllowNumber=False, AllowImage=False, AllowText=False, AllowNull=False}"
-                               ToolTip.Tip="{Binding Content}" />
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <my:Avatar Theme="{Binding Theme}"
+                           my:ThemeAssist.Role="{Binding Role}"
+                           my:ClassesAssist.Classes="{Binding Classes}"
+                           Source="{m:RandomImage}"
+                           Content="{Binding Converter={x:Static c:ContentConverter.Default}}" />
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-        </ctrl:ControlThemeViewer>
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <ToggleSwitch Name="ShowBackground" my:FormItem.Label="{my:LocObject ShowBackground}" IsChecked="True" />
+            </my:Form>
+        </v:ControlCatalogView.Settings>
 
-    </DockPanel>
+    </v:ControlCatalogView>
 </pages:Page>

@@ -6,28 +6,34 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
-            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             x:DataType="vm:SelectableTextBlockPageViewModel"
             ClipToBounds="False">
 
-    <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                             MinItemWidth="100"
-                             MinItemHeight="50"
-                             IsActive="{Binding IsActive}">
+    <v:ControlCatalogView>
 
-        <!-- Template for standard controls -->
-        <ctrl:ControlThemeViewer.ControlTemplate>
-            <DataTemplate x:DataType="ctrl:ControlDescription">
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <SelectableTextBlock Theme="{Binding Appearance.ActiveTheme}"
+                                     my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                                     my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                                     Text="{Binding ContentProvider.Content}"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center" />
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
+
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
                 <SelectableTextBlock Theme="{Binding Theme}"
                                      my:ThemeAssist.Role="{Binding Role}"
                                      my:ClassesAssist.Classes="{Binding Classes}"
-                                     ToolTip.Tip="{Binding Content}"
-                                     Text="{Binding Content}" />
+                                     Text="{Binding Converter={x:Static c:ContentConverter.Default}}" />
             </DataTemplate>
-        </ctrl:ControlThemeViewer.ControlTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-    </ctrl:ControlThemeViewer>
-
+    </v:ControlCatalogView>
 </pages:Page>

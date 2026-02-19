@@ -20,9 +20,10 @@ namespace MyNet.Avalonia.Theme.Palettes;
 /// </summary>
 public class BrushSet
 {
-    private readonly ColorTransition _colorTransition;
+    private readonly ColorTransition? _colorTransition;
     private readonly Dictionary<double, SolidColorBrush> _brushes = [];
     private readonly Dictionary<double, SolidColorBrush> _contrastedBrushes = [];
+    private bool _transitionsEnabled;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BrushSet"/> class with the specified color, transition duration, and easing.
@@ -31,17 +32,23 @@ public class BrushSet
     /// <param name="contrastedColor">The color to use for the contrast brush (optional; defaults to the contrasting color of the current color).</param>
     /// <param name="colorTransitionDuration">The duration of the color transition animation.</param>
     /// <param name="colorTransitionEasing">The easing function for the color transition animation.</param>
-    public BrushSet(Color color, Color contrastedColor, TimeSpan colorTransitionDuration, Easing colorTransitionEasing)
+    public BrushSet(Color color, Color contrastedColor, TimeSpan? colorTransitionDuration = null, Easing? colorTransitionEasing = null)
     {
-        _colorTransition = new ColorTransition
+        if (colorTransitionDuration > TimeSpan.Zero && colorTransitionEasing != null)
         {
-            Duration = colorTransitionDuration,
-            Easing = colorTransitionEasing,
-            Property = SolidColorBrush.ColorProperty
-        };
+            _colorTransition = new ColorTransition
+            {
+                Duration = colorTransitionDuration.Value,
+                Easing = colorTransitionEasing,
+                Property = SolidColorBrush.ColorProperty
+            };
+        }
 
-        Brush = CreateBrush(color);
-        Contrast = CreateBrush(contrastedColor);
+        using (PerformanceMonitor.Measure("[BrushSet] Constructor", maxBeforeWarning: 1.Milliseconds(), category: PerformanceCategory.Brushes))
+        {
+            Brush = CreateBrush(color);
+            Contrast = CreateBrush(contrastedColor);
+        }
     }
 
     /// <summary>
@@ -65,7 +72,7 @@ public class BrushSet
         opacity = NormalizeOpacity(opacity);
         if (_brushes.TryGetValue(opacity, out var existing)) return existing;
 
-        using (PerformanceMonitor.Measure($"[BrushSet] Created new opacity brush ({opacity:F2}) (Current opacity variants: {_brushes.Count})", maxBeforeWarning: 1.Milliseconds()))
+        using (PerformanceMonitor.Measure($"[BrushSet] Created new opacity brush ({opacity:F2}) (Current opacity variants: {_brushes.Count})", maxBeforeWarning: 1.Milliseconds(), category: PerformanceCategory.Brushes))
         {
             // Create new brush with color transition animation
             var newBrush = CreateBrush(Brush.Color, opacity);
@@ -87,7 +94,7 @@ public class BrushSet
         opacity = NormalizeOpacity(opacity);
         if (_contrastedBrushes.TryGetValue(opacity, out var existing)) return existing;
 
-        using (PerformanceMonitor.Measure($"[BrushSet] Created new contrasted opacity brush ({opacity:F2}) (Current opacity variants: {_contrastedBrushes.Count})", maxBeforeWarning: 1.Milliseconds()))
+        using (PerformanceMonitor.Measure($"[BrushSet] Created new contrasted opacity brush ({opacity:F2}) (Current opacity variants: {_contrastedBrushes.Count})", maxBeforeWarning: 1.Milliseconds(), category: PerformanceCategory.Brushes))
         {
             // Create new brush with color transition animation
             var newBrush = CreateBrush(Contrast.Color, opacity);
@@ -105,6 +112,12 @@ public class BrushSet
     /// <param name="contrastedColor">The color to use for the contrast brush (optional; defaults to the contrasting color of the current color).</param>
     public void UpdateColor(Color newColor, Color contrastedColor)
     {
+        // Enable transitions for smooth theme change animation
+        if (!_transitionsEnabled)
+        {
+            EnableTransitions();
+        }
+
         Brush.Color = newColor;
         Contrast.Color = contrastedColor;
 
@@ -121,6 +134,34 @@ public class BrushSet
     }
 
     /// <summary>
+    /// Enables color transitions on all brushes in this set.
+    /// Called automatically during the first theme change to add smooth animations.
+    /// </summary>
+    private void EnableTransitions()
+    {
+        if (_colorTransition == null) return;
+
+        _transitionsEnabled = true;
+
+        // Add transitions to main brushes
+        Brush.Transitions = [_colorTransition];
+        Contrast.Transitions = [_colorTransition];
+
+        // Add transitions to all cached opacity brushes
+        foreach (var brush in _brushes.Values)
+        {
+            brush.Transitions = [_colorTransition];
+        }
+
+        foreach (var brush in _contrastedBrushes.Values)
+        {
+            brush.Transitions = [_colorTransition];
+        }
+
+        PerformanceMonitor.Debug($"[BrushSet] Enabled transitions for {_brushes.Count + _contrastedBrushes.Count + 2} brushes", PerformanceCategory.Brushes);
+    }
+
+    /// <summary>
     /// Normalizes an opacity value to the range [0, 1] and rounds to three decimals for consistent caching.
     /// </summary>
     /// <param name="opacity">The opacity value to normalize.</param>
@@ -133,9 +174,21 @@ public class BrushSet
 
     /// <summary>
     /// Creates a new <see cref="SolidColorBrush"/> with the current color, specified opacity, and color transition animation.
+    /// Transitions are NOT added at creation time for performance - they're added lazily when theme changes.
     /// </summary>
     /// <param name="color">Color of the brush.</param>
     /// <param name="opacity">The opacity value for the brush (optional; defaults to 1.0).</param>
     /// <returns>A new <see cref="SolidColorBrush"/> instance.</returns>
-    private SolidColorBrush CreateBrush(Color color, double opacity = 1.0) => new(color) { Opacity = opacity, Transitions = [_colorTransition] };
+    private SolidColorBrush CreateBrush(Color color, double opacity = 1.0)
+    {
+        var brush = new SolidColorBrush(color) { Opacity = opacity };
+
+        // Only add transitions if already enabled (during theme change)
+        if (_transitionsEnabled && _colorTransition is not null)
+        {
+            brush.Transitions = [_colorTransition];
+        }
+
+        return brush;
+    }
 }

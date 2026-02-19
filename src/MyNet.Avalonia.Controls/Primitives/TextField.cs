@@ -18,42 +18,40 @@ public class TextField : ContentControl
 {
     static TextField() => ProxyProperty.Changed.AddClassHandler<TextField, IControlProxy>((o, e) => o.OnProxyChanged(e));
 
-    #region Watermark
+    #region PlaceholderText
 
     /// <summary>
-    /// Defines the <see cref="Watermark"/> property.
+    /// Defines the <see cref="PlaceholderText"/> property.
     /// </summary>
-    public static readonly StyledProperty<string?> WatermarkProperty =
-        AvaloniaProperty.Register<TextField, string?>(nameof(Watermark));
+    public static readonly StyledProperty<string?> PlaceholderTextProperty = AvaloniaProperty.Register<TextField, string?>(nameof(PlaceholderText));
 
     /// <summary>
     /// Gets or sets the placeholder or descriptive text that is displayed even if the text.
     /// property is not yet set.
     /// </summary>
-    public string? Watermark
+    public string? PlaceholderText
     {
-        get => GetValue(WatermarkProperty);
-        set => SetValue(WatermarkProperty, value);
+        get => GetValue(PlaceholderTextProperty);
+        set => SetValue(PlaceholderTextProperty, value);
     }
 
     #endregion
 
-    #region UseFloatingWatermark
+    #region UseFloatingPlaceholder
 
     /// <summary>
-    /// Defines the <see cref="UseFloatingWatermark"/> property.
+    /// Defines the <see cref="UseFloatingPlaceholder"/> property.
     /// </summary>
-    public static readonly StyledProperty<bool> UseFloatingWatermarkProperty =
-        AvaloniaProperty.Register<TextField, bool>(nameof(UseFloatingWatermark));
+    public static readonly StyledProperty<bool> UseFloatingPlaceholderProperty = AvaloniaProperty.Register<TextField, bool>(nameof(UseFloatingPlaceholder));
 
     /// <summary>
-    /// Gets or sets a value indicating whether the <see cref="Watermark"/> will still be shown above the
+    /// Gets or sets a value indicating whether the <see cref="PlaceholderText"/> will still be shown above the
     /// text even after a text value is set.
     /// </summary>
-    public bool UseFloatingWatermark
+    public bool UseFloatingPlaceholder
     {
-        get => GetValue(UseFloatingWatermarkProperty);
-        set => SetValue(UseFloatingWatermarkProperty, value);
+        get => GetValue(UseFloatingPlaceholderProperty);
+        set => SetValue(UseFloatingPlaceholderProperty, value);
     }
 
     #endregion
@@ -163,20 +161,20 @@ public class TextField : ContentControl
 
     #endregion
 
-    #region WatermarkFontSize
+    #region PlaceholderFontSize
 
     /// <summary>
-    /// Provides WatermarkFontSize Property.
+    /// Provides PlaceholderFontSize Property.
     /// </summary>
-    public static readonly StyledProperty<double> WatermarkFontSizeProperty = AvaloniaProperty.Register<TextField, double>(nameof(WatermarkFontSize));
+    public static readonly StyledProperty<double> PlaceholderFontSizeProperty = AvaloniaProperty.Register<TextField, double>(nameof(PlaceholderFontSize));
 
     /// <summary>
-    /// Gets or sets the WatermarkFontSize property.
+    /// Gets or sets the PlaceholderFontSize property.
     /// </summary>
-    public double WatermarkFontSize
+    public double PlaceholderFontSize
     {
-        get => GetValue(WatermarkFontSizeProperty);
-        set => SetValue(WatermarkFontSizeProperty, value);
+        get => GetValue(PlaceholderFontSizeProperty);
+        set => SetValue(PlaceholderFontSizeProperty, value);
     }
 
     #endregion
@@ -280,11 +278,15 @@ public class TextField : ContentControl
             oldHintProxy.IsEmptyChanged -= textField.IsEmptyChangedCallback;
             oldHintProxy.IsFocusedChanged -= textField.IsFocusedChangedCallback;
             oldHintProxy.IsActiveChanged -= textField.IsActiveChangedCallback;
-            oldHintProxy.Dispose();
         }
 
         if (args.NewValue.Value is not { } newHintProxy)
             return;
+
+        newHintProxy.IsEmptyChanged -= textField.IsEmptyChangedCallback;
+        newHintProxy.IsFocusedChanged -= textField.IsFocusedChangedCallback;
+        newHintProxy.IsActiveChanged -= textField.IsActiveChangedCallback;
+
         newHintProxy.IsEmptyChanged += textField.IsEmptyChangedCallback;
         newHintProxy.IsFocusedChanged += textField.IsFocusedChangedCallback;
         newHintProxy.IsActiveChanged += textField.IsActiveChangedCallback;
@@ -308,13 +310,13 @@ public class TextField : ContentControl
     {
         var isFloating = Proxy.IsActive();
         var isFocused = Proxy.IsFocused();
-        PseudoClasses.Set(PseudoClassName.Active, isFocused && ((UseFloatingWatermark && isFloating) || !UseFloatingWatermark));
+        PseudoClasses.Set(PseudoClassName.Active, isFocused && ((UseFloatingPlaceholder && isFloating) || !UseFloatingPlaceholder));
     }
 
     private void RefreshIsFloating()
     {
         var isFloating = Proxy.IsActive();
-        PseudoClasses.Set(PseudoClassName.Floating, UseFloatingWatermark && isFloating);
+        PseudoClasses.Set(PseudoClassName.Floating, UseFloatingPlaceholder && isFloating);
     }
 
     private void RefreshIsEmpty()

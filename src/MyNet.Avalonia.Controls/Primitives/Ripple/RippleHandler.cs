@@ -28,9 +28,14 @@ internal sealed class RippleHandler(IImmutableBrush brush,
     private TimeSpan _animationElapsed;
     private TimeSpan? _lastServerTime;
     private TimeSpan? _secondStepStart;
+    private readonly double _durationTicksInverse = 1.0 / duration.Ticks;
 
     public override void OnRender(ImmediateDrawingContext drawingContext)
     {
+        // Early exit if animation is complete
+        if (_animationElapsed >= duration)
+            return;
+
         if (_lastServerTime.HasValue) _animationElapsed += CompositionNow - _lastServerTime.Value;
         _lastServerTime = CompositionNow;
 
@@ -39,13 +44,13 @@ internal sealed class RippleHandler(IImmutableBrush brush,
 
         if (transitions)
         {
-            var expandingStep = easing.Ease((double)_animationElapsed.Ticks / duration.Ticks);
+            var expandingStep = easing.Ease(_animationElapsed.Ticks * _durationTicksInverse);
             currentRadius = radius * expandingStep;
 
             if (_secondStepStart is { } secondStepStart)
             {
-                var opacityStep = easing.Ease((double)(_animationElapsed - secondStepStart).Ticks /
-                                               (duration - secondStepStart).Ticks);
+                var remainingDuration = duration - secondStepStart;
+                var opacityStep = easing.Ease((double)(_animationElapsed - secondStepStart).Ticks / remainingDuration.Ticks);
                 currentOpacity = opacity - (opacity * opacityStep);
             }
         }

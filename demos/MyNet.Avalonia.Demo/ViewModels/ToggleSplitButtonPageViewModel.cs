@@ -5,20 +5,23 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ClassProviders;
+using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class ToggleSplitButtonPageViewModel : AutoBuildPageViewModel
+internal sealed class ToggleSplitButtonPageViewModel : ControlCatalogViewModel
 {
     public ToggleSplitButtonPageViewModel()
-        : base(nameof(ToggleSplitButton), [
-            new ControlThemeBuilder()
-            .AddLayouts("Circle")
-            .AddStyles("Light", "Solid", "Outlined", "Text")
-            .AddCartesianStyles("Solid", "Shadow").AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultRoles()
-            .AddSizes("Small", "Medium", "Large")
-        ])
-    { }
+        : base(nameof(ToggleSplitButton),
+            [
+                new ControlThemeBuilder()
+                    .AddShapes("shape-circle")
+                    .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-text", "shadow-control")
+                    .AddDefaultSizes()
+                    .AddDefaultRoles()
+            ]) => Playground.ClassProviders.AddRange([PlacementClassProvider]);
+
+    public ClassProvider PlacementClassProvider { get; } = new("position-right");
 }

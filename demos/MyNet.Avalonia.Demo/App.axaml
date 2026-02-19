@@ -9,15 +9,6 @@
              xmlns:viewsDialogs="clr-namespace:MyNet.Avalonia.Demo.Views.Dialogs"
              RequestedThemeVariant="Dark">
 
-    <!-- Local resources -->
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://MyNet.Avalonia.Demo/Controls/ControlThemeViewer/ControlThemeViewer.axaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
-    
     <!-- Styles -->
     <Application.Styles>
 
@@ -25,8 +16,8 @@
         <my:MyTheme />
         <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Default.axaml" />
 
-        <!-- Local styles -->
-        <StyleInclude Source="Styles/Settings.axaml" />
+        <!-- App Styles -->
+        <StyleInclude Source="avares://MyNet.Avalonia.Demo/Styles/ControlCatalog.axaml" />
     </Application.Styles>
 
     <!-- Page DataTemplates -->
@@ -85,8 +76,12 @@
             <pages:ClockPage />
         </DataTemplate>
 
-        <DataTemplate DataType="vm:ColorPickerPageViewModel">
-            <pages:ColorPickerPage />
+        <DataTemplate DataType="vm:ClockSelectorPageViewModel">
+            <pages:ClockSelectorPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:ColorViewPageViewModel">
+            <pages:ColorViewPage />
         </DataTemplate>
 
         <DataTemplate DataType="vm:DataGridPageViewModel">
@@ -103,6 +98,10 @@
 
         <DataTemplate DataType="vm:DropDownButtonPageViewModel">
             <pages:DropDownButtonPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:EllipsePageViewModel">
+            <pages:EllipsePage />
         </DataTemplate>
 
         <DataTemplate DataType="vm:ExpanderPageViewModel">
@@ -141,8 +140,20 @@
             <pages:MenuPage />
         </DataTemplate>
 
+        <DataTemplate DataType="vm:NavigationMenuPageViewModel">
+            <pages:NavigationMenuPage />
+        </DataTemplate>
+
         <DataTemplate DataType="vm:NotificationPageViewModel">
             <pages:NotificationPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:OutlinedIconPageViewModel">
+            <pages:OutlinedIconPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:PaginationPageViewModel">
+            <pages:PaginationPage />
         </DataTemplate>
 
         <DataTemplate DataType="vm:ProgressBarPageViewModel">
@@ -177,8 +188,8 @@
             <pages:ThemePage />
         </DataTemplate>
 
-        <DataTemplate DataType="vm:TimePickerPageViewModel">
-            <pages:TimePickerPage />
+        <DataTemplate DataType="vm:TimeViewPageViewModel">
+            <pages:TimeViewPage />
         </DataTemplate>
 
         <DataTemplate DataType="vm:ToggleSplitButtonPageViewModel">

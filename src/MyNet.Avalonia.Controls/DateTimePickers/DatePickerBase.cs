@@ -35,18 +35,18 @@ public class DatePickerBase : TemplatedControl
 
     public static readonly StyledProperty<bool> AllowSpinProperty = AvaloniaProperty.Register<DatePickerBase, bool>(nameof(AllowSpin));
 
-    public static readonly StyledProperty<string?> WatermarkProperty = AvaloniaProperty.Register<DatePickerBase, string?>(nameof(Watermark));
+    public static readonly StyledProperty<string?> PlaceholderTextProperty = AvaloniaProperty.Register<DatePickerBase, string?>(nameof(PlaceholderText));
 
-    public static readonly StyledProperty<DateTime> DisplayDateProperty = AvaloniaProperty.Register<CalendarDatePicker, DateTime>(nameof(DisplayDate), DateTime.Today);
+    public static readonly StyledProperty<DateTime> DisplayDateProperty = AvaloniaProperty.Register<CalendarDatePickerEx, DateTime>(nameof(DisplayDate), DateTime.Today);
 
-    public static readonly StyledProperty<DateTime?> DisplayDateStartProperty = AvaloniaProperty.Register<CalendarDatePicker, DateTime?>(nameof(DisplayDateStart));
+    public static readonly StyledProperty<DateTime?> DisplayDateStartProperty = AvaloniaProperty.Register<CalendarDatePickerEx, DateTime?>(nameof(DisplayDateStart));
 
-    public static readonly StyledProperty<DateTime?> DisplayDateEndProperty = AvaloniaProperty.Register<CalendarDatePicker, DateTime?>(nameof(DisplayDateEnd));
+    public static readonly StyledProperty<DateTime?> DisplayDateEndProperty = AvaloniaProperty.Register<CalendarDatePickerEx, DateTime?>(nameof(DisplayDateEnd));
 
-    public string? Watermark
+    public string? PlaceholderText
     {
-        get => GetValue(WatermarkProperty);
-        set => SetValue(WatermarkProperty, value);
+        get => GetValue(PlaceholderTextProperty);
+        set => SetValue(PlaceholderTextProperty, value);
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Used for binding")]

@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Avalonia.Media;
 using Avalonia.Threading;
 using DynamicData;
-using MyNet.Avalonia.Demo.Resources;
 using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Enums;
 using MyNet.Avalonia.Theme.Extensions;
@@ -23,7 +22,6 @@ using MyNet.UI.ViewModels.List.Filtering;
 using MyNet.UI.ViewModels.List.Filtering.Filters;
 using MyNet.UI.ViewModels.List.Paging;
 using MyNet.UI.ViewModels.List.Sorting;
-using MyNet.UI.ViewModels.Workspace;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
@@ -39,8 +37,6 @@ internal sealed class IconsPageViewModel : PageViewModel
     {
         CanPage = true
     };
-
-    protected override string CreateTitle() => DemoResources.Icons;
 
     protected override bool CanRefreshOnNavigatedTo(NavigationContext navigationContext) => !IsLoaded;
 

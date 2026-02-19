@@ -1,0 +1,57 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT PLACEHOLDERCONTENTCONTROL THEME                   -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type my:PlaceholderContentControl}" TargetType="my:PlaceholderContentControl">
+            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+            <Setter Property="HorizontalContentAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+            <Setter Property="VerticalContentAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Grid>
+                        <ContentPresenter Name="PART_ContentPresenter"
+                                          Padding="{TemplateBinding Padding}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          IsVisible="{TemplateBinding Content, Converter={x:Static my:NullConverter.IsNotNull}}" />
+
+                        <ContentPresenter Name="PART_PlaceholderPresenter"
+                                          Padding="{TemplateBinding Padding}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          Content="{TemplateBinding PlaceholderText}"
+                                          ContentTemplate="{TemplateBinding PlaceholderTemplate}"
+                                          IsVisible="{TemplateBinding Content, Converter={x:Static my:NullConverter.IsNull}}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+
+            <Style Selector="^.variant-watermark">
+                <Setter Property="my:IconAssist.Alignment" Value="Top" />
+
+                <Style Selector="^ /template/ ContentPresenter#PART_PlaceholderPresenter">
+                    <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="my:ClassesAssist.Classes" Value="Caption" />
+                    <Setter Property="FontStyle" Value="Italic" />
+                </Style>
+            </Style>
+        </ControlTheme>
+
+    </Styles.Resources>
+</Styles>

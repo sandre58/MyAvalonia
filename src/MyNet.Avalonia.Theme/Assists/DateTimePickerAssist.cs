@@ -10,135 +10,135 @@ namespace MyNet.Avalonia.Theme.Assists;
 
 public static class DateTimePickerAssist
 {
-    #region WatermarkDay
+    #region PlaceholderDay
 
     /// <summary>
-    /// Provides WatermarkDay Property for attached DatePickerAssist element.
+    /// Provides PlaceholderDay Property for attached DatePickerAssist element.
     /// </summary>
-    public static readonly AttachedProperty<string> WatermarkDayProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("WatermarkDay", typeof(DateTimePickerAssist));
+    public static readonly AttachedProperty<string> PlaceholderDayProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("PlaceholderDay", typeof(DateTimePickerAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkDayProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="WatermarkDayProperty"/>.</param>
-    public static void SetWatermarkDay(StyledElement element, string value) => element.SetValue(WatermarkDayProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkDayProperty"/>.
+    /// Accessor for Attached  <see cref="PlaceholderDayProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static string GetWatermarkDay(StyledElement element) => element.GetValue(WatermarkDayProperty);
+    /// <param name="value">The value to set  <see cref="PlaceholderDayProperty"/>.</param>
+    public static void SetPlaceholderDay(StyledElement element, string value) => element.SetValue(PlaceholderDayProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PlaceholderDayProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static string GetPlaceholderDay(StyledElement element) => element.GetValue(PlaceholderDayProperty);
 
     #endregion
 
-    #region WatermarkMonth
+    #region PlaceholderMonth
 
     /// <summary>
-    /// Provides WatermarkMonth Property for attached DatePickerAssist element.
+    /// Provides PlaceholderMonth Property for attached DatePickerAssist element.
     /// </summary>
-    public static readonly AttachedProperty<string> WatermarkMonthProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("WatermarkMonth", typeof(DateTimePickerAssist));
+    public static readonly AttachedProperty<string> PlaceholderMonthProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("PlaceholderMonth", typeof(DateTimePickerAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkMonthProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="WatermarkMonthProperty"/>.</param>
-    public static void SetWatermarkMonth(StyledElement element, string value) => element.SetValue(WatermarkMonthProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkMonthProperty"/>.
+    /// Accessor for Attached  <see cref="PlaceholderMonthProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static string GetWatermarkMonth(StyledElement element) => element.GetValue(WatermarkMonthProperty);
+    /// <param name="value">The value to set  <see cref="PlaceholderMonthProperty"/>.</param>
+    public static void SetPlaceholderMonth(StyledElement element, string value) => element.SetValue(PlaceholderMonthProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PlaceholderMonthProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static string GetPlaceholderMonth(StyledElement element) => element.GetValue(PlaceholderMonthProperty);
 
     #endregion
 
-    #region WatermarkYear
+    #region PlaceholderYear
 
     /// <summary>
-    /// Provides WatermarkYear Property for attached DatePickerAssist element.
+    /// Provides PlaceholderYear Property for attached DatePickerAssist element.
     /// </summary>
-    public static readonly AttachedProperty<string> WatermarkYearProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("WatermarkYear", typeof(DateTimePickerAssist));
+    public static readonly AttachedProperty<string> PlaceholderYearProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("PlaceholderYear", typeof(DateTimePickerAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkYearProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="WatermarkYearProperty"/>.</param>
-    public static void SetWatermarkYear(StyledElement element, string value) => element.SetValue(WatermarkYearProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkYearProperty"/>.
+    /// Accessor for Attached  <see cref="PlaceholderYearProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static string GetWatermarkYear(StyledElement element) => element.GetValue(WatermarkYearProperty);
+    /// <param name="value">The value to set  <see cref="PlaceholderYearProperty"/>.</param>
+    public static void SetPlaceholderYear(StyledElement element, string value) => element.SetValue(PlaceholderYearProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PlaceholderYearProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static string GetPlaceholderYear(StyledElement element) => element.GetValue(PlaceholderYearProperty);
 
     #endregion
 
-    #region WatermarkHour
+    #region PlaceholderHour
 
     /// <summary>
-    /// Provides WatermarkHour Property for attached DateTimePickerBehavior element.
+    /// Provides PlaceholderHour Property for attached DateTimePickerBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<string> WatermarkHourProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("WatermarkHour", typeof(DateTimePickerAssist));
+    public static readonly AttachedProperty<string> PlaceholderHourProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("PlaceholderHour", typeof(DateTimePickerAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkHourProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="WatermarkHourProperty"/>.</param>
-    public static void SetWatermarkHour(StyledElement element, string value) => element.SetValue(WatermarkHourProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkHourProperty"/>.
+    /// Accessor for Attached  <see cref="PlaceholderHourProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static string GetWatermarkHour(StyledElement element) => element.GetValue(WatermarkHourProperty);
+    /// <param name="value">The value to set  <see cref="PlaceholderHourProperty"/>.</param>
+    public static void SetPlaceholderHour(StyledElement element, string value) => element.SetValue(PlaceholderHourProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PlaceholderHourProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static string GetPlaceholderHour(StyledElement element) => element.GetValue(PlaceholderHourProperty);
 
     #endregion
 
-    #region WatermarkMinute
+    #region PlaceholderMinute
 
     /// <summary>
-    /// Provides WatermarkMinute Property for attached DateTimePickerBehavior element.
+    /// Provides PlaceholderMinute Property for attached DateTimePickerBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<string> WatermarkMinuteProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("WatermarkMinute", typeof(DateTimePickerAssist));
+    public static readonly AttachedProperty<string> PlaceholderMinuteProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("PlaceholderMinute", typeof(DateTimePickerAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkMinuteProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="WatermarkMinuteProperty"/>.</param>
-    public static void SetWatermarkMinute(StyledElement element, string value) => element.SetValue(WatermarkMinuteProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkMinuteProperty"/>.
+    /// Accessor for Attached  <see cref="PlaceholderMinuteProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static string GetWatermarkMinute(StyledElement element) => element.GetValue(WatermarkMinuteProperty);
+    /// <param name="value">The value to set  <see cref="PlaceholderMinuteProperty"/>.</param>
+    public static void SetPlaceholderMinute(StyledElement element, string value) => element.SetValue(PlaceholderMinuteProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PlaceholderMinuteProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static string GetPlaceholderMinute(StyledElement element) => element.GetValue(PlaceholderMinuteProperty);
 
     #endregion
 
-    #region WatermarkSecond
+    #region PlaceholderSecond
 
     /// <summary>
-    /// Provides WatermarkSecond Property for attached DateTimePickerBehavior element.
+    /// Provides PlaceholderSecond Property for attached DateTimePickerBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<string> WatermarkSecondProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("WatermarkSecond", typeof(DateTimePickerAssist));
+    public static readonly AttachedProperty<string> PlaceholderSecondProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("PlaceholderSecond", typeof(DateTimePickerAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkSecondProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="WatermarkSecondProperty"/>.</param>
-    public static void SetWatermarkSecond(StyledElement element, string value) => element.SetValue(WatermarkSecondProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="WatermarkSecondProperty"/>.
+    /// Accessor for Attached  <see cref="PlaceholderSecondProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static string GetWatermarkSecond(StyledElement element) => element.GetValue(WatermarkSecondProperty);
+    /// <param name="value">The value to set  <see cref="PlaceholderSecondProperty"/>.</param>
+    public static void SetPlaceholderSecond(StyledElement element, string value) => element.SetValue(PlaceholderSecondProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PlaceholderSecondProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static string GetPlaceholderSecond(StyledElement element) => element.GetValue(PlaceholderSecondProperty);
 
     #endregion
 }

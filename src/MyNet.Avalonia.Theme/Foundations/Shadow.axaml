@@ -1,0 +1,28 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <Style Selector=":is(Visual)">
+
+        <Style Selector="^.shadow-control">
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Control}" />
+        </Style>
+
+        <Style Selector="^.shadow-surface">
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
+        </Style>
+
+        <Style Selector="^.shadow-header">
+            <Setter Property="my:HeaderAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
+        </Style>
+
+        <Style Selector="^.shadow-items">
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="my:ItemsAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Control}" />
+            <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Sm}" />
+        </Style>
+
+    </Style>
+</Styles>

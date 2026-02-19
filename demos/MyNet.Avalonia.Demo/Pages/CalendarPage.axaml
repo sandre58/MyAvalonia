@@ -5,51 +5,56 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
-            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:CalendarPageViewModel"
+            Name="Root"
             mc:Ignorable="d">
 
-    <DockPanel>
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <StackPanel Spacing="{StaticResource MyNet.Spacing.Large}">
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <StackPanel Classes="size-lg"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <Calendar my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                              my:ItemsAssist.Role="{Binding Appearance.ActiveItemsRole}"
+                              my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                              SelectionMode="{Binding #SelectionMode.SelectedValue}"
+                              AllowTapRangeSelection="{Binding #AllowTapRangeSelection.IsChecked}" />
+                    <my:Calendar my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                                 my:ItemsAssist.Role="{Binding Appearance.ActiveItemsRole}"
+                                 my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                                 SelectionMode="{Binding #SelectionMode.SelectedValue}"
+                                 AllowTapRangeSelection="{Binding #AllowTapRangeSelection.IsChecked}" />
+                </StackPanel>
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
+
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <StackPanel Classes="size-md" Orientation="Horizontal">
+                    <Calendar my:ThemeAssist.Role="{Binding Role}" my:ItemsAssist.Role="{Binding ItemsRole}" my:ClassesAssist.Classes="{Binding Classes}" />
+                    <my:Calendar my:ThemeAssist.Role="{Binding Role}" my:ItemsAssist.Role="{Binding ItemsRole}" my:ClassesAssist.Classes="{Binding Classes}" />
+                </StackPanel>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
+
+        <v:ControlCatalogView.Settings>
+            <my:Form>
                 <ComboBox Name="SelectionMode"
-                          ItemsSource="{my:EnumSource {x:Type CalendarSelectionMode}}"
-                          PlaceholderText="{my:Loc SelectionMode}"
-                          SelectedIndex="0"
-                          SelectedValueBinding="{ReflectionBinding Value}" />
-                <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock AllowTapRangeSelection}">
-                    <ToggleSwitch Name="AllowTapRangeSelection" IsChecked="False" />
-                </HeaderedContentControl>
-            </StackPanel>
-        </HeaderedContentControl>
+                          my:FormItem.Label="{my:LocObject SelectionMode}"
+                          my:ItemsBehavior.EnumSourceType="{x:Type CalendarSelectionMode}"
+                          SelectedIndex="0" />
+                <ToggleSwitch Name="AllowTapRangeSelection"
+                              my:FormItem.Label="{my:LocObject AllowTapRangeSelection}"
+                              IsChecked="False" />
+            </my:Form>
+        </v:ControlCatalogView.Settings>
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="280"
-                                 MinItemHeight="300"
-                                 IsActive="{Binding IsActive}">
-
-            <!-- Template for standard controls -->
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <StackPanel Classes="Large">
-                        <Calendar my:ThemeAssist.Role="{Binding Role}" 
-                                  my:ClassesAssist.Classes="{Binding Classes}" 
-                                  AllowTapRangeSelection="{Binding IsChecked, ElementName=AllowTapRangeSelection}" 
-                                  SelectionMode="{Binding ElementName=SelectionMode, Path=SelectedValue}" />
-                        <my:Calendar my:ThemeAssist.Role="{Binding Role}" 
-                                  my:ClassesAssist.Classes="{Binding Classes}" 
-                                  AllowTapRangeSelection="{Binding IsChecked, ElementName=AllowTapRangeSelection}" 
-                                  Classes="Accent Shadow" SelectionMode="{Binding ElementName=SelectionMode, Path=SelectedValue}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
-        </ctrl:ControlThemeViewer>
-
-    </DockPanel>
+    </v:ControlCatalogView>
 </pages:Page>

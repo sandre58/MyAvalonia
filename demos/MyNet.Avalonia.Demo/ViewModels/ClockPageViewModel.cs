@@ -5,18 +5,18 @@
 // -----------------------------------------------------------------------
 
 using MyNet.Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class ClockPageViewModel : AutoBuildPageViewModel
+internal sealed class ClockPageViewModel : ControlCatalogViewModel
 {
     public ClockPageViewModel()
         : base(nameof(Clock), [
             new ControlThemeBuilder()
-            .AddStyles("Solid", "Outlined")
-            .AddCartesianStyles("Solid", "Outlined", "Shadow")
+            .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-transparent", "shadow-surface")
             .AddThemeRoles()
+            .AddItemsThemeRoles()
         ])
     { }
 }

@@ -80,6 +80,8 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
         var itemWidth = ItemWidth;
         var itemHeight = ItemHeight;
         var orientation = Orientation;
+        var itemSpacing = ItemSpacing;
+        var lineSpacing = LineSpacing;
 
         // Determine the space required for items in the same row/column based on horizontal/vertical arrangement
         var curLineSize = new UvSize(orientation);
@@ -109,6 +111,9 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
             itemWidthSet ? itemWidth : 0,
             itemHeightSet ? itemHeight : 0);
 
+        var spacingSize = new UvSize(orientation, itemSpacing, lineSpacing);
+        var isFirstInLine = true;
+
         foreach (var child in Children)
         {
             UvSize sz;
@@ -129,20 +134,33 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                     sz.V = itemSetSize.V;
                 }
 
-                if ((curLineSize.U + sz.U).GreaterThan(uvConstraint.U))
+                var spaceU = isFirstInLine ? 0 : spacingSize.U;
+                if ((curLineSize.U + sz.U + spaceU).GreaterThan(uvConstraint.U))
                 {
+                    // Finish current line
                     panelSize.U = Max(curLineSize.U, panelSize.U);
                     panelSize.V += curLineSize.V;
+                    if (curLineSize.V > 0)
+                    {
+                        panelSize.V += spacingSize.V;
+                    }
+
+                    // Start new line with this element
+                    curLineSize = sz;
+                    isFirstInLine = false;
                 }
                 else
                 {
-                    curLineSize.U += sz.U;
+                    curLineSize.U += sz.U + spaceU;
                     curLineSize.V = Max(sz.V, curLineSize.V);
-                    panelSize.U = Max(curLineSize.U, panelSize.U);
-                    panelSize.V += curLineSize.V;
+                    isFirstInLine = false;
                 }
 
+                // FixToRb forces end of line
+                panelSize.U = Max(curLineSize.U, panelSize.U);
+                panelSize.V += curLineSize.V;
                 curLineSize = new UvSize(orientation);
+                isFirstInLine = true;
             }
             else
             {
@@ -154,26 +172,39 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                     itemWidthSet ? itemWidth : child.DesiredSize.Width,
                     itemHeightSet ? itemHeight : child.DesiredSize.Height);
 
+                var spaceU = isFirstInLine ? 0 : spacingSize.U;
+
                 // Need to switch to another line
-                if ((curLineSize.U + sz.U).GreaterThan(uvConstraint.U))
+                if ((curLineSize.U + sz.U + spaceU).GreaterThan(uvConstraint.U))
                 {
+                    // Finish current line
                     panelSize.U = Max(curLineSize.U, panelSize.U);
                     panelSize.V += curLineSize.V;
+                    if (curLineSize.V > 0)
+                    {
+                        panelSize.V += spacingSize.V;
+                    }
+
                     curLineSize = sz;
+                    isFirstInLine = false;
 
                     // The element is wider than the constraint - give it a separate line
-                    if (!sz.U.GreaterThan(uvConstraint.U))
-                        continue;
-                    panelSize.U = Max(sz.U, panelSize.U);
-                    panelSize.V += sz.V;
-                    curLineSize = new UvSize(orientation);
+                    if (sz.U.GreaterThan(uvConstraint.U))
+                    {
+                        panelSize.U = Max(sz.U, panelSize.U);
+                        panelSize.V += sz.V;
+                        panelSize.V += spacingSize.V;
+                        curLineSize = new UvSize(orientation);
+                        isFirstInLine = true;
+                    }
                 }
 
                 // Continue to accumulate a line
                 else
                 {
-                    curLineSize.U += sz.U;
+                    curLineSize.U += sz.U + spaceU;
                     curLineSize.V = Max(sz.V, curLineSize.V);
+                    isFirstInLine = false;
                 }
             }
         }
@@ -192,6 +223,8 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
 
         var itemWidthSet = !double.IsNaN(ItemWidth);
         var itemHeightSet = !double.IsNaN(ItemHeight);
+        var itemSpacing = ItemSpacing;
+        var lineSpacing = LineSpacing;
 
         // This is the size for non-space measurement
         var itemSetSize = new UvSize(Orientation,
@@ -200,6 +233,8 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
 
         // Measure UVSize with the given space constraint, used for measuring elements when ItemWidth and ItemHeight are not set
         var uvFinalSize = new UvSize(Orientation, finalSize.Width, finalSize.Height);
+
+        var spacingSize = new UvSize(Orientation, itemSpacing, lineSpacing);
 
         // Collection of elements in the same direction (row/column)
         var lineUvCollection = new List<UvCollection>();
@@ -234,7 +269,11 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                     sz.V = itemSetSize.V;
                 }
 
-                if ((curLineUIs.TotalU + sz.U).GreaterThan(uvFinalSize.U))
+                var spaceU = curLineUIs.Count > 0 ? spacingSize.U : 0;
+
+                // TotalU doesn't include spacing, so we need to add it for existing items
+                var totalSpacingU = curLineUIs.Count > 0 ? (curLineUIs.Count * spacingSize.U) : 0;
+                if ((curLineUIs.TotalU + totalSpacingU + sz.U).GreaterThan(uvFinalSize.U))
                 {
                     if (curLineUIs.Count > 0)
                     {
@@ -258,8 +297,13 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                     itemWidthSet ? ItemWidth : child.DesiredSize.Width,
                     itemHeightSet ? ItemHeight : child.DesiredSize.Height);
 
+                var spaceU = curLineUIs.Count > 0 ? spacingSize.U : 0;
+
+                // TotalU doesn't include spacing, so we need to add it for existing items
+                var totalSpacingU = curLineUIs.Count > 0 ? (curLineUIs.Count * spacingSize.U) : 0;
+
                 // Need to switch to another line
-                if ((curLineUIs.TotalU + sz.U).GreaterThan(uvFinalSize.U))
+                if ((curLineUIs.TotalU + totalSpacingU + sz.U).GreaterThan(uvFinalSize.U))
                 {
                     if (curLineUIs.Count > 0)
                     {
@@ -315,25 +359,34 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                 static int valueSelector(KeyValuePair<Control, UvLengthSize> b) => b.Value.ULengthCount;
                 var maxElementCount = lineUvCollection
                     .Max(uiSet => uiSet.UiCollection.Sum(valueSelector));
-                adaptULength = (uvFinalSize.U - (maxElementCount * itemSetSize.U)) / maxElementCount;
+                var totalSpacingU = (maxElementCount - 1) * spacingSize.U;
+                adaptULength = (uvFinalSize.U - (maxElementCount * itemSetSize.U) - totalSpacingU) / maxElementCount;
                 adaptULength = Max(adaptULength, 0);
             }
 
             if (isFillV && itemSetSize.V > 0)
             {
                 isAdaptV = true;
-                adaptVLength = uvFinalSize.V / lineUvCollection.Count;
+                var totalSpacingV = (lineUvCollection.Count - 1) * spacingSize.V;
+                adaptVLength = (uvFinalSize.V - totalSpacingV) / lineUvCollection.Count;
             }
 
             var isHorizontal = Orientation == Orientation.Horizontal;
+            var lineIndex = 0;
             foreach (var uvCollection in lineUvCollection)
             {
                 double u = 0;
                 var lineUiEles = uvCollection.UiCollection.Keys.ToList();
                 var linevV = isAdaptV ? adaptVLength : uvCollection.LineV;
+                var itemIndex = 0;
                 foreach (var child in lineUiEles)
                 {
                     var childSize = uvCollection.UiCollection[child];
+
+                    if (itemIndex > 0)
+                    {
+                        u += spacingSize.U;
+                    }
 
                     var layoutSlotU = childSize.UvSize.U + (childSize.ULengthCount * adaptULength);
                     var layoutSlotV = isAdaptV ? linevV : childSize.UvSize.V;
@@ -363,9 +416,16 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                     }
 
                     u += layoutSlotU;
+                    itemIndex++;
                 }
 
                 accumulatedV += linevV;
+                if (lineIndex < lineUvCollection.Count - 1)
+                {
+                    accumulatedV += spacingSize.V;
+                }
+
+                lineIndex++;
                 lineUiEles.Clear();
             }
         }

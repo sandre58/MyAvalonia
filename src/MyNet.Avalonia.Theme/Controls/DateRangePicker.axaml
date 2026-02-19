@@ -1,0 +1,608 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <Styles.Resources>
+
+        <ControlTheme x:Key="{x:Type my:DateRangePicker}" TargetType="my:DateRangePicker">
+            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+            <Setter Property="Cursor" Value="IBeam" />
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.TextField}" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="PlaceholderText" Value="{x:Static sys:String.Empty}" />
+            <Setter Property="InputMethod.IsInputMethodEnabled" Value="True" />
+            <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.TextField.Md}" />
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.TextField.Md}" />
+            <Setter Property="FocusAdorner" Value="{x:Null}" />
+            <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
+            <Setter Property="my:IconAssist.Alignment" Value="Left" />
+            <Setter Property="my:IconAssist.Spacing" Value="{StaticResource MyNet.Spacing.Icon}" />
+            <Setter Property="my:IconAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+            <Setter Property="my:TextFieldAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
+            <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Inner.Md}" />
+            <Setter Property="my:TextFieldAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+            <Setter Property="my:TextFieldAssist.PlaceholderFontSize" Value="{Binding $self.FontSize}" />
+            <Setter Property="my:TextFieldAssist.FloatingScale" Value="0.75" />
+            <Setter Property="my:TextFieldAssist.FloatingOffset" Value="12" />
+            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
+            <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Center" />
+            <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
+            <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
+            <Setter Property="my:ItemsAssist.Margin" Value="0" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem}" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
+            <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
+            <Setter Property="my:ProxyBehavior.Enable" Value="True" />
+            <Setter Property="Focusable" Value="True" />
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
+            <Setter Property="IsTodayHighlighted" Value="True" />
+
+            <Style Selector="^">
+                <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
+                <Setter Property="Background" Value="{my:Theme Surface.Level4}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+                <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
+                <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:Foreground, Opacity=Focus}" />
+                <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeRole}" />
+                <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
+                <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+                <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:Theme Control.Border.Hover}" />
+                <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
+                <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Foreground, Opacity=High}" />
+                <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Foreground, Opacity=High}" />
+                <Setter Property="my:TextFieldAssist.PlaceholderForeground" Value="{my:Foreground, Opacity=Medium}" />
+                <Setter Property="my:PopupAssist.Background" Value="{my:ThemeContext Surface.Level1}" />
+                <Setter Property="my:PopupAssist.Role" Value="{Binding $self.(my:ThemeAssist.Role)}" />
+                <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
+                <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
+                <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
+                <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
+                <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:PopupAssist.Background), Opacity=Hover, Contrast=True}" />
+                <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
+                <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
+                <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary, Role='(my:PopupAssist.Role)'}" />
+                <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
+                <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
+            </Style>
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="my:DateRangePicker">
+                    <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
+                        <Panel Name="PART_RootPanel">
+
+                            <Border Name="PART_MainBorder"
+                                    my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding CornerRadius}" />
+
+                            <Border Name="PART_HoverBorder"
+                                    Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                    BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                            <Border Name="PART_ActiveBorder"
+                                    Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                                    BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                            <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                                <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                                    <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto">
+
+                                        <!-- Icon -->
+                                        <ContentControl x:Name="PART_Icon"
+                                                        Grid.Column="0"
+                                                        Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
+                                                        VerticalAlignment="Stretch"
+                                                        Content="{TemplateBinding (my:IconAssist.Icon)}"
+                                                        ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                        Focusable="False"
+                                                        Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
+                                            <ContentControl.IsVisible>
+                                                <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                                    <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                    <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                </MultiBinding>
+                                            </ContentControl.IsVisible>
+                                        </ContentControl>
+
+                                        <my:TextField Name="PART_TextField"
+                                                      Grid.Column="1"
+                                                      Padding="{TemplateBinding (my:TextFieldAssist.InnerPadding)}"
+                                                      HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Center"
+                                                      ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
+                                                      FloatingOffset="{TemplateBinding (my:TextFieldAssist.FloatingOffset)}"
+                                                      FloatingScale="{TemplateBinding (my:TextFieldAssist.FloatingScale)}"
+                                                      InactiveForeground="{TemplateBinding (my:TextFieldAssist.PlaceholderForeground)}"
+                                                      InnerFontSize="{TemplateBinding (my:TextFieldAssist.InnerFontSize)}"
+                                                      InnerForeground="{TemplateBinding (my:TextFieldAssist.InnerForeground)}"
+                                                      InnerLeftContent="{TemplateBinding (my:TextFieldAssist.InnerLeftContent)}"
+                                                      InnerRightContent="{TemplateBinding (my:TextFieldAssist.InnerRightContent)}"
+                                                      Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
+                                                      UseFloatingPlaceholder="{TemplateBinding (my:TextFieldAssist.UseFloatingPlaceholder)}"
+                                                      PlaceholderText="{TemplateBinding PlaceholderText}"
+                                                      PlaceholderFontSize="{TemplateBinding (my:TextFieldAssist.PlaceholderFontSize)}">
+                                            <Grid Name="PART_PassThroughElement" ColumnDefinitions="*, Auto, * Auto">
+                                                <!-- Text -->
+                                                <TextBox Name="PART_StartTextBox"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Stretch"
+                                                         CaretBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                         Classes="no-disablable"
+                                                         DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
+                                                         Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                         IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                         IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
+                                                         SelectionBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
+                                                         SelectionForegroundBrush="{TemplateBinding Foreground}"
+                                                         Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
+                                                <TextBlock Grid.Column="1"
+                                                           Margin="{my:Thickness Sm, Horizontal}"
+                                                           VerticalAlignment="Center"
+                                                           Text="{TemplateBinding SeparatorText}" />
+                                                <TextBox Name="{x:Static my:DateRangePicker.PartEndTextBox}"
+                                                         Grid.Column="2"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Stretch"
+                                                         CaretBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                         Classes="no-disablable"
+                                                         DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
+                                                         Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                         IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                         IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
+                                                         SelectionBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
+                                                         SelectionForegroundBrush="{TemplateBinding Foreground}"
+                                                         Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
+                                            </Grid>
+                                        </my:TextField>
+
+                                        <!-- Clipboard button -->
+                                        <Button Name="PART_ClipboardButton"
+                                                Grid.Column="2"
+                                                Classes="kind-tool is-clipboard is-stretch size-xs no-disablable"
+                                                CommandParameter="{Binding Text, ElementName=PART_StartTextBox, Mode=OneWay}"
+                                                IsVisible="False" />
+
+                                        <!-- Clear button -->
+                                        <Button Name="PART_ClearButton"
+                                                Grid.Column="3"
+                                                Classes="kind-tool is-stretch no-disablable"
+                                                Command="{Binding $parent[my:DateRangePicker].Clear}"
+                                                Content="{my:Icon Close}"
+                                                IsVisible="False" />
+
+                                        <!-- Date button -->
+                                        <Button Name="PART_Button"
+                                                Grid.Column="5"
+                                                Classes="kind-tool is-stretch no-disablable"
+                                                Classes.is-selected="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
+                                                Content="{my:Icon Calendar}" />
+                                    </Grid>
+                                </my:Ripple>
+                            </Border>
+
+                            <!-- UnderText -->
+                            <Border Name="PART_BorderUnderText">
+                                <TextBlock Name="PART_UnderText"
+                                           Margin="0 0 0 -15"
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Bottom"
+                                           FontSize="{TemplateBinding (my:TextFieldAssist.UnderFontSize)}"
+                                           FontStyle="{TemplateBinding (my:TextFieldAssist.UnderFontStyle)}"
+                                           FontWeight="{TemplateBinding (my:TextFieldAssist.UnderFontWeight)}"
+                                           Foreground="{TemplateBinding (my:TextFieldAssist.UnderForeground)}"
+                                           IsVisible="{Binding (my:TextFieldAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                           Text="{TemplateBinding (my:TextFieldAssist.UnderText)}" />
+                            </Border>
+
+                            <Panel Name="PART_PopupContainer">
+                                <Popup Name="PART_Popup"
+                                       my:PopupBehavior.EnableSlide="True"
+                                       HorizontalOffset="-2"
+                                       InheritsTransform="True"
+                                       IsLightDismissEnabled="True"
+                                       IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
+                                       Placement="BottomEdgeAlignedLeft"
+                                       PlacementTarget="PART_MainBorder"
+                                       WindowManagerAddShadowHint="False">
+                                    <Border Classes="kind-popup override-background"
+                                            Background="{TemplateBinding (my:PopupAssist.Background)}">
+                                        <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                            <Grid ColumnDefinitions="*,Auto,*">
+                                                <my:Calendar Name="{x:Static my:DateRangePicker.PartStartCalendar}"
+                                                             my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}"
+                                                             Background="Transparent"
+                                                             BorderThickness="0"
+                                                             FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                                             Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
+                                                             IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
+                                                    <my:Calendar.Styles>
+                                                        <Style Selector="my|CalendarDayButton">
+                                                            <Setter Property="my:ClassesAssist.Classes" Value="Range" />
+                                                        </Style>
+                                                    </my:Calendar.Styles>
+                                                </my:Calendar>
+                                                <Separator Grid.Column="1" Margin="0" Classes="orientation-vertical" />
+                                                <my:Calendar Name="{x:Static my:DateRangePicker.PartEndCalendar}"
+                                                             Grid.Column="2"
+                                                             my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}"
+                                                             Background="Transparent"
+                                                             BorderThickness="0"
+                                                             FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                                             Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
+                                                             IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
+                                                    <my:Calendar.Styles>
+                                                        <Style Selector="my|CalendarDayButton">
+                                                            <Setter Property="my:ClassesAssist.Classes" Value="Range" />
+                                                        </Style>
+                                                    </my:Calendar.Styles>
+                                                </my:Calendar>
+                                            </Grid>
+                                        </Border>
+                                    </Border>
+                                </Popup>
+                            </Panel>
+                        </Panel>
+                    </DataValidationErrors>
+                </ControlTemplate>
+            </Setter>
+
+            <!-- Layout -->
+            <Style Selector="^.icon-right, ^.button-right">
+                <Style Selector="^ /template/ ContentControl#PART_Icon">
+                    <Setter Property="Grid.Column" Value="4" />
+                </Style>
+            </Style>
+
+            <Style Selector="^.icon-right:not(.button-right) /template/ Grid#PART_Grid">
+                <Setter Property="Margin" Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.AddLeftToRight}}" />
+            </Style>
+
+            <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
+                <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Left}}" />
+            </Style>
+
+            <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
+                <Setter Property="Margin" Value="0" />
+            </Style>
+
+            <Style Selector="^[(my|TextFieldAssist.UseFloatingPlaceholder)=True]">
+                <Style Selector="^ /template/ my|TextField#PART_TextField">
+                    <Setter Property="Margin" Value="{Binding (my:TextFieldAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
+                </Style>
+                <Style Selector="^ /template/ Button#PART_ClearButton">
+                    <Setter Property="Padding" Value="{my:Thickness Sm}" />
+                </Style>
+            </Style>
+
+            <!-- With clear button -->
+            <Style Selector="^[(my|TextFieldAssist.ShowClearButton)=True]">
+                <Style Selector="^[(my|ProxyBehavior.IsEmpty)=False] /template/ Button#PART_ClearButton">
+                    <Setter Property="IsVisible" Value="True" />
+                </Style>
+            </Style>
+
+            <!-- With clipboard button -->
+            <Style Selector="^[(my|TextFieldAssist.ShowClipboardButton)=True]">
+                <Style Selector="^[(my|ProxyBehavior.IsEmpty)=False] /template/ Button#PART_ClipboardButton">
+                    <Setter Property="IsVisible" Value="True" />
+                </Style>
+            </Style>
+
+            <!-- Is Read only -->
+            <Style Selector="^[(my|TextFieldBehavior.IsTextEditable)=False]">
+                <Setter Property="Cursor" Value="Arrow" />
+            </Style>
+
+            <!-- Hover -->
+            <Style Selector="^:not(:disabled):not(:focus-within):pointerover">
+                <Style Selector="^ /template/ Border#PART_HoverBorder">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Style>
+
+            <!-- Focused -->
+            <Style Selector="^:focus-within, ^:flyout-open">
+                <Setter Property="BorderThickness" Value="1" />
+
+                <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Style>
+
+            <!-- Error -->
+            <Style Selector="^:error">
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="{my:Theme Validation.Error}" />
+                <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:Theme Validation.Error}" />
+                <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:Theme Validation.Error}" />
+                <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Validation.Error}" />
+
+                <Style Selector="^ /template/ my|Underline#PART_Underline">
+                    <Setter Property="ActiveBrush" Value="{my:Theme Validation.Error}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#PART_BorderUnderText">
+                    <Setter Property="IsVisible" Value="False" />
+                </Style>
+            </Style>
+
+            <!-- Colors -->
+            <Style Selector="^[(my|ThemeAssist.Role)=Contrast]">
+                <Setter Property="Background" Value="{my:Foreground, Opacity=Overlay}" />
+                <Setter Property="BorderBrush" Value="{my:Foreground, Opacity=Focus}" />
+                <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:Foreground, Opacity=Hover}" />
+                <Setter Property="my:PopupAssist.Role" Value="Primary" />
+            </Style>
+
+            <!-- Styles -->
+            <Style Selector="^.Outlined">
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="my:InteractionAssist.HoverBackground" Value="Transparent" />
+                <Setter Property="my:InteractionAssist.ActiveBackground" Value="Transparent" />
+                <Setter Property="my:InteractionAssist.RippleColor" Value="Transparent" />
+            </Style>
+
+            <!-- Layouts -->
+            <Style Selector="^.Circle">
+                <Setter Property="Padding" Value="8 0 0 0" />
+                <Setter Property="my:TextFieldAssist.InnerPadding" Value="0 4 8 4" />
+            </Style>
+
+            <!-- Sizes -->
+            <Style Selector="^.Small">
+                <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.TextField.Sm}" />
+            </Style>
+
+            <Style Selector="^.Large">
+                <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.TextField.Lg}" />
+            </Style>
+        </ControlTheme>
+
+        <ControlTheme x:Key="MyNet.Theme.DateRangePicker.Underline" TargetType="my:DateRangePicker" BasedOn="{StaticResource {x:Type my:DateRangePicker}}">
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.TextField.Underline.Md}" />
+            <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Underline.Inner.Md}" />
+            <Setter Property="my:TextFieldAssist.UseFloatingPlaceholder" Value="True" />
+
+            <Style Selector="^">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
+                <Setter Property="my:InteractionAssist.HoverBackground" Value="Transparent" />
+                <Setter Property="my:InteractionAssist.ActiveBackground" Value="Transparent" />
+                <Setter Property="my:InteractionAssist.RippleColor" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0 0 0 1" />
+                <Setter Property="CornerRadius" Value="0" />
+            </Style>
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="my:DateRangePicker">
+                    <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
+                        <Panel Name="PART_RootPanel">
+
+                            <Border Name="PART_MainBorder"
+                                    my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding CornerRadius}" />
+
+                            <Border Name="PART_HoverBorder"
+                                    Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                    BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                            <Border ClipToBounds="False">
+                                <Grid Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto">
+
+                                    <!-- Icon -->
+                                    <ContentControl x:Name="PART_Icon"
+                                                    Grid.Column="0"
+                                                    Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
+                                                    VerticalAlignment="Stretch"
+                                                    Content="{TemplateBinding (my:IconAssist.Icon)}"
+                                                    ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                    Focusable="False"
+                                                    Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
+                                        <ContentControl.IsVisible>
+                                            <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </ContentControl.IsVisible>
+                                    </ContentControl>
+
+                                    <my:TextField Grid.Column="1"
+                                                  Margin="{TemplateBinding (my:TextFieldAssist.InnerPadding)}"
+                                                      HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Center"
+                                                  ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
+                                                  FloatingOffset="{TemplateBinding (my:TextFieldAssist.FloatingOffset)}"
+                                                  FloatingScale="{TemplateBinding (my:TextFieldAssist.FloatingScale)}"
+                                                  InactiveForeground="{TemplateBinding (my:TextFieldAssist.PlaceholderForeground)}"
+                                                  InnerFontSize="{TemplateBinding (my:TextFieldAssist.InnerFontSize)}"
+                                                  InnerForeground="{TemplateBinding (my:TextFieldAssist.InnerForeground)}"
+                                                  InnerLeftContent="{TemplateBinding (my:TextFieldAssist.InnerLeftContent)}"
+                                                  InnerRightContent="{TemplateBinding (my:TextFieldAssist.InnerRightContent)}"
+                                                  Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
+                                                  UseFloatingPlaceholder="{TemplateBinding (my:TextFieldAssist.UseFloatingPlaceholder)}"
+                                                  PlaceholderText="{TemplateBinding PlaceholderText}"
+                                                  PlaceholderFontSize="{TemplateBinding (my:TextFieldAssist.PlaceholderFontSize)}">
+
+                                        <!-- Text -->
+                                        <Grid Name="PART_PassThroughElement" ColumnDefinitions="*, Auto, * Auto">
+                                            <!-- Text -->
+                                            <TextBox Name="PART_StartTextBox"
+                                                     HorizontalAlignment="Stretch"
+                                                     VerticalAlignment="Stretch"
+                                                     CaretBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                     Classes="no-disablable"
+                                                     DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
+                                                     Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                     IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                     IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
+                                                     SelectionBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
+                                                     SelectionForegroundBrush="{TemplateBinding Foreground}"
+                                                     Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
+                                            <TextBlock Grid.Column="1"
+                                                       Margin="{my:Thickness Sm, Horizontal}"
+                                                       VerticalAlignment="Center"
+                                                       Text="{TemplateBinding SeparatorText}" />
+                                            <TextBox Name="{x:Static my:DateRangePicker.PartEndTextBox}"
+                                                     Grid.Column="2"
+                                                     HorizontalAlignment="Stretch"
+                                                     VerticalAlignment="Stretch"
+                                                     CaretBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                     Classes="no-disablable"
+                                                     DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
+                                                     Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                     IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
+                                                     IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
+                                                     SelectionBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
+                                                     SelectionForegroundBrush="{TemplateBinding Foreground}"
+                                                     Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
+                                        </Grid>
+
+                                    </my:TextField>
+
+                                    <!-- Clipboard button -->
+                                    <Button Name="PART_ClipboardButton"
+                                            Grid.Column="2"
+                                            Margin="{my:Thickness Xs,  Left}"
+                                            Classes="kind-tool is-clipboard no-disablable"
+                                            CommandParameter="{Binding Text, ElementName=PART_StartTextBox, Mode=OneWay}"
+                                            IsVisible="False" />
+
+                                    <!-- Clear button -->
+                                    <Button Name="PART_ClearButton"
+                                            Grid.Column="3"
+                                            Margin="{my:Thickness Xs, Left}"
+                                            Classes="kind-tool no-disablable"
+                                            Command="{Binding $parent[my:DateRangePicker].Clear}"
+                                            Content="{my:Icon Close}"
+                                            IsVisible="False" />
+
+                                    <!-- Date button -->
+                                    <Button Name="PART_Button"
+                                            Grid.Column="5"
+                                            Margin="{my:Thickness Xs, Left}"
+                                            Classes="kind-tool no-disablable"
+                                            Classes.is-selected="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
+                                            Content="{my:Icon Calendar}" />
+                                </Grid>
+                            </Border>
+
+                            <!-- Underline -->
+                            <my:Underline x:Name="PART_Underline"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Bottom"
+                                          ActiveBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                          ActiveHeight="1.4"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          CornerRadius="0"
+                                          Focusable="False"
+                                          InactiveHeight="0"
+                                          IsHitTestVisible="False"
+                                          Opacity="1" />
+
+                            <!-- UnderText -->
+                            <Border Name="PART_BorderUnderText">
+                                <TextBlock Name="PART_UnderText"
+                                           Margin="0 0 0 -15"
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Bottom"
+                                           FontSize="{TemplateBinding (my:TextFieldAssist.UnderFontSize)}"
+                                           FontStyle="{TemplateBinding (my:TextFieldAssist.UnderFontStyle)}"
+                                           FontWeight="{TemplateBinding (my:TextFieldAssist.UnderFontWeight)}"
+                                           Foreground="{TemplateBinding (my:TextFieldAssist.UnderForeground)}"
+                                           IsVisible="{Binding (my:TextFieldAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                           Text="{TemplateBinding (my:TextFieldAssist.UnderText)}" />
+                            </Border>
+
+                            <Panel Name="PART_PopupContainer">
+                                <Popup Name="PART_Popup"
+                                       my:PopupBehavior.EnableSlide="True"
+                                       HorizontalOffset="-2"
+                                       InheritsTransform="True"
+                                       IsLightDismissEnabled="True"
+                                       IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
+                                       Placement="BottomEdgeAlignedLeft"
+                                       PlacementTarget="PART_MainBorder"
+                                       WindowManagerAddShadowHint="False">
+                                    <Border Classes="kind-popup">
+                                        <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                            <Grid ColumnDefinitions="*,Auto,*">
+                                                <my:Calendar Name="{x:Static my:DateRangePicker.PartStartCalendar}"
+                                                             my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}"
+                                                             Background="Transparent"
+                                                             BorderThickness="0"
+                                                             FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                                             Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
+                                                             IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
+                                                    <my:Calendar.Styles>
+                                                        <Style Selector="my|CalendarDayButton">
+                                                            <Setter Property="my:ClassesAssist.Classes" Value="Range" />
+                                                        </Style>
+                                                    </my:Calendar.Styles>
+                                                </my:Calendar>
+                                                <Separator Grid.Column="1" Margin="0" Classes="orientation-vertical" />
+                                                <my:Calendar Name="{x:Static my:DateRangePicker.PartEndCalendar}"
+                                                             Grid.Column="2"
+                                                             my:ThemeAssist.Role="{TemplateBinding my:PopupAssist.Role}"
+                                                             Background="Transparent"
+                                                             BorderThickness="0"
+                                                             FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                                             Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
+                                                             IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}">
+                                                    <my:Calendar.Styles>
+                                                        <Style Selector="my|CalendarDayButton">
+                                                            <Setter Property="my:ClassesAssist.Classes" Value="Range" />
+                                                        </Style>
+                                                    </my:Calendar.Styles>
+                                                </my:Calendar>
+                                            </Grid>
+                                        </Border>
+                                    </Border>
+                                </Popup>
+                            </Panel>
+                        </Panel>
+                    </DataValidationErrors>
+                </ControlTemplate>
+            </Setter>
+
+            <!-- Focused -->
+            <Style Selector="^:focus-within, ^:flyout-open">
+                <Setter Property="BorderThickness" Value="0 0 0 1" />
+
+                <Style Selector="^ /template/ my|Underline#PART_Underline">
+                    <Setter Property="IsActive" Value="True" />
+                </Style>
+            </Style>
+
+            <!-- Error -->
+            <Style Selector="^:error">
+                <Setter Property="BorderThickness" Value="0 0 0 1" />
+            </Style>
+
+            <Style Selector="^[(my|ThemeAssist.Role)=Contrast]">
+                <Setter Property="Background" Value="Transparent" />
+            </Style>
+
+        </ControlTheme>
+
+    </Styles.Resources>
+</Styles>

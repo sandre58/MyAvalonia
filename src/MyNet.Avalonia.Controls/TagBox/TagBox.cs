@@ -43,7 +43,7 @@ public class TagBox : TemplatedControl
         AvaloniaProperty.Register<TagBox, IList<string>>(
             nameof(Tags));
 
-    public static readonly StyledProperty<string?> WatermarkProperty = TextBox.WatermarkProperty.AddOwner<TagBox>();
+    public static readonly StyledProperty<string?> PlaceholderTextProperty = TextBox.PlaceholderTextProperty.AddOwner<TagBox>();
 
     public static readonly StyledProperty<bool> AcceptsReturnProperty =
         TextBox.AcceptsReturnProperty.AddOwner<TagBox>();
@@ -138,10 +138,10 @@ public class TagBox : TemplatedControl
         set => SetValue(TextProperty, value);
     }
 
-    public string? Watermark
+    public string? PlaceholderText
     {
-        get => GetValue(WatermarkProperty);
-        set => SetValue(WatermarkProperty, value);
+        get => GetValue(PlaceholderTextProperty);
+        set => SetValue(PlaceholderTextProperty, value);
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Used for binding")]

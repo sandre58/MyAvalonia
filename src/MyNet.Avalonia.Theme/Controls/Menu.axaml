@@ -1,0 +1,550 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="using:Avalonia.Controls.Converters"
+        xmlns:my="http://mynet.com/avalonia"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <Styles.Resources>
+
+        <c:PlatformKeyGestureConverter x:Key="KeyGestureConverter" />
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT SEPARATOR THEME                                   -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type Separator}" TargetType="Separator">
+            <Setter Property="Background" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Height" Value="1" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="{my:Thickness Sm, Vertical}" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="Separator">
+                    <Border Height="{TemplateBinding Height}"
+                            Padding="{TemplateBinding Margin}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT MENUITEM THEME                                    -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type MenuItem}" TargetType="MenuItem">
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="Focusable" Value="True" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeRole Primary}" />
+            <!-- Narrow padding should be used for mouse input, when non-narrow one should be used for touch input in future. -->
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.MenuItem}" />
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Menu}" />
+            <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />
+            <Setter Property="FontWeight" Value="{StaticResource MyNet.Font.Weight}" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="TextBlock.TextDecorations" Value="{x:Null}" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Panel Name="PART_RootPanel">
+
+                        <Border Name="PART_MainBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+
+                        <Border Name="PART_HoverBorder"
+                                Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                        <my:Ripple Name="PART_Ripple" Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="ToggleIcon" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIcon" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGT" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemChevron" />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentControl Name="PART_ToggleIconPresenter"
+                                                Grid.Column="0"
+                                                Width="{StaticResource MyNet.Size.Icon.Sm}"
+                                                Height="{StaticResource MyNet.Size.Icon.Sm}"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="{TemplateBinding my:InteractionAssist.ActiveForeground}"
+                                                IsVisible="False" />
+
+                                <Viewbox Name="PART_IconPresenter"
+                                         Grid.Column="1"
+                                         Margin="{my:Thickness Md, Horizontal}"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         IsVisible="False"
+                                         Stretch="Uniform">
+                                    <ContentPresenter Width="{StaticResource MyNet.Size.Icon.Sm}"
+                                                      Height="{StaticResource MyNet.Size.Icon.Sm}"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      Content="{TemplateBinding Icon}"
+                                                      Foreground="{TemplateBinding Foreground}" />
+                                </Viewbox>
+
+                                <ContentPresenter Name="PART_HeaderPresenter"
+                                                  Grid.Column="2"
+                                                  Margin="{my:Thickness Md, Horizontal}"
+                                                  HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Center"
+                                                  Content="{TemplateBinding Header}"
+                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                  Foreground="{TemplateBinding Foreground}"
+                                                  RecognizesAccessKey="True" />
+                                <TextBlock Name="PART_InputGestureText"
+                                           Grid.Column="3"
+                                           Margin="{my:Thickness Md, Horizontal}"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"
+                                           FontSize="{StaticResource MyNet.Font.Size.Sm}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           Opacity="{DynamicResource MyNet.Opacity.High}"
+                                           Text="{TemplateBinding InputGesture, Converter={StaticResource KeyGestureConverter}}" />
+                                <PathIcon Name="PART_ExpandIcon"
+                                          Grid.Column="4"
+                                          Width="{StaticResource MyNet.Size.Glyph.Md}"
+                                          Height="{StaticResource MyNet.Size.Glyph.Md}"
+                                          VerticalAlignment="Center"
+                                          Data="{StaticResource MyNet.Geometry.ChevronRight}"
+                                          Foreground="{TemplateBinding Foreground}" />
+                            </Grid>
+                        </my:Ripple>
+                        <Popup Name="PART_Popup"
+                               my:PopupBehavior.EnableSlide="True"
+                               HorizontalOffset="5"
+                               IsLightDismissEnabled="False"
+                               IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}"
+                               Placement="RightEdgeAlignedTop"
+                               VerticalOffset="-2"
+                               WindowManagerAddShadowHint="False">
+                            <Border Name="InnerPopup" MaxHeight="{StaticResource MyNet.MaxHeight.Menu}"
+                                    my:ShadowAssist.ShadowDepth="{StaticResource MyNet.Shadow.Popup}"
+                                    BorderThickness="0"
+                                    CornerRadius="{StaticResource MyNet.Corners.Popup}"
+                                    TextElement.Foreground="{TemplateBinding Foreground}"
+                                    Classes="kind-popup override-style">
+                                <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                    <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
+                                        <ItemsPresenter Name="PART_ItemsPresenter"
+                                                        Grid.IsSharedSizeScope="True"
+                                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                        KeyboardNavigation.TabNavigation="Continue" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Border>
+                        </Popup>
+                    </Panel>
+                </ControlTemplate>
+            </Setter>
+
+            <Style Selector="^[(my|ThemeAssist.Context)=Default] /template/ Border#InnerPopup">
+                <Setter Property="Background" Value="{my:ThemeContext Surface.Level1}" />
+            </Style>
+            <Style Selector="^[(my|ThemeAssist.Context)=Contrast] /template/ Border#InnerPopup">
+                <Setter Property="Background" Value="{my:Foreground Contrast=True}" />
+            </Style>
+
+            <Style Selector="^:icon /template/ Viewbox#PART_IconPresenter">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+            <Style Selector="^:empty /template/ PathIcon#PART_ExpandIcon">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+
+            <!-- Hover -->
+            <Style Selector="^:not(:disabled):selected">
+                <Style Selector="^ /template/ Border#PART_HoverBorder">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Style>
+
+            <!-- Separator -->
+            <Style Selector="^:separator">
+                <Setter Property="Template">
+                    <ControlTemplate>
+                        <Separator />
+                    </ControlTemplate>
+                </Setter>
+            </Style>
+
+            <!-- Checked -->
+            <Style Selector="^:checked:toggle /template/ ContentControl#PART_ToggleIconPresenter">
+                <Setter Property="IsVisible" Value="True" />
+                <Setter Property="Content">
+                    <Template>
+                        <PathIcon Classes="size-xs" Data="{StaticResource MyNet.Geometry.Check}" />
+                    </Template>
+                </Setter>
+            </Style>
+
+            <!-- Checked (Radio) -->
+            <Style Selector="^:checked:radio /template/ ContentControl#PART_ToggleIconPresenter">
+                <Setter Property="IsVisible" Value="True" />
+                <Setter Property="Content">
+                    <Template>
+                        <PathIcon Classes="size-xs" Data="{StaticResource MyNet.Geometry.CircleSmall}" />
+                    </Template>
+                </Setter>
+            </Style>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- TOPLEVEL MENUITEM THEME                                   -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="MyNet.Theme.MenuItem.TopLevel" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Panel Name="PART_RootPanel">
+
+                        <Border Name="PART_MainBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+
+                        <Border Name="PART_HoverBorder"
+                                Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                            <my:Ripple Name="PART_Ripple">
+                                <ContentPresenter Name="PART_HeaderPresenter"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Center"
+                                                  Content="{TemplateBinding Header}"
+                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                  RecognizesAccessKey="True" />
+                            </my:Ripple>
+                        </Border>
+                        <Popup Name="PART_Popup"
+                               my:PopupBehavior.EnableSlide="True"
+                               MinWidth="{Binding $parent[MenuItem].Bounds.Width}"
+                               HorizontalOffset="-2"
+                               IsLightDismissEnabled="True"
+                               IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}"
+                               OverlayInputPassThroughElement="{Binding $parent[Menu]}"
+                               Placement="BottomEdgeAlignedLeft"
+                               VerticalOffset="2"
+                               WindowManagerAddShadowHint="False">
+                            <Border MaxHeight="{StaticResource MyNet.MaxHeight.Menu}" Classes="kind-popup">
+                                <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                    <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
+                                        <ItemsPresenter Name="PART_ItemsPresenter"
+                                                        Grid.IsSharedSizeScope="True"
+                                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                        KeyboardNavigation.TabNavigation="Continue" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Border>
+                        </Popup>
+                    </Panel>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- HORIZONTAL MENUITEM THEME                                 -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="MyNet.Theme.MenuItem.Horizontal" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.MenuItem.Horizontal}" />
+            <Setter Property="Margin" Value="2 0 2 0" />
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT MENU THEME                                        -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type Menu}" TargetType="Menu">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.MenuItem.TopLevel}" />
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Menu}" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="Menu">
+                    <Border Padding="{TemplateBinding Padding}"
+                            HorizontalAlignment="Stretch"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ClipToBounds="True"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <ItemsPresenter Name="PART_ItemsPresenter"
+                                        VerticalAlignment="Stretch"
+                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                        KeyboardNavigation.TabNavigation="Continue" />
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT CONTEXTMENU THEME                                 -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type ContextMenu}" TargetType="ContextMenu">
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Popup}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="Background" Value="{my:ThemeContext Surface.Level1}" />
+            <Setter Property="Foreground" Value="{my:ThemeBrush $self.Background, Contrast=True}" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Popup}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+            <Setter Property="Margin" Value="{StaticResource MyNet.Margin.Popup}" />
+            <Setter Property="MaxHeight" Value="{StaticResource MyNet.MaxHeight.Menu}" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="WindowManagerAddShadowHint" Value="False" />
+            <Setter Property="my:PopupBehavior.EnableSlide" Value="True" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="ContextMenu">
+                    <Border MinHeight="{TemplateBinding MinHeight}"
+                            MaxWidth="{TemplateBinding MaxWidth}"
+                            MaxHeight="{TemplateBinding MaxHeight}"
+                            Margin="{TemplateBinding Margin}"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            TextElement.Foreground="{TemplateBinding Foreground}"
+                            Classes="kind-popup override-style no-transitions">
+                        <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                            <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
+                                <ItemsPresenter Name="PART_ItemsPresenter"
+                                                Grid.IsSharedSizeScope="True"
+                                                ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                KeyboardNavigation.TabNavigation="Continue" />
+                            </ScrollViewer>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+
+            <Style Selector="^:not(.no-transitions)">
+                <Setter Property="Transitions">
+                    <Transitions>
+                        <DoubleTransition Property="Opacity" Duration="{StaticResource MyNet.Animation.Fade}" Easing="CircularEaseOut" />
+                        <TransformOperationsTransition Property="RenderTransform" Duration="{StaticResource MyNet.Animation.Slide}" Easing="CircularEaseOut" />
+                    </Transitions>
+                </Setter>
+            </Style>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT FLYOUTPRESENTER THEME                             -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type FlyoutPresenter}" TargetType="FlyoutPresenter">
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Popup}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="Background" Value="{my:ThemeContext Surface.Level1}" />
+            <Setter Property="Foreground" Value="{my:ThemeBrush $self.Background, Contrast=True}" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Popup}" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Popup}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="{StaticResource MyNet.Margin.Popup}" />
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="UseLayoutRounding" Value="False" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="Cursor" Value="Arrow" />
+            <Setter Property="my:PopupBehavior.EnableSlide" Value="True" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="FlyoutPresenter">
+                    <Border Margin="{TemplateBinding Margin}"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            TextElement.Foreground="{TemplateBinding Foreground}"
+                            Classes="kind-popup override-style no-transitions">
+                        <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                            <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  HorizontalContentAlignment="Stretch"
+                                                  VerticalContentAlignment="Stretch"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            </ScrollViewer>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+
+            <Style Selector="^:not(.no-transitions)">
+                <Setter Property="Transitions">
+                    <Transitions>
+                        <DoubleTransition Property="Opacity" Duration="{StaticResource MyNet.Animation.Fade}" Easing="CircularEaseOut" />
+                        <TransformOperationsTransition Property="RenderTransform" Duration="{StaticResource MyNet.Animation.Slide}" Easing="CircularEaseOut" />
+                    </Transitions>
+                </Setter>
+            </Style>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT MENUFLYOUTPRESENTER THEME                         -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type MenuFlyoutPresenter}" TargetType="MenuFlyoutPresenter">
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Popup}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="Background" Value="{my:ThemeContext Surface.Level1}" />
+            <Setter Property="Foreground" Value="{my:ThemeBrush $self.Background, Contrast=True}" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Popup}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="{StaticResource MyNet.Margin.Popup}" />
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="UseLayoutRounding" Value="False" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="Cursor" Value="Arrow" />
+            <Setter Property="my:PopupBehavior.EnableSlide" Value="True" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="MenuFlyoutPresenter">
+                    <Border Margin="{TemplateBinding Margin}"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            TextElement.Foreground="{TemplateBinding Foreground}"
+                            Classes="kind-popup override-style no-transitions">
+                        <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                            <ScrollViewer CornerRadius="{TemplateBinding CornerRadius}"
+                                          HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                          Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}"
+                                          VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                <ItemsPresenter Name="PART_ItemsPresenter"
+                                                Margin="{TemplateBinding Padding}"
+                                                Grid.IsSharedSizeScope="True"
+                                                ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                KeyboardNavigation.TabNavigation="Continue" />
+                            </ScrollViewer>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+
+            <Style Selector="^:not(.no-transitions)">
+                <Setter Property="Transitions">
+                    <Transitions>
+                        <DoubleTransition Property="Opacity" Duration="{StaticResource MyNet.Animation.Fade}" Easing="CircularEaseOut" />
+                        <TransformOperationsTransition Property="RenderTransform" Duration="{StaticResource MyNet.Animation.Slide}" Easing="CircularEaseOut" />
+                    </Transitions>
+                </Setter>
+            </Style>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- HORIZONTAL MENUFLYOUTPRESENTER THEME                      -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="MyNet.Theme.MenuFlyoutPresenter.Horizontal" TargetType="MenuFlyoutPresenter" BasedOn="{StaticResource {x:Type MenuFlyoutPresenter}}">
+            <Setter Property="MinWidth" Value="32" />
+            <Setter Property="Padding" Value="8 0" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </ControlTheme>
+
+        <MenuFlyout x:Key="MyNet.MenuFlyout.Text" x:DataType="sys:Object" FlyoutPresenterTheme="{StaticResource {x:Type MenuFlyoutPresenter}}">
+            <MenuItem Name="MyNet.MenuItem.Cut"
+                      Command="{Binding $parent[TextBox].Cut}"
+                      Header="{my:Loc Cut}"
+                      Icon="{my:Icon ContentCut}"
+                      InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=cut}"
+                      IsEnabled="{Binding $parent[TextBox].CanCut}" />
+            <MenuItem Name="MenuItemCopy"
+                      Command="{Binding $parent[TextBox].Copy}"
+                      Header="{my:Loc Copy}"
+                      Icon="{my:Icon ContentCopy}"
+                      InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=copy}"
+                      IsEnabled="{Binding $parent[TextBox].CanCopy}" />
+            <MenuItem Name="MenuItemPaste"
+                      Command="{Binding $parent[TextBox].Paste}"
+                      Header="{my:Loc Paste}"
+                      Icon="{my:Icon ContentPaste}"
+                      InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=paste}"
+                      IsEnabled="{Binding $parent[TextBox].CanPaste}" />
+            <Separator />
+            <MenuItem Name="MenuItemUndo"
+                      Command="{Binding $parent[TextBox].Undo}"
+                      Header="{my:Loc Undo}"
+                      Icon="{my:Icon Undo}"
+                      InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=undo}"
+                      IsEnabled="{Binding $parent[TextBox].CanUndo}" />
+            <MenuItem Name="MenuItemRedo"
+                      Command="{Binding $parent[TextBox].Redo}"
+                      Header="{my:Loc Redo}"
+                      Icon="{my:Icon Redo}"
+                      InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=redo}"
+                      IsEnabled="{Binding $parent[TextBox].CanRedo}" />
+            <Separator />
+            <MenuItem Name="MenuItemSelectAll"
+                      Command="{Binding $parent[TextBox].SelectAll}"
+                      Header="{my:Loc SelectAll}"
+                      Icon="{my:Icon SelectAll}"
+                      InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=selectall}" />
+        </MenuFlyout>
+
+        <MenuFlyout x:Key="MyNet.MenuFlyout.Text.Horizontal"
+                    x:DataType="sys:Object"
+                    FlyoutPresenterTheme="{StaticResource MyNet.Theme.MenuFlyoutPresenter.Horizontal}"
+                    ItemContainerTheme="{StaticResource MyNet.Theme.MenuItem.Horizontal}">
+            <MenuItem x:Name="MenuItemHorizontalCut"
+                      Command="{Binding $parent[TextBox].Cut}"
+                      Header="{my:Loc Cut}"
+                      IsEnabled="{Binding $parent[TextBox].CanCut}"
+                      IsVisible="{Binding $parent[TextBox].CanCut}" />
+            <MenuItem x:Name="MenuItemHorizontalCopy"
+                      Command="{Binding $parent[TextBox].Copy}"
+                      Header="{my:Loc Copy}"
+                      IsEnabled="{Binding $parent[TextBox].CanCopy}"
+                      IsVisible="{Binding $parent[TextBox].CanCopy}" />
+            <MenuItem x:Name="MenuItemHorizontalPaste"
+                      Command="{Binding $parent[TextBox].Paste}"
+                      Header="{my:Loc Paste}"
+                      IsEnabled="{Binding $parent[TextBox].CanPaste}" />
+            <MenuItem x:Name="MenuItemHorizontalUndo"
+                      Command="{Binding $parent[TextBox].Undo}"
+                      Header="{my:Loc Undo}"
+                      IsEnabled="{Binding $parent[TextBox].CanUndo}" />
+            <MenuItem x:Name="MenuItemHorizontalRedo"
+                      Command="{Binding $parent[TextBox].Redo}"
+                      Header="{my:Loc Redo}"
+                      IsEnabled="{Binding $parent[TextBox].CanRedo}" />
+            <MenuItem x:Name="MenuItemHorizontalSelectAll"
+                      Command="{Binding $parent[TextBox].SelectAll}"
+                      Header="{my:Loc SelectAll}" />
+        </MenuFlyout>
+    </Styles.Resources>
+</Styles>

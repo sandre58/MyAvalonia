@@ -11,6 +11,72 @@ namespace MyNet.Avalonia.Theme.Assists;
 
 public static class PaletteAssist
 {
+    #region Background
+
+    /// <summary>
+    /// Provides Background Property for attached PaletteAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<IBrush> BackgroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("Background", typeof(PaletteAssist));
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="BackgroundProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="BackgroundProperty"/>.</param>
+    public static void SetBackground(StyledElement element, IBrush value) => element.SetValue(BackgroundProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="BackgroundProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static IBrush GetBackground(StyledElement element) => element.GetValue(BackgroundProperty);
+
+    #endregion
+
+    #region Border
+
+    /// <summary>
+    /// Provides Border Property for attached PaletteAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<IBrush> BorderProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("Border", typeof(PaletteAssist));
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="BorderProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="BorderProperty"/>.</param>
+    public static void SetBorder(StyledElement element, IBrush value) => element.SetValue(BorderProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="BorderProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static IBrush GetBorder(StyledElement element) => element.GetValue(BorderProperty);
+
+    #endregion
+
+    #region Foreground
+
+    /// <summary>
+    /// Provides Foreground Property for attached PaletteAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<IBrush> ForegroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("Foreground", typeof(PaletteAssist));
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="ForegroundProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="ForegroundProperty"/>.</param>
+    public static void SetForeground(StyledElement element, IBrush value) => element.SetValue(ForegroundProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="ForegroundProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static IBrush GetForeground(StyledElement element) => element.GetValue(ForegroundProperty);
+
+    #endregion
+
     #region Primary
 
     /// <summary>
@@ -30,50 +96,6 @@ public static class PaletteAssist
     /// </summary>
     /// <param name="element">Target element.</param>
     public static IBrush? GetPrimary(AvaloniaObject element) => element.GetValue(PrimaryProperty);
-
-    #endregion
-
-    #region Secondary
-
-    /// <summary>
-    /// Provides Secondary Property for attached PaletteAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush?> SecondaryProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, IBrush?>("Secondary", typeof(PaletteAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="SecondaryProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="SecondaryProperty"/>.</param>
-    public static void SetSecondary(AvaloniaObject element, IBrush? value) => element.SetValue(SecondaryProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="SecondaryProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush? GetSecondary(AvaloniaObject element) => element.GetValue(SecondaryProperty);
-
-    #endregion
-
-    #region Tertiary
-
-    /// <summary>
-    /// Provides Tertiary Property for attached PaletteAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush?> TertiaryProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, IBrush?>("Tertiary", typeof(PaletteAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="TertiaryProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="TertiaryProperty"/>.</param>
-    public static void SetTertiary(AvaloniaObject element, IBrush? value) => element.SetValue(TertiaryProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="TertiaryProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush? GetTertiary(AvaloniaObject element) => element.GetValue(TertiaryProperty);
 
     #endregion
 }

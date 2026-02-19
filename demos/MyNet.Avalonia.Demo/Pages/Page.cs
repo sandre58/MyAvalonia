@@ -4,12 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.VisualTree;
-using MyNet.Avalonia.Helpers;
 using PropertyChanged;
 
 namespace MyNet.Avalonia.Demo.Pages;
@@ -17,14 +13,13 @@ namespace MyNet.Avalonia.Demo.Pages;
 [DoNotNotify]
 internal abstract class Page : UserControl
 {
-    protected override void OnLoaded(RoutedEventArgs e)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
-        using (PerformanceMonitor.Measure($"Page {GetType().Name} - OnLoaded"))
-        {
-            base.OnLoaded(e);
-        }
+        base.OnPropertyChanged(change);
 
-        var controlCount = this.GetVisualDescendants().Count();
-        PerformanceMonitor.Debug($"FormsPage - Total controls instantiated: {controlCount}");
+        if (change.Property == DataContextProperty && change.NewValue is null && change.OldValue is not null)
+        {
+            Content = null;
+        }
     }
 }

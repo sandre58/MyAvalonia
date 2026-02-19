@@ -1,0 +1,131 @@
+<UserControl x:Class="MyNet.Avalonia.Demo.Views.ControlCatalog.ControlCatalogView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
+             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
+             x:DataType="vm:ControlCatalogViewModel"
+             x:Name="Root"
+             mc:Ignorable="d"
+             ClipToBounds="False">
+
+    <Grid RowDefinitions="40,*">
+
+        <!-- Tabs -->
+        <TabControl Grid.Row="1"
+                    Classes="variant-solid shadow-header"
+                    ClipToBounds="False"
+                    my:HeaderAssist.CornerRadius="0"
+                    my:HeaderAssist.Background="{my:Theme Surface.Level0}"
+                    my:ItemsAssist.ActiveForeground="{my:Foreground AncestorType=TemplatedControl}">
+            <TabControl.ItemContainerTheme>
+                <ControlTheme TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                    <Setter Property="Width" Value="250" />
+                </ControlTheme>
+            </TabControl.ItemContainerTheme>
+
+            <!-- Playground Tab -->
+            <TabItem Header="{my:Loc Playground}" my:IconAssist.Icon="{my:Icon Tune}" IsVisible="{Binding #Root.ShowPlayground}">
+                <v:ControlPlaygroundView DataContext="{Binding Playground}"
+                                         ControlTemplate="{Binding #Root.PlaygroundControlTemplate}"
+                                         Settings="{Binding #Root.Settings}"
+                                         ShowAppearance="{Binding #Root.ShowAppearance}"
+                                         ShowPreviewCode="{Binding #Root.ShowPreviewCode}"
+                                         ShowIcon="{Binding #Root.ShowIcon}"
+                                         ShowContent="{Binding #Root.ShowContent}"
+                                         ShowBackgroundsSelection="{Binding #Root.ShowBackgroundsSelection}"
+                                         ClipToBounds="False" />
+            </TabItem>
+
+            <!-- Themes Tab -->
+            <TabItem IsVisible="{Binding #Root.ShowThemes}" HorizontalContentAlignment="Stretch">
+                <TabItem.Header>
+                    <ComboBox Name="ThemesComboBox"
+                              my:TextFieldAssist.InnerLeftContent="{my:Icon Shape}"
+                              Padding="{my:Thickness Md, Left}"
+                              ItemsSource="{Binding Themes}"
+                              HorizontalAlignment="Center"
+                              Classes="variant-light shape-circle"
+                              SelectedIndex="0"
+                              BorderThickness="0"
+                              FontSize="{StaticResource MyNet.Font.Size.Tab}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="vm:ControlThemeDefinition">
+                                <Grid>
+                                    <TextBlock HorizontalAlignment="Center"
+                                               Text="{Binding DisplayName}"
+                                               IsVisible="{Binding DisplayName, Converter={x:Static my:NullConverter.IsNotNull}}" />
+                                    <TextBlock HorizontalAlignment="Center"
+                                               Text="{my:Loc DefaultTheme}"
+                                               IsVisible="{Binding DisplayName, Converter={x:Static my:NullConverter.IsNull}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </TabItem.Header>
+
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                    <ContentControl Content="{Binding #ThemesComboBox.SelectedItem}">
+                        <ContentControl.ContentTemplate>
+                            <DataTemplate DataType="vm:ControlThemeDefinition">
+                                <StackPanel Name="InternalRoot" Spacing="{StaticResource MyNet.Spacing.Xxl}">
+                                    <HeaderedContentControl Header="{my:Loc ByDefault}"
+                                                            Content="{Binding Converter={x:Static c:ControlDefinitionConverter.Default}}"
+                                                            ContentTemplate="{Binding #Root.ThemeControlTemplate}"
+                                                            Classes="kind-label position-bottom align-header-center"
+                                                            ClipToBounds="False"
+                                                            Margin="{my:Thickness Xl}"
+                                                            HorizontalAlignment="Left"
+                                                            HorizontalContentAlignment="Center"
+                                                            my:HeaderAssist.Padding="{my:Thickness Lg, Top}"
+                                                            my:HeaderAssist.FontStyle="Italic" />
+                                    <v:ControlDefinitionsView DataContext="{Binding Shapes}"
+                                                              Header="{my:Loc Shapes}"
+                                                              IsVisible="{Binding Count, Converter={x:Static my:CountConverter.Any}}"
+                                                              ControlThemeDefinition="{Binding #InternalRoot.DataContext}"
+                                                              ControlTemplate="{Binding #Root.ThemeControlTemplate}" />
+                                    <v:ControlDefinitionsView DataContext="{Binding Variants}"
+                                                              Header="{my:Loc Variants}"
+                                                              IsVisible="{Binding Count, Converter={x:Static my:CountConverter.Any}}"
+                                                              ControlThemeDefinition="{Binding #InternalRoot.DataContext}"
+                                                              ControlTemplate="{Binding #Root.ThemeControlTemplate}" />
+                                    <v:ControlDefinitionsView DataContext="{Binding Roles}"
+                                                              Header="{my:Loc Roles}"
+                                                              IsVisible="{Binding Count, Converter={x:Static my:CountConverter.Any}}"
+                                                              ControlThemeDefinition="{Binding #InternalRoot.DataContext}"
+                                                              ControlTemplate="{Binding #Root.ThemeControlTemplate}" />
+                                    <v:ControlDefinitionsView DataContext="{Binding ItemsRoles}"
+                                                              Header="{my:Loc ItemsRoles}"
+                                                              IsVisible="{Binding Count, Converter={x:Static my:CountConverter.Any}}"
+                                                              ControlThemeDefinition="{Binding #InternalRoot.DataContext}"
+                                                              ControlTemplate="{Binding #Root.ThemeControlTemplate}" />
+                                    <v:ControlDefinitionsView DataContext="{Binding Sizes}"
+                                                              Header="{my:Loc Sizes}"
+                                                              IsVisible="{Binding Count, Converter={x:Static my:CountConverter.Any}}"
+                                                              ControlThemeDefinition="{Binding #InternalRoot.DataContext}"
+                                                              ControlTemplate="{Binding #Root.ThemeControlTemplate}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ContentControl.ContentTemplate>
+                    </ContentControl>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Custom Tab -->
+            <TabItem Header="{my:Loc CustomControls}" my:IconAssist.Icon="{my:Icon StarOutline}" IsVisible="{Binding #Root.CustomContent, Converter={x:Static my:NullConverter.IsNotNull}}">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                    <ContentControl Classes="kind-custom-settings" ClipToBounds="False" Content="{Binding #Root.CustomContent}" Margin="{my:Thickness Md}" />
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+        <!-- Background Top -->
+        <Border Grid.Row="0" Background="{my:Theme Surface.Level0}" VerticalAlignment="Stretch" />
+    </Grid>
+
+</UserControl>

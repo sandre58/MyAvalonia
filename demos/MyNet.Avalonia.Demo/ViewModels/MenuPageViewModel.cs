@@ -5,14 +5,15 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class MenuPageViewModel : AutoBuildPageViewModel
+internal sealed class MenuPageViewModel : ControlCatalogViewModel
 {
     public MenuPageViewModel()
-        : base(nameof(Menu), [
+    : base(nameof(Menu),
+        [
             new ControlThemeBuilder()
         ])
     { }

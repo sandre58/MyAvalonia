@@ -10,7 +10,4 @@ using MyNet.UI.ViewModels.Workspace;
 namespace MyNet.Avalonia.Demo.ViewModels;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-internal class PageViewModel : NavigableWorkspaceViewModel
-{
-    public bool IsActive { get; set; } = true;
-}
+internal class PageViewModel : NavigableWorkspaceViewModel;

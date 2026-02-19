@@ -1,0 +1,87 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT HYPERLINKBUTTON THEME                             -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type HyperlinkButton}" TargetType="HyperlinkButton">
+            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+            <Setter Property="Focusable" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Button}" />
+            <Setter Property="FontWeight" Value="{StaticResource MyNet.Font.Weight.Button}" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Padding" Value="3 3 3 1" />
+
+            <!-- Default Theme -->
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:ThemeRole Primary}" />
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="HyperlinkButton">
+                    <Panel>
+                        <my:IconContentControl Name="IconContent"
+                                               Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                               IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                               IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                               IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                               Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                               Padding="{TemplateBinding Padding}"
+                                               HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Stretch"
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                               BorderThickness="{TemplateBinding BorderThickness}"
+                                               CornerRadius="{TemplateBinding CornerRadius}"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               TextElement.FontSize="{TemplateBinding FontSize}"
+                                               TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                               UseLayoutRounding="False">
+                            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        </my:IconContentControl>
+                        <my:Underline x:Name="PART_Underline"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Bottom"
+                                      ActiveBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                      ActiveHeight="1"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      CornerRadius="0"
+                                      Focusable="False"
+                                      IsHitTestVisible="False"
+                                      Opacity="1" />
+                    </Panel>
+                </ControlTemplate>
+            </Setter>
+
+            <!-- Hover -->
+            <Style Selector="^:pointerover">
+                <Setter Property="Opacity" Value="1" />
+                <Style Selector="^ /template/ my|Underline#PART_Underline">
+                    <Setter Property="IsActive" Value="True" />
+                </Style>
+            </Style>
+
+            <!-- Visited -->
+            <Style Selector="^:visited">
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+                <Setter Property="Foreground" Value="{my:ThemeRole Primary}" />
+            </Style>
+
+            <!-- Focus -->
+            <Style Selector="^:focus-within">
+                <Style Selector="^ /template/ my|Underline#PART_Underline">
+                    <Setter Property="IsActive" Value="True" />
+                </Style>
+            </Style>
+        </ControlTheme>
+
+    </Styles.Resources>
+
+</Styles>

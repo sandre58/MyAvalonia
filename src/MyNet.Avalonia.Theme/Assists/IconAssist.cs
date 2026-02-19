@@ -78,25 +78,25 @@ public static class IconAssist
 
     #endregion
 
-    #region Margin
+    #region Spacing
 
     /// <summary>
-    /// Provides Margin Property for attached IconAssist element.
+    /// Provides Spacing Property for attached IconAssist element.
     /// </summary>
-    public static readonly AttachedProperty<Thickness> MarginProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("Margin", typeof(IconAssist), new Thickness(0, 0, 5, 0));
+    public static readonly AttachedProperty<double> SpacingProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("Spacing", typeof(IconAssist), 5.0d);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="MarginProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="MarginProperty"/>.</param>
-    public static void SetMargin(StyledElement element, Thickness value) => element.SetValue(MarginProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="MarginProperty"/>.
+    /// Accessor for Attached  <see cref="SpacingProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static Thickness GetMargin(StyledElement element) => element.GetValue(MarginProperty);
+    /// <param name="value">The value to set  <see cref="SpacingProperty"/>.</param>
+    public static void SetSpacing(StyledElement element, double value) => element.SetValue(SpacingProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="SpacingProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetSpacing(StyledElement element) => element.GetValue(SpacingProperty);
 
     #endregion
 
@@ -121,4 +121,35 @@ public static class IconAssist
     public static Position GetAlignment(StyledElement element) => element.GetValue(AlignmentProperty);
 
     #endregion
+
+    #region Role
+
+    /// <summary>
+    /// Provides Role Property for attached IconAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<IconRole> RoleProperty = AvaloniaProperty.RegisterAttached<StyledElement, IconRole>("Role", typeof(IconAssist), inherits: true);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="RoleProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="RoleProperty"/>.</param>
+    public static void SetRole(StyledElement element, IconRole value) => element.SetValue(RoleProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="RoleProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static IconRole GetRole(StyledElement element) => element.GetValue(RoleProperty);
+
+    #endregion
+}
+
+public enum IconRole
+{
+    None,
+
+    Primary,
+
+    Label
 }

@@ -1,0 +1,34 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <Style Selector=":is(TemplatedControl)">
+
+        <!-- Circle -->
+        <Style Selector="^.shape-circle">
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Round}" />
+
+            <Setter Property="FocusAdorner">
+                <FocusAdornerTemplate>
+                    <Border BorderBrush="{my:Theme Control.Border.Focus}"
+                            BorderThickness="2"
+                            CornerRadius="{StaticResource MyNet.Corners.Round}" />
+                </FocusAdornerTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="^.shape-circle-items">
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Round}" />
+        </Style>
+
+    </Style>
+
+    <Style Selector="TextBox">
+
+        <Style Selector="^.shape-circle">
+            <Setter Property="Padding" Value="8 0 0 0" />
+            <Setter Property="my:TextFieldAssist.InnerPadding" Value="0 4 8 4" />
+        </Style>
+
+    </Style>
+</Styles>

@@ -1,0 +1,19 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector=":is(Visual)">
+
+        <Style Selector="^.opacity-high">
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+        </Style>
+
+        <Style Selector="^.opacity-medium">
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+        </Style>
+
+        <Style Selector="^.opacity-low">
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Low}" />
+        </Style>
+
+    </Style>
+</Styles>

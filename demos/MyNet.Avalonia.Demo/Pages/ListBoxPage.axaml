@@ -7,24 +7,27 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:ListBoxPageViewModel"
+            x:Name="Root"
             ClipToBounds="False"
             mc:Ignorable="d">
     <pages:Page.Resources>
         <DataTemplate x:Key="MyNet.DataTemplate.Country" DataType="{x:Type geo:Country}">
-            <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Medium}">
+            <DockPanel>
                 <Image Width="16"
                        Height="16"
-                       Margin="{StaticResource MyNet.Margins.Default.Horizontal}"
+                       Margin="{my:Thickness Md, Right}"
                        VerticalAlignment="Center"
-                       Source="{Binding Converter={x:Static c:CountryToBitmapConverter.To16}}" />
+                       Source="{Binding Converter={x:Static c:CountryToBitmapConverter.To16}}"
+                       DockPanel.Dock="Left" />
                 <TextBlock Text="{my:Translate}" Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
-            </StackPanel>
+            </DockPanel>
         </DataTemplate>
-        <DataTemplate x:Key="MyNet.DataTemplate.Country.Large" DataType="{x:Type geo:Country}">
+        <DataTemplate x:Key="MyNet.DataTemplate.Country.Xl" DataType="{x:Type geo:Country}">
             <Grid Width="90" Height="90" RowDefinitions="Auto,*">
                 <Image Width="64" Source="{Binding Converter={x:Static c:CountryToBitmapConverter.To64}}" />
                 <TextBlock Grid.Row="1"
@@ -32,95 +35,132 @@
                            VerticalAlignment="Top"
                            Text="{my:Translate}"
                            TextWrapping="Wrap"
+                           TextAlignment="Center"
                            Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="MyNet.DataTemplate.Icon" DataType="{x:Type geo:Country}">
+            <ContentControl Content="{m:RandomIcon}" />
+        </DataTemplate>
     </pages:Page.Resources>
 
-    <DockPanel>
+    <v:ControlCatalogView ShowContent="False">
 
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <StackPanel Spacing="{StaticResource MyNet.Spacing.Large}">
-                <ComboBox Name="SelectionMode"
-                          ItemsSource="{my:EnumSource {x:Type SelectionMode}}"
-                          PlaceholderText="{my:Loc SelectionMode}"
-                          SelectedIndex="0"
-                          SelectedValueBinding="{ReflectionBinding Value}" />
-            </StackPanel>
-        </HeaderedContentControl>
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <Panel>
+                    <Panel.Styles>
+                        <Style Selector="ListBox">
+                            <Style Selector="^.icon-left ListBoxItem, ^.icon-right ListBoxItem, ^.icon-top ListBoxItem, ^.icon-bottom ListBoxItem">
+                                <Setter Property="my:IconAssist.Icon">
+                                    <Template>
+                                        <ContentControl Content="{m:RandomIcon}" />
+                                    </Template>
+                                </Setter>
+                            </Style>
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="380"
-                                 MinItemHeight="220"
-                                 IsActive="{Binding IsActive}">
-
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <Panel>
-                        <Panel.Styles>
-                            <Style Selector="ListBox">
+                            <Style Selector="^[(my|ThemeAssist.Kind)=default]">
                                 <Setter Property="Width" Value="300" />
-                                <Setter Property="ItemsSource" Value="{m:RandomCountries Min=10, Max=100}" />
+                                <Setter Property="ItemsSource" Value="{m:RandomCountries Min=10, Max=200}" />
+                                <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country}" />
+
+                                <Style Selector="^.layout-horizontal, ^.layout-uniform:not(.layout-vertical)">
+                                    <Setter Property="Width" Value="NaN" />
+                                    <Setter Property="ItemsSource" Value="{m:RandomCountries Min=8, Max=15}" />
+                                </Style>
+
+                                <Style Selector="^.layout-wrap">
+                                    <Setter Property="Width" Value="NaN" />
+                                    <Setter Property="ItemsSource" Value="{m:RandomCountries All=True}" />
+
+                                    <Style Selector="^ ListBoxItem">
+                                        <Setter Property="Width" Value="200" />
+                                    </Style>
+                                </Style>
+
+                                <Style Selector="^.kind-cards">
+                                    <Setter Property="Width" Value="NaN" />
+                                    <Setter Property="ItemsSource" Value="{m:RandomCountries All=True}" />
+                                    <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country.Xl}" />
+                                </Style>
+                            </Style>
+
+                            <Style Selector="^.kind-toggle, ^[(my|ThemeAssist.Kind)=tabs], ^[(my|ThemeAssist.Kind)=icon]">
+                                <Setter Property="Width" Value="NaN" />
+                                <Setter Property="ItemsSource" Value="{m:RandomCountries Min=3, Max=5}" />
+                                <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country}" />
+
+                                <Style Selector="^.layout-wrap">
+                                    <Style Selector="^ ListBoxItem">
+                                        <Setter Property="Width" Value="120" />
+                                    </Style>
+                                </Style>
+                            </Style>
+
+                            <Style Selector="^[(my|ThemeAssist.Kind)=icon]">
+                                <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
+                            </Style>
+                        </Style>
+                    </Panel.Styles>
+                    <ListBox Theme="{Binding Appearance.ActiveTheme}"
+                             my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                             my:ItemsAssist.Role="{Binding Appearance.ActiveItemsRole}"
+                             my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                             MaxHeight="300"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             SelectionMode="{Binding #SelectionMode.SelectedValue}"
+                             SelectedIndex="0" />
+                </Panel>
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
+
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <Panel>
+                    <Panel.Styles>
+                        <Style Selector="ListBox">
+
+                            <Style Selector="^[(my|ThemeAssist.Kind)=default]">
+                                <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country}" />
+
+                                <Style Selector="^.kind-cards">
+                                    <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country.Xl}" />
+                                </Style>
+                            </Style>
+
+                            <Style Selector="^.kind-toggle, ^[(my|ThemeAssist.Kind)=tabs], ^[(my|ThemeAssist.Kind)=icon]">
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country}" />
                             </Style>
 
-                            <Style Selector="ListBox.Cards, ListBox.theme-Toggle, ListBox.theme-Tabs">
-                                <Setter Property="Width" Value="NaN" />
-                                <Setter Property="ItemsSource" Value="{m:RandomDays Min=3, Max=4}" />
+                            <Style Selector="^[(my|ThemeAssist.Kind)=icon]">
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
-
-                                <Style Selector="^ ListBoxItem">
-                                    <Setter Property="my:IconAssist.Icon">
-                                        <Template>
-                                            <ContentControl Content="{m:RandomIcon}" />
-                                        </Template>
-                                    </Setter>
-                                </Style>
                             </Style>
+                        </Style>
+                    </Panel.Styles>
+                    <ListBox Theme="{Binding Theme}"
+                             my:ThemeAssist.Role="{Binding Role}"
+                             my:ItemsAssist.Role="{Binding ItemsRole}"
+                             my:ClassesAssist.Classes="{Binding Classes}"
+                             ItemsSource="{m:RandomCountries Min=5, Max=5}"
+                             SelectedIndex="{m:RandomInt Min=0, Max=4}">
+                        <ListBox.Styles>
+                        </ListBox.Styles>
+                    </ListBox>
+                </Panel>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-                            <Style Selector="ListBox.theme-Icon">
-                                <Setter Property="Width" Value="NaN" />
-                                <Setter Property="ItemsSource" Value="{m:RandomDays Min=3, Max=4}" />
-                                <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <ComboBox Name="SelectionMode"
+                          my:FormItem.Label="{my:LocObject SelectionMode}"
+                          ItemsSource="{my:EnumSource {x:Type SelectionMode}}"
+                          DisplayMemberBinding="{ReflectionBinding Display}"
+                          SelectedValue="{x:Static SelectionMode.Single}"
+                          SelectedValueBinding="{ReflectionBinding Value}" />
+            </my:Form>
+        </v:ControlCatalogView.Settings>
 
-                                <Style Selector="^ ListBoxItem">
-                                    <Setter Property="Content">
-                                        <Template>
-                                            <ContentControl Content="{m:RandomIcon}" />
-                                        </Template>
-                                    </Setter>
-                                </Style>
-                            </Style>
-                        </Panel.Styles>
-                        <ListBox Theme="{Binding Theme}"
-                                 my:ThemeAssist.Role="{Binding Role}"
-                                 my:ClassesAssist.Classes="{Binding Classes}"
-                                 MaxHeight="200"
-                                 HorizontalAlignment="Left"
-                                 VerticalAlignment="Top"
-                                 SelectionMode="{Binding #SelectionMode.SelectedValue}"
-                                 ToolTip.Tip="{Binding Content}">
-                            <ListBox.Styles>
-                            </ListBox.Styles>
-                        </ListBox>
-                    </Panel>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
-
-            <ctrl:ControlThemeViewer.CustomContent>
-                <StackPanel Spacing="20" Margin="20">
-                    <HeaderedContentControl Header="Cards Large" Classes="Transparent">
-                        <ListBox ItemsSource="{m:RandomCountries Min=20, Max=110}"
-                                 MaxHeight="360"
-                                 Width="360"
-                                 Classes="Cards Outlined"
-                                 SelectionMode="{Binding #SelectionMode.SelectedValue}"
-                                 ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Large}" />
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ctrl:ControlThemeViewer.CustomContent>
-
-        </ctrl:ControlThemeViewer>
-    </DockPanel>
+    </v:ControlCatalogView>
 </pages:Page>

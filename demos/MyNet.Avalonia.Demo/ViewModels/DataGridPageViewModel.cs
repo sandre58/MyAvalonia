@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DataGridsViewModel.cs" company="Stéphane ANDRE">
+// <copyright file="DataGridPageViewModel.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -9,15 +9,16 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Avalonia.Collections;
+using Avalonia.Controls;
 using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Extensions;
 using MyNet.Humanizer;
 using MyNet.Observable;
 using MyNet.Observable.Attributes;
 using MyNet.UI.Selection.Models;
-using MyNet.UI.ViewModels.Workspace;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
 using MyNet.Utilities.Generator.Extensions;
@@ -25,15 +26,16 @@ using MyNet.Utilities.Geography;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class DataGridPageViewModel : PageViewModel
+internal sealed class DataGridPageViewModel : ControlCatalogViewModel
 {
     private readonly ObservableCollection<SelectedFixture> _fixtures = [.. RandomGenerator.ListItems(EnumClass.GetAll<Country>()).Select(x => new SelectedFixture(new Fixture(x)))];
 
-    public DataGridCollectionView Fixtures { get; }
-
-    public ObservableCollection<string> AvailableReferees { get; } = RandomGenerator.Int(5, 15).Range().Select(_ => NameGenerator.FullName()).Order().ToObservableCollection();
-
     public DataGridPageViewModel()
+        : base("DataGrid",
+            [
+                new ControlThemeBuilder()
+                    .AddItemsThemeRoles()
+            ])
     {
         Fixtures = new DataGridCollectionView(_fixtures);
         Fixtures.GroupDescriptions.Add(new DataGridPathGroupDescription("Item.Continent"));
@@ -45,7 +47,38 @@ internal sealed class DataGridPageViewModel : PageViewModel
             _fixtures.ToObservableChangeSet().WhenPropertyChanged(x => x.IsSelected).Subscribe(_ => OnPropertyChanged(nameof(AreAllSelected)))
         ]);
     }
-    protected override string CreateTitle() => "DataGrid";
+
+    public DataGridCollectionView Fixtures { get; }
+
+    public ObservableCollection<string> AvailableReferees { get; } = RandomGenerator.Int(5, 15).Range().Select(_ => NameGenerator.FullName()).Order().ToObservableCollection();
+
+    public bool CanUserSortColumns { get; set; } = true;
+
+    public bool CanUserReorderColumns { get; set; } = true;
+
+    public bool CanUserResizeColumns { get; set; } = true;
+
+    public bool IsReadOnly { get; set; }
+
+    public DataGridHeadersVisibility HeadersVisibility { get; set; } = DataGridHeadersVisibility.Column;
+
+    public double ColumnHeaderHeight { get; set; } = 35;
+
+    public double RowHeaderWidth { get; set; } = 35;
+
+    public double RowHeight { get; set; } = 40;
+
+    public DataGridGridLinesVisibility GridLinesVisibility { get; set; } = DataGridGridLinesVisibility.None;
+
+    public DataGridSelectionMode SelectionMode { get; set; } = DataGridSelectionMode.Extended;
+
+    public int FrozenColumnCount { get; set; }
+
+    public bool UseAlternateRowBackground { get; set; } = true;
+
+    public bool ShowSelection { get; set; } = true;
+
+    public bool ShowCellSelection { get; set; }
 
     public bool? AreAllSelected
     {

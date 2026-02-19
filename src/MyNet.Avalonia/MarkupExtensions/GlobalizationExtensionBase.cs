@@ -8,7 +8,6 @@ using System;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml;
-using MyNet.Utilities.Localization;
 
 namespace MyNet.Avalonia.MarkupExtensions;
 
@@ -75,7 +74,7 @@ public abstract class GlobalizationExtensionBase(bool updateOnCultureChanged, bo
             multiBinding.TargetNullValue = TargetNullValue;
         }
 
-        if (CreateBinding() is IBinding binding)
+        if (CreateBinding() is BindingBase binding)
         {
             multiBinding.Bindings.Add(binding);
         }
@@ -122,5 +121,5 @@ public abstract class GlobalizationExtensionBase(bool updateOnCultureChanged, bo
     /// Must be implemented by derived classes.
     /// </summary>
     /// <returns>The main binding, or null if not needed.</returns>
-    protected abstract IBinding? CreateBinding();
+    protected abstract BindingBase? CreateBinding();
 }

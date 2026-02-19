@@ -24,6 +24,8 @@ using MyNet.Avalonia.Extended.Services;
 using MyNet.Avalonia.Extended.Theming;
 using MyNet.Avalonia.Extended.Toasting;
 using MyNet.Avalonia.Theme;
+using MyNet.Avalonia.Theme.Infrastructure;
+using MyNet.Avalonia.Theme.Themes;
 using MyNet.UI.Commands;
 using MyNet.UI.Loading;
 using MyNet.UI.Locators;
@@ -43,7 +45,14 @@ namespace MyNet.Avalonia.Demo;
 [DoNotNotify]
 public class App : Application
 {
-    public override void Initialize() => AvaloniaXamlLoader.Load(this);
+    public override void Initialize()
+    {
+        AvaloniaXamlLoader.Load(this);
+
+#if DEBUG
+        this.AttachDeveloperTools();
+#endif
+    }
 
     public override void OnFrameworkInitializationCompleted()
     {
@@ -57,6 +66,7 @@ public class App : Application
 
         InitializeServices(services);
 
+        InitializeTheme(services);
         InitializeResources();
 
         var vm = ViewModelManager.Get<MainViewModel>();
@@ -78,7 +88,9 @@ public class App : Application
     private void RegisterServices(ServiceCollection collection)
         => collection.AddSingleton<ILogger, Utilities.Logging.NLog.Logger>()
                      .AddSingleton<IViewModelLocator, ViewModelLocator>()
-                     .AddSingleton<IThemeService>(new ThemeService(MyTheme.Current))
+                     .AddSingleton<IMyTheme>(MyTheme.Current)
+                     .AddSingleton<IThemeBaseRegistry, ThemeVariantsRegistry>()
+                     .AddSingleton<IThemeService, ThemeService>()
                      .AddSingleton<INotificationsManager, NotificationsManager>()
                      .AddSingleton<INavigationService, NavigationService>()
                      .AddSingleton<IToasterService>(new ToasterService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
@@ -108,7 +120,7 @@ public class App : Application
         var busyFactory = services.GetRequiredService<IBusyServiceFactory>();
         LogManager.Initialize(services.GetRequiredService<ILogger>());
         ViewModelManager.Initialize(null!, viewModelLocator);
-        ThemeManager.Initialize(services.GetRequiredService<IThemeService>());
+        ThemeManager.Initialize(services.GetRequiredService<IThemeService>(), services.GetRequiredService<IThemeBaseRegistry>());
         NavigationManager.Initialize(services.GetRequiredService<INavigationService>(), viewModelLocator);
         ToasterManager.Initialize(services.GetRequiredService<IToasterService>());
         ClipboardManager.Initialize(services.GetRequiredService<IClipboardService>());
@@ -121,9 +133,25 @@ public class App : Application
     private static void InitializeResources()
     {
         Extended.ResourceLocator.Initialize();
-        Avalonia.Controls.ResourceLocator.Initialize();
+        Controls.ResourceLocator.Initialize();
         TranslationService.RegisterResources(nameof(CountryResources), CountryResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(DemoResources), DemoResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(CommonResources), CommonResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(MenuResources), MenuResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(SettingsResources), SettingsResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(NotificationPageResources), NotificationPageResources.ResourceManager);
         TranslationService.RegisterResources(nameof(FormResources), FormResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(DataGridPageResources), DataGridPageResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(MenuPageResources), MenuPageResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(NavigationMenuPageResources), NavigationMenuPageResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(DialogsPageResources), DialogsPageResources.ResourceManager);
+    }
+
+    private static void InitializeTheme(ServiceProvider services)
+    {
+        var registry = services.GetRequiredService<IThemeBaseRegistry>();
+        registry.Register(registry.Dark);
+        registry.Register(registry.Light);
+        registry.Register(registry.HighContrast);
+        registry.Register(new ThemeBase(ThemeVariantProvider.DarkBlue, true, false));
     }
 }

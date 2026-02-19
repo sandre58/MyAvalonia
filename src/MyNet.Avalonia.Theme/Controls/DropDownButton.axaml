@@ -1,0 +1,342 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT DROPDOWNBUTTON THEME                              -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type DropDownButton}" TargetType="DropDownButton" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="my:PopupBehavior.Placement" Value="BottomEdgeAlignedRight" />
+            <Setter Property="Cursor" Value="Arrow" />
+            <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
+            <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
+            
+            <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeContext Control.Border}" />
+            <Setter Property="Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="DropDownButton">
+                    <Panel Name="PART_RootPanel">
+
+                        <Border Name="PART_MainBorder"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+
+                        <Border Name="PART_ActiveBorder"
+                                Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                                BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                        <Border Name="PART_HoverBorder"
+                                Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                                <Grid Name="PART_Grid" ColumnDefinitions="*,Auto">
+                                    <my:IconContentControl Name="IconContent"
+                                                           Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                                           IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                           IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                           IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                           Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                                           Padding="{TemplateBinding Padding}"
+                                                           HorizontalAlignment="Stretch"
+                                                           VerticalAlignment="Stretch"
+                                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                           BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                                           BorderThickness="{TemplateBinding BorderThickness}"
+                                                           CornerRadius="{TemplateBinding CornerRadius}"
+                                                           Foreground="{TemplateBinding Foreground}"
+                                                           TextElement.FontSize="{TemplateBinding FontSize}"
+                                                           TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                           UseLayoutRounding="False">
+                                        <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                    </my:IconContentControl>
+                                    <PathIcon Name="PART_ExpanderIcon"
+                                              Grid.Column="1"
+                                              Margin="4 0 8 0"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Classes="kind-glyph is-dropdown"
+                                              Focusable="False"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              IsHitTestVisible="False"
+                                              UseLayoutRounding="False" />
+
+                                </Grid>
+                            </my:Ripple>
+                        </Border>
+                    </Panel>
+                </ControlTemplate>
+            </Setter>
+
+            <!-- Placement -->
+            <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronDown}" />
+            </Style>
+            <Style Selector="^[(my|PopupBehavior.Placement)=Right], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedBottom]">
+                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                    <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronRight}" />
+                </Style>
+            </Style>
+            <Style Selector="^[(my|PopupBehavior.Placement)=Left], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedBottom]">
+                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                    <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronLeft}" />
+                </Style>
+            </Style>
+            <Style Selector="^[(my|PopupBehavior.Placement)=Top], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedLeft], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedRight]">
+                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                    <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronUp}" />
+                </Style>
+            </Style>
+
+            <!-- IsOpen -->
+            <Style Selector="^:flyout-open">
+                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                </Style>
+                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                </Style>
+
+                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                    <Setter Property="RenderTransform" Value="rotate(180deg)" />
+                </Style>
+
+                <Style Selector="^.shadow-control /template/ Border#PART_MainBorder, ^.shadow-surface /template/ Border#PART_MainBorder">
+                    <Setter Property="my:ShadowAssist.Darken" Value="True" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Style>
+
+            <!-- Positions -->
+            <Style Selector="^.position-left">
+                <Style Selector="^ /template/ Grid#PART_Grid">
+                    <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
+                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="Auto,*" />
+                </Style>
+                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                    <Setter Property="Grid.Row" Value="0" />
+                    <Setter Property="Grid.Column" Value="0" />
+                    <Setter Property="Margin" Value="8 0 4 0" />
+                </Style>
+                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                    <Setter Property="Grid.Row" Value="0" />
+                    <Setter Property="Grid.Column" Value="1" />
+                </Style>
+            </Style>
+            <Style Selector="^.position-right">
+                <Style Selector="^ /template/ Grid#PART_Grid">
+                    <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
+                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*,Auto" />
+                </Style>
+                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                    <Setter Property="Grid.Row" Value="0" />
+                    <Setter Property="Grid.Column" Value="1" />
+                    <Setter Property="Margin" Value="4 0 8 0" />
+                </Style>
+                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                    <Setter Property="Grid.Row" Value="0" />
+                    <Setter Property="Grid.Column" Value="0" />
+                </Style>
+            </Style>
+            <Style Selector="^.position-top">
+                <Style Selector="^ /template/ Grid#PART_Grid">
+                    <Setter Property="my:GridBehavior.RowDefinitions" Value="Auto,*" />
+                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
+                </Style>
+                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                    <Setter Property="Grid.Row" Value="0" />
+                    <Setter Property="Grid.Column" Value="0" />
+                    <Setter Property="Margin" Value="0 4 0 4" />
+                </Style>
+                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                    <Setter Property="Grid.Row" Value="1" />
+                    <Setter Property="Grid.Column" Value="0" />
+                </Style>
+            </Style>
+            <Style Selector="^.position-bottom">
+                <Style Selector="^ /template/ Grid#PART_Grid">
+                    <Setter Property="my:GridBehavior.RowDefinitions" Value="*,Auto" />
+                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
+                </Style>
+                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                    <Setter Property="Grid.Row" Value="1" />
+                    <Setter Property="Grid.Column" Value="0" />
+                    <Setter Property="Margin" Value="0 4 0 4" />
+                </Style>
+                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                    <Setter Property="Grid.Row" Value="0" />
+                    <Setter Property="Grid.Column" Value="0" />
+                </Style>
+            </Style>
+
+            <!-- Sizes -->
+            <Style Selector="^.size-sm /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+            </Style>
+            <Style Selector="^.size-md /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+            </Style>
+            <Style Selector="^.size-lg /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+            </Style>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- ROUNDED DROPDOWNBUTTON THEME                              -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="MyNet.Theme.DropDownButton.Rounded" TargetType="DropDownButton" BasedOn="{StaticResource {x:Type DropDownButton}}">
+            <Setter Property="my:ThemeAssist.Kind" Value="rounded" />
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
+            <Setter Property="Cursor" Value="Arrow" />
+            <Setter Property="FocusAdorner">
+                <FocusAdornerTemplate>
+                    <Ellipse Classes="kind-focus" />
+                </FocusAdornerTemplate>
+            </Setter>
+
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Panel Name="PART_RootPanel">
+
+                        <Border Name="PART_ShadowBorder"
+                                IsHitTestVisible="False"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{StaticResource MyNet.Corners.Round}"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}" />
+
+                        <Ellipse Name="PART_MainEllipse"
+                                 Fill="{TemplateBinding Background}"
+                                 Stroke="{TemplateBinding BorderBrush}"
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
+
+                        <Ellipse Name="PART_ActiveEllipse"
+                                 Fill="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                                 Stroke="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
+                                 Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
+
+                        <Ellipse Name="PART_HoverEllipse"
+                                 Fill="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                 Stroke="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
+                                 Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
+
+                        <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Round}">
+                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                                <Grid Name="PART_Grid" ColumnDefinitions="*,Auto">
+                                    <my:IconContentControl Name="IconContent"
+                                                           Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                                           IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                           IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                           IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                           Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                                           Padding="{TemplateBinding Padding}"
+                                                           HorizontalAlignment="Stretch"
+                                                           VerticalAlignment="Stretch"
+                                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                           BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                                           BorderThickness="{TemplateBinding BorderThickness}"
+                                                           CornerRadius="{TemplateBinding CornerRadius}"
+                                                           Foreground="{TemplateBinding Foreground}"
+                                                           TextElement.FontSize="{TemplateBinding FontSize}"
+                                                           TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                           UseLayoutRounding="False">
+                                        <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                    </my:IconContentControl>
+                                    <PathIcon Name="PART_ExpanderIcon"
+                                              Grid.Column="1"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Classes="kind-glyph"
+                                              Focusable="False"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              IsHitTestVisible="False"
+                                              UseLayoutRounding="False" />
+
+                                </Grid>
+                            </my:Ripple>
+                        </Border>
+                    </Panel>
+                </ControlTemplate>
+            </Setter>
+
+            <!-- Hover -->
+            <Style Selector="^:not(:disabled):pointerover">
+
+                <Style Selector="^.shadow-control /template/ Border#PART_ShadowBorder, ^.shadow-surface /template/ Border#PART_ShadowBorder">
+                    <Setter Property="my:ShadowAssist.Darken" Value="True" />
+                </Style>
+
+                <Style Selector="^ /template/ Ellipse#PART_HoverEllipse">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Style>
+
+            <!-- IsOpen -->
+            <Style Selector="^:flyout-open">
+
+                <Style Selector="^.shadow-control /template/ Border#PART_ShadowBorder, ^.shadow-surface /template/ Border#PART_ShadowBorder">
+                    <Setter Property="my:ShadowAssist.Darken" Value="True" />
+                </Style>
+
+                <Style Selector="^ /template/ Ellipse#PART_ActiveEllipse">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+
+            </Style>
+        </ControlTheme>
+
+    </Styles.Resources>
+
+    <Style Selector=":is(DropDownButton)">
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^[(my|ThemeAssist.Kind)=rounded]">
+            <Style Selector="^.size-sm">
+                <Setter Property="Padding" Value="1" />
+                <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Sm}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Sm}" />
+            </Style>
+            <Style Selector="^.size-md">
+                <Setter Property="Padding" Value="1" />
+                <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
+            </Style>
+            <Style Selector="^.size-lg">
+                <Setter Property="Padding" Value="1" />
+                <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Lg}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Lg}" />
+            </Style>
+        </Style>
+
+    </Style>
+</Styles>

@@ -7,6 +7,7 @@
 using System;
 using Avalonia;
 using Avalonia.Markup.Xaml;
+using Avalonia.Metadata;
 using MyNet.Avalonia.Theme.Enums;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
@@ -38,14 +39,14 @@ public class ThicknessExtension : MarkupExtension
     /// Initializes a new instance of the <see cref="ThicknessExtension"/> class with the specified size.
     /// </summary>
     /// <param name="size">The standard thickness size to use.</param>
-    public ThicknessExtension(ThicknessSize size) => Size = size;
+    public ThicknessExtension(SpacingSize size) => Size = size;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ThicknessExtension"/> class with the specified size and direction.
     /// </summary>
     /// <param name="size">The standard thickness size to use.</param>
     /// <param name="direction">The direction to apply the thickness.</param>
-    public ThicknessExtension(ThicknessSize size, ThicknessDirection direction)
+    public ThicknessExtension(SpacingSize size, ThicknessDirection direction)
     {
         Size = size;
         Direction = direction;
@@ -55,7 +56,7 @@ public class ThicknessExtension : MarkupExtension
     /// Gets or sets the standard thickness size to use.
     /// </summary>
     [ConstructorArgument("size")]
-    public ThicknessSize Size { get; set; } = ThicknessSize.None;
+    public SpacingSize Size { get; set; } = SpacingSize.None;
 
     /// <summary>
     /// Gets or sets the direction to apply the thickness (All, Horizontal, Vertical, Left, Top, Right, Bottom).

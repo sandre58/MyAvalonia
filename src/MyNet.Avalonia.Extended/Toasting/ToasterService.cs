@@ -104,7 +104,7 @@ public class ToasterService : IToasterService, IDisposable
         var classes = new List<string>();
 
         if (toast.Settings.ClosingStrategy is ToastClosingStrategy.CloseButton or ToastClosingStrategy.Both)
-            classes.Add("Closable");
+            classes.Add("is-closable");
 
         var type = toast.Notification.Severity switch
         {

@@ -10,8 +10,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Extended.Controls;
+using MyNet.Avalonia.Extensions;
 using MyNet.UI.Dialogs.ContentDialogs;
 
 namespace MyNet.Avalonia.Extended.Dialogs;

@@ -6,87 +6,74 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
-            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
-            x:DataType="vm:ButtonPageViewModel"
+            x:DataType="vm:CarouselPageViewModel"
+            Name="Root"
             ClipToBounds="False">
 
-    <DockPanel>
+    <v:ControlCatalogView ShowIcon="False" ShowContent="False">
 
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-                <StackPanel>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Type}">
-                        <ListBox Name="Type" SelectedIndex="0">
-                            <ListBoxItem Content="{my:LocTextBlock Dots}" />
-                            <ListBoxItem Content="{my:LocTextBlock Columnar}" />
-                            <ListBoxItem Content="{my:LocTextBlock Lines}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Position}">
-                        <ListBox Name="Position" SelectedIndex="1">
-                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                            <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:LocTextBlock Center}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <Carousel Theme="{Binding Appearance.ActiveTheme}"
+                          my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                          my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                          Width="600"
+                          Height="400"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          ItemsSource="{m:RandomCountries Max=20}">
+                    <Carousel.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
+                                <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                            </Border>
+                        </DataTemplate>
+                    </Carousel.ItemTemplate>
+                </Carousel>
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-        <!-- Fields -->
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="850"
-                                 MinItemHeight="550"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <Carousel Theme="{Binding Theme}"
+                          my:ThemeAssist.Role="{Binding Role}"
+                          my:ClassesAssist.Classes="{Binding Classes}"
+                          Width="600"
+                          Height="400"
+                          ItemsSource="{m:RandomCountries Max=20}">
+                    <Carousel.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
+                                <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                            </Border>
+                        </DataTemplate>
+                    </Carousel.ItemTemplate>
+                </Carousel>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-            <!-- Template for standard controls -->
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <Carousel Theme="{Binding Theme}"
-                              my:ThemeAssist.Role="{Binding Role}"
-                              b:SettingsBehavior.CarouselType="{Binding #Type.SelectedIndex}"
-                              b:SettingsBehavior.IndicatorHorizontalAlignmentClass="{Binding #Position.SelectedIndex}"
-                              my:ClassesAssist.Classes="{Binding Classes}"
-                              Width="600"
-                              Height="400"
-                              ToolTip.Tip="{Binding Content}">
-                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
-                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
-                        </Border>
-                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
-                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
-                        </Border>
-                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
-                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
-                        </Border>
-                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
-                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
-                        </Border>
-                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
-                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
-                        </Border>
-                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
-                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
-                        </Border>
-                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
-                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
-                        </Border>
-                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
-                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
-                        </Border>
-                        <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
-                            <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
-                        </Border>
-                    </Carousel>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+        <v:ControlCatalogView.Settings>
+            <my:Form IsVisible="{Binding #Root.DataContext.Playground.Appearance.SelectedTheme, Converter={x:Static my:NullConverter.IsNotNull}}">
 
-        </ctrl:ControlThemeViewer>
+                <ListBox my:FormItem.Label="{my:LocObject Type}" SelectedValue="{Binding #Root.DataContext.TypeClassProvider.SelectedClass}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem Content="{my:Loc Dots}" DataContext="variant-dots" />
+                    <ListBoxItem Content="{my:Loc Columnar}" DataContext="variant-columnar" />
+                    <ListBoxItem Content="{my:Loc Lines}" DataContext="variant-lines" />
+                </ListBox>
 
-    </DockPanel>
+                <ListBox my:FormItem.Label="{my:LocObject Position}" SelectedValue="{Binding #Root.DataContext.IndicatorClassProvider.SelectedClass}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="indicator-left" />
+                    <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:Loc Center}" DataContext="indicator-center" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:Loc Right}" DataContext="indicator-right" />
+                </ListBox>
+            </my:Form>
+        </v:ControlCatalogView.Settings>
+
+    </v:ControlCatalogView>
 </pages:Page>

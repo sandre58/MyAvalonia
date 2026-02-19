@@ -11,7 +11,6 @@ using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.UI.Commands;
 using MyNet.UI.Toasting;
-using MyNet.UI.ViewModels.Workspace;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 

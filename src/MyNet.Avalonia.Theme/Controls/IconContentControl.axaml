@@ -1,0 +1,54 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <Styles.Resources>
+        <ControlTheme x:Key="{x:Type my:IconContentControl}" TargetType="my:IconContentControl">
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Icon}" />
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="my:IconContentControl">
+
+                    <DockPanel LastChildFill="True"
+                               Margin="{TemplateBinding Padding}"
+                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <ContentPresenter Name="PART_Icon"
+                                          DockPanel.Dock="{TemplateBinding IconPosition, Converter={x:Static my:PositionToDockConverter.Default}}"
+                                          my:IconAssist.Role="Label"
+                                          HorizontalContentAlignment="Center"
+                                          VerticalContentAlignment="Center"
+                                          Content="{TemplateBinding Icon}"
+                                          ContentTemplate="{TemplateBinding IconTemplate}"
+                                          Opacity="{TemplateBinding IconOpacity}"
+                                          RecognizesAccessKey="True">
+                            <ContentPresenter.IsVisible>
+                                <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                    <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="Icon" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="IconTemplate" RelativeSource="{RelativeSource TemplatedParent}" />
+                                </MultiBinding>
+                            </ContentPresenter.IsVisible>
+                        </ContentPresenter>
+                        <ContentPresenter Content="{TemplateBinding Content}" RecognizesAccessKey="True" my:IconAssist.Role="Primary" />
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter>
+
+            <!-- Layout -->
+            <Style Selector="^[IconPosition=Left] /template/ ContentPresenter#PART_Icon">
+                <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Right}}"/>
+            </Style>
+            <Style Selector="^[IconPosition=Right] /template/ ContentPresenter#PART_Icon">
+                <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Left}}"/>
+            </Style>
+            <Style Selector="^[IconPosition=Bottom] /template/ ContentPresenter#PART_Icon">
+                <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}"/>
+            </Style>
+            <Style Selector="^[IconPosition=Top] /template/ ContentPresenter#PART_Icon">
+                <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Bottom}}"/>
+            </Style>
+        </ControlTheme>
+    </Styles.Resources>
+
+</Styles>

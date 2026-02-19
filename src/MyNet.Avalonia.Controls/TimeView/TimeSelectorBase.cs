@@ -6,10 +6,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Data;
 using Avalonia.Input;
 using MyNet.Utilities;
 using MyNet.Utilities.DateTimes;
@@ -36,6 +38,18 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
         SecondProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.OnComponentChanged());
         IsAmProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.OnComponentChanged());
         SelectedComponentProperty.Changed.AddClassHandler<TimeSelectorBase>((x, args) => x.OnSelectedComponentChanged(args));
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        if (change.Property == SelectedValueProperty)
+        {
+            var (oldValue, newValue) = change.GetOldAndNewValue<TimeSpan?>();
+
+            OnValueSelected(oldValue, newValue);
+        }
+
+        base.OnPropertyChanged(change);
     }
 
     /// <inheritdoc />
@@ -72,10 +86,12 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
     #region SelectedValue
 
+    public event EventHandler<SelectionChangedEventArgs>? SelectedValueChanged;
+
     /// <summary>
     /// Defines the <see cref="SelectedValue"/> property.
     /// </summary>
-    public static readonly StyledProperty<TimeSpan?> SelectedValueProperty = TimePicker.SelectedValueProperty.AddOwner<TimeSelectorBase>();
+    public static readonly StyledProperty<TimeSpan?> SelectedValueProperty = AvaloniaProperty.Register<TimeSelectorBase, TimeSpan?>(nameof(SelectedValue), defaultBindingMode: BindingMode.TwoWay);
 
     /// <summary>
     /// Gets or sets the selected time. Can be null.
@@ -83,6 +99,24 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
     public TimeSpan? SelectedValue
     {
         get => GetValue(SelectedValueProperty); set => SetValue(SelectedValueProperty, value);
+    }
+
+    private void OnValueSelected(TimeSpan? addedValue, TimeSpan? removedValue)
+    {
+        var handler = SelectedValueChanged;
+        if (handler != null)
+        {
+            var addedItems = new Collection<TimeSpan?>();
+            var removedItems = new Collection<TimeSpan?>();
+
+            if (addedValue is not null)
+                addedItems.Add(addedValue);
+
+            if (removedValue is not null)
+                removedItems.Add(removedValue);
+
+            handler(this, new SelectionChangedEventArgs(SelectingItemsControl.SelectionChangedEvent, removedItems, addedItems));
+        }
     }
 
     #endregion
@@ -209,8 +243,6 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
     /// Defines the <see cref="TimeFormat"/> property.
     /// </summary>
     public static readonly StyledProperty<TimeFormat> TimeFormatProperty = AvaloniaProperty.Register<TimeSelectorBase, TimeFormat>(nameof(TimeFormat), TimeFormat.TwelveHour);
-
-    public event EventHandler<SelectionChangedEventArgs>? SelectedValueChanged;
 
     /// <summary>
     /// Gets or sets the time format.
@@ -402,7 +434,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
     protected virtual void ShowComponent(IComponentTimeSelector component) { }
 }
 
-internal record TimeContext(int? Hours, int? Minutes, int? Seconds, bool IsAm)
+internal sealed record TimeContext(int? Hours, int? Minutes, int? Seconds, bool IsAm)
 {
     public static TimeContext FromTimeSpan(TimeSpan? time, TimeFormat format)
     {

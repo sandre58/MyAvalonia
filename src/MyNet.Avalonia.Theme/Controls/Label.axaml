@@ -1,0 +1,107 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <ControlTheme x:Key="{x:Type Label}" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="UseLayoutRounding" Value="False" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="my:PaletteAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Foreground}" />
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="Label">
+                    <Border Name="PART_Border"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <my:IconContentControl Name="IconContent"
+                                               Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                               IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                               IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                               IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                               Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                               Padding="{TemplateBinding Padding}"
+                                               HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Stretch"
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                               BorderThickness="{TemplateBinding BorderThickness}"
+                                               CornerRadius="{TemplateBinding CornerRadius}"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               TextElement.FontSize="{TemplateBinding FontSize}"
+                                               TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                               UseLayoutRounding="False">
+                            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        </my:IconContentControl>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+    </Styles.Resources>
+
+    <Style Selector="Label">
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- VARIANTS                                                  -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <!-- Code label -->
+        <Style Selector="^.kind-code">
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="Background" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Foreground, Opacity=High}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Sm}" />
+            <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily.Code}" />
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
+        </Style>
+
+        <!-- Badge -->
+        <Style Selector="^.kind-badge">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Md}" />
+            <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+
+            <!-- Default colors -->
+            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+
+            <!-- Default Theme -->
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Background" Value="{my:ThemeRole Background}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole Border}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <Style Selector="^.size-sm">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Sm}" />
+        </Style>
+
+        <Style Selector="^.size-md">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Md}" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Lg}" />
+        </Style>
+
+    </Style>
+
+
+</Styles>

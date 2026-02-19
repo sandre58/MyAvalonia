@@ -8,8 +8,8 @@ using System;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using MyNet.Avalonia.Demo.Controls;
 using MyNet.Avalonia.Demo.Resources;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.Views.Samples;
 using MyNet.Avalonia.Extended.Toasting;
 using MyNet.Avalonia.Templates;
@@ -23,7 +23,7 @@ using MyNet.Utilities.Generator;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class NotificationPageViewModel : AutoBuildPageViewModel
+internal sealed class NotificationPageViewModel : ControlCatalogViewModel
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup")]
     private ToasterService? _toasterService;
@@ -31,7 +31,11 @@ internal sealed class NotificationPageViewModel : AutoBuildPageViewModel
     static NotificationPageViewModel() => RegisteredDataTemplate.Register<CustomNotification>(_ => new LargeContent1(), nameof(INotification));
 
     public NotificationPageViewModel()
-        : base("Notifications", [new ControlThemeBuilder().AddRoles([ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information, ThemeRole.Custom])])
+        : base("Notifications",
+            [
+                new ControlThemeBuilder()
+                    .AddRoles([ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information, ThemeRole.Custom])
+            ])
     {
         ResetToasterService();
         ShowNotificationCommand = CommandsManager.CreateNotNull<ThemeRole>(ShowNotification);
@@ -71,8 +75,8 @@ internal sealed class NotificationPageViewModel : AutoBuildPageViewModel
             FreezeOnMouseEnter = FreezeOnMouseEnter
         };
 
-        var onClick = new Action<INotification>(x => _toasterService?.Show(new MessageNotification(DemoResources.NotificationClickMessage.FormatWith(x), severity: NotificationSeverity.Information), ToastSettings.Default));
-        var onClose = new Action(() => _toasterService?.Show(new MessageNotification(DemoResources.NotificationClosedMessage, severity: NotificationSeverity.Success), ToastSettings.Default));
+        var onClick = new Action<INotification>(x => _toasterService?.Show(new MessageNotification(NotificationPageResources.NotificationClickMessage.FormatWith(x), severity: NotificationSeverity.Information), ToastSettings.Default));
+        var onClose = new Action(() => _toasterService?.Show(new MessageNotification(NotificationPageResources.NotificationClosedMessage, severity: NotificationSeverity.Success), ToastSettings.Default));
         _toasterService?.Show(notification, settings, onClick: EnableOnClick ? onClick : null, onClose: EnableOnClose ? onClose : null);
     }
 

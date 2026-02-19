@@ -1,77 +1,93 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <Styles.Resources>
 
-    <!-- ===================================================================== -->
-    <!-- Spacing Tokens                                                        -->
-    <!-- ===================================================================== -->
+        <!-- ===================================================================== -->
+        <!-- Spacing Tokens                                                        -->
+        <!-- ===================================================================== -->
 
-    <sys:Double x:Key="MyNet.Spacing.None">0</sys:Double>
-    <sys:Double x:Key="MyNet.Spacing.ExtraExtraSmall">1</sys:Double>
-    <sys:Double x:Key="MyNet.Spacing.ExtraSmall">2</sys:Double>
-    <sys:Double x:Key="MyNet.Spacing.Small">5</sys:Double>
-    <sys:Double x:Key="MyNet.Spacing.Medium">10</sys:Double>
-    <sys:Double x:Key="MyNet.Spacing.Large">16</sys:Double>
-    <sys:Double x:Key="MyNet.Spacing.ExtraLarge">24</sys:Double>
-    <sys:Double x:Key="MyNet.Spacing.ExtraExtraLarge">32</sys:Double>
-    <sys:Double x:Key="MyNet.Spacing.ExtraExtraExtraLarge">48</sys:Double>
+        <sys:Double x:Key="MyNet.Spacing.None">0</sys:Double>
+        <sys:Double x:Key="MyNet.Spacing.Xxs">1</sys:Double>
+        <sys:Double x:Key="MyNet.Spacing.Xs">2</sys:Double>
+        <sys:Double x:Key="MyNet.Spacing.Sm">5</sys:Double>
+        <sys:Double x:Key="MyNet.Spacing.Md">10</sys:Double>
+        <sys:Double x:Key="MyNet.Spacing.Lg">16</sys:Double>
+        <sys:Double x:Key="MyNet.Spacing.Xl">24</sys:Double>
+        <sys:Double x:Key="MyNet.Spacing.Xxl">32</sys:Double>
+        <sys:Double x:Key="MyNet.Spacing.Xxxl">48</sys:Double>
+        
+        <sys:Double x:Key="MyNet.Spacing.Icon">5</sys:Double>
 
-    <!-- ===================================================================== -->
-    <!-- Padding Tokens                                                        -->
-    <!-- ===================================================================== -->
+        <!-- ===================================================================== -->
+        <!-- Padding Tokens                                                        -->
+        <!-- ===================================================================== -->
 
-    <!-- Button Padding -->
-    <Thickness x:Key="MyNet.Padding.Button.Small">6,2</Thickness>
-    <Thickness x:Key="MyNet.Padding.Button.Medium">11,4</Thickness>
-    <Thickness x:Key="MyNet.Padding.Button.Large">16,4</Thickness>
+        <!-- Button Padding -->
+        <Thickness x:Key="MyNet.Padding.Button.Sm">6,2</Thickness>
+        <Thickness x:Key="MyNet.Padding.Button.Md">11,4</Thickness>
+        <Thickness x:Key="MyNet.Padding.Button.Lg">16,4</Thickness>
 
-    <!-- TextField Padding -->
-    <Thickness x:Key="MyNet.Padding.TextField.Medium">4,0,0,0</Thickness>
-    <Thickness x:Key="MyNet.Padding.TextField.Inner.Medium">0,4,4,4</Thickness>
-    <Thickness x:Key="MyNet.Padding.TextField.Underline.Medium">0</Thickness>
-    <Thickness x:Key="MyNet.Padding.TextField.Underline.Inner.Medium">2,4</Thickness>
+        <!-- TextField Padding -->
+        <Thickness x:Key="MyNet.Padding.TextField.Md">4,0,0,0</Thickness>
+        <Thickness x:Key="MyNet.Padding.TextField.Inner.Md">0,4,4,4</Thickness>
+        <Thickness x:Key="MyNet.Padding.TextField.Underline.Md">0</Thickness>
+        <Thickness x:Key="MyNet.Padding.TextField.Underline.Inner.Md">2,4</Thickness>
 
-    <!-- Tag Padding -->
-    <Thickness x:Key="MyNet.Padding.Tag">4,1</Thickness>
+        <!-- Tag Padding -->
+        <Thickness x:Key="MyNet.Padding.Tag">4,1</Thickness>
 
-    <!-- Label Padding -->
-    <Thickness x:Key="MyNet.Padding.Label.Small">4,1</Thickness>
-    <Thickness x:Key="MyNet.Padding.Label.Medium">8,2</Thickness>
-    <Thickness x:Key="MyNet.Padding.Label.Large">10,4</Thickness>
+        <!-- Label Padding -->
+        <Thickness x:Key="MyNet.Padding.Label.Sm">4,1</Thickness>
+        <Thickness x:Key="MyNet.Padding.Label.Md">8,2</Thickness>
+        <Thickness x:Key="MyNet.Padding.Label.Lg">10,4</Thickness>
 
-    <!-- Popup & ToolTip Padding -->
-    <Thickness x:Key="MyNet.Padding.Popup">10</Thickness>
-    <Thickness x:Key="MyNet.Padding.ToolTip">5</Thickness>
+        <!-- Popup & ToolTip Padding -->
+        <Thickness x:Key="MyNet.Padding.Popup">10</Thickness>
+        <Thickness x:Key="MyNet.Padding.ToolTip">5</Thickness>
 
-    <!-- Banner & Surface Padding -->
-    <Thickness x:Key="MyNet.Padding.Banner">10,7</Thickness>
-    <Thickness x:Key="MyNet.Padding.Surface">10</Thickness>
+        <!-- Banner & Surface Padding -->
+        <Thickness x:Key="MyNet.Padding.Banner">10,7</Thickness>
+        <Thickness x:Key="MyNet.Padding.Surface">10</Thickness>
+        <Thickness x:Key="MyNet.Padding.Surface.Header.Sm">4,2</Thickness>
+        <Thickness x:Key="MyNet.Padding.Surface.Header.Md">10,7</Thickness>
+        <Thickness x:Key="MyNet.Padding.Surface.Header.Lg">12,10</Thickness>
 
-    <!-- MenuItem Padding -->
-    <Thickness x:Key="MyNet.Padding.MenuItem">20,8</Thickness>
-    <Thickness x:Key="MyNet.Padding.MenuItem.Horizontal">8,4,8,7</Thickness>
+        <!-- MenuItem Padding -->
+        <Thickness x:Key="MyNet.Padding.MenuItem">20,8</Thickness>
+        <Thickness x:Key="MyNet.Padding.MenuItem.Horizontal">8,4,8,7</Thickness>
 
-    <!-- ListBoxItem Padding -->
-    <Thickness x:Key="MyNet.Padding.ListBoxItem">16,8</Thickness>
-    <Thickness x:Key="MyNet.Padding.ListBoxItem.Small">3,2</Thickness>
-    <Thickness x:Key="MyNet.Padding.ListBoxItem.Medium">5</Thickness>
-    <Thickness x:Key="MyNet.Padding.ListBoxItem.Large">10,8</Thickness>
+        <!-- ListBoxItem Padding -->
+        <Thickness x:Key="MyNet.Padding.ListBoxItem">16,8</Thickness>
+        <Thickness x:Key="MyNet.Padding.ListBoxItem.Sm">3,2</Thickness>
+        <Thickness x:Key="MyNet.Padding.ListBoxItem.Md">5</Thickness>
+        <Thickness x:Key="MyNet.Padding.ListBoxItem.Lg">10,8</Thickness>
 
-    <!-- Tab Padding -->
-    <Thickness x:Key="MyNet.Padding.Tab.Small">10,6</Thickness>
-    <Thickness x:Key="MyNet.Padding.Tab.Medium">11,4</Thickness>
-    <Thickness x:Key="MyNet.Padding.Tab.Large">16,4</Thickness>
+        <!-- Tab Padding -->
+        <Thickness x:Key="MyNet.Padding.Tab.Sm">10,3</Thickness>
+        <Thickness x:Key="MyNet.Padding.Tab.Md">11,4</Thickness>
+        <Thickness x:Key="MyNet.Padding.Tab.Lg">16,4</Thickness>
 
-    <!-- ===================================================================== -->
-    <!-- Margin Tokens                                                         -->
-    <!-- ===================================================================== -->
+        <!-- Calendar Padding -->
+        <Thickness x:Key="MyNet.Padding.Calendar.Item.Sm">2</Thickness>
+        <Thickness x:Key="MyNet.Padding.Calendar.Item.Md">4</Thickness>
+        <Thickness x:Key="MyNet.Padding.Calendar.Item.Lg">6</Thickness>
 
-    <!-- Form Margins -->
-    <Thickness x:Key="MyNet.Margin.Form.Item">0,10</Thickness>
-    <Thickness x:Key="MyNet.Margin.Form.Group">0,30,0,0</Thickness>
+        <!-- ScrollViewer Padding -->
+        <Thickness x:Key="MyNet.Padding.ScrollViewer.Popup">3</Thickness>
 
-    <!-- Popup & ToolTip Margins -->
-    <Thickness x:Key="MyNet.Margin.Popup">2,2,8,8</Thickness>
-    <Thickness x:Key="MyNet.Margin.ToolTip">2,2,4,4</Thickness>
+        <!-- ===================================================================== -->
+        <!-- Margin Tokens                                                         -->
+        <!-- ===================================================================== -->
 
-</ResourceDictionary>
+        <!-- Form Margins -->
+        <Thickness x:Key="MyNet.Margin.Form.Item">0,10</Thickness>
+        <Thickness x:Key="MyNet.Margin.Form.Group">0,30,0,0</Thickness>
+
+        <!-- Popup & ToolTip Margins -->
+        <Thickness x:Key="MyNet.Margin.Popup">2,2,8,8</Thickness>
+        <Thickness x:Key="MyNet.Margin.ToolTip">2,2,4,4</Thickness>
+
+    </Styles.Resources>
+</Styles>

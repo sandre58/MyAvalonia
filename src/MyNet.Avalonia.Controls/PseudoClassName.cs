@@ -34,6 +34,7 @@ public static class PseudoClassName
     public const string Indeterminate = ":indeterminate";
     public const string Information = ":information";
     public const string InRange = ":in-range";
+    public const string Invalid = ":invalid";
     public const string Last = ":last";
     public const string Left = ":left";
     public const string Modal = ":modal";

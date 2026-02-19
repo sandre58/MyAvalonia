@@ -1,47 +1,56 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
-                    xmlns:my="http://mynet.com/avalonia"
-                    xmlns:enums="clr-namespace:MyNet.Avalonia.Controls.Enums;assembly=MyNet.Avalonia.Controls">
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+        xmlns:enums="clr-namespace:MyNet.Avalonia.Controls.Enums;assembly=MyNet.Avalonia.Controls">
+    <Styles.Resources>
 
-    <!-- Opacity Levels -->
-    <sys:Double x:Key="MyNet.Opacity.High">0.7</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Medium">0.56</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Low">0.45</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Scrim">0.40</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Disabled">0.38</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Drag">0.32</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Pressed">0.24</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Focus">0.16</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Hover">0.12</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Overlay">0.08</sys:Double>
+        <!-- ===================================================================== -->
+        <!-- Opacity Tokens                                                        -->
+        <!-- ===================================================================== -->
+        <sys:Double x:Key="MyNet.Opacity.Primary">1</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Foreground.Primary">1</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Foreground.Secondary">0.7</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Foreground.Tertiary">0.5</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Surface.Level0">0.18</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Surface.Level2">1</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Surface.Level1">1</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Surface.Level3">0.07</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Surface.Level4">0.10</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Surface.Level5">0.11</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Surface.Border">0.12</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Control.Border">0.14</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Control.Border.Hover">0.18</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Control.Border.Focus">0.22</sys:Double>
+        <sys:Double x:Key="MyNet.Opacity.Divider">0.12</sys:Double>
 
-    <!-- ===================================================================== -->
-    <!-- Shadow Depth Tokens                                                   -->
-    <!-- ===================================================================== -->
+        <!-- ===================================================================== -->
+        <!-- Shadow Depth Tokens                                                   -->
+        <!-- ===================================================================== -->
 
-    <my:ShadowDepth x:Key="MyNet.Shadow.Surface">Depth1</my:ShadowDepth>
-    <my:ShadowDepth x:Key="MyNet.Shadow.Control">Depth2</my:ShadowDepth>
-    <my:ShadowDepth x:Key="MyNet.Shadow.Popup">Depth2</my:ShadowDepth>
-    <my:ShadowDepth x:Key="MyNet.Shadow.ToolTip">Depth2</my:ShadowDepth>
+        <my:ShadowDepth x:Key="MyNet.Shadow.Surface">Depth1</my:ShadowDepth>
+        <my:ShadowDepth x:Key="MyNet.Shadow.Control">Depth2</my:ShadowDepth>
+        <my:ShadowDepth x:Key="MyNet.Shadow.Popup">Depth2</my:ShadowDepth>
+        <my:ShadowDepth x:Key="MyNet.Shadow.ToolTip">Depth2</my:ShadowDepth>
 
-    <!-- ===================================================================== -->
-    <!-- Animation Duration Tokens                                             -->
-    <!-- ===================================================================== -->
+        <!-- ===================================================================== -->
+        <!-- Animation Duration Tokens                                             -->
+        <!-- ===================================================================== -->
 
-    <sys:TimeSpan x:Key="MyNet.Animation.Instant">0:0:0.0</sys:TimeSpan>
-    <sys:TimeSpan x:Key="MyNet.Animation.Fast">0:0:0.15</sys:TimeSpan>
-    <sys:TimeSpan x:Key="MyNet.Animation.Default">0:0:0.3</sys:TimeSpan>
-    <sys:TimeSpan x:Key="MyNet.Animation.Slow">0:0:0.35</sys:TimeSpan>
-    <sys:TimeSpan x:Key="MyNet.Animation.VerySlow">0:0:0.5</sys:TimeSpan>
+        <sys:TimeSpan x:Key="MyNet.Animation.Instant">0:0:0.0</sys:TimeSpan>
+        <sys:TimeSpan x:Key="MyNet.Animation.Fast">0:0:0.15</sys:TimeSpan>
+        <sys:TimeSpan x:Key="MyNet.Animation.Default">0:0:0.3</sys:TimeSpan>
+        <sys:TimeSpan x:Key="MyNet.Animation.Slow">0:0:0.35</sys:TimeSpan>
+        <sys:TimeSpan x:Key="MyNet.Animation.VerySlow">0:0:0.5</sys:TimeSpan>
 
-    <!-- Semantic Aliases -->
-    <sys:TimeSpan x:Key="MyNet.Animation.Glyph">0:0:0.1</sys:TimeSpan>
-    <sys:TimeSpan x:Key="MyNet.Animation.Opacity">0:0:0.15</sys:TimeSpan>
-    <sys:TimeSpan x:Key="MyNet.Animation.Switch">0:0:0.2</sys:TimeSpan>
-    <sys:TimeSpan x:Key="MyNet.Animation.Fade">0:0:0.3</sys:TimeSpan>
-    <sys:TimeSpan x:Key="MyNet.Animation.Slide">0:0:0.3</sys:TimeSpan>
-    <sys:TimeSpan x:Key="MyNet.Animation.Shadow">0:0:0.3</sys:TimeSpan>
-    <sys:TimeSpan x:Key="MyNet.Animation.Underline">0:0:0.4</sys:TimeSpan>
+        <!-- Semantic Aliases -->
+        <sys:TimeSpan x:Key="MyNet.Animation.Glyph">0:0:0.1</sys:TimeSpan>
+        <sys:TimeSpan x:Key="MyNet.Animation.Opacity">0:0:0.15</sys:TimeSpan>
+        <sys:TimeSpan x:Key="MyNet.Animation.Switch">0:0:0.2</sys:TimeSpan>
+        <sys:TimeSpan x:Key="MyNet.Animation.Fade">0:0:0.3</sys:TimeSpan>
+        <sys:TimeSpan x:Key="MyNet.Animation.Slide">0:0:0.3</sys:TimeSpan>
+        <sys:TimeSpan x:Key="MyNet.Animation.Shadow">0:0:0.3</sys:TimeSpan>
+        <sys:TimeSpan x:Key="MyNet.Animation.Underline">0:0:0.4</sys:TimeSpan>
 
-</ResourceDictionary>
+    </Styles.Resources>
+</Styles>

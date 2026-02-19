@@ -8,6 +8,7 @@ using System;
 using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Metadata;
 using MyNet.Avalonia.Converters;
 
 namespace MyNet.Avalonia.MarkupExtensions;

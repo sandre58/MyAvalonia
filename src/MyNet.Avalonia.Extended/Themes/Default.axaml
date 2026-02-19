@@ -1,17 +1,12 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Styles.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <MergeResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/Drawer.axaml" />
-                <MergeResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/ExtendedView.axaml" />
-                <MergeResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/ExtendedWindow.axaml" />
-                <MergeResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/MessageNotificationControl.axaml" />
-                <MergeResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/OverlayDialogHost.axaml" />
-                <MergeResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowDialog.axaml" />
-                <MergeResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowNotificationManager.axaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Styles.Resources>
+
+    <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/Drawer.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/ExtendedView.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/ExtendedWindow.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/MessageNotificationControl.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/OverlayDialogHost.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowDialog.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowNotificationManager.axaml" />
 
 </Styles>

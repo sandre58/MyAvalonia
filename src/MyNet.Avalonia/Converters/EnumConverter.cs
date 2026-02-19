@@ -18,7 +18,16 @@ public class EnumConverter : IValueConverter
     /// <summary>
     /// Return a unique instance of <see cref="EnumConverter"/>.
     /// </summary>
-    public static readonly EnumConverter Any = new();
+    public static readonly EnumConverter Any = new(true);
+
+    /// <summary>
+    /// Return a unique instance of <see cref="EnumConverter"/>.
+    /// </summary>
+    public static readonly EnumConverter NotAny = new(false);
+
+    private EnumConverter(bool any) => _any = any;
+
+    private readonly bool _any;
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
@@ -32,7 +41,7 @@ public class EnumConverter : IValueConverter
                 System.Convert.ToInt32(parameter2, culture) == System.Convert.ToInt32(value, culture))
             : System.Convert.ToInt32(parameter, culture) == System.Convert.ToInt32(value, culture);
 
-        return val;
+        return _any ? val : !val;
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

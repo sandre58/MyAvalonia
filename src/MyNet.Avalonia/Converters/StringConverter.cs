@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using Avalonia.Controls;
 using Avalonia.Media;
 using MyNet.Avalonia.Extensions;
 using MyNet.Humanizer;
@@ -109,6 +110,10 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
 
         // Localizable
         RegisterTypeConverter<Localizable>((localizable, format, _, abbreviate, culture) => ConvertString(localizable.Key, localizable.Filename, format, abbreviate, culture));
+
+        // Controls
+        RegisterTypeConverter<TextBlock>((value, format, _, _, culture) => ConvertString(value.Text.OrEmpty(), null, format, false, culture));
+        RegisterTypeConverter<TextBox>((value, format, _, _, culture) => ConvertString(value.Text.OrEmpty(), null, format, false, culture));
     }
 
     /// <summary>
@@ -253,4 +258,4 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
 /// <summary>
 /// Represents a localizable resource key and optional filename.
 /// </summary>
-internal record Localizable(string Key, string? Filename);
+public record Localizable(string Key, string? Filename);

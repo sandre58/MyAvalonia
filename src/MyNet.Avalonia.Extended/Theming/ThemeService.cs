@@ -7,9 +7,10 @@
 using System;
 using Avalonia.Media;
 using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Theme.Infrastructure;
 using MyNet.Avalonia.Theme.Palettes;
-using MyNet.Avalonia.Theme.Theming;
 using MyNet.UI.Theming;
+using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Extended.Theming;
 
@@ -17,7 +18,7 @@ namespace MyNet.Avalonia.Extended.Theming;
 /// Service for managing application myTheme (Dark/Light/HighContrast) and brand colors (Primary/Accent).
 /// Integrates with MyNet.Avalonia.Theme.MyTheme for hot-reload support.
 /// </summary>
-public class ThemeService(IMyTheme myTheme) : IThemeService
+public class ThemeService(IMyTheme myTheme, IThemeBaseRegistry themeBaseRegistry) : IThemeService
 {
     /// <summary>
     /// Event raised when the myTheme changes.
@@ -33,14 +34,7 @@ public class ThemeService(IMyTheme myTheme) : IThemeService
         {
             var primary = myTheme.Primary;
             var accent = myTheme.Accent;
-            return new()
-            {
-                Base = Enum.TryParse<ThemeBase>(myTheme.Theme, out var baseTheme) ? baseTheme : ThemeBase.Inherit,
-                PrimaryColor = primary.Base.ToHex(),
-                PrimaryForegroundColor = primary.Foreground.ToHex(),
-                AccentColor = accent.Foreground.ToHex(),
-                AccentForegroundColor = accent.Foreground.ToHex()
-            };
+            return new(themeBaseRegistry.Get(myTheme.Theme.OrEmpty()) ?? themeBaseRegistry.Dark, primary.Base.ToHex(), accent.Base.ToHex(), primary.Foreground.ToHex(), accent.Foreground.ToHex());
         }
     }
 
@@ -76,6 +70,50 @@ public class ThemeService(IMyTheme myTheme) : IThemeService
         }
 
         ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(CurrentTheme));
+    }
+
+    /// <summary>
+    /// Applies a base myTheme (Dark/Light/HighContrast) to the application, keeping existing brand colors. This allows changing the overall theme mode while preserving the current primary and accent colors.
+    /// </summary>
+    /// <param name="baseTheme">The base theme to apply.</param>
+    public void ApplyBaseTheme(IThemeBase baseTheme)
+    {
+        var currentTheme = CurrentTheme;
+
+        ApplyTheme(currentTheme with { Base = baseTheme });
+    }
+
+    /// <summary>
+    /// Applies a primary color to the application, keeping existing base myTheme and accent color. This allows changing the primary brand color while preserving the overall theme mode and accent color.
+    /// </summary>
+    /// <param name="color">The primary color to apply.</param>
+    /// <param name="foreground">The primary foreground color to apply.</param>
+    public void ApplyPrimary(string color, string? foreground = null)
+    {
+        var currentTheme = CurrentTheme;
+        ApplyTheme(currentTheme with { PrimaryColor = color, PrimaryForegroundColor = foreground });
+    }
+
+    /// <summary>
+    /// Applies an accent color to the application, keeping existing base myTheme and primary color. This allows changing the accent color while preserving the overall theme mode and primary brand color.
+    /// </summary>
+    /// <param name="color">The accent color to apply.</param>
+    /// <param name="foreground">The accent foreground color to apply.</param>
+    public void ApplyAccent(string color, string? foreground = null)
+    {
+        var currentTheme = CurrentTheme;
+        ApplyTheme(currentTheme with { AccentColor = color, AccentForegroundColor = foreground });
+    }
+
+    /// <summary>
+    /// Updates the current myTheme configuration using a provided update action, allowing for flexible modifications to the theme properties. The update action receives the current theme as a parameter, and any changes made to the theme within the action will be applied when the method completes. This allows for complex theme updates that may involve multiple properties or conditional logic while ensuring that the updated theme is applied correctly to the application.
+    /// </summary>
+    /// <param name="update">The update action to apply to the current theme.</param>
+    public void UpdateTheme(Action<UI.Theming.Theme> update)
+    {
+        var currentTheme = CurrentTheme;
+        update(currentTheme);
+        ApplyTheme(currentTheme);
     }
 
     /// <summary>

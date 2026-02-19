@@ -6,72 +6,37 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:ToggleSwitchPageViewModel"
+            Name="Root"
             ClipToBounds="False">
 
-    <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                             MinItemWidth="100"
-                             MinItemHeight="50"
-                             IsActive="{Binding IsActive}">
+    <v:ControlCatalogView>
 
-        <ctrl:ControlThemeViewer.ControlTemplate>
-            <DataTemplate x:DataType="ctrl:ControlDescription">
-                <Panel>
-                    <Panel.Styles>
-                        <Style Selector="ToggleSwitch">
-                            <Setter Property="OnContent">
-                                <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
-                                    <Binding Path="ContentType" />
-                                    <Binding Path="Content" />
-                                </MultiBinding>
-                            </Setter>
-                            <Setter Property="OffContent">
-                                <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
-                                    <Binding Path="ContentType" />
-                                    <Binding Path="Content" />
-                                </MultiBinding>
-                            </Setter>
-                        </Style>
-                        <Style Selector="ToggleSwitch.theme-, ToggleSwitch.theme-Button">
-                            <Setter Property="OnContent">
-                                <Template>
-                                    <ContentControl Content="{my:LocTextBlock On}" />
-                                </Template>
-                            </Setter>
-                            <Setter Property="OffContent">
-                                <Template>
-                                    <ContentControl Content="{my:LocTextBlock Off}" />
-                                </Template>
-                            </Setter>
-                        </Style>
-
-                        <Style Selector="ListBox.theme-Icon">
-                            <Setter Property="Width" Value="NaN" />
-                            <Setter Property="ItemsSource" Value="{m:RandomDays Min=3, Max=4}" />
-                            <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
-
-                            <Style Selector="^ ListBoxItem">
-                                <Setter Property="Content">
-                                    <Template>
-                                        <ContentControl Content="{m:RandomIcon}" />
-                                    </Template>
-                                </Setter>
-                            </Style>
-                        </Style>
-                    </Panel.Styles>
-                    <ToggleSwitch Theme="{Binding Theme}"
-                                  my:ThemeAssist.Role="{Binding Role}"
-                                  my:ClassesAssist.Classes="{Binding Classes}"
-                                  IsChecked="{m:RandomBool}"
-                                  ToolTip.Tip="{Binding Content}" />
-                </Panel>
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <ToggleSwitch Theme="{Binding Appearance.ActiveTheme}"
+                              my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                              my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                              IsChecked="True"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center" />
             </DataTemplate>
-        </ctrl:ControlThemeViewer.ControlTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-    </ctrl:ControlThemeViewer>
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <ToggleSwitch Theme="{Binding Theme}"
+                              my:ThemeAssist.Role="{Binding Role}"
+                              my:ClassesAssist.Classes="{Binding Classes}"
+                              Content="{Binding Converter={x:Static c:ContentConverter.Default}}"
+                              IsChecked="True" />
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
+    </v:ControlCatalogView>
 </pages:Page>

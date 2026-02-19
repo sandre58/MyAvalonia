@@ -9,7 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using MyNet.Observable.Translatables;
@@ -19,57 +18,7 @@ namespace MyNet.Avalonia.Controls.Behaviors;
 
 public static class ItemsBehavior
 {
-    static ItemsBehavior()
-    {
-        OverrideContentTemplateProperty.Changed.Subscribe(OverrideContentTemplatePropertyChangedCallback);
-        EnumSourceTypeProperty.Changed.Subscribe(EnumSourceTypePropertyChangedCallback);
-    }
-
-    #region OverrideContentTemplate
-
-    /// <summary>
-    /// Provides VerticalAlignment Property for attached ItemsBehavior element.
-    /// </summary>
-    public static readonly AttachedProperty<bool> OverrideContentTemplateProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("OverrideContentTemplate", typeof(ItemsBehavior));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="OverrideContentTemplateProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="VerticalAlignmentProperty"/>.</param>
-    public static void SetOverrideContentTemplate(StyledElement element, bool value) => element.SetValue(OverrideContentTemplateProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="OverrideContentTemplateProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static bool GetOverrideContentTemplate(StyledElement element) => element.GetValue(OverrideContentTemplateProperty);
-
-    private static void OverrideContentTemplatePropertyChangedCallback(AvaloniaPropertyChangedEventArgs obj)
-    {
-        if (obj.Sender is not ContentControl sender || ((bool?)obj.NewValue).IsFalse()) return;
-
-        if (sender.Parent is not ItemsControl itemsControl) return;
-
-        itemsControl.PropertyChanged += (_, e) =>
-        {
-            if (e.Property == ItemsControl.ItemTemplateProperty)
-            {
-                itemTemplateChanged();
-            }
-        };
-        itemTemplateChanged();
-
-        void itemTemplateChanged()
-        {
-            if (sender.ContentTemplate is null && itemsControl.ItemTemplate is not null)
-            {
-                sender.SetCurrentValue(ContentControl.ContentTemplateProperty, itemsControl.ItemTemplate);
-            }
-        }
-    }
-
-    #endregion
+    static ItemsBehavior() => EnumSourceTypeProperty.Changed.Subscribe(EnumSourceTypePropertyChangedCallback);
 
     #region EnumSourceType
 
@@ -113,12 +62,12 @@ public static class ItemsBehavior
         }
 
         sender.ItemsSource = values;
-        sender.SelectedValueBinding = new Binding(nameof(EnumTranslatable<>.Value));
+        sender.SelectedValueBinding = CompiledBinding.Create<EnumTranslatable, Enum?>(x => x.Value);
 
         if (GetUseDisplayMember(sender))
         {
             sender.ItemTemplate = null;
-            sender.DisplayMemberBinding = new Binding(nameof(EnumTranslatable<>.Display));
+            sender.DisplayMemberBinding = CompiledBinding.Create<EnumTranslatable, string>(x => x.Display);
         }
     }
 

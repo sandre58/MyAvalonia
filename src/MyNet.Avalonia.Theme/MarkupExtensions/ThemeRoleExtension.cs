@@ -5,12 +5,9 @@
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Documents;
 using Avalonia.Data;
-using Avalonia.Markup.Xaml;
-using Microsoft.Extensions.DependencyInjection;
+using Avalonia.Metadata;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Converters.Internals;
 using MyNet.Avalonia.Theme.Palettes;
@@ -63,37 +60,30 @@ public class ThemeRoleExtension : ThemeBrushExtensionBase
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = RelativeSource,
-                NameScope = new WeakReference<INameScope?>(serviceProvider.GetService<INameScope>()),
                 TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
             },
             new Binding($"(my:{nameof(PaletteAssist)}.{Type})")
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = RelativeSource,
-                NameScope = new WeakReference<INameScope?>(serviceProvider.GetService<INameScope>()),
                 TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
             },
             new Binding()
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = RelativeSource
+            },
+            new Binding("(TextElement.Foreground)")
+            {
+                Mode = BindingMode.OneWay,
+                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor)
+                {
+                    AncestorType = typeof(Control)
+                },
+                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
             }
         },
         Converter = ThemeConverter.Default,
-        ConverterParameter = new ThemeRoleParameters(Type, Opacity?.ToString() ?? CustomOpacity, Contrast)
+        ConverterParameter = new ThemeRoleParameters(Type, Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten)
     };
-
-    /// <summary>
-    /// Resolves a type from the XAML type resolver service.
-    /// </summary>
-    /// <param name="ctx">The service provider context.</param>
-    /// <param name="namespacePrefix">The namespace prefix (optional).</param>
-    /// <param name="type">The type name to resolve.</param>
-    /// <returns>The resolved <see cref="Type"/>.</returns>
-    private static Type ResolveType(IServiceProvider ctx, string? namespacePrefix, string type)
-    {
-        var tr = ctx.GetRequiredService<IXamlTypeResolver>();
-        var name = string.IsNullOrEmpty(namespacePrefix) ? type : $"{namespacePrefix}:{type}";
-        return tr.Resolve(name);
-    }
 }

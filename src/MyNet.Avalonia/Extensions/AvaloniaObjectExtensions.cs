@@ -16,7 +16,7 @@ namespace MyNet.Avalonia.Extensions;
 
 public static class AvaloniaObjectExtensions
 {
-    public static ResultDisposable TryBind(this AvaloniaObject obj, AvaloniaProperty property, IBinding? binding)
+    public static ResultDisposable TryBind(this AvaloniaObject obj, AvaloniaProperty property, BindingBase? binding)
         => binding == null
             ? new ResultDisposable(Disposable.Empty, result: false)
             : new ResultDisposable(obj.Bind(property, binding), result: true);

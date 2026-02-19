@@ -6,116 +6,75 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:ProgressBarPageViewModel"
+            Name="Root"
             ClipToBounds="False">
 
-    <DockPanel>
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer>
-                <StackPanel>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Value}">
-                        <Slider Name="Value"
-                                ClipToBounds="False"
-                                IsSnapToTickEnabled="True"
-                                Maximum="100"
-                                Minimum="0"
-                                Value="30" />
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsIndeterminate}">
-                        <ToggleSwitch Name="IsIndeterminate" />
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock ValuePosition}">
-                        <ListBox Name="ValuePosition" SelectedIndex="0">
-                            <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:LocTextBlock None}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                            <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:LocTextBlock Center}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="300"
-                                 MinItemHeight="300"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <ProgressBar Theme="{Binding Appearance.ActiveTheme}"
+                             my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                             my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                             Orientation="{Binding #Root.DataContext.Orientation}"
+                             Width="{Binding #Root.DataContext.Width}"
+                             Height="{Binding #Root.DataContext.Height}"
+                             Value="{Binding #Value.Value}"
+                             IsIndeterminate="{Binding #IsIndeterminate.IsChecked}"
+                             ShowProgressText="{Binding #Root.DataContext.ShowProgressText}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <StackPanel Classes="Large">
-                        <ProgressBar Theme="{Binding Theme}"
-                                     my:ThemeAssist.Role="{Binding Role}"
-                                     my:ClassesAssist.Classes="{Binding Classes}"
-                                     b:SettingsBehavior.ProgressBarValuePosition="{Binding #ValuePosition.SelectedIndex}"
-                                     Orientation="Horizontal"
-                                     Width="250"
-                                     Height="NaN"
-                                     Value="{Binding #Value.Value}"
-                                     IsIndeterminate="{Binding #IsIndeterminate.IsChecked}"
-                                     ToolTip.Tip="{Binding Content}" />
-                        <ProgressBar Theme="{Binding Theme}"
-                                     my:ThemeAssist.Role="{Binding Role}"
-                                     my:ClassesAssist.Classes="{Binding Classes}"
-                                     b:SettingsBehavior.ProgressBarValuePosition="{Binding #ValuePosition.SelectedIndex}"
-                                     Orientation="Vertical"
-                                     Height="250"
-                                     Width="NaN"
-                                     Value="{Binding #Value.Value}"
-                                     IsIndeterminate="{Binding #IsIndeterminate.IsChecked}"
-                                     ToolTip.Tip="{Binding Content}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <Panel>
+                    <ProgressBar Theme="{Binding Theme}"
+                                 my:ThemeAssist.Role="{Binding Role}"
+                                 my:ClassesAssist.Classes="{Binding Classes}"
+                                 Orientation="Horizontal"
+                                 Width="250"
+                                 Value="30"
+                                 IsVisible="{Binding Theme, Converter={x:Static my:NullConverter.IsNull}}" />
+                    <ProgressBar Theme="{Binding Theme}"
+                                 my:ThemeAssist.Role="{Binding Role}"
+                                 my:ClassesAssist.Classes="{Binding Classes}"
+                                 Value="30"
+                                 IsVisible="{Binding Theme, Converter={x:Static my:NullConverter.IsNotNull}}" />
+                </Panel>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-            <!-- Custom content for the Custom tab (optional) -->
-            <ctrl:ControlThemeViewer.CustomContent>
-                <StackPanel Spacing="20" Margin="20">
-                    <HeaderedContentControl Header="Circular" Classes="Text">
-                        <StackPanel Classes="Large" Orientation="Horizontal">
-                            <ProgressBar Theme="{StaticResource MyNet.Theme.ProgressBar.Circular}"
-                                         my:ThemeAssist.Role="Default"
-                                         b:SettingsBehavior.ProgressBarValuePosition="{Binding #ValuePosition.SelectedIndex}"
-                                         Width="100"
-                                         Height="100"
-                                         Value="{Binding #Value.Value}"
-                                         IsIndeterminate="{Binding #IsIndeterminate.IsChecked}" />
-                            <ProgressBar Theme="{StaticResource MyNet.Theme.ProgressBar.Circular}"
-                                         my:ThemeAssist.Role="Accent"
-                                         b:SettingsBehavior.ProgressBarValuePosition="{Binding #ValuePosition.SelectedIndex}"
-                                         Width="100"
-                                         Height="100"
-                                         Value="{Binding #Value.Value}"
-                                         IsIndeterminate="{Binding #IsIndeterminate.IsChecked}" />
-                            <ProgressBar Theme="{StaticResource MyNet.Theme.ProgressBar.Circular}"
-                                         my:ThemeAssist.Role="Inverse"
-                                         b:SettingsBehavior.ProgressBarValuePosition="{Binding #ValuePosition.SelectedIndex}"
-                                         Width="100"
-                                         Height="100"
-                                         Value="{Binding #Value.Value}"
-                                         IsIndeterminate="{Binding #IsIndeterminate.IsChecked}" />
-                            <ProgressBar Theme="{StaticResource MyNet.Theme.ProgressBar.Circular}"
-                                         my:ThemeAssist.Role="Default"
-                                         Classes="Small"
-                                         b:SettingsBehavior.ProgressBarValuePosition="{Binding #ValuePosition.SelectedIndex}"
-                                         Value="{Binding #Value.Value}"
-                                         IsIndeterminate="{Binding #IsIndeterminate.IsChecked}" />
-                            <ProgressBar Theme="{StaticResource MyNet.Theme.ProgressBar.Circular}"
-                                         my:ThemeAssist.Role="Default"
-                                         Classes="Large"
-                                         b:SettingsBehavior.ProgressBarValuePosition="{Binding #ValuePosition.SelectedIndex}"
-                                         Value="{Binding #Value.Value}"
-                                         IsIndeterminate="{Binding #IsIndeterminate.IsChecked}" />
-                        </StackPanel>
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ctrl:ControlThemeViewer.CustomContent>
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <ListBox my:FormItem.Label="{my:LocObject Orientation}" SelectedValue="{Binding #Root.DataContext.Orientation}" SelectedValueBinding="{ReflectionBinding DataContext}"
+                         IsVisible="{Binding #Root.DataContext.Playground.Appearance.SelectedTheme, Converter={x:Static my:NullConverter.IsNull}}">
+                    <ListBoxItem my:IconAssist.Icon="{my:Icon BorderHorizontal}" Content="{my:Loc OrientationHorizontal}" DataContext="{x:Static Orientation.Horizontal}" />
+                    <ListBoxItem my:IconAssist.Icon="{my:Icon BorderVertical}" Content="{my:Loc OrientationVertical}" DataContext="{x:Static Orientation.Vertical}" />
+                </ListBox>
+                <Slider Name="Value"
+                        my:FormItem.Label="{my:LocObject Value}"
+                        ClipToBounds="False"
+                        IsSnapToTickEnabled="True"
+                        Maximum="100"
+                        Minimum="0"
+                        Value="30" />
+                <ToggleSwitch Name="IsIndeterminate" my:FormItem.Label="{my:LocObject IsIndeterminate}" IsChecked="False" />
+                <ListBox my:FormItem.Label="{my:LocObject ValuePosition}" SelectedValue="{Binding #Root.DataContext.PositionClassProvider.SelectedClass}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:Loc None}" DataContext="" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="position-left" />
+                    <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:Loc Center}" DataContext="position-center" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:Loc Right}" DataContext="position-right" />
+                </ListBox>
+            </my:Form>
+        </v:ControlCatalogView.Settings>
 
-        </ctrl:ControlThemeViewer>
-
-    </DockPanel>
+    </v:ControlCatalogView>
 </pages:Page>

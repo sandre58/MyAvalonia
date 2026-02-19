@@ -193,4 +193,17 @@ public class ColorShades
             // { nameof(Darker).WithPrefix(paletteName), Darker },
             // { nameof(Darkest).WithPrefix(paletteName), Darkest }
         };
+
+    /// <summary>
+    /// Creates a ColorShades instance from a resource dictionary.
+    /// </summary>
+    /// <param name="dictionary">The resource dictionary containing color definitions.</param>
+    /// <param name="paletteName">The name of the palette used as prefix for resource keys.</param>
+    /// <returns>A new ColorShades instance.</returns>
+    public static ColorShades FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary, string paletteName)
+    {
+        var baseColor = (Color)dictionary.GetValueOrDefault(paletteName, Colors.Gray);
+        var foregroundColor = (Color)dictionary.GetValueOrDefault($"{nameof(Foreground)}.{paletteName}", baseColor.ContrastingForegroundColor());
+        return new ColorShades(baseColor, foregroundColor);
+    }
 }

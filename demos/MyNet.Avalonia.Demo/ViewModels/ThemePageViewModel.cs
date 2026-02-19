@@ -4,179 +4,102 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
+using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using Avalonia.Collections;
-using Avalonia.Controls;
 using Avalonia.Media;
-using MyNet.Avalonia.Demo.Resources;
+using DynamicData;
 using MyNet.Avalonia.Extensions;
-using MyNet.Avalonia.Theme;
-using MyNet.Observable;
 using MyNet.Observable.Attributes;
 using MyNet.UI.Theming;
-using MyNet.Utilities;
 using MyNet.Utilities.Suspending;
 using PropertyChanged;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal class ThemePageViewModel : PageViewModel
+#pragma warning disable CS0628 // New protected member declared in sealed type
+
+internal sealed class ThemePageViewModel : PageViewModel
 {
-    private readonly Suspender _applyThemeSuspender = new();
+    private readonly IThemeService _themeService;
+    private readonly Suspender _updateSuspender = new();
+    private readonly Suspender _refreshThemePropertiesSuspender = new();
 
-    private readonly ObservableCollection<BrushData> _accentBrushes = [];
-    private readonly ObservableCollection<BrushData> _themeBrushes = [];
-
-    public DataGridCollectionView AccentBrushes { get; }
-
-    public DataGridCollectionView ThemeBrushes { get; }
-
-    [IsRequired]
-    public ThemeBase? CurrentBase { get; set; }
-
-    [IsRequired]
-    public Color? CurrentPrimaryColor { get; set; }
-
-    [IsRequired]
-    public Color? CurrentAccentColor { get; set; }
-
-    public ThemePageViewModel()
+    public ThemePageViewModel(IThemeService themeService, IThemeBaseRegistry themeBaseRegistry)
     {
-        AccentBrushes = new DataGridCollectionView(_accentBrushes);
-        AccentBrushes.GroupDescriptions.Add(new DataGridPathGroupDescription("Category"));
+        _themeService = themeService;
 
-        ThemeBrushes = new DataGridCollectionView(_themeBrushes);
-        ThemeBrushes.GroupDescriptions.Add(new DataGridPathGroupDescription("Category"));
-
+        AvailableThemeVariants.AddRange(themeBaseRegistry.Availables);
         UpdatePropertiesFromCurrentTheme();
 
-        ThemeManager.ThemeChanged += OnThemeChanged;
-
-        UpdateBrushes();
+        _themeService.ThemeChanged += OnThemeChanged;
     }
 
-    protected override string CreateTitle() => DemoResources.Theme;
+    public ObservableCollection<IThemeBase> AvailableThemeVariants { get; } = [];
+
+    [IsRequired]
+    public IThemeBase? Base { get; set; }
+
+    [IsRequired]
+    public Color? PrimaryColor { get; set; }
+
+    [IsRequired]
+    public Color? AccentColor { get; set; }
+
+    public ObservableCollection<BrushGroup> BrushGroups { get; } = [];
 
     private void UpdatePropertiesFromCurrentTheme()
     {
-        using (_applyThemeSuspender.Suspend())
+        using (_updateSuspender.Suspend())
         {
-            CurrentBase = ThemeManager.CurrentTheme?.Base;
-            CurrentPrimaryColor = ThemeManager.CurrentTheme?.PrimaryColor.ToColor();
-            CurrentAccentColor = ThemeManager.CurrentTheme?.AccentColor.ToColor();
+            var currentTheme = _themeService.CurrentTheme;
+            Base = currentTheme.Base;
+            PrimaryColor = currentTheme.PrimaryColor.ToColor();
+            AccentColor = currentTheme.AccentColor.ToColor();
         }
     }
 
     [SuppressPropertyChangedWarnings]
-    private void OnThemeChanged(object? sender, ThemeChangedEventArgs e)
+    private void OnThemeChanged(object? sender, EventArgs e)
     {
+        if (_refreshThemePropertiesSuspender.IsSuspended) return;
+
         UpdatePropertiesFromCurrentTheme();
-        UpdateBrushes();
     }
 
-    private void UpdateBrushes()
+    [SuppressPropertyChangedWarnings]
+    protected void OnBaseChanged()
     {
-        _accentBrushes.Set(MyTheme.Current.Resources.Where(x => x.Key.ToString().OrEmpty().Contains(ThemeResourceKeyFactory.BrushKey, System.StringComparison.OrdinalIgnoreCase))
-                                                            .Select(x => new BrushData(x.Key.ToString().OrEmpty())));
-        _themeBrushes.Set(((ResourceDictionary)MyTheme.Current.Resources.ThemeDictionaries[global::Avalonia.Application.Current!.ActualThemeVariant])
-                                                       .Where(x => x.Key.ToString().OrEmpty().Contains(ThemeResourceKeyFactory.BrushKey, System.StringComparison.OrdinalIgnoreCase))
-                                                       .Select(x => new BrushData(x.Key.ToString().OrEmpty()))
-                                                       .Where(x => x.Category != "Code"));
+        if (_updateSuspender.IsSuspended || Base is null) return;
+
+        using (_refreshThemePropertiesSuspender.Suspend())
+            _themeService.ApplyBaseTheme(Base);
     }
 
-    protected virtual void OnCurrentBaseChanged()
+    [SuppressPropertyChangedWarnings]
+    protected void OnPrimaryColorChanged()
     {
-        if (_applyThemeSuspender.IsSuspended) return;
+        if (_updateSuspender.IsSuspended || !PrimaryColor.HasValue) return;
 
-        if (CurrentBase.HasValue)
-            ThemeManager.ApplyBase(CurrentBase.Value);
+        using (_refreshThemePropertiesSuspender.Suspend())
+            _themeService.ApplyPrimary(PrimaryColor.Value.ToHex());
     }
 
-    protected virtual void OnCurrentPrimaryColorChanged()
+    [SuppressPropertyChangedWarnings]
+    protected void OnAccentColorChanged()
     {
-        if (_applyThemeSuspender.IsSuspended) return;
+        if (_updateSuspender.IsSuspended || !AccentColor.HasValue) return;
 
-        if (CurrentPrimaryColor.HasValue)
-            ThemeManager.ApplyPrimaryColor(CurrentPrimaryColor.Value.ToHex());
-    }
-
-    protected virtual void OnCurrentAccentColorChanged()
-    {
-        if (_applyThemeSuspender.IsSuspended) return;
-
-        if (CurrentAccentColor.HasValue)
-            ThemeManager.ApplyAccentColor(CurrentAccentColor.Value.ToHex());
+        using (_refreshThemePropertiesSuspender.Suspend())
+            _themeService.ApplyAccent(AccentColor.Value.ToHex());
     }
 
     protected override void Cleanup()
     {
+        _themeService.ThemeChanged -= OnThemeChanged;
         base.Cleanup();
-
-        ThemeManager.ThemeChanged -= OnThemeChanged;
     }
 }
 
-internal sealed class BrushData : ObservableObject
-{
-    public BrushData(string fullName)
-    {
-        Brush = ResourceLocator.GetResource<IBrush>(fullName);
-        FullName = fullName;
-        ColorFullName = fullName.Replace(ThemeResourceKeyFactory.BrushKey, ThemeResourceKeyFactory.ColorKey, System.StringComparison.OrdinalIgnoreCase);
-        Category = GetCategory(fullName);
+public record BrushGroup(string Name, Collection<string> BrushKeys, string? Description = null);
 
-        var stringToReplace = !string.IsNullOrEmpty(Category) ? $"{ThemeResourceKeyFactory.ResourcePrefix}.{ThemeResourceKeyFactory.BrushKey}.{Category}." : $"{ThemeResourceKeyFactory.ResourcePrefix}.{ThemeResourceKeyFactory.BrushKey}.";
-        Name = fullName.Replace(stringToReplace, string.Empty, System.StringComparison.OrdinalIgnoreCase);
-        Color = (Brush as SolidColorBrush)?.Color;
-        Opacity = Brush.Opacity;
-    }
-
-    public string Name { get; }
-
-    public string FullName { get; }
-
-    public string ColorFullName { get; }
-
-    public string Category { get; }
-
-    public IBrush Brush { get; }
-
-    public Color? Color { get; private set; }
-
-    public double Opacity { get; private set; }
-
-    private static string GetCategory(string fullName)
-    {
-        var strings = fullName.Split('.');
-
-        return strings.Length <= 3 && !new List<string> { "Transparency", "Primary", "Accent" }.Contains(strings[2]) ? "Others" : strings[2];
-    }
-}
-
-internal sealed class OpacityData : ObservableObject
-{
-    private readonly string _brushName;
-
-    public OpacityData(string displayName, string brushName)
-    {
-        //DisplayName = displayName;
-        //Name = ThemeResourceKeyFactory.Opacity(displayName);
-        //_brushName = brushName;
-        //Brush = ThemeResourceProvider.Get(brushName);
-        //Opacity = ThemeResourceProvider.GetOpacity(Name);
-
-        ThemeManager.ThemeChanged += ThemeManager_ThemeChanged;
-    }
-
-    private void ThemeManager_ThemeChanged(object? sender, ThemeChangedEventArgs e) { }//=> Brush = ThemeResourceProvider.Get(_brushName);
-
-    public string DisplayName { get; }
-
-    public string Name { get; }
-
-    public double Opacity { get; }
-
-    public IBrush Brush { get; private set; }
-}
+#pragma warning restore CS0628 // New protected member declared in sealed type

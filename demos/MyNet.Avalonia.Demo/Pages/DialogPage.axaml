@@ -15,16 +15,16 @@
         <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
             <ScrollViewer HorizontalScrollBarVisibility="Hidden">
                 <StackPanel>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock ShowCloseButton}">
+                    <HeaderedContentControl Classes="kind-label" Header="{my:Loc ShowCloseButton}">
                         <ToggleSwitch IsChecked="{Binding ShowCloseButton}" />
                     </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock CanDragMove}">
+                    <HeaderedContentControl Classes="kind-label" Header="{my:Loc CanDragMove}">
                         <ToggleSwitch IsChecked="{Binding CanDragMove}" />
                     </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock CanResize}">
+                    <HeaderedContentControl Classes="kind-label" Header="{my:Loc CanResize}">
                         <ToggleSwitch IsChecked="{Binding CanResize}" />
                     </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock FullScreen}">
+                    <HeaderedContentControl Classes="kind-label" Header="{my:Loc FullScreen}">
                         <ToggleSwitch IsChecked="{Binding FullScreen}" />
                     </HeaderedContentControl>
                 </StackPanel>

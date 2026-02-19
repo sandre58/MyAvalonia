@@ -1,0 +1,576 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT LISTBOXITEM THEME                                 -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
+            <Setter Property="HorizontalContentAlignment" Value="{Binding $parent[ListBox].(my:ItemsAssist.HorizontalContentAlignment)}" />
+            <Setter Property="VerticalContentAlignment" Value="{Binding $parent[ListBox].(my:ItemsAssist.VerticalContentAlignment)}" />
+            <Setter Property="HorizontalAlignment" Value="{Binding $parent[ListBox].(my:ItemsAssist.HorizontalAlignment)}" />
+            <Setter Property="VerticalAlignment" Value="{Binding $parent[ListBox].(my:ItemsAssist.VerticalAlignment)}" />
+            <Setter Property="Margin" Value="{Binding $parent[ListBox].(my:ItemsAssist.Margin)}" />
+            <Setter Property="Padding" Value="{Binding $parent[ListBox].(my:ItemsAssist.Padding)}" />
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{Binding $parent[ListBox].(my:ItemsAssist.ShadowDepth)}" />
+            <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[ListBox].(my:IconAssist.Alignment)}" />
+            <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[ListBox].(my:IconAssist.Spacing)}" />
+            <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[ListBox].(my:IconAssist.Opacity)}" />
+            <Setter Property="UseLayoutRounding" Value="False" />
+            <Setter Property="Focusable" Value="True" />
+            <Setter Property="ClipToBounds" Value="False" />
+
+            <!-- Default Theme -->
+            <Setter Property="Background" Value="{Binding $parent[ListBox].(my:ItemsAssist.Background)}" />
+            <Setter Property="BorderBrush" Value="{Binding $parent[ListBox].(my:ItemsAssist.BorderBrush)}" />
+            <Setter Property="BorderThickness" Value="{Binding $parent[ListBox].(my:ItemsAssist.BorderThickness)}" />
+            <Setter Property="Foreground" Value="{Binding $parent[ListBox].(my:ItemsAssist.Foreground)}" />
+            <Setter Property="CornerRadius" Value="{Binding $parent[ListBox].(my:ItemsAssist.CornerRadius)}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{Binding $parent[ListBox].(my:ItemsAssist.HoverBackground)}" />
+            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{Binding $parent[ListBox].(my:ItemsAssist.HoverBorderBrush)}" />
+            <Setter Property="my:InteractionAssist.HoverForeground" Value="{Binding $parent[ListBox].(my:ItemsAssist.HoverForeground)}" />
+            <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $parent[ListBox].(my:ItemsAssist.RippleColor)}" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $parent[ListBox].(my:ItemsAssist.ActiveBackground)}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $parent[ListBox].(my:ItemsAssist.ActiveBorderBrush)}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $parent[ListBox].(my:ItemsAssist.ActiveForeground)}" />
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Panel Name="PART_RootPanel">
+                        <Border Name="PART_MainBorder"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+
+                        <Border Name="PART_ActiveBorder"
+                                Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                                BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                        <Border Name="PART_HoverBorder"
+                                Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                                <my:IconContentControl Name="IconContent"
+                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       HorizontalAlignment="Stretch"
+                                                       VerticalAlignment="Stretch"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                                       BorderThickness="{TemplateBinding BorderThickness}"
+                                                       CornerRadius="{TemplateBinding CornerRadius}"
+                                                       Foreground="{TemplateBinding Foreground}"
+                                                       TextElement.FontSize="{TemplateBinding FontSize}"
+                                                       TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                       UseLayoutRounding="False">
+                                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                </my:IconContentControl>
+                            </my:Ripple>
+                        </Border>
+                    </Panel>
+                </ControlTemplate>
+            </Setter>
+
+            <Style Selector="^:not(.no-transitions)">
+                <Setter Property="Transitions">
+                    <Transitions>
+                        <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                    </Transitions>
+                </Setter>
+            </Style>
+
+            <!-- Hover -->
+            <Style Selector="^:not(:disabled):pointerover">
+                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                </Style>
+                <Style Selector="^ /template/ Border#PART_MainBorder">
+                    <Setter Property="my:ShadowAssist.Darken" Value="True" />
+                </Style>
+                <Style Selector="^ /template/ Border#PART_HoverBorder">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Style>
+
+            <Style Selector="^:selected">
+                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                </Style>
+                <Style Selector="^ /template/ Border#PART_MainBorder">
+                    <Setter Property="my:ShadowAssist.Darken" Value="True" />
+                </Style>
+                <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Style>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT LISTBOX THEME                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type ListBox}" TargetType="ListBox">
+            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+            <Setter Property="AutoScrollToSelectedItem" Value="False" />
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
+            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Left" />
+            <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Center" />
+            <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
+            <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
+            <Setter Property="my:ItemsAssist.Margin" Value="1" />
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem}" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
+            <Setter Property="Focusable" Value="True" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter>
+
+            <!-- Default colors -->
+            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+
+            <!-- Items -->
+            <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
+
+            <Style Selector="^[(my|ItemsAssist.Role)=Contrast]">
+                <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Foreground}" />
+            </Style>
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="ListBox">
+                    <Panel>
+                        <Border Name="PART_BorderRoot"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+                        <Border ClipToBounds="{TemplateBinding ClipToBounds}" CornerRadius="{TemplateBinding CornerRadius}">
+                            <ScrollViewer Name="PART_ScrollViewer"
+                                          Margin="{TemplateBinding Padding}"
+                                          my:ScrollViewerBehavior.RefreshOnScroll="{TemplateBinding my:ScrollViewerBehavior.RefreshOnScroll}"
+                                          AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
+                                          HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                                          IsDeferredScrollingEnabled="{TemplateBinding (ScrollViewer.IsDeferredScrollingEnabled)}"
+                                          IsScrollChainingEnabled="{TemplateBinding (ScrollViewer.IsScrollChainingEnabled)}"
+                                          IsScrollInertiaEnabled="{TemplateBinding (ScrollViewer.IsScrollInertiaEnabled)}"
+                                          VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+                                <ItemsPresenter Name="PART_ItemsPresenter"
+                                                ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                KeyboardNavigation.TabNavigation="Contained" />
+                            </ScrollViewer>
+                        </Border>
+                    </Panel>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- TAB LISTBOXITEM THEME                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Tab" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+
+            <!-- Hover -->
+            <Style Selector="^:not(:disabled):pointerover">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+
+            <!-- Active -->
+            <Style Selector="^:selected">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- TAB LISTBOX THEME                                         -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="MyNet.Theme.ListBox.Tabs" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+            <Setter Property="my:ThemeAssist.Kind" Value="tabs" />
+            <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.ListBoxItem.Tab}" />
+            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
+            <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Center" />
+            <Setter Property="my:ItemsAssist.Margin" Value="0" />
+            <Setter Property="my:ItemsAssist.Spacing" Value="0" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md}" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
+            <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+
+            <!-- Default colors -->
+            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+
+            <!-- Surface -->
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+
+            <!-- Items -->
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 0 2" />
+            <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="ListBox">
+                    <Border Name="PART_BorderRoot"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                            <ScrollViewer Name="PART_ScrollViewer"
+                                          my:ScrollViewerBehavior.RefreshOnScroll="{TemplateBinding my:ScrollViewerBehavior.RefreshOnScroll}"
+                                          AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
+                                          HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                                          IsDeferredScrollingEnabled="{TemplateBinding (ScrollViewer.IsDeferredScrollingEnabled)}"
+                                          IsScrollChainingEnabled="{TemplateBinding (ScrollViewer.IsScrollChainingEnabled)}"
+                                          IsScrollInertiaEnabled="{TemplateBinding (ScrollViewer.IsScrollInertiaEnabled)}"
+                                          VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+                                <ItemsPresenter Name="PART_ItemsPresenter"
+                                                Margin="{TemplateBinding Padding}"
+                                                ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                KeyboardNavigation.TabNavigation="Contained" />
+                            </ScrollViewer>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- ICON LISTBOXITEM THEME                                    -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Icon" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+            <Setter Property="FocusAdorner">
+                <FocusAdornerTemplate>
+                    <Ellipse Theme="{StaticResource MyNet.Theme.Ellipse.Focus}" />
+                </FocusAdornerTemplate>
+            </Setter>
+            <Setter Property="Template">
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border Name="PART_MainBorder">
+                        <my:Ripple Name="PART_Ripple"
+                                   IsCentered="True"
+                                   RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}"
+                                   SizeMultiplier="2">
+                            <my:IconContentControl Name="IconContent"
+                                                   Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                                   IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                   IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                   IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   HorizontalAlignment="Stretch"
+                                                   VerticalAlignment="Stretch"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   Background="{TemplateBinding Background}"
+                                                   BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                                   BorderThickness="{TemplateBinding BorderThickness}"
+                                                   CornerRadius="{TemplateBinding CornerRadius}"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   TextElement.FontSize="{TemplateBinding FontSize}"
+                                                   TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                   UseLayoutRounding="False">
+                                <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                            </my:IconContentControl>
+                        </my:Ripple>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+
+            <!-- Hover -->
+            <Style Selector="^:not(:disabled):pointerover">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+
+            <!-- Active -->
+            <Style Selector="^:selected">
+                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                </Style>
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- ICON LISTBOX THEME                                        -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="MyNet.Theme.ListBox.Icon" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+            <Setter Property="my:ThemeAssist.Kind" Value="icon" />
+            <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.ListBoxItem.Icon}" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md, Horizontal}" />
+            <Setter Property="my:ItemsAssist.Margin" Value="0" />
+            <Setter Property="my:ItemsAssist.Spacing" Value="0" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
+            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole Primary}" />
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="ListBox">
+                    <Border Name="PART_BorderRoot"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ClipToBounds="False"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <ScrollViewer Name="PART_ScrollViewer"
+                                      my:ScrollViewerBehavior.RefreshOnScroll="{TemplateBinding my:ScrollViewerBehavior.RefreshOnScroll}"
+                                      AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
+                                      ClipToBounds="False"
+                                      HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                                      IsDeferredScrollingEnabled="{TemplateBinding (ScrollViewer.IsDeferredScrollingEnabled)}"
+                                      IsScrollChainingEnabled="{TemplateBinding (ScrollViewer.IsScrollChainingEnabled)}"
+                                      IsScrollInertiaEnabled="{TemplateBinding (ScrollViewer.IsScrollInertiaEnabled)}"
+                                      VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+                            <ItemsPresenter Name="PART_ItemsPresenter"
+                                            Margin="{TemplateBinding Padding}"
+                                            ItemsPanel="{TemplateBinding ItemsPanel}"
+                                            KeyboardNavigation.TabNavigation="Contained" />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+
+            <!-- Layout -->
+            <Style Selector="^.layout-vertical">
+                <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md, Vertical}" />
+            </Style>
+        </ControlTheme>
+
+    </Styles.Resources>
+
+    <Style Selector=":is(ListBox)">
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- KINDS                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.kind-cards">
+            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="my:ItemsAssist.Margin" Value="0" />
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md}" />
+            <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Left" />
+            <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Top" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <my:ElasticWrapPanel Orientation="Horizontal" ItemSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}"  LineSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="^.kind-focus">
+            <Setter Property="my:ItemsAssist.BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="1" />
+            <Setter Property="my:ItemsAssist.Background" Value="{my:ThemeBrush (my:ItemsAssist.Foreground), Opacity=Overlay}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Foreground, Opacity=Focus}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Foreground}" />
+
+            <Style Selector="^[(my|ItemsAssist.Role)=Contrast]">
+                <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Foreground}" />
+                <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:Foreground}" />
+            </Style>
+
+            <Setter Property="ItemContainerTheme">
+                <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+
+                    <Style Selector="^:not(:selected)">
+                        <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+                    </Style>
+
+                    <Style Selector="^:selected">
+                        <Setter Property="BorderThickness" Value="2" />
+                    </Style>
+                </ControlTheme>
+            </Setter>
+        </Style>
+
+        <Style Selector="^.kind-toggle">
+            <Setter Property="my:ItemsAssist.Spacing" Value="0" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
+            <Setter Property="my:ItemsAssist.Margin" Value="0" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Md}" />
+            <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
+            <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
+            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
+            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="Background" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="^.kind-gender">
+            <Setter Property="my:ClassesAssist.Classes" Value="layout-uniform" />
+
+            <Style Selector="^ ListBoxItem">
+                <Setter Property="my:InteractionAssist.ActiveBackground" Value="{ReflectionBinding Value, Converter={x:Static my:GenderTypeConverter.Brush}}" />
+                <Setter Property="my:IconAssist.Icon" Value="{ReflectionBinding Value, Converter={x:Static my:GenderTypeConverter.Icon}}" />
+                <Setter Property="Content" Value="{ReflectionBinding Display}" />
+            </Style>
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- LAYOUTS                                                   -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^[(my|ThemeAssist.Kind)=default]:not(.kind-toggle)">
+            <Style Selector="^.variant-solid, ^.variant-light, ^.variant-outlined">
+                <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+                <Setter Property="Padding" Value="{my:Thickness Sm}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[(my|ThemeAssist.Kind)=tabs]">
+
+            <Style Selector="^.variant-solid, ^.variant-light, ^.variant-outlined">
+                <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+
+                <Style Selector="^.variant-solid-items, ^.variant-outlined-items, ^.variant-light-items, ^.variant-text-items">
+                    <Setter Property="Padding" Value="{my:Thickness Sm}" />
+                </Style>
+            </Style>
+
+            <Style Selector="^.variant-solid-items, ^.variant-outlined-items, ^.variant-light-items, ^.variant-text-items">
+                <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+                <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.layout-horizontal">
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        </Style>
+        <Style Selector="^.layout-uniform:not(.layout-vertical)">
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        </Style>
+        <Style Selector="^.layout-wrap, ^.layout-uniform, ^.layout-horizontal, ^.layout-vertical">
+            <Setter Property="my:ItemsAssist.Margin" Value="0" />
+        </Style>
+
+        <Style Selector="^.layout-spacing, ^.layout-spacing-sm, ^.layout-spacing-md, ^.layout-spacing-lg, ^.layout-spacing-xl, ^.layout-spacing-xxl, ^.layout-spacing-xxxl">
+            <Setter Property="my:ItemsAssist.Margin" Value="0" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        </Style>
+
+        <Style Selector="^.layout-spacing">
+            <Setter Property="Padding" Value="{my:Thickness Sm}" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="^.layout-spacing.size-xs">
+            <Setter Property="Padding" Value="{my:Thickness Xs}" />
+        </Style>
+
+        <Style Selector="^.layout-spacing.size-sm">
+            <Setter Property="Padding" Value="{my:Thickness Sm}" />
+        </Style>
+
+        <Style Selector="^.layout-spacing.size-md">
+            <Setter Property="Padding" Value="{my:Thickness Md}" />
+        </Style>
+
+        <Style Selector="^.layout-spacing.size-lg">
+            <Setter Property="Padding" Value="{my:Thickness Lg}" />
+        </Style>
+
+        <Style Selector="^.layout-spacing.size-xl">
+            <Setter Property="Padding" Value="{my:Thickness Xl}" />
+        </Style>
+
+        <Style Selector="^.layout-spacing.size-xs">
+            <Setter Property="Padding" Value="{my:Thickness Xs}" />
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Sm}" />
+        </Style>
+
+        <Style Selector="^.size-md">
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md}" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Lg}" />
+        </Style>
+
+    </Style>
+</Styles>

@@ -203,7 +203,7 @@ public class DataGridNumericColumn : DataGridBoundColumn<NumericUpDown, TextBloc
     {
         base.SynchronizeEditingControlProperties(control);
 
-        DataGridHelper.SynchronizeColumnProperty(this, control, NumericUpDown.WatermarkProperty, WatermarkProperty);
+        DataGridHelper.SynchronizeColumnProperty(this, control, NumericUpDown.PlaceholderTextProperty, PlaceholderTextProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, NumericUpDown.InnerRightContentProperty, InnerRightContentProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, NumericUpDown.InnerLeftContentProperty, InnerLeftContentProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, NumericUpDown.TextAlignmentProperty, TextAlignmentProperty);

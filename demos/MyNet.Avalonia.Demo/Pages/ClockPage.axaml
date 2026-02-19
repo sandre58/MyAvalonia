@@ -4,70 +4,64 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
-            mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
-            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
-            x:DataType="vm:ButtonPageViewModel"
-            ClipToBounds="False">
+            x:DataType="vm:ClockPageViewModel"
+            x:Name="Root"
+            ClipToBounds="False"
+            mc:Ignorable="d">
 
-    <DockPanel>
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                <StackPanel>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Hands}">
-                        <ListBox SelectionMode="Multiple,Toggle">
-                            <ListBoxItem Name="ShowHourHands" Content="{my:LocTextBlock Hours}" IsSelected="True" />
-                            <ListBoxItem Name="ShowMinuteHands" Content="{my:LocTextBlock Minutes}" IsSelected="True" />
-                            <ListBoxItem Name="ShowSecondHands" Content="{my:LocTextBlock Seconds}" IsSelected="True" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Ticks}">
-                        <ListBox SelectionMode="Multiple,Toggle">
-                            <ListBoxItem Name="ShowHourTicks" Content="{my:LocTextBlock Hours}" IsSelected="True" />
-                            <ListBoxItem Name="ShowMinuteTicks" Content="{my:LocTextBlock Minutes}" IsSelected="True" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsSmooth}">
-                        <ToggleSwitch Name="IsSmooth" IsChecked="False" />
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock LiveUpdate}">
-                        <ToggleSwitch Name="LiveUpdate" IsChecked="True" />
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <my:Clock Theme="{Binding Appearance.ActiveTheme}"
+                          my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                          my:ItemsAssist.Role="{Binding Appearance.ActiveItemsRole}"
+                          my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                          Height="150"
+                          Width="150"
+                          IsSmooth="{Binding #IsSmooth.IsChecked}"
+                          ShowHourHand="{Binding #ShowHourHand.IsSelected}"
+                          ShowHourTicks="{Binding #ShowHourTicks.IsSelected}"
+                          ShowMinuteHand="{Binding #ShowMinuteHand.IsSelected}"
+                          ShowMinuteTicks="{Binding #ShowMinuteTicks.IsSelected}"
+                          ShowSecondHand="{Binding #ShowSecondHand.IsSelected}"
+                          LiveUpdate="{Binding #LiveUpdate.IsChecked}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center" />
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="180"
-                                 MinItemHeight="180"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <my:Clock Theme="{Binding Theme}"
+                          my:ThemeAssist.Role="{Binding Role}"
+                          my:ItemsAssist.Role="{Binding ItemsRole}"
+                          my:ClassesAssist.Classes="{Binding Classes}"
+                          Height="150"
+                          Width="150" />
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-            <!-- Template for standard controls -->
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <my:Clock Theme="{Binding Theme}"
-                              my:ThemeAssist.Role="{Binding Role}"
-                              my:ClassesAssist.Classes="{Binding Classes}"
-                              Height="150"
-                              Width="150"
-                              IsSmooth="{Binding #IsSmooth.IsChecked}"
-                              ShowHourHand="{Binding #ShowHourHands.IsSelected}"
-                              ShowHourTicks="{Binding #ShowHourTicks.IsSelected}"
-                              ShowMinuteHand="{Binding #ShowMinuteHands.IsSelected}"
-                              ShowMinuteTicks="{Binding #ShowMinuteTicks.IsSelected}"
-                              ShowSecondHand="{Binding #ShowSecondHands.IsSelected}"
-                              LiveUpdate="{Binding #LiveUpdate.IsChecked}"
-                              ToolTip.Tip="{Binding Content}" />
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <ListBox my:FormItem.Label="{my:LocObject Hands}" SelectionMode="Multiple,Toggle">
+                    <ListBoxItem Name="ShowHourHand" Content="{my:Loc Hours}" IsSelected="True" />
+                    <ListBoxItem Name="ShowMinuteHand" Content="{my:Loc Minutes}" IsSelected="True" />
+                    <ListBoxItem Name="ShowSecondHand" Content="{my:Loc Seconds}" IsSelected="True" />
+                </ListBox>
+                <ListBox my:FormItem.Label="{my:LocObject Ticks}" SelectionMode="Multiple,Toggle">
+                    <ListBoxItem Name="ShowHourTicks" Content="{my:Loc Hours}" IsSelected="True" />
+                    <ListBoxItem Name="ShowMinuteTicks" Content="{my:Loc Minutes}" IsSelected="True" />
+                </ListBox>
+                <ToggleSwitch Name="IsSmooth" my:FormItem.Label="{my:LocObject IsSmooth}" IsChecked="False" />
+                <ToggleSwitch Name="LiveUpdate" my:FormItem.Label="{my:LocObject LiveUpdate}" IsChecked="True" />
+            </my:Form>
+        </v:ControlCatalogView.Settings>
 
-        </ctrl:ControlThemeViewer>
-
-    </DockPanel>
+    </v:ControlCatalogView>
 </pages:Page>

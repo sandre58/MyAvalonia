@@ -3,6 +3,7 @@
     <PropertyGroup>
         <NoWarn>$(NoWarn);SYSLIB0013;SYSLIB1054;CS1591;CS1574;NU5104;NETSDK1206;NETSDK1057</NoWarn>
         <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+        <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
     </PropertyGroup>
 
     <PropertyGroup>

@@ -5,18 +5,20 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class CheckBoxPageViewModel : AutoBuildPageViewModel
+internal sealed class CheckBoxPageViewModel : ControlCatalogViewModel
 {
     public CheckBoxPageViewModel()
-        : base(nameof(CheckBox), [
-            new ControlThemeBuilder()
-            .AddLayouts("Circle", "Alternate")
-            .AddDefaultRoles()
-            .AddSizes("Small", "Medium", "Large")
-        ])
-    { }
+        : base(nameof(CheckBox),
+            [
+                new ControlThemeBuilder()
+                    .AddShapes("shape-circle", "shape-alternate")
+                    .AddDefaultSizes()
+                    .AddDefaultRoles()
+            ])
+    {
+    }
 }

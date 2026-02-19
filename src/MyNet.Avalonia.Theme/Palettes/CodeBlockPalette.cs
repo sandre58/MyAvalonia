@@ -76,4 +76,27 @@ public class CodeBlockPalette
             { nameof(Brace).WithPrefix(prefix), Brace },
             { nameof(Entity).WithPrefix(prefix), Entity }
         };
+
+    /// <summary>
+    /// Creates a CodeBlockPalette instance from a resource dictionary.
+    /// </summary>
+    /// <param name="dictionary">The resource dictionary containing color definitions.</param>
+    /// <param name="prefix">The prefix used for resource keys (default: "CodeBlock").</param>
+    /// <returns>A new CodeBlockPalette instance.</returns>
+    public static CodeBlockPalette FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary, string prefix = nameof(ThemeVariantColors.CodeBlock))
+    {
+        var defaultColor = Colors.Gray;
+        return new CodeBlockPalette
+        {
+            Unknown = (Color)dictionary.GetValueOrDefault(nameof(Unknown).WithPrefix(prefix), defaultColor),
+            Space = (Color)dictionary.GetValueOrDefault(nameof(Space).WithPrefix(prefix), defaultColor),
+            Comment = (Color)dictionary.GetValueOrDefault(nameof(Comment).WithPrefix(prefix), defaultColor),
+            Tag = (Color)dictionary.GetValueOrDefault(nameof(Tag).WithPrefix(prefix), defaultColor),
+            Quote = (Color)dictionary.GetValueOrDefault(nameof(Quote).WithPrefix(prefix), defaultColor),
+            AttributeValue = (Color)dictionary.GetValueOrDefault(nameof(AttributeValue).WithPrefix(prefix), defaultColor),
+            AttributeKey = (Color)dictionary.GetValueOrDefault(nameof(AttributeKey).WithPrefix(prefix), defaultColor),
+            Brace = (Color)dictionary.GetValueOrDefault(nameof(Brace).WithPrefix(prefix), defaultColor),
+            Entity = (Color)dictionary.GetValueOrDefault(nameof(Entity).WithPrefix(prefix), defaultColor)
+        };
+    }
 }

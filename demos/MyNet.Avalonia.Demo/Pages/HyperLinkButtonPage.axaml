@@ -6,55 +6,36 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
-            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
             x:DataType="vm:HyperLinkButtonPageViewModel"
             ClipToBounds="False">
 
-    <DockPanel>
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                <StackPanel>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock IconLayout}">
-                        <ListBox Name="IconLayout" SelectedIndex="0">
-                            <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:LocTextBlock None}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:LocTextBlock Top}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
+    <v:ControlCatalogView>
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="100"
-                                 MinItemHeight="50"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <HyperlinkButton Theme="{Binding Appearance.ActiveTheme}"
+                                 my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                                 my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                                 my:IconAssist.Icon="{Binding IconProvider.Icon}"
+                                 Content="{Binding ContentProvider.Content}"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" />
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-            <!-- Template for standard controls -->
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <HyperlinkButton Theme="{Binding Theme}"
-                                     my:ThemeAssist.Role="{Binding Role}"
-                                     b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}"
-                                     my:ClassesAssist.Classes="{Binding Classes}"
-                                     ToolTip.Tip="{Binding Content}">
-                        <HyperlinkButton.Content>
-                            <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
-                                <Binding Path="ContentType" />
-                                <Binding Path="Content" />
-                            </MultiBinding>
-                        </HyperlinkButton.Content>
-                    </HyperlinkButton>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <HyperlinkButton Theme="{Binding Theme}"
+                                 my:ThemeAssist.Role="{Binding Role}"
+                                 my:ClassesAssist.Classes="{Binding Classes}"
+                                 Content="{Binding Converter={x:Static c:ContentConverter.Default}}" />
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-        </ctrl:ControlThemeViewer>
-
-    </DockPanel>
+    </v:ControlCatalogView>
 </pages:Page>

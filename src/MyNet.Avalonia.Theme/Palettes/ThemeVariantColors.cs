@@ -90,4 +90,23 @@ public class ThemeVariantColors(ThemeVariant variant) : ObservableObject
 
         void addColorShades(ColorShades shades, string name) => dictionary.AddRange(shades.ToResourceDictionary(name).ToDictionary(x => x.Key, x => (object)x.Value));
     }
+
+    /// <summary>
+    /// Creates a ThemeVariantColors instance from a resource dictionary.
+    /// </summary>
+    /// <param name="variant">The theme variant (e.g., Dark, Light, HighContrast).</param>
+    /// <param name="resourceDictionary">The resource dictionary containing color definitions.</param>
+    /// <returns>A new ThemeVariantColors instance.</returns>
+    public static ThemeVariantColors FromResourceDictionary(ThemeVariant variant, IReadOnlyDictionary<string, object> resourceDictionary) => new(variant)
+    {
+        Base = ThemePalette.FromResourceDictionary(resourceDictionary),
+        Success = ColorShades.FromResourceDictionary(resourceDictionary, nameof(Success)),
+        Warning = ColorShades.FromResourceDictionary(resourceDictionary, nameof(Warning)),
+        Error = ColorShades.FromResourceDictionary(resourceDictionary, nameof(Error)),
+        Information = ColorShades.FromResourceDictionary(resourceDictionary, nameof(Information)),
+        Neutral = ColorShades.FromResourceDictionary(resourceDictionary, nameof(Neutral)),
+        Gender = GenderPalette.FromResourceDictionary(resourceDictionary),
+        CodeBlock = CodeBlockPalette.FromResourceDictionary(resourceDictionary),
+        Opacity = OpacityLevels.FromResourceDictionary(resourceDictionary)
+    };
 }

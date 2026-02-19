@@ -15,20 +15,20 @@
         <!-- ============================================ -->
         <!-- ACCOUNT INFORMATION SECTION -->
         <!-- ============================================ -->
-        <my:FormGroup Header="{my:LocTextBlock AccountInformation}">
+        <my:FormGroup Header="{my:Loc AccountInformation}">
             <!-- Username with icon -->
             <TextBox my:FormItem.IsRequired="True"
                      my:FormItem.Label="{my:Icon Account}"
                      Classes="StretchH"
                      Text="{Binding Login}"
-                     Watermark="{my:Loc Username}" />
+                     PlaceholderText="{my:Loc Username}" />
 
             <!-- Email with validation icon -->
             <TextBox my:FormItem.IsRequired="True"
                      my:FormItem.Label="{my:Icon Email}"
                      Classes="StretchH"
                      Text="{Binding Email}"
-                     Watermark="{my:Loc Email}" />
+                     PlaceholderText="{my:Loc Email}" />
 
             <!-- Password fields side by side -->
             <Grid my:FormItem.IsRequired="True" my:FormItem.Label="{my:Icon Lock}" ColumnDefinitions="*,10,*">
@@ -36,27 +36,27 @@
                          PasswordChar="*"
                          my:TextFieldAssist.ShowRevealButton="True"
                          Text="{Binding Password}"
-                         Watermark="{my:Loc Password}" />
+                         PlaceholderText="{my:Loc Password}" />
                 <TextBox Grid.Column="2"
                          Classes="StretchH"
                          PasswordChar="*"
                          my:TextFieldAssist.ShowRevealButton="True"
                          Text="{Binding ConfirmPassword}"
-                         Watermark="{my:Loc ConfirmPassword}" />
+                         PlaceholderText="{my:Loc ConfirmPassword}" />
             </Grid>
         </my:FormGroup>
 
         <!-- ============================================ -->
         <!-- PERSONAL INFORMATION SECTION -->
         <!-- ============================================ -->
-        <my:FormGroup Header="{my:LocTextBlock PersonalInformation}">
+        <my:FormGroup Header="{my:Loc PersonalInformation}">
             <!-- Name fields in horizontal layout -->
             <Grid my:FormItem.IsRequired="True" my:FormItem.Label="{my:Icon CardAccountDetails}" ColumnDefinitions="*,10,*">
-                <TextBox Classes="StretchH" Text="{Binding FirstName}" Watermark="{my:Loc FirstName}" />
+                <TextBox Classes="StretchH" Text="{Binding FirstName}" PlaceholderText="{my:Loc FirstName}" />
                 <TextBox Grid.Column="2"
                          Classes="StretchH"
                          Text="{Binding LastName}"
-                         Watermark="{my:Loc LastName}" />
+                         PlaceholderText="{my:Loc LastName}" />
             </Grid>
 
             <!-- Gender with ComboBox instead -->
@@ -67,18 +67,18 @@
                      SelectedValue="{Binding Gender}" />
 
             <!-- Birth Date with Calendar (without InnerLeftContent) -->
-            <my:CalendarDatePicker Width="200" my:FormItem.Label="{my:Icon Calendar}"
+            <my:CalendarDatePickerEx Width="200" my:FormItem.Label="{my:Icon Calendar}"
                                    SelectedValue="{Binding BirthDate}"
-                                   Watermark="{my:Loc BirthDate}" />
+                                   PlaceholderText="{my:Loc BirthDate}" />
             <DatePicker Width="200" my:FormItem.Label="{my:Icon Calendar}"
                         SelectedDate="{Binding BirthDate}"
-                        my:TextFieldAssist.Watermark="{my:Loc BirthDate}" />
+                        my:TextFieldAssist.PlaceholderText="{my:Loc BirthDate}" />
 
             <!-- Phone Number -->
             <TextBox Width="300"
-                     my:FormItem.Label="{my:LocTextBlock PhoneNumber}"
+                     my:FormItem.Label="{my:LocObject PhoneNumber}"
                      Text="{Binding PhoneNumber}"
-                     Watermark="+33 6 12 34 56 78">
+                     PlaceholderText="+33 6 12 34 56 78">
                 <TextBox.InnerLeftContent>
                     <PathIcon Data="{StaticResource MyNet.Geometry.Phone}" />
                 </TextBox.InnerLeftContent>
@@ -87,7 +87,7 @@
             <!-- Country -->
             <ComboBox Width="300"
                       my:FormItem.IsRequired="True"
-                      my:FormItem.Label="{my:LocTextBlock Country}"
+                      my:FormItem.Label="{my:LocObject Country}"
                       ItemsSource="{Binding Countries}"
                       PlaceholderText="{my:Loc ChooseCountry}"
                       SelectedItem="{Binding SelectedCountry}" />
@@ -102,22 +102,22 @@
                 <TextBox Width="450"
                          my:FormItem.Label="Street Address"
                          Text="{Binding Address}"
-                         Watermark="123 Main Street" />
+                         PlaceholderText="123 Main Street" />
 
                 <!-- City, Postal Code, State in a grid -->
                 <Grid my:FormItem.Label="Location" ColumnDefinitions="200,150,100">
                     <TextBox Grid.Column="0"
                              Margin="0 0 5 0"
                              Text="{Binding City}"
-                             Watermark="City" />
+                             PlaceholderText="City" />
                     <TextBox Grid.Column="1"
                              Margin="5 0 5 0"
                              Text="{Binding PostalCode}"
-                             Watermark="Postal Code" />
+                             PlaceholderText="Postal Code" />
                     <TextBox Grid.Column="2"
                              Margin="5 0 0 0"
                              Text="{Binding State}"
-                             Watermark="State" />
+                             PlaceholderText="State" />
                 </Grid>
             </my:FormGroup>
         </Expander>
@@ -128,7 +128,7 @@
         <Expander Header="Professional Information" IsExpanded="False">
             <my:FormGroup>
                 <ComboBox Width="300"
-                          my:FormItem.Label="{my:LocTextBlock Role}"
+                          my:FormItem.Label="{my:LocObject Role}"
                           ItemsSource="{Binding Roles}"
                           PlaceholderText="{my:Loc SelectRole}"
                           SelectedItem="{Binding SelectedRole}" />
@@ -136,12 +136,12 @@
                 <TextBox Width="450"
                          my:FormItem.Label="Company"
                          Text="{Binding Company}"
-                         Watermark="Company name" />
+                         PlaceholderText="Company name" />
 
                 <TextBox Width="450"
                          my:FormItem.Label="Job Title"
                          Text="{Binding JobTitle}"
-                         Watermark="Software Engineer, Project Manager, etc." />
+                         PlaceholderText="Software Engineer, Project Manager, etc." />
 
                 <!-- Years of Experience with NumericUpDown -->
                 <NumericUpDown Width="150"
@@ -149,7 +149,7 @@
                                Maximum="50"
                                Minimum="0"
                                ShowButtonSpinner="True"
-                               Watermark="0"
+                               PlaceholderText="0"
                                Value="{Binding YearsOfExperience}" />
 
                 <!-- Salary with currency -->
@@ -160,7 +160,7 @@
                                Maximum="500000"
                                Minimum="0"
                                ShowButtonSpinner="True"
-                               Watermark="0"
+                               PlaceholderText="0"
                                Value="{Binding Salary}" />
             </my:FormGroup>
         </Expander>
@@ -175,14 +175,14 @@
                                   my:FormItem.Label="Technical Skills"
                                   ItemsSource="{Binding AvailableSkills}"
                                   SelectedItems="{Binding SelectedSkills}"
-                                  Watermark="Select your skills..." />
+                                  PlaceholderText="Select your skills..." />
 
                 <!-- Languages -->
                 <my:MultiComboBox Width="450"
                                   my:FormItem.Label="Languages"
                                   ItemsSource="{Binding AvailableLanguages}"
                                   SelectedItems="{Binding SelectedLanguages}"
-                                  Watermark="Select languages you speak..." />
+                                  PlaceholderText="Select languages you speak..." />
             </my:FormGroup>
         </Expander>
 
@@ -193,9 +193,9 @@
             <my:FormGroup Header="Availability">
                 <!-- Working hours -->
                 <StackPanel my:FormItem.Label="Preferred Working Hours" Orientation="Horizontal" Spacing="10">
-                    <my:TimePicker Width="150" SelectedValue="{Binding PreferredStartTime}" Watermark="Start time" />
+                    <my:TimePickerEx Width="150" SelectedValue="{Binding PreferredStartTime}" PlaceholderText="Start time" />
                     <TextBlock VerticalAlignment="Center" Text="to" />
-                    <my:TimePicker Width="150" SelectedValue="{Binding PreferredEndTime}" Watermark="End time" />
+                    <my:TimePickerEx Width="150" SelectedValue="{Binding PreferredEndTime}" PlaceholderText="End time" />
                 </StackPanel>
 
                 <!-- Availability Percentage with Slider -->
@@ -235,9 +235,9 @@
 
                 <!-- Contract dates -->
                 <StackPanel my:FormItem.Label="Contract Period" Orientation="Horizontal" Spacing="10">
-                    <my:CalendarDatePicker Width="180" SelectedValue="{Binding ContractStartDate}" Watermark="Start date" />
+                    <my:CalendarDatePickerEx Width="180" SelectedValue="{Binding ContractStartDate}" PlaceholderText="Start date" />
                     <TextBlock VerticalAlignment="Center" Text="to" />
-                    <my:CalendarDatePicker Width="180" SelectedValue="{Binding ContractEndDate}" Watermark="End date" />
+                    <my:CalendarDatePickerEx Width="180" SelectedValue="{Binding ContractEndDate}" PlaceholderText="End date" />
                 </StackPanel>
             </my:FormGroup>
         </Expander>
@@ -250,7 +250,7 @@
                 <TextBox Width="450"
                          my:FormItem.Label="Website"
                          Text="{Binding Website}"
-                         Watermark="https://yourwebsite.com">
+                         PlaceholderText="https://yourwebsite.com">
                     <TextBox.InnerLeftContent>
                         <PathIcon Data="{StaticResource MyNet.Geometry.Web}" />
                     </TextBox.InnerLeftContent>
@@ -259,7 +259,7 @@
                 <TextBox Width="450"
                          my:FormItem.Label="LinkedIn"
                          Text="{Binding LinkedIn}"
-                         Watermark="https://linkedin.com/in/yourprofile">
+                         PlaceholderText="https://linkedin.com/in/yourprofile">
                     <TextBox.InnerLeftContent>
                         <PathIcon Data="{StaticResource MyNet.Geometry.LinkedIn}" />
                     </TextBox.InnerLeftContent>
@@ -268,7 +268,7 @@
                 <TextBox Width="450"
                          my:FormItem.Label="GitHub"
                          Text="{Binding GitHub}"
-                         Watermark="https://github.com/yourusername">
+                         PlaceholderText="https://github.com/yourusername">
                     <TextBox.InnerLeftContent>
                         <PathIcon Data="{StaticResource MyNet.Geometry.GitHub}" />
                     </TextBox.InnerLeftContent>
@@ -279,7 +279,7 @@
         <!-- ============================================ -->
         <!-- ADDITIONAL DETAILS SECTION -->
         <!-- ============================================ -->
-        <Expander Header="{my:LocTextBlock AdditionalDetails}" IsExpanded="False">
+        <Expander Header="{my:Loc AdditionalDetails}" IsExpanded="False">
             <my:FormGroup>
                 <!-- Bio with multiline TextBox -->
                 <TextBox Width="450"
@@ -288,7 +288,7 @@
                          AcceptsReturn="True"
                          Text="{Binding Bio}"
                          TextWrapping="Wrap"
-                         Watermark="Tell us about yourself, your experience, interests, etc." />
+                         PlaceholderText="Tell us about yourself, your experience, interests, etc." />
             </my:FormGroup>
         </Expander>
 
@@ -300,12 +300,12 @@
                 <TextBox Width="450"
                          my:FormItem.Label="Contact Name"
                          Text="{Binding EmergencyContactName}"
-                         Watermark="Full name" />
+                         PlaceholderText="Full name" />
 
                 <TextBox Width="300"
                          my:FormItem.Label="Contact Phone"
                          Text="{Binding EmergencyContactPhone}"
-                         Watermark="+33 6 12 34 56 78">
+                         PlaceholderText="+33 6 12 34 56 78">
                     <TextBox.InnerLeftContent>
                         <PathIcon Data="{StaticResource MyNet.Geometry.Phone}" />
                     </TextBox.InnerLeftContent>
@@ -314,7 +314,7 @@
                 <TextBox Width="300"
                          my:FormItem.Label="Relation"
                          Text="{Binding EmergencyContactRelation}"
-                         Watermark="Spouse, Parent, Sibling, etc." />
+                         PlaceholderText="Spouse, Parent, Sibling, etc." />
             </my:FormGroup>
         </Expander>
 

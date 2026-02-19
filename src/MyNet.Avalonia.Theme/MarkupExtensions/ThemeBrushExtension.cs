@@ -5,10 +5,8 @@
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia.Controls;
 using Avalonia.Data;
-using Avalonia.Markup.Xaml;
-using Microsoft.Extensions.DependencyInjection;
+using Avalonia.Metadata;
 using MyNet.Avalonia.Theme.Converters.Internals;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
@@ -45,28 +43,13 @@ public class ThemeBrushExtension : ThemeBrushExtensionBase
     /// Provides the value for the markup extension, returning a binding to the theme brush with the specified options.
     /// </summary>
     /// <param name="serviceProvider">The service provider for the markup extension.</param>
-    /// <returns>A binding to the theme brush with the specified opacity and contrast settings.</returns>
+    /// <returns>A binding to the theme brush with the specified opacity, contrast, darken, and lighten settings.</returns>
     public override object ProvideValue(IServiceProvider serviceProvider) => new Binding(Path)
     {
         Mode = BindingMode.OneWay,
         RelativeSource = RelativeSource,
         Converter = ThemeConverter.Default,
-        ConverterParameter = new ThemeBrushParameters(Opacity?.ToString() ?? CustomOpacity, Contrast),
-        NameScope = new WeakReference<INameScope?>(serviceProvider.GetService<INameScope>()),
+        ConverterParameter = new ThemeBrushParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten),
         TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
     };
-
-    /// <summary>
-    /// Resolves a type from the XAML type resolver service.
-    /// </summary>
-    /// <param name="ctx">The service provider context.</param>
-    /// <param name="namespacePrefix">The namespace prefix (optional).</param>
-    /// <param name="type">The type name to resolve.</param>
-    /// <returns>The resolved <see cref="Type"/>.</returns>
-    private static Type ResolveType(IServiceProvider ctx, string? namespacePrefix, string type)
-    {
-        var tr = ctx.GetRequiredService<IXamlTypeResolver>();
-        var name = string.IsNullOrEmpty(namespacePrefix) ? type : $"{namespacePrefix}:{type}";
-        return tr.Resolve(name);
-    }
 }

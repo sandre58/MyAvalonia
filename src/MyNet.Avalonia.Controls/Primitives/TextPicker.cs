@@ -30,10 +30,10 @@ namespace MyNet.Avalonia.Controls.Primitives;
 public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, IValueSelector<T>, IIncrementableControl
     where TPreviewer : Control
 {
-    private static readonly CompositeFormat InvalidFormat = CompositeFormat.Parse(MessagesResources.InvalidFormatError);
-
     public const string PartTextBox = "PART_TextBox";
     public const string PartPreviewer = "PART_Previewer";
+
+    private static readonly CompositeFormat InvalidFormat = CompositeFormat.Parse(MessagesResources.InvalidFormatError);
 
     private readonly Suspender _previewValueChangedSuspender = new();
     private readonly Suspender _textBoxTextChangedSuspender = new();
@@ -135,20 +135,20 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
         base.OnPropertyChanged(change);
     }
 
-    #region Watermark
+    #region PlaceholderText
 
     /// <summary>
-    /// Provides Watermark Property.
+    /// Provides PlaceholderText Property.
     /// </summary>
-    public static readonly StyledProperty<string?> WatermarkProperty = AvaloniaProperty.Register<TextPicker<T, TPreviewer>, string?>(nameof(Watermark));
+    public static readonly StyledProperty<string?> PlaceholderTextProperty = AvaloniaProperty.Register<TextPicker<T, TPreviewer>, string?>(nameof(PlaceholderText));
 
     /// <summary>
-    /// Gets or sets the Watermark property.
+    /// Gets or sets the PlaceholderText property.
     /// </summary>
-    public string? Watermark
+    public string? PlaceholderText
     {
-        get => GetValue(WatermarkProperty);
-        set => SetValue(WatermarkProperty, value);
+        get => GetValue(PlaceholderTextProperty);
+        set => SetValue(PlaceholderTextProperty, value);
     }
 
     #endregion

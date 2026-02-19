@@ -5,15 +5,17 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class GridSplitterPageViewModel : AutoBuildPageViewModel
+internal sealed class GridSplitterPageViewModel : ControlCatalogViewModel
 {
     public GridSplitterPageViewModel()
-        : base(nameof(GridSplitter), [
-            new ControlThemeBuilder()
-        ])
-    { }
+        : base(nameof(GridSplitter),
+            [
+                new ControlThemeBuilder()
+            ])
+    {
+    }
 }

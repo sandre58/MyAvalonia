@@ -15,25 +15,25 @@ public enum IconSize
     /// <summary>
     /// Extra small icon size.
     /// </summary>
-    ExtraSmall,
+    Xs,
 
     /// <summary>
     /// Small icon size.
     /// </summary>
-    Small,
+    Sm,
 
     /// <summary>
     /// Default (medium) icon size.
     /// </summary>
-    Default,
+    Md,
 
     /// <summary>
     /// Large icon size.
     /// </summary>
-    Large,
+    Lg,
 
     /// <summary>
     /// Extra large icon size.
     /// </summary>
-    ExtraLarge
+    Xl
 }

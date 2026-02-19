@@ -6,121 +6,74 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
-            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:HeaderedContentControlPageViewModel"
+            Name="Root"
             ClipToBounds="False">
 
-    <DockPanel>
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <StackPanel Classes="Large">
-                <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Layout}">
-                    <ListBox Name="Layout" SelectedIndex="2">
-                        <ListBoxItem Content="{my:Icon DockLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                        <ListBoxItem Content="{my:Icon DockRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                        <ListBoxItem Content="{my:Icon DockTop}" ToolTip.Tip="{my:LocTextBlock Top}" />
-                        <ListBoxItem Content="{my:Icon DockBottom}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
-                    </ListBox>
+    <v:ControlCatalogView>
+
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <HeaderedContentControl Theme="{Binding Appearance.ActiveTheme}"
+                                        my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                                        my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                                        my:IconAssist.Icon="{Binding IconProvider.Icon}"
+                                        Header="{Binding ContentProvider.Content}"
+                                        MaxWidth="300"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" TextAlignment="Justify" />
                 </HeaderedContentControl>
-                <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock IconLayout}">
-                    <ListBox Name="IconLayout" SelectedIndex="0">
-                        <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:LocTextBlock None}" />
-                        <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                        <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                        <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:LocTextBlock Top}" />
-                        <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
-                    </ListBox>
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
+
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <HeaderedContentControl Theme="{Binding Theme}"
+                                        my:ThemeAssist.Role="{Binding Role}"
+                                        my:ClassesAssist.Classes="{Binding Classes}"
+                                        Header="{Binding Converter={x:Static c:ContentConverter.Default}}"
+                                        MaxWidth="300">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" TextAlignment="Justify" />
                 </HeaderedContentControl>
-                <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock HeaderLayout}">
-                    <ListBox Name="HeaderAlignment" SelectedIndex="0">
-                        <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                        <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                        <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:LocTextBlock Top}" />
-                        <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
-                        <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:LocTextBlock Center}" />
-                    </ListBox>
-                </HeaderedContentControl>
-            </StackPanel>
-        </HeaderedContentControl>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="350"
-                                 MinItemHeight="150"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <my:Form.Styles>
+                    <Style Selector="my|FormGroup > ListBox">
+                        <Setter Property="my:ClassesAssist.Classes" Value="kind-toggle" />
+                        <Setter Property="ItemsPanel">
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1" />
+                            </ItemsPanelTemplate>
+                        </Setter>
+                    </Style>
+                </my:Form.Styles>
 
-            <!-- Template for standard controls -->
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <HeaderedContentControl Theme="{Binding Theme}"
-                                            my:ThemeAssist.Role="{Binding Role}"
-                                            b:SettingsBehavior.AlignmentClass="{Binding #Layout.SelectedIndex}"
-                                            my:ClassesAssist.Classes="{Binding Classes}"
-                                            b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}"
-                                            b:SettingsBehavior.HeaderAlignmentClass="{Binding #HeaderAlignment.SelectedIndex}"
-                                            MaxWidth="300"
-                                            ToolTip.Tip="{Binding Content}">
-                        <HeaderedContentControl.Header>
-                            <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
-                                <Binding Path="ContentType" />
-                                <Binding Path="Content" />
-                            </MultiBinding>
-                        </HeaderedContentControl.Header>
-                        <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" TextAlignment="Justify" />
-                    </HeaderedContentControl>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+                <ListBox my:FormItem.Label="{my:LocObject Layout}" SelectedValue="{Binding #Root.DataContext.PositionClassProvider.SelectedClass}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem Content="{my:Icon DockLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="position-left" />
+                    <ListBoxItem Content="{my:Icon DockRight}" ToolTip.Tip="{my:Loc Right}" DataContext="position-right" />
+                    <ListBoxItem Content="{my:Icon DockTop}" ToolTip.Tip="{my:Loc Top}" DataContext="position-top" />
+                    <ListBoxItem Content="{my:Icon DockBottom}" ToolTip.Tip="{my:Loc Bottom}" DataContext="position-bottom" />
+                </ListBox>
 
-            <!-- Custom content for the Custom tab (optional) -->
-            <ctrl:ControlThemeViewer.CustomContent>
-                <StackPanel Spacing="20">
-                    <HeaderedContentControl Header="Labelled" Classes="Text">
-                        <StackPanel Spacing="20">
-                            <HeaderedContentControl Classes="Labelled"
-                                                    Header="Header"
-                                                    Content="{m:RandomText MinSentences=1, MaxSentences=1, MinWords=1, MaxWords=4}" />
-                            <HeaderedContentControl Classes="Labelled"
-                                                    Header="{m:RandomIcon}"
-                                                    Content="{m:RandomText MinSentences=1, MaxSentences=1, MinWords=1, MaxWords=4}" />
-                            <HeaderedContentControl Classes="Labelled HeaderCenter" Header="{m:RandomIcon}" my:HeaderAssist.Size="60">
-                                <TextBox Width="150" Watermark="{m:RandomText MinSentences=1, MaxSentences=1, MinWords=1, MaxWords=1}" UseFloatingWatermark="True" />
-                            </HeaderedContentControl>
-                        </StackPanel>
-                    </HeaderedContentControl>
+                <ListBox my:FormItem.Label="{my:LocObject HeaderPosition}" SelectedValue="{Binding #Root.DataContext.HeaderAlignmentClassProvider.SelectedClass}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="align-header-left" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:Loc Right}" DataContext="align-header-right" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:Loc Top}" DataContext="align-header-top" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:Loc Bottom}" DataContext="align-header-bottom" />
+                    <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:Loc Center}" DataContext="align-header-center-middle" />
+                </ListBox>
+            </my:Form>
+        </v:ControlCatalogView.Settings>
 
-                    <HeaderedContentControl Header="Labelled Caption Top" Classes="Text">
-                        <StackPanel Spacing="20">
-                            <HeaderedContentControl Classes="Labelled Caption Top"
-                                                    my:IconAssist.Icon="{m:RandomIcon}"
-                                                    MaxWidth="200"
-                                                    Header="Caption">
-                                <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" TextAlignment="Justify" />
-                            </HeaderedContentControl>
-                            <HeaderedContentControl Classes="Labelled SubCaption HeaderCenter Top"
-                                                    MaxWidth="200"
-                                                    Header="SubCaption">
-                                <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" TextAlignment="Justify" />
-                            </HeaderedContentControl>
-                        </StackPanel>
-                    </HeaderedContentControl>
-
-                    <HeaderedContentControl Header="Watermark" Classes="Text">
-                        <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Layout}">
-                            <ListBox SelectedIndex="2" Theme="{StaticResource MyNet.Theme.ListBox.Toggle}">
-                                <ListBoxItem Content="{my:Icon DockLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                                <ListBoxItem Content="{my:Icon DockRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                                <ListBoxItem Content="{my:Icon DockTop}" ToolTip.Tip="{my:LocTextBlock Top}" />
-                                <ListBoxItem Content="{my:Icon DockBottom}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
-                            </ListBox>
-                        </HeaderedContentControl>
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ctrl:ControlThemeViewer.CustomContent>
-
-        </ctrl:ControlThemeViewer>
-
-    </DockPanel>
+    </v:ControlCatalogView>
 </pages:Page>

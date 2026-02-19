@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using Avalonia;
@@ -16,13 +17,22 @@ namespace MyNet.Avalonia.Demo.Converters;
 
 public class CultureToBitmapConverter : IValueConverter
 {
+    private readonly Dictionary<string, Bitmap> _cache = [];
+
     public static CultureToBitmapConverter Default { get; } = new();
 
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not CultureInfo cultureInfo || cultureInfo.GetImage() is not { } flag) return AvaloniaProperty.UnsetValue;
+
+        var cultureName = cultureInfo.Name;
+        if (_cache.TryGetValue(cultureName, out var cachedBitmap))
+            return cachedBitmap;
+
         using var memoryStream = new MemoryStream(flag);
-        return new Bitmap(memoryStream);
+        var bitmap = new Bitmap(memoryStream);
+        _cache[cultureName] = bitmap;
+        return bitmap;
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new InvalidOperationException();

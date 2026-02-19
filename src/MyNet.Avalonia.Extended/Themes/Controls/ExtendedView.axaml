@@ -1,11 +1,11 @@
-﻿<ResourceDictionary
-    xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:my="http://mynet.com/avalonia">
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
     <!--  Add Resources Here  -->
     <ControlTheme x:Key="{x:Type my:ExtendedView}" TargetType="{x:Type my:ExtendedView}">
-        <Setter Property="Background" Value="{my:Theme Application.Background}" />
-        <Setter Property="Foreground" Value="{my:Theme Application.Foreground}" />
+        <Setter Property="Background" Value="{my:Theme Surface.Level2}" />
+        <Setter Property="Foreground" Value="{my:Theme Foreground.Primary}" />
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
         <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />
         <Setter Property="my:OverlayDialogHost.IsModalStatusScope" Value="True" />
@@ -44,4 +44,6 @@
             </ControlTemplate>
         </Setter>
     </ControlTheme>
-</ResourceDictionary>
+
+    </Styles.Resources>
+</Styles>

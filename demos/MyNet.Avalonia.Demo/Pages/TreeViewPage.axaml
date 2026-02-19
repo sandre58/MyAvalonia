@@ -9,31 +9,33 @@
             xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:TreeViewPageViewModel"
             ClipToBounds="False"
             mc:Ignorable="d">
 
-    <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                             MinItemWidth="500"
-                             MinItemHeight="800"
-                             IsActive="{Binding IsActive}">
+    <v:ControlCatalogView>
 
-        <!-- Template for standard controls -->
-        <ctrl:ControlThemeViewer.ControlTemplate>
-            <DataTemplate x:DataType="ctrl:ControlDescription">
-                <TreeView Theme="{Binding Theme}"
-                          my:ThemeAssist.Role="{Binding Role}"
-                          my:ClassesAssist.Classes="{Binding Classes}"
-                          ItemsSource="{x:Static data:Collections.CountriesByAplha}">
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <TreeView Theme="{Binding Appearance.ActiveTheme}"
+                          MaxHeight="300"
+                          my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                          my:ItemsAssist.Role="{Binding Appearance.ActiveItemsRole}"
+                          my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                          ItemsSource="{m:RandomCountries All=True, ByAlpha=True}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
                     <TreeView.ItemTemplate>
-                        <TreeDataTemplate DataType="{x:Type data:CountriesWrapper}" ItemsSource="{Binding Item}">
+                        <TreeDataTemplate DataType="{x:Type m:CountriesWrapper}" ItemsSource="{Binding Item}">
                             <TextBlock Text="{Binding DisplayName.Value}" />
                         </TreeDataTemplate>
                     </TreeView.ItemTemplate>
                     <TreeView.DataTemplates>
                         <TreeDataTemplate DataType="{x:Type countries:Country}">
-                            <StackPanel Classes="Medium" Orientation="Horizontal">
+                            <StackPanel Classes="size-md" Orientation="Horizontal">
                                 <Image Width="16"
                                        Height="16"
                                        VerticalAlignment="Center"
@@ -44,7 +46,35 @@
                     </TreeView.DataTemplates>
                 </TreeView>
             </DataTemplate>
-        </ctrl:ControlThemeViewer.ControlTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-    </ctrl:ControlThemeViewer>
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <TreeView Theme="{Binding Theme}"
+                          MaxHeight="300"
+                          my:ThemeAssist.Role="{Binding Role}"
+                          my:ItemsAssist.Role="{Binding ItemsRole}"
+                          my:ClassesAssist.Classes="{Binding Classes}"
+                          ItemsSource="{m:RandomCountries Min=20, Max=50, ByAlpha=True}">
+                    <TreeView.ItemTemplate>
+                        <TreeDataTemplate DataType="{x:Type m:CountriesWrapper}" ItemsSource="{Binding Item}">
+                            <TextBlock Text="{Binding DisplayName.Value}" />
+                        </TreeDataTemplate>
+                    </TreeView.ItemTemplate>
+                    <TreeView.DataTemplates>
+                        <TreeDataTemplate DataType="{x:Type countries:Country}">
+                            <StackPanel Classes="size-md" Orientation="Horizontal">
+                                <Image Width="16"
+                                       Height="16"
+                                       VerticalAlignment="Center"
+                                       Source="{Binding Converter={x:Static c:CountryToBitmapConverter.To16}}" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Converter={x:Static c:CountryToStringConverter.ToDisplayName}}" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </TreeDataTemplate>
+                    </TreeView.DataTemplates>
+                </TreeView>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
+
+    </v:ControlCatalogView>
 </pages:Page>

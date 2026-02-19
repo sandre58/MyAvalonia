@@ -1,0 +1,222 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia"
+        xmlns:o="using:MyNet.Observable.Translatables">
+    <Styles.Resources>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- FORM ITEM CONTAINER                                       -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type my:FormItemContainer}" TargetType="my:FormItemContainer">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="my:FormItemContainer">
+                    <!-- Label Layout -->
+                    <Grid Name="PART_Grid">
+                        <Label Name="PART_Label"
+                               Classes="no-disablable"
+                               Classes.text-wrapping="{TemplateBinding TextWrapping}"
+                               Target="{Binding #PART_ContentPresenter.Content}"
+                               Content="{TemplateBinding Label}"
+                               ContentTemplate="{TemplateBinding LabelTemplate}"
+                               HorizontalAlignment="{TemplateBinding LabelAlignment}"
+                               Margin="{TemplateBinding LabelMargin}"
+                               IsVisible="{TemplateBinding ShowLabel}">
+                            <ContentControl.DataTemplates>
+                                <DataTemplate DataType="o:StringTranslatable">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource MyNet.Spacing.Xxs}">
+                                        <TextBlock Text="{Binding Value}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{TemplateBinding RequiredIndicator}"
+                                                   Foreground="{my:Theme Error}"
+                                                   IsVisible="{TemplateBinding IsRequired}" />
+                                    </Grid>
+                                </DataTemplate>
+                                <DataTemplate DataType="x:String">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource MyNet.Spacing.Xxs}">
+                                        <TextBlock Text="{Binding}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{TemplateBinding RequiredIndicator}"
+                                                   Foreground="{my:Theme Error}"
+                                                   IsVisible="{TemplateBinding IsRequired}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ContentControl.DataTemplates>
+                        </Label>
+
+                        <StackPanel Name="PART_Content" Spacing="{StaticResource MyNet.Spacing.Xs}">
+                            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            <TextBlock Text="{TemplateBinding HelpText}" Classes="text-helper" TextWrapping="Wrap" IsVisible="{TemplateBinding HelpText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+
+            <!-- Label Position Pseudo Classes -->
+            <Style Selector="^:left">
+                <Style Selector="^ /template/ Label#PART_Label">
+                    <Setter Property="Grid.Column" Value="0" />
+                    <Setter Property="Grid.Row" Value="0" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style Selector="^ /template/ StackPanel#PART_Content">
+                    <Setter Property="Grid.Column" Value="1" />
+                    <Setter Property="Grid.Row" Value="0" />
+                </Style>
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                </Style>
+            </Style>
+
+            <Style Selector="^:right">
+                <Style Selector="^ /template/ Label#PART_Label">
+                    <Setter Property="Grid.Column" Value="1" />
+                    <Setter Property="Grid.Row" Value="0" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style Selector="^ /template/ StackPanel#PART_Content">
+                    <Setter Property="Grid.Column" Value="0" />
+                    <Setter Property="Grid.Row" Value="0" />
+                </Style>
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                </Style>
+            </Style>
+
+            <Style Selector="^:top">
+                <Style Selector="^ /template/ Label#PART_Label">
+                    <Setter Property="Grid.Column" Value="0" />
+                    <Setter Property="Grid.Row" Value="0" />
+                </Style>
+                <Style Selector="^ /template/ StackPanel#PART_Content">
+                    <Setter Property="Grid.Column" Value="0" />
+                    <Setter Property="Grid.Row" Value="1" />
+                </Style>
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="VerticalAlignment" Value="Top" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                </Style>
+            </Style>
+
+            <Style Selector="^:bottom">
+                <Style Selector="^ /template/ Label#PART_Label">
+                    <Setter Property="Grid.Column" Value="0" />
+                    <Setter Property="Grid.Row" Value="1" />
+                </Style>
+                <Style Selector="^ /template/ StackPanel#PART_Content">
+                    <Setter Property="Grid.Column" Value="0" />
+                    <Setter Property="Grid.Row" Value="0" />
+                </Style>
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="VerticalAlignment" Value="Top" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                </Style>
+            </Style>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- FORM                                                      -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type my:Form}" TargetType="my:Form">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Columns" Value="1" />
+            <Setter Property="LabelMargin" Value="{my:Thickness Sm, Bottom}" />
+            <Setter Property="LabelAlignment" Value="Left" />
+            <Setter Property="LabelPosition" Value="Left" />
+            <Setter Property="LabelWidth" Value="Auto" />
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Lg}" />
+            <Setter Property="GroupMargin" Value="{my:Thickness Xxl, Vertical}" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <my:FormItemsPanel Columns="{Binding Columns, RelativeSource={RelativeSource AncestorType=my:Form}}"
+                                       Spacing="{Binding Spacing, RelativeSource={RelativeSource AncestorType=my:Form}}"
+                                       LabelPosition="{Binding LabelPosition, RelativeSource={RelativeSource AncestorType=my:Form}}"
+                                       LabelWidth="{Binding LabelWidth, RelativeSource={RelativeSource AncestorType=my:Form}}"
+                                       GroupMargin="{Binding GroupMargin, RelativeSource={RelativeSource AncestorType=my:Form}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="my:Form">
+                    <ItemsPresenter Name="PART_ItemsPresenter"
+                                    ItemsPanel="{TemplateBinding ItemsPanel}"
+                                    KeyboardNavigation.TabNavigation="Continue" />
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- FORM GROUP                                                -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type my:FormGroup}" TargetType="my:FormGroup">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+            <Setter Property="Padding" Value="{my:Thickness Md, Top}" />
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="my:HeaderAssist.CornerRadius" Value="0" />
+            <Setter Property="my:HeaderAssist.ShadowDepth" Value="Depth0" />
+            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Xs, Bottom}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
+            <Setter Property="my:HeaderAssist.FontFamily" Value="{Binding $self.FontFamily}" />
+            <Setter Property="my:HeaderAssist.FontStyle" Value="{Binding $self.FontStyle}" />
+            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="my:HeaderAssist.Opacity" Value="1" />
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
+            <Setter Property="ClipToBounds" Value="True" />
+
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 1" />
+            <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="my:FormGroup">
+                    <Expander IsExpanded="{TemplateBinding IsExpanded, Mode=TwoWay}"
+                              my:ExpanderAssist.IsExpandable="{TemplateBinding IsExpandable}"
+                              Padding="{TemplateBinding Padding}"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalContentAlignment="Stretch"
+                              my:IconAssist.Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                              my:IconAssist.Opacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                              my:IconAssist.IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                              my:IconAssist.Alignment="{TemplateBinding (my:IconAssist.Alignment)}"
+                              my:IconAssist.Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                              my:HeaderAssist.Background="{TemplateBinding my:HeaderAssist.Background}"
+                              my:HeaderAssist.BorderBrush="{TemplateBinding my:HeaderAssist.BorderBrush}"
+                              my:HeaderAssist.BorderThickness="{TemplateBinding my:HeaderAssist.BorderThickness}"
+                              my:HeaderAssist.CornerRadius="{TemplateBinding my:HeaderAssist.CornerRadius}"
+                              my:HeaderAssist.FontFamily="{TemplateBinding my:HeaderAssist.FontFamily}"
+                              my:HeaderAssist.FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                              my:HeaderAssist.FontStyle="{TemplateBinding my:HeaderAssist.FontStyle}"
+                              my:HeaderAssist.FontWeight="{TemplateBinding my:HeaderAssist.FontWeight}"
+                              my:HeaderAssist.Foreground="{TemplateBinding my:HeaderAssist.Foreground}"
+                              my:HeaderAssist.HorizontalAlignment="{TemplateBinding my:HeaderAssist.HorizontalAlignment}"
+                              my:HeaderAssist.Opacity="{TemplateBinding my:HeaderAssist.Opacity}"
+                              my:HeaderAssist.Padding="{TemplateBinding my:HeaderAssist.Padding}"
+                              my:HeaderAssist.ShadowDepth="{TemplateBinding my:HeaderAssist.ShadowDepth}"
+                              my:HeaderAssist.VerticalAlignment="{TemplateBinding my:HeaderAssist.VerticalAlignment}"
+                              Background="{TemplateBinding Background}"
+                              BorderBrush="{TemplateBinding BorderBrush}"
+                              BorderThickness="{TemplateBinding BorderThickness}"
+                              CornerRadius="{TemplateBinding CornerRadius}"
+                              Foreground="{TemplateBinding Foreground}"
+                              Header="{TemplateBinding Header}"
+                              HeaderTemplate="{TemplateBinding HeaderTemplate}"
+                              HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                        <ItemsPresenter Name="PART_ItemsPresenter"
+                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                        KeyboardNavigation.TabNavigation="Continue" />
+                    </Expander>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+    </Styles.Resources>
+</Styles>

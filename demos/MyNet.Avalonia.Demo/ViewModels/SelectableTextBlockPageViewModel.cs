@@ -5,18 +5,20 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class SelectableTextBlockPageViewModel : AutoBuildPageViewModel
+internal sealed class SelectableTextBlockPageViewModel : ControlCatalogViewModel
 {
     public SelectableTextBlockPageViewModel()
-        : base(nameof(SelectableTextBlock), [
-            new ControlThemeBuilder()
-            .AddStyles("Secondary", "Tertiary", "Underline", "Delete", "Disablable")
-            .AddDefaultRoles()
-            .AddAllSizes()
-        ])
-    { }
+        : base(nameof(SelectableTextBlock),
+            [
+                new ControlThemeBuilder()
+                    .AddVariants("opacity-high", "opacity-medium", "opacity-low", "variant-underline", "variant-delete", "is-disablable")
+                    .AddDefaultRoles()
+                    .AddSizes(["font-sub-caption", "font-caption", "h6", "h5", "h4", "h3", "h2", "h1"])
+            ])
+    {
+    }
 }

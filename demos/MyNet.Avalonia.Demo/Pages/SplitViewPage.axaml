@@ -6,85 +6,103 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:samples="clr-namespace:MyNet.Avalonia.Demo.Views.Samples"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:SplitViewPageViewModel"
+            x:Name="Root"
             ClipToBounds="False">
 
-    <DockPanel>
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                <StackPanel>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsPaneOpen}">
-                        <ToggleSwitch Name="IsPaneOpen" IsChecked="False" />
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock UseOverlay}">
-                        <ToggleSwitch Name="UseOverlay" IsChecked="False" />
-                    </HeaderedContentControl>
-                    <ComboBox Name="DisplayMode"
-                              DisplayMemberBinding="{ReflectionBinding Display}"
-                              ItemsSource="{my:EnumSource {x:Type SplitViewDisplayMode}}"
-                              PlaceholderText="{my:Loc DisplayMode}"
-                              SelectedIndex="0"
-                              SelectedValueBinding="{ReflectionBinding Value}" />
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Placement}">
-                        <ListBox Name="Placement"
-                                 DisplayMemberBinding="{ReflectionBinding Display}"
-                                 ItemTemplate="{x:Null}"
-                                 ItemsSource="{my:EnumSource {x:Type SplitViewPanePlacement}}"
-                                 SelectedIndex="0"
-                                 SelectedValueBinding="{ReflectionBinding Value}" />
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Watermark" ClipToBounds="False" Header="{my:LocTextBlock CompactPaneLength}">
-                        <Slider Name="CompactPaneLength"
-                                IsSnapToTickEnabled="True"
-                                Maximum="100"
-                                Minimum="0"
-                                Value="50" />
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Watermark" ClipToBounds="False" Header="{my:LocTextBlock OpenPaneLength}">
-                        <Slider Name="OpenPaneLength"
-                                IsSnapToTickEnabled="True"
-                                Maximum="500"
-                                Minimum="100"
-                                Value="250" />
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="650"
-                                 MinItemHeight="550"
-                                 IsActive="{Binding IsActive}">
-
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <SplitView Theme="{Binding Theme}"
-                               my:ThemeAssist.Role="{Binding Role}"
-                               my:ClassesAssist.Classes="{Binding Classes}"
-                               CompactPaneLength="{Binding #CompactPaneLength.Value}"
-                               DisplayMode="{Binding #DisplayMode.SelectedValue}"
-                               IsPaneOpen="{Binding #IsPaneOpen.IsChecked}"
-                               OpenPaneLength="{Binding #OpenPaneLength.Value}"
-                               PanePlacement="{Binding #Placement.SelectedValue}"
-                               UseLightDismissOverlayMode="{Binding #UseOverlay.IsChecked}"
-                               Height="500"
-                               Width="600"
-                               ToolTip.Tip="{Binding Content}">
-                        <SplitView.Pane>
-                            <samples:LargeContent1 Width="NaN" />
-                        </SplitView.Pane>
-                        <SplitView.Content>
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <SplitView Theme="{Binding Appearance.ActiveTheme}"
+                           my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                           my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                           CompactPaneLength="{Binding #CompactPaneLength.Value}"
+                           DisplayMode="{Binding #DisplayMode.SelectedValue}"
+                           IsPaneOpen="{Binding #IsPaneOpen.IsChecked}"
+                           OpenPaneLength="{Binding #OpenPaneLength.Value}"
+                           PanePlacement="{Binding #Placement.SelectedValue}"
+                           UseLightDismissOverlayMode="{Binding #UseOverlay.IsChecked}"
+                           Height="500"
+                           Width="600"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                    <SplitView.Pane>
+                        <samples:LargeContent1 Width="NaN" />
+                    </SplitView.Pane>
+                    <SplitView.Content>
+                        <ScrollViewer>
                             <samples:ExtraLargeContent1 />
-                        </SplitView.Content>
-                    </SplitView>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+                        </ScrollViewer>
+                    </SplitView.Content>
+                </SplitView>
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-        </ctrl:ControlThemeViewer>
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <SplitView Theme="{Binding Theme}"
+                           my:ThemeAssist.Role="{Binding Role}"
+                           my:ClassesAssist.Classes="{Binding Classes}"
+                           CompactPaneLength="30"
+                           DisplayMode="Overlay"
+                           IsPaneOpen="True"
+                           OpenPaneLength="200"
+                           PanePlacement="Left"
+                           UseLightDismissOverlayMode="True"
+                           Height="500"
+                           Width="600">
+                    <SplitView.Pane>
+                        <samples:LargeContent1 Width="NaN" />
+                    </SplitView.Pane>
+                    <SplitView.Content>
+                        <ScrollViewer>
+                            <samples:ExtraLargeContent1 />
+                        </ScrollViewer>
+                    </SplitView.Content>
+                </SplitView>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-    </DockPanel>
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <ToggleSwitch Name="IsPaneOpen" my:FormItem.Label="{my:LocObject IsPaneOpen}" IsChecked="False" />
+                <ToggleSwitch Name="UseOverlay" my:FormItem.Label="{my:LocObject UseOverlay}" IsChecked="True" />
+                <ComboBox Name="DisplayMode"
+                          my:FormItem.Label="{my:LocObject DisplayMode}"
+                          DisplayMemberBinding="{ReflectionBinding Display}"
+                          ItemsSource="{my:EnumSource {x:Type SplitViewDisplayMode}}"
+                          SelectedValue="{x:Static SplitViewDisplayMode.Overlay}"
+                          SelectedValueBinding="{ReflectionBinding Value}" />
+                <ListBox Name="Placement"
+                         my:FormItem.Label="{my:LocObject Placement}"
+                         SelectedValue="{x:Static SplitViewPanePlacement.Left}"
+                         SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="{x:Static SplitViewPanePlacement.Left}" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:Loc Right}" DataContext="{x:Static SplitViewPanePlacement.Right}" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:Loc Top}" DataContext="{x:Static SplitViewPanePlacement.Top}" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:Loc Bottom}" DataContext="{x:Static SplitViewPanePlacement.Bottom}" />
+                </ListBox>
+                <Slider Name="CompactPaneLength"
+                        my:FormItem.Label="{my:LocObject CompactPaneLength}"
+                        IsSnapToTickEnabled="True"
+                        Maximum="100"
+                        Minimum="0"
+                        Value="50" />
+                <Slider Name="OpenPaneLength"
+                        my:FormItem.Label="{my:LocObject OpenPaneLength}"
+                        IsSnapToTickEnabled="True"
+                        Maximum="500"
+                        Minimum="100"
+                        Value="300" />
+            </my:Form>
+        </v:ControlCatalogView.Settings>
+
+    </v:ControlCatalogView>
+
 </pages:Page>

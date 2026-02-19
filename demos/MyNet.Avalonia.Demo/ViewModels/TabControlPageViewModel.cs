@@ -5,24 +5,24 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class TabControlPageViewModel : AutoBuildPageViewModel
+internal sealed class TabControlPageViewModel : ControlCatalogViewModel
 {
     public TabControlPageViewModel()
         : base(nameof(TabControl), [
             new ControlThemeBuilder()
-            .AddLayouts("Header", "Header Inverse")
-            .AddStyles("Solid", "Light", "Outlined")
-            .AddCartesianStyles("Solid", "Light", "Outlined")
-            .AddCartesianStyles("Circle", "Solid")
-            .AddRoles([ThemeRole.Accent, ThemeRole.Inverse]),
+            .AddShapes("shape-circle-items")
+            .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-header", "shadow-items", "variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items", "layout-uniform")
+            .AddThemeRoles()
+            .AddItemsThemeRoles()
+            .AddDefaultSizes(),
 
             new ControlThemeBuilder("Indicator")
-            .AddRoles([ThemeRole.Accent, ThemeRole.Inverse])
+            .AddItemsThemeRoles()
+            .AddDefaultSizes()
         ])
     { }
 }

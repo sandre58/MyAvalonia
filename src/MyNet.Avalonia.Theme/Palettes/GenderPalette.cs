@@ -34,4 +34,16 @@ public class GenderPalette
             { nameof(Male).WithPrefix(prefix), Male },
             { nameof(Female).WithPrefix(prefix), Female }
         };
+
+    /// <summary>
+    /// Creates a GenderPalette instance from a resource dictionary.
+    /// </summary>
+    /// <param name="dictionary">The resource dictionary containing color definitions.</param>
+    /// <param name="prefix">The prefix used for resource keys (default: "Gender").</param>
+    /// <returns>A new GenderPalette instance.</returns>
+    public static GenderPalette FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary, string prefix = nameof(ThemeVariantColors.Gender)) => new()
+    {
+        Male = (Color)dictionary.GetValueOrDefault(nameof(Male).WithPrefix(prefix), Colors.Blue),
+        Female = (Color)dictionary.GetValueOrDefault(nameof(Female).WithPrefix(prefix), Colors.Pink)
+    };
 }

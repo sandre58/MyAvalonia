@@ -34,28 +34,6 @@ public static class PopupAssist
 
     #endregion
 
-    #region Foreground
-
-    /// <summary>
-    /// Provides Foreground Property for attached PopupBehavior element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush> ForegroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("Foreground", typeof(PopupAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="ForegroundProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="ForegroundProperty"/>.</param>
-    public static void SetForeground(StyledElement element, IBrush value) => element.SetValue(ForegroundProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="ForegroundProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush GetForeground(StyledElement element) => element.GetValue(ForegroundProperty);
-
-    #endregion
-
     #region Role
 
     /// <summary>

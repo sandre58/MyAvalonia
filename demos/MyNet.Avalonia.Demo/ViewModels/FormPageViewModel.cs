@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.ObjectModel;
-using MyNet.Observable;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;

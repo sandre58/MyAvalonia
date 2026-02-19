@@ -5,41 +5,41 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ContentProviders;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class ToggleSwitchPageViewModel : AutoBuildPageViewModel
+internal sealed class ToggleSwitchPageViewModel : ControlCatalogViewModel
 {
     public ToggleSwitchPageViewModel()
-        : base(nameof(ToggleSwitch), [
-            new ControlThemeBuilder()
-            .AddDefaultRoles()
-            .AddSizes("Small", "Medium", "Large"),
+        : base(nameof(ToggleSwitch),
+            [
+                new ControlThemeBuilder()
+                    .AddDefaultSizes()
+                    .AddDefaultRoles(),
 
-            new ControlThemeBuilder("Inner", ContentType.Icon)
-            .AddDefaultRoles()
-            .AddSizes("Small", "Medium", "Large"),
+                new ControlThemeBuilder("Inner", defaultContentType: ContentProviderType.Icon)
+                    .AddDefaultSizes()
+                    .AddDefaultRoles(),
 
-            new ControlThemeBuilder("Alternate", ContentType.None)
-            .AddDefaultRoles(),
+                new ControlThemeBuilder("Alternate", defaultContentType: ContentProviderType.None)
+                    .AddDefaultRoles(),
 
-            new ControlThemeBuilder("Button")
-            .AddLayouts("Circle")
-            .AddStyles("Light", "Outlined", "Text")
-            .AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultRoles()
-            .AddSizes("Small", "Medium", "Large"),
+                new ControlThemeBuilder("Button")
+                    .AddShapes("shape-circle")
+                    .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-text")
+                    .AddDefaultSizes()
+                    .AddDefaultRoles(),
 
-            new ControlThemeBuilder("Button.Rounded", ContentType.Icon)
-            .AddStyles("Light", "Outlined", "Text")
-            .AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultRoles()
-            .AddSizes("Small", "Medium", "Large"),
+                new ControlThemeBuilder("Button.Rounded", defaultContentType: ContentProviderType.Icon)
+                    .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-text")
+                    .AddDefaultSizes()
+                    .AddDefaultRoles(),
 
-            new ControlThemeBuilder("Button.Icon", ContentType.Geometry)
-            .AddDefaultRoles()
-            .AddSizes("ExtraSmall", "Small", "Medium", "Large", "ExtraLarge")
-        ])
+                new ControlThemeBuilder("Button.Icon", defaultContentType: ContentProviderType.Icon)
+                    .AddDefaultSizes()
+                    .AddDefaultRoles()
+            ])
     { }
 }

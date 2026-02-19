@@ -16,9 +16,9 @@
                    IsManagedResizerVisible="{OnPlatform False, Linux=True}"
                    mc:Ignorable="d">
     <my:ExtendedWindow.RightContent>
-        <StackPanel Margin="{my:Thickness Medium, Horizontal}"
+        <StackPanel Margin="{my:Thickness Md, Horizontal}"
                     VerticalAlignment="Center"
-                    Classes="Small"
+                    Classes="size-sm"
                     Orientation="Horizontal">
 
             <!-- Language -->
@@ -29,11 +29,11 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Image x:Name="Image" Width="24"
-                               Cursor="Hand" Classes.NotSelected="{Binding !$parent[ListBoxItem].IsSelected}"
+                               Cursor="Hand" Classes.no-selected="{Binding !$parent[ListBoxItem].IsSelected}"
                                Source="{Binding Converter={x:Static c:CultureToBitmapConverter.Default}}"
                                ToolTip.Tip="{my:TranslateTextBlock DisplayName, Casing=Title}">
                             <Image.Styles>
-                                <Style Selector="Image.NotSelected">
+                                <Style Selector="Image.no-selected">
                                     <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Disabled}" />
                                 </Style>
                             </Image.Styles>
@@ -43,21 +43,21 @@
             </ListBox>
 
             <!-- Theme -->
-            <StackPanel Margin="{my:Thickness Default, Horizontal}"
+            <StackPanel Margin="{my:Thickness Sm, Horizontal}"
                         VerticalAlignment="Center"
-                        Classes="Medium"
+                        Classes="size-md"
                         Orientation="Horizontal">
-                <Button Classes="Small"
+                <Button Classes="size-sm"
                         Command="{Binding IsLightCommand}"
-                        Content="{StaticResource MyNet.Geometry.WeatherSunny}"
+                        Content="{my:Icon WeatherSunny}"
                         Theme="{StaticResource MyNet.Theme.Button.Icon}"
-                        ToolTip.Tip="{my:LocTextBlock Light}" />
-                <ToggleSwitch Classes="Small Inverse" IsChecked="{Binding IsDark}" />
-                <Button Classes="Small"
+                        ToolTip.Tip="{my:Loc Light}" />
+                <ToggleSwitch Classes="size-sm" my:ThemeAssist.Role="Contrast" IsChecked="{Binding IsDark}" />
+                <Button Classes="size-sm"
                         Command="{Binding IsDarkCommand}"
-                        Content="{StaticResource MyNet.Geometry.WeatherNight}"
+                        Content="{my:Icon WeatherNight}"
                         Theme="{StaticResource MyNet.Theme.Button.Icon}"
-                        ToolTip.Tip="{my:LocTextBlock Dark}" />
+                        ToolTip.Tip="{my:Loc Dark}" />
             </StackPanel>
         </StackPanel>
     </my:ExtendedWindow.RightContent>

@@ -18,7 +18,10 @@ namespace MyNet.Avalonia.Demo.ViewModels;
 
 internal sealed class MainViewModel : MainWindowViewModelBase
 {
-    public MainViewModel(INotificationsManager notificationsManager, IAppCommandsService appCommandsService, INavigationService navigationService, IViewModelLocator viewModelLocator)
+    public MainViewModel(INotificationsManager notificationsManager,
+                         IAppCommandsService appCommandsService,
+                         INavigationService navigationService,
+                         IViewModelLocator viewModelLocator)
         : base(notificationsManager, appCommandsService, AppBusyManager.MainBusyService, UIContext.Globalization)
     {
         NavigationService = navigationService;
@@ -27,30 +30,21 @@ internal sealed class MainViewModel : MainWindowViewModelBase
         GoForwardCommand = CommandsManager.Create(() => NavigationService.GoForward(), () => NavigationService.CanGoForward());
         NavigateCommand = CommandsManager.CreateNotNull<Type>(x => NavigationService.NavigateTo((INavigationPage)viewModelLocator.Get(x)));
 
-        NavigationService.Navigated += NavigationService_Navigated;
+        NavigationService.Navigated += (_, _) => RefreshNavigationCommands();
+        NavigationService.HistoryCleared += (_, _) => RefreshNavigationCommands();
     }
 
-    public PageViewModel? CurrentPage { get; private set; }
-
     public INavigationService NavigationService { get; }
-
-    public ICommand NavigateCommand { get; }
 
     public ICommand GoBackCommand { get; }
 
     public ICommand GoForwardCommand { get; }
 
-    private void NavigationService_Navigated(object? sender, NavigationEventArgs e)
-    {
-        ((RelayCommand)GoBackCommand).OnCanExecuteChanged();
-        ((RelayCommand)GoForwardCommand).OnCanExecuteChanged();
+    public ICommand NavigateCommand { get; }
 
-        CurrentPage = e.NewPage as PageViewModel;
-    }
-
-    protected override void Cleanup()
+    private void RefreshNavigationCommands()
     {
-        NavigationService.Navigated -= NavigationService_Navigated;
-        base.Cleanup();
+        (GoBackCommand as RelayCommand)?.OnCanExecuteChanged();
+        (GoForwardCommand as RelayCommand)?.OnCanExecuteChanged();
     }
 }

@@ -6,14 +6,107 @@
 
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Media;
+using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Theme.Palettes;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
 public static class ThemeAssist
 {
-    static ThemeAssist() => RoleProperty.Changed.AddClassHandler<AvaloniaObject>(OnRoleChangedCallback);
+    static ThemeAssist()
+    {
+        RoleProperty.Changed.AddClassHandler<AvaloniaObject>(OnRoleChangedCallback);
+        ContextProperty.Changed.AddClassHandler<AvaloniaObject>(OnContextChangedCallback);
+        FlyoutBase.AttachedFlyoutProperty.Changed.AddClassHandler<Control>(OnAttachedFlyoutChanged);
+        Control.ContextFlyoutProperty.Changed.AddClassHandler<Control>(OnContextFlyoutChanged);
+        Control.ContextMenuProperty.Changed.AddClassHandler<Control>(OnContextMenuChanged);
+    }
+
+    #region Context
+
+    /// <summary>
+    /// Provides Context Property for attached ThemeAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<ThemeContext> ContextProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, ThemeContext>("Context", typeof(ThemeAssist), inherits: true);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="ContextProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="ContextProperty"/>.</param>
+    public static void SetContext(AvaloniaObject element, ThemeContext value) => element.SetValue(ContextProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="ContextProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static ThemeContext GetContext(AvaloniaObject element) => element.GetValue(ContextProperty);
+
+    private static void OnContextChangedCallback(AvaloniaObject avaloniaObject, AvaloniaPropertyChangedEventArgs args)
+    {
+        switch (avaloniaObject)
+        {
+            case Button button:
+                PropagateContextToPopup(button, button.Flyout);
+                PropagateContextToPopup(button, button.ContextFlyout);
+                PropagateContextToPopup(button, button.ContextMenu);
+                break;
+
+            case Control control:
+                PropagateContextToPopup(control, control.ContextMenu);
+                PropagateContextToPopup(control, control.ContextFlyout);
+                break;
+        }
+    }
+
+    private static void OnAttachedFlyoutChanged(Control control, AvaloniaPropertyChangedEventArgs args)
+    {
+        if (args.NewValue is FlyoutBase flyout)
+        {
+            PropagateContextToPopup(control, flyout);
+        }
+    }
+
+    private static void OnContextFlyoutChanged(Control control, AvaloniaPropertyChangedEventArgs args)
+    {
+        if (args.NewValue is FlyoutBase flyout)
+        {
+            PropagateContextToPopup(control, flyout);
+        }
+    }
+
+    private static void OnContextMenuChanged(Control control, AvaloniaPropertyChangedEventArgs args)
+    {
+        if (args.NewValue is ContextMenu contextMenu)
+        {
+            PropagateContextToPopup(control, contextMenu);
+        }
+    }
+
+    private static void PropagateContextToPopup(Control source, AvaloniaObject? popup)
+    {
+        if (popup is null)
+            return;
+
+        if (popup is FlyoutBase flyout)
+        {
+            flyout.Opened += (s, e) =>
+            {
+                var context = GetContext(source);
+                SetContext(flyout, context);
+            };
+        }
+        else if (popup is ContextMenu contextMenu)
+        {
+            contextMenu.Opened += (s, e) =>
+            {
+                var context = GetContext(source);
+                SetContext(contextMenu, context);
+            };
+        }
+    }
+
+    #endregion
 
     #region Role
 
@@ -38,209 +131,55 @@ public static class ThemeAssist
 
     private static void OnRoleChangedCallback(AvaloniaObject avaloniaObject, AvaloniaPropertyChangedEventArgs args)
     {
-        if (avaloniaObject is Control c)
+        if (avaloniaObject is StyledElement c)
         {
-            c.Classes.Set("WithRole", args.GetNewValue<ThemeRole>() != ThemeRole.Default);
+            SetHasRole(c, args.NewValue is ThemeRole role && role != ThemeRole.Default);
         }
     }
 
     #endregion
 
-    #region HoverBackground
+    #region HasRole
 
     /// <summary>
-    /// Provides HoverBackground Property for attached ThemeAssist element.
+    /// Provides HasRole Property for attached ThemeAssist element.
     /// </summary>
-    public static readonly AttachedProperty<IBrush?> HoverBackgroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("HoverBackground", typeof(ThemeAssist));
+    public static readonly AttachedProperty<bool> HasRoleProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("HasRole", typeof(ThemeAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="HoverBackgroundProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="HoverBackgroundProperty"/>.</param>
-    public static void SetHoverBackground(StyledElement element, IBrush? value) => element.SetValue(HoverBackgroundProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="HoverBackgroundProperty"/>.
+    /// Accessor for Attached  <see cref="HasRoleProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static IBrush? GetHoverBackground(StyledElement element) => element.GetValue(HoverBackgroundProperty);
+    /// <param name="value">The value to set  <see cref="HasRoleProperty"/>.</param>
+    private static void SetHasRole(StyledElement element, bool value) => element.SetValue(HasRoleProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="HasRoleProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static bool GetHasRole(StyledElement element) => element.GetValue(HasRoleProperty);
 
     #endregion
 
-    #region HoverBorderBrush
+    #region Kind
 
     /// <summary>
-    /// Provides HoverBorderBrush Property for attached ThemeAssist element.
+    /// Provides Kind Property for attached ThemeAssist element.
     /// </summary>
-    public static readonly AttachedProperty<IBrush?> HoverBorderBrushProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("HoverBorderBrush", typeof(ThemeAssist));
+    public static readonly AttachedProperty<string> KindProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("Kind", typeof(ThemeAssist), "default");
 
     /// <summary>
-    /// Accessor for Attached  <see cref="HoverBorderBrushProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="HoverBorderBrushProperty"/>.</param>
-    public static void SetHoverBorderBrush(StyledElement element, IBrush? value) => element.SetValue(HoverBorderBrushProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="HoverBorderBrushProperty"/>.
+    /// Accessor for Attached  <see cref="KindProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static IBrush? GetHoverBorderBrush(StyledElement element) => element.GetValue(HoverBorderBrushProperty);
-
-    #endregion
-
-    #region HoverForeground
+    /// <param name="value">The value to set  <see cref="KindProperty"/>.</param>
+    public static void SetKind(StyledElement element, string value) => element.SetValue(KindProperty, value);
 
     /// <summary>
-    /// Provides HoverForeground Property for attached ThemeAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush?> HoverForegroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("HoverForeground", typeof(ThemeAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="HoverForegroundProperty"/>.
+    /// Accessor for Attached  <see cref="KindProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="HoverForegroundProperty"/>.</param>
-    public static void SetHoverForeground(StyledElement element, IBrush? value) => element.SetValue(HoverForegroundProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="HoverForegroundProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush? GetHoverForeground(StyledElement element) => element.GetValue(HoverForegroundProperty);
-
-    #endregion
-
-    #region ActiveBackground
-
-    /// <summary>
-    /// Provides ActiveBackground Property for attached ThemeAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush?> ActiveBackgroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("ActiveBackground", typeof(ThemeAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="ActiveBackgroundProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="ActiveBackgroundProperty"/>.</param>
-    public static void SetActiveBackground(StyledElement element, IBrush? value) => element.SetValue(ActiveBackgroundProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="ActiveBackgroundProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush? GetActiveBackground(StyledElement element) => element.GetValue(ActiveBackgroundProperty);
-
-    #endregion
-
-    #region ActiveBorderBrush
-
-    /// <summary>
-    /// Provides ActiveBorderBrush Property for attached ThemeAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush?> ActiveBorderBrushProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("ActiveBorderBrush", typeof(ThemeAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="ActiveBorderBrushProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="ActiveBorderBrushProperty"/>.</param>
-    public static void SetActiveBorderBrush(StyledElement element, IBrush? value) => element.SetValue(ActiveBorderBrushProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="ActiveBorderBrushProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush? GetActiveBorderBrush(StyledElement element) => element.GetValue(ActiveBorderBrushProperty);
-
-    #endregion
-
-    #region ActiveForeground
-
-    /// <summary>
-    /// Provides ActiveForeground Property for attached ThemeAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush?> ActiveForegroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("ActiveForeground", typeof(ThemeAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="ActiveForegroundProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="ActiveForegroundProperty"/>.</param>
-    public static void SetActiveForeground(StyledElement element, IBrush? value) => element.SetValue(ActiveForegroundProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="ActiveForegroundProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush? GetActiveForeground(StyledElement element) => element.GetValue(ActiveForegroundProperty);
-
-    #endregion
-
-    #region RippleColor
-
-    /// <summary>
-    /// Provides RippleColor Property for attached ThemeAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush?> RippleColorProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("RippleColor", typeof(ThemeAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="RippleColorProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="RippleColorProperty"/>.</param>
-    public static void SetRippleColor(StyledElement element, IBrush? value) => element.SetValue(RippleColorProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="RippleColorProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush? GetRippleColor(StyledElement element) => element.GetValue(RippleColorProperty);
-
-    #endregion
-
-    #region IndicatorColor
-
-    /// <summary>
-    /// Provides IndicatorColor Property for attached ThemeAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush> IndicatorColorProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("IndicatorColor", typeof(ThemeAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="IndicatorColorProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="IndicatorColorProperty"/>.</param>
-    public static void SetIndicatorColor(StyledElement element, IBrush value) => element.SetValue(IndicatorColorProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="IndicatorColorProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush GetIndicatorColor(StyledElement element) => element.GetValue(IndicatorColorProperty);
-
-    #endregion
-
-    #region ActiveIndicatorColor
-
-    /// <summary>
-    /// Provides ActiveIndicatorColor Property for attached ThemeAssist element.
-    /// </summary>
-    public static readonly AttachedProperty<IBrush> ActiveIndicatorColorProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("ActiveIndicatorColor", typeof(ThemeAssist));
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="ActiveIndicatorColorProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="ActiveIndicatorColorProperty"/>.</param>
-    public static void SetActiveIndicatorColor(StyledElement element, IBrush value) => element.SetValue(ActiveIndicatorColorProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="ActiveIndicatorColorProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    public static IBrush GetActiveIndicatorColor(StyledElement element) => element.GetValue(ActiveIndicatorColorProperty);
+    public static string GetKind(StyledElement element) => element.GetValue(KindProperty);
 
     #endregion
 }

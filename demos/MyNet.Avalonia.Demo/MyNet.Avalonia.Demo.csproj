@@ -4,13 +4,12 @@
         <Product>My .NET Avalonia</Product>
         <Description>Platform for testing and experimenting with Avalonia controls and styles. </Description>
         <ApplicationIcon>Assets\Demo.ico</ApplicationIcon>
-        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <NeutralLanguage>fr</NeutralLanguage>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Avalonia.Fonts.Inter" />
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" />
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" />
         <PackageReference Include="Fody" PrivateAssets="all" />
         <PackageReference Include="MyNet.UI" />
         <PackageReference Include="MyNet.Utilities.Generator.Extensions" />
@@ -32,30 +31,89 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AvaloniaResource Include="Controls\ControlThemeViewer\ControlThemeViewer.axaml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Resources\DemoResources.Designer.cs">
+      <Compile Update="Resources\CommonResources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
-        <DependentUpon>DemoResources.resx</DependentUpon>
+        <DependentUpon>CommonResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\DataGridPageResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>DataGridPageResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\DialogsPageResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>DialogsPageResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\MenuPageResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MenuPageResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\MenuResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MenuResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\NavigationMenuPageResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>NavigationMenuPageResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\SettingsResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>SettingsResources.resx</DependentUpon>
       </Compile>
       <Compile Update="Resources\FormResources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>FormResources.resx</DependentUpon>
       </Compile>
+      <Compile Update="Resources\NotificationPageResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>NotificationPageResources.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Update="Resources\DemoResources.resx">
+        <EmbeddedResource Update="Resources\CommonResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>CommonResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\DataGridPageResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>DataGridPageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\DialogsPageResources.resx">
             <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>DemoResources.Designer.cs</LastGenOutput>
+            <LastGenOutput>DialogsPageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\MenuPageResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>MenuPageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\MenuResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>MenuResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\NavigationMenuPageResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>NavigationMenuPageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\SettingsResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>SettingsResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\FormResources.resx">
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>FormResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\NotificationPageResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>NotificationPageResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 </Project>

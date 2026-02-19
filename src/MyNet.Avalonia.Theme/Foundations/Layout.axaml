@@ -1,0 +1,130 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <Style Selector=":is(Decorator)">
+        <Style Selector="^.no-padding">
+            <Setter Property="Padding" Value="0" />
+        </Style>
+    </Style>
+
+    <Style Selector=":is(TemplatedControl)">
+        <Style Selector="^.no-padding">
+            <Setter Property="Padding" Value="0" />
+        </Style>
+    </Style>
+
+    <Style Selector=":is(ItemsControl)">
+
+        <Style Selector="^.layout-spacing">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+        </Style>
+        <Style Selector="^.layout-spacing.size-xs, ^.layout-spacing-xs">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
+        </Style>
+        <Style Selector="^.layout-spacing.size-sm, ^.layout-spacing-sm">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+        </Style>
+        <Style Selector="^.layout-spacing.size-md, ^.layout-spacing-md">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Md}" />
+        </Style>
+        <Style Selector="^.layout-spacing.size-lg, ^.layout-spacing-lg">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Lg}" />
+        </Style>
+        <Style Selector="^.layout-spacing.size-xl, ^.layout-spacing-xl">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xl}" />
+        </Style>
+        <Style Selector="^.layout-spacing.size-xxl,^.layout-spacing-xxl">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xxl}" />
+        </Style>
+        <Style Selector="^.layout-spacing.size-xxxl, ^.layout-spacing-xxxl">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xxxl}" />
+        </Style>
+
+        <!-- Horizontal -->
+        <Style Selector="^.layout-horizontal">
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </Style>
+
+        <!-- Vertical -->
+        <Style Selector="^.layout-vertical">
+            <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </Style>
+
+        <!-- Uniform -->
+        <Style Selector="^:not(TabControl[TabStripPlacement=Left]):not(TabControl[TabStripPlacement=Right]).layout-uniform">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="0" Rows="1" ColumnSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Uniform Vertical -->
+        <Style Selector="^.layout-uniform.layout-vertical, ^:is(TabControl)[TabStripPlacement=Left], ^:is(TabControl)[TabStripPlacement=Right]">
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1" Rows="0" RowSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Wrap -->
+        <Style Selector="^.layout-wrap">
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <my:ElasticWrapPanel Orientation="Horizontal" ItemSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}"  LineSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </Style>
+
+        <!-- Wrap Vertical -->
+        <Style Selector="^.layout-wrap.layout-vertical">
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <my:ElasticWrapPanel Orientation="Vertical" ItemSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}"  LineSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </Style>
+    </Style>
+
+    <Style Selector=":is(StackPanel)">
+
+        <Style Selector="^.size-xs, ^.layout-spacing-xs, ^.spacing-xs">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
+        </Style>
+        <Style Selector="^.size-sm, ^.layout-spacing-sm, ^.spacing-sm">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+        </Style>
+        <Style Selector="^.size-md, ^.layout-spacing-md, ^.spacing-md">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Md}" />
+        </Style>
+        <Style Selector="^.size-lg, ^.layout-spacing-lg, ^.spacing-lg">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Lg}" />
+        </Style>
+        <Style Selector="^.size-xl, ^.layout-spacing-xl, ^.spacing-xl">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xl}" />
+        </Style>
+        <Style Selector="^.size-xxl,^.layout-spacing-xxl, ^.spacing-xxl">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xxl}" />
+        </Style>
+        <Style Selector="^.size-xxxl, ^.layout-spacing-xxxl, ^.spacing-xxxl">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xxxl}" />
+        </Style>
+    </Style>
+</Styles>

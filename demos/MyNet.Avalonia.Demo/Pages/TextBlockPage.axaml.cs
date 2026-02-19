@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Avalonia.Controls;
-
 namespace MyNet.Avalonia.Demo.Pages;
 
 internal sealed partial class TextBlockPage : Page

@@ -1,0 +1,34 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT GRIDSPLITTER THEME                                -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type GridSplitter}" TargetType="GridSplitter">
+            <Setter Property="Focusable" Value="True" />
+            <Setter Property="MinWidth" Value="6" />
+            <Setter Property="MinHeight" Value="6" />
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="Background" Value="{my:ThemeContext Divider}" />
+            <Setter Property="PreviewContent">
+                <Template>
+                    <Rectangle Fill="{my:ThemeContext Primary}" />
+                </Template>
+            </Setter>
+            <Setter Property="Template">
+                <ControlTemplate TargetType="GridSplitter">
+                    <Border Padding="{TemplateBinding Padding}" Background="Transparent">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+    </Styles.Resources>
+</Styles>

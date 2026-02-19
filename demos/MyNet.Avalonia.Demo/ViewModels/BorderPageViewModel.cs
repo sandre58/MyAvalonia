@@ -5,21 +5,19 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class BorderPageViewModel : AutoBuildPageViewModel
+internal sealed class BorderPageViewModel : ControlCatalogViewModel
 {
     public BorderPageViewModel()
-        : base(nameof(Border), [
-            new ControlThemeBuilder("Card")
-            .AddAllRoles()
-            .AddStyles("Light", "Outlined")
-            .AddCartesianStyles("Outlined", "Light")
-            .AddCartesianStyles("Outlined", "Solid")
-            .AddCartesianStyles("Solid", "Shadow Hover")
-            .AddCartesianStyles("Outlined", "Shadow Hover")
-        ])
-    { }
+        : base(nameof(Border),
+            [
+                new ControlThemeBuilder(kind: "kind-card")
+                    .AddVariants("variant-light", "variant-outlined", "variant-solid", "shadow-surface", "is-hover")
+                    .AddAllRoles()
+            ])
+    {
+    }
 }

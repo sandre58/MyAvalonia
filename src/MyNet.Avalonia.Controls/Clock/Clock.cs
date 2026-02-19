@@ -375,6 +375,38 @@ public sealed class Clock : TemplatedControl, IDisposable
 
     #endregion
 
+    public static readonly StyledProperty<double> HourTickLengthProperty = ClockTicks.HourTickLengthProperty.AddOwner<Clock>();
+
+    public double HourTickLength
+    {
+        get => GetValue(HourTickLengthProperty);
+        set => SetValue(HourTickLengthProperty, value);
+    }
+
+    public static readonly StyledProperty<double> MinuteTickLengthProperty = ClockTicks.MinuteTickLengthProperty.AddOwner<Clock>();
+
+    public double MinuteTickLength
+    {
+        get => GetValue(MinuteTickLengthProperty);
+        set => SetValue(MinuteTickLengthProperty, value);
+    }
+
+    public static readonly StyledProperty<double> HourTickWidthProperty = ClockTicks.HourTickWidthProperty.AddOwner<Clock>();
+
+    public double HourTickWidth
+    {
+        get => GetValue(HourTickWidthProperty);
+        set => SetValue(HourTickWidthProperty, value);
+    }
+
+    public static readonly StyledProperty<double> MinuteTickWidthProperty = ClockTicks.MinuteTickWidthProperty.AddOwner<Clock>();
+
+    public double MinuteTickWidth
+    {
+        get => GetValue(MinuteTickWidthProperty);
+        set => SetValue(MinuteTickWidthProperty, value);
+    }
+
     private void TimerOnElapsed(object? sender, ElapsedEventArgs e) => Dispatcher.UIThread.Invoke(() => IsEnabled.IfTrue(() => Time = DateTime.Now.TimeOfDay));
 
     protected override Size MeasureOverride(Size availableSize)

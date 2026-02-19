@@ -1,0 +1,16 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <Style Selector="AutoCompleteBox, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|CodeBlock, my|ColorPickerEx, my|DateRangePicker, my|DateTimePicker, my|MultiComboBox, my|TagBox, my|TimePickerEx, my|TimeRangePicker">
+
+        <Style Selector="^.size-sm">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.TextField.Sm}" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.TextField.Lg}" />
+        </Style>
+
+    </Style>
+</Styles>

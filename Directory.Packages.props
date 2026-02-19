@@ -3,32 +3,33 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Avalonia" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.10" />
+    <PackageVersion Include="Avalonia" Version="12.0.0-preview1" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.0.0-preview1" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.12" />
     <PackageVersion Include="Avalonia.Android" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="11.3.10" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.0.0-preview1" />
+    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="12.0.0-preview1" />
     <PackageVersion Include="Avalonia.Controls.ItemsRepeater" Version="11.1.5" />
     <PackageVersion Include="Avalonia.Browser" Version="11.3.10" />
     <PackageVersion Include="Avalonia.Skia" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.Desktop" Version="11.3.10" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.0.0-preview1" />
     <PackageVersion Include="Avalonia.iOS" Version="11.3.10" />
+    <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0-beta2" />
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.14" />
-    <PackageVersion Include="MyNet.Humanizer" Version="15.0.0" />
-    <PackageVersion Include="MyNet.Observable" Version="15.0.0" />
-    <PackageVersion Include="MyNet.Utilities" Version="15.0.0" />
-    <PackageVersion Include="MyNet.Utilities.Generator.Extensions" Version="15.0.0" />
-    <PackageVersion Include="MyNet.Utilities.Geography.Extensions" Version="15.0.0" />
-    <PackageVersion Include="MyNet.Utilities.Localization.Extensions" Version="15.0.0" />
-    <PackageVersion Include="MyNet.Utilities.Logging.NLog" Version="15.0.0" />
-    <PackageVersion Include="MyNet.UI" Version="15.0.0" />
+    <PackageVersion Include="MyNet.Humanizer" Version="16.0.2" />
+    <PackageVersion Include="MyNet.Observable" Version="16.0.2" />
+    <PackageVersion Include="MyNet.Utilities" Version="16.0.2" />
+    <PackageVersion Include="MyNet.Utilities.Generator.Extensions" Version="16.0.2" />
+    <PackageVersion Include="MyNet.Utilities.Geography.Extensions" Version="16.0.2" />
+    <PackageVersion Include="MyNet.Utilities.Localization.Extensions" Version="16.0.2" />
+    <PackageVersion Include="MyNet.Utilities.Logging.NLog" Version="16.0.2" />
+    <PackageVersion Include="MyNet.UI" Version="16.0.2" />
     <PackageVersion Include="System.Reactive" Version="7.0.0-preview.1" />
     <PackageVersion Include="Fody" Version="6.9.3" />
     <PackageVersion Include="PropertyChanged.Fody" Version="4.1.0" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0-preview.1.26104.118" />
     <!-- Code Analysis -->
-    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="11.0.100-preview.1.26104.118" />
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
     <PackageVersion Include="Roslynator.Analyzers" Version="4.15.0" />
     <!-- Tests -->
@@ -44,6 +45,6 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
     <!-- SourceLink -->
-    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="11.0.100-preview.1.26104.118" />
   </ItemGroup>
 </Project>

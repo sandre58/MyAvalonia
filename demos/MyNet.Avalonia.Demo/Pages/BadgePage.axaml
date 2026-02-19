@@ -5,80 +5,72 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
-            ClipToBounds="False"
-            mc:Ignorable="d"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
-            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
-            x:DataType="vm:BadgePageViewModel">
-    <DockPanel>
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            x:DataType="vm:BadgePageViewModel"
+            x:Name="Root"
+            ClipToBounds="False"
+            mc:Ignorable="d">
 
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                <StackPanel>
-                    <ComboBox Name="Position"
-                              Margin="{my:Thickness Default, Top}"
-                              ItemsSource="{my:EnumSource {x:Type my:CornerPosition}}"
-                              PlaceholderText="{my:Loc Position}"
-                              SelectedIndex="1" />
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock OffsetX}">
-                        <Slider Name="OffsetX"
-                                ClipToBounds="False"
-                                IsSnapToTickEnabled="True"
-                                Maximum="10"
-                                Minimum="-10"
-                                Value="0" />
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock OffsetY}">
-                        <Slider Name="OffsetY"
-                                ClipToBounds="False"
-                                IsSnapToTickEnabled="True"
-                                Maximum="10"
-                                Minimum="-10"
-                                Value="0" />
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock IsRounded}">
-                        <ToggleSwitch Name="IsRounded" />
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
+    <v:ControlCatalogView>
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="200"
-                                 MinItemHeight="70"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <my:Badge Theme="{Binding Appearance.ActiveTheme}"
+                          my:ThemeAssist.Role="{CompiledBinding Appearance.ActiveRole}"
+                          my:ClassesAssist.Classes="{CompiledBinding ComputedClasses}"
+                          CornerPosition="{CompiledBinding #CornerPosition.SelectedValue}"
+                          IsRounded="{CompiledBinding #IsRounded.IsChecked}"
+                          OffsetX="{CompiledBinding #OffsetX.Value}"
+                          OffsetY="{CompiledBinding #OffsetY.Value}"
+                          my:IconAssist.Icon="{CompiledBinding IconProvider.Icon}"
+                          Header="{CompiledBinding ContentProvider.Content}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+                    <my:Badge.Content>
+                        <Button Width="100" Content="{m:RandomContent AllowNull=False}" />
+                    </my:Badge.Content>
+                </my:Badge>
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-            <!-- Template for standard controls -->
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <my:Badge Theme="{Binding Theme}"
-                              my:ThemeAssist.Role="{Binding Role}"
-                              CornerPosition="{Binding #Position.SelectedIndex}"
-                              my:ClassesAssist.Classes="{Binding Classes}"
-                              IsRounded="{Binding #IsRounded.IsChecked}"
-                              OffsetX="{Binding #OffsetX.Value}"
-                              OffsetY="{Binding #OffsetY.Value}"
-                              Header="{m:RandomContent AllowImage=False, AllowNull=False}"
-                              ToolTip.Tip="{Binding Content}">
-                        <my:Badge.Content>
-                            <Button Width="100">
-                                <Button.Content>
-                                    <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
-                                        <Binding Path="ContentType" />
-                                        <Binding Path="Content" />
-                                    </MultiBinding>
-                                </Button.Content>
-                            </Button>
-                        </my:Badge.Content>
-                    </my:Badge>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <my:Badge Theme="{Binding Theme}"
+                          my:ThemeAssist.Role="{Binding Role}"
+                          my:ClassesAssist.Classes="{Binding Classes}"
+                          Header="{m:RandomContent AllowImage=False, AllowNull=False}">
+                    <my:Badge.Content>
+                        <Button Width="100" Content="{Binding Converter={x:Static c:ContentConverter.Default}}" />
+                    </my:Badge.Content>
+                </my:Badge>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-        </ctrl:ControlThemeViewer>
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <ComboBox Name="CornerPosition"
+                          my:FormItem.Label="{my:LocObject Position}"
+                          ItemsSource="{my:EnumSource {x:Type my:CornerPosition}}"
+                          DisplayMemberBinding="{ReflectionBinding Display}"
+                          SelectedValueBinding="{ReflectionBinding Value}"
+                          SelectedIndex="1" />
+                <Slider Name="OffsetX"
+                        my:FormItem.Label="{my:LocObject OffsetX}"
+                        Maximum="10"
+                        Minimum="-10"
+                        Value="0" />
+                <Slider Name="OffsetY"
+                        my:FormItem.Label="{my:LocObject OffsetY}"
+                        Maximum="10"
+                        Minimum="-10"
+                        Value="0" />
+                <ToggleSwitch Name="IsRounded" my:FormItem.Label="{my:LocObject IsRounded}" IsChecked="False" />
+            </my:Form>
+        </v:ControlCatalogView.Settings>
 
-    </DockPanel>
+    </v:ControlCatalogView>
 </pages:Page>

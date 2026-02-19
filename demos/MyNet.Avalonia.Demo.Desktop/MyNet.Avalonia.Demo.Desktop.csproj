@@ -6,7 +6,6 @@
         <TargetFramework>net10.0-windows</TargetFramework>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
-        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     </PropertyGroup>
     <ItemGroup>
         <None Remove="config\NLog.config" />
@@ -19,7 +18,7 @@
 
     <ItemGroup>
         <PackageReference Include="Avalonia.Desktop" />
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" />
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ToggleSplitButtonsPage.axaml.cs" company="Stéphane ANDRE">
+// <copyright file="ToggleSplitButtonPage.axaml.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------

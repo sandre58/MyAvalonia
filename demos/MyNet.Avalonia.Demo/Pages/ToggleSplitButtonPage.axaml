@@ -6,94 +6,82 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
-            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             xmlns:samples="using:MyNet.Avalonia.Demo.Views.Samples"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:ToggleSplitButtonPageViewModel"
+            Name="Root"
             ClipToBounds="False">
 
-    <DockPanel>
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                <StackPanel>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock IconLayout}">
-                        <ListBox Name="IconLayout" SelectedIndex="0">
-                            <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:LocTextBlock None}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:LocTextBlock Top}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock DropDownPlacement}">
-                        <ListBox Name="DropDownPlacement" SelectedIndex="1">
-                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:LocTextBlock Top}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock PopupPlacement}">
-                        <ComboBox Name="PopupPlacement"
-                                  DisplayMemberBinding="{ReflectionBinding Display}"
-                                  ItemTemplate="{x:Null}"
-                                  ItemsSource="{my:EnumSource {x:Type PlacementMode}}"
-                                  SelectedIndex="10"
-                                  SelectedValueBinding="{ReflectionBinding Value}" />
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
+    <v:ControlCatalogView>
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="130"
-                                 MinItemHeight="50"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <ToggleSplitButton Theme="{Binding Appearance.ActiveTheme}"
+                                   my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                                   my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                                   my:IconAssist.Icon="{Binding IconProvider.Icon}"
+                                   Content="{Binding ContentProvider.Content}"
+                                   IsChecked="{m:RandomBool}"
+                                   my:PopupBehavior.Placement="{Binding #PopupPlacement.SelectedValue}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center">
+                    <ToggleSplitButton.Flyout>
+                        <MenuFlyout ItemsSource="{m:RandomMenuItems}" />
+                    </ToggleSplitButton.Flyout>
+                </ToggleSplitButton>
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-            <!-- Template for standard controls -->
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <ToggleSplitButton Theme="{Binding Theme}"
-                                 my:ThemeAssist.Role="{Binding Role}"
-                                 b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}"
-                                 b:SettingsBehavior.AlignmentClass="{Binding #DropDownPlacement.SelectedIndex}"
-                                 my:ClassesAssist.Classes="{Binding Classes}"
-                                 my:PopupBehavior.Placement="{Binding #PopupPlacement.SelectedValue}"
-                                 IsChecked="{m:RandomBool}"
-                                 ToolTip.Tip="{Binding Content}">
-                        <SplitButton.Flyout>
-                            <MenuFlyout ItemsSource="{m:RandomMenuItems}" />
-                        </SplitButton.Flyout>
-                        <SplitButton.Content>
-                            <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
-                                <Binding Path="ContentType" />
-                                <Binding Path="Content" />
-                            </MultiBinding>
-                        </SplitButton.Content>
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <ToggleSplitButton Theme="{Binding Theme}"
+                                   my:ThemeAssist.Role="{Binding Role}"
+                                   my:ClassesAssist.Classes="{Binding Classes}"
+                                   Content="{Binding Converter={x:Static c:ContentConverter.Default}}"
+                                   IsChecked="{m:RandomBool}">
+                    <ToggleSplitButton.Flyout>
+                        <MenuFlyout ItemsSource="{m:RandomMenuItems}" />
+                    </ToggleSplitButton.Flyout>
+                </ToggleSplitButton>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
+
+        <v:ControlCatalogView.CustomContent>
+            <StackPanel>
+                <HeaderedContentControl Header="Custom Flyout">
+                    <ToggleSplitButton Content="Custom Flyout">
+                        <ToggleSplitButton.Flyout>
+                            <Flyout>
+                                <samples:LargeContent1 />
+                            </Flyout>
+                        </ToggleSplitButton.Flyout>
                     </ToggleSplitButton>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+                </HeaderedContentControl>
+            </StackPanel>
+        </v:ControlCatalogView.CustomContent>
 
-            <!-- Custom content for the Custom tab -->
-            <ctrl:ControlThemeViewer.CustomContent>
-                <StackPanel Spacing="20" Margin="20">
-                    <HeaderedContentControl Header="Custom Flyout" Background="Transparent">
-                        <SplitButton Content="Custom Flyout">
-                            <SplitButton.Flyout>
-                                <Flyout>
-                                    <samples:LargeContent1 />
-                                </Flyout>
-                            </SplitButton.Flyout>
-                        </SplitButton>
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ctrl:ControlThemeViewer.CustomContent>
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <ListBox my:FormItem.Label="{my:LocObject DropDownPlacement}" Name="DropDownPlacement" SelectedValue="{Binding #Root.DataContext.PlacementClassProvider.SelectedClass}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem Content="{my:Icon DockLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="position-left" />
+                    <ListBoxItem Content="{my:Icon DockRight}" ToolTip.Tip="{my:Loc Right}" DataContext="position-right" />
+                    <ListBoxItem Content="{my:Icon DockTop}" ToolTip.Tip="{my:Loc Top}" DataContext="position-top" />
+                    <ListBoxItem Content="{my:Icon DockBottom}" ToolTip.Tip="{my:Loc Bottom}" DataContext="position-bottom" />
+                </ListBox>
+                <ComboBox Name="PopupPlacement"
+                          my:FormItem.Label="{my:LocObject PopupPlacement}"
+                          DisplayMemberBinding="{ReflectionBinding Display}"
+                          ItemTemplate="{x:Null}"
+                          ItemsSource="{my:EnumSource {x:Type PlacementMode}}"
+                          SelectedIndex="10"
+                          SelectedValueBinding="{ReflectionBinding Value}" />
+            </my:Form>
+        </v:ControlCatalogView.Settings>
 
-        </ctrl:ControlThemeViewer>
-
-    </DockPanel>
+    </v:ControlCatalogView>
 </pages:Page>

@@ -1,0 +1,60 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <Styles.Resources>
+
+    <ControlTheme x:Key="{x:Type my:Tag}" TargetType="my:Tag">
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="UseLayoutRounding" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Tag}" />
+        <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Tag}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Control.Border}" />
+        <Setter Property="Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="BorderBrush" Value="{my:ThemeRole Border}" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:Tag">
+                <Border Name="PART_Border"
+                        Padding="{TemplateBinding Padding}"
+                        my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <ContentPresenter Name="PART_ContentPresenter"
+                                          MinWidth="{TemplateBinding MinWidth}"
+                                          MinHeight="{TemplateBinding MinHeight}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          FontSize="{TemplateBinding FontSize}"
+                                          RecognizesAccessKey="True"
+                                          UseLayoutRounding="True" />
+                        <Button Name="PART_CloseButton"
+                                Grid.Column="1"
+                                Margin="{my:Thickness Xs, Left}"
+                                Classes="kind-tool no-disablable size-sm"
+                                Command="{TemplateBinding CloseCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                Content="{my:Icon Close}"
+                                IsVisible="{TemplateBinding CloseCommand, Converter={x:Static my:NullConverter.IsNotNull}}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    </Styles.Resources>
+</Styles>
+

@@ -5,19 +5,20 @@
 // -----------------------------------------------------------------------
 
 using MyNet.Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ContentProviders;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class AvatarPageViewModel : AutoBuildPageViewModel
+internal sealed class AvatarPageViewModel : ControlCatalogViewModel
 {
     public AvatarPageViewModel()
         : base(nameof(Avatar), [
-            new ControlThemeBuilder(defaultContentType: ContentType.Icon)
-            .AddLayouts("Circle")
-            .AddStyles("Shadow")
+            new ControlThemeBuilder(defaultContentType: ContentProviderType.Icon)
+            .AddShapes("shape-circle")
+            .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-text", "shadow-control")
             .AddAllRoles()
-            .AddSizes("ExtraSmall", "Small", "Medium", "Large", "ExtraLarge")
+            .AddSizes("size-xs", "size-sm", "size-md", "size-lg", "size-xl")
         ])
     { }
 }

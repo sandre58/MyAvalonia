@@ -1,0 +1,16 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- DEFAULT THEMEVARIANTSCOPE THEME                           -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="{x:Type ThemeVariantScope}" TargetType="ThemeVariantScope">
+            <Setter Property="TextElement.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="TextElement.FontSize" Value="{StaticResource MyNet.Font.Size}" />
+            <Setter Property="TextElement.FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />
+        </ControlTheme>
+
+    </Styles.Resources>
+</Styles>

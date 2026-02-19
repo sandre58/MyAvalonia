@@ -155,6 +155,28 @@ public static class HeaderAssist
 
     #endregion
 
+    #region Margin
+
+    /// <summary>
+    /// Provides Margin Property for attached HeaderAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<Thickness> MarginProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("Margin", typeof(HeaderAssist), new Thickness(0));
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="MarginProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="MarginProperty"/>.</param>
+    public static void SetMargin(StyledElement element, Thickness value) => element.SetValue(MarginProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="MarginProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static Thickness GetMargin(StyledElement element) => element.GetValue(MarginProperty);
+
+    #endregion
+
     #region Size
 
     /// <summary>

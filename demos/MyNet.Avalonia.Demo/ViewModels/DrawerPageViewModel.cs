@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DrawersViewModel.cs" company="Stéphane ANDRE">
+// <copyright file="DrawerPageViewModel.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -10,7 +10,6 @@ using MyNet.Avalonia.Demo.ViewModels.Dialogs;
 using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.UI.Commands;
-using MyNet.UI.ViewModels.Workspace;
 
 namespace MyNet.Avalonia.Demo.ViewModels
 {

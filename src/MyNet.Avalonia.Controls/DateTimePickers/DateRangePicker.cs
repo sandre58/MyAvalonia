@@ -154,14 +154,14 @@ public class DateRangePicker : DatePickerBase
         if (_startCalendar != null)
         {
             _startCalendar.DateSelected -= OnDateSelected;
-            _startCalendar.DatePreviewed -= OnDatePreviewed;
+            //_startCalendar.DatePreviewed -= OnDatePreviewed;
             //_startCalendar.ContextDateChanged -= OnContextDateChanged;
         }
 
         if (_endCalendar != null)
         {
             _endCalendar.DateSelected -= OnDateSelected;
-            _endCalendar.DatePreviewed -= OnDatePreviewed;
+            //_endCalendar.DatePreviewed -= OnDatePreviewed;
             //_endCalendar.ContextDateChanged -= OnContextDateChanged;
         }
 
@@ -181,14 +181,14 @@ public class DateRangePicker : DatePickerBase
         if (_startCalendar != null)
         {
             _startCalendar.DateSelected += OnDateSelected;
-            _startCalendar.DatePreviewed += OnDatePreviewed;
+            //_startCalendar.DatePreviewed += OnDatePreviewed;
             //_startCalendar.ContextDateChanged += OnContextDateChanged;
         }
 
         if (_endCalendar != null)
         {
             _endCalendar.DateSelected += OnDateSelected;
-            _endCalendar.DatePreviewed += OnDatePreviewed;
+            //_endCalendar.DatePreviewed += OnDatePreviewed;
             //_endCalendar.ContextDateChanged += OnContextDateChanged;
         }
 

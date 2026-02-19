@@ -5,16 +5,20 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class CalendarPageViewModel : AutoBuildPageViewModel
+internal sealed class CalendarPageViewModel : ControlCatalogViewModel
 {
     public CalendarPageViewModel()
-        : base(nameof(Calendar), [
-            new ControlThemeBuilder().AddRoles([ThemeRole.Accent, ThemeRole.Inverse])
-        ])
+        : base(nameof(Calendar),
+            [
+                new ControlThemeBuilder()
+                    .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-transparent", "shadow-surface", "variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items")
+                    .AddThemeRoles()
+                    .AddItemsThemeRoles()
+                    .AddDefaultSizes()
+            ])
     { }
 }

@@ -7,26 +7,25 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Avalonia.Media;
 
 namespace MyNet.Avalonia.Controls;
 
 public class PlaceholderContentControl : ContentControl
 {
-    #region Placeholder
+    #region PlaceholderText
 
     /// <summary>
-    /// Provides Placeholder Property.
+    /// Provides PlaceholderText Property.
     /// </summary>
-    public static readonly StyledProperty<object?> PlaceholderProperty = AvaloniaProperty.Register<PlaceholderContentControl, object?>(nameof(Placeholder));
+    public static readonly StyledProperty<object?> PlaceholderTextProperty = AvaloniaProperty.Register<PlaceholderContentControl, object?>(nameof(PlaceholderText));
 
     /// <summary>
-    /// Gets or sets the Placeholder property.
+    /// Gets or sets the PlaceholderText property.
     /// </summary>
-    public object? Placeholder
+    public object? PlaceholderText
     {
-        get => GetValue(PlaceholderProperty);
-        set => SetValue(PlaceholderProperty, value);
+        get => GetValue(PlaceholderTextProperty);
+        set => SetValue(PlaceholderTextProperty, value);
     }
 
     #endregion

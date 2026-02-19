@@ -4,39 +4,44 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+            mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-            x:DataType="vm:ButtonPageViewModel"
-            ClipToBounds="False"
-            mc:Ignorable="d">
-    <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                             MinItemWidth="200"
-                             MinItemHeight="130"
-                             IsActive="{Binding IsActive}">
+            x:DataType="vm:BorderPageViewModel"
+            ClipToBounds="False">
 
-        <!-- Template for standard controls -->
-        <ctrl:ControlThemeViewer.ControlTemplate>
-            <DataTemplate x:DataType="ctrl:ControlDescription">
-                <Border  Width="190" Height="130" Theme="{Binding Theme}"
-                         my:ThemeAssist.Role="{Binding Role}"
-                         my:ClassesAssist.Classes="{Binding Classes}"
-                         ToolTip.Tip="{Binding Content}" />
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
+
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <Border Width="190" Height="130"
+                        Theme="{Binding Appearance.ActiveTheme}"
+                        my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                        my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" />
             </DataTemplate>
-        </ctrl:ControlThemeViewer.ControlTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-        <!-- Custom content for the Custom tab (optional) -->
-        <!-- If you do not define CustomContent, the tab will not appear -->
-        <ctrl:ControlThemeViewer.CustomContent>
-            <StackPanel Spacing="20" Margin="20">
-                <HeaderedContentControl Header="Popup" Classes="Text">
-                    <StackPanel Classes="Large">
-                        <Border Width="190" Height="120" Theme="{StaticResource MyNet.Theme.Border.Popup}" />
-                    </StackPanel>
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <Border Width="190" Height="130"
+                        Theme="{Binding Theme}"
+                        my:ThemeAssist.Role="{Binding Role}"
+                        my:ClassesAssist.Classes="{Binding Classes}" />
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
+
+        <v:ControlCatalogView.CustomContent>
+            <StackPanel>
+                <HeaderedContentControl Header="kind-popup">
+                    <Border Width="190" Height="130" Classes="kind-popup" />
                 </HeaderedContentControl>
             </StackPanel>
-        </ctrl:ControlThemeViewer.CustomContent>
+        </v:ControlCatalogView.CustomContent>
 
-    </ctrl:ControlThemeViewer>
+    </v:ControlCatalogView>
 </pages:Page>

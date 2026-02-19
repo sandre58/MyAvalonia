@@ -5,30 +5,31 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ContentProviders;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class ButtonPageViewModel : AutoBuildPageViewModel
+internal sealed class ButtonPageViewModel : ControlCatalogViewModel
 {
     public ButtonPageViewModel()
-        : base(nameof(Button), [
-            new ControlThemeBuilder()
-            .AddLayouts("Circle")
-            .AddStyles("Light", "Outlined", "Text", "Shadow")
-            .AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultRoles()
-            .AddSizes("Small", "Medium", "Large"),
+        : base(nameof(Button),
+            [
+                new ControlThemeBuilder()
+                    .AddShapes("shape-circle")
+                    .AddVariants("variant-light", "variant-outlined", "variant-text", "shadow-control")
+                    .AddDefaultSizes()
+                    .AddDefaultRoles(),
 
-            new ControlThemeBuilder("Rounded", ContentType.Icon)
-            .AddStyles("Light", "Outlined", "Text", "Shadow")
-            .AddCartesianStyles("Light", "Outlined", "Text")
-            .AddDefaultRoles()
-            .AddSizes("Small", "Medium", "Large"),
+                new ControlThemeBuilder("Rounded", defaultContentType: ContentProviderType.Icon)
+                    .AddVariants("variant-light", "variant-outlined", "variant-text", "shadow-control")
+                    .AddDefaultSizes()
+                    .AddDefaultRoles(),
 
-            new ControlThemeBuilder("Icon", ContentType.Geometry)
-            .AddDefaultRoles()
-            .AddSizes("Small", "Medium", "Large")
-        ])
-    { }
+                new ControlThemeBuilder("Icon", defaultContentType: ContentProviderType.Icon)
+                    .AddDefaultSizes()
+                    .AddDefaultRoles()
+            ])
+    {
+    }
 }

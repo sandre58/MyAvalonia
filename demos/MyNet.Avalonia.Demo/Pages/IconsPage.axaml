@@ -5,7 +5,7 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
-            xmlns:sys="clr-namespace:System;assembly=netstandard"
+            xmlns:sys="clr-namespace:System;assembly=System.Runtime"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             x:DataType="vm:IconsPageViewModel"
             ClipToBounds="False"
@@ -13,15 +13,14 @@
 
     <SplitView Classes="Dark Shadow"
                DisplayMode="Inline"
-               IsEnabled="{Binding IsActive}"
                IsPaneOpen="True"
                OpenPaneLength="300"
                PanePlacement="Right">
         <SplitView.Pane>
             <my:PlaceholderContentControl my:IconAssist.Icon="{my:Icon CircleOffOutline, Size=80}"
-                                          Classes="Watermark ExtraLarge"
+                                          Classes="PlaceholderText ExtraLarge"
                                           Content="{Binding Icons.SelectedItem}"
-                                          Placeholder="{my:LocTextBlock SelectItem}">
+                                          PlaceholderText="{my:Loc SelectItem}">
                 <my:PlaceholderContentControl.ContentTemplate>
                     <DataTemplate x:DataType="{x:Type vm:IconBuilderData}">
                         <HeaderedContentControl HorizontalContentAlignment="Stretch"
@@ -44,7 +43,7 @@
                                 <ItemsControl Grid.Row="2" ItemsSource="{Binding CodeBlocks}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <StackPanel HorizontalAlignment="Stretch" Spacing="{StaticResource MyNet.Spacing.Medium}" />
+                                            <StackPanel HorizontalAlignment="Stretch" Spacing="{StaticResource MyNet.Spacing.Md}" />
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
@@ -60,7 +59,7 @@
             </my:PlaceholderContentControl>
         </SplitView.Pane>
 
-        <Grid Margin="{my:Thickness Default}" ColumnDefinitions="*" RowDefinitions="Auto,10,*">
+        <Grid Margin="{my:Thickness Sm}" ColumnDefinitions="*" RowDefinitions="Auto,10,*">
 
             <DockPanel>
 
@@ -73,14 +72,14 @@
                                ShowPageSizeSelector="True"
                                ShowQuickJump="True"
                                TotalCount="{ReflectionBinding Icons.Paging.TotalItems, Mode=OneWay}" />
-                <TextBox Margin="{my:Thickness Default, Right}"
+                <TextBox Margin="{my:Thickness Sm, Right}"
                          HorizontalAlignment="Stretch"
                          my:IconAssist.Icon="{my:Icon Magnify}"
                          my:TextFieldAssist.ShowClearButton="True"
-                         Classes="Large"
-                         FontSize="{StaticResource MyNet.Font.Size.Caption}"
+                         Classes="size-lg"
+                         FontSize="{StaticResource MyNet.Font.Size.Lg}"
                          Text="{ReflectionBinding Icons.Filters.Value, Delay=50, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Watermark="{my:Loc Search}" />
+                         PlaceholderText="{my:Loc Search}" />
 
             </DockPanel>
 
@@ -101,7 +100,7 @@
                     <DataTemplate>
                         <PathIcon Width="30"
                                   Height="30"
-                                  Margin="{my:Thickness Large}"
+                                  Margin="{my:Thickness Lg}"
                                   Data="{Binding Geometry}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>

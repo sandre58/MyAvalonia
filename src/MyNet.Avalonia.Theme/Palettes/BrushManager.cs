@@ -19,7 +19,7 @@ namespace MyNet.Avalonia.Theme.Palettes;
 /// Manages registration, retrieval, and updating of brushes with animated color transitions and opacity support.
 /// Maintains a cache of <see cref="BrushSet"/> instances identified by string keys for efficient reuse and hot theme switching.
 /// </summary>
-public class BrushManager(TimeSpan colorTransitionDuration, Easing colorTransitionEasing)
+public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransitionEasing)
 {
     public static readonly IBrush FallbackBrush = Brushes.Fuchsia;
 
@@ -62,20 +62,22 @@ public class BrushManager(TimeSpan colorTransitionDuration, Easing colorTransiti
     /// <param name="key">The key identifying the brush set.</param>
     /// <param name="opacity">The desired opacity value.</param>
     /// <param name="contrast">Whether to apply contrast transformation.</param>
+    /// <param name="darken">Optional darken factor (value between 0.0 and 1.0).</param>
+    /// <param name="lighten">Optional lighten factor (value between 0.0 and 1.0).</param>
     /// <returns>The <see cref="SolidColorBrush"/> associated with the key.</returns>
     /// <exception cref="KeyNotFoundException">Thrown if the key does not exist in the manager.</exception>
-    public IBrush Get(string key, double? opacity = null, bool contrast = false)
+    public IBrush Get(string key, double? opacity = null, bool contrast = false, double? darken = null, double? lighten = null)
     {
-        using (PerformanceMonitor.Measure($"[BrushManager] GetBrush(key: '{key}', Opacity: {opacity}, Contrast: {contrast})", 1.Milliseconds()))
+        using (PerformanceMonitor.Measure($"[BrushManager] GetBrush(key: '{key}', Opacity: {opacity}, Contrast: {contrast}, Darken: {darken}, Lighten: {lighten})", maxBeforeWarning: 1.Milliseconds(), category: PerformanceCategory.Brushes))
         {
             if (!_sets.TryGetValue(key, out var set))
             {
-                PerformanceMonitor.Warning($"[BrushManager] Brush not found (key: '{key}', Opacity: {opacity}, Contrast: {contrast})");
+                PerformanceMonitor.Warning($"[BrushManager] Brush not found (key: '{key}', Opacity: {opacity}, Contrast: {contrast}, Darken: {darken}, Lighten: {lighten})", category: PerformanceCategory.Brushes);
                 return FallbackBrush;
             }
             else
             {
-                return ResolveBrushFromSet(set, opacity, contrast);
+                return ResolveBrushFromSet(set, opacity, contrast, darken, lighten);
             }
         }
     }
@@ -86,40 +88,61 @@ public class BrushManager(TimeSpan colorTransitionDuration, Easing colorTransiti
     /// <param name="brush">The brush instance to search for.</param>
     /// <param name="opacity">The desired opacity value.</param>
     /// <param name="contrast">Whether to apply contrast transformation.</param>
+    /// <param name="darken">Optional darken factor (value between 0.0 and 1.0).</param>
+    /// <param name="lighten">Optional lighten factor (value between 0.0 and 1.0).</param>
     /// <returns>The matching <see cref="SolidColorBrush"/> with the specified transformations applied.</returns>
-    public IBrush Get(IBrush brush, double? opacity = null, bool contrast = false)
+    public IBrush Get(IBrush brush, double? opacity = null, bool contrast = false, double? darken = null, double? lighten = null)
     {
         switch (brush)
         {
             case SolidColorBrush solidColorBrush:
                 var computedOpacity = opacity.HasValue ? opacity.Value * solidColorBrush.Opacity : solidColorBrush.Opacity;
-                using (PerformanceMonitor.Measure($"[BrushManager] Get Brush({solidColorBrush.Color}, Opacity: {computedOpacity}, Contrast: {contrast})", 1.Milliseconds()))
+                using (PerformanceMonitor.Measure($"[BrushManager] Get Brush({solidColorBrush.Color}, Opacity: {computedOpacity}, Contrast: {contrast}, Darken: {darken}, Lighten: {lighten})", 1.Milliseconds(), category: PerformanceCategory.Brushes))
                 {
                     if (_reverse.TryGetValue(solidColorBrush, out var registration))
                     {
-                        return ResolveBrushFromSet(registration.Set, computedOpacity, contrast || registration.IsContrast);
+                        return contrast && registration.IsContrast
+                            ? ComputeUnknownBrush(solidColorBrush, computedOpacity, contrast, darken, lighten)
+                            : ResolveBrushFromSet(registration.Set, computedOpacity, contrast ^ registration.IsContrast, darken, lighten);
                     }
                     else
                     {
-                        PerformanceMonitor.Warning($"[BrushManager] Brush not registered ({solidColorBrush.Color}, Opacity: {computedOpacity}, Contrast: {contrast})");
-                        return computedOpacity < 1.0 || contrast
-                            ? new SolidColorBrush(contrast ? solidColorBrush.Color.ContrastingForegroundColor() : solidColorBrush.Color, computedOpacity)
-                            : solidColorBrush;
+                        PerformanceMonitor.Warning($"[BrushManager] Brush not registered ({solidColorBrush.Color}, Opacity: {computedOpacity}, Contrast: {contrast}, Darken: {darken}, Lighten: {lighten})", PerformanceCategory.Theme);
+
+                        return ComputeUnknownBrush(solidColorBrush, computedOpacity, contrast, darken, lighten);
                     }
                 }
 
             case IImmutableSolidColorBrush immutableSolidColorBrush:
                 var computedOpacity1 = opacity.HasValue ? opacity.Value * immutableSolidColorBrush.Opacity : immutableSolidColorBrush.Opacity;
-                PerformanceMonitor.Warning($"[BrushManager] Try to get ImmutableSolidColorBrush({immutableSolidColorBrush.Color}, Opacity: {computedOpacity1}, Contrast: {contrast})");
+                PerformanceMonitor.Warning($"[BrushManager] Try to get ImmutableSolidColorBrush({immutableSolidColorBrush.Color}, Opacity: {computedOpacity1}, Contrast: {contrast})", category: PerformanceCategory.Theme);
 
-                return computedOpacity1 < 1.0 || contrast
-                    ? new SolidColorBrush(contrast ? immutableSolidColorBrush.Color.ContrastingForegroundColor() : immutableSolidColorBrush.Color, computedOpacity1)
-                    : immutableSolidColorBrush;
+                return ComputeUnknownBrush(immutableSolidColorBrush, computedOpacity1, contrast, darken, lighten);
 
             default:
-                PerformanceMonitor.Warning($"[BrushManager] Try to get Brush({brush})");
+                PerformanceMonitor.Warning($"[BrushManager] Try to get Brush({brush})", category: PerformanceCategory.Theme);
                 return brush;
         }
+    }
+
+    /// <summary>
+    /// Computes a new brush based on an unknown brush instance by applying color interpolation transformations such as opacity, contrast, darkening, and lightening.
+    /// </summary>
+    /// <param name="brush">The unknown brush instance.</param>
+    /// <param name="opacity">The desired opacity value.</param>
+    /// <param name="contrast">Whether to apply contrast transformation.</param>
+    /// <param name="darken">Optional darken factor (value between 0.0 and 1.0).</param>
+    /// <param name="lighten">Optional lighten factor (value between 0.0 and 1.0).</param>
+    /// <returns>The computed brush with the specified transformations applied.</returns>
+    private static ISolidColorBrush ComputeUnknownBrush(ISolidColorBrush brush, double opacity, bool contrast, double? darken, double? lighten)
+    {
+        if (opacity == 1.0 && !contrast && !darken.HasValue && !lighten.HasValue)
+            return brush;
+
+        var color = brush.Color.Apply(new ColorInterpolation(null, contrast, darken, lighten));
+        return opacity < 1.0 || contrast || darken.HasValue || lighten.HasValue
+            ? new SolidColorBrush(color, opacity)
+            : brush;
     }
 
     /// <summary>
@@ -128,16 +151,37 @@ public class BrushManager(TimeSpan colorTransitionDuration, Easing colorTransiti
     /// <param name="set">The brush set to resolve from.</param>
     /// <param name="opacity">The desired opacity value.</param>
     /// <param name="contrast">Whether to apply contrast transformation.</param>
+    /// <param name="darken">Optional darken factor (value between 0.0 and 1.0).</param>
+    /// <param name="lighten">Optional lighten factor (value between 0.0 and 1.0).</param>
     /// <returns>The resolved <see cref="SolidColorBrush"/>.</returns>
-    private SolidColorBrush ResolveBrushFromSet(BrushSet set, double? opacity, bool contrast) => contrast
+    private ISolidColorBrush ResolveBrushFromSet(BrushSet set, double? opacity, bool contrast, double? darken, double? lighten)
+    {
+        // If we need to darken or lighten, we create a new brush with the transformed color
+        if (darken.HasValue || lighten.HasValue)
+        {
+            var baseBrush = contrast
+                ? opacity.HasValue && opacity < 1.0 ? set.GetContrastedOpacityBrush(opacity.Value) : set.Contrast
+                : opacity.HasValue && opacity < 1.0 ? set.GetOpacityBrush(opacity.Value) : set.Brush;
+
+            var transformedColor = baseBrush.Color.Apply(new ColorInterpolation(null, contrast, darken, lighten));
+            return new SolidColorBrush(transformedColor, baseBrush.Opacity);
+        }
+
+        // Otherwise, use the standard resolution
+        return contrast
             ? opacity.HasValue && opacity < 1.0 ? TrackBrush(set.GetContrastedOpacityBrush(opacity.Value), set, true) : set.Contrast
             : opacity.HasValue && opacity < 1.0 ? TrackBrush(set.GetOpacityBrush(opacity.Value), set, false) : set.Brush;
+    }
 
     /// <summary>
     /// Registers the main and contrast brushes of a <see cref="BrushSet"/> in the reverse lookup table.
     /// </summary>
     /// <param name="set">The brush set to register.</param>
-    private void RegisterBrushSet(BrushSet set) => TrackBrush(set.Brush, set, false);
+    private void RegisterBrushSet(BrushSet set)
+    {
+        TrackBrush(set.Brush, set, false);
+        TrackBrush(set.Contrast, set, true);
+    }
 
     /// <summary>
     /// Tracks a brush in the reverse lookup table, associating it with its owning <see cref="BrushSet"/> and contrast status.
@@ -145,8 +189,8 @@ public class BrushManager(TimeSpan colorTransitionDuration, Easing colorTransiti
     /// <param name="brush">The brush to track.</param>
     /// <param name="owner">The owning brush set.</param>
     /// <param name="isContrast">Whether the brush is a contrast variant.</param>
-    /// <returns>The tracked <see cref="SolidColorBrush"/>.</returns>
-    private SolidColorBrush TrackBrush(SolidColorBrush brush, BrushSet owner, bool isContrast)
+    /// <returns>The tracked <see cref="ISolidColorBrush"/>.</returns>
+    private ISolidColorBrush TrackBrush(ISolidColorBrush brush, BrushSet owner, bool isContrast)
     {
         _reverse.AddOrUpdate(brush, new BrushRegistration(owner, isContrast));
         return brush;

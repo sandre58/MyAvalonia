@@ -6,111 +6,95 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             xmlns:samples="clr-namespace:MyNet.Avalonia.Demo.Views.Samples"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:TabControlPageViewModel"
+            x:Name="Root"
             ClipToBounds="False">
 
-    <DockPanel>
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                <StackPanel>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Layout}">
-                        <ListBox Name="Layout" SelectedIndex="3">
-                            <ListBoxItem ToolTip.Tip="{my:LocTextBlock Left}" Content="{my:Icon DockLeft}" />
-                            <ListBoxItem ToolTip.Tip="{my:LocTextBlock Bottom}" Content="{my:Icon DockBottom}" />
-                            <ListBoxItem ToolTip.Tip="{my:LocTextBlock Right}" Content="{my:Icon DockRight}" />
-                            <ListBoxItem ToolTip.Tip="{my:LocTextBlock Top}" Content="{my:Icon DockTop}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock IconLayout}">
-                        <ListBox Name="IconLayout" SelectedIndex="0">
-                            <ListBoxItem ToolTip.Tip="{my:LocTextBlock None}" Content="{my:Icon CircleOffOutline}" />
-                            <ListBoxItem ToolTip.Tip="{my:LocTextBlock Left}" Content="{my:Icon GamepadCircleLeft}" />
-                            <ListBoxItem ToolTip.Tip="{my:LocTextBlock Right}" Content="{my:Icon GamepadCircleRight}" />
-                            <ListBoxItem ToolTip.Tip="{my:LocTextBlock Top}" Content="{my:Icon GamepadCircleUp}" />
-                            <ListBoxItem ToolTip.Tip="{my:LocTextBlock Bottom}" Content="{my:Icon GamepadCircleDown}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Labelled" Header="{my:LocTextBlock Uniform}">
-                        <ToggleSwitch Name="Uniform" IsChecked="False" />
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
+    <v:ControlCatalogView ShowContent="False">
 
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="550"
-                                 MinItemHeight="300"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <TabControl Theme="{Binding Appearance.ActiveTheme}"
+                            my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                            my:ItemsAssist.Role="{Binding Appearance.ActiveItemsRole}"
+                            my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                            TabStripPlacement="{Binding #TabPlacement.SelectedValue}"
+                            MaxWidth="600"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <TabItem Header="Tab 1">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Tab 2">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Tab 3">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Tab 4">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <TabControl Theme="{Binding Theme}"
-                                my:ThemeAssist.Role="{Binding Role}"
-                                my:ClassesAssist.Classes="{Binding Classes}"
-                                TabStripPlacement="{Binding #Layout.SelectedIndex}"
-                                Classes.Uniform="{Binding #Uniform.IsChecked}"
-                                MaxWidth="500"
-                                ToolTip.Tip="{Binding Content}">
-                        <TabItem Header="Tab 1" b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}">
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                                <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                            </ScrollViewer>
-                        </TabItem>
-                        <TabItem Header="Tab 2" b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}">
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                                <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                            </ScrollViewer>
-                        </TabItem>
-                        <TabItem Header="Tab 3" b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}">
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                                <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                            </ScrollViewer>
-                        </TabItem>
-                        <TabItem Header="Tab 4" b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}">
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                                <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                            </ScrollViewer>
-                        </TabItem>
-                    </TabControl>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <TabControl Theme="{Binding Theme}"
+                            my:ThemeAssist.Role="{Binding Role}"
+                            my:ItemsAssist.Role="{Binding ItemsRole}"
+                            my:ClassesAssist.Classes="{Binding Classes}"
+                            MaxWidth="500">
+                    <TabItem Header="Tab 1">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Tab 2">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Tab 3">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Tab 4">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-            <ctrl:ControlThemeViewer.CustomContent>
-                <StackPanel Spacing="20" Margin="20">
-                    <HeaderedContentControl Header="Many Tabs" Background="Transparent">
-                        <TabControl MaxWidth="500">
-                            <TabItem Header="Tab 1"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 2"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 3"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 4"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 5"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 6"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 7"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 8"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 9"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 10"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>  
-                            <TabItem Header="Tab 11"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 12"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 13"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 14"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 15"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 16"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 17"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 18"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 19"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                            <TabItem Header="Tab 20"><ScrollViewer HorizontalScrollBarVisibility="Auto"><samples:LargeContent1 BorderBrush="{m:RandomBrush}" /></ScrollViewer></TabItem>
-                        </TabControl>
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ctrl:ControlThemeViewer.CustomContent>
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <ListBox Name="TabPlacement" my:FormItem.Label="{my:LocObject Layout}" SelectedValue="{x:Static Dock.Top}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem ToolTip.Tip="{my:Loc Left}" Content="{my:Icon DockLeft}" DataContext="{x:Static Dock.Left}" />
+                    <ListBoxItem ToolTip.Tip="{my:Loc Bottom}" Content="{my:Icon DockBottom}" DataContext="{x:Static Dock.Bottom}" />
+                    <ListBoxItem ToolTip.Tip="{my:Loc Right}" Content="{my:Icon DockRight}" DataContext="{x:Static Dock.Right}" />
+                    <ListBoxItem ToolTip.Tip="{my:Loc Top}" Content="{my:Icon DockTop}" DataContext="{x:Static Dock.Top}" />
+                </ListBox>
+            </my:Form>
+        </v:ControlCatalogView.Settings>
 
-        </ctrl:ControlThemeViewer>
+    </v:ControlCatalogView>
 
-    </DockPanel>
 </pages:Page>

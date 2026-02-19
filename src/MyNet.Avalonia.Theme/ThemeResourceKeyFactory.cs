@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme;
@@ -59,6 +60,31 @@ public static class ThemeResourceKeyFactory
     public const string ThemeKey = "Theme";
 
     /// <summary>
+    /// The key for surface resources.
+    /// </summary>
+    public const string SurfaceKey = "Surface";
+
+    /// <summary>
+    /// The key for control resources.
+    /// </summary>
+    public const string ControlKey = "Control";
+
+    /// <summary>
+    /// The key for surface inverse resources.
+    /// </summary>
+    public const string InverseSurfaceKey = "Surface.Inverse";
+
+    /// <summary>
+    /// The key for foreground inverse resources.
+    /// </summary>
+    public const string InverseForegroundKey = "Foreground.Inverse";
+
+    /// <summary>
+    /// Represents the resource key for the primary foreground color.
+    /// </summary>
+    private const string PrimaryForeground = "Foreground.Primary";
+
+    /// <summary>
     /// Gets a resource key using the specified type and name.
     /// </summary>
     /// <param name="type">The resource type (e.g., Type, Brush).</param>
@@ -108,4 +134,33 @@ public static class ThemeResourceKeyFactory
     /// <param name="type">The resource type.</param>
     /// <returns>The formatted pattern string.</returns>
     public static string Pattern(string type) => BuildResourceKey(type, "{0}");
+
+    /// <summary>
+    /// Determines the appropriate contrasted color for a given color key based on theme conventions.
+    /// </summary>
+    /// <param name="colorKey">The color key to find a contrasted color for.</param>
+    /// <returns>The contrasted color if found; otherwise, null.</returns>
+    public static string? ContrastedColor(string colorKey)
+    {
+        // Define the contrasted color mappings
+        var contrastedColorKey = colorKey switch
+        {
+            // Surface.Inverse uses Foreground.Inverse as contrast
+            InverseSurfaceKey => InverseForegroundKey,
+
+            // Foreground.Inverse uses Foreground.Primary for contrast
+            InverseForegroundKey => PrimaryForeground,
+
+            // All other Surface levels use Foreground.Primary
+            var k when k.StartsWith($"{SurfaceKey}.", StringComparison.OrdinalIgnoreCase) => PrimaryForeground,
+
+            // Control borders might need foreground for contrast
+            var k when k.StartsWith($"{ControlKey}.", StringComparison.OrdinalIgnoreCase) => PrimaryForeground,
+
+            // Overlay and other elements has no specified contrasted color
+            _ => null
+        };
+
+        return !string.IsNullOrEmpty(contrastedColorKey) ? Color(contrastedColorKey) : null;
+    }
 }

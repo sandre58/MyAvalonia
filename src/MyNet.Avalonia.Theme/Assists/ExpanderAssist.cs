@@ -32,4 +32,26 @@ public static class ExpanderAssist
     public static ControlTheme GetButtonTheme(StyledElement element) => element.GetValue(ButtonThemeProperty);
 
     #endregion
+
+    #region IsExpandable
+
+    /// <summary>
+    /// Provides IsExpandable Property for attached Expander element to control whether the expander can be collapsed/expanded.
+    /// </summary>
+    public static readonly AttachedProperty<bool> IsExpandableProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("IsExpandable", typeof(ExpanderAssist), defaultValue: true);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="IsExpandableProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="IsExpandableProperty"/>.</param>
+    public static void SetIsExpandable(StyledElement element, bool value) => element.SetValue(IsExpandableProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="IsExpandableProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static bool GetIsExpandable(StyledElement element) => element.GetValue(IsExpandableProperty);
+
+    #endregion
 }

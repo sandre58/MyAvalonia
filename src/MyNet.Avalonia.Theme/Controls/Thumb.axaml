@@ -1,0 +1,119 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    <Styles.Resources>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- THUMB BORDER THEME                                        -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="MyNet.Theme.Thumb.Border" TargetType="{x:Type Thumb}">
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="BorderThickness" Value="0" />
+
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=Control}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:ThemeRole Primary, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="Transparent" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeRole Primary, Opacity=Focus}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="Transparent" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Panel Name="PART_RootPanel">
+
+                            <Border Name="PART_MainBorder"
+                                    my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding CornerRadius}" />
+
+                            <Border Name="PART_HoverBorder"
+                                    Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                    BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                            <Border Name="PART_ActiveBorder"
+                                    Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                                    BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    Theme="{StaticResource MyNet.Theme.Border.State}" />
+                        </Panel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <!-- Hover -->
+            <Style Selector="^:not(:disabled):pointerover">
+                <Style Selector="^ /template/ Border#PART_HoverBorder">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Style>
+
+            <!-- Active -->
+            <Style Selector="^:pressed">
+                <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Style>
+        </ControlTheme>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- THUMB ELLIPSE THEME                                       -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <ControlTheme x:Key="MyNet.Theme.Thumb.Ellipse" TargetType="Thumb" BasedOn="{StaticResource MyNet.Theme.Thumb.Border}">
+            <Setter Property="Template">
+                <ControlTemplate TargetType="Thumb">
+                    <Panel Name="PART_RootPanel">
+
+                        <Border Name="PART_ShadowBorder"
+                                IsHitTestVisible="False"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{StaticResource MyNet.Corners.Round}"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}" />
+
+                        <Ellipse Name="PART_MainEllipse"
+                                 Fill="{TemplateBinding Background}"
+                                 Stroke="{TemplateBinding BorderBrush}"
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
+
+                        <Ellipse Name="PART_HoverEllipse"
+                                 Fill="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                 Stroke="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
+                                 Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
+
+                        <Ellipse Name="PART_ActiveEllipse"
+                                 Fill="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                                 Stroke="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
+                                 Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
+                    </Panel>
+                </ControlTemplate>
+            </Setter>
+            <!-- Hover -->
+            <Style Selector="^:not(:disabled):pointerover">
+                <Style Selector="^ /template/ Ellipse#PART_HoverEllipse">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Style>
+
+            <!-- Active -->
+            <Style Selector="^:pressed">
+                <Style Selector="^ /template/ Ellipse#PART_ActiveEllipse">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Style>
+        </ControlTheme>
+
+    </Styles.Resources>
+</Styles>

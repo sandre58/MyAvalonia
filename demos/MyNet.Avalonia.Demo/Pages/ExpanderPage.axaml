@@ -5,97 +5,66 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:ExpanderPageViewModel"
+            Name="Root"
             mc:Ignorable="d">
 
-    <DockPanel>
+    <v:ControlCatalogView>
 
-        <!-- Settings -->
-        <HeaderedContentControl Classes="Settings" DockPanel.Dock="Right">
-            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                <StackPanel>
-                    <UniformGrid Rows="1">
-                        <Button Name="Expand"
-                                HorizontalAlignment="Stretch"
-                                my:IconAssist.Icon="{my:Icon ArrowExpand}"
-                                Click="Expand_Click"
-                                BorderThickness="0"
-                                Content="{my:LocTextBlock Expand}"
-                                CornerRadius="3 0 0 3" />
-                        <Button Name="Collapse"
-                                HorizontalAlignment="Stretch"
-                                my:IconAssist.Icon="{my:Icon ArrowCollapse}"
-                                Click="Collapse_Click"
-                                BorderThickness="0"
-                                Content="{my:LocTextBlock Collapse}"
-                                CornerRadius="0" />
-                    </UniformGrid>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock Direction}">
-                        <ListBox Name="Direction" SelectedIndex="0">
-                            <ListBoxItem Content="{my:Icon ChevronDown}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
-                            <ListBoxItem Content="{my:Icon ChevronUp}" ToolTip.Tip="{my:LocTextBlock Top}" />
-                            <ListBoxItem Content="{my:Icon ChevronLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                            <ListBoxItem Content="{my:Icon ChevronRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock IconLayout}">
-                        <ListBox Name="IconLayout" SelectedIndex="0">
-                            <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:LocTextBlock None}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:LocTextBlock Top}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Classes="Watermark" Header="{my:LocTextBlock HeaderLayout}">
-                        <ListBox Name="HeaderAlignment" SelectedIndex="0">
-                            <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:LocTextBlock Left}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:LocTextBlock Right}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:LocTextBlock Top}" />
-                            <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:LocTextBlock Bottom}" />
-                            <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:LocTextBlock Center}" />
-                        </ListBox>
-                    </HeaderedContentControl>
-                </StackPanel>
-            </ScrollViewer>
-        </HeaderedContentControl>
+        <v:ControlCatalogView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
+                <Expander Theme="{Binding Appearance.ActiveTheme}"
+                          my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                          my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                          my:IconAssist.Icon="{Binding IconProvider.Icon}"
+                          Width="{Binding #Root.DataContext.Width}"
+                          Height="{Binding #Root.DataContext.Height}"
+                          MaxWidth="300"
+                          IsExpanded="True"
+                          Header="{Binding ContentProvider.Content}"
+                          HorizontalAlignment="{Binding #Root.DataContext.HorizontalAlignment}"
+                          VerticalAlignment="{Binding #Root.DataContext.VerticalAlignment}"
+                          ExpandDirection="{Binding #Root.DataContext.ExpandDirection}">
+                    <TextBlock Text="{m:RandomText MinWords=10, MaxWords=30, MinSentences=3, MaxSentences=4}" TextWrapping="Wrap" TextAlignment="Justify" />
+                </Expander>
+            </DataTemplate>
+        </v:ControlCatalogView.PlaygroundControlTemplate>
 
-        <!-- ControlThemeViewer -->
-        <ctrl:ControlThemeViewer ItemsSource="{Binding ControlThemes}"
-                                 MinItemWidth="320"
-                                 MinItemHeight="320"
-                                 IsActive="{Binding IsActive}">
+        <v:ControlCatalogView.ThemeControlTemplate>
+            <DataTemplate x:DataType="c:ControlDefinition">
+                <Expander Theme="{Binding Theme}"
+                          my:ThemeAssist.Role="{Binding Role}"
+                          my:ClassesAssist.Classes="{Binding Classes}"
+                          Width="300"
+                          MaxWidth="300"
+                          IsExpanded="True"
+                          Header="{Binding Converter={x:Static c:ContentConverter.Default}}">
+                    <TextBlock Text="{m:RandomText MinWords=10, MaxWords=30, MinSentences=3, MaxSentences=4}" TextWrapping="Wrap" TextAlignment="Justify" />
+                </Expander>
+            </DataTemplate>
+        </v:ControlCatalogView.ThemeControlTemplate>
 
-            <!-- Template for standard controls -->
-            <ctrl:ControlThemeViewer.ControlTemplate>
-                <DataTemplate x:DataType="ctrl:ControlDescription">
-                    <Expander Theme="{Binding Theme}"
-                              my:ThemeAssist.Role="{Binding Role}"
-                              b:SettingsBehavior.ExpandDirection="{Binding #Direction.SelectedIndex}"
-                              b:SettingsBehavior.IconLayout="{Binding #IconLayout.SelectedIndex}"
-                              b:SettingsBehavior.HeaderAlignmentClass="{Binding #HeaderAlignment.SelectedIndex}"
-                              my:ClassesAssist.Classes="{Binding Classes}"
-                              Width="300"
-                              MaxWidth="300"
-                              IsExpanded="{m:RandomBool}"
-                              ToolTip.Tip="{Binding Content}">
-                        <Expander.Header>
-                            <MultiBinding Converter="{x:Static c:ContentConverter.Default}">
-                                <Binding Path="ContentType" />
-                                <Binding Path="Content" />
-                            </MultiBinding>
-                        </Expander.Header>
-                        <TextBlock Text="{m:RandomText MinWords=10, MaxWords=30, MinSentences=3, MaxSentences=4}" TextWrapping="Wrap" TextAlignment="Justify" />
-                    </Expander>
-                </DataTemplate>
-            </ctrl:ControlThemeViewer.ControlTemplate>
+        <v:ControlCatalogView.Settings>
+            <my:Form>
+                <ListBox my:FormItem.Label="{my:LocObject Direction}" SelectedValue="{Binding #Root.DataContext.ExpandDirection}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem Content="{my:Icon ChevronDown}" ToolTip.Tip="{my:Loc Bottom}" DataContext="{x:Static ExpandDirection.Down}" />
+                    <ListBoxItem Content="{my:Icon ChevronUp}" ToolTip.Tip="{my:Loc Top}" DataContext="{x:Static ExpandDirection.Up}" />
+                    <ListBoxItem Content="{my:Icon ChevronLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="{x:Static ExpandDirection.Left}" />
+                    <ListBoxItem Content="{my:Icon ChevronRight}" ToolTip.Tip="{my:Loc Right}" DataContext="{x:Static ExpandDirection.Right}" />
+                </ListBox>
+                <ListBox my:FormItem.Label="{my:LocObject HeaderPosition}" SelectedValue="{Binding #Root.DataContext.HeaderAlignmentClassProvider.SelectedClass}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                    <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="align-header-left" />
+                    <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:Loc Center}" DataContext="align-header-center-middle" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:Loc Right}" DataContext="align-header-right" />
+                </ListBox>
+            </my:Form>
+        </v:ControlCatalogView.Settings>
 
-        </ctrl:ControlThemeViewer>
-
-    </DockPanel>
+    </v:ControlCatalogView>
 </pages:Page>

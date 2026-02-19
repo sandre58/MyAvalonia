@@ -1,24 +1,36 @@
-<Styles x:Class="MyNet.Avalonia.Theme.MyTheme"
+﻿<Styles x:Class="MyNet.Avalonia.Theme.MyTheme"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:themes="using:MyNet.Avalonia.Theme.Themes">
     <Styles.Resources>
         <ResourceDictionary>
-            
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceInclude x:Key="Dark" Source="avares://MyNet.Avalonia.Theme/Themes/Dark.axaml" />
                 <ResourceInclude x:Key="Light" Source="avares://MyNet.Avalonia.Theme/Themes/Light.axaml" />
+                <ResourceInclude x:Key="{x:Static themes:ThemeVariantProvider.DarkBlue}" Source="avares://MyNet.Avalonia.Theme/Themes/DarkBlue.axaml" />
                 <ResourceInclude x:Key="{x:Static themes:ThemeVariantProvider.HighContrast}" Source="avares://MyNet.Avalonia.Theme/Themes/HighContrast.axaml" />
             </ResourceDictionary.ThemeDictionaries>
-
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Tokens/_index.axaml" />
-                <ResourceInclude Source="avares://MyNet.Avalonia.Theme/ResourceDictionaries/_index.axaml" />
-                <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/_index.axaml" />
-            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>
 
-    <!-- Styles -->
-    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Styles/_index.axaml" />
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- 1. TOKENS - Design tokens (values)                         -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Tokens/_index.axaml" />
+    
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- 2. FOUNDATIONS - Resources only (DataTemplates, Icons)     -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/_resources.axaml" />
+    
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- 3. CONTROLS - Control themes and variants                  -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Controls/_index.axaml" />
+    
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- 4. FOUNDATIONS - Utility styles (loaded AFTER controls)    -->
+    <!-- These styles override control defaults                     -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/_styles.axaml" />
 </Styles>

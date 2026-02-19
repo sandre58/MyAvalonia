@@ -1,0 +1,22 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:ClassModifier="internal">
+    
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- UTILITY STYLES                                             -->
+    <!-- These will be loaded AFTER Controls to override defaults   -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/Alignment.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/Focus.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/Iconography.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/Iconography.Sizes.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/Layout.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/Opacity.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/Shadow.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/Shape.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/Sizing.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/States.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/Typography.axaml" />
+    <StyleInclude Source="avares://MyNet.Avalonia.Theme/Foundations/Variants.axaml" />
+    
+</Styles>

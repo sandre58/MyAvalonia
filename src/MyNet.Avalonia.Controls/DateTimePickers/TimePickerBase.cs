@@ -37,13 +37,13 @@ public abstract class TimePickerBase : TemplatedControl
     public static readonly StyledProperty<bool> IsReadOnlyProperty = AvaloniaProperty.Register<TimePickerBase, bool>(
         nameof(IsReadOnly));
 
-    public static readonly StyledProperty<string?> WatermarkProperty = AvaloniaProperty.Register<TimePickerBase, string?>(
-nameof(Watermark));
+    public static readonly StyledProperty<string?> PlaceholderTextProperty = AvaloniaProperty.Register<TimePickerBase, string?>(
+nameof(PlaceholderText));
 
-    public string? Watermark
+    public string? PlaceholderText
     {
-        get => GetValue(WatermarkProperty);
-        set => SetValue(WatermarkProperty, value);
+        get => GetValue(PlaceholderTextProperty);
+        set => SetValue(PlaceholderTextProperty, value);
     }
 
     public bool IsReadOnly

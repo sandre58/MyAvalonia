@@ -9,21 +9,53 @@ using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
 using Avalonia.Collections;
+using MyNet.Avalonia.Extensions;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
 public static class ClassesAssist
 {
+    public static readonly AttachedProperty<string?> AddClassesProperty = AvaloniaProperty.RegisterAttached<StyledElement, string?>("AddClasses", typeof(ClassesAssist));
+
     public static readonly AttachedProperty<object> ClassesProperty = AvaloniaProperty.RegisterAttached<StyledElement, object>("Classes", typeof(ClassesAssist));
 
     public static readonly AttachedProperty<StyledElement> ClassSourceProperty = AvaloniaProperty.RegisterAttached<StyledElement, StyledElement>("ClassSource", typeof(ClassesAssist));
 
     static ClassesAssist()
     {
+        _ = AddClassesProperty.Changed.AddClassHandler<StyledElement>(OnAddClassesChanged);
         _ = ClassesProperty.Changed.AddClassHandler<StyledElement>(OnClassesChanged);
         _ = ClassSourceProperty.Changed.AddClassHandler<StyledElement>(OnClassSourceChanged);
     }
+
+    public static void SetClasses(AvaloniaObject obj, object value) => obj.SetValue(ClassesProperty, value);
+
+    public static object GetClasses(AvaloniaObject obj) => obj.GetValue(ClassesProperty);
+
+    private static void OnClassesChanged(StyledElement sender, AvaloniaPropertyChangedEventArgs value)
+    {
+        var classes = value.NewValue is IEnumerable<string> classesEnumerable ? classesEnumerable.ToArray() : (value.NewValue as string)?.Split([' '], StringSplitOptions.RemoveEmptyEntries);
+        if (classes is null) return;
+        var removeNonPseudoClasses = sender.Classes.Where(c => !c.StartsWith(':') && !classes.Contains(c)).ToList();
+        removeNonPseudoClasses.ForEach(x => sender.Classes.Set(x, false));
+        classes.ForEach(x => sender.Classes.Set(x, true));
+    }
+
+    public static void SetAddClasses(AvaloniaObject obj, string? value) => obj.SetValue(AddClassesProperty, value);
+
+    public static string? GetAddClasses(AvaloniaObject obj) => obj.GetValue(AddClassesProperty);
+
+    private static void OnAddClassesChanged(StyledElement sender, AvaloniaPropertyChangedEventArgs value)
+    {
+        if (value.NewValue is not string classes) return;
+
+        sender.AddClasses(classes);
+    }
+
+    public static void SetClassSource(StyledElement obj, StyledElement value) => obj.SetValue(ClassSourceProperty, value);
+
+    public static StyledElement GetClassSource(StyledElement obj) => obj.GetValue(ClassSourceProperty);
 
     private static void OnClassSourceChanged(StyledElement arg1, AvaloniaPropertyChangedEventArgs arg2)
     {
@@ -41,19 +73,4 @@ public static class ClassesAssist
         var nonPseudoClasses = classes.Where(c => !c.StartsWith(':'));
         target.Classes.AddRange(nonPseudoClasses);
     }
-
-    public static void SetClasses(AvaloniaObject obj, object value) => obj.SetValue(ClassesProperty, value);
-
-    public static object GetClasses(AvaloniaObject obj) => obj.GetValue(ClassesProperty);
-
-    private static void OnClassesChanged(StyledElement sender, AvaloniaPropertyChangedEventArgs value)
-    {
-        var classes = value.NewValue is IEnumerable<string> classesEnumerable ? classesEnumerable.ToArray() : (value.NewValue as string)?.Split([' '], StringSplitOptions.RemoveEmptyEntries);
-        if (classes is null) return;
-        classes.ForEach(x => sender.Classes.Set(x, true));
-    }
-
-    public static void SetClassSource(StyledElement obj, StyledElement value) => obj.SetValue(ClassSourceProperty, value);
-
-    public static StyledElement GetClassSource(StyledElement obj) => obj.GetValue(ClassSourceProperty);
 }

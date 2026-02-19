@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Avalonia.Controls;
 using Avalonia.Interactivity;
+using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extensions;
 
 namespace MyNet.Avalonia.Demo.Pages;
@@ -14,5 +14,5 @@ internal sealed partial class BannerPage : Page
 {
     public BannerPage() => InitializeComponent();
 
-    private void Restore_Click(object? sender, RoutedEventArgs e) => this.ExecuteOnChildren<CheckBox>(x => x.IsVisible = true);
+    private void Restore_Click(object? sender, RoutedEventArgs e) => Root.ExecuteOnChildren<Banner>(x => x.IsVisible = true);
 }

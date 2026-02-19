@@ -221,8 +221,6 @@ public class Calendar : TemplatedControl
         remove => RemoveHandler(DateSelectedEvent, value);
     }
 
-    public event EventHandler<CalendarDateButtonEventArgs>? DatePreviewed;
-
     public static readonly StyledProperty<DateTime?> SelectedDateProperty = AvaloniaProperty.Register<Calendar, DateTime?>(nameof(SelectedDate), defaultBindingMode: BindingMode.TwoWay);
 
     public DateTime? SelectedDate
@@ -1018,7 +1016,7 @@ public class Calendar : TemplatedControl
 
     private void OnDayPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
-        if (sender is not CalendarDayButton cell || AllowTapRangeSelection) return;
+        if (sender is not CalendarDayButton || AllowTapRangeSelection) return;
 
         OnDayButtonClick(sender, e);
     }

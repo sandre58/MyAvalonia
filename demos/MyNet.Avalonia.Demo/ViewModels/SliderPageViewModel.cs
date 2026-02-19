@@ -4,17 +4,47 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using Avalonia.Controls;
-using MyNet.Avalonia.Demo.Controls;
+using Avalonia.Layout;
+using DynamicData.Binding;
+using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class SliderPageViewModel : AutoBuildPageViewModel
+internal sealed class SliderPageViewModel : ControlCatalogViewModel
 {
     public SliderPageViewModel()
-        : base(nameof(Slider), [
-            new ControlThemeBuilder()
-            .AddThemeRoles()
-        ])
-    { }
+        : base(nameof(Slider),
+            [
+                new ControlThemeBuilder()
+                    .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-control")
+                    .AddDefaultRoles()
+            ]) => Disposables.AddRange(
+            [
+                this.WhenPropertyChanged(x => x.Orientation).Subscribe(_ => UpdateLatyout()),
+            ]);
+
+    private void UpdateLatyout()
+    {
+        switch (Orientation)
+        {
+            case Orientation.Horizontal:
+                Width = 250;
+                Height = 80;
+                break;
+
+            case Orientation.Vertical:
+                Width = 80;
+                Height = 250;
+                break;
+        }
+    }
+
+    public Orientation Orientation { get; set; } = Orientation.Horizontal;
+
+    public double Width { get; set; } = 250;
+
+    public double Height { get; set; } = 80;
 }

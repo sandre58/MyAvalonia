@@ -35,6 +35,8 @@ public sealed class DoubleToThicknessConverter : IValueConverter
     public static readonly DoubleToThicknessConverter Left = new(Mode.Left);
     public static readonly DoubleToThicknessConverter Right = new(Mode.Right);
     public static readonly DoubleToThicknessConverter Bottom = new(Mode.Bottom);
+    public static readonly DoubleToThicknessConverter Horizontal = new(Mode.Horizontal);
+    public static readonly DoubleToThicknessConverter Vertical = new(Mode.Vertical);
 
     private readonly Mode _mode;
 

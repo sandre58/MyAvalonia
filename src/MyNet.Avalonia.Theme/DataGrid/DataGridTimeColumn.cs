@@ -10,19 +10,17 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
-using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Converters;
 using MyNet.Humanizer;
-using MyNet.Utilities.Localization;
-using TimePicker = MyNet.Avalonia.Controls.TimePicker;
+using TimePickerEx = MyNet.Avalonia.Controls.TimePickerEx;
 
 namespace MyNet.Avalonia.Theme.DataGrid;
 
-public class DataGridTimeColumn : DataGridBoundColumn<TimePicker, ContentControl>
+public class DataGridTimeColumn : DataGridBoundColumn<TimePickerEx, ContentControl>
 {
     public DataGridTimeColumn()
-        : base(TimePicker.SelectedValueProperty, ContentControl.ContentProperty)
+        : base(TimePickerEx.SelectedValueProperty, ContentControl.ContentProperty)
     {
         DisplayFormat = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern;
         PanelFormat = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Replace(":", " ", StringComparison.OrdinalIgnoreCase);
@@ -82,9 +80,9 @@ public class DataGridTimeColumn : DataGridBoundColumn<TimePicker, ContentControl
         DataGridHelper.SynchronizeColumnProperty(this, control, DisplayFormatProperty);
     }
 
-    protected override void ResetValue(TimePicker control, object uneditedValue) => control.SelectedValue = (TimeSpan?)uneditedValue;
+    protected override void ResetValue(TimePickerEx control, object uneditedValue) => control.SelectedValue = (TimeSpan?)uneditedValue;
 
-    protected override object? GetValue(TimePicker control) => control.SelectedValue;
+    protected override object? GetValue(TimePickerEx control) => control.SelectedValue;
 
     private void SynchronizeDataTemplate(Control element)
     {

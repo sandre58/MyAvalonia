@@ -1,0 +1,25 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <Style Selector=":is(Visual)">
+
+        <Style Selector="^.icon-left">
+            <Setter Property="my:IconAssist.Alignment" Value="Left" />
+        </Style>
+
+        <Style Selector="^.icon-top">
+            <Setter Property="my:IconAssist.Alignment" Value="Top" />
+        </Style>
+
+        <Style Selector="^.icon-right">
+            <Setter Property="my:IconAssist.Alignment" Value="Right" />
+        </Style>
+
+        <Style Selector="^.icon-bottom">
+            <Setter Property="my:IconAssist.Alignment" Value="Bottom" />
+        </Style>
+
+    </Style>
+
+</Styles>

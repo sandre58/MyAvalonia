@@ -54,8 +54,7 @@ public class ClockTicks : Control
         set => SetValue(MinuteTickForegroundProperty, value);
     }
 
-    public static readonly StyledProperty<double> HourTickLengthProperty = AvaloniaProperty.Register<ClockTicks, double>(
-        nameof(HourTickLength), 10);
+    public static readonly StyledProperty<double> HourTickLengthProperty = AvaloniaProperty.Register<ClockTicks, double>(nameof(HourTickLength), 10);
 
     public double HourTickLength
     {
@@ -90,7 +89,7 @@ public class ClockTicks : Control
         set => SetValue(MinuteTickWidthProperty, value);
     }
 
-    static ClockTicks() => AffectsRender<ClockTicks>(ShowHourTicksProperty);
+    static ClockTicks() => AffectsRender<ClockTicks>(ShowHourTicksProperty, HourTickForegroundProperty, HourTickLengthProperty, HourTickWidthProperty, ShowMinuteTicksProperty, MinuteTickForegroundProperty, MinuteTickLengthProperty, MinuteTickWidthProperty);
 
     public ClockTicks() => ActualThemeVariantChanged += (_, _) => InvalidateVisual();
 

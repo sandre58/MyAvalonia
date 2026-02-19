@@ -3,66 +3,62 @@
                     x:ClassModifier="internal"
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
-    <!-- Application -->
-    <Color x:Key="MyNet.Color.Application.Background">#EBEBEB</Color>
-    <Color x:Key="MyNet.Color.Application.Foreground">#242424</Color>
-
     <!-- Surfaces -->
-    <Color x:Key="MyNet.Color.Surface.Background">#F6F6F6</Color>
-    <Color x:Key="MyNet.Color.Surface.Border">#DADADA</Color>
+    <Color x:Key="MyNet.Color.Surface.Level0">#FFFFFF</Color> <!-- Headers -->
+    <Color x:Key="MyNet.Color.Surface.Level1">#FFFFFF</Color> <!-- Application -->
+    <Color x:Key="MyNet.Color.Surface.Level2">#F3F3F3</Color> <!-- Popup, Dialog -->
+    <Color x:Key="MyNet.Color.Surface.Level3">#FBFBFB</Color> <!-- Container -->
+    <Color x:Key="MyNet.Color.Surface.Level4">#FDFDFD</Color> <!-- Control -->
+    <Color x:Key="MyNet.Color.Surface.Level5">#EEEEEE</Color> <!-- Container secondary -->
+    <Color x:Key="MyNet.Color.Surface.Inverse">#454545</Color> <!-- Tooltip -->
+    <Color x:Key="MyNet.Color.Surface.Border">#CCCCCC</Color>
 
-    <!-- Overlay -->
-    <Color x:Key="MyNet.Color.Overlay.Background">#22000000</Color>
+    <!-- Divider -->
+    <Color x:Key="MyNet.Color.Divider">#CCCCCC</Color>
 
-    <!-- Dialog -->
-    <Color x:Key="MyNet.Color.Dialog.Background">#f6f6f6</Color>
-
-    <!-- Popup -->
-    <Color x:Key="MyNet.Color.Popup.Background">#FAFAFA</Color>
-    <Color x:Key="MyNet.Color.Popup.Border">Transparent</Color>
-    <Color x:Key="MyNet.Color.Popup.Foreground">#242424</Color>
-
-    <!-- ToolTip -->
-    <Color x:Key="MyNet.Color.ToolTip.Background">#41464C</Color>
-    <Color x:Key="MyNet.Color.ToolTip.Border">Transparent</Color>
+    <!-- Foreground -->
+    <Color x:Key="MyNet.Color.Foreground.Primary">#121212</Color>
+    <Color x:Key="MyNet.Color.Foreground.Secondary">#404040</Color>
+    <Color x:Key="MyNet.Color.Foreground.Tertiary">#606060</Color>
+    <Color x:Key="MyNet.Color.Foreground.Inverse">#FFFFFF</Color>
 
     <!-- Controls -->
-    <Color x:Key="MyNet.Color.Control.Background">#E0E0E0</Color>
-    <Color x:Key="MyNet.Color.Control.Background.Light">#E2E2E2</Color>
-    <Color x:Key="MyNet.Color.Control.Border">#C5C5C5</Color>
-    <Color x:Key="MyNet.Color.Control.Border.Hover">#999999</Color>
-    <Color x:Key="MyNet.Color.Control.Border.Focus">#646464</Color>
+    <Color x:Key="MyNet.Color.Control.Border">#909090</Color>
+    <Color x:Key="MyNet.Color.Control.Border.Hover">#707070</Color>
+    <Color x:Key="MyNet.Color.Control.Border.Focus">#60A5FA</Color>
+
+    <!-- Overlay -->
+    <Color x:Key="MyNet.Color.Overlay.Background">#000000</Color>
 
     <!-- Specifics -->
-    <Color x:Key="MyNet.Color.Button.Close.Hover">#D52515</Color>
+    <Color x:Key="MyNet.Color.Button.Close.Hover">#FF5555</Color>
 
     <!-- Validation -->
-    <Color x:Key="MyNet.Color.Validation.Error">#A1260D</Color>
+    <Color x:Key="MyNet.Color.Validation.Error">#FF5555</Color>
 
     <!-- Roles -->
-    <Color x:Key="MyNet.Color.Dark">#CACACA</Color>
-    <Color x:Key="MyNet.Color.Success">#388A34</Color>
-    <Color x:Key="MyNet.Color.Error">#A1260D</Color>
-    <Color x:Key="MyNet.Color.Warning">#DD6E00</Color>
-    <Color x:Key="MyNet.Color.Information">#1BA1E2</Color>
-    <Color x:Key="MyNet.Color.Neutral">#828282</Color>
+    <Color x:Key="MyNet.Color.Success">#28A745</Color>
+    <Color x:Key="MyNet.Color.Error">#DC3545</Color>
+    <Color x:Key="MyNet.Color.Warning">#FFC107</Color>
+    <Color x:Key="MyNet.Color.Information">#17A2B8</Color>
+    <Color x:Key="MyNet.Color.Neutral">#808080</Color>
 
     <!-- CodeBlock -->
-    <Color x:Key="MyNet.Color.CodeBlock.Unknown">DarkSlateGray</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Unknown">#505050</Color>
     <Color x:Key="MyNet.Color.CodeBlock.Space">Transparent</Color>
-    <Color x:Key="MyNet.Color.CodeBlock.Comment">DarkGreen</Color>
-    <Color x:Key="MyNet.Color.CodeBlock.Tag">Lime</Color>
-    <Color x:Key="MyNet.Color.CodeBlock.Quote">RoyalBlue</Color>
-    <Color x:Key="MyNet.Color.CodeBlock.AttributeValue">RoyalBlue</Color>
-    <Color x:Key="MyNet.Color.CodeBlock.AttributeKey">CornflowerBlue</Color>
-    <Color x:Key="MyNet.Color.CodeBlock.Brace">Chocolate</Color>
-    <Color x:Key="MyNet.Color.CodeBlock.Entity">LightSeaGreen</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Quote">#AA5500</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Comment">#28A745</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Tag">#AA00AA</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.AttributeKey">#17A2B8</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.AttributeValue">#DD5555</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Brace">#AA00AA</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Entity">#DC3545</Color>
 
     <!-- Gender -->
-    <Color x:Key="MyNet.Color.Gender.Female">#c90076</Color>
-    <Color x:Key="MyNet.Color.Gender.Male">#2986cc</Color>
+    <Color x:Key="MyNet.Color.Gender.Female">#FF77AA</Color>
+    <Color x:Key="MyNet.Color.Gender.Male">#77AAFF</Color>
 
-    <!-- Opacity Levels -->
+    <!-- Opacity Levels (similaire au Dark) -->
     <sys:Double x:Key="MyNet.Opacity.High">0.7</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Medium">0.56</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Low">0.45</sys:Double>
@@ -73,4 +69,5 @@
     <sys:Double x:Key="MyNet.Opacity.Focus">0.16</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Hover">0.12</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Overlay">0.08</sys:Double>
+
 </ResourceDictionary>

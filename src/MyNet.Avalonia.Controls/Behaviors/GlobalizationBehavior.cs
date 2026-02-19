@@ -9,6 +9,7 @@ using Avalonia;
 using Avalonia.Controls;
 using MyNet.Avalonia.Extensions;
 using MyNet.Utilities;
+using MyNet.Utilities.DateTimes;
 using MyNet.Utilities.Localization;
 
 namespace MyNet.Avalonia.Controls.Behaviors;
@@ -60,23 +61,37 @@ public static class GlobalizationBehavior
 
     private static void UpdateControl(Control? element)
     {
-        if (element is global::Avalonia.Controls.TimePicker tp)
+        if (element is TimePicker tp)
             UpdateTimePicker(tp);
 
-        if (element is global::Avalonia.Controls.CalendarDatePicker calendarDatePicker)
+        if (element is TimePickerEx tpEx)
+            UpdateTimePickerEx(tpEx);
+
+        if (element is CalendarDatePicker calendarDatePicker)
             UpdateCalendarDatePicker(calendarDatePicker);
+
+        if (element is CalendarDatePickerEx calendarDatePickerEx)
+            UpdateCalendarDatePickerEx(calendarDatePickerEx);
 
         if (element is DatePicker datepicker)
             UpdateDatePicker(datepicker);
     }
 
-    private static void UpdateTimePicker(global::Avalonia.Controls.TimePicker timePicker) => timePicker.ClockIdentifier = UIContext.Globalization.Culture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? "24HourClock" : "12HourClock";
+    private static void UpdateTimePicker(TimePicker timePicker) => timePicker.ClockIdentifier = UIContext.Globalization.Culture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? "24HourClock" : "12HourClock";
 
-    private static void UpdateCalendarDatePicker(global::Avalonia.Controls.CalendarDatePicker calendarDatePicker)
+    private static void UpdateTimePickerEx(TimePickerEx timePicker)
+    {
+        timePicker.TimeFormat = UIContext.Globalization.Culture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? TimeFormat.TwentyFourHour : TimeFormat.TwelveHour;
+        timePicker.DisplayFormat = timePicker.ShowSeconds ? UIContext.Globalization.Culture.DateTimeFormat.LongTimePattern : UIContext.Globalization.Culture.DateTimeFormat.ShortTimePattern;
+    }
+
+    private static void UpdateCalendarDatePicker(CalendarDatePicker calendarDatePicker)
     {
         calendarDatePicker.SelectedDateFormat = CalendarDatePickerFormat.Custom;
         calendarDatePicker.CustomDateFormatString = GlobalizationService.Current.Culture.DateTimeFormat.ShortDatePattern;
     }
+
+    private static void UpdateCalendarDatePickerEx(CalendarDatePickerEx calendarDatePicker) => calendarDatePicker.DisplayFormat = GlobalizationService.Current.Culture.DateTimeFormat.ShortDatePattern;
 
     private static void UpdateDatePicker(DatePicker datePicker)
     {

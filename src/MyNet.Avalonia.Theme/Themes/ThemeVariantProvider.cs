@@ -12,10 +12,15 @@ namespace MyNet.Avalonia.Theme.Themes;
 /// Provides theme variant definitions for the application, such as HighContrast.
 /// Used to register and identify custom or extended theme variants in the theming system.
 /// </summary>
-internal static class ThemeVariantProvider
+public static class ThemeVariantProvider
 {
     /// <summary>
-    /// Gets the HighContrast theme variant, based on the Dark theme variant.
+    /// Gets the high contrast theme variant, based on the Dark theme variant.
     /// </summary>
     public static readonly ThemeVariant HighContrast = new(nameof(HighContrast), ThemeVariant.Dark);
+
+    /// <summary>
+    /// Gets the dark blue theme variant, based on the Dark theme variant.
+    /// </summary>
+    public static readonly ThemeVariant DarkBlue = new(nameof(DarkBlue), ThemeVariant.Dark);
 }

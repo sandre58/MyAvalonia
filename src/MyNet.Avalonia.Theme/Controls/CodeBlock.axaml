@@ -1,0 +1,272 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <Styles.Resources>
+
+    <ControlTheme x:Key="{x:Type my:CodeBlock}" TargetType="my:CodeBlock">
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+        <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.TextField}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily.Code}" />
+        <Setter Property="my:TextFieldAssist.PlaceholderText" Value="{x:Static sys:String.Empty}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.TextField.Md}" />
+        <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.TextField.Md}" />
+        <Setter Property="FocusAdorner" Value="{x:Null}" />
+        <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
+        <Setter Property="my:IconAssist.Alignment" Value="Left" />
+        <Setter Property="my:IconAssist.Spacing" Value="{StaticResource MyNet.Spacing.Icon}" />
+        <Setter Property="my:IconAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+        <Setter Property="my:TextFieldAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
+        <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Inner.Md}" />
+        <Setter Property="my:TextFieldAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+        <Setter Property="my:TextFieldAssist.PlaceholderFontSize" Value="{Binding $self.FontSize}" />
+        <Setter Property="my:TextFieldAssist.FloatingScale" Value="0.75" />
+        <Setter Property="my:TextFieldAssist.FloatingOffset" Value="12" />
+        <Setter Property="my:ProxyBehavior.Enable" Value="True" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
+        <Setter Property="my:ClipboardAssist.Content" Value="{Binding $self.Content, Mode=OneWay}" />
+
+        <!-- Default Theme -->
+        <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
+        <Setter Property="Background" Value="{my:Theme Surface.Level4}" />
+        <Setter Property="BorderBrush" Value="{my:Theme Control.Border}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Foreground, Opacity=High}" />
+        <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Foreground, Opacity=High}" />
+        <Setter Property="my:TextFieldAssist.PlaceholderForeground" Value="{my:Foreground, Opacity=Medium}" />
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:Theme Control.Border.Hover}" />
+        <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:Foreground, Opacity=Focus}" />
+        <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeRole}" />
+        <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeRole}" />
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:CodeBlock">
+                <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
+                    <Panel Name="PART_RootPanel">
+
+                        <Border Name="PART_MainBorder"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+
+                        <Border Name="PART_HoverBorder"
+                                Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                        <Border Name="PART_ActiveBorder"
+                                Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                                BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                                <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto,Auto">
+
+                                    <!-- Icon -->
+                                    <ContentControl x:Name="PART_Icon"
+                                                    Grid.Column="0"
+                                                    Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
+                                                    VerticalAlignment="Stretch"
+                                                    Content="{TemplateBinding (my:IconAssist.Icon)}"
+                                                    ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                    Focusable="False"
+                                                    Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
+                                        <ContentControl.IsVisible>
+                                            <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </ContentControl.IsVisible>
+                                    </ContentControl>
+
+                                    <my:TextField Name="PART_TextField"
+                                                  Grid.Column="1"
+                                                  Padding="{TemplateBinding (my:TextFieldAssist.InnerPadding)}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
+                                                  FloatingOffset="{TemplateBinding (my:TextFieldAssist.FloatingOffset)}"
+                                                  FloatingScale="{TemplateBinding (my:TextFieldAssist.FloatingScale)}"
+                                                  InactiveForeground="{TemplateBinding (my:TextFieldAssist.PlaceholderForeground)}"
+                                                  InnerFontSize="{TemplateBinding (my:TextFieldAssist.InnerFontSize)}"
+                                                  InnerForeground="{TemplateBinding (my:TextFieldAssist.InnerForeground)}"
+                                                  InnerLeftContent="{TemplateBinding (my:TextFieldAssist.InnerLeftContent)}"
+                                                  InnerRightContent="{TemplateBinding (my:TextFieldAssist.InnerRightContent)}"
+                                                  Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
+                                                  UseFloatingPlaceholder="{TemplateBinding (my:TextFieldAssist.UseFloatingPlaceholder)}"
+                                                  PlaceholderText="{TemplateBinding (my:TextFieldAssist.PlaceholderText)}"
+                                                  PlaceholderFontSize="{TemplateBinding (my:TextFieldAssist.PlaceholderFontSize)}">
+
+                                        <!-- Text -->
+                                        <ScrollViewer Name="PART_ScrollViewer"
+                                                      AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
+                                                      ClipToBounds="True"
+                                                      HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                                                      IsScrollChainingEnabled="{TemplateBinding (ScrollViewer.IsScrollChainingEnabled)}"
+                                                      VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+                                            <ContentPresenter Name="PART_ContentPresenter"
+                                                              TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                                              TextElement.FontSize="{TemplateBinding FontSize}"
+                                                              TextElement.FontStyle="{TemplateBinding FontStyle}"
+                                                              TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                              TextElement.Foreground="{TemplateBinding Foreground}" />
+                                        </ScrollViewer>
+
+                                    </my:TextField>
+
+                                    <!-- Clipboard button -->
+                                    <Button Name="PART_ClipboardButton"
+                                            Grid.Column="2"
+                                            Classes="kind-tool is-clipboard is-stretch size-xs no-disablable"
+                                            CommandParameter="{TemplateBinding (my:ClipboardAssist.Content)}"
+                                            IsVisible="False" />
+                                </Grid>
+                            </my:Ripple>
+                        </Border>
+
+                        <!-- UnderText -->
+                        <Border Name="PART_BorderUnderText">
+                            <TextBlock Name="PART_UnderText"
+                                       Margin="0 0 0 -15"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Bottom"
+                                       FontSize="{TemplateBinding (my:TextFieldAssist.UnderFontSize)}"
+                                       FontStyle="{TemplateBinding (my:TextFieldAssist.UnderFontStyle)}"
+                                       FontWeight="{TemplateBinding (my:TextFieldAssist.UnderFontWeight)}"
+                                       Foreground="{TemplateBinding (my:TextFieldAssist.UnderForeground)}"
+                                       IsVisible="{Binding (my:TextFieldAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                       Text="{TemplateBinding (my:TextFieldAssist.UnderText)}" />
+                        </Border>
+                    </Panel>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- Layout -->
+            <Style Selector="^.icon-right, ^.button-right">
+                <Style Selector="^ /template/ ContentControl#PART_Icon">
+                    <Setter Property="Grid.Column" Value="3" />
+                </Style>
+            </Style>
+
+            <Style Selector="^.icon-right:not(.button-right) /template/ Grid#PART_Grid">
+                <Setter Property="Margin" Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.AddLeftToRight}}" />
+            </Style>
+
+            <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
+                <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Left}}" />
+            </Style>
+
+            <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
+                <Setter Property="Margin" Value="0" />
+            </Style>
+
+        <Style Selector="^[(my|TextFieldAssist.UseFloatingPlaceholder)=True]">
+            <Style Selector="^ /template/ my|TextField#PART_TextField">
+                <Setter Property="Margin" Value="{Binding (my:TextFieldAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
+            </Style>
+            <Style Selector="^ /template/ Button#PART_ClearButton">
+                <Setter Property="Padding" Value="{my:Thickness Sm}" />
+            </Style>
+        </Style>
+
+        <!-- With clipboard button -->
+        <Style Selector="^[(my|TextFieldAssist.ShowClipboardButton)=True]">
+            <Style Selector="^:not(:empty) /template/ Button#PART_ClipboardButton">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+        </Style>
+
+        <!-- Hover -->
+        <Style Selector="^:not(:disabled):not(:focus-within):pointerover">
+            <Style Selector="^ /template/ Border#PART_HoverBorder">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+
+        <!-- Focused -->
+        <Style Selector="^:focus-within">
+            <Setter Property="BorderThickness" Value="1" />
+
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+
+        <!-- Error -->
+        <Style Selector="^:error">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Validation.Error}" />
+
+            <Style Selector="^ /template/ my|Underline#PART_Underline">
+                <Setter Property="ActiveBrush" Value="{my:Theme Validation.Error}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#PART_BorderUnderText">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+        </Style>
+
+        <!-- Colors -->
+        <Style Selector="^[(my|ThemeAssist.Role)=Contrast]">
+            <Setter Property="Background" Value="{my:Foreground, Opacity=Overlay}" />
+            <Setter Property="BorderBrush" Value="{my:Foreground, Opacity=Focus}" />
+            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:Foreground, Opacity=Hover}" />
+        </Style>
+
+        <!-- Style -->
+        <Style Selector="^.Outlined">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="Transparent" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="Transparent" />
+            <Setter Property="my:InteractionAssist.RippleColor" Value="Transparent" />
+        </Style>
+
+
+        <Style Selector="^.variant-clean">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="Transparent" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="Transparent" />
+            <Setter Property="my:InteractionAssist.RippleColor" Value="Transparent" />
+        </Style>
+
+        <!-- Layouts -->
+        <Style Selector="^.Circle">
+            <Setter Property="Padding" Value="8 0 0 0" />
+            <Setter Property="my:TextFieldAssist.InnerPadding" Value="0 4 8 4" />
+        </Style>
+
+        <!-- Sizes -->
+        <Style Selector="^.Small">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.TextField.Sm}" />
+        </Style>
+
+        <Style Selector="^.Large">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.TextField.Lg}" />
+        </Style>
+    </ControlTheme>
+
+    </Styles.Resources>
+</Styles>

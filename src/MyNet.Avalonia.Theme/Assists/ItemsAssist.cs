@@ -5,15 +5,18 @@
 // -----------------------------------------------------------------------
 
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
-using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.Theme.Enums;
+using MyNet.Avalonia.Theme.Palettes;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
 public static class ItemsAssist
 {
+    static ItemsAssist() => RoleProperty.Changed.AddClassHandler<AvaloniaObject>(OnRoleChangedCallback);
+
     #region Background
 
     /// <summary>
@@ -388,6 +391,28 @@ public static class ItemsAssist
 
     #endregion
 
+    #region Spacing
+
+    /// <summary>
+    /// Provides Spacing Property for attached ItemsBehavior element.
+    /// </summary>
+    public static readonly AttachedProperty<double> SpacingProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("Spacing", typeof(ItemsAssist), 0.0d);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="SpacingProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="SpacingProperty"/>.</param>
+    public static void SetSpacing(StyledElement element, double value) => element.SetValue(SpacingProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="SpacingProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetSpacing(StyledElement element) => element.GetValue(SpacingProperty);
+
+    #endregion
+
     #region HorizontalAlignment
 
     /// <summary>
@@ -508,25 +533,78 @@ public static class ItemsAssist
 
     #endregion
 
-    #region Placement
+    #region IndicatorPlacement
 
     /// <summary>
-    /// Provides Placement Property for attached ItemsBehavior element.
+    /// Provides IndicatorPlacement Property for attached ItemsBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<Position> PlacementProperty = AvaloniaProperty.RegisterAttached<StyledElement, Position>("Placement", typeof(ItemsAssist), Position.Bottom);
+    public static readonly AttachedProperty<Dock> IndicatorPlacementProperty = AvaloniaProperty.RegisterAttached<StyledElement, Dock>("IndicatorPlacement", typeof(ItemsAssist), Dock.Bottom);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="PlacementProperty"/>.
-    /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="PlacementProperty"/>.</param>
-    public static void SetPlacement(StyledElement element, Position value) => element.SetValue(PlacementProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached  <see cref="PlacementProperty"/>.
+    /// Accessor for Attached  <see cref="IndicatorPlacementProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static Position GetPlacement(StyledElement element) => element.GetValue(PlacementProperty);
+    /// <param name="value">The value to set  <see cref="IndicatorPlacementProperty"/>.</param>
+    public static void SetIndicatorPlacement(StyledElement element, Dock value) => element.SetValue(IndicatorPlacementProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="IndicatorPlacementProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static Dock GetIndicatorPlacement(StyledElement element) => element.GetValue(IndicatorPlacementProperty);
+
+    #endregion
+
+    #region Role
+
+    /// <summary>
+    /// Defines the Role attached property for assigning a semantic color role to a control.
+    /// </summary>
+    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, ThemeRole>("Role", typeof(ItemsAssist), ThemeRole.Default);
+
+    /// <summary>
+    /// Gets the theme role for the specified control.
+    /// </summary>
+    /// <param name="element">The control to query.</param>
+    /// <returns>The assigned theme role.</returns>
+    public static ThemeRole GetRole(AvaloniaObject element) => element.GetValue(RoleProperty);
+
+    /// <summary>
+    /// Sets the theme role for the specified control.
+    /// </summary>
+    /// <param name="element">The control to update.</param>
+    /// <param name="value">The theme role to assign.</param>
+    public static void SetRole(AvaloniaObject element, ThemeRole value) => element.SetValue(RoleProperty, value);
+
+    private static void OnRoleChangedCallback(AvaloniaObject avaloniaObject, AvaloniaPropertyChangedEventArgs args)
+    {
+        if (avaloniaObject is StyledElement c)
+        {
+            SetHasRole(c, args.NewValue is ThemeRole role && role != ThemeRole.Default);
+        }
+    }
+
+    #endregion
+
+    #region HasRole
+
+    /// <summary>
+    /// Provides HasRole Property for attached ThemeAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<bool> HasRoleProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("HasRole", typeof(ItemsAssist));
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="HasRoleProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="HasRoleProperty"/>.</param>
+    private static void SetHasRole(StyledElement element, bool value) => element.SetValue(HasRoleProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="HasRoleProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static bool GetHasRole(StyledElement element) => element.GetValue(HasRoleProperty);
 
     #endregion
 }

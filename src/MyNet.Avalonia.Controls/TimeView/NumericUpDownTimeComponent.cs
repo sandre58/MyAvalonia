@@ -66,6 +66,4 @@ public sealed class NumericUpDownTimeComponent : NumericUpDown, IComponentTimeSe
     }
 
     #endregion
-
-
 }

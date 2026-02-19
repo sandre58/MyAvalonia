@@ -1,0 +1,193 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <Styles.Resources>
+
+        <!--  ==============================================  -->
+        <!--  PAGINATIONBUTTON THEME  -->
+        <!--  ==============================================  -->
+
+        <ControlTheme x:Key="{x:Type my:PaginationButton}" TargetType="my:PaginationButton" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Content" Value="{Binding $self.Page}" />
+            <Setter Property="Margin" Value="{my:Thickness Left=1, Right=1}" />
+            <Setter Property="Padding" Value="{my:Thickness Xs}" />
+            <Setter Property="MinWidth" Value="32" />
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="Background" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.Background)}" />
+            <Setter Property="BorderBrush" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.BorderBrush)}" />
+            <Setter Property="BorderThickness" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.BorderThickness)}" />
+            <Setter Property="Foreground" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.Foreground)}" />
+            <Setter Property="CornerRadius" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.CornerRadius)}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.HoverBackground)}" />
+            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.HoverBorderBrush)}" />
+            <Setter Property="my:InteractionAssist.HoverForeground" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.HoverForeground)}" />
+            <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.RippleColor)}" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.ActiveBackground)}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.ActiveBorderBrush)}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $parent[my:Pagination].(my:ItemsAssist.ActiveForeground)}" />
+
+            <Style Selector="^:left">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Template>
+                            <PathIcon Classes="size-sm" Data="{StaticResource MyNet.Geometry.DotsHorizontal}" />
+                        </Template>
+                    </Setter.Value>
+                </Setter>
+
+                <Style Selector="^:pointerover">
+                    <Setter Property="Content">
+                        <Setter.Value>
+                            <Template>
+                                <PathIcon Classes="size-sm" Data="{StaticResource MyNet.Geometry.ChevronDoubleLeft}" />
+                            </Template>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Style>
+
+            <Style Selector="^:right">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Template>
+                            <PathIcon Classes="size-sm" Data="{StaticResource MyNet.Geometry.DotsHorizontal}" />
+                        </Template>
+                    </Setter.Value>
+                </Setter>
+
+                <Style Selector="^:pointerover">
+                    <Setter Property="Content">
+                        <Setter.Value>
+                            <Template>
+                                <PathIcon Classes="size-sm" Data="{StaticResource MyNet.Geometry.ChevronDoubleRight}" />
+                            </Template>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Style>
+        </ControlTheme>
+
+        <!--  ==============================================  -->
+        <!--  DEFAULT PAGINATION THEME  -->
+        <!--  ==============================================  -->
+
+        <ControlTheme x:Key="{x:Type my:Pagination}" TargetType="my:Pagination">
+            <Setter Property="PageButtonTheme" Value="{StaticResource {x:Type my:PaginationButton}}" />
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+
+            <!-- Items -->
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
+
+            <Setter Property="Template">
+                <ControlTemplate TargetType="my:Pagination">
+                    <StackPanel Orientation="Horizontal">
+                        <my:PaginationButton Name="{x:Static my:Pagination.PartPreviousButton}"
+                                             Classes="size-sm"
+                                             Content="{my:Icon ChevronLeft}"
+                                             my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                             Theme="{TemplateBinding PageButtonTheme}"
+                                             ToolTip.Tip="{my:Loc PreviousPage}" />
+                        <StackPanel Name="{x:Static my:Pagination.PartButtonPanel}" Orientation="Horizontal" />
+                        <my:PaginationButton Name="{x:Static my:Pagination.PartNextButton}"
+                                             Classes="size-sm"
+                                             Content="{my:Icon ChevronRight}"
+                                             my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                             Theme="{TemplateBinding PageButtonTheme}"
+                                             ToolTip.Tip="{my:Loc NextPage}" />
+                        <NumericUpDown x:Name="{x:Static my:Pagination.PartQuickJumpInput}"
+                                       Width="65"
+                                       Margin="{my:Thickness Sm, Left}"
+                                       VerticalAlignment="Stretch"
+                                       VerticalContentAlignment="Center"
+                                       Classes="no-disablable"
+                                       my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                       InnerRightContent="{Binding PageCount, RelativeSource={RelativeSource Mode=TemplatedParent}, StringFormat='/ #'}"
+                                       IsVisible="{TemplateBinding ShowQuickJump}"
+                                       Maximum="{TemplateBinding PageCount, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                                       Minimum="1"
+                                       ShowButtonSpinner="False" />
+                        <DropDownButton Margin="{my:Thickness Sm, Left}"
+                                        VerticalAlignment="Stretch"
+                                        my:PopupBehavior.Placement="BottomEdgeAlignedLeft"
+                                        Classes="no-disablable"
+                                        my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                        Content="{TemplateBinding PageSize}"
+                                        FontSize="{StaticResource MyNet.Font.Size}"
+                                        IsVisible="{TemplateBinding ShowPageSizeSelector}">
+                            <DropDownButton.ContentTemplate>
+                                <DataTemplate DataType="{x:Type sys:Int32}">
+                                    <HeaderedContentControl Classes="kind-label position-right" Content="{Binding}" Header="{my:Loc ItemsByPage}" />
+                                </DataTemplate>
+                            </DropDownButton.ContentTemplate>
+                            <DropDownButton.Flyout>
+                                <MenuFlyout ItemsSource="{Binding $parent[my:Pagination].PageSizeOptions}">
+                                    <MenuFlyout.ItemContainerTheme>
+                                        <ControlTheme TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                            <Setter Property="Header" Value="{Binding DataType={x:Type sys:Int32}}" />
+                                            <Setter Property="CommandParameter" Value="{Binding DataType={x:Type sys:Int32}}" />
+                                            <Setter Property="Command" Value="{Binding $parent[my:Pagination].SetPageSizeCommand}" />
+                                        </ControlTheme>
+                                    </MenuFlyout.ItemContainerTheme>
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+        <!--  ==============================================  -->
+        <!--  COMPACT PAGINATION THEME  -->
+        <!--  ==============================================  -->
+
+        <ControlTheme x:Key="MyNet.Theme.Pagination.Compact" TargetType="{x:Type my:Pagination}" BasedOn="{StaticResource {x:Type my:Pagination}}">
+            <Setter Property="my:PaletteAssist.Primary" Value="{my:Theme Primary}" />
+            <Setter Property="DisplayCurrentPageInQuickJumper" Value="True" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="my:Pagination">
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Sm}">
+                        <my:PaginationButton Name="{x:Static my:Pagination.PartPreviousButton}"
+                                             Classes="size-sm"
+                                             Content="{my:Icon ChevronLeft}"
+                                             my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                             Theme="{TemplateBinding PageButtonTheme}"
+                                             ToolTip.Tip="{my:Loc PreviousPage}" />
+                        <NumericUpDown x:Name="{x:Static my:Pagination.PartQuickJumpInput}"
+                                       Width="65"
+                                       VerticalAlignment="Stretch"
+                                       VerticalContentAlignment="Center"
+                                       Classes="no-disablable"
+                                       my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                       InnerRightContent="{Binding PageCount, RelativeSource={RelativeSource Mode=TemplatedParent}, StringFormat='/ #'}"
+                                       Maximum="{TemplateBinding PageCount, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                                       Minimum="1"
+                                       ShowButtonSpinner="False"
+                                       Value="{Binding CurrentPage, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:IntToDecimalConverter.Default}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <my:PaginationButton Name="{x:Static my:Pagination.PartNextButton}"
+                                             Classes="size-sm"
+                                             my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                             Content="{my:Icon ChevronRight}"
+                                             Theme="{TemplateBinding PageButtonTheme}"
+                                             ToolTip.Tip="{my:Loc NextPage}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+    </Styles.Resources>
+
+</Styles>
