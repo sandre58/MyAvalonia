@@ -31,7 +31,7 @@ public sealed class CountConverter
         _parameter = parameter;
     }
 
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => _converter.Convert(value, targetType, _parameter, culture);
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => _converter.Convert(value, targetType, _parameter, culture);
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => _converter.ConvertBack(value, targetType, _parameter, culture);
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => _converter.ConvertBack(value, targetType, _parameter, culture);
 }

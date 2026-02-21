@@ -289,7 +289,7 @@
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
@@ -360,7 +360,7 @@
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />

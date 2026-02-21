@@ -35,7 +35,7 @@ public class Banner : HeaderedContentControl
     /// <summary>
     /// Provides Severity Property.
     /// </summary>
-    public static readonly StyledProperty<Severity> SeverityProperty = AvaloniaProperty.Register<Banner, Severity>(nameof(Severity), Severity.Custom);
+    public static readonly StyledProperty<Severity> SeverityProperty = AvaloniaProperty.Register<Banner, Severity>(nameof(Severity));
 
     /// <summary>
     /// Gets or sets the Severity property.

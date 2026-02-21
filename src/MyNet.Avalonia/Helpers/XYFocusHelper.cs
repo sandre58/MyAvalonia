@@ -23,7 +23,7 @@ public static class XYFocusHelper
         _ => throw new ArgumentOutOfRangeException(nameof(keyDeviceType), keyDeviceType, null)
     };
 
-    public static InputElement? FindXYSearchRoot(this InputElement visual, KeyDeviceType? keyDeviceType)
+    public static InputElement FindXYSearchRoot(this InputElement visual, KeyDeviceType? keyDeviceType)
     {
         var candidate = visual;
         var candidateParent = visual.FindAncestorOfType<InputElement>();

@@ -10,7 +10,6 @@
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
-            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
             x:DataType="vm:RadioButtonPageViewModel"
             ClipToBounds="False">
 

@@ -10,7 +10,7 @@
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:PaginationPageViewModel"
-            Name="Root"
+            x:Name="Root"
             mc:Ignorable="d">
 
     <v:ControlCatalogView ShowContent="False" ShowIcon="False">
@@ -46,8 +46,8 @@
         <v:ControlCatalogView.Settings>
             <my:Form>
 
-                <ToggleSwitch Name="ShowQuickJump" my:FormItem.Label="{my:LocObject ShowQuickJump}" IsChecked="True" />
-                <ToggleSwitch Name="ShowPageSizeSelector" my:FormItem.Label="{my:LocObject ShowPageSizeSelector}" IsChecked="True" />
+                <ToggleSwitch x:Name="ShowQuickJump" my:FormItem.Label="{my:LocObject ShowQuickJump}" IsChecked="True" />
+                <ToggleSwitch x:Name="ShowPageSizeSelector" my:FormItem.Label="{my:LocObject ShowPageSizeSelector}" IsChecked="True" />
 
             </my:Form>
         </v:ControlCatalogView.Settings>

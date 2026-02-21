@@ -31,7 +31,6 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     private static readonly ColorShades DefaultPrimary = new(Color.Parse("#1756BD"));
     private static readonly ColorShades DefaultAccent = new(Color.Parse("#FFAE18"));
 
-    private static MyTheme? _current;
     private readonly IServiceProvider? _serviceProvider;
     private readonly BrushManager _brushManager;
 
@@ -43,10 +42,10 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     {
         get
         {
-            if (_current is not null) return _current;
-            _current = Application.Current?.Styles.OfType<MyTheme>().FirstOrDefault()
-                ?? throw new InvalidOperationException("Cannot locate MyTheme in Avalonia application styles. Ensure MyTheme is included in your App.axaml in Application.Styles section.");
-            return _current;
+            if (field is not null) return field;
+            field = Application.Current?.Styles.OfType<MyTheme>().FirstOrDefault()
+                    ?? throw new InvalidOperationException("Cannot locate MyTheme in Avalonia application styles. Ensure MyTheme is included in your App.axaml in Application.Styles section.");
+            return field;
         }
     }
 
@@ -201,7 +200,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     private void OnActualThemeVariantChanged()
     {
-        Theme = Application.Current?.ActualThemeVariant.Key?.ToString();
+        Theme = Application.Current?.ActualThemeVariant.Key.ToString();
         UpdateBrushesFromCurrentTheme();
         RaiseThemeChanged();
     }
@@ -310,7 +309,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
             {
                 if (obj is Color color)
                 {
-                    var colorKey = key?.ToString()?.Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase);
+                    var colorKey = key.ToString()?.Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase);
                     if (!string.IsNullOrEmpty(colorKey))
                     {
                         var contrastedColor = GetContrastedColorForKey(colorKey, activeTheme);
@@ -338,16 +337,16 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
                 Drawing = new DrawingGroup
                 {
                     Children = [
-                                new GeometryDrawing() { Brush = Brushes.Transparent, Geometry = PathGeometry.Parse("M0,0 L2,0 2,2, 0,2Z") },
-                                new GeometryDrawing() { Brush = GetBrush("Foreground.Primary", nameof(Opacity.Scrim)), Geometry = PathGeometry.Parse("M0,1 L2,1 2,2, 1,2 1,0 0,0Z") },
-                            ]
+                                new GeometryDrawing { Brush = Brushes.Transparent, Geometry = PathGeometry.Parse("M0,0 L2,0 2,2, 0,2Z") },
+                                new GeometryDrawing { Brush = GetBrush("Foreground.Primary", nameof(Opacity.Scrim)), Geometry = PathGeometry.Parse("M0,1 L2,1 2,2, 1,2 1,0 0,0Z") }
+                    ]
                 }
             }
         })
         {
             DestinationRect = new RelativeRect(0, 0, size, size, RelativeUnit.Absolute),
             Stretch = Stretch.Uniform,
-            TileMode = TileMode.Tile,
+            TileMode = TileMode.Tile
         };
     }
 
@@ -363,7 +362,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
 
         return contrastedColorKey is null
             ? null
-            : (Color?)(themeDictionary.TryGetResource(contrastedColorKey, null, out var obj) && obj is Color color ? color : null);
+            : themeDictionary.TryGetResource(contrastedColorKey, null, out var obj) && obj is Color color ? color : null;
     }
 
     /// <summary>

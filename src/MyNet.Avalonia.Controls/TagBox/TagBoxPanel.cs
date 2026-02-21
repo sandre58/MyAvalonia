@@ -25,10 +25,9 @@ public class TagBoxPanel : Panel
         double currentLineHeight = 0;
         double totalHeight = 0;
 
-        var children = Children;
-        for (var i = 0; i < children.Count - 1; i++)
+        for (var i = 0; i < Children.Count - 1; i++)
         {
-            var child = children[i];
+            var child = Children[i];
             child.Measure(availableSize);
             var deltaX = availableSize.Width - currentLineX;
 
@@ -51,7 +50,7 @@ public class TagBoxPanel : Panel
             }
         }
 
-        var last = children[children.Count - 1];
+        var last = Children[^1];
         last.Measure(availableSize);
         var lastDeltaX = availableSize.Width - currentLineX;
 
@@ -75,10 +74,9 @@ public class TagBoxPanel : Panel
         double currentLineX = 0;
         double currentLineHeight = 0;
         double totalHeight = 0;
-        var children = Children;
-        for (var i = 0; i < children.Count - 1; i++)
+        for (var i = 0; i < Children.Count - 1; i++)
         {
-            var child = children[i];
+            var child = Children[i];
             var deltaX = finalSize.Width - currentLineX;
 
             // Width is enough to place next child
@@ -102,7 +100,7 @@ public class TagBoxPanel : Panel
             }
         }
 
-        var last = children[children.Count - 1];
+        var last = Children[^1];
         var lastDeltaX = finalSize.Width - currentLineX;
 
         // If width is not enough, add a new line, and recalculate total height
@@ -114,7 +112,7 @@ public class TagBoxPanel : Panel
         }
         else
         {
-            currentLineHeight = children.Count == 1 ? finalSize.Height : currentLineHeight;
+            currentLineHeight = Children.Count == 1 ? finalSize.Height : currentLineHeight;
             last.Arrange(new Rect(currentLineX, totalHeight, lastDeltaX, Math.Max(currentLineHeight, last.DesiredSize.Height)));
             currentLineHeight = Math.Max(currentLineHeight, last.DesiredSize.Height);
             totalHeight += currentLineHeight;

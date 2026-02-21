@@ -1,18 +1,17 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime">
     <Styles.Resources>
 
         <!-- ===================================================================== -->
-        <!-- Font Family Tokens                                                    -->
+        <!-- Font Family Tokens -->
         <!-- ===================================================================== -->
 
-        <FontFamily x:Key="MyNet.Font.FontFamily">Inter, -apple-system,BlinkMacSystemFont,PingFang SC, Microsoft YaHei, Segoe UI, Hiragino Sans GB, Helvetica Neue,Helvetica,Arial,sans-serif</FontFamily>
-        <FontFamily x:Key="MyNet.Font.FontFamily.Code">Cascadia Code, Consolas, Inconsolata, monospace</FontFamily>
+        <FontFamily x:Key="MyNet.Font.FontFamily">fonts:Inter#Inter, Segoe UI, Helvetica Neue, Arial, sans-serif</FontFamily>
+        <FontFamily x:Key="MyNet.Font.FontFamily.Code">fonts:Cascadia Code#Cascadia Code, Consolas, monospace</FontFamily>
 
         <!-- ===================================================================== -->
-        <!-- Font Size Tokens                                                      -->
+        <!-- Font Size Tokens -->
         <!-- ===================================================================== -->
 
         <sys:Double x:Key="MyNet.Font.Size.Xs">8</sys:Double>
@@ -36,7 +35,7 @@
         <sys:Double x:Key="MyNet.Font.Size.Tab">13</sys:Double>
 
         <!-- ===================================================================== -->
-        <!-- Font Weight Tokens                                                    -->
+        <!-- Font Weight Tokens -->
         <!-- ===================================================================== -->
 
         <FontWeight x:Key="MyNet.Font.Weight">Regular</FontWeight>

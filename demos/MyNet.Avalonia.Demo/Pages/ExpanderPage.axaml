@@ -9,11 +9,13 @@
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:ExpanderPageViewModel"
-            Name="Root"
+            x:Name="Root"
             mc:Ignorable="d">
+    <pages:Page.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+    </pages:Page.Resources>
 
     <v:ControlCatalogView>
 
@@ -23,14 +25,14 @@
                           my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
                           my:ClassesAssist.Classes="{Binding ComputedClasses}"
                           my:IconAssist.Icon="{Binding IconProvider.Icon}"
-                          Width="{Binding #Root.DataContext.Width}"
-                          Height="{Binding #Root.DataContext.Height}"
+                          Width="{ReflectionBinding Data.Width, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                          Height="{ReflectionBinding Data.Height, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
                           MaxWidth="300"
                           IsExpanded="True"
                           Header="{Binding ContentProvider.Content}"
-                          HorizontalAlignment="{Binding #Root.DataContext.HorizontalAlignment}"
-                          VerticalAlignment="{Binding #Root.DataContext.VerticalAlignment}"
-                          ExpandDirection="{Binding #Root.DataContext.ExpandDirection}">
+                          HorizontalAlignment="{ReflectionBinding Data.HorizontalAlignment, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                          VerticalAlignment="{ReflectionBinding Data.VerticalAlignment, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                          ExpandDirection="{ReflectionBinding Data.ExpandDirection, FallbackValue={x:Null}, Source={StaticResource PageProxy}}">
                     <TextBlock Text="{m:RandomText MinWords=10, MaxWords=30, MinSentences=3, MaxSentences=4}" TextWrapping="Wrap" TextAlignment="Justify" />
                 </Expander>
             </DataTemplate>
@@ -51,14 +53,18 @@
         </v:ControlCatalogView.ThemeControlTemplate>
 
         <v:ControlCatalogView.Settings>
-            <my:Form>
-                <ListBox my:FormItem.Label="{my:LocObject Direction}" SelectedValue="{Binding #Root.DataContext.ExpandDirection}" SelectedValueBinding="{ReflectionBinding DataContext}">
+            <my:Form x:DataType="vm:ExpanderPageViewModel" DataContext="{Binding #Root.DataContext}">
+                <ListBox my:FormItem.Label="{my:LocObject Direction}"
+                         SelectedValue="{Binding ExpandDirection}"
+                         SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
                     <ListBoxItem Content="{my:Icon ChevronDown}" ToolTip.Tip="{my:Loc Bottom}" DataContext="{x:Static ExpandDirection.Down}" />
                     <ListBoxItem Content="{my:Icon ChevronUp}" ToolTip.Tip="{my:Loc Top}" DataContext="{x:Static ExpandDirection.Up}" />
                     <ListBoxItem Content="{my:Icon ChevronLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="{x:Static ExpandDirection.Left}" />
                     <ListBoxItem Content="{my:Icon ChevronRight}" ToolTip.Tip="{my:Loc Right}" DataContext="{x:Static ExpandDirection.Right}" />
                 </ListBox>
-                <ListBox my:FormItem.Label="{my:LocObject HeaderPosition}" SelectedValue="{Binding #Root.DataContext.HeaderAlignmentClassProvider.SelectedClass}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                <ListBox my:FormItem.Label="{my:LocObject HeaderPosition}"
+                         SelectedValue="{Binding HeaderAlignmentClassProvider.SelectedClass}"
+                         SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
                     <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="align-header-left" />
                     <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:Loc Center}" DataContext="align-header-center-middle" />
                     <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:Loc Right}" DataContext="align-header-right" />

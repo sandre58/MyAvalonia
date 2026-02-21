@@ -23,18 +23,17 @@ internal sealed class ContentConverter : IValueConverter
     {
         ContentProviderType contentType;
         string? defaultText = null;
-        if (value is ControlDefinition controlDefinition)
+        switch (value)
         {
-            contentType = controlDefinition.DefaultContentType;
-            defaultText = controlDefinition.DisplayName;
-        }
-        else if (value is ContentProviderType contentProviderType)
-        {
-            contentType = contentProviderType;
-        }
-        else
-        {
-            return AvaloniaProperty.UnsetValue;
+            case ControlDefinition controlDefinition:
+                contentType = controlDefinition.DefaultContentType;
+                defaultText = controlDefinition.DisplayName;
+                break;
+            case ContentProviderType contentProviderType:
+                contentType = contentProviderType;
+                break;
+            default:
+                return AvaloniaProperty.UnsetValue;
         }
 
         return contentType switch

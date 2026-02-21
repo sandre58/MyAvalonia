@@ -9,7 +9,6 @@
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
-            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             xmlns:samples="clr-namespace:MyNet.Avalonia.Demo.Views.Samples"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
@@ -86,7 +85,7 @@
 
         <v:ControlCatalogView.Settings>
             <my:Form>
-                <ListBox Name="TabPlacement" my:FormItem.Label="{my:LocObject Layout}" SelectedValue="{x:Static Dock.Top}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                <ListBox x:Name="TabPlacement" my:FormItem.Label="{my:LocObject Layout}" SelectedValue="{x:Static Dock.Top}" SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
                     <ListBoxItem ToolTip.Tip="{my:Loc Left}" Content="{my:Icon DockLeft}" DataContext="{x:Static Dock.Left}" />
                     <ListBoxItem ToolTip.Tip="{my:Loc Bottom}" Content="{my:Icon DockBottom}" DataContext="{x:Static Dock.Bottom}" />
                     <ListBoxItem ToolTip.Tip="{my:Loc Right}" Content="{my:Icon DockRight}" DataContext="{x:Static Dock.Right}" />

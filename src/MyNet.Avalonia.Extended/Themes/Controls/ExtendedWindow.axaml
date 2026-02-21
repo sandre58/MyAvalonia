@@ -5,6 +5,7 @@
         <ControlTheme x:Key="{x:Type my:ExtendedWindow}" TargetType="my:ExtendedWindow">
             <Setter Property="Background" Value="{my:Theme Surface.Level2}" />
             <Setter Property="TransparencyBackgroundFallback" Value="{my:Theme Surface.Level2}" />
+            <Setter Property="TopLevel.SystemBarColor" Value="{my:ThemeRole Foreground}"/>
             <Setter Property="Foreground" Value="{my:Theme Foreground.Primary}" />
             <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
             <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />

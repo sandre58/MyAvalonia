@@ -10,7 +10,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Controls.Extensions;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Controls.Behaviors;
 
@@ -136,35 +135,35 @@ public static class TextFieldBehavior
 
         if (!popupOpen)
         {
-            if (e.Key == Key.Down && e.KeyModifiers == KeyModifiers.None)
+            switch (e)
             {
-                tc.Increment(1);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Up && e.KeyModifiers == KeyModifiers.None)
-            {
-                tc.Increment(-1);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.PageDown && e.KeyModifiers == KeyModifiers.None)
-            {
-                tc.IncrementLarge(1);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.PageUp && e.KeyModifiers == KeyModifiers.None)
-            {
-                tc.IncrementLarge(-1);
-                e.Handled = true;
-            }
-            else if ((e.Key == Key.Down || e.Key == Key.Up) && e.KeyModifiers == KeyModifiers.Alt)
-            {
-                tc.OpenPopup();
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Enter || e.Key == Key.Space)
-            {
-                tc.OpenPopup();
-                e.Handled = true;
+                case { Key: Key.Down, KeyModifiers: KeyModifiers.None }:
+                    tc.Increment(1);
+                    e.Handled = true;
+                    break;
+                case { Key: Key.Up, KeyModifiers: KeyModifiers.None }:
+                    tc.Increment(-1);
+                    e.Handled = true;
+                    break;
+                case { Key: Key.PageDown, KeyModifiers: KeyModifiers.None }:
+                    tc.IncrementLarge(1);
+                    e.Handled = true;
+                    break;
+                case { Key: Key.PageUp, KeyModifiers: KeyModifiers.None }:
+                    tc.IncrementLarge(-1);
+                    e.Handled = true;
+                    break;
+
+                default:
+                    {
+                        if ((e.Key is Key.Down or Key.Up && e.KeyModifiers == KeyModifiers.Alt) || e.Key is Key.Enter or Key.Space)
+                        {
+                            tc.OpenPopup();
+                            e.Handled = true;
+                        }
+
+                        break;
+                    }
             }
         }
     }

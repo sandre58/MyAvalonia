@@ -44,7 +44,7 @@ public class ForegroundExtension : ThemeBrushExtensionBase
     /// </summary>
     /// <param name="serviceProvider">The service provider for the markup extension.</param>
     /// <returns>A binding to the theme brush with the specified opacity, contrast, darken, and lighten settings.</returns>
-    public override object ProvideValue(IServiceProvider serviceProvider) => new Binding("(TextElement.Foreground)")
+    public override object ProvideValue(IServiceProvider serviceProvider) => new ReflectionBinding("(TextElement.Foreground)")
     {
         Mode = BindingMode.OneWay,
         RelativeSource = new RelativeSource(AncestorType is not null ? RelativeSourceMode.FindAncestor : RelativeSourceMode)
@@ -53,6 +53,6 @@ public class ForegroundExtension : ThemeBrushExtensionBase
         },
         Converter = ThemeConverter.Default,
         ConverterParameter = new ThemeBrushParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten),
-        TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
+        TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
     };
 }

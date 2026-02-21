@@ -74,7 +74,7 @@ public class LocExtension : GlobalizationExtensionBase
     /// Creates the main binding for the translation.
     /// </summary>
     /// <returns>A binding to a <see cref="Localizable"/> instance.</returns>
-    protected override BindingBase? CreateBinding() => new Binding
+    protected override BindingBase CreateBinding() => new ReflectionBinding
     {
         Source = new Localizable(Key, Filename),
         Mode = BindingMode.OneTime

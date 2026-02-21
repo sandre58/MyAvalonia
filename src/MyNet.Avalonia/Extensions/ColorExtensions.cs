@@ -5,9 +5,8 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using Avalonia.Media;
 
 namespace MyNet.Avalonia.Extensions;
@@ -16,178 +15,144 @@ namespace MyNet.Avalonia.Extensions;
 /// Provides extension methods for color manipulation, conversion, and analysis.
 /// Supports conversions between RGB, Hex, color names, and color space transformations (XYZ, LAB).
 /// </summary>
+[SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "Extensions methods must be in a static class, and extension methods cannot be in a nested class.")]
 public static class ColorExtensions
 {
-    public static Color Apply(this Color color, ColorInterpolation colorInterpolation)
-    {
-        if (colorInterpolation.Darken.HasValue)
-        {
-            var amount = Math.Max(1, (int)(colorInterpolation.Darken.Value * 5));
-            color = color.Darken(amount);
-        }
-
-        if (colorInterpolation.Lighten.HasValue)
-        {
-            var amount = Math.Max(1, (int)(colorInterpolation.Lighten.Value * 5));
-            color = color.Lighten(amount);
-        }
-
-        if (colorInterpolation.Contrast)
-            color = color.ContrastingForegroundColor();
-
-        if (colorInterpolation.Opacity.HasValue)
-            color = Color.FromArgb(Convert.ToByte(255 * colorInterpolation.Opacity.Value), color.R, color.G, color.B);
-
-        return color;
-    }
-
     /// <summary>
-    /// Converts a string to a <see cref="Color"/> object, attempting multiple parsing strategies.
-    /// Tries the following in order: hex code (with or without '#'), named color lookup, and fallback with '#' prefix.
+    /// Provides extension methods for the <see cref="Color"/> struct, including conversions to hex, name, and color manipulation.
     /// </summary>
-    /// <param name="colorName">The color name, hex code, or localized color name.</param>
-    /// <returns>The parsed <see cref="Color"/> if successful; otherwise, null.</returns>
-    public static Color? ToColor(this string? colorName)
+    extension(Color color)
     {
-        if (string.IsNullOrWhiteSpace(colorName))
-            return null;
+        /// <summary>
+        /// Converts a <see cref="Color"/> to its hexadecimal string representation.
+        /// Includes alpha channel if not fully opaque (255).
+        /// </summary>
+        /// <returns>A hex string in the format "#RRGGBB" or "#AARRGGBB" if alpha is not 255.</returns>
+        public string ToHex()
+            => color.A != 255
+                ? string.Format(CultureInfo.InvariantCulture, "#{0:X2}{1:X2}{2:X2}{3:X2}", color.A, color.R, color.G, color.B)
+                : string.Format(CultureInfo.InvariantCulture, "#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
 
-        // Try direct parsing
-        var result = TryToColor(colorName);
-        if (result.HasValue)
-            return result;
+        /// <summary>
+        /// Gets the localized or resource name of a color, or its hex representation if no name is found.
+        /// </summary>
+        /// <returns>The localized color name or hex string if no name exists.</returns>
+        public string ToName()
+            => ResourceLocator.ColorResourcesDictionary.TryGetValue(color, out var name) ? $"{name}" : color.ToHex();
 
-        // Fallback: add '#' prefix if not present and try again
-        if (!colorName.StartsWith('#'))
+        /// <summary>
+        /// Determines the contrasting foreground color (black or white) for optimal readability against the given background color.
+        /// </summary>
+        /// <returns><see cref="Colors.Black"/> if the color is light; otherwise, <see cref="Colors.White"/>.</returns>
+        public Color ContrastingForegroundColor() => color.IsLightColor() ? Colors.Black : Colors.White;
+
+        /// <summary>
+        /// Determines if a color is light based on its relative luminance using the sRGB color space.
+        /// Uses the WCAG luminance formula.
+        /// </summary>
+        /// <returns>True if the color is light (luminance > 0.179); otherwise, false.</returns>
+        public bool IsLightColor()
         {
-            result = TryToColor("#" + colorName);
+            var r = rgbSrgb(color.R);
+            var g = rgbSrgb(color.G);
+            var b = rgbSrgb(color.B);
+
+            var luminance = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
+            return luminance > 0.179;
+
+            static double rgbSrgb(double d)
+            {
+                d /= 255.0;
+                return d > 0.03928
+                    ? Math.Pow((d + 0.055) / 1.055, 2.4)
+                    : d / 12.92;
+            }
         }
 
-        return result;
-    }
+        /// <summary>
+        /// Determines if a color is dark based on its relative luminance.
+        /// </summary>
+        /// <returns>True if the color is dark; otherwise, false.</returns>
+        public bool IsDarkColor() => !color.IsLightColor();
 
-    /// <summary>
-    /// Attempts to convert a string to a <see cref="Color"/> object without throwing exceptions.
-    /// Checks for named colors in the resource dictionary, then tries parsing as hex code.
-    /// </summary>
-    /// <param name="colorName">The color name or hex code.</param>
-    /// <returns>The parsed <see cref="Color"/> if successful; otherwise, null.</returns>
-    public static Color? TryToColor(this string? colorName)
-    {
-        if (string.IsNullOrWhiteSpace(colorName))
-            return null;
+        /// <summary>
+        /// Darkens a color by reducing its lightness in the LAB color space.
+        /// </summary>
+        /// <param name="amount">The amount to darken (default is 1).</param>
+        /// <returns>The darkened color.</returns>
+        public Color Darken(int amount = 1) => color.ShiftLightness(amount);
 
-        // Try named color lookup first (if not starting with '#')
-        if (!colorName.StartsWith('#'))
+        /// <summary>
+        /// Lightens a color by increasing its lightness in the LAB color space.
+        /// </summary>
+        /// <param name="amount">The amount to lighten (default is 1).</param>
+        /// <returns>The lightened color.</returns>
+        public Color Lighten(int amount = 1) => color.ShiftLightness(-amount);
+
+        /// <summary>
+        /// Shifts the lightness of a color in the LAB color space.
+        /// </summary>
+        /// <param name="amount">The amount to shift (positive darkens, negative lightens).</param>
+        /// <returns>The color with shifted lightness.</returns>
+        public Color ShiftLightness(int amount = 1)
         {
-            var namedColor = ResourceLocator.ColorResourcesDictionary
-                .FirstOrDefault(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase));
-
-            if (!namedColor.Equals(default(KeyValuePair<Color, string>)))
-                return namedColor.Key;
+            var lab = color.ToLab();
+            var shifted = new Lab(lab.L - (LabConstants.Kn * amount), lab.A, lab.B);
+            return shifted.ToColor();
         }
 
-        // Try parsing as hex code
-        if (Color.TryParse(colorName, out var color))
+        /// <summary>
+        /// Converts an RGB color to the LAB color space via XYZ.
+        /// </summary>
+        private Lab ToLab()
+        {
+            var xyz = color.ToXyz();
+            return xyz.ToLab();
+        }
+
+        public Color Apply(ColorInterpolation colorInterpolation)
+        {
+            if (colorInterpolation.Darken.HasValue)
+            {
+                var amount = Math.Max(1, (int)(colorInterpolation.Darken.Value * 5));
+                color = color.Darken(amount);
+            }
+
+            if (colorInterpolation.Lighten.HasValue)
+            {
+                var amount = Math.Max(1, (int)(colorInterpolation.Lighten.Value * 5));
+                color = color.Lighten(amount);
+            }
+
+            if (colorInterpolation.Contrast)
+                color = color.ContrastingForegroundColor();
+
+            if (colorInterpolation.Opacity.HasValue)
+                color = Color.FromArgb(Convert.ToByte(255 * colorInterpolation.Opacity.Value), color.R, color.G, color.B);
+
             return color;
-
-        // Last attempt: try with '#' prefix if not already present
-        return !colorName.StartsWith('#') && Color.TryParse($"#{colorName}", out color) ? color : null;
-    }
-
-    /// <summary>
-    /// Converts a <see cref="Color"/> to its hexadecimal string representation.
-    /// Includes alpha channel if not fully opaque (255).
-    /// </summary>
-    /// <param name="color">The color to convert.</param>
-    /// <returns>A hex string in the format "#RRGGBB" or "#AARRGGBB" if alpha is not 255.</returns>
-    public static string ToHex(this Color color)
-        => color.A != 255
-            ? string.Format(CultureInfo.InvariantCulture, "#{0:X2}{1:X2}{2:X2}{3:X2}", color.A, color.R, color.G, color.B)
-            : string.Format(CultureInfo.InvariantCulture, "#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
-
-    /// <summary>
-    /// Gets the localized or resource name of a color, or its hex representation if no name is found.
-    /// </summary>
-    /// <param name="color">The color to look up.</param>
-    /// <returns>The localized color name or hex string if no name exists.</returns>
-    public static string ToName(this Color color)
-        => ResourceLocator.ColorResourcesDictionary.TryGetValue(color, out var name) ? $"{name}" : color.ToHex();
-
-    /// <summary>
-    /// Determines the contrasting foreground color (black or white) for optimal readability against the given background color.
-    /// </summary>
-    /// <param name="color">The background color.</param>
-    /// <returns><see cref="Colors.Black"/> if the color is light; otherwise, <see cref="Colors.White"/>.</returns>
-    public static Color ContrastingForegroundColor(this Color color) => color.IsLightColor() ? Colors.Black : Colors.White;
-
-    /// <summary>
-    /// Determines if a color is light based on its relative luminance using the sRGB color space.
-    /// Uses the WCAG luminance formula.
-    /// </summary>
-    /// <param name="color">The color to evaluate.</param>
-    /// <returns>True if the color is light (luminance > 0.179); otherwise, false.</returns>
-    public static bool IsLightColor(this Color color)
-    {
-        var r = rgbSrgb(color.R);
-        var g = rgbSrgb(color.G);
-        var b = rgbSrgb(color.B);
-
-        var luminance = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
-        return luminance > 0.179;
-
-        static double rgbSrgb(double d)
-        {
-            d /= 255.0;
-            return d > 0.03928
-                ? Math.Pow((d + 0.055) / 1.055, 2.4)
-                : d / 12.92;
         }
-    }
 
-    /// <summary>
-    /// Determines if a color is dark based on its relative luminance.
-    /// </summary>
-    /// <param name="color">The color to evaluate.</param>
-    /// <returns>True if the color is dark; otherwise, false.</returns>
-    public static bool IsDarkColor(this Color color) => !color.IsLightColor();
+        /// <summary>
+        /// Converts an RGB color to XYZ color space.
+        /// </summary>
+        private Xyz ToXyz()
+        {
+            var r = rgbXyz(color.R);
+            var g = rgbXyz(color.G);
+            var b = rgbXyz(color.B);
 
-    /// <summary>
-    /// Darkens a color by reducing its lightness in the LAB color space.
-    /// </summary>
-    /// <param name="color">The color to darken.</param>
-    /// <param name="amount">The amount to darken (default is 1).</param>
-    /// <returns>The darkened color.</returns>
-    public static Color Darken(this Color color, int amount = 1) => color.ShiftLightness(amount);
+            var x = (0.4124564 * r) + (0.3575761 * g) + (0.1804375 * b);
+            var y = (0.2126729 * r) + (0.7151522 * g) + (0.0721750 * b);
+            var z = (0.0193339 * r) + (0.1191920 * g) + (0.9503041 * b);
+            return new Xyz(x, y, z);
 
-    /// <summary>
-    /// Lightens a color by increasing its lightness in the LAB color space.
-    /// </summary>
-    /// <param name="color">The color to lighten.</param>
-    /// <param name="amount">The amount to lighten (default is 1).</param>
-    /// <returns>The lightened color.</returns>
-    public static Color Lighten(this Color color, int amount = 1) => color.ShiftLightness(-amount);
-
-    /// <summary>
-    /// Shifts the lightness of a color in the LAB color space.
-    /// </summary>
-    /// <param name="color">The color to shift.</param>
-    /// <param name="amount">The amount to shift (positive darkens, negative lightens).</param>
-    /// <returns>The color with shifted lightness.</returns>
-    public static Color ShiftLightness(this Color color, int amount = 1)
-    {
-        var lab = color.ToLab();
-        var shifted = new Lab(lab.L - (LabConstants.Kn * amount), lab.A, lab.B);
-        return shifted.ToColor();
-    }
-
-    /// <summary>
-    /// Converts an RGB color to the LAB color space via XYZ.
-    /// </summary>
-    private static Lab ToLab(this Color c)
-    {
-        var xyz = c.ToXyz();
-        return xyz.ToLab();
+            static double rgbXyz(double v)
+            {
+                v /= 255;
+                return v > 0.04045 ? Math.Pow((v + 0.055) / 1.055, 2.4) : v / 12.92;
+            }
+        }
     }
 
     /// <summary>
@@ -229,27 +194,6 @@ public static class ColorExtensions
 
         double xyzRgb(double d) => d > 0.0031308 ? 255.0 * ((1.055 * Math.Pow(d, 1.0 / 2.4)) - 0.055) : 255.0 * (12.92 * d);
         byte clip(double d) => d < 0 ? (byte)0 : d > 255 ? (byte)255 : (byte)Math.Round(d);
-    }
-
-    /// <summary>
-    /// Converts an RGB color to XYZ color space.
-    /// </summary>
-    private static Xyz ToXyz(this Color c)
-    {
-        var r = rgbXyz(c.R);
-        var g = rgbXyz(c.G);
-        var b = rgbXyz(c.B);
-
-        var x = (0.4124564 * r) + (0.3575761 * g) + (0.1804375 * b);
-        var y = (0.2126729 * r) + (0.7151522 * g) + (0.0721750 * b);
-        var z = (0.0193339 * r) + (0.1191920 * g) + (0.9503041 * b);
-        return new Xyz(x, y, z);
-
-        static double rgbXyz(double v)
-        {
-            v /= 255;
-            return v > 0.04045 ? Math.Pow((v + 0.055) / 1.055, 2.4) : v / 12.92;
-        }
     }
 
     /// <summary>

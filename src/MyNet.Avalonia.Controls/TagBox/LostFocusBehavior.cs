@@ -14,5 +14,5 @@ public enum LostFocusBehavior
 
     Add,
 
-    Clear,
+    Clear
 }

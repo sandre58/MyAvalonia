@@ -5,9 +5,11 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml;
+using MyNet.Observable.Globalization;
 
 namespace MyNet.Avalonia.MarkupExtensions;
 
@@ -74,29 +76,25 @@ public abstract class GlobalizationExtensionBase(bool updateOnCultureChanged, bo
             multiBinding.TargetNullValue = TargetNullValue;
         }
 
-        if (CreateBinding() is BindingBase binding)
+        if (CreateBinding() is { } binding)
         {
             multiBinding.Bindings.Add(binding);
         }
 
         if (UpdateOnCultureChanged)
         {
-            multiBinding.Bindings.Add(new Binding
-            {
-                Source = UIContext.Globalization,
-                Path = nameof(UIContext.Globalization.Culture),
-                Mode = BindingMode.OneWay
-            });
+            var cultureBinding = CompiledBinding.Create<ObservableGlobalization, CultureInfo?>(x => x.Culture);
+            cultureBinding.Source = UIContext.Globalization;
+            cultureBinding.Mode = BindingMode.OneWay;
+            multiBinding.Bindings.Add(cultureBinding);
         }
 
         if (UpdateOnTimeZoneChanged)
         {
-            multiBinding.Bindings.Add(new Binding
-            {
-                Source = UIContext.Globalization,
-                Path = nameof(UIContext.Globalization.TimeZone),
-                Mode = BindingMode.OneWay
-            });
+            var timeZoneBinding = CompiledBinding.Create<ObservableGlobalization, TimeZoneInfo?>(x => x.TimeZone);
+            timeZoneBinding.Source = UIContext.Globalization;
+            timeZoneBinding.Mode = BindingMode.OneWay;
+            multiBinding.Bindings.Add(timeZoneBinding);
         }
 
         return multiBinding;

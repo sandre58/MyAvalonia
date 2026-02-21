@@ -50,16 +50,16 @@
         <v:ControlCatalogView.Settings>
             <my:Form>
                 <ListBox my:FormItem.Label="{my:LocObject Hands}" SelectionMode="Multiple,Toggle">
-                    <ListBoxItem Name="ShowHourHand" Content="{my:Loc Hours}" IsSelected="True" />
-                    <ListBoxItem Name="ShowMinuteHand" Content="{my:Loc Minutes}" IsSelected="True" />
-                    <ListBoxItem Name="ShowSecondHand" Content="{my:Loc Seconds}" IsSelected="True" />
+                    <ListBoxItem x:Name="ShowHourHand" Content="{my:Loc Hours}" IsSelected="True" />
+                    <ListBoxItem x:Name="ShowMinuteHand" Content="{my:Loc Minutes}" IsSelected="True" />
+                    <ListBoxItem x:Name="ShowSecondHand" Content="{my:Loc Seconds}" IsSelected="True" />
                 </ListBox>
                 <ListBox my:FormItem.Label="{my:LocObject Ticks}" SelectionMode="Multiple,Toggle">
-                    <ListBoxItem Name="ShowHourTicks" Content="{my:Loc Hours}" IsSelected="True" />
-                    <ListBoxItem Name="ShowMinuteTicks" Content="{my:Loc Minutes}" IsSelected="True" />
+                    <ListBoxItem x:Name="ShowHourTicks" Content="{my:Loc Hours}" IsSelected="True" />
+                    <ListBoxItem x:Name="ShowMinuteTicks" Content="{my:Loc Minutes}" IsSelected="True" />
                 </ListBox>
-                <ToggleSwitch Name="IsSmooth" my:FormItem.Label="{my:LocObject IsSmooth}" IsChecked="False" />
-                <ToggleSwitch Name="LiveUpdate" my:FormItem.Label="{my:LocObject LiveUpdate}" IsChecked="True" />
+                <ToggleSwitch x:Name="IsSmooth" my:FormItem.Label="{my:LocObject IsSmooth}" IsChecked="False" />
+                <ToggleSwitch x:Name="LiveUpdate" my:FormItem.Label="{my:LocObject LiveUpdate}" IsChecked="True" />
             </my:Form>
         </v:ControlCatalogView.Settings>
 

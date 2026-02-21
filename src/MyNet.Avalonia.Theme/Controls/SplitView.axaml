@@ -25,7 +25,7 @@
             <Setter Property="PaneBackground" Value="{my:ThemeRole Background}" />
             <Setter Property="BorderBrush" Value="{my:ThemeRole Border}" />
             <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Scrim}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Scrim}" />
 
             <Style Selector="^:left">
                 <Setter Property="Template">
@@ -372,7 +372,7 @@
                                 <DoubleTransition Easing="{StaticResource MyNet.Transition.Easing.SplitView}" Property="Width" Duration="{StaticResource MyNet.Animation.Slide}" />
                             </Transitions>
                         </Setter>
-                        <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OpenPaneLength}" />
+                        <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OpenPaneLength, x:DataType=SplitView}" />
                     </Style>
                 </Style>
 
@@ -383,7 +383,7 @@
                                 <DoubleTransition Easing="{StaticResource MyNet.Transition.Easing.SplitView}" Property="Height" Duration="{StaticResource MyNet.Animation.Slide}" />
                             </Transitions>
                         </Setter>
-                        <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OpenPaneLength}" />
+                        <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OpenPaneLength, x:DataType=SplitView}" />
                     </Style>
                 </Style>
             </Style>
@@ -405,7 +405,7 @@
                                 <DoubleTransition Easing="{StaticResource MyNet.Transition.Easing.SplitView}" Property="Width" Duration="{StaticResource MyNet.Animation.Slide}" />
                             </Transitions>
                         </Setter>
-                        <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.ClosedPaneWidth}" />
+                        <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.ClosedPaneWidth, x:DataType=SplitView}" />
                     </Style>
 
                     <Style Selector="^:top, ^:bottom">
@@ -415,7 +415,7 @@
                                     <DoubleTransition Easing="{StaticResource MyNet.Transition.Easing.SplitView}" Property="Height" Duration="{StaticResource MyNet.Animation.Slide}" />
                                 </Transitions>
                             </Setter>
-                            <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.ClosedPaneHeight}" />
+                            <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.ClosedPaneHeight, x:DataType=SplitView}" />
                         </Style>
                     </Style>
                 </Style>

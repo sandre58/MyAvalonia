@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="CarouselPageViewModel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="CarouselPageViewModel.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ internal sealed class CarouselPageViewModel : ControlCatalogViewModel
                 new ControlThemeBuilder(),
 
                 new ControlThemeBuilder("Full")
-                    .AddRoles([ThemeRole.Default, ThemeRole.Accent, ThemeRole.Contrast])
+                    .AddRoles(ThemeRole.Default, ThemeRole.Accent, ThemeRole.Contrast)
             ]) => Playground.ClassProviders.AddRange([TypeClassProvider, IndicatorClassProvider]);
 
     public ClassProvider TypeClassProvider { get; } = new("variant-dots");

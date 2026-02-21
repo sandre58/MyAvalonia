@@ -47,14 +47,14 @@ public static class ItemsBehavior
 
         var excludedValues = GetExcludedValues(sender) ?? [];
 
-        IEnumerable? values = null;
+        IEnumerable? values;
         if (type.IsEnum)
         {
-            values = Enum.GetValues(type).Cast<Enum>().Where(x => excludedValues?.Contains(x) != true).Select(x => new EnumTranslatable(x));
+            values = Enum.GetValues(type).Cast<Enum>().Where(x => !excludedValues.Contains(x)).Select(x => new EnumTranslatable(x));
         }
         else if (type.IsAssignableTo(typeof(IEnumeration)))
         {
-            values = EnumClass.GetAll(type).Cast<IEnumeration>().Where(x => excludedValues?.Contains(x) != true).Select(x => new EnumClassTranslatable(x));
+            values = EnumClass.GetAll(type).Cast<IEnumeration>().Where(x => !excludedValues.Contains(x)).Select(x => new EnumClassTranslatable(x));
         }
         else
         {
@@ -78,20 +78,20 @@ public static class ItemsBehavior
     /// <summary>
     /// Provides ExcludedValues Property for attached ItemsBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<ICollection<object>> ExcludedValuesProperty = AvaloniaProperty.RegisterAttached<StyledElement, ICollection<object>>("ExcludedValues", typeof(ItemsBehavior));
+    public static readonly AttachedProperty<ICollection<object>?> ExcludedValuesProperty = AvaloniaProperty.RegisterAttached<StyledElement, ICollection<object>?>("ExcludedValues", typeof(ItemsBehavior));
 
     /// <summary>
     /// Accessor for Attached  <see cref="ExcludedValuesProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
     /// <param name="value">The value to set  <see cref="ExcludedValuesProperty"/>.</param>
-    public static void SetExcludedValues(StyledElement element, ICollection<object> value) => element.SetValue(ExcludedValuesProperty, value);
+    public static void SetExcludedValues(StyledElement element, ICollection<object>? value) => element.SetValue(ExcludedValuesProperty, value);
 
     /// <summary>
     /// Accessor for Attached  <see cref="ExcludedValuesProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public static ICollection<object> GetExcludedValues(StyledElement element) => element.GetValue(ExcludedValuesProperty);
+    public static ICollection<object>? GetExcludedValues(StyledElement element) => element.GetValue(ExcludedValuesProperty);
 
     #endregion
 

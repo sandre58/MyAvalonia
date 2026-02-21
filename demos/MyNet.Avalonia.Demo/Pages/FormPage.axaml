@@ -7,7 +7,6 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             xmlns:samples="clr-namespace:MyNet.Avalonia.Demo.Views.Samples"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
-            xmlns:u="clr-namespace:MyNet.Utilities;assembly=MyNet.Utilities"
             x:DataType="vm:FormPageViewModel"
             ClipToBounds="False"
             mc:Ignorable="d">

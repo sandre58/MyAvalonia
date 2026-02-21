@@ -50,9 +50,9 @@
             <Setter Property="BorderBrush" Value="{Binding $parent[Slider].(my:InteractionAssist.ActiveBackground)}" />
             <Setter Property="Background" Value="White" />
             <Setter Property="my:InteractionAssist.HoverBackground" Value="Transparent" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:Brush $self.BorderBrush, Lighten=1}" />
-            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:Brush $self.BorderBrush, Lighten=1}" />
-            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:Brush $self.BorderBrush, Lighten=1}" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeBrush BorderBrush, Lighten=1}" />
+            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:ThemeBrush BorderBrush, Lighten=1}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeBrush BorderBrush, Lighten=1}" />
 
             <Setter Property="Template">
                 <ControlTemplate TargetType="Thumb">

@@ -8,7 +8,6 @@
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
-            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:BannerPageViewModel"
@@ -51,15 +50,19 @@
         </v:ControlCatalogView.ThemeControlTemplate>
 
         <v:ControlCatalogView.Settings>
-            <my:Form>
-                <ListBox my:FormItem.Label="{my:LocObject Layout}" SelectedValue="{Binding #Root.DataContext.PositionClassProvider.SelectedClass, Mode=TwoWay}" SelectedValueBinding="{ReflectionBinding DataContext}">
+            <my:Form x:DataType="vm:BannerPageViewModel" DataContext="{Binding #Root.DataContext}">
+                <ListBox my:FormItem.Label="{my:LocObject Layout}"
+                         SelectedValue="{Binding PositionClassProvider.SelectedClass, Mode=TwoWay}"
+                         SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
                     <ListBoxItem Content="{my:Icon DockLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="position-left" />
                     <ListBoxItem Content="{my:Icon DockRight}" ToolTip.Tip="{my:Loc Right}" DataContext="position-right" />
                     <ListBoxItem Content="{my:Icon DockTop}" ToolTip.Tip="{my:Loc Top}" DataContext="position-top" />
                     <ListBoxItem Content="{my:Icon DockBottom}" ToolTip.Tip="{my:Loc Bottom}" DataContext="position-bottom" />
                 </ListBox>
 
-                <ListBox my:FormItem.Label="{my:LocObject HeaderPosition}" SelectedValue="{Binding #Root.DataContext.HeaderAlignmentClassProvider.SelectedClass, Mode=TwoWay}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                <ListBox my:FormItem.Label="{my:LocObject HeaderPosition}"
+                         SelectedValue="{Binding HeaderAlignmentClassProvider.SelectedClass, Mode=TwoWay}"
+                         SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
                     <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="align-header-left" />
                     <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:Loc Right}" DataContext="align-header-right" />
                     <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:Loc Top}" DataContext="align-header-top" />
@@ -67,7 +70,7 @@
                     <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:Loc Center}" DataContext="align-header-middle" />
                 </ListBox>
 
-                <ToggleSwitch Name="CanClose" my:FormItem.Label="{my:LocObject ShowClearButton}" IsChecked="True" />
+                <ToggleSwitch x:Name="CanClose" my:FormItem.Label="{my:LocObject ShowClearButton}" IsChecked="True" />
                 <Button Content="{my:Loc Restore}"
                         my:IconAssist.Icon="{my:Icon Refresh}"
                         Click="Restore_Click"

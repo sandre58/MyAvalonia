@@ -25,5 +25,5 @@ public enum ResizeDirection
     BottomLeft = 64,
     BottomRight = 128,
     Corners = TopLeft | TopRight | BottomLeft | BottomRight,
-    All = Sides | Corners,
+    All = Sides | Corners
 }

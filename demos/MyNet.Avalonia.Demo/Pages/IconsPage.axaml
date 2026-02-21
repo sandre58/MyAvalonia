@@ -28,8 +28,8 @@
                                                 Classes="Text H2"
                                                 Header="{Binding DisplayName}">
                             <HeaderedContentControl.HeaderTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding DataType={x:Type vm:IconBuilderData}}" TextAlignment="Center" TextWrapping="Wrap" />
+                                <DataTemplate DataType="{x:Type vm:IconBuilderData}">
+                                    <TextBlock Text="{Binding}" TextAlignment="Center" TextWrapping="Wrap" />
                                 </DataTemplate>
                             </HeaderedContentControl.HeaderTemplate>
 
@@ -48,7 +48,7 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate x:DataType="{x:Type sys:String}">
-                                            <my:CodeBlock HorizontalAlignment="Stretch" my:TextFieldAssist.ShowClipboardButton="True" Content="{Binding DataType={x:Type sys:String}}" />
+                                            <my:CodeBlock HorizontalAlignment="Stretch" my:TextFieldAssist.ShowClipboardButton="True" Content="{Binding}" />
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>

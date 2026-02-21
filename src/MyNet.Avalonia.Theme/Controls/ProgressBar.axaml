@@ -366,7 +366,7 @@
 
             <!-- Colors -->
             <Style Selector="^[(my|ThemeAssist.Role)=Contrast]">
-                <Setter Property="Background" Value="{my:Foreground, Opacity=Overlay}" />
+                <Setter Property="Background" Value="{my:Foreground Opacity=Overlay}" />
             </Style>
         </ControlTheme>
 

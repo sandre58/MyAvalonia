@@ -43,7 +43,7 @@ public class ThemeVariantsRegistry : IThemeBaseRegistry
     /// </summary>
     /// <param name="name">The unique name of the theme base to retrieve.</param>
     /// <returns>The theme base associated with the specified name, or null if not found.</returns>
-    public IThemeBase? Get(string name) => _themeBases.TryGetValue(name, out var themeBase) ? themeBase : null;
+    public IThemeBase? Get(string name) => _themeBases.GetValueOrDefault(name);
 
     /// <summary>
     /// Registers a new theme base in the registry. This method allows adding a custom theme base to the theming system, making it available for retrieval and application. The theme base is identified by its unique name, which is derived from the associated theme variant key. If a theme base with the same name already exists in the registry, it will be overwritten with the new theme base. This method is used to expand the theming capabilities of the application by allowing developers to define and register their own custom theme bases.

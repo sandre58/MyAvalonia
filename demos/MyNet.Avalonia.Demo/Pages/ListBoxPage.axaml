@@ -153,12 +153,10 @@
 
         <v:ControlCatalogView.Settings>
             <my:Form>
-                <ComboBox Name="SelectionMode"
+                <ComboBox x:Name="SelectionMode"
                           my:FormItem.Label="{my:LocObject SelectionMode}"
-                          ItemsSource="{my:EnumSource {x:Type SelectionMode}}"
-                          DisplayMemberBinding="{ReflectionBinding Display}"
-                          SelectedValue="{x:Static SelectionMode.Single}"
-                          SelectedValueBinding="{ReflectionBinding Value}" />
+                          my:ItemsBehavior.EnumSourceType="{x:Type SelectionMode}"
+                          SelectedValue="{x:Static SelectionMode.Single}" />
             </my:Form>
         </v:ControlCatalogView.Settings>
 

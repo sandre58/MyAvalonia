@@ -9,11 +9,13 @@
             xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
-            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:SliderPageViewModel"
-            Name="Root"
+            x:Name="Root"
             ClipToBounds="False">
+    <pages:Page.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+    </pages:Page.Resources>
 
     <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
@@ -22,7 +24,7 @@
                 <Slider Theme="{Binding Appearance.ActiveTheme}"
                         my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
                         my:ClassesAssist.Classes="{Binding ComputedClasses}"
-                        Orientation="{Binding #Root.DataContext.Orientation}"
+                        Orientation="{ReflectionBinding Data.Orientation, FallbackValue=Horizontal, Source={StaticResource PageProxy}}"
                         IsDirectionReversed="{Binding #IsDirectionReversed.IsChecked}"
                         TickPlacement="{Binding #TickPlacement.SelectedValue}"
                         TickFrequency="{Binding #TickFrequency.Value}"
@@ -32,8 +34,8 @@
                         my:SliderAssist.TickLength="{Binding #TickLength.Value}"
                         Minimum="{Binding #Minimum.Value}"
                         Maximum="{Binding #Maximum.Value}"
-                        Width="{Binding #Root.DataContext.Width}"
-                        Height="{Binding #Root.DataContext.Height}"
+                        Width="{ReflectionBinding Data.Width, FallbackValue=0, Source={StaticResource PageProxy}}"
+                        Height="{ReflectionBinding Data.Height, FallbackValue=0, Source={StaticResource PageProxy}}"
                         Value="30"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center" />
@@ -87,57 +89,51 @@
         </v:ControlCatalogView.CustomContent>
 
         <v:ControlCatalogView.Settings>
-            <my:Form>
-                <ListBox my:FormItem.Label="{my:LocObject Orientation}" SelectedValue="{Binding #Root.DataContext.Orientation}" SelectedValueBinding="{ReflectionBinding DataContext}"
-                         IsVisible="{Binding #Root.DataContext.Playground.Appearance.SelectedTheme, Converter={x:Static my:NullConverter.IsNull}}">
+            <my:Form x:DataType="vm:SliderPageViewModel" DataContext="{Binding #Root.DataContext}">
+                <ListBox my:FormItem.Label="{my:LocObject Orientation}"
+                         SelectedValue="{Binding Orientation}" SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}"
+                         IsVisible="{Binding Playground.Appearance.SelectedTheme, Converter={x:Static my:NullConverter.IsNull}}">
                     <ListBoxItem my:IconAssist.Icon="{my:Icon BorderHorizontal}" Content="{my:Loc OrientationHorizontal}" DataContext="{x:Static Orientation.Horizontal}" />
                     <ListBoxItem my:IconAssist.Icon="{my:Icon BorderVertical}" Content="{my:Loc OrientationVertical}" DataContext="{x:Static Orientation.Vertical}" />
                 </ListBox>
-                <ToggleSwitch Name="IsDirectionReversed" my:FormItem.Label="{my:LocObject IsDirectionReversed}"
+                <ToggleSwitch x:Name="IsDirectionReversed" my:FormItem.Label="{my:LocObject IsDirectionReversed}"
                               OnContent=""
                               OffContent=""
                               IsChecked="False" />
-                <ComboBox Name="TickPlacement"
+                <ComboBox x:Name="TickPlacement"
                           my:FormItem.Label="{my:LocObject TickPlacement}"
-                          DisplayMemberBinding="{ReflectionBinding Display}"
-                          ItemsSource="{my:EnumSource {x:Type TickPlacement}}"
-                          SelectedIndex="0"
-                          SelectedValueBinding="{ReflectionBinding Value}"
+                          my:ItemsBehavior.EnumSourceType="{x:Type TickPlacement}"
                           SelectedValue="{x:Static TickPlacement.None}" />
-                <ComboBox Name="TickMode"
+                <ComboBox x:Name="TickMode"
                           my:FormItem.Label="{my:LocObject TickMode}"
-                          DisplayMemberBinding="{ReflectionBinding Display}"
-                          ItemTemplate="{x:Null}"
-                          ItemsSource="{my:EnumSource {x:Type my:TickMode}}"
-                          SelectedIndex="0"
-                          SelectedValueBinding="{ReflectionBinding Value}"
+                          my:ItemsBehavior.EnumSourceType="{x:Type my:TickMode}"
                           SelectedValue="{x:Static my:TickMode.Values}" />
-                <NumericUpDown Name="TickFrequency"
+                <NumericUpDown x:Name="TickFrequency"
                                my:FormItem.Label="{my:LocObject TickFrequency}"
                                Maximum="100"
                                Minimum="0"
                                Value="20" />
-                <NumericUpDown Name="TickLength"
+                <NumericUpDown x:Name="TickLength"
                                my:FormItem.Label="{my:LocObject TickLength}"
                                Maximum="20"
                                Minimum="1"
                                Value="5" />
-                <ToggleSwitch Name="IsSnapToTickEnabled"
+                <ToggleSwitch x:Name="IsSnapToTickEnabled"
                               my:FormItem.Label="{my:LocObject IsSnapToTickEnabled}"
                               OnContent=""
                               OffContent=""
                               IsChecked="False" />
-                <NumericUpDown Name="Minimum"
+                <NumericUpDown x:Name="Minimum"
                                my:FormItem.Label="{my:LocObject Minimum}"
                                Maximum="1000"
                                Minimum="-1000"
                                Value="0" />
-                <NumericUpDown Name="Maximum"
+                <NumericUpDown x:Name="Maximum"
                                my:FormItem.Label="{my:LocObject Maximum}"
                                Maximum="1000"
                                Minimum="-1000"
                                Value="100" />
-                <ToggleSwitch Name="ShowValue"
+                <ToggleSwitch x:Name="ShowValue"
                               my:FormItem.Label="{my:LocObject ShowValueOnMouseOver}"
                               OnContent=""
                               OffContent=""

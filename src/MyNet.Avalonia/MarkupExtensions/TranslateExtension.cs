@@ -78,9 +78,9 @@ public class TranslateExtension : LocExtension
     /// Creates the main binding for the translation, supporting dynamic binding scenarios.
     /// </summary>
     /// <returns>A binding to the property to translate.</returns>
-    protected override BindingBase? CreateBinding()
+    protected override BindingBase CreateBinding()
     {
-        var binding = new Binding(Key)
+        var binding = new ReflectionBinding(Key)
         {
             Mode = BindingMode.OneWay
         };

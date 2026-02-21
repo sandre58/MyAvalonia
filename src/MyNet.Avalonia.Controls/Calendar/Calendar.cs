@@ -138,13 +138,7 @@ public class Calendar : TemplatedControl
     {
         var day = (DayOfWeek)value;
 
-        return day == DayOfWeek.Sunday
-            || day == DayOfWeek.Monday
-            || day == DayOfWeek.Tuesday
-            || day == DayOfWeek.Wednesday
-            || day == DayOfWeek.Thursday
-            || day == DayOfWeek.Friday
-            || day == DayOfWeek.Saturday;
+        return day is DayOfWeek.Sunday or DayOfWeek.Monday or DayOfWeek.Tuesday or DayOfWeek.Wednesday or DayOfWeek.Thursday or DayOfWeek.Friday or DayOfWeek.Saturday;
     }
 
     private void OnFirstDayOfWeekChanged(AvaloniaPropertyChangedEventArgs e)
@@ -152,7 +146,7 @@ public class Calendar : TemplatedControl
         if (IsValidFirstDayOfWeek(e.NewValue!))
             Refresh();
         else
-            throw new ArgumentOutOfRangeException(nameof(e), "Invalid DayOfWeek");
+            throw new ArgumentOutOfRangeException(nameof(e));
     }
 
     #endregion
@@ -183,10 +177,7 @@ public class Calendar : TemplatedControl
     {
         var mode = (CalendarSelectionMode)value;
 
-        return mode == CalendarSelectionMode.SingleDate
-            || mode == CalendarSelectionMode.SingleRange
-            || mode == CalendarSelectionMode.MultipleRange
-            || mode == CalendarSelectionMode.None;
+        return mode is CalendarSelectionMode.SingleDate or CalendarSelectionMode.SingleRange or CalendarSelectionMode.MultipleRange or CalendarSelectionMode.None;
     }
 
     private void OnSelectionModeChanged(AvaloniaPropertyChangedEventArgs e)
@@ -194,7 +185,7 @@ public class Calendar : TemplatedControl
         if (IsValidSelectionMode(e.NewValue!))
             ClearSelection();
         else
-            throw new ArgumentOutOfRangeException(nameof(e), "Invalid SelectionMode");
+            throw new ArgumentOutOfRangeException(nameof(e));
     }
 
     #endregion
@@ -275,7 +266,7 @@ public class Calendar : TemplatedControl
             }
             else
             {
-                throw new ArgumentOutOfRangeException(nameof(e), "SelectedDate value is not valid.");
+                throw new ArgumentOutOfRangeException(nameof(e));
             }
         }
         else
@@ -369,7 +360,7 @@ public class Calendar : TemplatedControl
     {
         DecadeContext decadeContext => decadeContext.StartYear % 10 == 0 ? decadeContext : new DecadeContext(DateTimeHelper.GetDecade(decadeContext.StartYear).Start),
         CenturyContext centuryContaxt => centuryContaxt.StartYear % 100 == 0 ? centuryContaxt : new CenturyContext(DateTimeHelper.GetCentury(centuryContaxt.StartYear).Start),
-        _ => value,
+        _ => value
     };
 
     private void OnDisplayDateContextPropertyChanged(AvaloniaPropertyChangedEventArgs e)
@@ -444,29 +435,27 @@ public class Calendar : TemplatedControl
     {
         if (_changeDisplayDate.IsSuspended) return;
 
-        var newValue = e.NewValue as DateTime?;
-
-        if (newValue.HasValue)
+        if (e.NewValue is DateTime newValue)
         {
             // DisplayDateStart coerces to the date of the SelectedDateMin if SelectedDateMin < DisplayDateStart
             var selectedDateMin = SelectedDateMin();
 
-            if (selectedDateMin.HasValue && selectedDateMin.Value.IsBefore(newValue.Value))
+            if (selectedDateMin.HasValue && selectedDateMin.Value.IsBefore(newValue))
             {
                 SetCurrentValue(DisplayDateStartProperty, selectedDateMin.Value);
                 return;
             }
 
             // if DisplayDateStart > DisplayDateEnd, DisplayDateEnd = DisplayDateStart
-            if (newValue.Value.IsAfter(GetDisplayDateRangeEnd()))
+            if (newValue.IsAfter(GetDisplayDateRangeEnd()))
             {
                 SetCurrentValue(DisplayDateEndProperty, DisplayDateStart);
                 return;
             }
 
             // If DisplayDateStart > DisplayDate , DisplayDate = DisplayDateStart
-            if (newValue.Value.IsAfter(DisplayDate))
-                SetCurrentValue(DisplayDateProperty, newValue.Value);
+            if (newValue.IsAfter(DisplayDate))
+                SetCurrentValue(DisplayDateProperty, newValue);
         }
 
         Refresh();
@@ -513,29 +502,27 @@ public class Calendar : TemplatedControl
     {
         if (_changeDisplayDate.IsSuspended) return;
 
-        var newValue = e.NewValue as DateTime?;
-
-        if (newValue.HasValue)
+        if (e.NewValue is DateTime newValue)
         {
             // DisplayDateEnd coerces to the date of the SelectedDateMax if SelectedDateMax > DisplayDateEnd
             var selectedDateMax = SelectedDateMax();
 
-            if (selectedDateMax.HasValue && selectedDateMax.Value.IsAfter(newValue.Value))
+            if (selectedDateMax.HasValue && selectedDateMax.Value.IsAfter(newValue))
             {
                 SetCurrentValue(DisplayDateEndProperty, selectedDateMax.Value);
                 return;
             }
 
             // if DisplayDateEnd < DisplayDateStart, DisplayDateEnd = DisplayDateStart
-            if (newValue.Value.IsBefore(GetDisplayDateRangeStart()))
+            if (newValue.IsBefore(GetDisplayDateRangeStart()))
             {
                 SetCurrentValue(DisplayDateEndProperty, GetDisplayDateRangeStart());
                 return;
             }
 
             // If DisplayDate > DisplayDateEnd, DisplayDate = DisplayDateEnd
-            if (newValue.Value.IsBefore(DisplayDate))
-                SetCurrentValue(DisplayDateProperty, newValue.Value);
+            if (newValue.IsBefore(DisplayDate))
+                SetCurrentValue(DisplayDateProperty, newValue);
         }
 
         Refresh();
@@ -573,12 +560,9 @@ public class Calendar : TemplatedControl
         // Generate Day titles (Sun, Mon, Tue, Wed, Thu, Fri, Sat) based on FirstDayOfWeek and culture.
         var count = DateTimeHelper.NumberOfDaysInWeek() + (DateTimeHelper.NumberOfDaysInWeek() * DateTimeHelper.NumberOfDaysInWeek());
         var children = new List<Control>(count);
-        var dayOfWeek = (int)FirstDayOfWeek;
-        var info = DateTimeHelper.GetCurrentDateTimeFormatInfo();
         for (var i = 0; i < DateTimeHelper.NumberOfDaysInWeek(); i++)
         {
-            var d = (dayOfWeek + i) % DateTimeHelper.NumberOfDaysInWeek();
-            if (DayTitleTemplate?.Build() is Control cell)
+            if (DayTitleTemplate?.Build() is { } cell)
             {
                 cell.DataContext = string.Empty;
                 _ = cell.SetValue(Grid.RowProperty, 0);
@@ -1002,7 +986,7 @@ public class Calendar : TemplatedControl
 
         _lastKeyModifiers = e.KeyModifiers;
 
-        if (cell.IsBlackout || !cell.IsEnabled || SelectionMode is CalendarSelectionMode.None || cell.DateContext?.ToDate() is not DateTime date)
+        if (cell.IsBlackout || !cell.IsEnabled || SelectionMode is CalendarSelectionMode.None || cell.DateContext?.ToDate() is not { } date)
         {
             _hoverStart = null;
             return;

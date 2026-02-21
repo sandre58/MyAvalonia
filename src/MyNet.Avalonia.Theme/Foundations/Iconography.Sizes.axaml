@@ -72,7 +72,7 @@
     </Style>
 
     <!-- Variants (TextFields) : AutoCompleteBox, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, CalendarDatePickerEx, CodeBlock, ColorPickerEx, DateRangePicker, DateTimePicker, MultiComboBox, TagBox, TimePickerEx, TimeRangePicker -->
-    <Style Selector="AutoCompleteBox, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|CodeBlock, my|ColorPickerEx, my|DateRangePicker, my|DateTimePicker, my|MultiComboBox, my|TagBox, my|TimePickerEx, my|TimeRangePicker">
+    <Style Selector="AutoCompleteBox, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|CodeBlock, my|ColorPickerEx, my|MultiComboBox, my|TagBox, my|TimePickerEx">
 
         <Style Selector="^">
 

@@ -1,37 +1,43 @@
 <pages:Page x:Class="MyNet.Avalonia.Demo.Pages.CarouselPage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
-            mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
+            xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
-            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
-            xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
+            x:Name="Root"
             x:DataType="vm:CarouselPageViewModel"
-            Name="Root"
-            ClipToBounds="False">
+            ClipToBounds="False"
+            mc:Ignorable="d">
 
-    <v:ControlCatalogView ShowIcon="False" ShowContent="False">
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
-                <Carousel Theme="{Binding Appearance.ActiveTheme}"
-                          my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
-                          my:ClassesAssist.Classes="{Binding ComputedClasses}"
-                          Width="600"
+                <Carousel Width="600"
                           Height="400"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"
-                          ItemsSource="{m:RandomCountries Max=20}">
+                          my:ClassesAssist.Classes="{Binding ComputedClasses}"
+                          my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
+                          ItemsSource="{m:RandomCountries Max=20}"
+                          Theme="{Binding Appearance.ActiveTheme}">
                     <Carousel.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
-                                <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                            <Border Padding="60 10"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Background="{m:RandomBrush}">
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Foreground="{my:ThemeBrush Background, RelativeSource={RelativeSource AncestorType=Border}, Contrast=True}"
+                                           Text="{m:RandomText}"
+                                           TextWrapping="Wrap" />
                             </Border>
                         </DataTemplate>
                     </Carousel.ItemTemplate>
@@ -41,16 +47,23 @@
 
         <v:ControlCatalogView.ThemeControlTemplate>
             <DataTemplate x:DataType="c:ControlDefinition">
-                <Carousel Theme="{Binding Theme}"
-                          my:ThemeAssist.Role="{Binding Role}"
-                          my:ClassesAssist.Classes="{Binding Classes}"
-                          Width="600"
+                <Carousel Width="600"
                           Height="400"
-                          ItemsSource="{m:RandomCountries Max=20}">
+                          my:ClassesAssist.Classes="{Binding Classes}"
+                          my:ThemeAssist.Role="{Binding Role}"
+                          ItemsSource="{m:RandomCountries Max=20}"
+                          Theme="{Binding Theme}">
                     <Carousel.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="{m:RandomBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="60 10">
-                                <TextBlock Foreground="{my:Brush $parent[Border].Background, Contrast=True}" Text="{m:RandomText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                            <Border Padding="60 10"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Background="{m:RandomBrush}">
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Foreground="{my:ThemeBrush Background, RelativeSource={RelativeSource AncestorType=Border}, Contrast=True}"
+                                           Text="{m:RandomText}"
+                                           TextWrapping="Wrap" />
                             </Border>
                         </DataTemplate>
                     </Carousel.ItemTemplate>
@@ -59,18 +72,18 @@
         </v:ControlCatalogView.ThemeControlTemplate>
 
         <v:ControlCatalogView.Settings>
-            <my:Form IsVisible="{Binding #Root.DataContext.Playground.Appearance.SelectedTheme, Converter={x:Static my:NullConverter.IsNotNull}}">
+            <my:Form x:DataType="vm:CarouselPageViewModel" DataContext="{Binding #Root.DataContext}" IsVisible="{Binding Playground.Appearance.SelectedTheme, Converter={x:Static my:NullConverter.IsNotNull}}">
 
-                <ListBox my:FormItem.Label="{my:LocObject Type}" SelectedValue="{Binding #Root.DataContext.TypeClassProvider.SelectedClass}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                <ListBox my:FormItem.Label="{my:LocObject Type}" SelectedValue="{Binding TypeClassProvider.SelectedClass}" SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
                     <ListBoxItem Content="{my:Loc Dots}" DataContext="variant-dots" />
                     <ListBoxItem Content="{my:Loc Columnar}" DataContext="variant-columnar" />
                     <ListBoxItem Content="{my:Loc Lines}" DataContext="variant-lines" />
                 </ListBox>
 
-                <ListBox my:FormItem.Label="{my:LocObject Position}" SelectedValue="{Binding #Root.DataContext.IndicatorClassProvider.SelectedClass}" SelectedValueBinding="{ReflectionBinding DataContext}">
-                    <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="indicator-left" />
-                    <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:Loc Center}" DataContext="indicator-center" />
-                    <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:Loc Right}" DataContext="indicator-right" />
+                <ListBox my:FormItem.Label="{my:LocObject Position}" SelectedValue="{Binding IndicatorClassProvider.SelectedClass}" SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
+                    <ListBoxItem Content="{my:Icon GamepadCircleLeft}" DataContext="indicator-left" ToolTip.Tip="{my:Loc Left}" />
+                    <ListBoxItem Content="{my:Icon CircleSmall}" DataContext="indicator-center" ToolTip.Tip="{my:Loc Center}" />
+                    <ListBoxItem Content="{my:Icon GamepadCircleRight}" DataContext="indicator-right" ToolTip.Tip="{my:Loc Right}" />
                 </ListBox>
             </my:Form>
         </v:ControlCatalogView.Settings>

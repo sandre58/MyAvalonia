@@ -178,5 +178,5 @@ public class ToasterService : IToasterService, IDisposable
         _ => throw new ArgumentOutOfRangeException(nameof(position), position, null)
     };
 
-    public IEnumerable<INotification> GetActiveToasts() => throw new NotImplementedException();
+    public IEnumerable<INotification> GetActiveToasts() => [];
 }

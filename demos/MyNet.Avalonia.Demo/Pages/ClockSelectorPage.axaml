@@ -22,7 +22,7 @@
                 <StackPanel Classes="size-md"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center">
-                    <my:ClockSelector Name="Clock"
+                    <my:ClockSelector x:Name="Clock"
                                       Width="180"
                                       Height="180"
                                       VerticalAlignment="Center"
@@ -35,7 +35,7 @@
                     <ListBox HorizontalAlignment="Center"
                              Classes="kind-toggle"
                              SelectedValue="{Binding #Clock.IsAm, Mode=TwoWay}"
-                             SelectedValueBinding="{ReflectionBinding DataContext}">
+                             SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
                         <ListBoxItem DataContext="{x:True}" Content="{my:Loc Am, Casing=AllCaps}" />
                         <ListBoxItem DataContext="{x:False}" Content="{my:Loc Pm, Casing=AllCaps}" />
                     </ListBox>
@@ -55,14 +55,12 @@
         </v:ControlCatalogView.ThemeControlTemplate>
 
         <v:ControlCatalogView.Settings>
-            <my:Form>
-                <ToggleSwitch Name="ShowSeconds" my:FormItem.Label="{my:LocObject UseSeconds}" IsChecked="True" />
+            <my:Form x:DataType="vm:ClockSelectorPageViewModel" DataContext="{Binding #Root.DataContext}">
+                <ToggleSwitch x:Name="ShowSeconds" my:FormItem.Label="{my:LocObject UseSeconds}" IsChecked="True" />
                     <ListBox my:FormItem.Label="{my:LocObject Format}"
-                             Name="TimeFormat"
-                             DisplayMemberBinding="{ReflectionBinding Display}"
-                             ItemsSource="{my:EnumSource {x:Type u:TimeFormat}}"
-                             SelectedValue="{x:Static u:TimeFormat.TwentyFourHour}"
-                             SelectedValueBinding="{ReflectionBinding Value}" />
+                             x:Name="TimeFormat"
+                             my:ItemsBehavior.EnumSourceType="{x:Type u:TimeFormat}"
+                             SelectedValue="{x:Static u:TimeFormat.TwentyFourHour}" />
                 <Button Content="{my:Loc Restore}"
                         my:IconAssist.Icon="{my:Icon Refresh}"
                         Click="Restore_Click"

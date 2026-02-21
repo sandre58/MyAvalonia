@@ -85,24 +85,24 @@ public static class ThemeAssist
 
     private static void PropagateContextToPopup(Control source, AvaloniaObject? popup)
     {
-        if (popup is null)
-            return;
-
-        if (popup is FlyoutBase flyout)
+        switch (popup)
         {
-            flyout.Opened += (s, e) =>
-            {
-                var context = GetContext(source);
-                SetContext(flyout, context);
-            };
-        }
-        else if (popup is ContextMenu contextMenu)
-        {
-            contextMenu.Opened += (s, e) =>
-            {
-                var context = GetContext(source);
-                SetContext(contextMenu, context);
-            };
+            case null:
+                return;
+            case FlyoutBase flyout:
+                flyout.Opened += (_, _) =>
+                {
+                    var context = GetContext(source);
+                    SetContext(flyout, context);
+                };
+                break;
+            case ContextMenu contextMenu:
+                contextMenu.Opened += (_, _) =>
+                {
+                    var context = GetContext(source);
+                    SetContext(contextMenu, context);
+                };
+                break;
         }
     }
 
@@ -113,7 +113,7 @@ public static class ThemeAssist
     /// <summary>
     /// Defines the Role attached property for assigning a semantic color role to a control.
     /// </summary>
-    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, ThemeRole>("Role", typeof(ThemeAssist), ThemeRole.Default);
+    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, ThemeRole>("Role", typeof(ThemeAssist));
 
     /// <summary>
     /// Gets the theme role for the specified control.

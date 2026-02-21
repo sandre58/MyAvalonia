@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="HeaderedContentControlPageViewModel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="HeaderedContentControlPageViewModel.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -20,12 +20,12 @@ internal sealed class HeaderedContentControlPageViewModel : ControlCatalogViewMo
                     .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-text", "variant-underline", "variant-headered", "variant-transparent", "shadow-surface", "shadow-header")
                     .AddAllRoles()
                     .AddDefaultSizes()
-                    .AddSizes(["header-watermark", "header-sub-caption", "header-caption", "header-h1", "header-h2", "header-h3", "header-h4", "header-h5", "header-h6"]),
+                    .AddSizes("header-watermark", "header-sub-caption", "header-caption", "header-h1", "header-h2", "header-h3", "header-h4", "header-h5", "header-h6"),
 
             new ControlThemeBuilder(null, "kind-label")
                     .AddVariants("variant-watermark")
                     .AddDefaultSizes()
-                    .AddSizes(["header-watermark", "header-sub-caption", "header-caption", "header-h1", "header-h2", "header-h3", "header-h4", "header-h5", "header-h6"])
+                    .AddSizes("header-watermark", "header-sub-caption", "header-caption", "header-h1", "header-h2", "header-h3", "header-h4", "header-h5", "header-h6")
             ]) => Playground.ClassProviders.AddRange([PositionClassProvider, HeaderAlignmentClassProvider]);
 
     public ClassProvider PositionClassProvider { get; } = new("position-top");

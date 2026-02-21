@@ -4,9 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:my="http://mynet.com/avalonia"
-             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
              xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
-             xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
              d:DesignHeight="450"
              d:DesignWidth="800"
              x:DataType="vm:MainViewModel"
@@ -24,7 +22,7 @@
             <Panel Margin="{my:Thickness Md}" my:ThemeAssist.Context="Contrast" TextElement.Foreground="{my:Theme Foreground.Inverse}">
 
                 <!-- Menu -->
-                <my:NavigationMenu Name="menu" my:NavigationAssist.AttachService="{Binding NavigationService}" my:NavigationAssist.Command="{Binding NavigateCommand}">
+                <my:NavigationMenu x:Name="menu" my:NavigationAssist.AttachService="{Binding NavigationService}" my:NavigationAssist.Command="{Binding NavigateCommand}">
                     <my:NavigationMenu.Header>
                         <Grid RowDefinitions="Auto, Auto, Auto"
                               RowSpacing="{StaticResource MyNet.Spacing.Md}"
@@ -116,12 +114,12 @@
                     <my:NavigationMenuItem CommandParameter="{x:Type vm:ToggleSplitButtonPageViewModel}" Header="ToggleSplitButton" Icon="{StaticResource MyNet.Geometry.FormDropdown}" />
                     <my:NavigationMenuItem CommandParameter="{x:Type vm:ToggleSwitchPageViewModel}" Header="ToggleSwitch" Icon="{StaticResource MyNet.Geometry.ToggleSwitch}" />
                     <my:NavigationMenuItem CommandParameter="{x:Type vm:TreeViewPageViewModel}" Header="TreeView" Icon="{StaticResource MyNet.Geometry.FileTree}" />
-                    
+
                     <!-- Extended Controls -->
                     <my:NavigationMenuItem IsSeparator="True" Padding="1" Header="Custom}" /><my:NavigationMenuItem CommandParameter="{x:Type vm:DialogPageViewModel}" Header="Dialogs}" Icon="{StaticResource MyNet.Geometry.DockWindow}" />
                     <my:NavigationMenuItem CommandParameter="{x:Type vm:DrawerPageViewModel}" Header="Drawers" Icon="{StaticResource MyNet.Geometry.ViewSplitVertical}" />
                     <my:NavigationMenuItem CommandParameter="{x:Type vm:FormPageViewModel}" Header="Forms" Icon="{StaticResource MyNet.Geometry.FormatLineStyle}" />
-                    
+
                     </my:NavigationMenu>
             </Panel>
         </Panel>

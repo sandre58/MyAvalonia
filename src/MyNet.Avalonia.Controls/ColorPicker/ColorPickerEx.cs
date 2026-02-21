@@ -521,20 +521,16 @@ public class ColorPickerEx : TextPicker<Color?, ColorView>
         {
             return value.Value.ToHex();
         }
-        else
-        {
-            var name = value.Value.ToName();
 
-            if (TextMode == ColorDisplayNameMode.Name)
-            {
-                return name;
-            }
-            else
-            {
-                var hexa = value.Value.ToHex();
-                return name == hexa ? hexa : $"{name} ({hexa})";
-            }
+        var name = value.Value.ToName();
+
+        if (TextMode == ColorDisplayNameMode.Name)
+        {
+            return name;
         }
+
+        var hex = value.Value.ToHex();
+        return name == hex ? hex : $"{name} ({hex})";
     }
 
     protected override Color? ConvertValueFromString(string text) => text.TryToColor();
@@ -543,7 +539,7 @@ public class ColorPickerEx : TextPicker<Color?, ColorView>
     {
         if (Previewer is not null && value.HasValue)
         {
-            Previewer.Color = value!.Value;
+            Previewer.Color = value.Value;
         }
     }
 

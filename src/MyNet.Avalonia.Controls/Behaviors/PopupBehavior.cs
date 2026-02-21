@@ -33,7 +33,7 @@ public static class PopupBehavior
                 popup.PropertyChanged += OnPopupPropertyChanged;
 
                 // Initialize child state if it already exists
-                if (popup.Child is Control child)
+                if (popup.Child is { } child)
                 {
                     InitializeControlForSlide(child);
                 }
@@ -261,12 +261,7 @@ public static class PopupBehavior
 
         if (!popupOpen)
         {
-            if ((e.Key == Key.Down || e.Key == Key.Up) && e.KeyModifiers == KeyModifiers.Alt)
-            {
-                tc.OpenPopup();
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Enter)
+            if ((e.Key is Key.Down or Key.Up && e.KeyModifiers == KeyModifiers.Alt) || e.Key == Key.Enter)
             {
                 tc.OpenPopup();
                 e.Handled = true;
@@ -313,15 +308,15 @@ public static class PopupBehavior
 
     private static void OnTemplateApplied(object? sender, TemplateAppliedEventArgs e)
     {
-        if (sender is not TemplatedControl tc)
+        if (sender is not TemplatedControl)
             return;
 
         var popup = e.NameScope.Find<Popup>("PART_Popup");
         if (popup != null)
         {
-            popup.Opened += (_, __) =>
+            popup.Opened += (_, _) =>
             {
-                var focusable = popup?.Child?.GetFirstFocusableControl();
+                var focusable = popup.Child?.GetFirstFocusableControl();
                 focusable?.Focus();
             };
         }
@@ -334,7 +329,7 @@ public static class PopupBehavior
     /// <summary>
     /// Provides EnableSlide Property for attached PopupAssist element.
     /// </summary>
-    public static readonly AttachedProperty<bool> EnableSlideProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("EnableSlide", typeof(PopupBehavior), false);
+    public static readonly AttachedProperty<bool> EnableSlideProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("EnableSlide", typeof(PopupBehavior));
 
     /// <summary>
     /// Accessor for Attached  <see cref="EnableSlideProperty"/>.
@@ -351,7 +346,7 @@ public static class PopupBehavior
 
     private static void OnPopupPropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
     {
-        if (sender is not Popup popup || e.Property.Name != nameof(Popup.Child) || popup.Child is not Control child)
+        if (sender is not Popup popup || e.Property.Name != nameof(Popup.Child) || popup.Child is not { } child)
             return;
 
         // When Child is set, immediately hide it to prevent flash
@@ -360,7 +355,7 @@ public static class PopupBehavior
 
     private static void OnPopupClosedCallback(object? sender, EventArgs e)
     {
-        if (sender is not Popup popup || popup.Child is not Control child)
+        if (sender is not Popup { Child: { } child })
             return;
 
         ResetControlState(child);
@@ -368,7 +363,7 @@ public static class PopupBehavior
 
     private static void OnPopupOpenedCallback(object? sender, EventArgs e)
     {
-        if (sender is not Popup popup || popup.Child is not Control child)
+        if (sender is not Popup { Child: { } child } popup)
             return;
 
         ApplySlideAnimation(child, popup.Placement);

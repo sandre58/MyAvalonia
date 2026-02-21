@@ -18,13 +18,13 @@ using MyNet.UI.Dialogs.MessageBox;
 namespace MyNet.Avalonia.Extended.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-[TemplatePart(PartOKButton, typeof(Button))]
+[TemplatePart(PartOkButton, typeof(Button))]
 [TemplatePart(PartCancelButton, typeof(Button))]
 [TemplatePart(PartYesButton, typeof(Button))]
 [TemplatePart(PartNoButton, typeof(Button))]
 public class OverlayDialogBox : OverlayDialogBase
 {
-    public const string PartOKButton = "PART_OKButton";
+    public const string PartOkButton = "PART_OKButton";
     public const string PartCancelButton = "PART_CancelButton";
     public const string PartYesButton = "PART_YesButton";
     public const string PartNoButton = "PART_NoButton";
@@ -65,7 +65,7 @@ public class OverlayDialogBox : OverlayDialogBase
     {
         base.OnApplyTemplate(e);
         Button.ClickEvent.RemoveHandler(DefaultButtonsClose, _okButton, _cancelButton, _yesButton, _noButton);
-        _okButton = e.NameScope.Find<Button>(PartOKButton);
+        _okButton = e.NameScope.Find<Button>(PartOkButton);
         _cancelButton = e.NameScope.Find<Button>(PartCancelButton);
         _yesButton = e.NameScope.Find<Button>(PartYesButton);
         _noButton = e.NameScope.Find<Button>(PartNoButton);
@@ -102,8 +102,6 @@ public class OverlayDialogBox : OverlayDialogBase
             case MessageBoxResultOption.YesNoCancel:
                 IsVisibleProperty.SetValue(false, _okButton);
                 IsVisibleProperty.SetValue(true, _cancelButton, _yesButton, _noButton);
-                break;
-            default:
                 break;
         }
     }

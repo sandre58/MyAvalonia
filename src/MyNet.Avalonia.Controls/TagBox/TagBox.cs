@@ -160,10 +160,8 @@ public class TagBox : TemplatedControl
     public IList Items
     {
         get;
-        private set => SetAndRaise(ItemsProperty, ref field, value);
+        private init => SetAndRaise(ItemsProperty, ref field, value);
     }
-
-= null!;
 
     public ControlTheme InputTheme
     {
@@ -281,45 +279,53 @@ public class TagBox : TemplatedControl
                 Items.Insert(Items.Count - 1, newTag);
         }
 
-        if (oldTags is INotifyCollectionChanged inccold) inccold.CollectionChanged -= OnCollectionChanged;
+        if (oldTags is INotifyCollectionChanged oldTagsCollection) oldTagsCollection.CollectionChanged -= OnCollectionChanged;
 
-        if (Tags is INotifyCollectionChanged incc) incc.CollectionChanged += OnCollectionChanged;
+        if (Tags is INotifyCollectionChanged tags) tags.CollectionChanged += OnCollectionChanged;
 
         RaiseEvent(new SelectionChangedEventArgs(TagsChangedEvent, (IList)oldTags!, (IList)newTags!) { RoutedEvent = TagsChangedEvent, Source = this });
     }
 
     private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        if (e.Action == NotifyCollectionChangedAction.Add)
+        switch (e.Action)
         {
-            var items = e.NewItems;
-            if (items is null) return;
-            var index = e.NewStartingIndex;
-            foreach (var item in items)
-            {
-                if (item is string s)
+            case NotifyCollectionChangedAction.Add:
                 {
-                    Items.Insert(index, s);
-                    index++;
+                    var items = e.NewItems;
+                    if (items is null) return;
+                    var index = e.NewStartingIndex;
+                    foreach (var item in items)
+                    {
+                        if (item is string s)
+                        {
+                            Items.Insert(index, s);
+                            index++;
+                        }
+                    }
+
+                    break;
                 }
-            }
-        }
-        else if (e.Action == NotifyCollectionChangedAction.Remove)
-        {
-            var items = e.OldItems;
-            if (items is null) return;
-            var index = e.OldStartingIndex;
-            foreach (var item in items)
-            {
-                if (item is string)
-                    Items.RemoveAt(index);
-            }
-        }
-        else if (e.Action == NotifyCollectionChangedAction.Reset)
-        {
-            Items.Clear();
-            _ = Items.Add(_textBox);
-            InvalidateVisual();
+
+            case NotifyCollectionChangedAction.Remove:
+                {
+                    var items = e.OldItems;
+                    if (items is null) return;
+                    var index = e.OldStartingIndex;
+                    foreach (var item in items)
+                    {
+                        if (item is string)
+                            Items.RemoveAt(index);
+                    }
+
+                    break;
+                }
+
+            case NotifyCollectionChangedAction.Reset:
+                Items.Clear();
+                _ = Items.Add(_textBox);
+                InvalidateVisual();
+                break;
         }
 
         OnTextChanged();
@@ -338,29 +344,39 @@ public class TagBox : TemplatedControl
 
     private void OnTextBoxKeyDown(object? sender, KeyEventArgs args)
     {
-        if (!AcceptsReturn && args.Key == Key.Enter)
+        switch (AcceptsReturn)
         {
-            AddTags(_textBox.Text);
-        }
-        else if (AcceptsReturn && args.Key == Key.Enter)
-        {
-            var texts = _textBox.Text?.Split(["\r", "\n"], StringSplitOptions.RemoveEmptyEntries) ?? [];
-            foreach (var text in texts)
-            {
-                AddTags(text);
-            }
+            case false when args.Key == Key.Enter:
+                AddTags(_textBox.Text);
+                break;
 
-            args.Handled = true;
-        }
-        else if (args.Key is Key.Delete or Key.Back)
-        {
-            if (string.IsNullOrEmpty(_textBox.Text) || _textBox.Text?.Length == 0)
-            {
-                if (Tags.Count == 0) return;
-                var index = Items.Count - 2;
+            case true when args.Key == Key.Enter:
+                {
+                    var texts = _textBox.Text?.Split(["\r", "\n"], StringSplitOptions.RemoveEmptyEntries) ?? [];
+                    foreach (var text in texts)
+                    {
+                        AddTags(text);
+                    }
 
-                Tags.RemoveAt(index);
-            }
+                    args.Handled = true;
+                    break;
+                }
+
+            default:
+                {
+                    if (args.Key is Key.Delete or Key.Back)
+                    {
+                        if (string.IsNullOrEmpty(_textBox.Text) || _textBox.Text?.Length == 0)
+                        {
+                            if (Tags.Count == 0) return;
+                            var index = Items.Count - 2;
+
+                            Tags.RemoveAt(index);
+                        }
+                    }
+
+                    break;
+                }
         }
     }
 
@@ -400,14 +416,11 @@ public class TagBox : TemplatedControl
 
     public void Close(object o)
     {
-        if (o is Control t)
+        if (o is Control { Parent: ContentPresenter presenter })
         {
-            if (t.Parent is ContentPresenter presenter)
-            {
-                var index = _itemsControl?.IndexFromContainer(presenter);
-                if (index is >= 0 && index < Items.Count - 1)
-                    Tags.RemoveAt(index.Value);
-            }
+            var index = _itemsControl?.IndexFromContainer(presenter);
+            if (index is >= 0 && index < Items.Count - 1)
+                Tags.RemoveAt(index.Value);
         }
     }
 }

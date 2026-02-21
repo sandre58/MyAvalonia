@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="ValidationErrorMessageConverter.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="ValidationErrorMessageConverter.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -21,32 +21,30 @@ public class ValidationErrorMessageConverter : IValueConverter
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is IEnumerable errors)
+        if (value is not IEnumerable errors)
+            return value;
+
+        var messages = new List<string>();
+
+        foreach (var error in errors)
         {
-            var messages = new List<string>();
-
-            foreach (var error in errors)
+            switch (error)
             {
-                if (error is TranslatableException translatableException)
-                {
+                case TranslatableException translatableException:
                     messages.Add(TranslationService.Current.Translate(translatableException.ResourceKey).FormatWith(translatableException.Parameters ?? []));
-                }
-                else if (error is Exception exception)
-                {
+                    break;
+                case Exception exception:
                     messages.Add(exception.Message);
-                }
-                else
-                {
+                    break;
+                default:
                     messages.Add(error?.ToString()?.Translate() ?? string.Empty);
-                }
+                    break;
             }
-
-            return messages;
         }
 
-        return value;
+        return messages;
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         => throw new NotSupportedException();
 }

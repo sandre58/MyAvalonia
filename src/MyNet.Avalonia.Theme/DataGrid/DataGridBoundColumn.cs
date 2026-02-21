@@ -367,8 +367,6 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
             case "Foreground":
                 DataGridHelper.SynchronizeColumnProperty(this, element, ForegroundProperty);
                 break;
-            default:
-                break;
         }
     }
 

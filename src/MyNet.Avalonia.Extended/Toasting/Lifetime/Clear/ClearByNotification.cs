@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace MyNet.Avalonia.Extended.Toasting.Lifetime.Clear;
 
-public class ClearByNotification(MyNet.UI.Notifications.INotification notification) : IClearStrategy
+public class ClearByNotification(UI.Notifications.INotification notification) : IClearStrategy
 {
     public IEnumerable<Toast> GetToastsToRemove(IEnumerable<Toast> toasts)
     {

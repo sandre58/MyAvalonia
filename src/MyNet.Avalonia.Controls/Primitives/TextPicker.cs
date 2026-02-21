@@ -434,8 +434,8 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
 
     protected override void OnLostFocus(RoutedEventArgs e)
     {
-        if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is Visual v && v.FindAncestorOfType<TPreviewer>(true) == Previewer) return;
-        if (e.Source is Visual v1 && v1.FindAncestorOfType<TPreviewer>(true) == Previewer) return;
+        if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is Visual v && ReferenceEquals(v.FindAncestorOfType<TPreviewer>(true), Previewer)) return;
+        if (e.Source is Visual v1 && ReferenceEquals(v1.FindAncestorOfType<TPreviewer>(true), Previewer)) return;
 
         CommitFromTextBox();
 
@@ -473,17 +473,15 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
             {
                 return newSelectedValue;
             }
-            else
-            {
-                var errorMessage = MessagesResources.InvalidValueError;
-                var valueValidationError = new PickerValueValidationErrorEventArgs(new ArgumentOutOfRangeException(nameof(text), errorMessage), text);
-                OnValueValidationError(valueValidationError);
 
-                DataValidationErrors.SetError(this, valueValidationError.Exception);
+            var errorMessage = MessagesResources.InvalidValueError;
+            var valueValidationError = new PickerValueValidationErrorEventArgs(new ArgumentOutOfRangeException(nameof(text), errorMessage), text);
+            OnValueValidationError(valueValidationError);
 
-                if (valueValidationError.ThrowException)
-                    throw valueValidationError.Exception;
-            }
+            DataValidationErrors.SetError(this, valueValidationError.Exception);
+
+            if (valueValidationError.ThrowException)
+                throw valueValidationError.Exception;
         }
         catch (FormatException e)
         {
@@ -515,7 +513,8 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
 
             return;
         }
-        else if (SelectedValue is not null)
+
+        if (SelectedValue is not null)
         {
             var selectedValueText = ConvertValueToString(SelectedValue);
             if (selectedValueText == text)

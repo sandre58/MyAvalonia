@@ -17,5 +17,5 @@ public static class VisualExtensions
     /// <summary>
     /// Executes an action on all children of a visual of type <typeparamref name="T"/>.
     /// </summary>
-    public static void ExecuteOnChildren<T>(this Visual visual, Action<T> action) => visual?.GetVisualDescendants().OfType<T>().ForEach(action);
+    public static void ExecuteOnChildren<T>(this Visual visual, Action<T> action) => visual.GetVisualDescendants().OfType<T>().ForEach(action);
 }

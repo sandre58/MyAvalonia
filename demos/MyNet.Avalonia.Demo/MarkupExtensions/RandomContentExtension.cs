@@ -47,7 +47,7 @@ internal sealed class RandomContentExtension : MarkupExtension
             ContentType.Number => RandomGenerator.Int(0, 200),
             ContentType.Text => RandomGenerator.String(RandomGenerator.Int(1, 2)),
             ContentType.Char => RandomGenerator.Char(),
-            _ => null!,
+            _ => null!
         };
     }
 

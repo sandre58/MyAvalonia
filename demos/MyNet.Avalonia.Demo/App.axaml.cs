@@ -38,7 +38,9 @@ using MyNet.UI.Toasting;
 using MyNet.Utilities.Geography.Extensions;
 using MyNet.Utilities.Localization;
 using MyNet.Utilities.Logging;
+using MyNet.Utilities.Logging.NLog;
 using PropertyChanged;
+using Scheduler = MyNet.UI.Threading.Scheduler;
 
 namespace MyNet.Avalonia.Demo;
 
@@ -86,7 +88,7 @@ public class App : Application
     }
 
     private void RegisterServices(ServiceCollection collection)
-        => collection.AddSingleton<ILogger, Utilities.Logging.NLog.Logger>()
+        => collection.AddSingleton<ILogger, Logger>()
                      .AddSingleton<IViewModelLocator, ViewModelLocator>()
                      .AddSingleton<IMyTheme>(MyTheme.Current)
                      .AddSingleton<IThemeBaseRegistry, ThemeVariantsRegistry>()
@@ -105,7 +107,7 @@ public class App : Application
     private static void RegisterPageViewModels(ServiceCollection collection)
     {
         collection.AddSingleton<MainViewModel>();
-        foreach (var viewModelType in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsAssignableTo(typeof(INavigationPage))))
+        foreach (var viewModelType in Assembly.GetExecutingAssembly().GetTypes().Where(t => t is { IsClass: true, IsAbstract: false } && t.IsAssignableTo(typeof(INavigationPage))))
         {
             collection.AddSingleton(viewModelType);
         }
@@ -114,7 +116,7 @@ public class App : Application
     private static void InitializeServices(ServiceProvider services)
     {
         // Logging
-        Utilities.Logging.NLog.Logger.LoadConfiguration($"{Directory.GetCurrentDirectory()}/config/NLog.config");
+        Logger.LoadConfiguration($"{Directory.GetCurrentDirectory()}/config/NLog.config");
 
         var viewModelLocator = services.GetRequiredService<IViewModelLocator>();
         var busyFactory = services.GetRequiredService<IBusyServiceFactory>();
@@ -127,7 +129,7 @@ public class App : Application
         BusyManager.Initialize(busyFactory);
         AppBusyManager.Initialize(busyFactory);
         CommandsManager.Initialize(services.GetRequiredService<ICommandFactory>());
-        UI.Threading.Scheduler.Initialize(services.GetRequiredService<IScheduler>());
+        Scheduler.Initialize(services.GetRequiredService<IScheduler>());
     }
 
     private static void InitializeResources()

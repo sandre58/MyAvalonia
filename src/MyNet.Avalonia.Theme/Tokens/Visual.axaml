@@ -1,8 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia"
-        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
-        xmlns:enums="clr-namespace:MyNet.Avalonia.Controls.Enums;assembly=MyNet.Avalonia.Controls">
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime">
     <Styles.Resources>
 
         <!-- ===================================================================== -->

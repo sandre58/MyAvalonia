@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="ThemeContext.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="ThemeContext.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -19,5 +19,5 @@ public enum ThemeContext
     /// <summary>
     /// Represents a high-contrast color scheme for improved visibility and accessibility.
     /// </summary>
-    Contrast,
+    Contrast
 }

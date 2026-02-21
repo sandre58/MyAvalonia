@@ -10,9 +10,8 @@
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-            xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:ToggleSwitchPageViewModel"
-            Name="Root"
+            x:Name="Root"
             ClipToBounds="False">
 
     <v:ControlCatalogView>

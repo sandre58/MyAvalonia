@@ -147,13 +147,11 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
 
                     // Start new line with this element
                     curLineSize = sz;
-                    isFirstInLine = false;
                 }
                 else
                 {
                     curLineSize.U += sz.U + spaceU;
                     curLineSize.V = Max(sz.V, curLineSize.V);
-                    isFirstInLine = false;
                 }
 
                 // FixToRb forces end of line
@@ -269,8 +267,6 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                     sz.V = itemSetSize.V;
                 }
 
-                var spaceU = curLineUIs.Count > 0 ? spacingSize.U : 0;
-
                 // TotalU doesn't include spacing, so we need to add it for existing items
                 var totalSpacingU = curLineUIs.Count > 0 ? (curLineUIs.Count * spacingSize.U) : 0;
                 if ((curLineUIs.TotalU + totalSpacingU + sz.U).GreaterThan(uvFinalSize.U))
@@ -296,8 +292,6 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                 sz = new UvSize(Orientation,
                     itemWidthSet ? ItemWidth : child.DesiredSize.Width,
                     itemHeightSet ? ItemHeight : child.DesiredSize.Height);
-
-                var spaceU = curLineUIs.Count > 0 ? spacingSize.U : 0;
 
                 // TotalU doesn't include spacing, so we need to add it for existing items
                 var totalSpacingU = curLineUIs.Count > 0 ? (curLineUIs.Count * spacingSize.U) : 0;

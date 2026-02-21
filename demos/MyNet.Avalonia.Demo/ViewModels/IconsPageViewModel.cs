@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Media;
@@ -28,7 +29,7 @@ namespace MyNet.Avalonia.Demo.ViewModels;
 
 internal sealed class IconsPageViewModel : PageViewModel
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup method")]
+    [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup method")]
     private readonly SourceList<IconBuilderData> _allIcons = new();
 
     public ListViewModel<IconBuilderData> Icons { get; }

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="ThemeContextExtension.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="ThemeContextExtension.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -44,25 +44,25 @@ public class ThemeContextExtension(string path) : ThemeBrushExtensionBase
     {
         Bindings =
         {
-            new Binding(Context)
+            new ReflectionBinding(Context)
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = RelativeSource,
-                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
+                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
             },
-            new Binding()
+            new ReflectionBinding
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = new RelativeSource(RelativeSourceMode.Self)
             },
-            new Binding("(TextElement.Foreground)")
+            new ReflectionBinding("(TextElement.Foreground)")
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor)
                 {
                     AncestorType = typeof(Control)
                 },
-                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
+                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
             }
         },
         Converter = ThemeConverter.Default,

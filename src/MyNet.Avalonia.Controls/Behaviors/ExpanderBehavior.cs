@@ -55,59 +55,37 @@ public static class ExpanderBehavior
 
     private static void OnExpanderKeyDown(object? sender, KeyEventArgs e)
     {
-        if (sender is not Expander ctrl || !ctrl.IsFocused || !ctrl.IsKeyboardFocusWithin)
+        if (sender is not Expander { IsFocused: true, IsKeyboardFocusWithin: true } ctrl)
             return;
 
-        switch (e.Key)
+        ctrl.IsExpanded = e.Key switch
         {
-            case Key.Down:
-                if (ctrl.ExpandDirection == ExpandDirection.Down && !ctrl.IsExpanded)
-                {
-                    ctrl.IsExpanded = true;
-                }
-                else if (ctrl.ExpandDirection == ExpandDirection.Up && ctrl.IsExpanded)
-                {
-                    ctrl.IsExpanded = false;
-                }
-
-                break;
-
-            case Key.Up:
-                if (ctrl.ExpandDirection == ExpandDirection.Up && !ctrl.IsExpanded)
-                {
-                    ctrl.IsExpanded = true;
-                }
-                else if (ctrl.ExpandDirection == ExpandDirection.Down && ctrl.IsExpanded)
-                {
-                    ctrl.IsExpanded = false;
-                }
-
-                break;
-
-            case Key.Left:
-                if (ctrl.ExpandDirection == ExpandDirection.Left && !ctrl.IsExpanded)
-                {
-                    ctrl.IsExpanded = true;
-                }
-                else if (ctrl.ExpandDirection == ExpandDirection.Right && ctrl.IsExpanded)
-                {
-                    ctrl.IsExpanded = false;
-                }
-
-                break;
-
-            case Key.Right:
-                if (ctrl.ExpandDirection == ExpandDirection.Right && !ctrl.IsExpanded)
-                {
-                    ctrl.IsExpanded = true;
-                }
-                else if (ctrl.ExpandDirection == ExpandDirection.Left && ctrl.IsExpanded)
-                {
-                    ctrl.IsExpanded = false;
-                }
-
-                break;
-        }
+            Key.Down => ctrl switch
+            {
+                { ExpandDirection: ExpandDirection.Down, IsExpanded: false } => true,
+                { ExpandDirection: ExpandDirection.Up, IsExpanded: true } => false,
+                _ => ctrl.IsExpanded
+            },
+            Key.Up => ctrl switch
+            {
+                { ExpandDirection: ExpandDirection.Up, IsExpanded: false } => true,
+                { ExpandDirection: ExpandDirection.Down, IsExpanded: true } => false,
+                _ => ctrl.IsExpanded
+            },
+            Key.Left => ctrl switch
+            {
+                { ExpandDirection: ExpandDirection.Left, IsExpanded: false } => true,
+                { ExpandDirection: ExpandDirection.Right, IsExpanded: true } => false,
+                _ => ctrl.IsExpanded
+            },
+            Key.Right => ctrl switch
+            {
+                { ExpandDirection: ExpandDirection.Right, IsExpanded: false } => true,
+                { ExpandDirection: ExpandDirection.Left, IsExpanded: true } => false,
+                _ => ctrl.IsExpanded
+            },
+            _ => ctrl.IsExpanded
+        };
     }
 
     #endregion

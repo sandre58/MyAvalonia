@@ -12,5 +12,5 @@ namespace MyNet.Avalonia.Demo.ViewModels.Dialogs;
 
 internal sealed class PerfDialogViewModel : DialogViewModel
 {
-    public ObservableCollection<int>? List { get; } = new(EnumerableHelper.Range(1, 1000, 1));
+    public ObservableCollection<int>? List { get; } = new(EnumerableHelper.Range(1, 1000));
 }

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="SliderPageViewModel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="SliderPageViewModel.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ internal sealed class SliderPageViewModel : ControlCatalogViewModel
                     .AddDefaultRoles()
             ]) => Disposables.AddRange(
             [
-                this.WhenPropertyChanged(x => x.Orientation).Subscribe(_ => UpdateLatyout()),
+                this.WhenPropertyChanged(x => x.Orientation).Subscribe(_ => UpdateLatyout())
             ]);
 
     private void UpdateLatyout()

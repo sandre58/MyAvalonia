@@ -6,12 +6,10 @@
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             mc:Ignorable="d"
             xmlns:my="http://mynet.com/avalonia"
-            xmlns:ctrl="clr-namespace:MyNet.Avalonia.Demo.Controls"
             xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             xmlns:u="clr-namespace:MyNet.Utilities.DateTimes;assembly=MyNet.Utilities"
             xmlns:geo="using:MyNet.Utilities.Geography"
@@ -19,6 +17,8 @@
             x:Name="Root"
             ClipToBounds="False">
     <pages:Page.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+
         <DataTemplate x:Key="MyNet.DataTemplate.Country" DataType="{x:Type geo:Country}">
             <DockPanel>
                 <Image Width="16"
@@ -42,98 +42,89 @@
                              VerticalAlignment="Center"
                              HorizontalAlignment="Center">
                     <UniformGrid.Styles>
-                        <Style Selector="AutoCompleteBox, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|ColorPickerEx, my|DateRangePicker, my|DateTimePicker, my|MultiComboBox, my|TagBox, my|TimePickerEx, my|TimeRangePicker">
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                            <Setter Property="MaxWidth" Value="250"/>
-                            <Setter Property="my:TextFieldAssist.UnderText" Value="{Binding #UnderText.Text}"/>
-                            <Setter Property="my:TextFieldAssist.InnerLeftContent" Value="{Binding #InnerLeftContent.Text}"/>
-                            <Setter Property="my:TextFieldAssist.InnerRightContent" Value="{Binding #InnerLeftContent.Text}"/>
-                            <Setter Property="my:TextFieldAssist.ShowClearButton" Value="{Binding #ShowClearButton.IsChecked}"/>
-                            <Setter Property="my:TextFieldAssist.ShowClipboardButton" Value="{Binding #ShowClipboardButton.IsChecked}"/>
-                            <Setter Property="my:TextFieldAssist.UseFloatingPlaceholder" Value="{Binding #IsFloating.IsChecked}"/>
-                            <Setter Property="my:TextFieldBehavior.IsTextEditable" Value="{Binding #IsEditable.IsChecked}"/>
-                            <Setter Property="my:IconAssist.Icon" Value="{Binding IconProvider.Icon}"/>
+                        <Style Selector="AutoCompleteBox, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|ColorPickerEx, my|MultiComboBox, my|TagBox, my|TimePickerEx">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="MaxWidth" Value="250" />
+                            <Setter Property="my:TextFieldAssist.UnderText" Value="{Binding #UnderText.Text}" />
+                            <Setter Property="my:TextFieldAssist.InnerLeftContent" Value="{Binding #InnerLeftContent.Text}" />
+                            <Setter Property="my:TextFieldAssist.InnerRightContent" Value="{Binding #InnerLeftContent.Text}" />
+                            <Setter Property="my:TextFieldAssist.ShowClearButton" Value="{Binding #ShowClearButton.IsChecked}" />
+                            <Setter Property="my:TextFieldAssist.ShowClipboardButton" Value="{Binding #ShowClipboardButton.IsChecked}" />
+                            <Setter Property="my:TextFieldAssist.UseFloatingPlaceholder" Value="{Binding #IsFloating.IsChecked}" />
+                            <Setter Property="my:TextFieldBehavior.IsTextEditable" Value="{Binding #IsEditable.IsChecked}" />
+                            <Setter Property="my:IconAssist.Icon" Value="{Binding IconProvider.Icon}" />
                         </Style>
                         <Style Selector="AutoCompleteBox.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.AutoCompleteBox.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.AutoCompleteBox.Underline}" />
                         </Style>
                         <Style Selector="ComboBox.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ComboBox.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ComboBox.Underline}" />
                         </Style>
                         <Style Selector="CalendarDatePicker.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.CalendarDatePicker.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.CalendarDatePicker.Underline}" />
                         </Style>
                         <Style Selector="DatePicker.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.DatePicker.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.DatePicker.Underline}" />
                         </Style>
                         <Style Selector="NumericUpDown.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.NumericUpDown.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.NumericUpDown.Underline}" />
                         </Style>
                         <Style Selector="TimePicker.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TimePicker.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TimePicker.Underline}" />
                         </Style>
                         <Style Selector="TextBox.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TextBox.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TextBox.Underline}" />
                         </Style>
                         <Style Selector="my|CalendarDatePickerEx.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.CalendarDatePickerEx.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.CalendarDatePickerEx.Underline}" />
                         </Style>
                         <Style Selector="my|ColorPickerEx.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ColorPickerEx.Underline}"/>
-                        </Style>
-                        <Style Selector="my|DateRangePicker.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.DateRangePicker.Underline}"/>
-                        </Style>
-                        <Style Selector="my|DateTimePicker.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.DateTimePicker.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ColorPickerEx.Underline}" />
                         </Style>
                         <Style Selector="my|MultiComboBox.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.MultiComboBox.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.MultiComboBox.Underline}" />
                         </Style>
                         <Style Selector="my|TagBox.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TagBox.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TagBox.Underline}" />
                         </Style>
                         <Style Selector="my|TimePickerEx.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TimePickerEx.Underline}"/>
-                        </Style>
-                        <Style Selector="my|TimeRangePicker.is-underline">
-                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TimeRangePicker.Underline}"/>
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TimePickerEx.Underline}" />
                         </Style>
                         <Style Selector="TextBox.has-watermark">
-                            <Setter Property="PlaceholderText" Value="TextBox"/>
+                            <Setter Property="PlaceholderText" Value="TextBox" />
                         </Style>
                         <Style Selector="AutoCompleteBox.has-watermark">
-                            <Setter Property="PlaceholderText" Value="AutoCompleteBox"/>
+                            <Setter Property="PlaceholderText" Value="AutoCompleteBox" />
                         </Style>
                         <Style Selector="ComboBox.has-watermark">
-                            <Setter Property="PlaceholderText" Value="ComboBox"/>
+                            <Setter Property="PlaceholderText" Value="ComboBox" />
                         </Style>
                         <Style Selector="my|TagBox.has-watermark">
-                            <Setter Property="PlaceholderText" Value="TagBox"/>
+                            <Setter Property="PlaceholderText" Value="TagBox" />
                         </Style>
                         <Style Selector="NumericUpDown.has-watermark">
-                            <Setter Property="PlaceholderText" Value="NumericUpDown"/>
+                            <Setter Property="PlaceholderText" Value="NumericUpDown" />
                         </Style>
                         <Style Selector="my|MultiComboBox.has-watermark">
-                            <Setter Property="PlaceholderText" Value="MultiComboBox"/>
+                            <Setter Property="PlaceholderText" Value="MultiComboBox" />
                         </Style>
                         <Style Selector="CalendarDatePicker.has-watermark">
-                            <Setter Property="PlaceholderText" Value="CalendarDatePicker"/>
+                            <Setter Property="PlaceholderText" Value="CalendarDatePicker" />
                         </Style>
                         <Style Selector="my|CalendarDatePickerEx.has-watermark">
-                            <Setter Property="PlaceholderText" Value="CalendarDatePickerEx"/>
+                            <Setter Property="PlaceholderText" Value="CalendarDatePickerEx" />
                         </Style>
                         <Style Selector="DatePicker.has-watermark">
-                            <Setter Property="my:TextFieldAssist.PlaceholderText" Value="DatePicker"/>
+                            <Setter Property="my:TextFieldAssist.PlaceholderText" Value="DatePicker" />
                         </Style>
                         <Style Selector="TimePicker.has-watermark">
-                            <Setter Property="my:TextFieldAssist.PlaceholderText" Value="TimePicker"/>
+                            <Setter Property="my:TextFieldAssist.PlaceholderText" Value="TimePicker" />
                         </Style>
                         <Style Selector="my|TimePickerEx.has-watermark">
-                            <Setter Property="PlaceholderText" Value="TimePickerEx"/>
+                            <Setter Property="PlaceholderText" Value="TimePickerEx" />
                         </Style>
                         <Style Selector="my|ColorPickerEx.has-watermark">
-                            <Setter Property="PlaceholderText" Value="ColorPickerEx"/>
+                            <Setter Property="PlaceholderText" Value="ColorPickerEx" />
                         </Style>
                     </UniformGrid.Styles>
                     <TextBox my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
@@ -141,8 +132,8 @@
                              InnerLeftContent="{Binding #InnerLeftContent.Text}"
                              InnerRightContent="{Binding #InnerRightContent.Text}"
                              UseFloatingPlaceholder="{Binding #IsFloating.IsChecked}"
-                             PasswordChar="{Binding #Root.DataContext.PasswordChar}"
-                             my:TextFieldAssist.ShowRevealButton="{Binding #Root.DataContext.IsPassword}"
+                             PasswordChar="{ReflectionBinding Data.PasswordChar, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                             my:TextFieldAssist.ShowRevealButton="{ReflectionBinding Data.IsPassword, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
                              IsReadOnly="{Binding #IsEditable.IsChecked, Converter={x:Static BoolConverters.Not}}" />
 
                     <AutoCompleteBox my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
@@ -192,13 +183,13 @@
                     <TimePicker my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
                                 my:ClassesAssist.Classes="{Binding ComputedClasses}"
                                 UseSeconds="{Binding #UseSeconds.IsChecked}"
-                                ClockIdentifier="{Binding #Root.DataContext.TimeMode}"
+                                ClockIdentifier="{ReflectionBinding Data.TimeMode, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
                                 my:DateTimePickerBehavior.OverridePlaceholderText="{Binding #UseTimePlaceholderText.IsChecked}" />
 
                     <my:TimePickerEx my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
                                      my:ClassesAssist.Classes="{Binding ComputedClasses}"
-                                      ShowSeconds="{Binding #UseSeconds.IsChecked}"
-                                       TimeFormat="{Binding #Root.DataContext.TimeFormat}" />
+                                     ShowSeconds="{Binding #UseSeconds.IsChecked}"
+                                     TimeFormat="{ReflectionBinding Data.TimeFormat, FallbackValue={x:Null}, Source={StaticResource PageProxy}}" />
 
                     <my:ColorPickerEx my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
                                       my:ClassesAssist.Classes="{Binding ComputedClasses}" />
@@ -207,8 +198,8 @@
         </v:ControlCatalogView.PlaygroundControlTemplate>
 
         <v:ControlCatalogView.Settings>
-            <my:Form>
-                <ToggleSwitch my:FormItem.Label="{my:LocObject ShowPlaceholderText}" IsChecked="{Binding #Root.DataContext.ShowPlaceholderText}" />
+            <my:Form x:DataType="vm:FieldsPageViewModel" DataContext="{Binding #Root.DataContext}">
+                <ToggleSwitch my:FormItem.Label="{my:LocObject ShowPlaceholderText}" IsChecked="{Binding ShowPlaceholderText}" />
                 <ToggleSwitch x:Name="IsFloating" my:FormItem.Label="{my:LocObject IsFloating}" IsChecked="False" />
                 <ToggleSwitch x:Name="IsEditable" my:FormItem.Label="{my:LocObject IsEditable}" IsChecked="True" />
                 <ToggleSwitch x:Name="ShowClearButton" my:FormItem.Label="{my:LocObject ShowClearButton}" IsChecked="True" />
@@ -217,7 +208,7 @@
                 <TextBox x:Name="InnerRightContent" my:FormItem.Label="{my:LocObject Suffix}" PlaceholderText="{my:Loc SuffixDescription}" />
                 <TextBox x:Name="UnderText" my:FormItem.Label="{my:LocObject UnderText}" PlaceholderText="{my:Loc UnderTextDescription}" />
 
-                <ListBox my:FormItem.Label="{my:LocObject ShowError}" Name="ShowError" SelectedIndex="0">
+                <ListBox my:FormItem.Label="{my:LocObject ShowError}" x:Name="ShowError" SelectedIndex="0">
                     <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:Loc ErrorNone}" />
                     <ListBoxItem Content="{my:Icon FormatText}" ToolTip.Tip="{my:Loc ErrorText}" />
                     <ListBoxItem Content="{my:Icon AlertCircle}" ToolTip.Tip="{my:Loc ErrorToolTip}" />
@@ -226,23 +217,19 @@
 
                 <!-- TextBox -->
                 <my:FormGroup Header="TextBox">
-                    <ToggleSwitch my:FormItem.Label="{my:LocObject IsPassword}" IsChecked="{Binding #Root.DataContext.IsPassword}" />
+                    <ToggleSwitch my:FormItem.Label="{my:LocObject IsPassword}" IsChecked="{Binding IsPassword}" />
                 </my:FormGroup>
 
                 <!-- NumericUpDown -->
                 <my:FormGroup Header="NumericUpDown">
                     <ToggleSwitch x:Name="ShowSpinnerButtons" my:FormItem.Label="{my:LocObject ShowButtons}" IsChecked="True" />
                     <ListBox x:Name="SpinnerButtonsPosition" my:FormItem.Label="{my:LocObject ButtonsPosition}"
-                             DisplayMemberBinding="{ReflectionBinding Display}"
                              SelectedIndex="1"
-                             ItemsSource="{my:EnumSource {x:Type Location}}"
-                             SelectedValueBinding="{ReflectionBinding Value}" />
+                             my:ItemsBehavior.EnumSourceType="{x:Type Location}" />
                     <ListBox x:Name="SpinnerButtonsLayout" my:FormItem.Label="{my:LocObject ButtonsLayout}"
-                             DisplayMemberBinding="{ReflectionBinding Display}"
-                             ItemsSource="{my:EnumSource {x:Type my:SpinnerLayout}}"
-                             SelectedIndex="0"
-                             SelectedValueBinding="{ReflectionBinding Value}" />
-                    <ToggleSwitch Name="SwitchSpinnerButtons" my:FormItem.Label="{my:LocObject SwitchButtons}" IsChecked="False" />
+                             my:ItemsBehavior.EnumSourceType="{x:Type my:SpinnerLayout}"
+                             SelectedIndex="0" />
+                    <ToggleSwitch x:Name="SwitchSpinnerButtons" my:FormItem.Label="{my:LocObject SwitchButtons}" IsChecked="False" />
                 </my:FormGroup>
 
                 <!-- DatePicker -->
@@ -258,10 +245,8 @@
                     <ToggleSwitch x:Name="UseTimePlaceholderText" my:FormItem.Label="{my:LocObject ShowPlaceholderText}" IsChecked="True" />
                     <ToggleSwitch x:Name="UseSeconds" my:FormItem.Label="{my:LocObject UseSeconds}" IsChecked="False" />
                     <ListBox my:FormItem.Label="{my:LocObject Mode}"
-                             DisplayMemberBinding="{ReflectionBinding Display}"
-                             ItemsSource="{my:EnumSource {x:Type u:TimeFormat}}"
-                             SelectedValue="{Binding #Root.DataContext.TimeFormat}"
-                             SelectedValueBinding="{ReflectionBinding Value}" />
+                             my:ItemsBehavior.EnumSourceType="{x:Type u:TimeFormat}"
+                             SelectedValue="{Binding TimeFormat}" />
                 </my:FormGroup>
 
             </my:Form>

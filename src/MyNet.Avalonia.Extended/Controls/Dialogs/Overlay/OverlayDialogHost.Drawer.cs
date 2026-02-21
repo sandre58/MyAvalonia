@@ -123,8 +123,6 @@ public partial class OverlayDialogHost
             case Position.Top or Position.Bottom:
                 control.Width = Bounds.Width;
                 break;
-            default:
-                break;
         }
     }
 

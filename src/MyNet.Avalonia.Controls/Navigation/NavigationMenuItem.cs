@@ -321,8 +321,6 @@ public class NavigationMenuItem : HeaderedItemsControl
             case NavigationMenu menu:
                 menu.SelectItem(item, this);
                 break;
-            default:
-                break;
         }
 
         _popup?.Close();

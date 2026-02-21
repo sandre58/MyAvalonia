@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="LocalizableString.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="LocalizableString.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ public class LocalizableString : INotifyPropertyChanged
             value = string.Format(CultureInfo.CurrentCulture, _format, value);
         }
 
-        return _casing != LetterCasing.Normal ? value?.ApplyCase(_casing) ?? string.Empty : value ?? string.Empty;
+        return _casing != LetterCasing.Normal ? value.ApplyCase(_casing) : value;
     }
 
     /// <summary>

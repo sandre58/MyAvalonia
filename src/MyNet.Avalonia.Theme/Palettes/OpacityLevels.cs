@@ -82,7 +82,7 @@ public class OpacityLevels
             [nameof(Disabled).WithPrefix(prefix)] = Disabled,
             [nameof(Low).WithPrefix(prefix)] = Low,
             [nameof(Medium).WithPrefix(prefix)] = Medium,
-            [nameof(High).WithPrefix(prefix)] = High,
+            [nameof(High).WithPrefix(prefix)] = High
         };
 
     /// <summary>

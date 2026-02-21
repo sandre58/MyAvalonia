@@ -30,8 +30,9 @@ internal sealed class ControlAppearanceViewModel : ObservableObject
     /// <param name="themes">The collection of available theme definitions.</param>
     public ControlAppearanceViewModel(IEnumerable<ControlThemeDefinition> themes)
     {
-        _themes = themes;
-        AvailableThemes = themes.Skip(1).ToObservableCollection();
+        var controlThemeDefinitions = themes.ToList();
+        _themes = controlThemeDefinitions;
+        AvailableThemes = controlThemeDefinitions.Skip(1).ToObservableCollection();
         Reset();
 
         Disposables.AddRange(

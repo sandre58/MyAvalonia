@@ -352,26 +352,6 @@ public class ClockTimeComponent : TemplatedControl, IComponentTimeSelector
         _cachedAccessors.Clear();
         _cellPanel.Children.Clear();
 
-        void arrangeCell(ClockTimeComponentCell cell, double degree)
-        {
-            var canvasBounds = _cellPanel.Bounds;
-
-            var w = canvasBounds.Width;
-            var h = canvasBounds.Height;
-
-            var hW = w / 2;
-            var hH = h / 2;
-
-            var rad = (float)((degree - 90) * Math.PI / 180);
-
-            var x = (float)(hW * radiusMultiplier * Math.Cos(rad)) + hW;
-            var y = (float)(hH * radiusMultiplier * Math.Sin(rad)) + hH;
-
-            cell.RenderTransform = new TranslateTransform(x, y);
-        }
-
-        float getAngle(int value) => (value - min + cellShift) * (360f / (max + 1 - min));
-
         for (var i = min; i <= max; i++)
         {
             var cell = new ClockTimeComponentCell
@@ -393,6 +373,27 @@ public class ClockTimeComponent : TemplatedControl, IComponentTimeSelector
         }
 
         UpdateVisual(Value);
+        return;
+
+        float getAngle(int value) => (value - min + cellShift) * (360f / (max + 1 - min));
+
+        void arrangeCell(ClockTimeComponentCell cell, double degree)
+        {
+            var canvasBounds = _cellPanel.Bounds;
+
+            var w = canvasBounds.Width;
+            var h = canvasBounds.Height;
+
+            var hW = w / 2;
+            var hH = h / 2;
+
+            var rad = (float)((degree - 90) * Math.PI / 180);
+
+            var x = (float)(hW * radiusMultiplier * Math.Cos(rad)) + hW;
+            var y = (float)(hH * radiusMultiplier * Math.Sin(rad)) + hH;
+
+            cell.RenderTransform = new TranslateTransform(x, y);
+        }
     }
 
     private void AdjustPointer()

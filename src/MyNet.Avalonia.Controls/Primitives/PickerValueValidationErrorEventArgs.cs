@@ -10,8 +10,6 @@ namespace MyNet.Avalonia.Controls.Primitives;
 
 public class PickerValueValidationErrorEventArgs(Exception exception, string text) : EventArgs
 {
-    private bool _throwException;
-
     // Summary:
     //     Gets the initial exception associated with the Avalonia.Controls.CalendarDatePicker.DateValidationError
     //     event.
@@ -41,7 +39,7 @@ public class PickerValueValidationErrorEventArgs(Exception exception, string tex
     //     is null.
     public bool ThrowException
     {
-        get => _throwException;
+        get;
         set
         {
             if (value && Exception == null)
@@ -49,7 +47,7 @@ public class PickerValueValidationErrorEventArgs(Exception exception, string tex
                 throw new ArgumentException("Cannot Throw Null Exception");
             }
 
-            _throwException = value;
+            field = value;
         }
     }
 }

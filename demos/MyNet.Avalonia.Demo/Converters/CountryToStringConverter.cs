@@ -13,7 +13,7 @@ using MyNet.Utilities.Geography.Extensions;
 
 namespace MyNet.Avalonia.Demo.Converters;
 
-public class CountryToStringConverter : IValueConverter
+public sealed class CountryToStringConverter : IValueConverter
 {
     private enum Display
     {

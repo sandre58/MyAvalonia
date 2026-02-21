@@ -28,7 +28,7 @@ public class BrushConverter : ColorConverter
             HslColor hsl => hsl.ToRgb(),
             _ => value.ToString().ToColor() ?? Colors.White
         };
-        var opacity = Opacity ?? (value is SolidColorBrush brush && brush.Opacity < 1.0 ? brush.Opacity : 1.0);
+        var opacity = Opacity ?? (value is SolidColorBrush { Opacity: < 1.0 } brush ? brush.Opacity : 1.0);
 
         color = color.Apply(new ColorInterpolation(null, Contrast, Darken, Lighten));
 

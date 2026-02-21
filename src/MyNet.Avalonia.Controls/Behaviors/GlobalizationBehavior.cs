@@ -61,20 +61,24 @@ public static class GlobalizationBehavior
 
     private static void UpdateControl(Control? element)
     {
-        if (element is TimePicker tp)
-            UpdateTimePicker(tp);
-
-        if (element is TimePickerEx tpEx)
-            UpdateTimePickerEx(tpEx);
-
-        if (element is CalendarDatePicker calendarDatePicker)
-            UpdateCalendarDatePicker(calendarDatePicker);
-
-        if (element is CalendarDatePickerEx calendarDatePickerEx)
-            UpdateCalendarDatePickerEx(calendarDatePickerEx);
-
-        if (element is DatePicker datepicker)
-            UpdateDatePicker(datepicker);
+        switch (element)
+        {
+            case TimePicker tp:
+                UpdateTimePicker(tp);
+                break;
+            case TimePickerEx tpEx:
+                UpdateTimePickerEx(tpEx);
+                break;
+            case CalendarDatePicker calendarDatePicker:
+                UpdateCalendarDatePicker(calendarDatePicker);
+                break;
+            case CalendarDatePickerEx calendarDatePickerEx:
+                UpdateCalendarDatePickerEx(calendarDatePickerEx);
+                break;
+            case DatePicker datepicker:
+                UpdateDatePicker(datepicker);
+                break;
+        }
     }
 
     private static void UpdateTimePicker(TimePicker timePicker) => timePicker.ClockIdentifier = UIContext.Globalization.Culture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? "24HourClock" : "12HourClock";

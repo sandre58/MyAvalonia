@@ -44,12 +44,12 @@ public class ThemeBrushExtension : ThemeBrushExtensionBase
     /// </summary>
     /// <param name="serviceProvider">The service provider for the markup extension.</param>
     /// <returns>A binding to the theme brush with the specified opacity, contrast, darken, and lighten settings.</returns>
-    public override object ProvideValue(IServiceProvider serviceProvider) => new Binding(Path)
+    public override object ProvideValue(IServiceProvider serviceProvider) => new ReflectionBinding(Path)
     {
         Mode = BindingMode.OneWay,
         RelativeSource = RelativeSource,
         Converter = ThemeConverter.Default,
         ConverterParameter = new ThemeBrushParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten),
-        TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
+        TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
     };
 }

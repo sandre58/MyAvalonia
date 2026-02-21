@@ -30,5 +30,5 @@ public class IconProviderViewModel : ObservableObject, IContentProviderViewModel
     /// Provides a randomly generated icon.
     /// </summary>
     /// <returns>A random icon object.</returns>
-    public object? ProvideContent() => (Data ?? RandomGenerator.Enum<IconData>()).ToIcon();
+    public object ProvideContent() => (Data ?? RandomGenerator.Enum<IconData>()).ToIcon();
 }

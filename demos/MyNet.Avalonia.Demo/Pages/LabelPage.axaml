@@ -9,7 +9,6 @@
             xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
-            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:LabelPageViewModel"
             ClipToBounds="False">

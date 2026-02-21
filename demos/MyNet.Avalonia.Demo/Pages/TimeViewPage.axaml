@@ -2,7 +2,6 @@
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:data="clr-namespace:MyNet.Avalonia.Demo.Data"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
@@ -12,7 +11,7 @@
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:TimeViewPageViewModel"
-            Name="Root"
+            x:Name="Root"
             mc:Ignorable="d">
 
     <v:ControlCatalogView ShowContent="False" ShowIcon="False">
@@ -42,14 +41,11 @@
         <v:ControlCatalogView.Settings>
             <my:Form>
 
-                <ToggleSwitch Name="ShowSeconds" my:FormItem.Label="{my:LocObject UseSeconds}" IsChecked="True" />
+                <ToggleSwitch x:Name="ShowSeconds" my:FormItem.Label="{my:LocObject UseSeconds}" IsChecked="True" />
                     <ListBox my:FormItem.Label="{my:LocObject Format}"
-                             Name="TimeFormat"
-                             DisplayMemberBinding="{ReflectionBinding Display}"
-                             ItemTemplate="{x:Null}"
-                             ItemsSource="{my:EnumSource {x:Type u:TimeFormat}}"
-                             SelectedValue="{x:Static u:TimeFormat.TwentyFourHour}"
-                             SelectedValueBinding="{ReflectionBinding Value}" />
+                             x:Name="TimeFormat"
+                             my:ItemsBehavior.EnumSourceType="{x:Type u:TimeFormat}"
+                             SelectedValue="{x:Static u:TimeFormat.TwentyFourHour}" />
             </my:Form>
         </v:ControlCatalogView.Settings>
 

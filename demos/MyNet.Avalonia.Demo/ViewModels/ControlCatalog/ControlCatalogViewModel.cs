@@ -31,7 +31,7 @@ internal class ControlCatalogViewModel : PageViewModel
     /// <param name="builders">The array of theme builders to generate theme definitions.</param>
     public ControlCatalogViewModel(string controlName, ControlThemeBuilder[] builders)
     {
-        var definitions = builders.Select(x => x.Build(controlName));
+        var definitions = builders.Select(x => x.Build(controlName)).ToList();
         Themes = new(definitions);
         Playground = new(controlName, definitions);
     }

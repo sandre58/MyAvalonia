@@ -9,11 +9,13 @@
             xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
-            xmlns:b="clr-namespace:MyNet.Avalonia.Demo.Behaviors"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:ProgressBarPageViewModel"
-            Name="Root"
+            x:Name="Root"
             ClipToBounds="False">
+    <pages:Page.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+    </pages:Page.Resources>
 
     <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
@@ -22,12 +24,12 @@
                 <ProgressBar Theme="{Binding Appearance.ActiveTheme}"
                              my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
                              my:ClassesAssist.Classes="{Binding ComputedClasses}"
-                             Orientation="{Binding #Root.DataContext.Orientation}"
-                             Width="{Binding #Root.DataContext.Width}"
-                             Height="{Binding #Root.DataContext.Height}"
+                             Orientation="{ReflectionBinding Data.Orientation, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                             Width="{ReflectionBinding Data.Width, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                             Height="{ReflectionBinding Data.Height, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
                              Value="{Binding #Value.Value}"
                              IsIndeterminate="{Binding #IsIndeterminate.IsChecked}"
-                             ShowProgressText="{Binding #Root.DataContext.ShowProgressText}"
+                             ShowProgressText="{ReflectionBinding Data.ShowProgressText, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
                              HorizontalAlignment="Center"
                              VerticalAlignment="Center" />
             </DataTemplate>
@@ -53,21 +55,24 @@
         </v:ControlCatalogView.ThemeControlTemplate>
 
         <v:ControlCatalogView.Settings>
-            <my:Form>
-                <ListBox my:FormItem.Label="{my:LocObject Orientation}" SelectedValue="{Binding #Root.DataContext.Orientation}" SelectedValueBinding="{ReflectionBinding DataContext}"
-                         IsVisible="{Binding #Root.DataContext.Playground.Appearance.SelectedTheme, Converter={x:Static my:NullConverter.IsNull}}">
+            <my:Form x:DataType="vm:ProgressBarPageViewModel" DataContext="{Binding #Root.DataContext}">
+                <ListBox my:FormItem.Label="{my:LocObject Orientation}"
+                         SelectedValue="{Binding Orientation}" SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}"
+                         IsVisible="{Binding Playground.Appearance.SelectedTheme, Converter={x:Static my:NullConverter.IsNull}}">
                     <ListBoxItem my:IconAssist.Icon="{my:Icon BorderHorizontal}" Content="{my:Loc OrientationHorizontal}" DataContext="{x:Static Orientation.Horizontal}" />
                     <ListBoxItem my:IconAssist.Icon="{my:Icon BorderVertical}" Content="{my:Loc OrientationVertical}" DataContext="{x:Static Orientation.Vertical}" />
                 </ListBox>
-                <Slider Name="Value"
+                <Slider x:Name="Value"
                         my:FormItem.Label="{my:LocObject Value}"
                         ClipToBounds="False"
                         IsSnapToTickEnabled="True"
                         Maximum="100"
                         Minimum="0"
                         Value="30" />
-                <ToggleSwitch Name="IsIndeterminate" my:FormItem.Label="{my:LocObject IsIndeterminate}" IsChecked="False" />
-                <ListBox my:FormItem.Label="{my:LocObject ValuePosition}" SelectedValue="{Binding #Root.DataContext.PositionClassProvider.SelectedClass}" SelectedValueBinding="{ReflectionBinding DataContext}">
+                <ToggleSwitch x:Name="IsIndeterminate" my:FormItem.Label="{my:LocObject IsIndeterminate}" IsChecked="False" />
+                <ListBox my:FormItem.Label="{my:LocObject ValuePosition}"
+                         SelectedValue="{Binding PositionClassProvider.SelectedClass}"
+                         SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
                     <ListBoxItem Content="{my:Icon CircleOffOutline}" ToolTip.Tip="{my:Loc None}" DataContext="" />
                     <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="position-left" />
                     <ListBoxItem Content="{my:Icon CircleSmall}" ToolTip.Tip="{my:Loc Center}" DataContext="position-center" />

@@ -1,11 +1,9 @@
 // -----------------------------------------------------------------------
-// <copyright file="HomePageViewModel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="HomePageViewModel.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class HomePageViewModel : PageViewModel
-{
-}
+internal sealed class HomePageViewModel : PageViewModel;

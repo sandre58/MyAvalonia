@@ -20,7 +20,7 @@ namespace MyNet.Avalonia.Extended.Controls;
 
 [TemplatePart(PartCloseButton, typeof(Button))]
 [TemplatePart(PartNoButton, typeof(Button))]
-[TemplatePart(PartOKButton, typeof(Button))]
+[TemplatePart(PartOkButton, typeof(Button))]
 [TemplatePart(PartCancelButton, typeof(Button))]
 [TemplatePart(PartYesButton, typeof(Button))]
 public class WindowMessageBox(MessageBoxResultOption buttons) : Window
@@ -28,7 +28,7 @@ public class WindowMessageBox(MessageBoxResultOption buttons) : Window
     public const string PartCloseButton = "PART_CloseButton";
     public const string PartYesButton = "PART_YesButton";
     public const string PartNoButton = "PART_NoButton";
-    public const string PartOKButton = "PART_OKButton";
+    public const string PartOkButton = "PART_OKButton";
     public const string PartCancelButton = "PART_CancelButton";
 
     public static readonly StyledProperty<MessageBoxIcon> MessageIconProperty =
@@ -62,7 +62,7 @@ public class WindowMessageBox(MessageBoxResultOption buttons) : Window
         Button.ClickEvent.RemoveHandler(OnCloseButtonClick, _closeButton);
         _yesButton = e.NameScope.Find<Button>(PartYesButton);
         _noButton = e.NameScope.Find<Button>(PartNoButton);
-        _okButton = e.NameScope.Find<Button>(PartOKButton);
+        _okButton = e.NameScope.Find<Button>(PartOkButton);
         _cancelButton = e.NameScope.Find<Button>(PartCancelButton);
         _closeButton = e.NameScope.Find<Button>(PartCloseButton);
         Button.ClickEvent.AddHandler(OnDefaultButtonClick, _yesButton, _noButton, _okButton, _cancelButton);
@@ -134,8 +134,6 @@ public class WindowMessageBox(MessageBoxResultOption buttons) : Window
             case MessageBoxResultOption.YesNo:
                 Close(MessageBoxResult.No);
                 break;
-            default:
-                break;
         }
     }
 
@@ -150,7 +148,6 @@ public class WindowMessageBox(MessageBoxResultOption buttons) : Window
             MessageBoxResultOption.OkCancel => _cancelButton,
             MessageBoxResultOption.YesNo => _yesButton,
             MessageBoxResultOption.YesNoCancel => _cancelButton,
-            MessageBoxResultOption.None => null,
             _ => null
         };
         Button.IsDefaultProperty.SetValue(true, defaultButton);

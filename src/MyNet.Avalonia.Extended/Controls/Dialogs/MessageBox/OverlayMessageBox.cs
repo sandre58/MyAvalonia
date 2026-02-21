@@ -21,14 +21,14 @@ namespace MyNet.Avalonia.Extended.Controls;
 ///     The messageBox used to display in OverlayDialogHost.
 /// </summary>
 [TemplatePart(PartNoButton, typeof(Button))]
-[TemplatePart(PartOKButton, typeof(Button))]
+[TemplatePart(PartOkButton, typeof(Button))]
 [TemplatePart(PartCancelButton, typeof(Button))]
 [TemplatePart(PartYesButton, typeof(Button))]
 public class OverlayMessageBox : OverlayDialogBase
 {
     public const string PartYesButton = "PART_YesButton";
     public const string PartNoButton = "PART_NoButton";
-    public const string PartOKButton = "PART_OKButton";
+    public const string PartOkButton = "PART_OKButton";
     public const string PartCancelButton = "PART_CancelButton";
 
     #region Severity
@@ -77,7 +77,7 @@ public class OverlayMessageBox : OverlayDialogBase
     {
         base.OnApplyTemplate(e);
         Button.ClickEvent.RemoveHandler(DefaultButtonsClose, _okButton, _cancelButton, _yesButton, _noButton);
-        _okButton = e.NameScope.Find<Button>(PartOKButton);
+        _okButton = e.NameScope.Find<Button>(PartOkButton);
         _cancelButton = e.NameScope.Find<Button>(PartCancelButton);
         _yesButton = e.NameScope.Find<Button>(PartYesButton);
         _noButton = e.NameScope.Find<Button>(PartNoButton);
@@ -94,7 +94,6 @@ public class OverlayMessageBox : OverlayDialogBase
             MessageBoxResultOption.OkCancel => _cancelButton,
             MessageBoxResultOption.YesNo => _yesButton,
             MessageBoxResultOption.YesNoCancel => _cancelButton,
-            MessageBoxResultOption.None => null,
             _ => null
         };
         _ = defaultButton?.Focus();
@@ -142,8 +141,6 @@ public class OverlayMessageBox : OverlayDialogBase
                 break;
             case MessageBoxResultOption.None:
                 break;
-            default:
-                break;
         }
     }
 
@@ -155,7 +152,6 @@ public class OverlayMessageBox : OverlayDialogBase
             MessageBoxResultOption.OkCancel => MessageBoxResult.Cancel,
             MessageBoxResultOption.YesNo => MessageBoxResult.No,
             MessageBoxResultOption.YesNoCancel => MessageBoxResult.Cancel,
-            MessageBoxResultOption.None => MessageBoxResult.None,
             _ => MessageBoxResult.None
         };
         OnElementClosing(this, result);

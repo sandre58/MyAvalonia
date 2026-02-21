@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="FormItemsPanel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="FormItemsPanel.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ public class FormItemsPanel : Panel
 {
     public static readonly StyledProperty<int> ColumnsProperty = AvaloniaProperty.Register<FormItemsPanel, int>(nameof(Columns), 1);
     public static readonly StyledProperty<double> SpacingProperty = AvaloniaProperty.Register<FormItemsPanel, double>(nameof(Spacing), 16d);
-    public static readonly StyledProperty<Position> LabelPositionProperty = AvaloniaProperty.Register<FormItemsPanel, Position>(nameof(LabelPosition), Position.Left);
+    public static readonly StyledProperty<Position> LabelPositionProperty = AvaloniaProperty.Register<FormItemsPanel, Position>(nameof(LabelPosition));
     public static readonly StyledProperty<GridLength> LabelWidthProperty = AvaloniaProperty.Register<FormItemsPanel, GridLength>(nameof(LabelWidth), GridLength.Auto);
     public static readonly StyledProperty<Thickness> GroupMarginProperty = AvaloniaProperty.Register<FormItemsPanel, Thickness>(nameof(GroupMargin), new Thickness(0, 16, 0, 16));
 
@@ -66,29 +66,27 @@ public class FormItemsPanel : Panel
         // Calculate max label width only for FormItemContainer items
         var formItemContainers = visibleChildren.OfType<FormItemContainer>().ToList();
 
-        if (formItemContainers.Count > 0)
+        if (formItemContainers is { Count: <= 0 })
         {
-            computeMaxLabelWidth(Position.Left);
-            computeMaxLabelWidth(Position.Right);
+            return Columns > 1
+                ? MeasureGrid(visibleChildren, availableSize)
+                : MeasureVertical(visibleChildren, availableSize);
         }
+
+        computeMaxLabelWidth(Position.Left);
+        computeMaxLabelWidth(Position.Right);
 
         // Final measurement with computed widths
         return Columns > 1
             ? MeasureGrid(visibleChildren, availableSize)
             : MeasureVertical(visibleChildren, availableSize);
 
-        double computeMaxLabelWidth(Position position)
+        void computeMaxLabelWidth(Position position)
         {
-            double maxWidth = 0;
-
             var itemsWithPosition = formItemContainers.Where(x => x.LabelPosition == position).ToList();
 
             // Pass 1: Reset computed width and measure all items to get natural label widths
-            foreach (var item in itemsWithPosition)
-            {
-                var labelSize = item.MeasureLabel();
-                maxWidth = Math.Max(maxWidth, labelSize.Width);
-            }
+            var maxWidth = itemsWithPosition.Select(item => item.MeasureLabel()).Select(labelSize => labelSize.Width).Prepend(0).Max();
 
             // Pass 2: Apply computed width to all items
             // Each item will decide if it uses PanelComputedWidth or its own LabelWidth
@@ -96,8 +94,6 @@ public class FormItemsPanel : Panel
             {
                 item.PanelComputedWidth = maxWidth;
             }
-
-            return maxWidth;
         }
     }
 
@@ -216,7 +212,10 @@ public class FormItemsPanel : Panel
                 index++;
             }
 
-            var currentRowHasFormGroup = rowItems.Count == 1 && rowItems[0] is FormGroup;
+            var currentRowHasFormGroup = rowItems is
+            [
+                FormGroup
+            ];
 
             // Add spacing from previous row
             // Not first row
@@ -311,7 +310,10 @@ public class FormItemsPanel : Panel
                 index++;
             }
 
-            var currentRowHasFormGroup = rowItems.Count == 1 && rowItems[0] is FormGroup;
+            var currentRowHasFormGroup = rowItems is
+            [
+                FormGroup
+            ];
 
             // Add spacing from previous row
             // Not first row
@@ -388,19 +390,18 @@ public class FormItemsPanel : Panel
         if (item is not FormGroup)
             return (0, 0);
 
-        var margin = GroupMargin;
+        var (_, nextTopMargin, _, bottom) = GroupMargin;
         var isFirst = index == 0;
         var isLast = index == allItems.Count - 1;
 
-        var topMargin = isFirst ? 0 : margin.Top;
-        var bottomMargin = isLast ? 0 : margin.Bottom;
+        var topMargin = isFirst ? 0 : nextTopMargin;
+        var bottomMargin = isLast ? 0 : bottom;
 
         // If next item is also a FormGroup, use max margin instead of both
         if (!isLast && index + 1 < allItems.Count && allItems[index + 1] is FormGroup)
         {
             // Use the larger of bottom margin of current and top margin of next
             // We'll apply it as bottom margin here and skip top margin for next
-            var nextTopMargin = margin.Top;
             bottomMargin = Math.Max(bottomMargin, nextTopMargin);
         }
 

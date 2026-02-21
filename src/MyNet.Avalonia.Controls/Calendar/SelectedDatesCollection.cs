@@ -19,8 +19,6 @@ namespace MyNet.Avalonia.Controls.Primitives;
 
 public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollection<DateTime>
 {
-    private readonly Calendar _owner = owner;
-
     public void AddRange(DateTime start, DateTime end)
     {
         foreach (var date in ToDates(start, end))
@@ -58,8 +56,8 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         base.ClearItems();
 
         // The event fires after Value changes
-        if (_owner.SelectionMode != CalendarSelectionMode.None && _owner.SelectedDate != null)
-            _owner.SelectedDate = null;
+        if (owner.SelectionMode != CalendarSelectionMode.None && owner.SelectedDate != null)
+            owner.SelectedDate = null;
     }
 
     protected override void InsertItem(int index, DateTime item)
@@ -72,8 +70,8 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
             base.InsertItem(index, date);
 
             // The event fires after Value changes
-            if (index == 0 && !(_owner.SelectedDate.HasValue && DateTime.Compare(_owner.SelectedDate.Value, date) == 0))
-                _owner.SelectedDate = date;
+            if (index == 0 && !(owner.SelectedDate.HasValue && DateTime.Compare(owner.SelectedDate.Value, date) == 0))
+                owner.SelectedDate = date;
         }
     }
 
@@ -85,7 +83,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
 
         // The event fires after Value changes
         if (index == 0)
-            _owner.SelectedDate = Count > 0 ? this[0] : null;
+            owner.SelectedDate = Count > 0 ? this[0] : null;
     }
 
     protected override void SetItem(int index, DateTime item)
@@ -97,8 +95,8 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
             base.SetItem(index, item);
 
             // The event fires after Value changes
-            if (index == 0 && !(_owner.SelectedDate.HasValue && DateTime.Compare(_owner.SelectedDate.Value, item) == 0))
-                _owner.SelectedDate = item;
+            if (index == 0 && !(owner.SelectedDate.HasValue && DateTime.Compare(owner.SelectedDate.Value, item) == 0))
+                owner.SelectedDate = item;
         }
     }
 
@@ -126,8 +124,8 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
     private static void EnsureValidThread() => Dispatcher.UIThread.VerifyAccess();
 
     private bool IsValid(DateTime date)
-        => _owner.SelectionMode != CalendarSelectionMode.None
-        && (_owner.SelectionMode != CalendarSelectionMode.SingleDate || Count <= 0)
-        && ((_owner.SelectionMode != CalendarSelectionMode.SingleRange || this.Concat([date]).IsConsecutiveDays())
-        && _owner.BlackoutDates.All(x => !x.Contains(date)));
+        => owner.SelectionMode != CalendarSelectionMode.None
+        && (owner.SelectionMode != CalendarSelectionMode.SingleDate || Count <= 0)
+        && ((owner.SelectionMode != CalendarSelectionMode.SingleRange || this.Concat([date]).IsConsecutiveDays())
+        && owner.BlackoutDates.All(x => !x.Contains(date)));
 }

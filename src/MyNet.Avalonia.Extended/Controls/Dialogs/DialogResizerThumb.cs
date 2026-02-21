@@ -53,6 +53,7 @@ public class DialogResizerThumb : Thumb
             ResizeDirection.Sides => throw new InvalidOperationException(),
             ResizeDirection.Corners => throw new InvalidOperationException(),
             ResizeDirection.All => throw new InvalidOperationException(),
+            ResizeDirection.None => throw new InvalidOperationException(),
             _ => throw new InvalidOperationException()
         };
         _dialog.BeginResizeDrag(windowEdge, e);

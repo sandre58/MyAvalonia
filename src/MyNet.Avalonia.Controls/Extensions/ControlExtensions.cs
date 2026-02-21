@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using Avalonia.Controls;
@@ -16,171 +16,191 @@ using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Controls.Extensions;
 
+[SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "Extensions methods must be in a static class, and extension methods cannot be in a nested class.")]
+[SuppressMessage("Naming", "CA1708:Identifiers should differ by more than case", Justification = "Extension methods must be in a static class, and extension methods cannot be in a nested class.")]
 public static class ControlExtensions
 {
     private const BindingFlags PropertyFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy;
     private static readonly Dictionary<Control, Popup?> PopupCache = [];
 
-    public static Control? GetFirstFocusableControl(this Control ctrl)
-        => ctrl.GetVisualDescendants().OfType<Control>().FirstOrDefault(x => x.Focusable && x.IsEffectivelyEnabled && x.IsVisible);
-
-    public static Popup? GetPopup(this Control ctrl)
+    extension(Control ctrl)
     {
-        if (PopupCache.TryGetValue(ctrl, out var cachedPopup))
-            return cachedPopup;
+        public Control? GetFirstFocusableControl()
+            => ctrl.GetVisualDescendants().OfType<Control>().FirstOrDefault(x => x is { Focusable: true, IsEffectivelyEnabled: true, IsVisible: true });
 
-        var popup = ctrl.GetVisualDescendants().OfType<Popup>().FirstOrDefault();
+        public Popup? GetPopup()
+        {
+            if (PopupCache.TryGetValue(ctrl, out var cachedPopup))
+                return cachedPopup;
 
-        if (popup is not null || ctrl.IsLoaded)
-            PopupCache[ctrl] = popup;
+            var popup = ctrl.GetVisualDescendants().OfType<Popup>().FirstOrDefault();
 
-        return popup;
-    }
+            if (popup is not null || ctrl.IsLoaded)
+                PopupCache[ctrl] = popup;
 
-    public static bool IsPopupOpen(this Control ctrl) => TryGetBooleanPropertyValue(ctrl, "IsDropDownOpen", out var isDropDownOpen)
+            return popup;
+        }
+
+        public bool IsPopupOpen() => TryGetBooleanPropertyValue(ctrl, "IsDropDownOpen", out var isDropDownOpen)
             ? isDropDownOpen
             : TryGetFlyout(ctrl, out var flyout) && TryGetBooleanPropertyValue(flyout, "IsOpen", out var isFlyoutOpen)
-            ? isFlyoutOpen
-            : TryGetBooleanPropertyValue(ctrl, "IsOpen", out var isOpen)
-            ? isOpen
-            : ctrl.GetPopup()?.IsOpen ?? false;
+                ? isFlyoutOpen
+                : TryGetBooleanPropertyValue(ctrl, "IsOpen", out var isOpen)
+                    ? isOpen
+                    : ctrl.GetPopup()?.IsOpen ?? false;
 
-    public static void OpenPopup(this Control ctrl)
-    {
-        if (TrySetBooleanProperty(ctrl, "IsDropDownOpen", true))
+        public void OpenPopup()
         {
+            if (TrySetBooleanProperty(ctrl, "IsDropDownOpen", true))
+            {
+            }
+            else if (TryGetFlyout(ctrl, out var flyout))
+            {
+                flyout?.ShowAt(ctrl);
+            }
+            else if (TryGetProperty<Popup>(ctrl, "Popup", out var popup))
+            {
+                popup?.IsOpen = true;
+            }
+            else
+            {
+                ctrl.GetPopup()?.Open();
+            }
         }
-        else if (TryGetFlyout(ctrl, out var flyout))
+
+        public void ClosePopup()
         {
-            flyout?.ShowAt(ctrl);
-        }
-        else if (TryGetProperty<Popup>(ctrl, "Popup", out var popup))
-        {
-            popup?.IsOpen = true;
-        }
-        else
-        {
-            ctrl.GetPopup()?.Open();
+            if (TrySetBooleanProperty(ctrl, "IsDropDownOpen", false))
+            {
+            }
+            else if (TryGetFlyout(ctrl, out var flyout))
+            {
+                flyout?.Hide();
+            }
+            else if (TryGetProperty<Popup>(ctrl, "Popup", out var popup))
+            {
+                popup?.IsOpen = false;
+            }
+            else
+            {
+                ctrl.GetPopup()?.Close();
+            }
         }
     }
 
-    public static void ClosePopup(this Control ctrl)
+    extension(TemplatedControl tc)
     {
-        if (TrySetBooleanProperty(ctrl, "IsDropDownOpen", false))
+        public bool Increment(int value) => tc switch
         {
-        }
-        else if (TryGetFlyout(ctrl, out var flyout))
-        {
-            flyout?.Hide();
-        }
-        else if (TryGetProperty<Popup>(ctrl, "Popup", out var popup))
-        {
-            popup?.IsOpen = false;
-        }
-        else
-        {
-            ctrl.GetPopup()?.Close();
-        }
-    }
-
-    public static bool Increment(this TemplatedControl tc, int value) => tc switch
-    {
-        DatePicker datePicker => datePicker.IncrementDay(value),
-        global::Avalonia.Controls.TimePicker timePicker => timePicker.IncrementMinute(value),
-        NumericUpDown numericUpDown => numericUpDown.IncrementNumericUpDown(value),
-        ComboBox comboBox => comboBox.IncrementComboBox(value),
-        IIncrementableControl incrementableControl => incrementableControl.Increment(value),
-        _ => false
-    };
-
-    public static bool IncrementLarge(this TemplatedControl tc, int value) => tc switch
-    {
-        DatePicker datePicker => datePicker.IncrementMonth(value),
-        global::Avalonia.Controls.TimePicker timePicker => timePicker.IncrementHour(value),
-        NumericUpDown numericUpDown => numericUpDown.IncrementLargeNumericUpDown(value),
-        ComboBox comboBox => comboBox.IncrementLargeComboBox(value),
-        IIncrementableControl incrementableControl => incrementableControl.IncrementLarge(value),
-        _ => false
-    };
-
-    private static bool IncrementLargeComboBox(this ComboBox comboBox, int value)
-        => IncrementComboBoxCore(comboBox, value * 5);
-
-    private static bool IncrementComboBox(this ComboBox comboBox, int value)
-        => IncrementComboBoxCore(comboBox, value);
-
-    private static bool IncrementComboBoxCore(this ComboBox comboBox, int value)
-    {
-        if (comboBox.SelectedIndex <= -1)
-            return false;
-
-        var newIndex = comboBox.SelectedIndex + value;
-        var itemCount = comboBox.Items.Count;
-        comboBox.SelectedIndex = newIndex switch
-        {
-            -1 => itemCount - 1,
-            _ when newIndex >= itemCount => 0,
-            _ => newIndex
+            DatePicker datePicker => datePicker.IncrementDay(value),
+            TimePicker timePicker => timePicker.IncrementMinute(value),
+            NumericUpDown numericUpDown => numericUpDown.IncrementNumericUpDown(value),
+            ComboBox comboBox => comboBox.IncrementComboBox(value),
+            IIncrementableControl incrementableControl => incrementableControl.Increment(value),
+            _ => false
         };
-        return true;
+
+        public bool IncrementLarge(int value) => tc switch
+        {
+            DatePicker datePicker => datePicker.IncrementMonth(value),
+            TimePicker timePicker => timePicker.IncrementHour(value),
+            NumericUpDown numericUpDown => numericUpDown.IncrementLargeNumericUpDown(value),
+            ComboBox comboBox => comboBox.IncrementLargeComboBox(value),
+            IIncrementableControl incrementableControl => incrementableControl.IncrementLarge(value),
+            _ => false
+        };
     }
 
-    private static bool IncrementNumericUpDown(this NumericUpDown numericUpDown, int value)
-        => IncrementNumericUpDownCore(numericUpDown, value * numericUpDown.Increment);
-
-    private static bool IncrementLargeNumericUpDown(this NumericUpDown numericUpDown, int value)
-        => IncrementNumericUpDownCore(numericUpDown, value * numericUpDown.Increment * 10);
-
-    private static bool IncrementNumericUpDownCore(this NumericUpDown numericUpDown, decimal incrementValue)
+    extension(ComboBox comboBox)
     {
-        if (numericUpDown.Value is not { } currentValue)
-            return false;
+        private bool IncrementLargeComboBox(int value)
+            => comboBox.IncrementComboBoxCore(value * 5);
 
-        var newValue = currentValue + incrementValue;
+        private bool IncrementComboBox(int value)
+            => comboBox.IncrementComboBoxCore(value);
 
-        if (newValue >= numericUpDown.Minimum && newValue <= numericUpDown.Maximum)
+        private bool IncrementComboBoxCore(int value)
         {
-            numericUpDown.Value = newValue;
+            if (comboBox.SelectedIndex <= -1)
+                return false;
+
+            var newIndex = comboBox.SelectedIndex + value;
+            var itemCount = comboBox.Items.Count;
+            comboBox.SelectedIndex = newIndex switch
+            {
+                -1 => itemCount - 1,
+                _ when newIndex >= itemCount => 0,
+                _ => newIndex
+            };
+            return true;
+        }
+    }
+
+    extension(NumericUpDown numericUpDown)
+    {
+        private bool IncrementNumericUpDown(int value)
+            => numericUpDown.IncrementNumericUpDownCore(value * numericUpDown.Increment);
+
+        private bool IncrementLargeNumericUpDown(int value)
+            => numericUpDown.IncrementNumericUpDownCore(value * numericUpDown.Increment * 10);
+
+        private bool IncrementNumericUpDownCore(decimal incrementValue)
+        {
+            if (numericUpDown.Value is not { } currentValue)
+                return false;
+
+            var newValue = currentValue + incrementValue;
+
+            if (newValue >= numericUpDown.Minimum && newValue <= numericUpDown.Maximum)
+            {
+                numericUpDown.Value = newValue;
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    extension(TimePicker timePicker)
+    {
+        private bool IncrementMinute(int value)
+        {
+            if (timePicker.SelectedTime is not { } time)
+                return false;
+
+            timePicker.SelectedTime = time.Add(value.Minutes());
             return true;
         }
 
-        return false;
+        private bool IncrementHour(int value)
+        {
+            if (timePicker.SelectedTime is not { } time)
+                return false;
+
+            timePicker.SelectedTime = time.Add(value.Hours());
+            return true;
+        }
     }
 
-    private static bool IncrementMinute(this global::Avalonia.Controls.TimePicker timePicker, int value)
+    extension(DatePicker datePicker)
     {
-        if (timePicker.SelectedTime is not { } time)
-            return false;
+        private bool IncrementDay(int value)
+        {
+            if (datePicker.SelectedDate is not { } date)
+                return false;
 
-        timePicker.SelectedTime = time.Add(value.Minutes());
-        return true;
-    }
+            datePicker.SelectedDate = date.AddDays(value);
+            return true;
+        }
 
-    private static bool IncrementHour(this global::Avalonia.Controls.TimePicker timePicker, int value)
-    {
-        if (timePicker.SelectedTime is not { } time)
-            return false;
+        private bool IncrementMonth(int value)
+        {
+            if (datePicker.SelectedDate is not { } date)
+                return false;
 
-        timePicker.SelectedTime = time.Add(value.Hours());
-        return true;
-    }
-
-    private static bool IncrementDay(this DatePicker datePicker, int value)
-    {
-        if (datePicker.SelectedDate is not { } date)
-            return false;
-
-        datePicker.SelectedDate = date.AddDays(value);
-        return true;
-    }
-
-    private static bool IncrementMonth(this DatePicker datePicker, int value)
-    {
-        if (datePicker.SelectedDate is not { } date)
-            return false;
-
-        datePicker.SelectedDate = date.AddMonths(value);
-        return true;
+            datePicker.SelectedDate = date.AddMonths(value);
+            return true;
+        }
     }
 
     private static bool TryGetBooleanPropertyValue(object? obj, string propertyName, out bool value)

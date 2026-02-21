@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="ThemeRoleExtension.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="ThemeRoleExtension.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -56,34 +56,34 @@ public class ThemeRoleExtension : ThemeBrushExtensionBase
     {
         Bindings =
         {
-            new Binding(Role)
+            new ReflectionBinding(Role)
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = RelativeSource,
-                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
+                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
             },
-            new Binding($"(my:{nameof(PaletteAssist)}.{Type})")
+            new ReflectionBinding($"(my:{nameof(PaletteAssist)}.{Type})")
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = RelativeSource,
-                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
+                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
             },
-            new Binding()
+            new ReflectionBinding
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = RelativeSource
             },
-            new Binding("(TextElement.Foreground)")
+            new ReflectionBinding("(TextElement.Foreground)")
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor)
                 {
                     AncestorType = typeof(Control)
                 },
-                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y),
+                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
             }
         },
         Converter = ThemeConverter.Default,
-        ConverterParameter = new ThemeRoleParameters(Type, Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten)
+        ConverterParameter = new ThemeRoleParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten)
     };
 }

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="FormGroup.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="FormGroup.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ public class FormGroup : HeaderedItemsControl
 
     public static readonly StyledProperty<GridLength> LabelWidthProperty = AvaloniaProperty.Register<FormGroup, GridLength>(nameof(LabelWidth), GridLength.Auto);
 
-    public static readonly StyledProperty<Position> LabelPositionProperty = AvaloniaProperty.Register<FormGroup, Position>(nameof(LabelPosition), Position.Left);
+    public static readonly StyledProperty<Position> LabelPositionProperty = AvaloniaProperty.Register<FormGroup, Position>(nameof(LabelPosition));
 
     public static readonly StyledProperty<string?> RequiredIndicatorProperty = AvaloniaProperty.Register<FormGroup, string?>(nameof(RequiredIndicator), "*");
 

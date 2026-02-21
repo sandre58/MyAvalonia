@@ -84,7 +84,7 @@
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary}" />
@@ -137,8 +137,8 @@
                                 <MenuFlyout ItemsSource="{Binding $parent[my:Pagination].PageSizeOptions}">
                                     <MenuFlyout.ItemContainerTheme>
                                         <ControlTheme TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
-                                            <Setter Property="Header" Value="{Binding DataType={x:Type sys:Int32}}" />
-                                            <Setter Property="CommandParameter" Value="{Binding DataType={x:Type sys:Int32}}" />
+                                            <Setter Property="Header" Value="{Binding x:DataType=sys:Int32}" />
+                                            <Setter Property="CommandParameter" Value="{Binding x:DataType=sys:Int32}" />
                                             <Setter Property="Command" Value="{Binding $parent[my:Pagination].SetPageSizeCommand}" />
                                         </ControlTheme>
                                     </MenuFlyout.ItemContainerTheme>

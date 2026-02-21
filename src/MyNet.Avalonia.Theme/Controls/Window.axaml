@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia">
     <Styles.Resources>
-        
+
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- DEFAULT WINDOW THEME                                      -->
         <!-- ═════════════════════════════════════════════════════════ -->
@@ -17,6 +17,7 @@
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Background" Value="{my:ThemeRole Background}" />
             <Setter Property="TransparencyBackgroundFallback" Value="{my:ThemeRole Background}" />
+            <Setter Property="TopLevel.SystemBarColor" Value="{my:ThemeRole Foreground}"/>
             <Setter Property="BorderBrush" Value="{my:ThemeRole Border}" />
             <Setter Property="Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
 

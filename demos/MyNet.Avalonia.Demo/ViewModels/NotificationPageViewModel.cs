@@ -1,10 +1,11 @@
 // -----------------------------------------------------------------------
-// <copyright file="NotificationPageViewModel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="NotificationPageViewModel.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -25,7 +26,7 @@ namespace MyNet.Avalonia.Demo.ViewModels;
 
 internal sealed class NotificationPageViewModel : ControlCatalogViewModel
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup")]
+    [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup")]
     private ToasterService? _toasterService;
 
     static NotificationPageViewModel() => RegisteredDataTemplate.Register<CustomNotification>(_ => new LargeContent1(), nameof(INotification));
@@ -34,7 +35,7 @@ internal sealed class NotificationPageViewModel : ControlCatalogViewModel
         : base("Notifications",
             [
                 new ControlThemeBuilder()
-                    .AddRoles([ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information, ThemeRole.Custom])
+                    .AddRoles(ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information, ThemeRole.Custom)
             ])
     {
         ResetToasterService();

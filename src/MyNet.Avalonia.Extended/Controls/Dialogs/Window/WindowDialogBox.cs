@@ -20,13 +20,13 @@ namespace MyNet.Avalonia.Extended.Controls;
 
 [TemplatePart(PartYesButton, typeof(Button))]
 [TemplatePart(PartNoButton, typeof(Button))]
-[TemplatePart(PartOKButton, typeof(Button))]
+[TemplatePart(PartOkButton, typeof(Button))]
 [TemplatePart(PartCancelButton, typeof(Button))]
 public class WindowDialogBox : WindowDialog
 {
     public const string PartYesButton = "PART_YesButton";
     public const string PartNoButton = "PART_NoButton";
-    public const string PartOKButton = "PART_OKButton";
+    public const string PartOkButton = "PART_OKButton";
     public const string PartCancelButton = "PART_CancelButton";
 
     public static readonly StyledProperty<MessageBoxResultOption> ButtonsProperty = AvaloniaProperty.Register<WindowDialogBox, MessageBoxResultOption>(nameof(Buttons));
@@ -56,7 +56,7 @@ public class WindowDialogBox : WindowDialog
     {
         base.OnApplyTemplate(e);
         Button.ClickEvent.RemoveHandler(OnDefaultClose, _okButton, _cancelButton, _yesButton, _noButton);
-        _okButton = e.NameScope.Find<Button>(PartOKButton);
+        _okButton = e.NameScope.Find<Button>(PartOkButton);
         _cancelButton = e.NameScope.Find<Button>(PartCancelButton);
         _yesButton = e.NameScope.Find<Button>(PartYesButton);
         _noButton = e.NameScope.Find<Button>(PartNoButton);
@@ -107,8 +107,6 @@ public class WindowDialogBox : WindowDialog
             case MessageBoxResultOption.YesNoCancel:
                 IsVisibleProperty.SetValue(false, _okButton);
                 IsVisibleProperty.SetValue(true, _cancelButton, _yesButton, _noButton);
-                break;
-            default:
                 break;
         }
     }

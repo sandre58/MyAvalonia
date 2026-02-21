@@ -1,19 +1,19 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia"
-                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
                     xmlns:o="using:MyNet.Observable.Translatables"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
                     xmlns:media="using:Avalonia.Media">
 
-    <DataTemplate x:Key="MyNet.DataTemplate.PathIcon" DataType="{x:Type media:Geometry}">
+    <DataTemplate x:Key="MyNet.DataTemplate.PathIcon" x:DataType="{x:Type media:Geometry}">
         <PathIcon Data="{Binding}" />
     </DataTemplate>
 
-    <DataTemplate x:Key="MyNet.DataTemplate.Translatable" DataType="{x:Type o:StringTranslatable}">
+    <DataTemplate x:Key="MyNet.DataTemplate.Translatable" x:DataType="{x:Type o:StringTranslatable}">
         <TextBlock Text="{Binding Value}" />
     </DataTemplate>
 
-    <DataTemplate x:Key="MyNet.DataTemplates.Text.ClipBoard">
+    <DataTemplate x:Key="MyNet.DataTemplates.Text.ClipBoard" x:DataType="{x:Type sys:String}">
         <DockPanel>
             <Button DockPanel.Dock="Right" Classes="kind-tool is-clipboard" CommandParameter="{Binding}" Margin="{my:Thickness Sm, Left}" />
             <TextBlock Text="{Binding}" FontStyle="Italic" />

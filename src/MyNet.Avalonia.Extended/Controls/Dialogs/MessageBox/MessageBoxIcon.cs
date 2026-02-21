@@ -19,5 +19,5 @@ public enum MessageBoxIcon
     Question,
     Stop, // Same as Error
     Warning,
-    Success,
+    Success
 }

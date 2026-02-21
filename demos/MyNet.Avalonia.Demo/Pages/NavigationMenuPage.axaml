@@ -10,14 +10,14 @@
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:NavigationMenuPageViewModel"
-            Name="Root"
+            x:Name="Root"
             mc:Ignorable="d">
 
     <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
-                <my:NavigationMenu Name="menu"
+                <my:NavigationMenu x:Name="menu"
                                    Theme="{Binding Appearance.ActiveTheme}"
                                    my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
                                    my:ClassesAssist.Classes="{Binding ComputedClasses}"
@@ -43,7 +43,7 @@
 
         <v:ControlCatalogView.ThemeControlTemplate>
             <DataTemplate x:DataType="c:ControlDefinition">
-                <my:NavigationMenu Name="menu"
+                <my:NavigationMenu x:Name="menu"
                                    Theme="{Binding Theme}"
                                    my:ThemeAssist.Role="{Binding Role}"
                                    my:ClassesAssist.Classes="{Binding Classes}">
@@ -66,19 +66,19 @@
         </v:ControlCatalogView.ThemeControlTemplate>
 
         <v:ControlCatalogView.Settings>
-            <my:Form>
+            <my:Form x:DataType="vm:NavigationMenuPageViewModel" DataContext="{Binding #Root.DataContext}">
 
-                <NumericUpDown Name="CollapseWidth" Maximum="200"
+                <NumericUpDown x:Name="CollapseWidth" Maximum="200"
                                Minimum="40"
                                Value="50"
                                my:FormItem.Label="{my:LocObject CollapseWidth}" />
 
-                <NumericUpDown Name="ExpandWidth" Maximum="500"
+                <NumericUpDown x:Name="ExpandWidth" Maximum="500"
                                Minimum="200"
                                Value="300"
                                my:FormItem.Label="{my:LocObject ExpandWidth}" />
 
-                <NumericUpDown Name="SubMenuIndent" Maximum="50"
+                <NumericUpDown x:Name="SubMenuIndent" Maximum="50"
                                Minimum="0"
                                Value="24"
                                my:FormItem.Label="{my:LocObject SubMenuIndent}" />

@@ -33,7 +33,7 @@
             <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
             <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
             <Setter Property="my:InteractionAssist.IndicatorColor" Value="{my:Foreground Opacity=High}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeRole Primary}" />
             <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary}" />
             <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), Contrast=True}" />

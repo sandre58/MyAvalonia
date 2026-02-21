@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using Avalonia.Controls;
 using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.Theme.Enums;
@@ -52,6 +51,6 @@ internal sealed class ControlIconViewModel : ObservableObject
         Position.Right => ["icon-right"],
         Position.Top => ["icon-top"],
         Position.Bottom => ["icon-bottom"],
-        _ => [],
+        _ => []
     } : [];
 }

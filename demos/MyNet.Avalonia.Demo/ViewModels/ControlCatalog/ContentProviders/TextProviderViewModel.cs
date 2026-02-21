@@ -27,5 +27,5 @@ public class TextProviderViewModel : ObservableObject, IContentProviderViewModel
     /// Provides the text content.
     /// </summary>
     /// <returns>The text content.</returns>
-    public object? ProvideContent() => Text;
+    public object ProvideContent() => Text;
 }

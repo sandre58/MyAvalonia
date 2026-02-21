@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="Form.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="Form.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ public class Form : ItemsControl
 
     public static readonly StyledProperty<double> SpacingProperty = AvaloniaProperty.Register<Form, double>(nameof(Spacing), 16d);
 
-    public static readonly StyledProperty<Position> LabelPositionProperty = AvaloniaProperty.Register<Form, Position>(nameof(LabelPosition), Position.Left);
+    public static readonly StyledProperty<Position> LabelPositionProperty = AvaloniaProperty.Register<Form, Position>(nameof(LabelPosition));
 
     public static readonly StyledProperty<GridLength> LabelWidthProperty = AvaloniaProperty.Register<Form, GridLength>(nameof(LabelWidth), GridLength.Auto);
 
@@ -95,40 +95,44 @@ public class Form : ItemsControl
     {
         base.PrepareContainerForItemOverride(container, item, index);
 
-        if (container is FormItemContainer fic && item is Control c)
+        switch (container)
         {
-            fic.Label = FormItem.GetLabel(c);
-            fic.LabelTemplate = FormItem.GetLabelTemplate(c);
-            fic.ShowLabel = !FormItem.GetNoLabel(c) && fic.Label != null;
-            fic.LabelPosition = FormItem.GetLabelPosition(c) ?? LabelPosition;
-            fic.LabelWidth = FormItem.GetLabelWidth(c) ?? LabelWidth;
-            fic.LabelAlignment = FormItem.GetLabelAlignment(c) ?? LabelAlignment;
-            fic.LabelMargin = FormItem.GetLabelMargin(c) ?? LabelMargin;
-            fic.IsRequired = FormItem.GetIsRequired(c);
-            fic.RequiredIndicator = FormItem.GetRequiredIndicator(c) ?? RequiredIndicator;
-            fic.HelpText = FormItem.GetHelpText(c);
-            fic.TextWrapping = FormItem.GetTextWrapping(c);
+            case FormItemContainer fic when item is Control c:
+                fic.Label = FormItem.GetLabel(c);
+                fic.LabelTemplate = FormItem.GetLabelTemplate(c);
+                fic.ShowLabel = !FormItem.GetNoLabel(c) && fic.Label != null;
+                fic.LabelPosition = FormItem.GetLabelPosition(c) ?? LabelPosition;
+                fic.LabelWidth = FormItem.GetLabelWidth(c) ?? LabelWidth;
+                fic.LabelAlignment = FormItem.GetLabelAlignment(c) ?? LabelAlignment;
+                fic.LabelMargin = FormItem.GetLabelMargin(c) ?? LabelMargin;
+                fic.IsRequired = FormItem.GetIsRequired(c);
+                fic.RequiredIndicator = FormItem.GetRequiredIndicator(c) ?? RequiredIndicator;
+                fic.HelpText = FormItem.GetHelpText(c);
+                fic.TextWrapping = FormItem.GetTextWrapping(c);
 
-            // Bind container visibility to content visibility
-            fic.Bind(IsVisibleProperty, c.GetObservable(IsVisibleProperty));
-        }
-        else if (container is FormGroup group)
-        {
-            // Propagate Form properties to FormGroup if not explicitly set
-            if (!group.IsSet(FormGroup.LabelPositionProperty))
-                group.LabelPosition = LabelPosition;
+                // Bind container visibility to content visibility
+                fic.Bind(IsVisibleProperty, c.GetObservable(IsVisibleProperty));
+                break;
 
-            if (!group.IsSet(FormGroup.LabelWidthProperty))
-                group.LabelWidth = LabelWidth;
+            case FormGroup group:
+                {
+                    // Propagate Form properties to FormGroup if not explicitly set
+                    if (!group.IsSet(FormGroup.LabelPositionProperty))
+                        group.LabelPosition = LabelPosition;
 
-            if (!group.IsSet(FormGroup.LabelAlignmentProperty))
-                group.LabelAlignment = LabelAlignment;
+                    if (!group.IsSet(FormGroup.LabelWidthProperty))
+                        group.LabelWidth = LabelWidth;
 
-            if (!group.IsSet(FormGroup.LabelMarginProperty))
-                group.LabelMargin = LabelMargin;
+                    if (!group.IsSet(FormGroup.LabelAlignmentProperty))
+                        group.LabelAlignment = LabelAlignment;
 
-            if (!group.IsSet(FormGroup.RequiredIndicatorProperty))
-                group.RequiredIndicator = RequiredIndicator;
+                    if (!group.IsSet(FormGroup.LabelMarginProperty))
+                        group.LabelMargin = LabelMargin;
+
+                    if (!group.IsSet(FormGroup.RequiredIndicatorProperty))
+                        group.RequiredIndicator = RequiredIndicator;
+                    break;
+                }
         }
     }
 }

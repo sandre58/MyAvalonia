@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Threading.Tasks;
 using System.Windows.Input;
 using MyNet.Avalonia.Demo.ViewModels.Dialogs;
 using MyNet.Avalonia.Demo.Views.Dialogs;
@@ -105,7 +106,7 @@ internal sealed class DialogPageViewModel : PageViewModel
 
             _overlayDialogService.Show(view, vm, null, options);
 
-            await System.Threading.Tasks.Task.CompletedTask.ConfigureAwait(false);
+            await Task.CompletedTask.ConfigureAwait(false);
         });
 
         OpenOverlayPerfDialogCommand = CommandsManager.Create(async () =>

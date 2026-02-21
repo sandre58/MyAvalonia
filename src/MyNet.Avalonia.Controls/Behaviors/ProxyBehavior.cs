@@ -38,14 +38,11 @@ public static class ProxyBehavior
         Builders.Add(new ProxyBuilder(c => c is ComboBox, c => new ComboBoxProxy((ComboBox)c)));
         Builders.Add(new ProxyBuilder(c => c is AutoCompleteBox, c => new AutoCompleteBoxProxy((AutoCompleteBox)c)));
         Builders.Add(new ProxyBuilder(c => c is NumericUpDown, c => new NumericUpDownProxy((NumericUpDown)c)));
-        Builders.Add(new ProxyBuilder(c => c is global::Avalonia.Controls.CalendarDatePicker, c => new CalendarDatePickerProxy((global::Avalonia.Controls.CalendarDatePicker)c)));
+        Builders.Add(new ProxyBuilder(c => c is CalendarDatePicker, c => new CalendarDatePickerProxy((CalendarDatePicker)c)));
         Builders.Add(new ProxyBuilder(c => c is ITextPicker, c => new PickerProxy((ITextPicker)c)));
         Builders.Add(new ProxyBuilder(c => c is DatePicker, c => new DatePickerProxy((DatePicker)c)));
-        Builders.Add(new ProxyBuilder(c => c is global::Avalonia.Controls.TimePicker, c => new TimePickerProxy((global::Avalonia.Controls.TimePicker)c)));
+        Builders.Add(new ProxyBuilder(c => c is TimePicker, c => new TimePickerProxy((TimePicker)c)));
         Builders.Add(new ProxyBuilder(c => c is CodeBlock, c => new CodeBlockProxy((CodeBlock)c)));
-        Builders.Add(new ProxyBuilder(c => c is DateTimePicker, c => new DateTimePickerProxy((DateTimePicker)c)));
-        Builders.Add(new ProxyBuilder(c => c is DateRangePicker, c => new DateRangePickerProxy((DateRangePicker)c)));
-        Builders.Add(new ProxyBuilder(c => c is TimeRangePicker, c => new TimeRangePickerProxy((TimeRangePicker)c)));
         Builders.Add(new ProxyBuilder(c => c is MultiComboBox, c => new MultiComboBoxProxy((MultiComboBox)c)));
         Builders.Add(new ProxyBuilder(c => c is TagBox, c => new TagBoxProxy((TagBox)c)));
     }
@@ -55,7 +52,7 @@ public static class ProxyBehavior
     private static IControlProxy? GetOrCreateProxy(Control? control)
     {
         if (control is null) return null;
-        if (GetProxy(control) is IControlProxy proxy)
+        if (GetProxy(control) is { } proxy)
         {
             return proxy;
         }

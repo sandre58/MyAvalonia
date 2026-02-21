@@ -16,8 +16,6 @@ namespace MyNet.Avalonia.Controls;
 [PseudoClasses(PseudoClassName.Selected, PseudoClassName.Dot)]
 public class ClockTimeComponentCell : TemplatedControl
 {
-    private int _value;
-
     static ClockTimeComponentCell()
     {
         AffectsArrange<ClockTimeComponentCell>(IsDotProperty);
@@ -58,8 +56,8 @@ public class ClockTimeComponentCell : TemplatedControl
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1721:Property names should not match get methods", Justification = "GetValue is in base class")]
     public int Value
     {
-        get => _value;
-        set => SetAndRaise(ValueProperty, ref _value, value);
+        get;
+        set => SetAndRaise(ValueProperty, ref field, value);
     }
 
     #endregion

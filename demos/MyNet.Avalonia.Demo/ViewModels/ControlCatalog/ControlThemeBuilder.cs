@@ -28,10 +28,6 @@ internal sealed class ControlThemeBuilder(string? themeName = null, string? kind
 {
     private static readonly ConcurrentDictionary<string, ControlTheme> ThemeCache = new();
 
-    private readonly string? _themeName = themeName;
-    private readonly string? _kind = kind;
-    private readonly ContentProviderType _defaultContentType = defaultContentType;
-
     private readonly List<ShapeDefinition> _shapes = [];
     private readonly List<VariantDefinition> _variants = [];
     private readonly List<SizeDefinition> _sizes = [];
@@ -188,10 +184,10 @@ internal sealed class ControlThemeBuilder(string? themeName = null, string? kind
     /// <returns>The constructed control theme definition.</returns>
     public ControlThemeDefinition Build(string controlName)
     {
-        var key = ResolveKey(controlName, _themeName);
+        var key = ResolveKey(controlName, themeName);
         var theme = ResolveTheme(key);
 
-        var definition = new ControlThemeDefinition(theme, _kind, key, _themeName, _defaultContentType);
+        var definition = new ControlThemeDefinition(theme, kind, key, themeName, defaultContentType);
         definition.Variants.AddRange(_variants);
         definition.Sizes.AddRange(_sizes);
         definition.Roles.AddRange(_roles);

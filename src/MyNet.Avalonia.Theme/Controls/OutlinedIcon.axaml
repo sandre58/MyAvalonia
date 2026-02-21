@@ -9,7 +9,7 @@
         <ControlTheme x:Key="{x:Type my:OutlinedIcon}" TargetType="my:OutlinedIcon">
             <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
             <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
-            
+
             <Setter Property="my:PaletteAssist.Background" Value="{my:Foreground AncestorType=Control, Opacity=Medium}" />
             <Setter Property="my:PaletteAssist.Border" Value="{my:Foreground AncestorType=Control, Opacity=High}" />
             <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=Control}" />
@@ -44,8 +44,8 @@
     <Style Selector="my|OutlinedIcon">
 
         <Style Selector="^.is-activable">
-            <Setter Property="Background" Value="{my:Foreground, Opacity=Medium}" />
-            <Setter Property="BorderBrush" Value="{my:Foreground, Opacity=Medium}" />
+            <Setter Property="Background" Value="{my:Foreground Opacity=Medium}" />
+            <Setter Property="BorderBrush" Value="{my:Foreground Opacity=Medium}" />
             <Setter Property="ActiveBackground" Value="{my:ThemeRole Primary}" />
             <Setter Property="ActiveBorderBrush" Value="{my:ThemeRole Primary}" />
         </Style>

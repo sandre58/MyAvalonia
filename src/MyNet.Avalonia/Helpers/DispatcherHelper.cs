@@ -46,10 +46,9 @@ public static class DispatcherHelper
             action();
             return Task.CompletedTask;
         }
-        else
-        {
-            var tcs = new TaskCompletionSource<object?>();
-            Dispatcher.UIThread.InvokeAsync(() =>
+
+        var tcs = new TaskCompletionSource<object?>();
+        Dispatcher.UIThread.InvokeAsync(() =>
             {
                 try
                 {
@@ -62,8 +61,7 @@ public static class DispatcherHelper
                 }
             },
             priority ?? DispatcherPriority.Normal);
-            return tcs.Task;
-        }
+        return tcs.Task;
     }
 
     /// <summary>
@@ -79,10 +77,9 @@ public static class DispatcherHelper
         {
             return Task.FromResult(func());
         }
-        else
-        {
-            var tcs = new TaskCompletionSource<T>();
-            Dispatcher.UIThread.InvokeAsync(() =>
+
+        var tcs = new TaskCompletionSource<T>();
+        Dispatcher.UIThread.InvokeAsync(() =>
             {
                 try
                 {
@@ -94,8 +91,7 @@ public static class DispatcherHelper
                 }
             },
             priority ?? DispatcherPriority.Normal);
-            return tcs.Task;
-        }
+        return tcs.Task;
     }
 
     /// <summary>

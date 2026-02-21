@@ -256,7 +256,7 @@ public class Badge : HeaderedContentControl
         _badgeContainer.VerticalAlignment = CornerPosition is CornerPosition.BottomLeft or CornerPosition.BottomRight
             ? global::Avalonia.Layout.VerticalAlignment.Bottom
             : global::Avalonia.Layout.VerticalAlignment.Top;
-        _badgeContainer.RenderTransform = new TransformGroup()
+        _badgeContainer.RenderTransform = new TransformGroup
         {
             Children =
             [

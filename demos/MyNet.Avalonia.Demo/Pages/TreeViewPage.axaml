@@ -4,7 +4,6 @@
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             xmlns:countries="clr-namespace:MyNet.Utilities.Geography;assembly=MyNet.Utilities"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:data="clr-namespace:MyNet.Avalonia.Demo.Data"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"

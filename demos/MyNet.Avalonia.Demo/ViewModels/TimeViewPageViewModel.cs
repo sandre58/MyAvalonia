@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="TimeViewPageViewModel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="TimeViewPageViewModel.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ internal sealed class TimeViewPageViewModel : ControlCatalogViewModel
         : base(nameof(TimeView),
             [
                 new ControlThemeBuilder()
-                    .AddThemeRoles(),
+                    .AddThemeRoles()
             ])
     {
     }

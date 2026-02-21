@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia.Media;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Infrastructure;
 using MyNet.Avalonia.Theme.Palettes;
@@ -44,29 +43,20 @@ public class ThemeService(IMyTheme myTheme, IThemeBaseRegistry themeBaseRegistry
     /// <param name="theme">The myTheme to apply.</param>
     public void ApplyTheme(UI.Theming.Theme theme)
     {
-        if (theme.Base is not null)
+        myTheme.Theme = theme.Base.ToString();
+
+        var primaryColor = theme.PrimaryColor.ToColor();
+        var primaryForegroundColor = theme.PrimaryForegroundColor.ToColor();
+        if (primaryColor.HasValue)
         {
-            myTheme.Theme = theme.Base.ToString();
+            myTheme.Primary = new ColorShades(primaryColor.Value, primaryForegroundColor);
         }
 
-        if (theme.PrimaryColor is not null)
+        var accentColor = theme.AccentColor.ToColor();
+        var accentForegroundColor = theme.AccentForegroundColor.ToColor();
+        if (accentColor.HasValue)
         {
-            var primaryColor = theme.PrimaryColor.ToColor();
-            var foregroundColor = theme.PrimaryForegroundColor.ToColor();
-            if (primaryColor.HasValue)
-            {
-                myTheme.Primary = new ColorShades(primaryColor.Value, foregroundColor);
-            }
-        }
-
-        if (theme.AccentColor is not null)
-        {
-            var accentColor = theme.AccentColor.ToColor();
-            var foregroundColor = theme.AccentForegroundColor.ToColor();
-            if (accentColor.HasValue)
-            {
-                myTheme.Accent = new ColorShades(accentColor.Value, foregroundColor);
-            }
+            myTheme.Accent = new ColorShades(accentColor.Value, accentForegroundColor);
         }
 
         ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(CurrentTheme));

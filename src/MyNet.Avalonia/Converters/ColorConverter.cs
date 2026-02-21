@@ -46,7 +46,7 @@ public class ColorConverter : IValueConverter
             string s => s.ToColor().GetValueOrDefault(),
             _ => Colors.White
         };
-        var opacity = Opacity ?? (value is SolidColorBrush brush && brush.Opacity < 1.0 ? brush.Opacity : (double?)null);
+        var opacity = Opacity ?? (value is SolidColorBrush { Opacity: < 1.0 } brush ? brush.Opacity : null);
 
         return color.Apply(new ColorInterpolation(opacity, Contrast, Darken, Lighten));
     }

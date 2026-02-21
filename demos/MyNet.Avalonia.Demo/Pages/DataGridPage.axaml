@@ -16,6 +16,8 @@
             ClipToBounds="False"
             mc:Ignorable="d">
     <pages:Page.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+
         <DataTemplate x:Key="MyNet.DataTemplate.Country" DataType="{x:Type geo:Country}">
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Md}">
                 <Image Width="16"
@@ -48,58 +50,58 @@
                           GridLinesVisibility="{Binding #GridLinesVisibility.SelectedValue}"
                           HeadersVisibility="{Binding #HeadersVisibility.SelectedValue}"
                           IsReadOnly="{Binding !#IsEditable.IsChecked}"
-                          ItemsSource="{Binding #Root.DataContext.Fixtures}"
+                          ItemsSource="{ReflectionBinding Data.Fixtures, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
                           RowHeaderWidth="{Binding #RowHeaderWidth.Value}"
                           RowHeight="{Binding #RowHeight.Value}"
                           SelectionMode="{Binding #SelectionMode.SelectedValue}">
                     <DataGrid.RowTheme>
                         <ControlTheme BasedOn="{StaticResource {x:Type DataGridRow}}" TargetType="DataGridRow">
-                            <Setter Property="IsSelected" Value="{ReflectionBinding IsSelected, Mode=OneWayToSource}" />
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWayToSource, x:DataType=vm:SelectedFixture}" />
                         </ControlTheme>
                     </DataGrid.RowTheme>
                     <DataGrid.Columns>
                         <my:DataGridDateColumn Width="2*"
                                                x:DataType="{x:Type vm:SelectedFixture}"
-                                               Binding="{ReflectionBinding Item.Date}"
+                                               Binding="{Binding Item.Date, x:DataType=vm:SelectedFixture}"
                                                Header="{my:Loc Date}"
                                                Icon="{StaticResource MyNet.Geometry.Calendar}"
                                                IsReadOnly="False"
                                                PlaceholderText="{my:Loc Date}" />
                         <my:DataGridTimeColumn Width="*"
                                                x:DataType="{x:Type vm:SelectedFixture}"
-                                               Binding="{ReflectionBinding Item.Time}"
+                                               Binding="{Binding Item.Time, x:DataType=vm:SelectedFixture}"
                                                Header="{my:Loc Time}"
                                                Icon="{StaticResource MyNet.Geometry.Clock}"
                                                IsReadOnly="False"
                                                PlaceholderText="{my:Loc Time}" />
                         <my:DataGridComboBoxColumn Width="3*"
                                                    x:DataType="{x:Type vm:SelectedFixture}"
-                                                   Binding="{ReflectionBinding Item.Home}"
+                                                   Binding="{Binding Item.Home, x:DataType=vm:SelectedFixture}"
                                                    ContentTemplate="{StaticResource MyNet.DataTemplate.Country}"
                                                    Header="{my:Loc HomeTeam}"
                                                    ItemsSource="{my:EnumClassSource EnumType={x:Type models:Country}, OrderByDisplay=True}" />
                         <my:DataGridNumericColumn Width="70"
                                                   x:DataType="{x:Type vm:SelectedFixture}"
-                                                  Binding="{ReflectionBinding Item.HomeScore}"
+                                                  Binding="{Binding Item.HomeScore, x:DataType=vm:SelectedFixture}"
                                                   Increment="1"
                                                   Maximum="10"
                                                   Minimum="0" />
                         <my:DataGridNumericColumn Width="70"
                                                   x:DataType="{x:Type vm:SelectedFixture}"
-                                                  Binding="{ReflectionBinding Item.AwayScore}"
+                                                  Binding="{Binding Item.AwayScore, x:DataType=vm:SelectedFixture}"
                                                   Increment="1"
                                                   Maximum="15"
                                                   Minimum="0" />
                         <my:DataGridComboBoxColumn Width="3*"
                                                    x:DataType="{x:Type vm:SelectedFixture}"
-                                                   Binding="{ReflectionBinding Item.Away}"
+                                                   Binding="{Binding Item.Away, x:DataType=vm:SelectedFixture}"
                                                    ContentTemplate="{StaticResource MyNet.DataTemplate.Country}"
                                                    Header="{my:Loc AwayTeam}"
                                                    IsReadOnly="False"
                                                    ItemsSource="{my:EnumClassSource EnumType={x:Type models:Country}, OrderByDisplay=True}" />
                         <my:DataGridTextColumn Width="3*"
                                                x:DataType="{x:Type vm:SelectedFixture}"
-                                               Binding="{ReflectionBinding Item.Venue}"
+                                               Binding="{Binding Item.Venue, x:DataType=vm:SelectedFixture}"
                                                Header="{my:Loc Venue}"
                                                Icon="{StaticResource MyNet.Geometry.Stadium}"
                                                ShowClearButton="True"
@@ -107,10 +109,10 @@
                                                PlaceholderText="{my:Loc Venue}" />
                         <my:DataGridComboBoxColumn Width="2*"
                                                    x:DataType="{x:Type vm:SelectedFixture}"
-                                                   Binding="{ReflectionBinding Item.Referee}"
+                                                   Binding="{Binding Item.Referee, x:DataType=vm:SelectedFixture}"
                                                    Header="{my:Loc Referee}"
                                                    Icon="{StaticResource MyNet.Geometry.Whistle}"
-                                                   ItemsSource="{Binding #Root.DataContext.AvailableReferees}"
+                                                   ItemsSource="{ReflectionBinding Data.AvailableReferees, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
                                                    ShowClearButton="True"
                                                    ShowClipboardButton="True"
                                                    PlaceholderText="{my:Loc Referee}" />
@@ -127,49 +129,49 @@
                           my:ClassesAssist.Classes="{Binding Classes}">
                     <DataGrid.RowTheme>
                         <ControlTheme BasedOn="{StaticResource {x:Type DataGridRow}}" TargetType="DataGridRow">
-                            <Setter Property="IsSelected" Value="{ReflectionBinding IsSelected, Mode=OneWayToSource}" />
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWayToSource, x:DataType=vm:SelectedFixture}" />
                         </ControlTheme>
                     </DataGrid.RowTheme>
                     <DataGrid.Columns>
                         <my:DataGridDateColumn Width="2*"
                                                x:DataType="{x:Type vm:SelectedFixture}"
-                                               Binding="{ReflectionBinding Item.Date}"
+                                               Binding="{Binding Item.Date, x:DataType=vm:SelectedFixture}"
                                                Header="{my:Loc Date}"
                                                Icon="{StaticResource MyNet.Geometry.Calendar}"
                                                PlaceholderText="{my:Loc Date}" />
                         <my:DataGridTimeColumn Width="*"
                                                x:DataType="{x:Type vm:SelectedFixture}"
-                                               Binding="{ReflectionBinding Item.Time}"
+                                               Binding="{Binding Item.Time, x:DataType=vm:SelectedFixture}"
                                                Header="{my:Loc Time}"
                                                Icon="{StaticResource MyNet.Geometry.Clock}"
                                                PlaceholderText="{my:Loc Time}" />
                         <my:DataGridComboBoxColumn Width="3*"
                                                    x:DataType="{x:Type vm:SelectedFixture}"
-                                                   Binding="{ReflectionBinding Item.Home}"
+                                                   Binding="{Binding Item.Home, x:DataType=vm:SelectedFixture}"
                                                    ContentTemplate="{StaticResource MyNet.DataTemplate.Country}"
                                                    Header="{my:Loc HomeTeam}"
                                                    ItemsSource="{my:EnumClassSource EnumType={x:Type models:Country}, OrderByDisplay=True}" />
                         <my:DataGridNumericColumn Width="70"
                                                   x:DataType="{x:Type vm:SelectedFixture}"
-                                                  Binding="{ReflectionBinding Item.HomeScore}"
+                                                  Binding="{Binding Item.HomeScore, x:DataType=vm:SelectedFixture}"
                                                   Increment="1"
                                                   Maximum="10"
                                                   Minimum="0" />
                         <my:DataGridNumericColumn Width="70"
                                                   x:DataType="{x:Type vm:SelectedFixture}"
-                                                  Binding="{ReflectionBinding Item.AwayScore}"
+                                                  Binding="{Binding Item.AwayScore, x:DataType=vm:SelectedFixture}"
                                                   Increment="1"
                                                   Maximum="15"
                                                   Minimum="0" />
                         <my:DataGridComboBoxColumn Width="3*"
                                                    x:DataType="{x:Type vm:SelectedFixture}"
-                                                   Binding="{ReflectionBinding Item.Away}"
+                                                   Binding="{Binding Item.Away, x:DataType=vm:SelectedFixture}"
                                                    ContentTemplate="{StaticResource MyNet.DataTemplate.Country}"
                                                    Header="{my:Loc AwayTeam}"
                                                    ItemsSource="{my:EnumClassSource EnumType={x:Type models:Country}, OrderByDisplay=True}" />
                         <my:DataGridTextColumn Width="3*"
                                                x:DataType="{x:Type vm:SelectedFixture}"
-                                               Binding="{ReflectionBinding Item.Venue}"
+                                               Binding="{Binding Item.Venue, x:DataType=vm:SelectedFixture}"
                                                Header="{my:Loc Venue}"
                                                Icon="{StaticResource MyNet.Geometry.Stadium}"
                                                ShowClearButton="True"
@@ -177,10 +179,10 @@
                                                PlaceholderText="{my:Loc Venue}" />
                         <my:DataGridComboBoxColumn Width="2*"
                                                    x:DataType="{x:Type vm:SelectedFixture}"
-                                                   Binding="{ReflectionBinding Item.Referee}"
+                                                   Binding="{Binding Item.Referee, x:DataType=vm:SelectedFixture}"
                                                    Header="{my:Loc Referee}"
                                                    Icon="{StaticResource MyNet.Geometry.Whistle}"
-                                                   ItemsSource="{Binding #Root.DataContext.AvailableReferees}"
+                                                   ItemsSource="{ReflectionBinding Data.AvailableReferees, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
                                                    ShowClearButton="True"
                                                    ShowClipboardButton="True"
                                                    PlaceholderText="{my:Loc Referee}" />
@@ -190,13 +192,12 @@
         </v:ControlCatalogView.ThemeControlTemplate>
 
         <v:ControlCatalogView.Settings>
-            <my:Form>
-
-                <ToggleSwitch Name="CanUserSortColumns" my:FormItem.Label="{my:LocObject CanUserSortColumns}" IsChecked="True" />
-                <ToggleSwitch Name="CanUserReorderColumns" my:FormItem.Label="{my:LocObject CanUserReorderColumns}" IsChecked="True" />
-                <ToggleSwitch Name="CanUserResizeColumns" my:FormItem.Label="{my:LocObject CanUserResizeColumns}" IsChecked="True" />
-                <ToggleSwitch Name="IsEditable" my:FormItem.Label="{my:LocObject IsEditable}" IsChecked="True" />
-                <ListBox Name="HeadersVisibility" my:FormItem.Label="{my:LocObject HeadersVisibility}" SelectedValueBinding="{ReflectionBinding DataContext}" SelectedValue="{x:Static DataGridHeadersVisibility.Column}">
+            <my:Form x:DataType="vm:DataGridPageViewModel" DataContext="{Binding #Root.DataContext}">
+                <ToggleSwitch x:Name="CanUserSortColumns" my:FormItem.Label="{my:LocObject CanUserSortColumns}" IsChecked="True" />
+                <ToggleSwitch x:Name="CanUserReorderColumns" my:FormItem.Label="{my:LocObject CanUserReorderColumns}" IsChecked="True" />
+                <ToggleSwitch x:Name="CanUserResizeColumns" my:FormItem.Label="{my:LocObject CanUserResizeColumns}" IsChecked="True" />
+                <ToggleSwitch x:Name="IsEditable" my:FormItem.Label="{my:LocObject IsEditable}" IsChecked="True" />
+                <ListBox x:Name="HeadersVisibility" my:FormItem.Label="{my:LocObject HeadersVisibility}" SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}" SelectedValue="{x:Static DataGridHeadersVisibility.Column}">
                     <ListBoxItem Content="{my:Icon CircleOffOutline}"
                                  DataContext="{x:Static DataGridHeadersVisibility.None}"
                                  ToolTip.Tip="{my:Loc DataGridHeadersVisibilityNone}" />
@@ -211,24 +212,24 @@
                                  ToolTip.Tip="{my:Loc DataGridHeadersVisibilityAll}" />
                 </ListBox>
 
-                <NumericUpDown Name="ColumnHeaderHeight"
+                <NumericUpDown x:Name="ColumnHeaderHeight"
                                Maximum="100"
                                Minimum="0"
                                Value="35"
                                my:FormItem.Label="{my:LocObject ColumnHeaderHeight}" />
 
-                <NumericUpDown Name="RowHeaderWidth"
+                <NumericUpDown x:Name="RowHeaderWidth"
                                Maximum="100"
                                Minimum="0"
                                Value="40"
                                my:FormItem.Label="{my:LocObject RowHeaderWidth}" />
 
-                <NumericUpDown Name="RowHeight"
+                <NumericUpDown x:Name="RowHeight"
                                Maximum="100"
                                Minimum="0"
                                Value="40"
                                my:FormItem.Label="{my:LocObject RowHeight}" />
-                <ListBox Name="GridLinesVisibility" my:FormItem.Label="{my:LocObject GridLinesVisibility}" SelectedValueBinding="{ReflectionBinding DataContext}" SelectedValue="{x:Static DataGridGridLinesVisibility.None}">
+                <ListBox x:Name="GridLinesVisibility" my:FormItem.Label="{my:LocObject GridLinesVisibility}" SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}" SelectedValue="{x:Static DataGridGridLinesVisibility.None}">
                     <ListBoxItem Content="{my:Icon CircleOffOutline}"
                                  DataContext="{x:Static DataGridGridLinesVisibility.None}"
                                  ToolTip.Tip="{my:Loc DataGridGridLinesVisibilityNone}" />
@@ -242,7 +243,7 @@
                                  DataContext="{x:Static DataGridGridLinesVisibility.All}"
                                  ToolTip.Tip="{my:Loc DataGridGridLinesVisibilityAll}" />
                 </ListBox>
-                <ListBox Name="SelectionMode" my:FormItem.Label="{my:LocObject SelectionMode}" SelectedValueBinding="{ReflectionBinding DataContext}" SelectedValue="{x:Static DataGridSelectionMode.Extended}">
+                <ListBox x:Name="SelectionMode" my:FormItem.Label="{my:LocObject SelectionMode}" SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}" SelectedValue="{x:Static DataGridSelectionMode.Extended}">
                     <ListBoxItem Content="{my:Icon CheckboxMultipleMarked}"
                                  DataContext="{x:Static DataGridSelectionMode.Extended}"
                                  ToolTip.Tip="{my:Loc DataGridSelectionModeExtended}" />
@@ -251,14 +252,14 @@
                                  ToolTip.Tip="{my:Loc DataGridSelectionModeSingle}" />
                 </ListBox>
 
-                <NumericUpDown Name="FrozenColumnCount"
+                <NumericUpDown x:Name="FrozenColumnCount"
                                Maximum="5"
                                Minimum="0"
                                Value="0"
                                my:FormItem.Label="{my:LocObject FrozenColumnCount}" />
-                <ToggleSwitch Name="UseAlternateRowBackground" my:FormItem.Label="{my:LocObject UseAlternateRowBackground}" IsChecked="True" />
-                <ToggleSwitch Name="ShowSelection" my:FormItem.Label="{my:LocObject ShowSelection}" IsChecked="True" />
-                <ToggleSwitch Name="ShowCellSelection" my:FormItem.Label="{my:LocObject ShowCellSelection}" IsChecked="False" />
+                <ToggleSwitch x:Name="UseAlternateRowBackground" my:FormItem.Label="{my:LocObject UseAlternateRowBackground}" IsChecked="True" />
+                <ToggleSwitch x:Name="ShowSelection" my:FormItem.Label="{my:LocObject ShowSelection}" IsChecked="True" />
+                <ToggleSwitch x:Name="ShowCellSelection" my:FormItem.Label="{my:LocObject ShowCellSelection}" IsChecked="False" />
 
             </my:Form>
         </v:ControlCatalogView.Settings>

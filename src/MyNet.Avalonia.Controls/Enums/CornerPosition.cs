@@ -14,5 +14,5 @@ public enum CornerPosition
 
     BottomLeft,
 
-    BottomRight,
+    BottomRight
 }

@@ -2,7 +2,6 @@
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:data="clr-namespace:MyNet.Avalonia.Demo.Data"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
@@ -11,7 +10,7 @@
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:ColorViewPageViewModel"
-            Name="Root"
+            x:Name="Root"
             mc:Ignorable="d">
 
     <v:ControlCatalogView ShowContent="False" ShowIcon="False">
@@ -56,25 +55,25 @@
 
                 <!-- Tabs -->
                 <ListBox my:FormItem.Label="{my:LocObject Tabs}" SelectedValue="{x:Null}" SelectionMode="Multiple,Toggle">
-                    <ListBoxItem Name="IsColorSpectrumVisible" Content="{my:Icon Palette}"
+                    <ListBoxItem x:Name="IsColorSpectrumVisible" Content="{my:Icon Palette}"
                                  IsSelected="True"
                                  ToolTip.Tip="{my:Loc Spectrum}" />
-                    <ListBoxItem Name="IsColorPaletteVisible" Content="{my:Icon PaletteSwatchVariant}"
+                    <ListBoxItem x:Name="IsColorPaletteVisible" Content="{my:Icon PaletteSwatchVariant}"
                                  IsSelected="True"
                                  ToolTip.Tip="{my:Loc Palette}" />
-                    <ListBoxItem Name="IsColorComponentsVisible" Content="{my:Icon TuneVariant}"
+                    <ListBoxItem x:Name="IsColorComponentsVisible" Content="{my:Icon TuneVariant}"
                                  IsSelected="True"
                                  ToolTip.Tip="{my:Loc Components}" />
                 </ListBox>
 
                 <!-- IsColorPreviewVisible -->
-                <ToggleSwitch Name="IsColorPreviewVisible" my:FormItem.Label="{my:LocObject IsColorPreviewVisible}" IsChecked="True" />
+                <ToggleSwitch x:Name="IsColorPreviewVisible" my:FormItem.Label="{my:LocObject IsColorPreviewVisible}" IsChecked="True" />
 
                 <!-- IsAccentColorsVisible -->
-                <ToggleSwitch Name="IsAccentColorsVisible" my:FormItem.Label="{my:LocObject IsAccentColorsVisible}" IsChecked="True" />
+                <ToggleSwitch x:Name="IsAccentColorsVisible" my:FormItem.Label="{my:LocObject IsAccentColorsVisible}" IsChecked="True" />
 
                 <!-- Shape -->
-                <ListBox Name="ColorSpectrumShape" my:FormItem.Label="{my:LocObject Shape}" SelectedValueBinding="{ReflectionBinding DataContext}" SelectedValue="{x:Static ColorSpectrumShape.Box}">
+                <ListBox x:Name="ColorSpectrumShape" my:FormItem.Label="{my:LocObject Shape}" SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}" SelectedValue="{x:Static ColorSpectrumShape.Box}">
                     <ListBoxItem Content="{my:Icon CheckboxBlank}"
                                  DataContext="{x:Static ColorSpectrumShape.Box}"
                                  ToolTip.Tip="{my:Loc ColorSpectrumShapeBox}" />
@@ -84,42 +83,41 @@
                 </ListBox>
 
                 <!-- IsColorSpectrumSliderVisible -->
-                <ToggleSwitch Name="IsColorSpectrumSliderVisible" my:FormItem.Label="{my:LocObject IsColorSpectrumSliderVisible}" IsChecked="True" />
+                <ToggleSwitch x:Name="IsColorSpectrumSliderVisible" my:FormItem.Label="{my:LocObject IsColorSpectrumSliderVisible}" IsChecked="True" />
 
                 <!-- IsAlphaVisible -->
-                <ToggleSwitch Name="IsAlphaVisible"  my:FormItem.Label="{my:LocObject IsAlphaVisible}" IsChecked="True" />
+                <ToggleSwitch x:Name="IsAlphaVisible"  my:FormItem.Label="{my:LocObject IsAlphaVisible}" IsChecked="True" />
 
                 <!-- Palette -->
-                <ComboBox Name="Palette"
-                          DisplayMemberBinding="{ReflectionBinding DisplayName}"
+                <ComboBox x:Name="Palette"
+                          DisplayMemberBinding="{Binding DisplayName}"
                           ItemsSource="{x:Static vm:ColorViewPageViewModel.Palettes}"
                           my:FormItem.Label="{my:LocObject Palette}"
                           SelectedIndex="7"
-                          SelectedValueBinding="{ReflectionBinding Item}" />
+                          SelectedValueBinding="{Binding Item}" />
 
                 <!-- PaletteColumnCount -->
-                <NumericUpDown Name="PaletteColumnCount"
+                <NumericUpDown x:Name="PaletteColumnCount"
                                Maximum="30"
                                Minimum="1"
                                my:FormItem.Label="{my:LocObject PaletteColumnCount}"
                                Value="16" />
 
                 <!-- IsColorModelVisible -->
-                <ToggleSwitch Name="IsColorModelVisible" my:FormItem.Label="{my:LocObject IsColorModelVisible}" IsChecked="True" />
+                <ToggleSwitch x:Name="IsColorModelVisible" my:FormItem.Label="{my:LocObject IsColorModelVisible}" IsChecked="True" />
 
                 <!-- Model -->
-                <ListBox Name="ColorModel" my:FormItem.Label="{my:LocObject Model}" DisplayMemberBinding="{ReflectionBinding Display}"
-                         ItemsSource="{my:EnumSource {x:Type ColorModel}}"
-                         SelectedValue="{x:Static ColorModel.Rgba}"
-                         SelectedValueBinding="{ReflectionBinding Value}" />
+                <ListBox x:Name="ColorModel" my:FormItem.Label="{my:LocObject Model}"
+                         my:ItemsBehavior.EnumSourceType="{x:Type ColorModel}"
+                         SelectedValue="{x:Static ColorModel.Rgba}" />
 
                 <!-- IsHexInputVisible -->
-                <ToggleSwitch Name="IsHexInputVisible" my:FormItem.Label="{my:LocObject IsHexInputVisible}" IsChecked="True" />
+                <ToggleSwitch x:Name="IsHexInputVisible" my:FormItem.Label="{my:LocObject IsHexInputVisible}" IsChecked="True" />
 
                 <!-- Components -->
                 <ListBox my:FormItem.Label="{my:LocObject Components}" SelectedValue="{x:Null}" SelectionMode="Multiple,Toggle">
-                    <ListBoxItem Name="IsComponentSliderVisible" Content="{my:Loc Slider}" IsSelected="True" />
-                    <ListBoxItem Name="IsComponentTextInputVisible" Content="{my:Loc Numeric}" IsSelected="True" />
+                    <ListBoxItem x:Name="IsComponentSliderVisible" Content="{my:Loc Slider}" IsSelected="True" />
+                    <ListBoxItem x:Name="IsComponentTextInputVisible" Content="{my:Loc Numeric}" IsSelected="True" />
                 </ListBox>
 
             </my:Form>

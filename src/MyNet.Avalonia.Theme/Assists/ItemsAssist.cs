@@ -396,7 +396,7 @@ public static class ItemsAssist
     /// <summary>
     /// Provides Spacing Property for attached ItemsBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<double> SpacingProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("Spacing", typeof(ItemsAssist), 0.0d);
+    public static readonly AttachedProperty<double> SpacingProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("Spacing", typeof(ItemsAssist));
 
     /// <summary>
     /// Accessor for Attached  <see cref="SpacingProperty"/>.
@@ -560,7 +560,7 @@ public static class ItemsAssist
     /// <summary>
     /// Defines the Role attached property for assigning a semantic color role to a control.
     /// </summary>
-    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, ThemeRole>("Role", typeof(ItemsAssist), ThemeRole.Default);
+    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, ThemeRole>("Role", typeof(ItemsAssist));
 
     /// <summary>
     /// Gets the theme role for the specified control.

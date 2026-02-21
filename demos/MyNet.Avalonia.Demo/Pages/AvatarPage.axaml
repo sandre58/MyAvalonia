@@ -42,7 +42,7 @@
 
         <v:ControlCatalogView.Settings>
             <my:Form>
-                <ToggleSwitch Name="ShowBackground" my:FormItem.Label="{my:LocObject ShowBackground}" IsChecked="True" />
+                <ToggleSwitch x:Name="ShowBackground" my:FormItem.Label="{my:LocObject ShowBackground}" IsChecked="True" />
             </my:Form>
         </v:ControlCatalogView.Settings>
 

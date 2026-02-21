@@ -24,7 +24,7 @@ namespace MyNet.Avalonia.Extended.Controls;
 /// Navigation host control that displays pages from INavigationService with optional caching support.
 /// Supports three cache strategies: None (no caching), ByInstance (cache per page instance), and ByType (cache one view per page type).
 /// </summary>
-public partial class NavigationHost : ContentControl, IDisposable
+public class NavigationHost : ContentControl, IDisposable
 {
     private readonly CacheStorage<object, Control> _cache;
     private INavigationService? _navigationService;
@@ -173,7 +173,7 @@ public partial class NavigationHost : ContentControl, IDisposable
 
     private void OnNavigated(object? sender, NavigationEventArgs e)
     {
-        using (PerformanceMonitor.Measure($"[NavigationHost] Navigation to {e.NewPage?.GetType().Name ?? "null"}", category: PerformanceCategory.Pages))
+        using (PerformanceMonitor.Measure($"[NavigationHost] Navigation to {e.NewPage.GetType().Name}", category: PerformanceCategory.Pages))
         {
             DisplayPage(e.NewPage);
         }
@@ -219,14 +219,7 @@ public partial class NavigationHost : ContentControl, IDisposable
         {
             var isInCache = _cache.Contains(cacheKey);
 
-            if (isInCache)
-            {
-                PerformanceMonitor.Debug($"[NavigationHost] Cache HIT for {pageTypeName} (CacheMode={CacheStrategy})", PerformanceCategory.Pages);
-            }
-            else
-            {
-                PerformanceMonitor.Debug($"[NavigationHost] Cache MISS for {pageTypeName} (CacheMode={CacheStrategy}) - creating new view", PerformanceCategory.Pages);
-            }
+            PerformanceMonitor.Debug(isInCache ? $"[NavigationHost] Cache HIT for {pageTypeName} (CacheMode={CacheStrategy})" : $"[NavigationHost] Cache MISS for {pageTypeName} (CacheMode={CacheStrategy}) - creating new view", PerformanceCategory.Pages);
 
             // Use CacheStorage.GetFromCacheOrFetch for clean cache-or-create pattern
             var cachedView = _cache.GetFromCacheOrFetch(
@@ -234,7 +227,7 @@ public partial class NavigationHost : ContentControl, IDisposable
                 code: () => CreateView(page) ?? throw new InvalidOperationException($"No DataTemplate found for {pageTypeName}"),
                 @override: false);
 
-            if (Content != cachedView)
+            if (!ReferenceEquals(Content, cachedView))
             {
                 _currentView = cachedView;
                 _currentView.DataContext = page;
@@ -256,7 +249,6 @@ public partial class NavigationHost : ContentControl, IDisposable
         CacheStrategy switch
         {
             CacheStrategy.ByType => page.GetType(),
-            CacheStrategy.ByInstance => page,
             _ => page
         };
 
@@ -299,8 +291,6 @@ public partial class NavigationHost : ContentControl, IDisposable
     /// <param name="page">The page to remove from cache.</param>
     public void RemoveFromCache(INavigationPage page)
     {
-        if (page == null) return;
-
         var cacheKey = GetCacheKey(page);
         _cache.Remove(cacheKey);
         PerformanceMonitor.Debug($"[NavigationHost] Removed {page.GetType().Name} from cache", PerformanceCategory.Pages);
@@ -320,7 +310,7 @@ public partial class NavigationHost : ContentControl, IDisposable
         }
     }
 
-    private void OnCacheExpired(object? sender, ExpiredEventArgs<object, Control> e) => PerformanceMonitor.Debug("[NavigationHost] View expired and removed from cache", PerformanceCategory.Pages);
+    private static void OnCacheExpired(object? sender, ExpiredEventArgs<object, Control> e) => PerformanceMonitor.Debug("[NavigationHost] View expired and removed from cache", PerformanceCategory.Pages);
 
     #endregion
 

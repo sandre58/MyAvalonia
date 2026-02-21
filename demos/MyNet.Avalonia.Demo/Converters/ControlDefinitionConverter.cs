@@ -21,9 +21,9 @@ internal sealed class ControlDefinitionConverter : IMultiValueConverter, IValueC
 {
     public static readonly ControlDefinitionConverter Default = new();
 
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value], targetType, parameter, culture);
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value], targetType, parameter, culture);
 
-    public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
+    public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
         if (values.Count == 0 || values[0] is not ControlThemeDefinition themeDefinition) return AvaloniaProperty.UnsetValue;
 
@@ -58,7 +58,7 @@ internal sealed class ControlDefinitionConverter : IMultiValueConverter, IValueC
         return result;
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => AvaloniaProperty.UnsetValue;
 }
 
 /// <summary>

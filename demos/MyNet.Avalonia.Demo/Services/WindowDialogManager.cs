@@ -31,9 +31,9 @@ public static class WindowDialogManager
 
     #region Members
 
-    public static IList<IDialogViewModel>? OpenedDialogs => DialogService?.OpenedDialogs;
+    public static IList<IDialogViewModel> OpenedDialogs => DialogService.OpenedDialogs;
 
-    public static bool HasOpenedDialogs => OpenedDialogs?.Any() == true;
+    public static bool HasOpenedDialogs => OpenedDialogs.Any() ;
 
     public static WindowDialogService DialogService { get; } = new();
 
@@ -82,14 +82,12 @@ public static class WindowDialogManager
     public static async Task ShowAsync<T>(T viewModel, Action<T>? closeAction = null)
         where T : IDialogViewModel
     {
-        if (DialogService is null) return;
-
         var view = GetViewFromViewModel(viewModel.GetType());
 
         if (view != null)
         {
             if (closeAction is not null)
-                viewModel.CloseRequest += (sender, e) => closeAction(viewModel);
+                viewModel.CloseRequest += (_, _) => closeAction(viewModel);
 
             Messenger.Default?.Send(new OpenDialogMessage(DialogType.Dialog, viewModel));
 
@@ -112,7 +110,7 @@ public static class WindowDialogManager
     /// Displays a modal dialog.
     /// </summary>
     /// <param name="typeViewModel">The view to include in workspace dialog.</param>
-    public static async Task<bool?> ShowDialogAsync(Type typeViewModel) => GetViewModel<IDialogViewModel>(typeViewModel) is not IDialogViewModel vm ? false : await ShowDialogAsync(vm).ConfigureAwait(false);
+    public static async Task<bool?> ShowDialogAsync(Type typeViewModel) => GetViewModel<IDialogViewModel>(typeViewModel) is not { } vm ? false : await ShowDialogAsync(vm).ConfigureAwait(false);
 
     /// <summary>
     /// Displays a message dialog.
@@ -121,8 +119,6 @@ public static class WindowDialogManager
     public static async Task<bool?> ShowDialogAsync<T>(T viewModel)
         where T : IDialogViewModel
     {
-        if (DialogService is null) return null;
-
         Messenger.Default?.Send(new OpenDialogMessage(DialogType.ModalDialog, viewModel));
 
         var view = GetViewFromViewModel(viewModel.GetType());

@@ -13,7 +13,7 @@ using Avalonia.Data.Converters;
 
 namespace MyNet.Avalonia.Converters;
 
-public class EnumConverter : IValueConverter
+public sealed class EnumConverter : IValueConverter
 {
     /// <summary>
     /// Return a unique instance of <see cref="EnumConverter"/>.

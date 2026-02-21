@@ -55,7 +55,7 @@ public sealed class CalendarBlackoutDatesCollection(Calendar owner) : Observable
 
         if (!IsValid(item))
         {
-            throw new ArgumentOutOfRangeException(nameof(item), "Value is not valid.");
+            throw new ArgumentOutOfRangeException(nameof(item));
         }
 
         base.InsertItem(index, item);
@@ -74,7 +74,7 @@ public sealed class CalendarBlackoutDatesCollection(Calendar owner) : Observable
 
         if (!IsValid(item))
         {
-            throw new ArgumentOutOfRangeException(nameof(item), "Value is not valid.");
+            throw new ArgumentOutOfRangeException(nameof(item));
         }
 
         base.SetItem(index, item);
@@ -94,16 +94,5 @@ public sealed class CalendarBlackoutDatesCollection(Calendar owner) : Observable
             (start >= 0 && DateTime.Compare(source.Start, range.End) <= 0);
     }
 
-    private bool IsValid(Period item)
-    {
-        foreach (var day in _owner.SelectedDates)
-        {
-            if (day.InRange(item.Start, item.End))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
+    private bool IsValid(Period item) => _owner.SelectedDates.All(day => !day.InRange(item.Start, item.End));
 }

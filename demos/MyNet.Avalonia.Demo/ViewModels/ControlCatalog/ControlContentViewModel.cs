@@ -29,7 +29,7 @@ internal sealed class ControlContentViewModel : ObservableObject
     /// <summary>
     /// Gets the collection of available content providers for the control.
     /// </summary>
-    public ReadOnlyCollection<IContentProviderViewModel> AvailableProviders { get; } = new List<IContentProviderViewModel>()
+    public ReadOnlyCollection<IContentProviderViewModel> AvailableProviders { get; } = new List<IContentProviderViewModel>
     {
         new NoContentProviderViewModel(),
         new IconProviderViewModel(),

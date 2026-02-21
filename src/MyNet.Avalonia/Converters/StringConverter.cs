@@ -163,7 +163,7 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
 
         var fallback = ConvertString(value.ToString().OrEmpty(), null, format, Abbreviate, culture);
 
-        return fallback?.ApplyCase(Casing);
+        return fallback.ApplyCase(Casing);
     }
 
     /// <summary>
@@ -175,7 +175,7 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
     /// <param name="abbreviate">Whether to abbreviate the output.</param>
     /// <param name="culture">The culture to use.</param>
     /// <returns>The localized and formatted string.</returns>
-    private static string? ConvertString(string key, string? filename, string? format, bool abbreviate, CultureInfo culture)
+    private static string ConvertString(string key, string? filename, string? format, bool abbreviate, CultureInfo culture)
     {
         if (string.IsNullOrEmpty(key)) return key;
 
@@ -236,13 +236,13 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
     {
         var translatedTimeSpan = value.Humanize(1, TimeUnit.Year, TimeUnit.Day, culture: culture);
 
-        return !int.TryParse(format, out var index) ? translatedTimeSpan : translatedTimeSpan?.Split(" ").GetByIndex(index - 1);
+        return !int.TryParse(format, out var index) ? translatedTimeSpan : translatedTimeSpan.Split(" ").GetByIndex(index - 1);
     }
 
     /// <summary>
     /// Converts a <see cref="Color"/> value to a string representation.
     /// </summary>
-    private static string? ConvertColor(Color value) => value.ToName() == value.ToHex() ? value.ToHex() : $"{value.ToName()}";
+    private static string ConvertColor(Color value) => value.ToName() == value.ToHex() ? value.ToHex() : $"{value.ToName()}";
 
     /// <summary>
     /// Converts a date/time value to a localized string.
@@ -252,7 +252,7 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
     /// <summary>
     /// Converts an array of strings to a single string.
     /// </summary>
-    private static string? ConvertArray(Array value) => string.Join(" ", value.OfType<string>());
+    private static string ConvertArray(Array value) => string.Join(" ", value.OfType<string>());
 }
 
 /// <summary>

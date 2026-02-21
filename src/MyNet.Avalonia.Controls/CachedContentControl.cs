@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="CachedContentControl.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="CachedContentControl.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -23,7 +23,6 @@ namespace MyNet.Avalonia.Controls;
 public class CachedContentControl : ContentControl
 {
     private readonly CacheStorage<object, Control> _cache;
-    private Control? _currentView;
 
     /// <summary>
     /// Defines the cache key strategy.
@@ -139,8 +138,6 @@ public class CachedContentControl : ContentControl
     {
         if (newContent == null)
         {
-            _currentView = null;
-
             // Let the base class handle null content
             return;
         }
@@ -148,8 +145,6 @@ public class CachedContentControl : ContentControl
         // If caching is disabled, use default behavior
         if (!EnableCaching)
         {
-            _currentView = null;
-
             // Base ContentControl will handle content presentation through its template
             return;
         }
@@ -163,14 +158,7 @@ public class CachedContentControl : ContentControl
             // Check if already in cache
             var isInCache = _cache.Contains(cacheKey);
 
-            if (isInCache)
-            {
-                PerformanceMonitor.Debug($"[CachedContentControl] Cache HIT for {newContent.GetType().Name}", PerformanceCategory.Pages);
-            }
-            else
-            {
-                PerformanceMonitor.Debug($"[CachedContentControl] Cache MISS for {newContent.GetType().Name} - creating new view", PerformanceCategory.Pages);
-            }
+            PerformanceMonitor.Debug(isInCache ? $"[CachedContentControl] Cache HIT for {newContent.GetType().Name}" : $"[CachedContentControl] Cache MISS for {newContent.GetType().Name} - creating new view", PerformanceCategory.Pages);
 
             // Use CacheStorage.GetFromCacheOrFetch for clean cache-or-create pattern
             var cachedView = _cache.GetFromCacheOrFetch(
@@ -178,16 +166,11 @@ public class CachedContentControl : ContentControl
                 code: () => CreateView(newContent)!,
                 @override: false);
 
-            if (cachedView != null)
-            {
-                _currentView = cachedView;
+            // Always update DataContext (important for ByType strategy)
+            cachedView.DataContext = newContent;
 
-                // Always update DataContext (important for ByType strategy)
-                cachedView.DataContext = newContent;
-
-                // Set the cached or newly created control as content
-                SetCurrentValue(ContentProperty, cachedView);
-            }
+            // Set the cached or newly created control as content
+            SetCurrentValue(ContentProperty, cachedView);
         }
     }
 
@@ -197,7 +180,6 @@ public class CachedContentControl : ContentControl
     private object GetCacheKey(object content) => CacheBy switch
     {
         CacheKeyStrategy.ByType => content.GetType(),
-        CacheKeyStrategy.ByInstance => content,
         _ => content
     };
 
@@ -211,11 +193,11 @@ public class CachedContentControl : ContentControl
         using (PerformanceMonitor.Measure($"[CachedContentControl] DataTemplate.Build for {content.GetType().Name}", category: PerformanceCategory.Pages))
         {
             var newView = template.Build(content);
-            if (newView is Control control)
+            if (newView != null)
             {
-                control.DataContext = content;
-                PerformanceMonitor.Debug($"[CachedContentControl] View type created: {control.GetType().Name}", PerformanceCategory.Pages);
-                return control;
+                newView.DataContext = content;
+                PerformanceMonitor.Debug($"[CachedContentControl] View type created: {newView.GetType().Name}", PerformanceCategory.Pages);
+                return newView;
             }
         }
 
@@ -237,7 +219,7 @@ public class CachedContentControl : ContentControl
         }
     }
 
-    private void OnCacheExpired(object? sender, ExpiredEventArgs<object, Control> e)
+    private static void OnCacheExpired(object? sender, ExpiredEventArgs<object, Control> e)
     {
         var keyDescription = e.Key is Type type ? type.Name : e.Key.GetType().Name;
         PerformanceMonitor.Debug($"[CachedContentControl] View for {keyDescription} has expired and been removed from cache", PerformanceCategory.Controls);

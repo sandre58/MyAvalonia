@@ -21,7 +21,7 @@ public class OverlayDialogService : ContentDialogServiceBase
 {
     private static readonly OverlayDialogOptions DefaultOptions = new();
 
-    public virtual void Show(object view, IDialogViewModel viewModel, string? hostId, OverlayDialogOptions? options = null, CancellationToken? token = default)
+    public virtual void Show(object view, IDialogViewModel viewModel, string? hostId, OverlayDialogOptions? options = null)
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return;

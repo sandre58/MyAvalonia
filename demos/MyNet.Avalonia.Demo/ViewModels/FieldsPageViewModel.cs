@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="FieldsPageViewModel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="FieldsPageViewModel.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ internal sealed class FieldsPageViewModel : ControlCatalogViewModel
 
     public char PasswordChar { get; private set; }
 
-    public string? TimeMode => TimeFormat == Utilities.DateTimes.TimeFormat.TwentyFourHour ? "24HourClock" : "12HourClock";
+    public string TimeMode => TimeFormat == Utilities.DateTimes.TimeFormat.TwentyFourHour ? "24HourClock" : "12HourClock";
 
     [AlsoNotifyFor(nameof(TimeMode))]
     public TimeFormat? TimeFormat { get; set; } = Utilities.DateTimes.TimeFormat.TwentyFourHour;

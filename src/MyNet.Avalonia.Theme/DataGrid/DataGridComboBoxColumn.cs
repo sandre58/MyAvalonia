@@ -15,19 +15,17 @@ namespace MyNet.Avalonia.Theme.DataGrid;
 
 public class DataGridComboBoxColumn : DataGridBoundColumn<ComboBox, ContentControl>
 {
-    private BindingBase? _selectedValueBinding;
-
     public DataGridComboBoxColumn()
         : base(global::Avalonia.Controls.Primitives.SelectingItemsControl.SelectedItemProperty, ContentControl.ContentProperty) { }
 
     public virtual BindingBase? SelectedValueBinding
     {
-        get => _selectedValueBinding;
+        get;
         set
         {
-            if (_selectedValueBinding == value)
+            if (field == value)
                 return;
-            _selectedValueBinding = value;
+            field = value;
             BindingTarget = global::Avalonia.Controls.Primitives.SelectingItemsControl.SelectedValueProperty;
         }
     }

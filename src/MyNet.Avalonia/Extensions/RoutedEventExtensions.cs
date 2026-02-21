@@ -6,192 +6,159 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reactive.Disposables;
 using Avalonia.Interactivity;
 
 namespace MyNet.Avalonia.Extensions;
 
+[SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "Extensions methods must be in a static class, and extension methods cannot be in a nested class.")]
 public static class RoutedEventExtensions
 {
-    public static void AddHandler<TArgs>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        params Interactive?[] controls)
+    extension<TArgs>(RoutedEvent<TArgs> routedEvent)
         where TArgs : RoutedEventArgs
     {
-        foreach (var t in controls)
+        public void AddHandler(EventHandler<TArgs> handler,
+            params Interactive?[] controls)
         {
-            t?.AddHandler(routedEvent, handler);
+            foreach (var t in controls)
+            {
+                t?.AddHandler(routedEvent, handler);
+            }
         }
-    }
 
-    public static void AddHandler<TArgs, TControl>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        params TControl?[] controls)
-        where TControl : Interactive
-        where TArgs : RoutedEventArgs
-    {
-        foreach (var t in controls)
+        public void AddHandler<TControl>(EventHandler<TArgs> handler,
+            params TControl?[] controls)
+            where TControl : Interactive
         {
-            t?.AddHandler(routedEvent, handler);
+            foreach (var t in controls)
+            {
+                t?.AddHandler(routedEvent, handler);
+            }
         }
-    }
 
-    public static void AddHandler<TArgs>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
-        bool handledEventsToo = false,
-        params Interactive?[] controls)
-        where TArgs : RoutedEventArgs
-    {
-        foreach (var t in controls)
+        public void AddHandler(EventHandler<TArgs> handler,
+            RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
+            bool handledEventsToo = false,
+            params Interactive?[] controls)
         {
-            t?.AddHandler(routedEvent, handler, strategies, handledEventsToo);
+            foreach (var t in controls)
+            {
+                t?.AddHandler((RoutedEvent)routedEvent, handler, strategies, handledEventsToo);
+            }
         }
-    }
 
-    public static void AddHandler<TArgs, TControl>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
-        bool handledEventsToo = false,
-        params TControl?[] controls)
-        where TArgs : RoutedEventArgs
-        where TControl : Interactive
-    {
-        foreach (var t in controls)
+        public void AddHandler<TControl>(EventHandler<TArgs> handler,
+            RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
+            bool handledEventsToo = false,
+            params TControl?[] controls)
+            where TControl : Interactive
         {
-            t?.AddHandler(routedEvent, handler, strategies, handledEventsToo);
+            foreach (var t in controls)
+            {
+                t?.AddHandler(routedEvent, (Delegate)handler, strategies, handledEventsToo);
+            }
         }
-    }
 
-    public static void AddHandler<TArgs, TControl>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        IEnumerable<TControl?> controls,
-        RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
-        bool handledEventsToo = false)
-        where TArgs : RoutedEventArgs
-        where TControl : Interactive
-    {
-        foreach (var t in controls)
+        public void AddHandler<TControl>(EventHandler<TArgs> handler,
+            IEnumerable<TControl?> controls,
+            RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
+            bool handledEventsToo = false)
+            where TControl : Interactive
         {
-            t?.AddHandler(routedEvent, handler, strategies, handledEventsToo);
+            foreach (var t in controls)
+            {
+                t?.AddHandler(routedEvent, (Delegate)handler, strategies, handledEventsToo);
+            }
         }
-    }
 
-    public static void RemoveHandler<TArgs>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        params Interactive?[] controls)
-        where TArgs : RoutedEventArgs
-    {
-        foreach (var t in controls)
+        public void RemoveHandler(EventHandler<TArgs> handler,
+            params Interactive?[] controls)
         {
-            t?.RemoveHandler(routedEvent, handler);
+            foreach (var t in controls)
+            {
+                t?.RemoveHandler((RoutedEvent)routedEvent, handler);
+            }
         }
-    }
 
-    public static void RemoveHandler<TArgs, TControl>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        params TControl?[] controls)
-        where TArgs : RoutedEventArgs
-        where TControl : Interactive
-    {
-        foreach (var t in controls)
+        public void RemoveHandler<TControl>(EventHandler<TArgs> handler,
+            params TControl?[] controls)
+            where TControl : Interactive
         {
-            t?.RemoveHandler(routedEvent, handler);
+            foreach (var t in controls)
+            {
+                t?.RemoveHandler(routedEvent, (Delegate)handler);
+            }
         }
-    }
 
-    public static void RemoveHandler<TArgs, TControl>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        IEnumerable<TControl?> controls)
-        where TArgs : RoutedEventArgs
-        where TControl : Interactive
-    {
-        foreach (var t in controls)
+        public void RemoveHandler<TControl>(EventHandler<TArgs> handler,
+            IEnumerable<TControl?> controls)
+            where TControl : Interactive
         {
-            t?.RemoveHandler(routedEvent, handler);
+            foreach (var t in controls)
+            {
+                t?.RemoveHandler(routedEvent, (Delegate)handler);
+            }
         }
-    }
 
-    public static IDisposable AddDisposableHandler<TArgs>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        params Interactive?[] controls)
-        where TArgs : RoutedEventArgs
-    {
-        var list = new List<IDisposable>(controls.Length);
-        list.AddRange(controls.Select(t => t?.AddDisposableHandler(routedEvent, handler)).OfType<IDisposable>());
+        public IDisposable AddDisposableHandler(EventHandler<TArgs> handler,
+            params Interactive?[] controls)
+        {
+            var list = new List<IDisposable>(controls.Length);
+            list.AddRange(controls.Select(t => t?.AddDisposableHandler(routedEvent, handler)).OfType<IDisposable>());
 
-        var result = new CompositeDisposable(list);
-        return result;
-    }
+            var result = new CompositeDisposable(list);
+            return result;
+        }
 
-    public static IDisposable AddDisposableHandler<TArgs, TControl>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        params TControl?[] controls)
-        where TArgs : RoutedEventArgs
-        where TControl : Interactive
-    {
-        var list = new List<IDisposable>(controls.Length);
-        list.AddRange(controls.Select(t => t?.AddDisposableHandler(routedEvent, handler)).OfType<IDisposable>());
+        public IDisposable AddDisposableHandler<TControl>(EventHandler<TArgs> handler,
+            params TControl?[] controls)
+            where TControl : Interactive
+        {
+            var list = new List<IDisposable>(controls.Length);
+            list.AddRange(controls.Select(t => t?.AddDisposableHandler(routedEvent, handler)).OfType<IDisposable>());
 
-        var result = new CompositeDisposable(list);
-        return result;
-    }
+            var result = new CompositeDisposable(list);
+            return result;
+        }
 
-    public static IDisposable AddDisposableHandler<TArgs>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
-        bool handledEventsToo = false,
-        params Interactive?[] controls)
-        where TArgs : RoutedEventArgs
-    {
-        var list = new List<IDisposable>(controls.Length);
-        list.AddRange(controls.Select(t => t?.AddDisposableHandler(routedEvent, handler, strategies, handledEventsToo)).OfType<IDisposable>());
+        public IDisposable AddDisposableHandler(EventHandler<TArgs> handler,
+            RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
+            bool handledEventsToo = false,
+            params Interactive?[] controls)
+        {
+            var list = new List<IDisposable>(controls.Length);
+            list.AddRange(controls.Select(t => t?.AddDisposableHandler(routedEvent, handler, strategies, handledEventsToo)).OfType<IDisposable>());
 
-        var result = new CompositeDisposable(list);
-        return result;
-    }
+            var result = new CompositeDisposable(list);
+            return result;
+        }
 
-    public static IDisposable AddDisposableHandler<TArgs, TControl>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
-        bool handledEventsToo = false,
-        params TControl?[] controls)
-        where TArgs : RoutedEventArgs
-        where TControl : Interactive
-    {
-        var list = new List<IDisposable>(controls.Length);
-        list.AddRange(controls.Select(t => t?.AddDisposableHandler(routedEvent, handler, strategies, handledEventsToo)).OfType<IDisposable>());
+        public IDisposable AddDisposableHandler<TControl>(EventHandler<TArgs> handler,
+            RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
+            bool handledEventsToo = false,
+            params TControl?[] controls)
+            where TControl : Interactive
+        {
+            var list = new List<IDisposable>(controls.Length);
+            list.AddRange(controls.Select(t => t?.AddDisposableHandler(routedEvent, handler, strategies, handledEventsToo)).OfType<IDisposable>());
 
-        var result = new CompositeDisposable(list);
-        return result;
-    }
+            var result = new CompositeDisposable(list);
+            return result;
+        }
 
-    public static IDisposable AddDisposableHandler<TArgs, TControl>(
-        this RoutedEvent<TArgs> routedEvent,
-        EventHandler<TArgs> handler,
-        IEnumerable<TControl> controls,
-        RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
-        bool handledEventsToo = false)
-        where TArgs : RoutedEventArgs
-        where TControl : Interactive
-    {
-        // list is not initialized with controls.Count() to avoid multiple enumeration
-        var list = controls.Select(t => t.AddDisposableHandler(routedEvent, handler, strategies, handledEventsToo)).ToList();
+        public IDisposable AddDisposableHandler<TControl>(EventHandler<TArgs> handler,
+            IEnumerable<TControl> controls,
+            RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct,
+            bool handledEventsToo = false)
+            where TControl : Interactive
+        {
+            // list is not initialized with controls.Count() to avoid multiple enumeration
+            var list = controls.Select(t => t.AddDisposableHandler(routedEvent, handler, strategies, handledEventsToo)).ToList();
 
-        var result = new CompositeDisposable(list);
-        return result;
+            var result = new CompositeDisposable(list);
+            return result;
+        }
     }
 }

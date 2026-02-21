@@ -52,23 +52,21 @@
 
         <v:ControlCatalogView.Settings>
             <my:Form>
-                <ComboBox Name="CornerPosition"
+                <ComboBox x:Name="CornerPosition"
                           my:FormItem.Label="{my:LocObject Position}"
-                          ItemsSource="{my:EnumSource {x:Type my:CornerPosition}}"
-                          DisplayMemberBinding="{ReflectionBinding Display}"
-                          SelectedValueBinding="{ReflectionBinding Value}"
+                          my:ItemsBehavior.EnumSourceType="{x:Type my:CornerPosition}"
                           SelectedIndex="1" />
-                <Slider Name="OffsetX"
+                <Slider x:Name="OffsetX"
                         my:FormItem.Label="{my:LocObject OffsetX}"
                         Maximum="10"
                         Minimum="-10"
                         Value="0" />
-                <Slider Name="OffsetY"
+                <Slider x:Name="OffsetY"
                         my:FormItem.Label="{my:LocObject OffsetY}"
                         Maximum="10"
                         Minimum="-10"
                         Value="0" />
-                <ToggleSwitch Name="IsRounded" my:FormItem.Label="{my:LocObject IsRounded}" IsChecked="False" />
+                <ToggleSwitch x:Name="IsRounded" my:FormItem.Label="{my:LocObject IsRounded}" IsChecked="False" />
             </my:Form>
         </v:ControlCatalogView.Settings>
 

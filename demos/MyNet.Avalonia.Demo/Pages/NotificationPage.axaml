@@ -11,15 +11,18 @@
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:t="clr-namespace:MyNet.UI.Toasting.Settings;assembly=MyNet.UI"
             x:DataType="vm:NotificationPageViewModel"
-            Name="Root"
+            x:Name="Root"
             ClipToBounds="False">
+    <pages:Page.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+    </pages:Page.Resources>
 
     <v:ControlCatalogView ShowIcon="False" ShowContent="False" ShowThemes="False" ShowPreviewCode="False">
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
                 <Button Content="{my:Loc ShowNotification}"
-                        Command="{Binding $parent[pages:Page].DataContext.ShowNotificationCommand}"
+                        Command="{ReflectionBinding Data.ShowNotificationCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
                         CommandParameter="{Binding Appearance.ActiveRole}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center" />
@@ -27,57 +30,53 @@
         </v:ControlCatalogView.PlaygroundControlTemplate>
 
         <v:ControlCatalogView.Settings>
-            <my:Form>
+            <my:Form x:DataType="vm:NotificationPageViewModel" DataContext="{Binding #Root.DataContext}">
                 <Button my:IconAssist.Icon="{my:Icon CloseCircle}"
                         my:FormItem.NoLabel="True"
                         Classes="size-sm variant-solid"
                         my:ThemeAssist.Role="Error"
-                        Command="{Binding #Root.DataContext.ClearNotifications}"
+                        Command="{Binding ClearNotifications}"
                         Content="{my:Loc Clear}" />
-                
+
                 <ComboBox my:FormItem.Label="{my:LocObject Placement}"
-                          ItemsSource="{my:EnumSource {x:Type t:ToasterPosition}}"
-                          SelectedValue="{Binding #Root.DataContext.Placement}"
-                          SelectedValueBinding="{ReflectionBinding Value}"
-                          DisplayMemberBinding="{ReflectionBinding Display}" />
+                          my:ItemsBehavior.EnumSourceType="{x:Type t:ToasterPosition}"
+                          SelectedValue="{Binding Placement}" />
 
                 <NumericUpDown my:FormItem.Label="{my:LocObject Duration}"
                                   my:TextFieldAssist.InnerRightContent="{my:Loc TimeUnitSecond, Casing=LowerCase}"
                                   Maximum="60"
                                   Minimum="0"
-                                  Value="{Binding #Root.DataContext.Duration}" />
+                                  Value="{Binding Duration}" />
 
                 <NumericUpDown my:FormItem.Label="{my:LocObject MaxItems}"
                                   Maximum="30"
                                   Minimum="0"
-                                  Value="{Binding #Root.DataContext.MaxItems}" />
+                                  Value="{Binding MaxItems}" />
 
                 <NumericUpDown my:FormItem.Label="{my:LocObject Width}"
                                   Maximum="800"
                                   Minimum="100"
-                                  Value="{Binding #Root.DataContext.ToastWidth}" />
+                                  Value="{Binding ToastWidth}" />
 
                 <NumericUpDown my:FormItem.Label="{my:LocObject OffsetX}"
                                   Maximum="300"
                                   Minimum="0"
-                                  Value="{Binding #Root.DataContext.OffsetX}" />
+                                  Value="{Binding OffsetX}" />
 
                 <NumericUpDown my:FormItem.Label="{my:LocObject OffsetY}"
                                   Maximum="300"
                                   Minimum="0"
-                                  Value="{Binding #Root.DataContext.OffsetY}" />
+                                  Value="{Binding OffsetY}" />
 
                 <ComboBox my:FormItem.Label="{my:LocObject ClosingStrategy}"
-                          ItemsSource="{my:EnumSource {x:Type t:ToastClosingStrategy}}"
-                          SelectedValue="{Binding #Root.DataContext.ClosingStrategy}"
-                          SelectedValueBinding="{ReflectionBinding Value}"
-                          DisplayMemberBinding="{ReflectionBinding Display}" />
+                          my:ItemsBehavior.EnumSourceType="{x:Type t:ToastClosingStrategy}"
+                          SelectedValue="{Binding ClosingStrategy}" />
 
-                <ToggleSwitch my:FormItem.Label="{my:LocObject FreezeOnMouseEnter}" IsChecked="{Binding #Root.DataContext.FreezeOnMouseEnter}" />
+                <ToggleSwitch my:FormItem.Label="{my:LocObject FreezeOnMouseEnter}" IsChecked="{Binding FreezeOnMouseEnter}" />
 
-                <ToggleSwitch my:FormItem.Label="{my:LocObject ActivateOnClick}" IsChecked="{Binding #Root.DataContext.EnableOnClick}" />
+                <ToggleSwitch my:FormItem.Label="{my:LocObject ActivateOnClick}" IsChecked="{Binding EnableOnClick}" />
 
-                <ToggleSwitch my:FormItem.Label="{my:LocObject ActivateOnClose}" IsChecked="{Binding #Root.DataContext.EnableOnClose}" />
+                <ToggleSwitch my:FormItem.Label="{my:LocObject ActivateOnClose}" IsChecked="{Binding EnableOnClose}" />
             </my:Form>
         </v:ControlCatalogView.Settings>
 

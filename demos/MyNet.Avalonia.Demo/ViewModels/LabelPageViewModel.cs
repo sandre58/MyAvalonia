@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="LabelPageViewModel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="LabelPageViewModel.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ internal sealed class LabelPageViewModel : ControlCatalogViewModel
                 new ControlThemeBuilder()
                     .AddVariants("opacity-high", "opacity-medium", "opacity-low")
                     .AddAllRoles()
-                    .AddSizes(["font-sub-caption", "font-caption", "h6", "h5", "h4", "h3", "h2", "h1"]),
+                    .AddSizes("font-sub-caption", "font-caption", "h6", "h5", "h4", "h3", "h2", "h1"),
 
                 new ControlThemeBuilder(kind: "kind-badge")
                     .AddShapes("shape-circle")

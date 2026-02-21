@@ -10,7 +10,7 @@
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:CalendarPageViewModel"
-            Name="Root"
+            x:Name="Root"
             mc:Ignorable="d">
 
     <v:ControlCatalogView ShowContent="False" ShowIcon="False">
@@ -46,11 +46,11 @@
 
         <v:ControlCatalogView.Settings>
             <my:Form>
-                <ComboBox Name="SelectionMode"
+                <ComboBox x:Name="SelectionMode"
                           my:FormItem.Label="{my:LocObject SelectionMode}"
                           my:ItemsBehavior.EnumSourceType="{x:Type CalendarSelectionMode}"
                           SelectedIndex="0" />
-                <ToggleSwitch Name="AllowTapRangeSelection"
+                <ToggleSwitch x:Name="AllowTapRangeSelection"
                               my:FormItem.Label="{my:LocObject AllowTapRangeSelection}"
                               IsChecked="False" />
             </my:Form>

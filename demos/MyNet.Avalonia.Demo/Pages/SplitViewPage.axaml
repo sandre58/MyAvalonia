@@ -71,30 +71,28 @@
 
         <v:ControlCatalogView.Settings>
             <my:Form>
-                <ToggleSwitch Name="IsPaneOpen" my:FormItem.Label="{my:LocObject IsPaneOpen}" IsChecked="False" />
-                <ToggleSwitch Name="UseOverlay" my:FormItem.Label="{my:LocObject UseOverlay}" IsChecked="True" />
-                <ComboBox Name="DisplayMode"
+                <ToggleSwitch x:Name="IsPaneOpen" my:FormItem.Label="{my:LocObject IsPaneOpen}" IsChecked="False" />
+                <ToggleSwitch x:Name="UseOverlay" my:FormItem.Label="{my:LocObject UseOverlay}" IsChecked="True" />
+                <ComboBox x:Name="DisplayMode"
                           my:FormItem.Label="{my:LocObject DisplayMode}"
-                          DisplayMemberBinding="{ReflectionBinding Display}"
-                          ItemsSource="{my:EnumSource {x:Type SplitViewDisplayMode}}"
-                          SelectedValue="{x:Static SplitViewDisplayMode.Overlay}"
-                          SelectedValueBinding="{ReflectionBinding Value}" />
-                <ListBox Name="Placement"
+                          my:ItemsBehavior.EnumSourceType="{x:Type SplitViewDisplayMode}"
+                          SelectedValue="{x:Static SplitViewDisplayMode.Overlay}" />
+                <ListBox x:Name="Placement"
                          my:FormItem.Label="{my:LocObject Placement}"
                          SelectedValue="{x:Static SplitViewPanePlacement.Left}"
-                         SelectedValueBinding="{ReflectionBinding DataContext}">
+                         SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
                     <ListBoxItem Content="{my:Icon GamepadCircleLeft}" ToolTip.Tip="{my:Loc Left}" DataContext="{x:Static SplitViewPanePlacement.Left}" />
                     <ListBoxItem Content="{my:Icon GamepadCircleRight}" ToolTip.Tip="{my:Loc Right}" DataContext="{x:Static SplitViewPanePlacement.Right}" />
                     <ListBoxItem Content="{my:Icon GamepadCircleUp}" ToolTip.Tip="{my:Loc Top}" DataContext="{x:Static SplitViewPanePlacement.Top}" />
                     <ListBoxItem Content="{my:Icon GamepadCircleDown}" ToolTip.Tip="{my:Loc Bottom}" DataContext="{x:Static SplitViewPanePlacement.Bottom}" />
                 </ListBox>
-                <Slider Name="CompactPaneLength"
+                <Slider x:Name="CompactPaneLength"
                         my:FormItem.Label="{my:LocObject CompactPaneLength}"
                         IsSnapToTickEnabled="True"
                         Maximum="100"
                         Minimum="0"
                         Value="50" />
-                <Slider Name="OpenPaneLength"
+                <Slider x:Name="OpenPaneLength"
                         my:FormItem.Label="{my:LocObject OpenPaneLength}"
                         IsSnapToTickEnabled="True"
                         Maximum="500"

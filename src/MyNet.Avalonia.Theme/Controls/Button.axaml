@@ -1,7 +1,6 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia"
-        xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+        xmlns:my="http://mynet.com/avalonia">
     <Styles.Resources>
 
         <!-- ═════════════════════════════════════════════════════════ -->
@@ -33,7 +32,7 @@
             <Setter Property="Background" Value="{my:ThemeRole Background}" />
             <Setter Property="BorderBrush" Value="{my:ThemeRole Border}" />
             <Setter Property="Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
 
@@ -351,7 +350,7 @@
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
             <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Tool}" />
@@ -380,7 +379,7 @@
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control, Opacity=High}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
 

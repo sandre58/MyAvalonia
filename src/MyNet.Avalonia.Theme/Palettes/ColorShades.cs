@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="ColorShades.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="ColorShades.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -174,7 +174,7 @@ public class ColorShades
             { paletteName, Base },
             { nameof(Foreground).WithPrefix(paletteName), Foreground },
             { nameof(Light).WithPrefix(paletteName), Light },
-            { nameof(Dark).WithPrefix(paletteName), Dark },
+            { nameof(Dark).WithPrefix(paletteName), Dark }
 
             // The following lines are commented out to reduce redundancy, as the shades can be accessed via GetShade method or aliases.
             // { nameof(Shade50).WithPrefix(paletteName), Shade50 },

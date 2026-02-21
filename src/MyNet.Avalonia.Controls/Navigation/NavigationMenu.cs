@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
@@ -250,13 +251,10 @@ public class NavigationMenu : ItemsControl
             return true;
         }
 
-        foreach (var kvp in _leafMenuCache)
+        foreach (var kvp in _leafMenuCache.Where(kvp => kvp.Key == item || (kvp.Value.DataContext != null && kvp.Value.DataContext == item)))
         {
-            if (kvp.Key == item || (kvp.Value.DataContext != null && kvp.Value.DataContext == item))
-            {
-                kvp.Value.SelectItem(kvp.Value);
-                return true;
-            }
+            kvp.Value.SelectItem(kvp.Value);
+            return true;
         }
 
         return false;
@@ -268,10 +266,7 @@ public class NavigationMenu : ItemsControl
         foreach (var leaf in GetLeafMenus())
         {
             var key = leaf.DataContext is not null && leaf.DataContext != DataContext ? leaf.DataContext : leaf;
-            if (!_leafMenuCache.ContainsKey(key))
-            {
-                _leafMenuCache[key] = leaf;
-            }
+            _leafMenuCache.TryAdd(key, leaf);
         }
     }
 

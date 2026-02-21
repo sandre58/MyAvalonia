@@ -7,9 +7,9 @@
         <!-- COLORPALETTE LISTBOXITEM THEME                            -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.ListBoxItem.ColorPalette" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-            <Setter Property="ToolTip.Tip" Value="{Binding Converter={x:Static my:StringConverter.Default}, DataType={x:Type Color}}" />
-            <Setter Property="AutomationProperties.Name" Value="{Binding Converter={x:Static my:StringConverter.Default}, DataType={x:Type Color}}" />
-            <Setter Property="Background" Value="{Binding Converter={x:Static my:BrushConverter.Default}, DataType={x:Type Color}}" />
+            <Setter Property="ToolTip.Tip" Value="{Binding Converter={x:Static my:StringConverter.Default}, x:DataType=Color}" />
+            <Setter Property="AutomationProperties.Name" Value="{Binding Converter={x:Static my:StringConverter.Default}, x:DataType=Color}" />
+            <Setter Property="Background" Value="{Binding Converter={x:Static my:BrushConverter.Default}, x:DataType=Color}" />
             <Setter Property="BorderThickness" Value="1.4" />
         </ControlTheme>
 
@@ -188,7 +188,6 @@
                                                      Classes="kind-toggle no-disablable layout-uniform"
                                                      my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                                      my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                     my:ItemsBehavior.UseDisplayMember="True"
                                                      my:ItemsBehavior.EnumSourceType="{x:Type ColorModel}"
                                                      IsVisible="{TemplateBinding IsColorModelVisible}"
                                                      SelectedValue="{Binding ColorModel, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />

@@ -17,11 +17,11 @@ namespace MyNet.Avalonia.Demo.ViewModels
     {
         public ICommand OpenCommand { get; set; }
 
-        public DrawerPageViewModel() => OpenCommand = CommandsManager.Create<string>(async x => await ShowAsync().ConfigureAwait(false));
+        public DrawerPageViewModel() => OpenCommand = CommandsManager.Create<string>(async _ => await ShowAsync().ConfigureAwait(false));
 
         private async Task ShowAsync()
         {
-            var options = new DrawerOptions()
+            var options = new DrawerOptions
             {
                 //FullScreen = FullScreen,
                 //HorizontalAnchor = HorizontalAnchor,

@@ -36,10 +36,10 @@ public static class OverlayDialogManager
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return;
-        var t = new OverlayDialogBox()
+        var t = new OverlayDialogBox
         {
             Content = new TView(),
-            DataContext = vm,
+            DataContext = vm
         };
         ConfigureOverlayDialogBox(t, options);
         host.AddDialog(t);
@@ -49,10 +49,10 @@ public static class OverlayDialogManager
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return;
-        var t = new OverlayDialogBox()
+        var t = new OverlayDialogBox
         {
             Content = control,
-            DataContext = vm,
+            DataContext = vm
         };
         ConfigureOverlayDialogBox(t, options);
         host.AddDialog(t);
@@ -65,10 +65,10 @@ public static class OverlayDialogManager
         var view = GetViewFromViewModel(vm?.GetType());
         view ??= new ContentControl();
         view.DataContext = vm;
-        var t = new OverlayDialogBox()
+        var t = new OverlayDialogBox
         {
             Content = view,
-            DataContext = vm,
+            DataContext = vm
         };
         ConfigureOverlayDialogBox(t, options);
         host.AddDialog(t);
@@ -79,10 +79,10 @@ public static class OverlayDialogManager
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return;
-        var t = new OverlayDialog()
+        var t = new OverlayDialog
         {
             Content = new TView(),
-            DataContext = vm,
+            DataContext = vm
         };
         ConfigureOverlayDialog(t, options);
         host.AddDialog(t);
@@ -92,10 +92,10 @@ public static class OverlayDialogManager
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return;
-        var t = new OverlayDialog()
+        var t = new OverlayDialog
         {
             Content = control,
-            DataContext = vm,
+            DataContext = vm
         };
         ConfigureOverlayDialog(t, options);
         host.AddDialog(t);
@@ -106,9 +106,9 @@ public static class OverlayDialogManager
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return;
         var view = GetViewFromViewModel(vm?.GetType());
-        view ??= new ContentControl() { Padding = new Thickness(24) };
+        view ??= new ContentControl { Padding = new Thickness(24) };
         view.DataContext = vm;
-        var t = new OverlayDialog()
+        var t = new OverlayDialog
         {
             Content = view,
             DataContext = vm,
@@ -123,7 +123,7 @@ public static class OverlayDialogManager
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return Task.FromResult(MessageBoxResult.None);
-        var t = new OverlayDialogBox()
+        var t = new OverlayDialogBox
         {
             Content = new TView(),
             DataContext = vm,
@@ -138,7 +138,7 @@ public static class OverlayDialogManager
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return Task.FromResult(MessageBoxResult.None);
-        var t = new OverlayDialogBox()
+        var t = new OverlayDialogBox
         {
             Content = control,
             DataContext = vm,
@@ -154,7 +154,7 @@ public static class OverlayDialogManager
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return Task.FromResult(default(TResult));
-        var t = new OverlayDialog()
+        var t = new OverlayDialog
         {
             Content = new TView(),
             DataContext = vm,
@@ -169,7 +169,7 @@ public static class OverlayDialogManager
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return Task.FromResult(default(TResult));
-        var t = new OverlayDialog()
+        var t = new OverlayDialog
         {
             Content = control,
             DataContext = vm,
@@ -187,7 +187,7 @@ public static class OverlayDialogManager
         var view = GetViewFromViewModel(vm?.GetType());
         view ??= new ContentControl();
         view.DataContext = vm;
-        var t = new OverlayDialog()
+        var t = new OverlayDialog
         {
             Content = view,
             DataContext = vm,
@@ -265,8 +265,7 @@ public static class OverlayDialogManager
         where T : Control
     {
         var host = OverlayDialogHostManager.GetHost(hostId, null);
-        if (host is null) return null;
-        var item = host.Recall<T>();
+        var item = host?.Recall<T>();
         return item;
     }
 

@@ -35,7 +35,7 @@ public class DrawerBox : DrawerBase
 
     public static readonly StyledProperty<MessageSeverity> SeverityProperty =
         AvaloniaProperty.Register<DrawerBox, MessageSeverity>(
-            nameof(Severity), MessageSeverity.Custom);
+            nameof(Severity));
 
     public static readonly StyledProperty<string?> TitleProperty =
         AvaloniaProperty.Register<DrawerBox, string?>(
@@ -107,8 +107,6 @@ public class DrawerBox : DrawerBase
             case MessageBoxResultOption.YesNoCancel:
                 IsVisibleProperty.SetValue(false, _okButton);
                 IsVisibleProperty.SetValue(true, _cancelButton, _yesButton, _noButton);
-                break;
-            default:
                 break;
         }
     }

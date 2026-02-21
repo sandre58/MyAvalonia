@@ -197,8 +197,6 @@ public partial class OverlayDialogHost : Canvas
                 case DrawerBase drawer:
                     ResetDrawerPosition(drawer, e.NewSize);
                     break;
-                default:
-                    break;
             }
         }
     }

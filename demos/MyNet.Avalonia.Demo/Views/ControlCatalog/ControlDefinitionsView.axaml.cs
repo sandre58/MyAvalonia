@@ -1,9 +1,10 @@
 // -----------------------------------------------------------------------
-// <copyright file="ControlDefinitionsView.axaml.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="ControlDefinitionsView.axaml.cs" company="Stï¿½phane ANDRE">
+// Copyright (c) Stï¿½phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -16,6 +17,14 @@ namespace MyNet.Avalonia.Demo.Views.ControlCatalog;
 internal sealed partial class ControlDefinitionsView : HeaderedContentControl
 {
     public ControlDefinitionsView() => InitializeComponent();
+
+    public static readonly StyledProperty<IEnumerable<AppearanceDefinition>?> ItemsProperty = AvaloniaProperty.Register<ControlDefinitionsView, IEnumerable<AppearanceDefinition>?>(nameof(Items));
+
+    public IEnumerable<AppearanceDefinition>? Items
+    {
+        get => GetValue(ItemsProperty);
+        set => SetValue(ItemsProperty, value);
+    }
 
     public static readonly StyledProperty<IDataTemplate?> ControlTemplateProperty = AvaloniaProperty.Register<ControlDefinitionsView, IDataTemplate?>(nameof(ControlTemplate));
 

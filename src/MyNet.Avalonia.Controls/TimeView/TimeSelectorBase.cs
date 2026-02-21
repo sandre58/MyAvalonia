@@ -195,7 +195,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
     {
         var value = e.GetNewValue<TimeComponent>();
 
-        if (Components.GetValueOrDefault(value) is IComponentTimeSelector componentTimeSelector)
+        if (Components.GetValueOrDefault(value) is { } componentTimeSelector)
             ShowComponent(componentTimeSelector);
     }
 
@@ -242,7 +242,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
     /// <summary>
     /// Defines the <see cref="TimeFormat"/> property.
     /// </summary>
-    public static readonly StyledProperty<TimeFormat> TimeFormatProperty = AvaloniaProperty.Register<TimeSelectorBase, TimeFormat>(nameof(TimeFormat), TimeFormat.TwelveHour);
+    public static readonly StyledProperty<TimeFormat> TimeFormatProperty = AvaloniaProperty.Register<TimeSelectorBase, TimeFormat>(nameof(TimeFormat));
 
     /// <summary>
     /// Gets or sets the time format.

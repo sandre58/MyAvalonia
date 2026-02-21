@@ -54,7 +54,7 @@ public class IconContentControl : ContentControl
     /// <summary>
     /// Provides IconPosition Property.
     /// </summary>
-    public static readonly StyledProperty<Position> IconPositionProperty = AvaloniaProperty.Register<IconContentControl, Position>(nameof(Position), Position.Left);
+    public static readonly StyledProperty<Position> IconPositionProperty = AvaloniaProperty.Register<IconContentControl, Position>(nameof(Position));
 
     /// <summary>
     /// Gets or sets the IconPosition property.

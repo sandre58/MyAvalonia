@@ -158,7 +158,7 @@
             <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
             <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
@@ -436,16 +436,6 @@
                     <StackPanel Orientation="Horizontal" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
                 </ItemsPanelTemplate>
             </Setter>
-        </Style>
-
-        <Style Selector="^.kind-gender">
-            <Setter Property="my:ClassesAssist.Classes" Value="layout-uniform" />
-
-            <Style Selector="^ TabStripItem">
-                <Setter Property="my:InteractionAssist.ActiveBackground" Value="{ReflectionBinding Value, Converter={x:Static my:GenderTypeConverter.Brush}}" />
-                <Setter Property="my:IconAssist.Icon" Value="{ReflectionBinding Value, Converter={x:Static my:GenderTypeConverter.Icon}}" />
-                <Setter Property="Content" Value="{ReflectionBinding Display}" />
-            </Style>
         </Style>
 
         <!-- ═════════════════════════════════════════════════════════ -->

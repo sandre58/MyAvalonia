@@ -45,7 +45,7 @@
             <!-- Themes Tab -->
             <TabItem IsVisible="{Binding #Root.ShowThemes}" HorizontalContentAlignment="Stretch">
                 <TabItem.Header>
-                    <ComboBox Name="ThemesComboBox"
+                    <ComboBox x:Name="ThemesComboBox"
                               my:TextFieldAssist.InnerLeftContent="{my:Icon Shape}"
                               Padding="{my:Thickness Md, Left}"
                               ItemsSource="{Binding Themes}"
@@ -73,7 +73,7 @@
                     <ContentControl Content="{Binding #ThemesComboBox.SelectedItem}">
                         <ContentControl.ContentTemplate>
                             <DataTemplate DataType="vm:ControlThemeDefinition">
-                                <StackPanel Name="InternalRoot" Spacing="{StaticResource MyNet.Spacing.Xxl}">
+                                <StackPanel x:Name="InternalRoot" Spacing="{StaticResource MyNet.Spacing.Xxl}">
                                     <HeaderedContentControl Header="{my:Loc ByDefault}"
                                                             Content="{Binding Converter={x:Static c:ControlDefinitionConverter.Default}}"
                                                             ContentTemplate="{Binding #Root.ThemeControlTemplate}"

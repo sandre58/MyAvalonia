@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="PositionToDockConverter.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="PositionToDockConverter.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -16,10 +16,10 @@ public sealed class PositionToDockConverter : IValueConverter
 {
     public static PositionToDockConverter Default { get; } = new();
 
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         => value is Position position ? ToDock(position) : Dock.Left;
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         => value is Dock dock ? ToPosition(dock) : Position.Left;
 
     private static Dock ToDock(Position position)

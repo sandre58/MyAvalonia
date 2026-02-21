@@ -37,7 +37,6 @@ public class FormItemContainer : ContentControl
 
     private Label? _label;
     private Grid? _grid;
-    private double _effectiveLabelWidth;
 
     static FormItemContainer()
     {
@@ -58,7 +57,7 @@ public class FormItemContainer : ContentControl
     /// <summary>
     /// Internal property used by FormItemsPanel to communicate the computed max label width.
     /// </summary>
-    internal static readonly StyledProperty<double> PanelComputedWidthProperty = AvaloniaProperty.Register<FormItemContainer, double>(nameof(PanelComputedWidth), 0d);
+    internal static readonly StyledProperty<double> PanelComputedWidthProperty = AvaloniaProperty.Register<FormItemContainer, double>(nameof(PanelComputedWidth));
 
     /// <summary>
     /// Gets the effective label width that will be used in the template.
@@ -66,8 +65,8 @@ public class FormItemContainer : ContentControl
     /// </summary>
     public double EffectiveLabelWidth
     {
-        get => _effectiveLabelWidth;
-        private set => SetAndRaise(EffectiveLabelWidthProperty, ref _effectiveLabelWidth, value);
+        get;
+        private set => SetAndRaise(EffectiveLabelWidthProperty, ref field, value);
     }
 
     /// <summary>
@@ -272,10 +271,8 @@ public class FormItemContainer : ContentControl
             _label.Measure(Size.Infinity);
             return _label.DesiredSize;
         }
-        else
-        {
-            return new(0, 0);
-        }
+
+        return new(0, 0);
     }
 
     protected override Size MeasureOverride(Size availableSize)
@@ -284,13 +281,13 @@ public class FormItemContainer : ContentControl
 
         EffectiveLabelWidth = !ShowLabel
             ? 0
-            : (double)(LabelWidth.IsAbsolute
+            : LabelWidth.IsAbsolute
                 ? LabelWidth.Value
                 : (LabelWidth.IsAuto || LabelWidth.IsStar) && LabelPosition is Position.Left or Position.Right
                     ? PanelComputedWidth > 0
                         ? PanelComputedWidth
                         : labelSize.Width
-                    : labelSize.Width);
+                    : labelSize.Width;
 
         // ⚠️ IMPORTANT
         return base.MeasureOverride(availableSize);

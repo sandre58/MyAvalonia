@@ -26,7 +26,7 @@ public enum PerformanceCategory
     Pages = 2,
     Theme = 4,
     Controls = 8,
-    All = None | Brushes | Pages | Theme | Controls,
+    All = None | Brushes | Pages | Theme | Controls
 }
 
 public static class PerformanceMonitor
@@ -58,15 +58,20 @@ public static class PerformanceMonitor
             return Disposable.Empty;
         }
 
-        if (string.IsNullOrEmpty(title))
+        if (!string.IsNullOrEmpty(title))
         {
-            var st = new StackTrace(new StackFrame(1));
-            var method = st.GetFrame(0)?.GetMethod();
+            return LogManager.MeasureTime(new PerformanceLoggerSettings(false, false, x => maxBeforeWarning.HasValue && x >= maxBeforeWarning.Value
+                    ? PerformanceTraceLevel.Warning
+                    : maxBeforeError.HasValue && x >= maxBeforeError.Value ? PerformanceTraceLevel.Error : PerformanceTraceLevel.Debug),
+                title);
+        }
 
-            if (method != null)
-            {
-                title = $"{method.DeclaringType}.{method.Name}({string.Join(", ", method.GetParameters().Select(x => x.Name))})";
-            }
+        var st = new StackTrace(new StackFrame(1));
+        var method = st.GetFrame(0)?.GetMethod();
+
+        if (method != null)
+        {
+            title = $"{method.DeclaringType}.{method.Name}({string.Join(", ", method.GetParameters().Select(x => x.Name))})";
         }
 
         return LogManager.MeasureTime(new PerformanceLoggerSettings(false, false, x => maxBeforeWarning.HasValue && x >= maxBeforeWarning.Value

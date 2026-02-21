@@ -39,7 +39,7 @@ public static class PopupAssist
     /// <summary>
     /// Defines the Role attached property for assigning a semantic color role to a control.
     /// </summary>
-    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, ThemeRole>("Role", typeof(PopupAssist), ThemeRole.Default);
+    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, ThemeRole>("Role", typeof(PopupAssist));
 
     /// <summary>
     /// Gets the theme role for the specified control.

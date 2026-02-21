@@ -49,14 +49,14 @@
             <Setter Property="Background" Value="{Binding $self.(my:PaletteAssist.Background)}" />
             <Setter Property="BorderBrush" Value="{Binding $self.(my:PaletteAssist.Border)}" />
             <Setter Property="Foreground" Value="{Binding $self.(my:PaletteAssist.Foreground)}" />
-            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Foreground, Opacity=High}" />
-            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Foreground, Opacity=High}" />
+            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Foreground Opacity=High}" />
+            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Foreground Opacity=High}" />
             <Setter Property="my:TextFieldAssist.PlaceholderForeground" Value="{my:Foreground Opacity=Medium}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:ThemeContext Control.Border.Hover}" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:Foreground, Opacity=Focus}" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:Foreground Opacity=Focus}" />
             <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeRole Primary}" />
             <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary}" />
             <Setter Property="my:PopupAssist.Background" Value="{my:ThemeContext Surface.Level1}" />

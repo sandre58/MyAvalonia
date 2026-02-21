@@ -34,7 +34,7 @@ public sealed class ThicknessConverter : IValueConverter
         AddBottomToRight,
         AddTopToBottom,
         AddTopToLeft,
-        AddTopToRight,
+        AddTopToRight
     }
 
     private readonly Side _side;

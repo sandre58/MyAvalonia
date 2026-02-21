@@ -179,7 +179,7 @@
             <Setter Property="FontFamily" Value="{Binding $parent[DataGrid].(my:HeaderAssist.FontFamily)}" />
             <Setter Property="Padding" Value="{Binding $parent[DataGrid].(my:HeaderAssist.Padding)}" />
             <Setter Property="Opacity" Value="{Binding $parent[DataGrid].(my:HeaderAssist.Opacity)}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="HorizontalContentAlignment" Value="{Binding $parent[DataGrid].(my:HeaderAssist.HorizontalAlignment)}" />
             <Setter Property="VerticalContentAlignment" Value="{Binding $parent[DataGrid].(my:HeaderAssist.VerticalAlignment)}" />
@@ -299,7 +299,7 @@
             <Setter Property="SeparatorBrush" Value="{Binding $parent[DataGrid].(my:HeaderAssist.BorderBrush)}" />
             <Setter Property="Background" Value="{Binding $parent[DataGrid].(my:HeaderAssist.Background)}" />
             <Setter Property="Foreground" Value="{Binding $parent[DataGrid].(my:HeaderAssist.Foreground)}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="AreSeparatorsVisible" Value="False" />
             <Setter Property="Template">
@@ -606,11 +606,11 @@
             <Setter Property="my:DataGridAssist.RowCornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:DataGridAssist.UseAlternateRowBackground" Value="True" />
             <Setter Property="RowBackground" Value="Transparent" />
-            <Setter Property="my:DataGridAssist.AlternateRowBackground" Value="{my:Foreground, Opacity=Overlay}" />
+            <Setter Property="my:DataGridAssist.AlternateRowBackground" Value="{my:Foreground Opacity=Overlay}" />
             <Setter Property="my:DataGridAssist.RowForeground" Value="{my:Foreground}" />
             <Setter Property="my:DataGridAssist.RowBorderBrush" Value="{my:ThemeBrush HorizontalGridLinesBrush}" />
             <Setter Property="my:DataGridAssist.RowBorderThickness" Value="0" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />

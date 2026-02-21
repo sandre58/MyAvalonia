@@ -37,9 +37,9 @@ internal sealed class ThemeConverter : IValueConverter, IMultiValueConverter
     /// <param name="parameter">A parameter describing the theme brush or role to resolve.</param>
     /// <param name="culture">The culture for conversion (not used).</param>
     /// <returns>The resolved <see cref="IBrush"/> or <see cref="AvaloniaProperty.UnsetValue"/> if conversion fails.</returns>
-    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value], targetType, parameter, culture)!;
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value], targetType, parameter, culture);
 
-    public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
+    public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
         if (values.Count == 0) return AvaloniaProperty.UnsetValue;
         var value = values[0];
@@ -90,7 +90,7 @@ internal sealed class ThemeConverter : IValueConverter, IMultiValueConverter
                 return ResolveBrush(brush2, brushParameters);
 
             default:
-                return value is IBrush brush3 ? brush3 : AvaloniaProperty.UnsetValue;
+                return value as IBrush ?? AvaloniaProperty.UnsetValue;
         }
 
         static IBrush? provideForeground(IBrush? foreground, Control? control) => foreground ?? (control?.Parent is Control parent ? TextElement.GetForeground(parent) : null);
@@ -130,7 +130,7 @@ public record ThemeBrushParameters(string? Opacity, bool Contrast, double? Darke
 /// <summary>
 /// Describes parameters for resolving a role-based theme brush, including palette color type, opacity, contrast, darken, and lighten.
 /// </summary>
-internal sealed record ThemeRoleParameters(PaletteColor Type, string? Opacity, bool Contrast, double? Darken = null, double? Lighten = null) : ThemeBrushParameters(Opacity, Contrast, Darken, Lighten);
+internal sealed record ThemeRoleParameters(string? Opacity, bool Contrast, double? Darken = null, double? Lighten = null) : ThemeBrushParameters(Opacity, Contrast, Darken, Lighten);
 
 /// <summary>
 /// Describes parameters for resolving a theme context brush, including resource key, opacity, contrast, darken, and lighten.

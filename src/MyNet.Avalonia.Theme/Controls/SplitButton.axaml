@@ -113,7 +113,7 @@
             <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
             <Setter Property="BorderBrush" Value="{my:ThemeContext Control.Border}" />
             <Setter Property="Foreground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
             <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeRole Primary}" />

@@ -6,6 +6,7 @@
 
 using System;
 using System.Globalization;
+using Avalonia;
 using Avalonia.Data.Converters;
 
 namespace MyNet.Avalonia.Theme.Converters.Internals;
@@ -20,5 +21,5 @@ internal sealed class ClockHandLengthConverter(double ratio) : IValueConverter
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value is double d ? d * ratio / 2 : 0.0;
 
-    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => AvaloniaProperty.UnsetValue;
 }

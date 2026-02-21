@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="ExpanderPageViewModel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="ExpanderPageViewModel.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ internal sealed class ExpanderPageViewModel : ControlCatalogViewModel
                     .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-text",  "variant-headered", "variant-transparent", "shadow-surface", "shadow-header")
                     .AddDefaultRoles()
                     .AddDefaultSizes()
-                    .AddSizes(["header-watermark", "header-sub-caption", "header-caption", "header-h1", "header-h2", "header-h3", "header-h4", "header-h5", "header-h6"]),
+                    .AddSizes("header-watermark", "header-sub-caption", "header-caption", "header-h1", "header-h2", "header-h3", "header-h4", "header-h5", "header-h6"),
 
                 new ControlThemeBuilder("Button")
                     .AddShapes("shape-circle")

@@ -159,7 +159,7 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
         base.OnPointerPressed(e);
-        if (!e.Handled && e.Source is Visual source)
+        if (e is { Handled: false, Source: Visual source })
         {
             if (_popup?.IsInsidePopup(source) == true)
             {
@@ -184,7 +184,7 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
     /// <inheritdoc/>
     protected override void OnPointerReleased(PointerReleasedEventArgs e)
     {
-        if (!e.Handled && e.Source is Visual source)
+        if (e is { Handled: false, Source: Visual source })
         {
             if (_popup?.IsInsidePopup(source) == true)
             {
@@ -249,7 +249,7 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
             }
 
             // This part of code is needed just to acquire initial focus, subsequent focus navigation will be done by ItemsControl.
-            else if (SelectedIndex < 0 && ItemCount > 0 && (e.Key == Key.Up || e.Key == Key.Down) && IsFocused)
+            else if (SelectedIndex < 0 && ItemCount > 0 && e.Key is Key.Up or Key.Down && IsFocused)
             {
                 var firstChild = Presenter?.Panel?.Children.FirstOrDefault(CanFocus);
                 if (firstChild != null)
@@ -266,7 +266,7 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
                 Selection.SelectAll();
                 e.Handled = true;
             }
-            else if (e.Key == Key.Space || e.Key == Key.Enter)
+            else if (e.Key is Key.Space or Key.Enter)
             {
                 UpdateSelectionFromEvent((Control)e.Source!, e);
             }
@@ -275,7 +275,7 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
 
     internal void ItemFocused(MultiComboBoxItem dropDownItem)
     {
-        if (IsDropDownOpen && dropDownItem.IsFocused && dropDownItem.IsArrangeValid) dropDownItem.BringIntoView();
+        if (IsDropDownOpen && dropDownItem is { IsFocused: true, IsArrangeValid: true }) dropDownItem.BringIntoView();
     }
 
     public void SelectAll() => Selection.SelectAll();
@@ -289,11 +289,10 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
             var data = s.DataContext;
             SelectedItems?.Remove(data);
             var item = Items.FirstOrDefault(a => ReferenceEquals(a, data));
-            if (item is not null)
-            {
-                var container = ContainerFromItem(item);
-                if (container is MultiComboBoxItem t) t.IsSelected = false;
-            }
+            if (item is null) return;
+
+            var container = ContainerFromItem(item);
+            if (container is MultiComboBoxItem t) t.IsSelected = false;
         }
     }
 
@@ -370,5 +369,5 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
         }
     }
 
-    private bool CanFocus(Control control) => control.Focusable && control.IsEffectivelyEnabled && control.IsVisible;
+    private static bool CanFocus(Control control) => control is { Focusable: true, IsEffectivelyEnabled: true, IsVisible: true };
 }

@@ -54,7 +54,7 @@ public sealed class NumericUpDownTimeComponent : NumericUpDown, IComponentTimeSe
     /// <summary>
     /// Provides IsActive Property.
     /// </summary>
-    public static readonly StyledProperty<bool> IsActiveProperty = AvaloniaProperty.Register<NumericUpDownTimeComponent, bool>(nameof(IsActive), false);
+    public static readonly StyledProperty<bool> IsActiveProperty = AvaloniaProperty.Register<NumericUpDownTimeComponent, bool>(nameof(IsActive));
 
     /// <summary>
     /// Gets or sets a value indicating whether gets or sets the IsActive property.

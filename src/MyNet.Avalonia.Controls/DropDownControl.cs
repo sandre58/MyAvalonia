@@ -46,7 +46,7 @@ public class DropDownControl : TemplatedControl, IPopupControl
         KeyboardNavigation.TabNavigationProperty.OverrideDefaultValue<DropDownControl>(KeyboardNavigationMode.Once);
     }
 
-    private static bool CanFocus(Control control) => control.Focusable && control.IsEffectivelyEnabled && control.IsVisible;
+    private static bool CanFocus(Control control) => control is { Focusable: true, IsEffectivelyEnabled: true, IsVisible: true };
 
     #region IsDropDownOpen
 

@@ -218,16 +218,21 @@ public static class DrawerManager
         drawer.IsCloseButtonVisible = options.IsCloseButtonVisible;
         drawer.CanLightDismiss = options.CanLightDismiss;
         drawer.CanResize = options.CanResize;
-        if (options.Position is Position.Left or Position.Right)
+        switch (options.Position)
         {
-            if (options.MinWidth is not null) drawer.MinWidth = options.MinWidth.Value;
-            if (options.MaxWidth is not null) drawer.MaxWidth = options.MaxWidth.Value;
-        }
+            case Position.Left or Position.Right:
+                {
+                    if (options.MinWidth is not null) drawer.MinWidth = options.MinWidth.Value;
+                    if (options.MaxWidth is not null) drawer.MaxWidth = options.MaxWidth.Value;
+                    break;
+                }
 
-        if (options.Position is Position.Top or Position.Bottom)
-        {
-            if (options.MinHeight is not null) drawer.MinHeight = options.MinHeight.Value;
-            if (options.MaxHeight is not null) drawer.MaxHeight = options.MaxHeight.Value;
+            case Position.Top or Position.Bottom:
+                {
+                    if (options.MinHeight is not null) drawer.MinHeight = options.MinHeight.Value;
+                    if (options.MaxHeight is not null) drawer.MaxHeight = options.MaxHeight.Value;
+                    break;
+                }
         }
 
         if (!string.IsNullOrWhiteSpace(options.StyleClass))
@@ -246,16 +251,21 @@ public static class DrawerManager
         drawer.Buttons = options.Buttons;
         drawer.Title = options.Title;
         drawer.CanResize = options.CanResize;
-        if (options.Position is Position.Left or Position.Right)
+        switch (options.Position)
         {
-            if (options.MinWidth is not null) drawer.MinWidth = options.MinWidth.Value;
-            if (options.MaxWidth is not null) drawer.MaxWidth = options.MaxWidth.Value;
-        }
+            case Position.Left or Position.Right:
+                {
+                    if (options.MinWidth is not null) drawer.MinWidth = options.MinWidth.Value;
+                    if (options.MaxWidth is not null) drawer.MaxWidth = options.MaxWidth.Value;
+                    break;
+                }
 
-        if (options.Position is Position.Top or Position.Bottom)
-        {
-            if (options.MinHeight is not null) drawer.MinHeight = options.MinHeight.Value;
-            if (options.MaxHeight is not null) drawer.MaxHeight = options.MaxHeight.Value;
+            case Position.Top or Position.Bottom:
+                {
+                    if (options.MinHeight is not null) drawer.MinHeight = options.MinHeight.Value;
+                    if (options.MaxHeight is not null) drawer.MaxHeight = options.MaxHeight.Value;
+                    break;
+                }
         }
 
         if (!string.IsNullOrWhiteSpace(options.StyleClass))

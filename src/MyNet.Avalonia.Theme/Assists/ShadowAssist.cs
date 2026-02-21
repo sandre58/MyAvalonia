@@ -33,8 +33,6 @@ public static class ShadowAssist
             case Ellipse ellipse:
                 ellipse.Effect = (args.NewValue as ShadowDepth? ?? ShadowDepth.Depth0).ToBoxShadows().ToDropShadowEffect();
                 break;
-            default:
-                break;
         }
     }
 
@@ -77,9 +75,6 @@ public static class ShadowAssist
                     _ = ellipse.SetValue(Visual.EffectProperty, targetBoxShadows.ToDropShadowEffect());
                     break;
                 }
-
-            default:
-                break;
         }
     }
     #endregion Darken
