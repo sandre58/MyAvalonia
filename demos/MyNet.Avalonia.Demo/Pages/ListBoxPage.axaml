@@ -85,7 +85,7 @@
                                 </Style>
                             </Style>
 
-                            <Style Selector="^.kind-toggle, ^[(my|ThemeAssist.Kind)=tabs], ^[(my|ThemeAssist.Kind)=icon]">
+                            <Style Selector="^.kind-toggle, ^.kind-tabs, ^.kind-icon">
                                 <Setter Property="Width" Value="NaN" />
                                 <Setter Property="ItemsSource" Value="{m:RandomCountries Min=3, Max=5}" />
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country}" />
@@ -97,7 +97,7 @@
                                 </Style>
                             </Style>
 
-                            <Style Selector="^[(my|ThemeAssist.Kind)=icon]">
+                            <Style Selector="^.kind-icon">
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
                             </Style>
                         </Style>
@@ -133,7 +133,7 @@
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country}" />
                             </Style>
 
-                            <Style Selector="^[(my|ThemeAssist.Kind)=icon]">
+                            <Style Selector="^.kind-icon">
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
                             </Style>
                         </Style>

@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -14,6 +15,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Styling;
+using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Helpers;
 using MyNet.Avalonia.Theme.Infrastructure;
 using MyNet.Avalonia.Theme.Palettes;
@@ -313,8 +315,21 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
                     if (!string.IsNullOrEmpty(colorKey))
                     {
                         var contrastedColor = GetContrastedColorForKey(colorKey, activeTheme);
-                        AddOrUpdateBrush(colorKey, color, contrastedColor);
-                        count++;
+
+                        if (new List<string> { nameof(ThemeVariantColors.Success), nameof(ThemeVariantColors.Error), nameof(ThemeVariantColors.Warning), nameof(ThemeVariantColors.Information), nameof(ThemeVariantColors.Neutral) }.Contains(colorKey))
+                        {
+                            var shades = new ColorShades(color, contrastedColor);
+                            shades.ToResourceDictionary(colorKey).ForEach(x =>
+                            {
+                                AddOrUpdateBrush(x.Key, x.Value, shades.Foreground);
+                                count++;
+                            });
+                        }
+                        else
+                        {
+                            AddOrUpdateBrush(colorKey, color, contrastedColor);
+                            count++;
+                        }
                     }
                 }
             }
@@ -428,6 +443,10 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     /// </summary>
     private void RaiseThemeChanged() => ThemeChanged?.Invoke(this, EventArgs.Empty);
 
+    /// <summary>
+    /// Retrieves actual resources dictionary from current theme.
+    /// </summary>
+    /// <returns>The active resource dictionary.</returns>
     private ResourceDictionary GetActiveThemeDictionary()
     {
         var current = Application.Current?.ActualThemeVariant ?? ThemeVariant.Default;
@@ -477,7 +496,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     public IBrush GetBrush(string path, string? opacityKey = null, bool contrast = false, double? darken = null, double? lighten = null)
     {
         var opacity = GetOpacity(opacityKey);
-        return _brushManager.Get(ThemeResourceKeyFactory.Brush(path), opacity, contrast, darken, lighten);
+        return _brushManager.Get(ThemeResourceKeyFactory.Brush(path), new ColorInterpolation(opacity, contrast, darken, lighten));
     }
 
     /// <summary>
@@ -492,7 +511,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     public IBrush GetBrush(IBrush brush, string? opacityKey = null, bool contrast = false, double? darken = null, double? lighten = null)
     {
         var opacity = GetOpacity(opacityKey);
-        return _brushManager.Get(brush, opacity, contrast, darken, lighten);
+        return _brushManager.Get(brush, new ColorInterpolation(opacity, contrast, darken, lighten));
     }
 
     /// <summary>

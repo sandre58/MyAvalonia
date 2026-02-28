@@ -92,12 +92,10 @@ public class CaptionButtons : CaptionButtonsBase
             return;
         }
 
-        IsVisibleProperty.SetValue(u.IsCloseButtonVisible, _closeButton);
-        IsVisibleProperty.SetValue(u.WindowState != WindowState.FullScreen && u.IsRestoreButtonVisible,
-            _restoreButton);
-        IsVisibleProperty.SetValue(u.WindowState != WindowState.FullScreen && u.IsMinimizeButtonVisible,
-            _minimizeButton);
-        IsVisibleProperty.SetValue(u.IsFullScreenButtonVisible, _fullScreenButton);
+        _closeButton?.SetValue(IsVisibleProperty, u.IsCloseButtonVisible);
+        _restoreButton?.SetValue(IsVisibleProperty, u.WindowState != WindowState.FullScreen && u.IsRestoreButtonVisible);
+        _minimizeButton?.SetValue(IsVisibleProperty, u.WindowState != WindowState.FullScreen && u.IsMinimizeButtonVisible);
+        _fullScreenButton?.SetValue(IsVisibleProperty, u.IsFullScreenButtonVisible);
     }
 
     public override void Detach()

@@ -12,7 +12,7 @@ namespace MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 /// <summary>
 /// View model for the control catalog page, which displays available control themes and provides a playground for testing.
 /// </summary>
-internal class ControlCatalogViewModel : PageViewModel
+internal abstract class ControlCatalogViewModel : PageViewModel
 {
     /// <summary>
     /// Gets the collection of available theme definitions for the control.
@@ -29,7 +29,7 @@ internal class ControlCatalogViewModel : PageViewModel
     /// </summary>
     /// <param name="controlName">The name of the control being cataloged.</param>
     /// <param name="builders">The array of theme builders to generate theme definitions.</param>
-    public ControlCatalogViewModel(string controlName, ControlThemeBuilder[] builders)
+    protected ControlCatalogViewModel(string controlName, ControlThemeBuilder[] builders)
     {
         var definitions = builders.Select(x => x.Build(controlName)).ToList();
         Themes = new(definitions);

@@ -268,7 +268,6 @@ public class Pagination : TemplatedControl
                 IsVisible = true,
                 Theme = PageButtonTheme
             };
-            button.AddClasses("no-disablable");
             _buttonPanel.Children.Add(button);
             _buttons[i - 1] = button;
             Button.ClickEvent.AddHandler(OnPageButtonClick, button);

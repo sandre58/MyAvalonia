@@ -1,8 +1,8 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+﻿
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:c="clr-namespace:Avalonia.Controls.Converters;assembly=Avalonia.Controls"
         xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
 
         <c:MarginMultiplierConverter x:Key="MyNet.Converter.TreeViewItem.LeftMargin" Indent="10" Left="True" />
 
@@ -35,6 +35,9 @@
         <!-- DEFAULT TREEVIEWITEM THEME                                -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type TreeViewItem}" TargetType="TreeViewItem">
+            <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
+            <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+            <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
             <Setter Property="HorizontalAlignment" Value="{Binding $parent[TreeView].(my:ItemsAssist.HorizontalAlignment)}" />
             <Setter Property="VerticalAlignment" Value="{Binding $parent[TreeView].(my:ItemsAssist.VerticalAlignment)}" />
             <Setter Property="Margin" Value="{Binding $parent[TreeView].(my:ItemsAssist.Margin)}" />
@@ -88,7 +91,8 @@
                                     <Grid Name="PART_Header" Margin="{TemplateBinding Level, Mode=OneWay, Converter={StaticResource MyNet.Converter.TreeViewItem.LeftMargin}}" ColumnDefinitions="Auto, *">
                                         <ToggleButton Name="PART_ExpandCollapseChevron"
                                                       Grid.Column="0"
-                                                      Focusable="False" Classes="no-disablable"
+                                                      Focusable="False"
+                                                      my:DisableAssist.IsDisablable="False"
                                                       Foreground="{TemplateBinding Foreground}"
                                                       IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}"
                                                       Theme="{StaticResource MyNet.Theme.ToggleButton.Embedded.TreeViewItem}" />
@@ -159,6 +163,7 @@
         <!-- DEFAULT TREEVIEW THEME                                    -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type TreeView}" TargetType="TreeView">
+            <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
             <Setter Property="AutoScrollToSelectedItem" Value="False" />
             <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
             <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
@@ -178,10 +183,23 @@
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
 
             <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="Transparent" />
+            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="Transparent" />
+            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+
+            <!-- Variant -->
+            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+            <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+            <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+            
+            <!-- Theme -->
+            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+            <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
 
             <!-- Items -->
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
@@ -212,25 +230,5 @@
             </Setter>
         </ControlTheme>
 
-    </Styles.Resources>
 
-    <Style Selector=":is(TreeView)">
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- SIZES                                                     -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-
-        <Style Selector="^.size-sm">
-            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Sm}" />
-        </Style>
-
-        <Style Selector="^.size-md">
-            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Md}" />
-        </Style>
-
-        <Style Selector="^.size-lg">
-            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Lg}" />
-        </Style>
-
-    </Style>
-</Styles>
+</ResourceDictionary>

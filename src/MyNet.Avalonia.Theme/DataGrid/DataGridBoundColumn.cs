@@ -107,7 +107,7 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
     /// </summary>
     [SuppressMessage("AvaloniaProperty", "AVP1002", Justification = "Generic avalonia property is expected here.")]
     [SuppressMessage("Roslynator", "RCS1158:Static member in generic type should use a type parameter", Justification = "Generic avalonia property is expected here.")]
-    public static readonly AttachedProperty<string?> PlaceholderTextProperty = TextFieldAssist.PlaceholderTextProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
+    public static readonly AttachedProperty<string?> PlaceholderTextProperty = InputAssist.PlaceholderTextProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
 
     /// <summary>
     /// Gets or sets the PlaceholderText property.
@@ -127,7 +127,7 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
     /// </summary>
     [SuppressMessage("AvaloniaProperty", "AVP1002", Justification = "Generic avalonia property is expected here.")]
     [SuppressMessage("Roslynator", "RCS1158:Static member in generic type should use a type parameter", Justification = "Generic avalonia property is expected here.")]
-    public static readonly AttachedProperty<object?> InnerLeftContentProperty = TextFieldAssist.InnerLeftContentProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
+    public static readonly AttachedProperty<object?> InnerLeftContentProperty = InputAssist.InnerLeftContentProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
 
     /// <summary>
     /// Gets or sets the InnerLeftContent property.
@@ -147,7 +147,7 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
     /// </summary>
     [SuppressMessage("AvaloniaProperty", "AVP1002", Justification = "Generic avalonia property is expected here.")]
     [SuppressMessage("Roslynator", "RCS1158:Static member in generic type should use a type parameter", Justification = "Generic avalonia property is expected here.")]
-    public static readonly AttachedProperty<object?> InnerRightContentProperty = TextFieldAssist.InnerLeftContentProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
+    public static readonly AttachedProperty<object?> InnerRightContentProperty = InputAssist.InnerLeftContentProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
 
     /// <summary>
     /// Gets or sets the InnerRightContent property.
@@ -187,7 +187,7 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
     /// </summary>
     [SuppressMessage("AvaloniaProperty", "AVP1002", Justification = "Generic avalonia property is expected here.")]
     [SuppressMessage("Roslynator", "RCS1158:Static member in generic type should use a type parameter", Justification = "Generic avalonia property is expected here.")]
-    public static readonly StyledProperty<bool> ShowClearButtonProperty = TextFieldAssist.ShowClearButtonProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
+    public static readonly StyledProperty<bool> ShowClearButtonProperty = InputAssist.ShowClearButtonProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
 
     /// <summary>
     /// Gets or sets a value indicating whether we want show clear button.
@@ -207,7 +207,7 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
     /// </summary>
     [SuppressMessage("AvaloniaProperty", "AVP1002", Justification = "Generic avalonia property is expected here.")]
     [SuppressMessage("Roslynator", "RCS1158:Static member in generic type should use a type parameter", Justification = "Generic avalonia property is expected here.")]
-    public static readonly StyledProperty<bool> ShowClipboardButtonProperty = TextFieldAssist.ShowClipboardButtonProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
+    public static readonly StyledProperty<bool> ShowClipboardButtonProperty = InputAssist.ShowClipboardButtonProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
 
     /// <summary>
     /// Gets or sets a value indicating whether we want show clipboard button.

@@ -43,7 +43,7 @@
                           SelectedValue="{Binding Placement}" />
 
                 <NumericUpDown my:FormItem.Label="{my:LocObject Duration}"
-                                  my:TextFieldAssist.InnerRightContent="{my:Loc TimeUnitSecond, Casing=LowerCase}"
+                                  my:InputAssist.InnerRightContent="{my:Loc TimeUnitSecond, Casing=LowerCase}"
                                   Maximum="60"
                                   Minimum="0"
                                   Value="{Binding Duration}" />

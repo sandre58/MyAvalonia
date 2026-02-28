@@ -308,7 +308,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
         {
             e.Handled = true;
 
-            if (!TextFieldBehavior.GetIsTextEditable(this))
+            if (!InputBehavior.GetIsTextEditable(this))
                 TogglePopup();
         }
     }
@@ -420,7 +420,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
         if (IsDropDownOpen)
             return;
 
-        if (IsEnabled && TextFieldBehavior.GetIsTextEditable(this) && TextBox is not null && e.NavigationMethod == NavigationMethod.Tab)
+        if (IsEnabled && InputBehavior.GetIsTextEditable(this) && TextBox is not null && e.NavigationMethod == NavigationMethod.Tab)
         {
             TextBox.Focus();
             var text = TextBox.Text;

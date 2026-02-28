@@ -1,0 +1,85 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- TAB STRIP PLACEMENT STYLES                                -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="TabControl[(my|ThemeAssist.Kind)=default]">
+        <Style Selector="^[TabStripPlacement=Left]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 3 0" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 3 0" />
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Top" />
+            <Style Selector="^.layout-uniform">
+                <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Right]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="3 0 0 0" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="3 0 0 0" />
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Top" />
+
+            <Style Selector="^.layout-uniform">
+                <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Top]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 3" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 0 3" />
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
+
+            <Style Selector="^.layout-uniform">
+                <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Bottom]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 3 0 0" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 3 0 0" />
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
+
+            <Style Selector="^.layout-uniform">
+                <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
+            </Style>
+        </Style>
+    </Style>
+
+    <Style Selector="TabControl.kind-indicator">
+        <Style Selector="^[TabStripPlacement=Left]">
+            <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="Right" />
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Right]">
+            <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="Left" />
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Top]">
+            <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="Bottom" />
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Bottom]">
+            <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="Top" />
+        </Style>
+    </Style>
+
+    <Style Selector="TabControl.variant-solid, TabControl.variant-light, TabControl.variant-outlined">
+        <Setter Property="my:HeaderAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+
+        <Style Selector="^.variant-items-solid, ^.variant-items-outlined, ^.variant-items-light, ^.variant-items-text">
+            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm}" />
+        </Style>
+    </Style>
+
+    <Style Selector="TabControl.variant-items-solid, TabControl.variant-items-outlined, TabControl.variant-items-light, TabControl.variant-items-text">
+        <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+        <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
+    </Style>
+</Styles>

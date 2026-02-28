@@ -13,7 +13,7 @@ public static class DateTimePickerBehavior
     #region OverridePlaceholderText
 
     /// <summary>
-    /// Provides OverridePlaceholderText Property for attached TextFieldBehavior element.
+    /// Provides OverridePlaceholderText Property for attached InputBehavior element.
     /// </summary>
     public static readonly AttachedProperty<bool> OverridePlaceholderTextProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("OverridePlaceholderText", typeof(DateTimePickerBehavior), true);
 

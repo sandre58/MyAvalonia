@@ -1,169 +1,173 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals"
-        xmlns:u="clr-namespace:MyNet.Utilities.DateTimes;assembly=MyNet.Utilities"
-        xmlns:my="http://mynet.com/avalonia">
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals"
+                    xmlns:u="clr-namespace:MyNet.Utilities.DateTimes;assembly=MyNet.Utilities"
+                    xmlns:my="http://mynet.com/avalonia">
 
-    <Styles.Resources>
+    <!--  ==============================================  -->
+    <!--  NUMERICUPDOWNTIMECOMPONENT THEME  -->
+    <!--  ==============================================  -->
 
-        <!--  ==============================================  -->
-        <!--  NUMERICUPDOWNTIMECOMPONENT THEME  -->
-        <!--  ==============================================  -->
+    <ControlTheme x:Key="{x:Type my:NumericUpDownTimeComponent}" TargetType="my:NumericUpDownTimeComponent" BasedOn="{StaticResource {x:Type NumericUpDown}}">
+        <Setter Property="ShowButtonSpinner" Value="False" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="Width" Value="55" />
 
-        <ControlTheme x:Key="{x:Type my:NumericUpDownTimeComponent}" TargetType="my:NumericUpDownTimeComponent" BasedOn="{StaticResource {x:Type NumericUpDown}}">
-            <Setter Property="ShowButtonSpinner" Value="False" />
-            <Setter Property="TextAlignment" Value="Center" />
-            <Setter Property="Width" Value="55" />
+        <Style Selector="^[IsActive=False]">
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+        </Style>
 
-            <Style Selector="^[IsActive=False]">
-                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
-            </Style>
-
-            <Style Selector="^[IsActive=True]">
-                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
-                <Setter Property="BorderThickness" Value="1" />
-
-                <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
-            </Style>
-        </ControlTheme>
-
-        <!--  ==============================================  -->
-        <!--  DEFAULT TIMEVIEW THEME  -->
-        <!--  ==============================================  -->
-
-        <ControlTheme x:Key="{x:Type my:TimeView}" TargetType="my:TimeView">
-            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
-            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
-            <Setter Property="Focusable" Value="false" />
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
-            <Setter Property="ClipToBounds" Value="False" />
-            <Setter Property="my:HeaderAssist.CornerRadius" Value="0" />
-            <Setter Property="my:HeaderAssist.ShadowDepth" Value="Depth0" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
-            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H2}" />
-            <Setter Property="my:HeaderAssist.FontFamily" Value="{Binding $self.FontFamily}" />
-            <Setter Property="my:HeaderAssist.FontStyle" Value="{Binding $self.FontStyle}" />
-            <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
-            <Setter Property="my:HeaderAssist.Opacity" Value="1" />
-            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Center" />
-            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
-
-            <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
-
-            <!-- Surface -->
+        <Style Selector="^[IsActive=True]">
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="{Binding $self.(my:PaletteAssist.Background)}" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:PaletteAssist.Border)}" />
-            <Setter Property="Foreground" Value="{Binding $self.(my:PaletteAssist.Foreground)}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-            <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
-            <Setter Property="my:HeaderAssist.BorderBrush" Value="Transparent" />
 
-            <Setter Property="Template">
-                <ControlTemplate TargetType="{x:Type my:TimeView}">
-                    <Border my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid RowDefinitions="Auto,*" RowSpacing="{StaticResource MyNet.Spacing.Md}" Margin="{my:Thickness Md}">
-                            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" HorizontalAlignment="Center">
-                                <my:NumericUpDownTimeComponent x:Name="PART_Hour"
-                                                               Grid.Column="0"
-                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                               my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                               FormatString="{TemplateBinding NumberFormat}"
-                                                               Value="{TemplateBinding Hour, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
-                                                               FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
-                                                               Minimum="{TemplateBinding TimeFormat, Converter={x:Static c:AmPmRangeConverter.Minimum}}"
-                                                               Maximum="{TemplateBinding TimeFormat, Converter={x:Static c:AmPmRangeConverter.Maximum}}"
-                                                               Increment="1"
-                                                               IsActive="True"
-                                                               Classes="no-disablable" />
-                                <ContentControl Content=":"
-                                                Grid.Column="1"
-                                                Margin="{my:Thickness Sm, Horizontal}" />
-                                <my:NumericUpDownTimeComponent x:Name="PART_Minute"
-                                                               Grid.Column="2"
-                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                               my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                               FormatString="{TemplateBinding NumberFormat}"
-                                                               FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
-                                                               Minimum="0"
-                                                               Maximum="59"
-                                                               Value="{TemplateBinding Minute, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
-                                                               Increment="1"
-                                                               Classes="no-disablable" />
-                                <ContentControl Grid.Column="3"
-                                                Content=":"
-                                                Margin="{my:Thickness Sm, Horizontal}"
-                                                IsVisible="{TemplateBinding ShowSeconds}" />
-                                <my:NumericUpDownTimeComponent x:Name="PART_Second"
-                                                               Grid.Column="4"
-                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                               my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                               FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
-                                                               FormatString="{TemplateBinding NumberFormat}"
-                                                               Minimum="0"
-                                                               Maximum="59"
-                                                               Increment="1"
-                                                               Value="{TemplateBinding Second, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
-                                                               IsEnabled="{TemplateBinding ShowSeconds}"
-                                                               IsVisible="{TemplateBinding ShowSeconds}"
-                                                               Classes="no-disablable" />
-                                <Separator Grid.Column="5" Margin="{my:Thickness Sm, Horizontal}" IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static u:TimeFormat.TwelveHour}}" />
-                                <StackPanel Grid.Column="6"
-                                            Classes="spacing-xs"
-                                            VerticalAlignment="Center"
-                                            IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static u:TimeFormat.TwelveHour}}">
-                                    <RadioButton Content="{my:Loc Am, Casing=AllCaps}"
-                                                 my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                 my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                 Theme="{StaticResource {x:Type ToggleButton}}"
-                                                 FontSize="{TemplateBinding FontSize}"
-                                                 Classes="variant-text size-sm no-disablable"
-                                                 IsChecked="{Binding IsAm, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
-                                    <RadioButton Content="{my:Loc Pm, Casing=AllCaps}"
-                                                 my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                 my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                 Theme="{StaticResource {x:Type ToggleButton}}"
-                                                 FontSize="{TemplateBinding FontSize}"
-                                                 Classes="variant-text size-sm no-disablable"
-                                                 IsChecked="{Binding !IsAm, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
-                                </StackPanel>
-                            </Grid>
-                            <my:ClockSelector x:Name="PART_ClockSelector"
-                                              Grid.Row="1"
-                                              Classes="variant-solid shadow-surface no-disablable"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"
-                                              Height="{Binding $self.Bounds.Width}"
-                                              MinWidth="220"
-                                              Hour="{TemplateBinding Hour, Mode=TwoWay}"
-                                              Minute="{TemplateBinding Minute, Mode=TwoWay}"
-                                              Second="{TemplateBinding Second, Mode=TwoWay}"
-                                              my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                              my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                              my:PaletteAssist.Background="{my:ThemeContext Surface.Level4}"
-                                              TimeFormat="{TemplateBinding TimeFormat}"
-                                              ShowSeconds="{TemplateBinding ShowSeconds}"
-                                              SelectedComponent="{TemplateBinding SelectedComponent, Mode=TwoWay}"
-                                              IsAm="{TemplateBinding IsAm}" />
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+    <!--  ==============================================  -->
+    <!--  DEFAULT TIMEVIEW THEME  -->
+    <!--  ==============================================  -->
+
+    <ControlTheme x:Key="{x:Type my:TimeView}" TargetType="my:TimeView">
+        <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="my:HeaderAssist.CornerRadius" Value="0" />
+        <Setter Property="my:HeaderAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
+        <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H2}" />
+        <Setter Property="my:HeaderAssist.FontFamily" Value="{Binding $self.FontFamily}" />
+        <Setter Property="my:HeaderAssist.FontStyle" Value="{Binding $self.FontStyle}" />
+        <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
+        <Setter Property="my:HeaderAssist.Opacity" Value="1" />
+        <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Center" />
+        <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
+
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+
+        <!-- Surface -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
+        <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
+        <Setter Property="my:HeaderAssist.BorderBrush" Value="Transparent" />
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="{x:Type my:TimeView}">
+                <Border my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid RowDefinitions="Auto,*" RowSpacing="{StaticResource MyNet.Spacing.Md}" Margin="{my:Thickness Md}">
+                        <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" HorizontalAlignment="Center">
+                            <my:NumericUpDownTimeComponent x:Name="PART_Hour"
+                                                           Grid.Column="0"
+                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                           my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                           FormatString="{TemplateBinding NumberFormat}"
+                                                           Value="{TemplateBinding Hour, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                                                           FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                                           Minimum="{TemplateBinding TimeFormat, Converter={x:Static c:AmPmRangeConverter.Minimum}}"
+                                                           Maximum="{TemplateBinding TimeFormat, Converter={x:Static c:AmPmRangeConverter.Maximum}}"
+                                                           Increment="1"
+                                                           IsActive="True"
+                                                           my:DisableAssist.IsDisablable="False" />
+                            <ContentControl Content=":"
+                                            Grid.Column="1"
+                                            Margin="{my:Thickness Sm, Horizontal}" />
+                            <my:NumericUpDownTimeComponent x:Name="PART_Minute"
+                                                           Grid.Column="2"
+                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                           my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                           FormatString="{TemplateBinding NumberFormat}"
+                                                           FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                                           Minimum="0"
+                                                           Maximum="59"
+                                                           Value="{TemplateBinding Minute, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                                                           Increment="1"
+                                                           my:DisableAssist.IsDisablable="False" />
+                            <ContentControl Grid.Column="3"
+                                            Content=":"
+                                            Margin="{my:Thickness Sm, Horizontal}"
+                                            IsVisible="{TemplateBinding ShowSeconds}" />
+                            <my:NumericUpDownTimeComponent x:Name="PART_Second"
+                                                           Grid.Column="4"
+                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                           my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                           FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                                           FormatString="{TemplateBinding NumberFormat}"
+                                                           Minimum="0"
+                                                           Maximum="59"
+                                                           Increment="1"
+                                                           Value="{TemplateBinding Second, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                                                           IsEnabled="{TemplateBinding ShowSeconds}"
+                                                           IsVisible="{TemplateBinding ShowSeconds}"
+                                                           my:DisableAssist.IsDisablable="False" />
+                            <Separator Grid.Column="5" Margin="{my:Thickness Sm, Horizontal}" IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static u:TimeFormat.TwelveHour}}" />
+                            <StackPanel Grid.Column="6"
+                                        Classes="spacing-xs"
+                                        VerticalAlignment="Center"
+                                        IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static u:TimeFormat.TwelveHour}}">
+                                <RadioButton Content="{my:Loc Am, Casing=AllCaps}"
+                                             my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                             my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                             Theme="{StaticResource {x:Type ToggleButton}}"
+                                             FontSize="{TemplateBinding FontSize}"
+                                             Classes="variant-text size-sm"
+                                             my:DisableAssist.IsDisablable="False"
+                                             IsChecked="{Binding IsAm, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+                                <RadioButton Content="{my:Loc Pm, Casing=AllCaps}"
+                                             my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                             my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                             Theme="{StaticResource {x:Type ToggleButton}}"
+                                             FontSize="{TemplateBinding FontSize}"
+                                             Classes="variant-text size-sm"
+                                             my:DisableAssist.IsDisablable="False"
+                                             IsChecked="{Binding !IsAm, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+                            </StackPanel>
                         </Grid>
-                    </Border>
-                </ControlTemplate>
-            </Setter>
-        </ControlTheme>
+                        <my:ClockSelector x:Name="PART_ClockSelector"
+                                          Grid.Row="1"
+                                          Classes="variant-solid shadow-surface"
+                                          my:DisableAssist.IsDisablable="False"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          Height="{Binding $self.Bounds.Width}"
+                                          MinWidth="220"
+                                          Hour="{TemplateBinding Hour, Mode=TwoWay}"
+                                          Minute="{TemplateBinding Minute, Mode=TwoWay}"
+                                          Second="{TemplateBinding Second, Mode=TwoWay}"
+                                          my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                          my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                          my:VariantAssist.DefaultBackground="{my:ThemeContext Surface.Level4}"
+                                          TimeFormat="{TemplateBinding TimeFormat}"
+                                          ShowSeconds="{TemplateBinding ShowSeconds}"
+                                          SelectedComponent="{TemplateBinding SelectedComponent, Mode=TwoWay}"
+                                          IsAm="{TemplateBinding IsAm}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 
-    </Styles.Resources>
-
-</Styles>
+</ResourceDictionary>

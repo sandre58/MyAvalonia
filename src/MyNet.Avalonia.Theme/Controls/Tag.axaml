@@ -1,9 +1,11 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
 
     <ControlTheme x:Key="{x:Type my:Tag}" TargetType="my:Tag">
+        <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -12,14 +14,24 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Tag}" />
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Tag}" />
-        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
-        <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
-        <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Control.Border}" />
-        <Setter Property="Background" Value="{my:ThemeRole Background}" />
-        <Setter Property="BorderBrush" Value="{my:ThemeRole Border}" />
+
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
+
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+
+        <!-- Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+
         <Setter Property="Template">
             <ControlTemplate TargetType="my:Tag">
                 <Border Name="PART_Border"
@@ -43,7 +55,8 @@
                         <Button Name="PART_CloseButton"
                                 Grid.Column="1"
                                 Margin="{my:Thickness Xs, Left}"
-                                Classes="kind-tool no-disablable size-sm"
+                                Classes="kind-tool size-sm"
+                                my:DisableAssist.IsDisablable="False"
                                 Command="{TemplateBinding CloseCommand}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                 Content="{my:Icon Close}"
@@ -54,6 +67,6 @@
         </Setter>
     </ControlTheme>
 
-    </Styles.Resources>
-</Styles>
+
+</ResourceDictionary>
 

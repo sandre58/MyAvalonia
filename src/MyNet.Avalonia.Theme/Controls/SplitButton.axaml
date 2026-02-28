@@ -1,12 +1,13 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+﻿
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- EMBEDDED SPLITBUTTON BUTTON THEME                         -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.Button.Embedded.SplitButton" TargetType="Button">
+            <Setter Property="my:ThemeAssist.Category" Value="Action" />
             <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
             <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
             <Setter Property="Template">
@@ -88,6 +89,9 @@
         <!-- DEFAULT SPLITBUTTON THEME                                 -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type SplitButton}" TargetType="SplitButton">
+            <Setter Property="my:ThemeAssist.Category" Value="Action" />
+            <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+            <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
             <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
             <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -103,21 +107,28 @@
             <Setter Property="Focusable" Value="True" />
 
             <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Control.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
+            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+
+            <!-- Variant -->
+            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+            <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+            <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
             <!-- Default Theme -->
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeContext Control.Border}" />
-            <Setter Property="Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+            <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
             <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeRole Primary}" />
-            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary, Opacity=Low}" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeBrush $self.(my:VariantAssist.Primary), Opacity=Low}" />
             <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), Contrast=True}" />
 
             <Setter Property="Template">
@@ -145,7 +156,7 @@
                                     my:InteractionAssist.RippleColor="{TemplateBinding my:InteractionAssist.RippleColor}"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    Classes="no-disablable"
+                                    my:DisableAssist.IsDisablable="False"
                                     ClipToBounds="{TemplateBinding ClipToBounds}"
                                     Command="{TemplateBinding Command}"
                                     CommandParameter="{TemplateBinding CommandParameter}"
@@ -180,7 +191,7 @@
                                     my:InteractionAssist.RippleColor="{TemplateBinding my:InteractionAssist.RippleColor}"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    Classes="no-disablable"
+                                    my:DisableAssist.IsDisablable="False"
                                     ClipToBounds="{TemplateBinding ClipToBounds}"
                                     Focusable="False"
                                     Foreground="{TemplateBinding Foreground}"
@@ -403,26 +414,5 @@
             </Style>
         </ControlTheme>
 
-    </Styles.Resources>
 
-    <Style Selector=":is(SplitButton)">
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- SIZES                                                     -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-
-        <Style Selector="^.size-sm">
-            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Sm}" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Sm}" />
-        </Style>
-        <Style Selector="^.size-md">
-            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Md}" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Md}" />
-        </Style>
-        <Style Selector="^.size-lg">
-            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Lg}" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Lg}" />
-        </Style>
-
-    </Style>
-</Styles>
+</ResourceDictionary>

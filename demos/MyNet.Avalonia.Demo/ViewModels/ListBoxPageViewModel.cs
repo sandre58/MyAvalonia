@@ -14,18 +14,18 @@ internal sealed class ListBoxPageViewModel : ControlCatalogViewModel
     public ListBoxPageViewModel()
         : base(nameof(ListBox), [
             new ControlThemeBuilder()
-            .AddShapes("shape-circle-items")
+            .AddShapes("shape-items-circle")
             .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
-            .AddVariants("variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items", "shadow-items")
+            .AddVariants("variant-items-solid", "variant-items-light", "variant-items-outlined", "variant-items-text", "shadow-items")
             .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
             .AddThemeRoles()
             .AddItemsThemeRoles()
             .AddDefaultSizes(),
 
             new ControlThemeBuilder(null, "kind-cards")
-            .AddShapes("shape-circle-items")
+            .AddShapes("shape-items-circle")
             .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
-            .AddVariants("variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items", "shadow-items")
+            .AddVariants("variant-items-solid", "variant-items-light", "variant-items-outlined", "variant-items-text", "shadow-items")
             .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
             .AddThemeRoles()
             .AddItemsThemeRoles()
@@ -33,7 +33,7 @@ internal sealed class ListBoxPageViewModel : ControlCatalogViewModel
 
             new ControlThemeBuilder(null, "kind-toggle")
             .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
-            .AddVariants("variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items", "shadow-items")
+            .AddVariants("variant-items-solid", "variant-items-light", "variant-items-outlined", "variant-items-text", "shadow-items")
             .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
             .AddDefaultRoles()
             .AddItemsThemeRoles()
@@ -41,7 +41,7 @@ internal sealed class ListBoxPageViewModel : ControlCatalogViewModel
 
             new ControlThemeBuilder("Tabs")
             .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
-            .AddVariants("variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items", "shadow-items")
+            .AddVariants("variant-items-solid", "variant-items-light", "variant-items-outlined", "variant-items-text", "shadow-items")
             .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
             .AddThemeRoles()
             .AddItemsThemeRoles()

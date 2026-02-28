@@ -7,7 +7,6 @@
 using System.Collections.Generic;
 using Avalonia.Media;
 using MyNet.Avalonia.Extensions;
-using MyNet.Avalonia.Theme.Extensions;
 
 namespace MyNet.Avalonia.Theme.Palettes;
 
@@ -103,7 +102,7 @@ public class ColorShades
     /// <summary>
     /// Gets the light color alias (shade 300).
     /// </summary>
-    public Color Light => Shade300;
+    public Color Light => Shade400;
 
     /// <summary>
     /// Gets the default color alias (shade 500).
@@ -113,7 +112,7 @@ public class ColorShades
     /// <summary>
     /// Gets the dark color alias (shade 700).
     /// </summary>
-    public Color Dark => Shade700;
+    public Color Dark => Shade600;
 
     /// <summary>
     /// Gets the darker color alias (shade 800).
@@ -172,9 +171,9 @@ public class ColorShades
     public IReadOnlyDictionary<string, Color> ToResourceDictionary(string paletteName) => new Dictionary<string, Color>
         {
             { paletteName, Base },
-            { nameof(Foreground).WithPrefix(paletteName), Foreground },
-            { nameof(Light).WithPrefix(paletteName), Light },
-            { nameof(Dark).WithPrefix(paletteName), Dark }
+            { nameof(Dark).WithPrefix(paletteName, "."), Dark },
+            { nameof(Light).WithPrefix(paletteName, "."), Light },
+            { nameof(Foreground).WithPrefix(paletteName, "."), Foreground },
 
             // The following lines are commented out to reduce redundancy, as the shades can be accessed via GetShade method or aliases.
             // { nameof(Shade50).WithPrefix(paletteName), Shade50 },

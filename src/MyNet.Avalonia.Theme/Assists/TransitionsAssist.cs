@@ -8,21 +8,13 @@ using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Animation;
-using Avalonia.Data;
+using MyNet.Avalonia.Helpers;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
 public static class TransitionsAssist
 {
-    static TransitionsAssist()
-    {
-        _ = TransitionsProperty.Changed.Subscribe(TransitionsPropertyChangedCallback);
-        _ = DisableTransitionsProperty.Changed.Subscribe(args =>
-        {
-            if (args.Sender is not StyledElement styledElement) return;
-            styledElement.Classes.Set("no-transitions", args.NewValue.Value);
-        });
-    }
+    static TransitionsAssist() => TransitionsProperty.Changed.Subscribe(TransitionsPropertyChangedCallback);
 
     #region Transitions
 
@@ -56,22 +48,25 @@ public static class TransitionsAssist
 
     #endregion
 
-    #region DisableTransitions
+    #region UseTransitions
 
     /// <summary>
-    ///     Allows transitions to be disabled where supported.  Note this is an inheritable property.
+    /// Provides UseTransitions Property for attached TransitionsAssist element.
     /// </summary>
-    public static readonly AvaloniaProperty<bool> DisableTransitionsProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, bool>("DisableTransitions", typeof(TransitionsAssist), false, true, BindingMode.TwoWay);
+    public static readonly AttachedProperty<bool> UseTransitionsProperty = AvaloniaPropertyHelper.RegisterBoolProperty("UseTransitions", ClassName.UseTransitions);
 
     /// <summary>
-    ///     Allows transitions to be disabled where supported.  Note this is an inheritable property.
+    /// Accessor for Attached  <see cref="UseTransitionsProperty"/>.
     /// </summary>
-    public static void SetDisableTransitions(AvaloniaObject element, bool value) => element.SetValue(DisableTransitionsProperty, value);
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="UseTransitionsProperty"/>.</param>
+    public static void SetUseTransitions(StyledElement element, bool value) => element.SetValue(UseTransitionsProperty, value);
 
     /// <summary>
-    ///     Allows transitions to be disabled where supported.  Note this is an inheritable property.
+    /// Accessor for Attached  <see cref="UseTransitionsProperty"/>.
     /// </summary>
-    public static bool GetDisableTransitions(AvaloniaObject element) => element.GetValue<bool>(DisableTransitionsProperty);
+    /// <param name="element">Target element.</param>
+    public static bool GetUseTransitions(StyledElement element) => element.GetValue(UseTransitionsProperty);
 
-    #endregion DisableTransitions
+    #endregion
 }

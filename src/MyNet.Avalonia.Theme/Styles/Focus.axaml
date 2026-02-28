@@ -1,0 +1,43 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <Style Selector="Rectangle.kind-dashed">
+        <Setter Property="RadiusX" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="RadiusY" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="Stroke" Value="{my:Theme Control.Border.Focus}" />
+        <Setter Property="StrokeThickness" Value="2" />
+    </Style>
+
+    <Style Selector="Rectangle.kind-focus">
+        <Setter Property="RadiusX" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="RadiusY" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="Stroke" Value="{my:Theme Control.Border.Focus}" />
+        <Setter Property="StrokeThickness" Value="2" />
+    </Style>
+
+    <Style Selector="Ellipse.kind-focus">
+        <Setter Property="Stroke" Value="{my:Theme Control.Border.Focus}" />
+        <Setter Property="StrokeThickness" Value="2" />
+    </Style>
+
+    <Style Selector="TemplatedControl.focus-rectangle">
+        <Setter Property="FocusAdorner">
+            <FocusAdornerTemplate>
+                <Rectangle Classes="kind-focus" />
+            </FocusAdornerTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="TemplatedControl.focus-ellipse">
+        <Setter Property="FocusAdorner">
+            <FocusAdornerTemplate>
+                <Ellipse Classes="kind-focus" />
+            </FocusAdornerTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="TemplatedControl.focus-hidden">
+        <Setter Property="FocusAdorner" Value="{x:Null}" />
+    </Style>
+</Styles>

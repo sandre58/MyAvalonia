@@ -1,0 +1,84 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:MyNet.Avalonia.PerfTest.ViewModels"
+             x:Class="MyNet.Avalonia.PerfTest.Views.HomeView"
+             x:DataType="vm:HomeViewModel">
+
+    <ScrollViewer>
+        <StackPanel Spacing="20" MaxWidth="800">
+            <TextBlock Text="{Binding Title}" 
+                      FontSize="32" 
+                      FontWeight="Bold"/>
+            
+            <TextBlock Text="{Binding Description}" 
+                      FontSize="16" 
+                      TextWrapping="Wrap"/>
+            
+            <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                    Padding="20"
+                    CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="📝 Instructions" 
+                              FontSize="20" 
+                              FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding Instructions}" 
+                              TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                    Padding="20"
+                    CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="🎯 Objectifs" 
+                              FontSize="20" 
+                              FontWeight="SemiBold"/>
+                    <TextBlock TextWrapping="Wrap">
+                        Cette application permet de tester les performances de navigation
+                        avec le thème Fluent de base d'Avalonia, sans utiliser de thème personnalisé.
+                    </TextBlock>
+                    <TextBlock TextWrapping="Wrap">
+                        Chaque page contient un nombre variable d'éléments pour tester
+                        différents scénarios de charge.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                    Padding="20"
+                    CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="📊 Pages de test" 
+                              FontSize="20" 
+                              FontWeight="SemiBold"/>
+                    
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="• DataGrid: 500 éléments avec 10 colonnes"/>
+                        <TextBlock Text="• Complex Layout: 20 sections avec 15 items chacune"/>
+                        <TextBlock Text="• List: 1000 éléments dans une liste scrollable"/>
+                        <TextBlock Text="• Forms: Formulaire complexe avec de nombreux contrôles"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Background="#FFF3E5"
+                    Padding="20"
+                    CornerRadius="8"
+                    BorderBrush="#FF9800"
+                    BorderThickness="2">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="⚡ Performance Monitor" 
+                              FontSize="20" 
+                              FontWeight="SemiBold"
+                              Foreground="#FF6F00"/>
+                    <TextBlock TextWrapping="Wrap"
+                              Foreground="#FF6F00">
+                        Le temps de navigation est affiché en haut de la fenêtre.
+                        Il mesure le temps nécessaire pour charger et afficher une nouvelle page.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

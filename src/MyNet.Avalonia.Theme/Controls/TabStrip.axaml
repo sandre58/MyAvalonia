@@ -1,12 +1,14 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+﻿
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- DEFAULT TABSTRIPITEM THEME                                -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type TabStripItem}" TargetType="TabStripItem">
+            <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+            <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
             <Setter Property="HorizontalContentAlignment" Value="{Binding $parent[TabStrip].(my:ItemsAssist.HorizontalContentAlignment)}" />
             <Setter Property="VerticalContentAlignment" Value="{Binding $parent[TabStrip].(my:ItemsAssist.VerticalContentAlignment)}" />
             <Setter Property="HorizontalAlignment" Value="{Binding $parent[TabStrip].(my:ItemsAssist.HorizontalAlignment)}" />
@@ -87,7 +89,7 @@
                 </ControlTemplate>
             </Setter>
 
-            <Style Selector="^:not(.no-transitions)">
+            <Style Selector="^.use-transitions">
                 <Setter Property="Transitions">
                     <Transitions>
                         <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
@@ -125,6 +127,7 @@
         <!-- DEFAULT TABSTRIP THEME                                     -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type TabStrip}" TargetType="TabStrip">
+            <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
             <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
             <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
@@ -148,10 +151,23 @@
             </Setter>
 
             <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="Transparent" />
+            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="Transparent" />
+            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+
+            <!-- Variant -->
+            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+            <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+            <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+            
+            <!-- Theme -->
+            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+            <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
 
             <!-- Items -->
             <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
@@ -161,8 +177,8 @@
             <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
-            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
             <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
             <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
 
@@ -236,10 +252,10 @@
             </Setter>
 
             <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
             <!-- Surface -->
             <Setter Property="Background" Value="Transparent" />
@@ -395,142 +411,5 @@
             </Style>
         </ControlTheme>
 
-    </Styles.Resources>
 
-    <Style Selector=":is(TabStrip)">
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- KINDS                                                     -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-
-        <Style Selector="^.kind-cards">
-            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="my:ItemsAssist.Margin" Value="0" />
-            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
-            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md}" />
-            <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Left" />
-            <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Top" />
-            <Setter Property="ItemsPanel">
-                <ItemsPanelTemplate>
-                    <my:ElasticWrapPanel Orientation="Horizontal" ItemSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}"  LineSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
-                </ItemsPanelTemplate>
-            </Setter>
-        </Style>
-
-        <Style Selector="^.kind-toggle">
-            <Setter Property="my:ItemsAssist.Spacing" Value="0" />
-            <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
-            <Setter Property="my:ItemsAssist.Margin" Value="0" />
-            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Md}" />
-            <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
-            <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
-            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Control.Border}" />
-            <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeContext Control.Border}" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="ItemsPanel">
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
-                </ItemsPanelTemplate>
-            </Setter>
-        </Style>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- LAYOUTS                                                   -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-
-        <Style Selector="^[(my|ThemeAssist.Kind)=default]:not(.kind-toggle)">
-            <Style Selector="^.variant-solid, ^.variant-light, ^.variant-outlined">
-                <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-                <Setter Property="Padding" Value="{my:Thickness Sm}" />
-            </Style>
-        </Style>
-
-        <Style Selector="^[(my|ThemeAssist.Kind)=tabs]">
-
-            <Style Selector="^.variant-solid, ^.variant-light, ^.variant-outlined">
-                <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-
-                <Style Selector="^.variant-solid-items, ^.variant-outlined-items, ^.variant-light-items, ^.variant-text-items">
-                    <Setter Property="Padding" Value="{my:Thickness Sm}" />
-                </Style>
-            </Style>
-
-            <Style Selector="^.variant-solid-items, ^.variant-outlined-items, ^.variant-light-items, ^.variant-text-items">
-                <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
-                <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-                <Setter Property="BorderThickness" Value="0" />
-            </Style>
-        </Style>
-
-        <Style Selector="^.layout-horizontal">
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
-        </Style>
-        <Style Selector="^.layout-uniform:not(.layout-vertical)">
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
-        </Style>
-        <Style Selector="^.layout-wrap, ^.layout-uniform, ^.layout-horizontal, ^.layout-vertical">
-            <Setter Property="my:ItemsAssist.Margin" Value="0" />
-        </Style>
-
-        <Style Selector="^.layout-spacing, ^.layout-spacing-sm, ^.layout-spacing-md, ^.layout-spacing-lg, ^.layout-spacing-xl, ^.layout-spacing-xxl, ^.layout-spacing-xxxl">
-            <Setter Property="my:ItemsAssist.Margin" Value="0" />
-            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-        </Style>
-
-        <Style Selector="^.layout-spacing">
-            <Setter Property="Padding" Value="{my:Thickness Sm}" />
-            <Setter Property="ItemsPanel">
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
-                </ItemsPanelTemplate>
-            </Setter>
-        </Style>
-
-        <Style Selector="^.layout-spacing.size-xs">
-            <Setter Property="Padding" Value="{my:Thickness Xs}" />
-        </Style>
-
-        <Style Selector="^.layout-spacing.size-sm">
-            <Setter Property="Padding" Value="{my:Thickness Sm}" />
-        </Style>
-
-        <Style Selector="^.layout-spacing.size-md">
-            <Setter Property="Padding" Value="{my:Thickness Md}" />
-        </Style>
-
-        <Style Selector="^.layout-spacing.size-lg">
-            <Setter Property="Padding" Value="{my:Thickness Lg}" />
-        </Style>
-
-        <Style Selector="^.layout-spacing.size-xl">
-            <Setter Property="Padding" Value="{my:Thickness Xl}" />
-        </Style>
-
-        <Style Selector="^.layout-spacing.size-xs">
-            <Setter Property="Padding" Value="{my:Thickness Xs}" />
-        </Style>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- SIZES                                                     -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-
-        <Style Selector="^.size-sm">
-            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Sm}" />
-        </Style>
-
-        <Style Selector="^.size-md">
-            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md}" />
-        </Style>
-
-        <Style Selector="^.size-lg">
-            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Lg}" />
-        </Style>
-
-    </Style>
-</Styles>
+</ResourceDictionary>

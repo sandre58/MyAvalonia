@@ -1,94 +1,28 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DEFAULT PATHICON THEME                                    -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="{x:Type PathIcon}" TargetType="PathIcon">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="Template">
-                <ControlTemplate TargetType="PathIcon">
-                    <Border Background="{TemplateBinding Background}">
-                        <Viewbox Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-                            <Path Name="PART_Path"
-                                  Data="{TemplateBinding Data}"
-                                  Fill="{TemplateBinding Foreground}"
-                                  Stretch="Uniform" />
-                        </Viewbox>
-                    </Border>
-                </ControlTemplate>
-            </Setter>
-        </ControlTheme>
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT PATHICON THEME                                    -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type PathIcon}" TargetType="PathIcon">
+        <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="PathIcon">
+                <Border Background="{TemplateBinding Background}">
+                    <Viewbox Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                        <Path Name="PART_Path"
+                              Data="{TemplateBinding Data}"
+                              Fill="{TemplateBinding Foreground}"
+                              Stretch="Uniform" />
+                    </Viewbox>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 
-    </Styles.Resources>
-
-    <Style Selector=":is(PathIcon)">
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- GLYPH VARIANT                                             -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-
-        <Style Selector="^.kind-glyph">
-            <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Md}" />
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Md}" />
-            <Setter Property="Margin" Value="8 0" />
-            <Setter Property="my:TransitionsAssist.Transitions">
-                <Setter.Value>
-                    <Transitions>
-                        <BrushTransition Easing="LinearEasing" Property="Foreground" Duration="{StaticResource MyNet.Animation.Opacity}" />
-                        <TransformOperationsTransition Property="RenderTransform" Duration="{StaticResource MyNet.Animation.Glyph}" />
-                    </Transitions>
-                </Setter.Value>
-            </Setter>
-            
-            <Style Selector="^.size-xs">
-                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Xs}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Xs}" />
-            </Style>
-            <Style Selector="^.size-sm">
-                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
-            </Style>
-            <Style Selector="^.size-md">
-                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Md}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Md}" />
-            </Style>
-            <Style Selector="^.size-lg">
-                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
-            </Style>
-            <Style Selector="^.size-xl">
-                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Xl}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Xl}" />
-            </Style>
-        </Style>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DROPDOWN VARIANT                                          -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-
-        <Style Selector="^.is-dropdown">
-            <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronDown}" />
-
-            <Style Selector="^.position-left">
-                <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronLeft}" />
-            </Style>
-            <Style Selector="^.position-top">
-                <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronUp}" />
-            </Style>
-            <Style Selector="^.position-bottom">
-                <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronDown}" />
-            </Style>
-            <Style Selector="^.position-right">
-                <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronRight}" />
-            </Style>
-
-        </Style>
-
-    </Style>
-</Styles>
+</ResourceDictionary>

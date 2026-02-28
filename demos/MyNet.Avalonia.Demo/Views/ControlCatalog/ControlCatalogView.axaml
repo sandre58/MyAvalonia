@@ -46,7 +46,7 @@
             <TabItem IsVisible="{Binding #Root.ShowThemes}" HorizontalContentAlignment="Stretch">
                 <TabItem.Header>
                     <ComboBox x:Name="ThemesComboBox"
-                              my:TextFieldAssist.InnerLeftContent="{my:Icon Shape}"
+                              my:InputAssist.InnerLeftContent="{my:Icon Shape}"
                               Padding="{my:Thickness Md, Left}"
                               ItemsSource="{Binding Themes}"
                               HorizontalAlignment="Center"

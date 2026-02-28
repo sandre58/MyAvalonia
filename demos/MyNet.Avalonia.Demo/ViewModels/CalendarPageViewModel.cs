@@ -15,7 +15,7 @@ internal sealed class CalendarPageViewModel : ControlCatalogViewModel
         : base(nameof(Calendar),
             [
                 new ControlThemeBuilder()
-                    .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-transparent", "shadow-surface", "variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items")
+                    .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-transparent", "shadow-surface", "variant-items-solid", "variant-items-light", "variant-items-outlined", "variant-items-text")
                     .AddThemeRoles()
                     .AddItemsThemeRoles()
                     .AddDefaultSizes()

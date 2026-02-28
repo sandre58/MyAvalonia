@@ -11,8 +11,8 @@
 
             <Style Selector="^ > :is(TemplatedControl)">
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
-                <Setter Property="my:TextFieldAssist.ShowClearButton" Value="True" />
-                <Setter Property="my:TextFieldAssist.ShowClipboardButton" Value="True" />
+                <Setter Property="my:InputAssist.ShowClearButton" Value="True" />
+                <Setter Property="my:InputAssist.ShowClipboardButton" Value="True" />
             </Style>
 
             <Style Selector="^ > ToggleSwitch">
@@ -47,7 +47,7 @@
 
         <Style Selector="^ >  StackPanel > HeaderedContentControl, ^ > HeaderedContentControl">
             <Setter Property="my:ClassesAssist.AddClasses" Value="kind-label position-bottom align-header-center" />
-            <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplates.Text.ClipBoard}" />
+            <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.Text.Clipboard}" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="ClipToBounds" Value="False" />

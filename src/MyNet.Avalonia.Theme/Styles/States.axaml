@@ -1,0 +1,22 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <!-- =============================================================== -->
+    <!-- Disablable controls (default opt-in by type)                    -->
+    <!-- =============================================================== -->
+
+    <!-- Transitions -->
+    <Style Selector="Visual.use-transitions">
+        <Setter Property="Transitions">
+            <Transitions>
+                <DoubleTransition Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <!-- Disabled visual -->
+    <Style Selector="Control.is-disablable:disabled">
+        <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Disabled}" />
+    </Style>
+</Styles>

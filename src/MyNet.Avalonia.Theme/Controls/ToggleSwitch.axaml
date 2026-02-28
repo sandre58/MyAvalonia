@@ -1,12 +1,15 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+﻿
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- DEFAULT TOGGLESWITCH THEME                                -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type ToggleSwitch}" TargetType="ToggleSwitch">
+            <Setter Property="my:ThemeAssist.Category" Value="Selection" />
+            <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+            <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
             <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
             <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -23,19 +26,24 @@
             <Setter Property="Focusable" Value="True" />
 
             <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
-            <!-- Default Theme -->
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <!-- Variant -->
+            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+            <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+            
+            <!-- Theme -->
+            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
             <Setter Property="my:InteractionAssist.IndicatorColor" Value="{my:Foreground Opacity=High}" />
             <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeRole Primary}" />
-            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary}" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
             <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), Contrast=True}" />
             <Setter Property="my:InteractionAssist.ActiveIndicatorColor" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), Contrast=True}" />
 
@@ -368,7 +376,7 @@
             </Setter>
 
             <!-- Transitions -->
-            <Style Selector="^:not(.no-transitions) /template/ Panel#MovingKnobs">
+            <Style Selector="^.use-transitions /template/ Panel#MovingKnobs">
                 <Setter Property="Transitions">
                     <Transitions>
                         <DoubleTransition Easing="CircularEaseOut" Property="Canvas.Left" Duration="{StaticResource MyNet.Animation.Switch}" />
@@ -717,5 +725,5 @@
             </Setter>
         </ControlTheme>
 
-    </Styles.Resources>
-</Styles>
+
+</ResourceDictionary>

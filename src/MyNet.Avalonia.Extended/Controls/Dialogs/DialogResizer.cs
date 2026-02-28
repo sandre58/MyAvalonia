@@ -65,13 +65,13 @@ public class DialogResizer : TemplatedControl
 
     private void UpdateThumbVisibility(ResizeDirection direction)
     {
-        IsVisibleProperty.SetValue(direction.HasFlag(ResizeDirection.Top), _top);
-        IsVisibleProperty.SetValue(direction.HasFlag(ResizeDirection.Bottom), _bottom);
-        IsVisibleProperty.SetValue(direction.HasFlag(ResizeDirection.Left), _left);
-        IsVisibleProperty.SetValue(direction.HasFlag(ResizeDirection.Right), _right);
-        IsVisibleProperty.SetValue(direction.HasFlag(ResizeDirection.TopLeft), _topLeft);
-        IsVisibleProperty.SetValue(direction.HasFlag(ResizeDirection.TopRight), _topRight);
-        IsVisibleProperty.SetValue(direction.HasFlag(ResizeDirection.BottomLeft), _bottomLeft);
-        IsVisibleProperty.SetValue(direction.HasFlag(ResizeDirection.BottomRight), _bottomRight);
+        _top?.SetValue(IsVisibleProperty, direction.HasFlag(ResizeDirection.Top));
+        _bottom?.SetValue(IsVisibleProperty, direction.HasFlag(ResizeDirection.Bottom));
+        _left?.SetValue(IsVisibleProperty, direction.HasFlag(ResizeDirection.Left));
+        _right?.SetValue(IsVisibleProperty, direction.HasFlag(ResizeDirection.Right));
+        _topLeft?.SetValue(IsVisibleProperty, direction.HasFlag(ResizeDirection.TopLeft));
+        _topRight?.SetValue(IsVisibleProperty, direction.HasFlag(ResizeDirection.TopRight));
+        _bottomLeft?.SetValue(IsVisibleProperty, direction.HasFlag(ResizeDirection.BottomLeft));
+        _bottomRight?.SetValue(IsVisibleProperty, direction.HasFlag(ResizeDirection.BottomRight));
     }
 }

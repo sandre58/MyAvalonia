@@ -1,14 +1,12 @@
-<UserControl x:Class="MyNet.Avalonia.Demo.Views.MainView"
-             xmlns="https://github.com/avaloniaui"
+<UserControl x:Class="MyNet.Avalonia.Demo.Views.MainView" xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:my="http://mynet.com/avalonia"
-             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
-             d:DesignHeight="450"
-             d:DesignWidth="800"
-             x:DataType="vm:MainViewModel"
-             mc:Ignorable="d">
+             xmlns:my="http://mynet.com/avalonia" xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
+             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
+             xmlns:dialogs="clr-namespace:MyNet.Avalonia.Demo.ViewModels.Dialogs"
+             xmlns:dialogs1="clr-namespace:MyNet.Avalonia.Demo.Views.Dialogs" d:DesignHeight="450" d:DesignWidth="800"
+             x:DataType="vm:MainViewModel" mc:Ignorable="d">
 
     <Grid ColumnDefinitions="Auto, *">
 
@@ -19,22 +17,20 @@
             <Border Background="{my:Theme Surface.Inverse}" />
             <Border Background="{my:Theme Primary, Opacity=Scrim}" />
 
-            <Panel Margin="{my:Thickness Md}" my:ThemeAssist.Context="Contrast" TextElement.Foreground="{my:Theme Foreground.Inverse}">
+            <Panel Margin="{my:Thickness Md}" my:ThemeAssist.Context="Contrast"
+                   TextElement.Foreground="{my:Theme Foreground.Inverse}">
 
                 <!-- Menu -->
-                <my:NavigationMenu x:Name="menu" my:NavigationAssist.AttachService="{Binding NavigationService}" my:NavigationAssist.Command="{Binding NavigateCommand}">
+                <my:NavigationMenu x:Name="menu" my:NavigationAssist.AttachService="{Binding NavigationService}"
+                                   my:NavigationAssist.Command="{Binding NavigateCommand}">
                     <my:NavigationMenu.Header>
-                        <Grid RowDefinitions="Auto, Auto, Auto"
-                              RowSpacing="{StaticResource MyNet.Spacing.Md}"
+                        <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="{StaticResource MyNet.Spacing.Md}"
                               Margin="{my:Thickness Md, Bottom}">
 
                             <!-- Title -->
                             <StackPanel Classes="size-md" Orientation="Horizontal" Margin="0 10">
-                                <Image Width="48"
-                                       Height="48"
-                                       VerticalAlignment="Center"
-                                       RenderOptions.BitmapInterpolationMode="HighQuality"
-                                       Source="../Assets/Demo.ico" />
+                                <Image Width="48" Height="48" VerticalAlignment="Center"
+                                       RenderOptions.BitmapInterpolationMode="HighQuality" Source="../Assets/Demo.ico" />
                                 <TextBlock VerticalAlignment="Center" Classes="h4" Text="{Binding ProductName}" />
                             </StackPanel>
 
@@ -43,22 +39,16 @@
 
                             <!-- Toggle Menu -->
                             <DockPanel Grid.Row="2">
-                                <Button DockPanel.Dock="Left"
-                                        Width="48"
-                                        Height="48"
-                                        Padding="0"
-                                        Classes="variant-text"
-                                        Content="{my:Icon Menu, Size=26}"
-                                        Command="{Binding #menu.Toggle}" />
-                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Sm}" HorizontalAlignment="Right">
+                                <Button DockPanel.Dock="Left" Width="48" Height="48" Padding="0" Classes="variant-text"
+                                        Content="{my:Icon Menu, Size=26}" Command="{Binding #menu.Toggle}" />
+                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Sm}"
+                                            HorizontalAlignment="Right">
                                     <Button Command="{Binding GoBackCommand, FallbackValue={x:Null}}"
-                                            Content="{my:Icon ArrowLeft}"
-                                            Classes="variant-outlined"
+                                            Content="{my:Icon ArrowLeft}" Classes="variant-outlined"
                                             Theme="{StaticResource MyNet.Theme.Button.Rounded}"
                                             ToolTip.Tip="{my:Loc PreviousPage}" />
                                     <Button Command="{Binding GoForwardCommand, FallbackValue={x:Null}}"
-                                            Content="{my:Icon ArrowRight}"
-                                            Classes="variant-outlined"
+                                            Content="{my:Icon ArrowRight}" Classes="variant-outlined"
                                             Theme="{StaticResource MyNet.Theme.Button.Rounded}"
                                             ToolTip.Tip="{my:Loc NextPage}" />
                                 </StackPanel>
@@ -67,64 +57,302 @@
                     </my:NavigationMenu.Header>
 
                     <!-- Home -->
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:HomePageViewModel}" Header="{my:Loc Home}" Icon="{StaticResource MyNet.Geometry.Home}" />
-
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:HomePageViewModel}" Header="{my:Loc Home}"
+                                           Icon="{StaticResource MyNet.Geometry.Home}" />
                     <my:NavigationMenuItem IsSeparator="True" Padding="1" />
 
                     <!-- Theme -->
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ThemePageViewModel}" Header="{my:Loc Theme}" Icon="{StaticResource MyNet.Geometry.PaletteSwatchVariant}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:IconsPageViewModel}" Header="{my:Loc Icons}" Icon="{StaticResource MyNet.Geometry.TagFaces}" />
-
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:AvatarPageViewModel}" Header="Avatar" Icon="{StaticResource MyNet.Geometry.AccountBox}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:BadgePageViewModel}" Header="Badge" Icon="{StaticResource MyNet.Geometry.CheckboxBlankBadge}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:BannerPageViewModel}" Header="Banner" Icon="{StaticResource MyNet.Geometry.InformationBox}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:BorderPageViewModel}" Header="Border" Icon="{StaticResource MyNet.Geometry.CardOutline}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ButtonPageViewModel}" Header="Button" Icon="{StaticResource MyNet.Geometry.ButtonCursor}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:CalendarPageViewModel}" Header="Calendar" Icon="{StaticResource MyNet.Geometry.Calendar}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:CarouselPageViewModel}" Header="Carousel" Icon="{StaticResource MyNet.Geometry.ViewCarousel}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:CheckBoxPageViewModel}" Header="CheckBox" Icon="{StaticResource MyNet.Geometry.CheckboxMultipleMarked}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ClockPageViewModel}" Header="Clock" Icon="{StaticResource MyNet.Geometry.Clock}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ClockSelectorPageViewModel}" Header="ClockSelector" Icon="{StaticResource MyNet.Geometry.ClockEdit}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ColorViewPageViewModel}" Header="ColorView" Icon="{StaticResource MyNet.Geometry.Palette}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:DataGridPageViewModel}" Header="DataGrid" Icon="{StaticResource MyNet.Geometry.Table}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:DropDownButtonPageViewModel}" Header="DropDownButton" Icon="{StaticResource MyNet.Geometry.FormSelect}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:EllipsePageViewModel}" Header="Ellipse" Icon="{StaticResource MyNet.Geometry.Circle}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ExpanderPageViewModel}" Header="Expander" Icon="{StaticResource MyNet.Geometry.Expand}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:GridSplitterPageViewModel}" Header="GridSplitter" Icon="{StaticResource MyNet.Geometry.ArrowSplitVertical}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:HeaderedContentControlPageViewModel}" Header="HeaderedContentControl" Icon="{StaticResource MyNet.Geometry.CardBulleted}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:HyperLinkButtonPageViewModel}" Header="HyperLinkButton" Icon="{StaticResource MyNet.Geometry.LinkVariant}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:FieldsPageViewModel}" Header="{my:Loc Inputs}" Icon="{StaticResource MyNet.Geometry.FocusFieldHorizontal}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:LabelPageViewModel}" Header="Label" Icon="{StaticResource MyNet.Geometry.TagText}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ListBoxPageViewModel}" Header="ListBox" Icon="{StaticResource MyNet.Geometry.ListBox}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:MenuPageViewModel}" Header="Menus" Icon="{StaticResource MyNet.Geometry.Menu}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:NavigationMenuPageViewModel}" Header="NavigationMenu" Icon="{StaticResource MyNet.Geometry.Navigation}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:NotificationPageViewModel}" Header="{my:Loc Notifications}" Icon="{StaticResource MyNet.Geometry.MessageAlert}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:OutlinedIconPageViewModel}" Header="OutlinedIcon" Icon="{StaticResource MyNet.Geometry.Shape}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:PaginationPageViewModel}" Header="Pagination" Icon="{StaticResource MyNet.Geometry.PageLayoutBody}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ProgressBarPageViewModel}" Header="ProgressBar" Icon="{StaticResource MyNet.Geometry.ProgressCheck}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:RadioButtonPageViewModel}" Header="RadioButton" Icon="{StaticResource MyNet.Geometry.RadioboxMarked}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:SelectableTextBlockPageViewModel}" Header="SelectableTextBlock" Icon="{StaticResource MyNet.Geometry.CursorText}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:SliderPageViewModel}" Header="Slider" Icon="{StaticResource MyNet.Geometry.TuneVariant}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:SplitButtonPageViewModel}" Header="SplitButton" Icon="{StaticResource MyNet.Geometry.FormDropdown}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:SplitViewPageViewModel}" Header="SplitView" Icon="{StaticResource MyNet.Geometry.ViewSplitVertical}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:TabControlPageViewModel}" Header="TabControl" Icon="{StaticResource MyNet.Geometry.Tab}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:TextBlockPageViewModel}" Header="TextBlock" Icon="{StaticResource MyNet.Geometry.FormatText}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:TimeViewPageViewModel}" Header="TimeView" Icon="{StaticResource MyNet.Geometry.ClockEdit}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ToggleButtonPageViewModel}" Header="ToggleButton" Icon="{StaticResource MyNet.Geometry.ToggleSwitchVariant}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ToggleSplitButtonPageViewModel}" Header="ToggleSplitButton" Icon="{StaticResource MyNet.Geometry.FormDropdown}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ToggleSwitchPageViewModel}" Header="ToggleSwitch" Icon="{StaticResource MyNet.Geometry.ToggleSwitch}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:TreeViewPageViewModel}" Header="TreeView" Icon="{StaticResource MyNet.Geometry.FileTree}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ThemePageViewModel}" Header="{my:Loc Theme}"
+                                           Icon="{StaticResource MyNet.Geometry.PaletteSwatchVariant}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:IconsPageViewModel}" Header="{my:Loc Icons}"
+                                           Icon="{StaticResource MyNet.Geometry.TagFaces}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:AvatarPageViewModel}" Header="Avatar"
+                                           Icon="{StaticResource MyNet.Geometry.AccountBox}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:BadgePageViewModel}" Header="Badge"
+                                           Icon="{StaticResource MyNet.Geometry.CheckboxBlankBadge}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:BannerPageViewModel}" Header="Banner"
+                                           Icon="{StaticResource MyNet.Geometry.InformationBox}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:BorderPageViewModel}" Header="Border"
+                                           Icon="{StaticResource MyNet.Geometry.CardOutline}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ButtonPageViewModel}" Header="Button"
+                                           Icon="{StaticResource MyNet.Geometry.ButtonCursor}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:CalendarPageViewModel}" Header="Calendar"
+                                           Icon="{StaticResource MyNet.Geometry.Calendar}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:CarouselPageViewModel}" Header="Carousel"
+                                           Icon="{StaticResource MyNet.Geometry.ViewCarousel}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:CheckBoxPageViewModel}" Header="CheckBox"
+                                           Icon="{StaticResource MyNet.Geometry.CheckboxMultipleMarked}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ClockPageViewModel}" Header="Clock"
+                                           Icon="{StaticResource MyNet.Geometry.Clock}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ClockSelectorPageViewModel}"
+                                           Header="ClockSelector" Icon="{StaticResource MyNet.Geometry.ClockEdit}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ColorViewPageViewModel}" Header="ColorView"
+                                           Icon="{StaticResource MyNet.Geometry.Palette}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:DataGridPageViewModel}" Header="DataGrid"
+                                           Icon="{StaticResource MyNet.Geometry.Table}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:DropDownButtonPageViewModel}"
+                                           Header="DropDownButton" Icon="{StaticResource MyNet.Geometry.FormSelect}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:EllipsePageViewModel}" Header="Ellipse"
+                                           Icon="{StaticResource MyNet.Geometry.Circle}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ExpanderPageViewModel}" Header="Expander"
+                                           Icon="{StaticResource MyNet.Geometry.Expand}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:GridSplitterPageViewModel}"
+                                           Header="GridSplitter"
+                                           Icon="{StaticResource MyNet.Geometry.ArrowSplitVertical}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:HeaderedContentControlPageViewModel}"
+                                           Header="HeaderedContentControl"
+                                           Icon="{StaticResource MyNet.Geometry.CardBulleted}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:HyperLinkButtonPageViewModel}"
+                                           Header="HyperLinkButton" Icon="{StaticResource MyNet.Geometry.LinkVariant}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:FieldsPageViewModel}" Header="{my:Loc Inputs}"
+                                           Icon="{StaticResource MyNet.Geometry.FocusFieldHorizontal}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:LabelPageViewModel}" Header="Label"
+                                           Icon="{StaticResource MyNet.Geometry.TagText}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ListBoxPageViewModel}" Header="ListBox"
+                                           Icon="{StaticResource MyNet.Geometry.ListBox}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:MenuPageViewModel}" Header="Menus"
+                                           Icon="{StaticResource MyNet.Geometry.Menu}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:NavigationMenuPageViewModel}"
+                                           Header="NavigationMenu" Icon="{StaticResource MyNet.Geometry.Navigation}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:NotificationPageViewModel}"
+                                           Header="{my:Loc Notifications}"
+                                           Icon="{StaticResource MyNet.Geometry.MessageAlert}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:OutlinedIconPageViewModel}"
+                                           Header="OutlinedIcon" Icon="{StaticResource MyNet.Geometry.Shape}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:PaginationPageViewModel}" Header="Pagination"
+                                           Icon="{StaticResource MyNet.Geometry.PageLayoutBody}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ProgressBarPageViewModel}" Header="ProgressBar"
+                                           Icon="{StaticResource MyNet.Geometry.ProgressCheck}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:RadioButtonPageViewModel}" Header="RadioButton"
+                                           Icon="{StaticResource MyNet.Geometry.RadioboxMarked}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:SelectableTextBlockPageViewModel}"
+                                           Header="SelectableTextBlock"
+                                           Icon="{StaticResource MyNet.Geometry.CursorText}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:SliderPageViewModel}" Header="Slider"
+                                           Icon="{StaticResource MyNet.Geometry.TuneVariant}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:SplitButtonPageViewModel}" Header="SplitButton"
+                                           Icon="{StaticResource MyNet.Geometry.FormDropdown}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:SplitViewPageViewModel}" Header="SplitView"
+                                           Icon="{StaticResource MyNet.Geometry.ViewSplitVertical}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:TabControlPageViewModel}" Header="TabControl"
+                                           Icon="{StaticResource MyNet.Geometry.Tab}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:TextBlockPageViewModel}" Header="TextBlock"
+                                           Icon="{StaticResource MyNet.Geometry.FormatText}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:TimeViewPageViewModel}" Header="TimeView"
+                                           Icon="{StaticResource MyNet.Geometry.ClockEdit}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ToggleButtonPageViewModel}"
+                                           Header="ToggleButton"
+                                           Icon="{StaticResource MyNet.Geometry.ToggleSwitchVariant}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ToggleSplitButtonPageViewModel}"
+                                           Header="ToggleSplitButton"
+                                           Icon="{StaticResource MyNet.Geometry.FormDropdown}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:ToggleSwitchPageViewModel}"
+                                           Header="ToggleSwitch" Icon="{StaticResource MyNet.Geometry.ToggleSwitch}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:TreeViewPageViewModel}" Header="TreeView"
+                                           Icon="{StaticResource MyNet.Geometry.FileTree}" />
 
                     <!-- Extended Controls -->
-                    <my:NavigationMenuItem IsSeparator="True" Padding="1" Header="Custom}" /><my:NavigationMenuItem CommandParameter="{x:Type vm:DialogPageViewModel}" Header="Dialogs}" Icon="{StaticResource MyNet.Geometry.DockWindow}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:DrawerPageViewModel}" Header="Drawers" Icon="{StaticResource MyNet.Geometry.ViewSplitVertical}" />
-                    <my:NavigationMenuItem CommandParameter="{x:Type vm:FormPageViewModel}" Header="Forms" Icon="{StaticResource MyNet.Geometry.FormatLineStyle}" />
+                    <my:NavigationMenuItem IsSeparator="True" Padding="1" Header="Custom}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:DialogPageViewModel}" Header="Dialogs}"
+                                           Icon="{StaticResource MyNet.Geometry.DockWindow}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:DrawerPageViewModel}" Header="Drawers"
+                                           Icon="{StaticResource MyNet.Geometry.ViewSplitVertical}" />
+                    <my:NavigationMenuItem CommandParameter="{x:Type vm:FormPageViewModel}" Header="Forms"
+                                           Icon="{StaticResource MyNet.Geometry.FormatLineStyle}" />
 
-                    </my:NavigationMenu>
+                </my:NavigationMenu>
             </Panel>
         </Panel>
 
         <!-- Main content -->
-        <my:NavigationHost Grid.Column="1" NavigationService="{Binding NavigationService}" />
+        <my:NavigationHost Grid.Column="1"
+                           NavigationService="{Binding NavigationService}"
+                           WarmUpService="{Binding WarmUpService}">
+            <my:NavigationHost.PageTransition>
+                <CrossFade Duration="{StaticResource MyNet.Animation.Fade}" />
+            </my:NavigationHost.PageTransition>
+
+            <my:NavigationHost.DataTemplates>
+                <DataTemplate DataType="vm:HomePageViewModel">
+                    <pages:HomePage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ButtonPageViewModel">
+                    <pages:ButtonPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:BorderPageViewModel">
+                    <pages:BorderPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:CheckBoxPageViewModel">
+                    <pages:CheckBoxPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:RadioButtonPageViewModel">
+                    <pages:RadioButtonPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ToggleButtonPageViewModel">
+                    <pages:ToggleButtonPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:AvatarPageViewModel">
+                    <pages:AvatarPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:BadgePageViewModel">
+                    <pages:BadgePage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:BannerPageViewModel">
+                    <pages:BannerPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:CalendarPageViewModel">
+                    <pages:CalendarPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:CarouselPageViewModel">
+                    <pages:CarouselPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ClockPageViewModel">
+                    <pages:ClockPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ClockSelectorPageViewModel">
+                    <pages:ClockSelectorPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ColorViewPageViewModel">
+                    <pages:ColorViewPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:DataGridPageViewModel">
+                    <pages:DataGridPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:DialogPageViewModel">
+                    <pages:DialogPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:DrawerPageViewModel">
+                    <pages:DrawerPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:DropDownButtonPageViewModel">
+                    <pages:DropDownButtonPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:EllipsePageViewModel">
+                    <pages:EllipsePage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ExpanderPageViewModel">
+                    <pages:ExpanderPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:FieldsPageViewModel">
+                    <pages:FieldsPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:FormPageViewModel">
+                    <pages:FormPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:GridSplitterPageViewModel">
+                    <pages:GridSplitterPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:HeaderedContentControlPageViewModel">
+                    <pages:HeaderedContentControlPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:HyperLinkButtonPageViewModel">
+                    <pages:HyperLinkButtonPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:IconsPageViewModel">
+                    <pages:IconsPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:LabelPageViewModel">
+                    <pages:LabelPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ListBoxPageViewModel">
+                    <pages:ListBoxPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:MenuPageViewModel">
+                    <pages:MenuPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:NavigationMenuPageViewModel">
+                    <pages:NavigationMenuPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:NotificationPageViewModel">
+                    <pages:NotificationPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:OutlinedIconPageViewModel">
+                    <pages:OutlinedIconPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:PaginationPageViewModel">
+                    <pages:PaginationPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ProgressBarPageViewModel">
+                    <pages:ProgressBarPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:SelectableTextBlockPageViewModel">
+                    <pages:SelectableTextBlockPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:SliderPageViewModel">
+                    <pages:SliderPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:SplitButtonPageViewModel">
+                    <pages:SplitButtonPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:SplitViewPageViewModel">
+                    <pages:SplitViewPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:TabControlPageViewModel">
+                    <pages:TabControlPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:TextBlockPageViewModel">
+                    <pages:TextBlockPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ThemePageViewModel">
+                    <pages:ThemePage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:TimeViewPageViewModel">
+                    <pages:TimeViewPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ToggleSplitButtonPageViewModel">
+                    <pages:ToggleSplitButtonPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ToggleSwitchPageViewModel">
+                    <pages:ToggleSwitchPage />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:TreeViewPageViewModel">
+                    <pages:TreeViewPage />
+                </DataTemplate>
+            </my:NavigationHost.DataTemplates>
+        </my:NavigationHost>
     </Grid>
 </UserControl>

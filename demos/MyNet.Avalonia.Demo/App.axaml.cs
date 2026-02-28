@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Reactive.Concurrency;
@@ -23,6 +24,7 @@ using MyNet.Avalonia.Extended.Schedulers;
 using MyNet.Avalonia.Extended.Services;
 using MyNet.Avalonia.Extended.Theming;
 using MyNet.Avalonia.Extended.Toasting;
+using MyNet.Avalonia.Extended.WarmUp;
 using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Infrastructure;
 using MyNet.Avalonia.Theme.Themes;
@@ -47,6 +49,22 @@ namespace MyNet.Avalonia.Demo;
 [DoNotNotify]
 public class App : Application
 {
+    /// <summary>
+    /// Delay in milliseconds before starting the warm-up process.
+    /// This allows the first page to render completely before preloading others.
+    /// </summary>
+    public const int WarmUpDelayMs = 800;
+
+    /// <summary>
+    /// Gets a value indicating whether warm-up is enabled in DEBUG mode.
+    /// </summary>
+    public static bool IsWarmUpEnabled =>
+#if DEBUG
+        true; // Enable in DEBUG to test performance improvements
+#else
+        true; // Enable in RELEASE for production
+#endif
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -61,7 +79,7 @@ public class App : Application
         // Register all the services needed for the application to run
         var collection = new ServiceCollection();
         RegisterServices(collection);
-        RegisterPageViewModels(collection);
+        var pageTypes = RegisterPageViewModels(collection);
 
         // Creates a ServiceProvider containing services from the provided IServiceCollection
         var services = collection.BuildServiceProvider();
@@ -76,6 +94,13 @@ public class App : Application
         {
             case IClassicDesktopStyleApplicationLifetime desktop:
                 desktop.MainWindow = new MainWindow { DataContext = vm };
+
+                desktop.MainWindow.Opened += async (_, _) =>
+                {
+                    var warmUpService = services.GetRequiredService<IWarmUpService>();
+
+                    await warmUpService.WarmUpAsync(pageTypes, delayMs: 800);
+                };
                 break;
             case ISingleViewApplicationLifetime singleView:
                 singleView.MainView = new MainView { DataContext = vm };
@@ -89,28 +114,33 @@ public class App : Application
 
     private void RegisterServices(ServiceCollection collection)
         => collection.AddSingleton<ILogger, Logger>()
-                     .AddSingleton<IViewModelLocator, ViewModelLocator>()
-                     .AddSingleton<IMyTheme>(MyTheme.Current)
-                     .AddSingleton<IThemeBaseRegistry, ThemeVariantsRegistry>()
-                     .AddSingleton<IThemeService, ThemeService>()
-                     .AddSingleton<INotificationsManager, NotificationsManager>()
-                     .AddSingleton<INavigationService, NavigationService>()
-                     .AddSingleton<IToasterService>(new ToasterService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
-                     .AddSingleton<IClipboardService>(new ClipboardService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
-                     // .AddSingleton<IDialogService, OverlayDialogService>()
-                     .AddScoped<IBusyServiceFactory, BusyServiceFactory>()
-                     // .AddScoped<IMessageBoxFactory, MessageBoxFactory>()
-                     .AddScoped<IScheduler, AvaloniaScheduler>(_ => AvaloniaScheduler.Current)
-                     .AddScoped<ICommandFactory, AvaloniaCommandFactory>()
-                     .AddScoped<IAppCommandsService, AppCommandsService>();
+            .AddSingleton<IViewModelLocator, ViewModelLocator>()
+            .AddSingleton<IWarmUpService, ViewModelWarmUpService>()
+            .AddSingleton<IMyTheme>(MyTheme.Current)
+            .AddSingleton<IThemeBaseRegistry, ThemeVariantsRegistry>()
+            .AddSingleton<IThemeService, ThemeService>()
+            .AddSingleton<INotificationsManager, NotificationsManager>()
+            .AddSingleton<INavigationService, NavigationService>()
+            .AddSingleton<IToasterService>(new ToasterService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
+            .AddSingleton<IClipboardService>(new ClipboardService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
+            // .AddSingleton<IDialogService, OverlayDialogService>()
+            .AddScoped<IBusyServiceFactory, BusyServiceFactory>()
+            // .AddScoped<IMessageBoxFactory, MessageBoxFactory>()
+            .AddScoped<IScheduler, AvaloniaScheduler>(_ => AvaloniaScheduler.Current)
+            .AddScoped<ICommandFactory, AvaloniaCommandFactory>()
+            .AddScoped<IAppCommandsService, AppCommandsService>();
 
-    private static void RegisterPageViewModels(ServiceCollection collection)
+    private static Type[] RegisterPageViewModels(ServiceCollection collection)
     {
         collection.AddSingleton<MainViewModel>();
-        foreach (var viewModelType in Assembly.GetExecutingAssembly().GetTypes().Where(t => t is { IsClass: true, IsAbstract: false } && t.IsAssignableTo(typeof(INavigationPage))))
+
+        var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t is { IsClass: true, IsAbstract: false } && t.IsAssignableTo(typeof(INavigationPage))).ToArray();
+        foreach (var viewModelType in types)
         {
             collection.AddSingleton(viewModelType);
         }
+
+        return types;
     }
 
     private static void InitializeServices(ServiceProvider services)
@@ -146,6 +176,7 @@ public class App : Application
         TranslationService.RegisterResources(nameof(MenuPageResources), MenuPageResources.ResourceManager);
         TranslationService.RegisterResources(nameof(NavigationMenuPageResources), NavigationMenuPageResources.ResourceManager);
         TranslationService.RegisterResources(nameof(DialogsPageResources), DialogsPageResources.ResourceManager);
+        TranslationService.RegisterResources(nameof(ThemePageResources), ThemePageResources.ResourceManager);
     }
 
     private static void InitializeTheme(ServiceProvider services)

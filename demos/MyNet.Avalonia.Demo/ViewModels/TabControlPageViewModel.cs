@@ -14,8 +14,8 @@ internal sealed class TabControlPageViewModel : ControlCatalogViewModel
     public TabControlPageViewModel()
         : base(nameof(TabControl), [
             new ControlThemeBuilder()
-            .AddShapes("shape-circle-items")
-            .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-header", "shadow-items", "variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items", "layout-uniform")
+            .AddShapes("shape-items-circle")
+            .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-header", "shadow-items", "variant-items-solid", "variant-items-light", "variant-items-outlined", "variant-items-text", "layout-uniform")
             .AddThemeRoles()
             .AddItemsThemeRoles()
             .AddDefaultSizes(),

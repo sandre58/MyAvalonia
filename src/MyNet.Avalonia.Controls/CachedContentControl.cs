@@ -169,8 +169,12 @@ public class CachedContentControl : ContentControl
             // Always update DataContext (important for ByType strategy)
             cachedView.DataContext = newContent;
 
-            // Set the cached or newly created control as content
-            SetCurrentValue(ContentProperty, cachedView);
+            // Only update Content if it's different (Avalonia 12 rendering fix)
+            // Direct assignment instead of SetCurrentValue to avoid infinite loops
+            if (!ReferenceEquals(Content, cachedView))
+            {
+                Content = cachedView;
+            }
         }
     }
 

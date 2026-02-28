@@ -1,768 +1,775 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- COLORPALETTE LISTBOXITEM THEME                            -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="MyNet.Theme.ListBoxItem.ColorPalette" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-            <Setter Property="ToolTip.Tip" Value="{Binding Converter={x:Static my:StringConverter.Default}, x:DataType=Color}" />
-            <Setter Property="AutomationProperties.Name" Value="{Binding Converter={x:Static my:StringConverter.Default}, x:DataType=Color}" />
-            <Setter Property="Background" Value="{Binding Converter={x:Static my:BrushConverter.Default}, x:DataType=Color}" />
-            <Setter Property="BorderThickness" Value="1.4" />
-        </ControlTheme>
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- COLORPALETTE LISTBOXITEM THEME                            -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="MyNet.Theme.ListBoxItem.ColorPalette" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+        <Setter Property="ToolTip.Tip" Value="{Binding Converter={x:Static my:StringConverter.Default}, x:DataType=Color}" />
+        <Setter Property="AutomationProperties.Name" Value="{Binding Converter={x:Static my:StringConverter.Default}, x:DataType=Color}" />
+        <Setter Property="Background" Value="{Binding Converter={x:Static my:BrushConverter.Default}, x:DataType=Color}" />
+        <Setter Property="BorderThickness" Value="1.4" />
+    </ControlTheme>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- COLORPALETTE LISTBOX THEME                                -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="MyNet.Theme.ListBox.ColorPalette" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-            <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
-            <Setter Property="VerticalAlignment" Value="Stretch" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
-            <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
-            <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Stretch" />
-            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="my:ItemsAssist.Padding" Value="0" />
-            <Setter Property="my:ItemsAssist.Margin" Value="0" />
-            <Setter Property="my:ClassesAssist.Classes" Value="variant-outlined-items" />
-            <Setter Property="UseLayoutRounding" Value="True" />
-            <Setter Property="ItemTemplate">
-                <DataTemplate DataType="{x:Type Color}" />
-            </Setter>
-            <Setter Property="ItemsPanel">
-                <Setter.Value>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="{Binding PaletteColumnCount, RelativeSource={RelativeSource AncestorType=ColorView}}" ColumnSpacing="{StaticResource MyNet.Spacing.Xxs}" RowSpacing="{StaticResource MyNet.Spacing.Xxs}" />
-                    </ItemsPanelTemplate>
-                </Setter.Value>
-            </Setter>
-        </ControlTheme>
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- COLORPALETTE LISTBOX THEME                                -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="MyNet.Theme.ListBox.ColorPalette" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
+        <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="my:ItemsAssist.Padding" Value="0" />
+        <Setter Property="my:ItemsAssist.Margin" Value="0" />
+        <Setter Property="my:ClassesAssist.Classes" Value="variant-items-outlined" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="ItemTemplate">
+            <DataTemplate DataType="{x:Type Color}" />
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="{Binding PaletteColumnCount, RelativeSource={RelativeSource AncestorType=ColorView}}" ColumnSpacing="{StaticResource MyNet.Spacing.Xxs}" RowSpacing="{StaticResource MyNet.Spacing.Xxs}" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </ControlTheme>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DEFAULT COLORVIEW THEME                                   -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="{x:Type ColorView}" TargetType="ColorView">
-            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
-            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
-            <Setter Property="Focusable" Value="false" />
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
-            <Setter Property="ClipToBounds" Value="False" />
-            <Setter Property="Palette">
-                <my:DarkColorPalette />
-            </Setter>
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT COLORVIEW THEME                                   -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type ColorView}" TargetType="ColorView">
+        <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Palette">
+            <my:DarkColorPalette />
+        </Setter>
 
-            <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
 
-            <!-- Surface -->
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="{Binding $self.(my:PaletteAssist.Background)}" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:PaletteAssist.Border)}" />
-            <Setter Property="Foreground" Value="{Binding $self.(my:PaletteAssist.Foreground)}" />
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
-            <Setter Property="Template">
-                <ControlTemplate TargetType="{x:Type ColorView}">
-                    <Border my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid RowDefinitions="*,Auto">
+        <!-- Surface -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
 
-                            <TabControl Name="PART_TabControl"
-                                        Grid.Row="0"
-                                        Padding="{TemplateBinding Padding}"
-                                        my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                        my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                        Classes="no-disablable layout-uniform"
-                                        SelectedIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
-                                <my:HeaderAssist.IsVisible>
-                                    <MultiBinding Converter="{x:Static my:ListConverter.ManyTrue}">
-                                        <Binding Path="IsColorSpectrumVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Path="IsColorPaletteVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Path="IsColorComponentsVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                    </MultiBinding>
-                                </my:HeaderAssist.IsVisible>
+        <Setter Property="Template">
+            <ControlTemplate TargetType="{x:Type ColorView}">
+                <Border my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid RowDefinitions="*,Auto">
 
-                                <!-- Spectrum Tab -->
-                                <TabItem Classes="no-disablable" Header="{my:Icon Palette}" IsVisible="{TemplateBinding IsColorSpectrumVisible}">
-                                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="*">
-                                        <ColorSlider Name="ColorSpectrumThirdComponentSlider"
-                                                     Grid.Column="0"
-                                                     Margin="{my:Thickness Md, Right}"
-                                                     HorizontalAlignment="Center"
-                                                     VerticalAlignment="Stretch"
-                                                     AutomationProperties.Name="Third Component"
-                                                     Classes="no-disablable"
-                                                     ColorComponent="{Binding ThirdComponent, ElementName=ColorSpectrum}"
-                                                     ColorModel="Hsva"
-                                                     HsvColor="{Binding HsvColor, ElementName=ColorSpectrum}"
-                                                     IsAlphaVisible="True"
-                                                     IsPerceptive="False"
-                                                     IsVisible="{TemplateBinding IsColorSpectrumSliderVisible}"
-                                                     Orientation="Vertical" />
-                                        <ColorSpectrum Name="ColorSpectrum"
-                                                       Grid.Column="1"
-                                                       Classes="shadow-surface no-disablable"
-                                                       Components="{TemplateBinding ColorSpectrumComponents}"
-                                                       HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                       MaxHue="{TemplateBinding MaxHue}"
-                                                       MaxSaturation="{TemplateBinding MaxSaturation}"
-                                                       MaxValue="{TemplateBinding MaxValue}"
-                                                       MinHue="{TemplateBinding MinHue}"
-                                                       MinSaturation="{TemplateBinding MinSaturation}"
-                                                       MinValue="{TemplateBinding MinValue}"
-                                                       Shape="{TemplateBinding ColorSpectrumShape}" />
-                                        <ColorSlider Name="ColorSpectrumAlphaSlider"
-                                                     Grid.Column="2"
-                                                     Margin="{my:Thickness Md, Left}"
-                                                     HorizontalAlignment="Center"
-                                                     VerticalAlignment="Stretch"
-                                                     AutomationProperties.Name="Alpha Component"
-                                                     Classes="no-disablable"
-                                                     ColorComponent="Alpha"
-                                                     ColorModel="Hsva"
-                                                     HsvColor="{Binding HsvColor, ElementName=ColorSpectrum}"
-                                                     IsEnabled="{TemplateBinding IsAlphaEnabled}"
-                                                     Orientation="Vertical">
-                                            <ColorSlider.IsVisible>
-                                                <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                    <Binding Path="IsAlphaVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                </MultiBinding>
-                                            </ColorSlider.IsVisible>
-                                        </ColorSlider>
-                                    </Grid>
-                                </TabItem>
+                        <TabControl Name="PART_TabControl"
+                                    Grid.Row="0"
+                                    Padding="{TemplateBinding Padding}"
+                                    my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                    my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                    Classes="layout-uniform"
+                                    my:DisableAssist.IsDisablable="False"
+                                    SelectedIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                            <my:HeaderAssist.IsVisible>
+                                <MultiBinding Converter="{x:Static my:ListConverter.ManyTrue}">
+                                    <Binding Path="IsColorSpectrumVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="IsColorPaletteVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="IsColorComponentsVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                </MultiBinding>
+                            </my:HeaderAssist.IsVisible>
 
-                                <!-- Palette Tab -->
-                                <TabItem Classes="no-disablable" Header="{my:Icon PaletteSwatchVariant}" IsVisible="{TemplateBinding IsColorPaletteVisible}">
-                                    <ListBox Classes="no-disablable"
-                                             my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                             my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                             ItemContainerTheme="{StaticResource MyNet.Theme.ListBoxItem.ColorPalette}"
-                                             ItemsSource="{TemplateBinding PaletteColors}"
-                                             SelectedItem="{Binding Color, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullFallbackConverter.Default}, Mode=TwoWay}"
-                                             Theme="{StaticResource MyNet.Theme.ListBox.ColorPalette}" />
-                                </TabItem>
-
-                                <!-- Components Tab -->
-                                <TabItem Classes="no-disablable" Header="{my:Icon TuneVariant}" IsVisible="{TemplateBinding IsColorComponentsVisible}">
-                                    <Grid Name="GridComponents" RowDefinitions="Auto,10,Auto" UseLayoutRounding="False">
-                                        <Grid.Styles>
-                                            <Style Selector="HeaderedContentControl">
-                                                <Setter Property="ClipToBounds" Value="False" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                <Setter Property="Margin" Value="{my:Thickness Sm, Vertical}" />
-                                                <Setter Property="my:ClassesAssist.Classes" Value="kind-label variant-watermark position-top" />
-                                            </Style>
-
-                                            <Style Selector="NumericUpDown">
-                                                <Setter Property="DockPanel.Dock" Value="Right" />
-                                                <Setter Property="Width" Value="90" />
-                                                <Setter Property="Margin" Value="{my:Thickness Md, Left}" />
-                                                <Setter Property="AllowSpin" Value="True" />
-                                                <Setter Property="my:TextFieldAssist.ShowClearButton" Value="False" />
-                                            </Style>
-
-                                            <Style Selector="ColorSlider">
-                                                <Setter Property="my:SliderAssist.ShowValueOnMouseOver" Value="{Binding !$parent[ColorView].IsComponentTextInputVisible}" />
-                                                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                                <Setter Property="IsRoundingEnabled" Value="True" />
-                                                <Setter Property="IsSnapToTickEnabled" Value="True" />
-                                            </Style>
-                                        </Grid.Styles>
-
-                                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-
-                                            <!-- RGB / HSV -->
-                                            <ListBox VerticalAlignment="Stretch"
-                                                     Classes="kind-toggle no-disablable layout-uniform"
-                                                     my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                     my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                     my:ItemsBehavior.EnumSourceType="{x:Type ColorModel}"
-                                                     IsVisible="{TemplateBinding IsColorModelVisible}"
-                                                     SelectedValue="{Binding ColorModel, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
-
-                                            <!-- Hex Value -->
-                                            <TextBox Name="PART_HexTextBox"
-                                                     Grid.Column="1"
-                                                     Width="130"
-                                                     my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                     my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                     Margin="{my:Thickness Md, Left}"
-                                                     HorizontalAlignment="Stretch"
-                                                     my:TextFieldAssist.ShowClipboardButton="True"
-                                                     AutomationProperties.Name="Hexadecimal Color"
-                                                     Classes="no-disablable"
-                                                     InnerLeftContent="#"
-                                                     IsVisible="{TemplateBinding IsHexInputVisible}"
-                                                     MaxLength="8"
-                                                     UseFloatingPlaceholder="True"
-                                                     PlaceholderText="{my:Loc Hexadecimal}" />
-                                        </Grid>
-
-                                        <Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto">
-                                            <Grid.IsVisible>
-                                                <MultiBinding Converter="{x:Static my:ListConverter.AnyTrue}">
-                                                    <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                    <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                </MultiBinding>
-                                            </Grid.IsVisible>
-
-                                            <!-- Color component editing controls -->
-                                            <!-- Component 1 RGB:Red HSV:Hue -->
-                                            <HeaderedContentControl Name="Component1HeaderedContentControl" Grid.Row="0">
-                                                <DockPanel>
-                                                    <NumericUpDown Name="Component1NumericUpDown"
-                                                                   Classes="no-disablable"
-                                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                                   IsVisible="{TemplateBinding IsComponentTextInputVisible}"
-                                                                   Maximum="{Binding Maximum, ElementName=Component1Slider}"
-                                                                   Minimum="{Binding Minimum, ElementName=Component1Slider}"
-                                                                   Value="{Binding Value, ElementName=Component1Slider}" />
-                                                    <ColorSlider Name="Component1Slider"
-                                                                 Classes="no-disablable"
-                                                                 ColorComponent="Component1"
-                                                                 ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
-                                                                 HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                                 IsVisible="{TemplateBinding IsComponentSliderVisible}" />
-                                                </DockPanel>
-                                            </HeaderedContentControl>
-
-                                            <!-- Component 2 RGB:Green HSV:Saturation -->
-                                            <HeaderedContentControl Name="Component2HeaderedContentControl" Grid.Row="1">
-                                                <DockPanel>
-                                                    <NumericUpDown Classes="no-disablable"
-                                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                                   Maximum="{Binding Maximum, ElementName=Component2Slider}"
-                                                                   Minimum="{Binding Minimum, ElementName=Component2Slider}"
-                                                                   Value="{Binding Value, ElementName=Component2Slider}">
-                                                        <NumericUpDown.IsVisible>
-                                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                                         ConverterParameter="{x:Static ColorModel.Rgba}"
-                                                                         Path="ColorModel"
-                                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                            </MultiBinding>
-                                                        </NumericUpDown.IsVisible>
-                                                    </NumericUpDown>
-                                                    <NumericUpDown Classes="no-disablable"
-                                                                   FormatString="P0"
-                                                                   Increment="0.01"
-                                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                                   Maximum="{Binding Maximum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                                   Minimum="{Binding Minimum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                                   Value="{Binding Value, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
-                                                        <NumericUpDown.IsVisible>
-                                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                                         ConverterParameter="{x:Static ColorModel.Hsva}"
-                                                                         Path="ColorModel"
-                                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                            </MultiBinding>
-                                                        </NumericUpDown.IsVisible>
-                                                    </NumericUpDown>
-                                                    <ColorSlider Name="Component2Slider"
-                                                                 Classes="no-disablable"
-                                                                 ColorComponent="Component2"
-                                                                 ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
-                                                                 HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                                 IsVisible="{TemplateBinding IsComponentSliderVisible}" />
-                                                </DockPanel>
-                                            </HeaderedContentControl>
-
-                                            <!-- Component 3 RGB:Blue HSV:Value -->
-                                            <HeaderedContentControl Name="Component3HeaderedContentControl" Grid.Row="2">
-                                                <DockPanel>
-                                                    <NumericUpDown Classes="no-disablable"
-                                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                                   Maximum="{Binding Maximum, ElementName=Component3Slider}"
-                                                                   Minimum="{Binding Minimum, ElementName=Component3Slider}"
-                                                                   Value="{Binding Value, ElementName=Component3Slider}">
-                                                        <NumericUpDown.IsVisible>
-                                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                                         ConverterParameter="{x:Static ColorModel.Rgba}"
-                                                                         Path="ColorModel"
-                                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                            </MultiBinding>
-                                                        </NumericUpDown.IsVisible>
-                                                    </NumericUpDown>
-                                                    <NumericUpDown Classes="no-disablable"
-                                                                   FormatString="P0"
-                                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                                   Increment="0.01"
-                                                                   Maximum="{Binding Maximum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                                   Minimum="{Binding Minimum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                                   Value="{Binding Value, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
-                                                        <NumericUpDown.IsVisible>
-                                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                                         ConverterParameter="{x:Static ColorModel.Hsva}"
-                                                                         Path="ColorModel"
-                                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                            </MultiBinding>
-                                                        </NumericUpDown.IsVisible>
-                                                    </NumericUpDown>
-                                                    <ColorSlider Name="Component3Slider"
-                                                                 Classes="no-disablable"
-                                                                 ColorComponent="Component3"
-                                                                 ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
-                                                                 HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                                 IsVisible="{TemplateBinding IsComponentSliderVisible}" />
-                                                </DockPanel>
-                                            </HeaderedContentControl>
-
-                                            <!-- Alpha Component -->
-                                            <HeaderedContentControl Name="AlphaComponentHeaderedContentControl" Grid.Row="3" IsVisible="{TemplateBinding IsAlphaVisible}">
-                                                <DockPanel>
-                                                    <NumericUpDown Name="AlphaComponentNumericUpDown"
-                                                                   Classes="no-disablable"
-                                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                                   IsEnabled="{TemplateBinding IsAlphaEnabled}"
-                                                                   Maximum="{Binding Maximum, ElementName=AlphaComponentSlider}"
-                                                                   Minimum="{Binding Minimum, ElementName=AlphaComponentSlider}"
-                                                                   Value="{Binding Value, ElementName=AlphaComponentSlider}">
-                                                        <NumericUpDown.IsVisible>
-                                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                                         ConverterParameter="{x:Static ColorModel.Rgba}"
-                                                                         Path="ColorModel"
-                                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                            </MultiBinding>
-                                                        </NumericUpDown.IsVisible>
-                                                    </NumericUpDown>
-                                                    <NumericUpDown Classes="no-disablable"
-                                                                   FormatString="P0"
-                                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                                   Increment="0.01"
-                                                                   Maximum="{Binding Maximum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                                   Minimum="{Binding Minimum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                                   Value="{Binding Value, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
-                                                        <NumericUpDown.IsVisible>
-                                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                                         ConverterParameter="{x:Static ColorModel.Hsva}"
-                                                                         Path="ColorModel"
-                                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                            </MultiBinding>
-                                                        </NumericUpDown.IsVisible>
-                                                    </NumericUpDown>
-                                                    <ColorSlider Name="AlphaComponentSlider"
-                                                                 Classes="no-disablable"
-                                                                 ColorComponent="Alpha"
-                                                                 ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
-                                                                 HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                                 IsEnabled="{TemplateBinding IsAlphaEnabled}">
-                                                        <ColorSlider.IsVisible>
-                                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                                <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                            </MultiBinding>
-                                                        </ColorSlider.IsVisible>
-                                                    </ColorSlider>
-                                                </DockPanel>
-                                            </HeaderedContentControl>
-
-                                        </Grid>
-
-                                    </Grid>
-                                </TabItem>
-                            </TabControl>
-
-                            <!-- Previewer -->
-                            <ColorPreviewer Grid.Row="1"
-                                            Height="32"
-                                            Margin="{TemplateBinding Padding, Converter={x:Static my:ThicknessConverter.RemoveTop}}"
-                                            Classes="no-disablable"
-                                            HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                            IsAccentColorsVisible="{TemplateBinding IsAccentColorsVisible}"
-                                            IsVisible="{TemplateBinding IsColorPreviewVisible}" />
-                        </Grid>
-                    </Border>
-                </ControlTemplate>
-            </Setter>
-            <Style Selector="^[ColorModel=Rgba]">
-                <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Red}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Green}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Blue}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Alpha}" />
-                </Style>
-            </Style>
-            <Style Selector="^[ColorModel=Hsva]">
-                <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Hue}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Saturation}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Value}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Alpha}" />
-                </Style>
-                <Style Selector="^ /template/ NumericUpDown#Component1NumericUpDown">
-                    <Setter Property="FormatString" Value="#°" />
-                </Style>
-            </Style>
-
-            <Style Selector="^[IsComponentSliderVisible=False] /template/ Grid#GridComponents NumericUpDown">
-                <Setter Property="Width" Value="NaN" />
-                <Setter Property="Margin" Value="0" />
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                <Setter Property="DockPanel.Dock" Value="Top" />
-            </Style>
-        </ControlTheme>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- SIMPLE COLORVIEW THEME                                    -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="MyNet.Theme.ColorView.Simple" TargetType="ColorView" BasedOn="{StaticResource {x:Type ColorView}}">
-            <Setter Property="ColorSpectrumComponents" Value="SaturationValue" />
-            <Setter Property="IsAccentColorsVisible" Value="False" />
-            <Setter Property="ColorModel" Value="Hsva" />
-            <Setter Property="IsComponentTextInputVisible" Value="False" />
-            <Setter Property="Template">
-                <ControlTemplate TargetType="{x:Type ColorView}">
-                    <Border Padding="{TemplateBinding Padding}"
-                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid Name="GridComponents" RowDefinitions="Auto,10,*,Auto,Auto,Auto,Auto">
-                            <Grid.Styles>
-                                <Style Selector="HeaderedContentControl">
-                                    <Setter Property="ClipToBounds" Value="False" />
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    <Setter Property="Margin" Value="{my:Thickness Sm, Vertical}" />
-                                    <Setter Property="my:ClassesAssist.Classes" Value="kind-label variant-watermark position-top" />
-                                </Style>
-
-                                <Style Selector="NumericUpDown">
-                                    <Setter Property="DockPanel.Dock" Value="Right" />
-                                    <Setter Property="Width" Value="90" />
-                                    <Setter Property="Margin" Value="{my:Thickness Md, Left}" />
-                                    <Setter Property="AllowSpin" Value="True" />
-                                    <Setter Property="my:ClassesAssist.Classes" Value="no-disablable" />
-                                    <Setter Property="my:TextFieldAssist.ShowClearButton" Value="False" />
-                                </Style>
-
-                                <Style Selector="ColorSlider">
-                                    <Setter Property="my:SliderAssist.ShowValueOnMouseOver" Value="{Binding !$parent[ColorView].IsComponentTextInputVisible}" />
-                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                    <Setter Property="IsRoundingEnabled" Value="True" />
-                                    <Setter Property="IsSnapToTickEnabled" Value="True" />
-                                </Style>
-                            </Grid.Styles>
-
-                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-
-                                <!-- Previewer -->
-                                <ColorPreviewer VerticalAlignment="Stretch"
-                                                Classes="no-disablable"
-                                                HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                IsAccentColorsVisible="{TemplateBinding IsAccentColorsVisible}"
-                                                IsVisible="{TemplateBinding IsColorPreviewVisible}" />
-
-                                <!-- Hexa Value -->
-                                <TextBox Name="PART_HexTextBox"
-                                         Grid.Column="1"
-                                         my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                         my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                         Width="100"
-                                         Margin="{my:Thickness Md, Left}"
-                                         HorizontalAlignment="Stretch"
-                                         my:TextFieldAssist.ShowClipboardButton="True"
-                                         AutomationProperties.Name="Hexadecimal Color"
-                                         Classes="no-disablable"
-                                         InnerLeftContent="#"
-                                         IsVisible="{TemplateBinding IsHexInputVisible}"
-                                         MaxLength="8"
-                                         UseFloatingPlaceholder="True"
-                                         PlaceholderText="{my:Loc Hexadecimal}" />
-                            </Grid>
-
-                            <ColorSpectrum Name="ColorSpectrum"
-                                           Grid.Row="2"
-                                           VerticalAlignment="Stretch"
-                                           HorizontalAlignment="Stretch"
-                                           Classes="shadow-surface no-disablable"
-                                           Components="{TemplateBinding ColorSpectrumComponents}"
-                                           HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                           MaxHue="{TemplateBinding MaxHue}"
-                                           MaxSaturation="{TemplateBinding MaxSaturation}"
-                                           MaxValue="{TemplateBinding MaxValue}"
-                                           MinHue="{TemplateBinding MinHue}"
-                                           MinSaturation="{TemplateBinding MinSaturation}"
-                                           MinValue="{TemplateBinding MinValue}"
-                                           Shape="{TemplateBinding ColorSpectrumShape}" />
-
-                            <!-- Color component editing controls -->
-                            <!-- Component 1 RGB:Red HSV:Hue -->
-                            <HeaderedContentControl Name="Component1HeaderedContentControl" Grid.Row="3">
-                                <HeaderedContentControl.IsVisible>
-                                    <MultiBinding Converter="{x:Static my:ListConverter.AnyTrue}">
-                                        <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                    </MultiBinding>
-                                </HeaderedContentControl.IsVisible>
-                                <DockPanel>
-                                    <NumericUpDown Name="Component1NumericUpDown"
-                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                   Classes="no-disablable"
-                                                   IsVisible="{TemplateBinding IsComponentTextInputVisible}"
-                                                   Maximum="{Binding Maximum, ElementName=Component1Slider}"
-                                                   Minimum="{Binding Minimum, ElementName=Component1Slider}"
-                                                   Value="{Binding Value, ElementName=Component1Slider}" />
-                                    <ColorSlider Name="Component1Slider"
-                                                 Classes="no-disablable"
-                                                 ColorComponent="Component1"
-                                                 ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
-                                                 HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                 IsVisible="{TemplateBinding IsComponentSliderVisible}" />
-                                </DockPanel>
-                            </HeaderedContentControl>
-
-                            <!-- Component 2 RGB:Green HSV:Saturation -->
-                            <HeaderedContentControl Name="Component2HeaderedContentControl" Grid.Row="4">
-                                <HeaderedContentControl.IsVisible>
-                                    <MultiBinding Converter="{x:Static my:ListConverter.AnyTrue}">
-                                        <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                    </MultiBinding>
-                                </HeaderedContentControl.IsVisible>
-                                <DockPanel>
-                                    <NumericUpDown Classes="no-disablable"
-                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                   Maximum="{Binding Maximum, ElementName=Component2Slider}"
-                                                   Minimum="{Binding Minimum, ElementName=Component2Slider}"
-                                                   Value="{Binding Value, ElementName=Component2Slider}">
-                                        <NumericUpDown.IsVisible>
-                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                         ConverterParameter="{x:Static ColorModel.Rgba}"
-                                                         Path="ColorModel"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            </MultiBinding>
-                                        </NumericUpDown.IsVisible>
-                                    </NumericUpDown>
-                                    <NumericUpDown Classes="no-disablable"
-                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                   FormatString="P0"
-                                                   Increment="0.01"
-                                                   Maximum="{Binding Maximum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                   Minimum="{Binding Minimum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                   Value="{Binding Value, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
-                                        <NumericUpDown.IsVisible>
-                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                         ConverterParameter="{x:Static ColorModel.Hsva}"
-                                                         Path="ColorModel"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            </MultiBinding>
-                                        </NumericUpDown.IsVisible>
-                                    </NumericUpDown>
-                                    <ColorSlider Name="Component2Slider"
-                                                 Classes="no-disablable"
-                                                 ColorComponent="Component2"
-                                                 ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
-                                                 HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                 IsVisible="{TemplateBinding IsComponentSliderVisible}" />
-                                </DockPanel>
-                            </HeaderedContentControl>
-
-                            <!-- Component 3 RGB:Blue HSV:Value -->
-                            <HeaderedContentControl Name="Component3HeaderedContentControl" Grid.Row="5">
-                                <HeaderedContentControl.IsVisible>
-                                    <MultiBinding Converter="{x:Static my:ListConverter.AnyTrue}">
-                                        <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                    </MultiBinding>
-                                </HeaderedContentControl.IsVisible>
-                                <DockPanel>
-                                    <NumericUpDown Classes="no-disablable"
-                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                   Maximum="{Binding Maximum, ElementName=Component3Slider}"
-                                                   Minimum="{Binding Minimum, ElementName=Component3Slider}"
-                                                   Value="{Binding Value, ElementName=Component3Slider}">
-                                        <NumericUpDown.IsVisible>
-                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                         ConverterParameter="{x:Static ColorModel.Rgba}"
-                                                         Path="ColorModel"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            </MultiBinding>
-                                        </NumericUpDown.IsVisible>
-                                    </NumericUpDown>
-                                    <NumericUpDown Classes="no-disablable"
-                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                   FormatString="P0"
-                                                   Increment="0.01"
-                                                   Maximum="{Binding Maximum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                   Minimum="{Binding Minimum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                   Value="{Binding Value, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
-                                        <NumericUpDown.IsVisible>
-                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                         ConverterParameter="{x:Static ColorModel.Hsva}"
-                                                         Path="ColorModel"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            </MultiBinding>
-                                        </NumericUpDown.IsVisible>
-                                    </NumericUpDown>
-                                    <ColorSlider Name="Component3Slider"
-                                                 Classes="no-disablable"
-                                                 ColorComponent="Component3"
-                                                 ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
-                                                 HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                 IsVisible="{TemplateBinding IsComponentSliderVisible}" />
-                                </DockPanel>
-                            </HeaderedContentControl>
-
-                            <!-- Alpha Component -->
-                            <HeaderedContentControl Name="AlphaComponentHeaderedContentControl" Grid.Row="6">
-                                <HeaderedContentControl.IsVisible>
-                                    <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                        <Binding Path="IsAlphaVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <MultiBinding Converter="{x:Static my:ListConverter.AnyTrue}">
-                                            <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                        </MultiBinding>
-                                    </MultiBinding>
-                                </HeaderedContentControl.IsVisible>
-                                <DockPanel>
-                                    <NumericUpDown Name="AlphaComponentNumericUpDown"
-                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                   Classes="no-disablable"
-                                                   IsEnabled="{TemplateBinding IsAlphaEnabled}"
-                                                   Maximum="{Binding Maximum, ElementName=AlphaComponentSlider}"
-                                                   Minimum="{Binding Minimum, ElementName=AlphaComponentSlider}"
-                                                   Value="{Binding Value, ElementName=AlphaComponentSlider}">
-                                        <NumericUpDown.IsVisible>
-                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                         ConverterParameter="{x:Static ColorModel.Rgba}"
-                                                         Path="ColorModel"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            </MultiBinding>
-                                        </NumericUpDown.IsVisible>
-                                    </NumericUpDown>
-                                    <NumericUpDown Classes="no-disablable"
-                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                   my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}"
-                                                   FormatString="P0"
-                                                   Increment="0.01"
-                                                   Maximum="{Binding Maximum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                   Minimum="{Binding Minimum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
-                                                   Value="{Binding Value, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
-                                        <NumericUpDown.IsVisible>
-                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                <Binding Converter="{x:Static my:EnumConverter.Any}"
-                                                         ConverterParameter="{x:Static ColorModel.Hsva}"
-                                                         Path="ColorModel"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            </MultiBinding>
-                                        </NumericUpDown.IsVisible>
-                                    </NumericUpDown>
-                                    <ColorSlider Name="AlphaComponentSlider"
-                                                 Classes="no-disablable"
+                            <!-- Spectrum Tab -->
+                            <TabItem my:DisableAssist.IsDisablable="False" Header="{my:Icon Palette}" IsVisible="{TemplateBinding IsColorSpectrumVisible}">
+                                <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="*">
+                                    <ColorSlider Name="ColorSpectrumThirdComponentSlider"
+                                                 Grid.Column="0"
+                                                 Margin="{my:Thickness Md, Right}"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Stretch"
+                                                 AutomationProperties.Name="Third Component"
+                                                 my:DisableAssist.IsDisablable="False"
+                                                 ColorComponent="{Binding ThirdComponent, ElementName=ColorSpectrum}"
+                                                 ColorModel="Hsva"
+                                                 HsvColor="{Binding HsvColor, ElementName=ColorSpectrum}"
+                                                 IsAlphaVisible="True"
+                                                 IsPerceptive="False"
+                                                 IsVisible="{TemplateBinding IsColorSpectrumSliderVisible}"
+                                                 Orientation="Vertical" />
+                                    <ColorSpectrum Name="ColorSpectrum"
+                                                   Grid.Column="1"
+                                                   Classes="shadow-surface"
+                                                   my:DisableAssist.IsDisablable="False"
+                                                   Components="{TemplateBinding ColorSpectrumComponents}"
+                                                   HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                   MaxHue="{TemplateBinding MaxHue}"
+                                                   MaxSaturation="{TemplateBinding MaxSaturation}"
+                                                   MaxValue="{TemplateBinding MaxValue}"
+                                                   MinHue="{TemplateBinding MinHue}"
+                                                   MinSaturation="{TemplateBinding MinSaturation}"
+                                                   MinValue="{TemplateBinding MinValue}"
+                                                   Shape="{TemplateBinding ColorSpectrumShape}" />
+                                    <ColorSlider Name="ColorSpectrumAlphaSlider"
+                                                 Grid.Column="2"
+                                                 Margin="{my:Thickness Md, Left}"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Stretch"
+                                                 AutomationProperties.Name="Alpha Component"
+                                                 my:DisableAssist.IsDisablable="False"
                                                  ColorComponent="Alpha"
-                                                 ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
-                                                 HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                 IsEnabled="{TemplateBinding IsAlphaEnabled}">
+                                                 ColorModel="Hsva"
+                                                 HsvColor="{Binding HsvColor, ElementName=ColorSpectrum}"
+                                                 IsEnabled="{TemplateBinding IsAlphaEnabled}"
+                                                 Orientation="Vertical">
                                         <ColorSlider.IsVisible>
                                             <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Path="IsAlphaVisible" RelativeSource="{RelativeSource TemplatedParent}" />
                                             </MultiBinding>
                                         </ColorSlider.IsVisible>
                                     </ColorSlider>
-                                </DockPanel>
-                            </HeaderedContentControl>
+                                </Grid>
+                            </TabItem>
+
+                            <!-- Palette Tab -->
+                            <TabItem my:DisableAssist.IsDisablable="False" Header="{my:Icon PaletteSwatchVariant}" IsVisible="{TemplateBinding IsColorPaletteVisible}">
+                                <ListBox my:DisableAssist.IsDisablable="False"
+                                         my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                         my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                         ItemContainerTheme="{StaticResource MyNet.Theme.ListBoxItem.ColorPalette}"
+                                         ItemsSource="{TemplateBinding PaletteColors}"
+                                         SelectedItem="{Binding Color, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullFallbackConverter.Default}, Mode=TwoWay}"
+                                         Theme="{StaticResource MyNet.Theme.ListBox.ColorPalette}" />
+                            </TabItem>
+
+                            <!-- Components Tab -->
+                            <TabItem my:DisableAssist.IsDisablable="False" Header="{my:Icon TuneVariant}" IsVisible="{TemplateBinding IsColorComponentsVisible}">
+                                <Grid Name="GridComponents" RowDefinitions="Auto,10,Auto" UseLayoutRounding="False">
+                                    <Grid.Styles>
+                                        <Style Selector="HeaderedContentControl">
+                                            <Setter Property="ClipToBounds" Value="False" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            <Setter Property="Margin" Value="{my:Thickness Sm, Vertical}" />
+                                            <Setter Property="my:ClassesAssist.Classes" Value="kind-label variant-watermark position-top" />
+                                        </Style>
+
+                                        <Style Selector="NumericUpDown">
+                                            <Setter Property="DockPanel.Dock" Value="Right" />
+                                            <Setter Property="Width" Value="90" />
+                                            <Setter Property="Margin" Value="{my:Thickness Md, Left}" />
+                                            <Setter Property="AllowSpin" Value="True" />
+                                            <Setter Property="my:InputAssist.ShowClearButton" Value="False" />
+                                        </Style>
+
+                                        <Style Selector="ColorSlider">
+                                            <Setter Property="my:SliderAssist.ShowValueOnMouseOver" Value="{Binding !$parent[ColorView].IsComponentTextInputVisible}" />
+                                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                            <Setter Property="IsRoundingEnabled" Value="True" />
+                                            <Setter Property="IsSnapToTickEnabled" Value="True" />
+                                        </Style>
+                                    </Grid.Styles>
+
+                                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+
+                                        <!-- RGB / HSV -->
+                                        <ListBox VerticalAlignment="Stretch"
+                                                 Classes="kind-toggle layout-uniform"
+                                                 my:DisableAssist.IsDisablable="False"
+                                                 my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                 my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                 my:ItemsBehavior.EnumSourceType="{x:Type ColorModel}"
+                                                 IsVisible="{TemplateBinding IsColorModelVisible}"
+                                                 SelectedValue="{Binding ColorModel, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+
+                                        <!-- Hex Value -->
+                                        <TextBox Name="PART_HexTextBox"
+                                                 Grid.Column="1"
+                                                 Width="130"
+                                                 my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                 my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                 Margin="{my:Thickness Md, Left}"
+                                                 HorizontalAlignment="Stretch"
+                                                 my:InputAssist.ShowClipboardButton="True"
+                                                 AutomationProperties.Name="Hexadecimal Color"
+                                                 my:DisableAssist.IsDisablable="False"
+                                                 InnerLeftContent="#"
+                                                 IsVisible="{TemplateBinding IsHexInputVisible}"
+                                                 MaxLength="8"
+                                                 UseFloatingPlaceholder="True"
+                                                 PlaceholderText="{my:Loc Hexadecimal}" />
+                                    </Grid>
+
+                                    <Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto">
+                                        <Grid.IsVisible>
+                                            <MultiBinding Converter="{x:Static my:ListConverter.AnyTrue}">
+                                                <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </Grid.IsVisible>
+
+                                        <!-- Color component editing controls -->
+                                        <!-- Component 1 RGB:Red HSV:Hue -->
+                                        <HeaderedContentControl Name="Component1HeaderedContentControl" Grid.Row="0">
+                                            <DockPanel>
+                                                <NumericUpDown Name="Component1NumericUpDown"
+                                                               my:DisableAssist.IsDisablable="False"
+                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               IsVisible="{TemplateBinding IsComponentTextInputVisible}"
+                                                               Maximum="{Binding Maximum, ElementName=Component1Slider}"
+                                                               Minimum="{Binding Minimum, ElementName=Component1Slider}"
+                                                               Value="{Binding Value, ElementName=Component1Slider}" />
+                                                <ColorSlider Name="Component1Slider"
+                                                             my:DisableAssist.IsDisablable="False"
+                                                             ColorComponent="Component1"
+                                                             ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
+                                                             HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                             IsVisible="{TemplateBinding IsComponentSliderVisible}" />
+                                            </DockPanel>
+                                        </HeaderedContentControl>
+
+                                        <!-- Component 2 RGB:Green HSV:Saturation -->
+                                        <HeaderedContentControl Name="Component2HeaderedContentControl" Grid.Row="1">
+                                            <DockPanel>
+                                                <NumericUpDown my:DisableAssist.IsDisablable="False"
+                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               Maximum="{Binding Maximum, ElementName=Component2Slider}"
+                                                               Minimum="{Binding Minimum, ElementName=Component2Slider}"
+                                                               Value="{Binding Value, ElementName=Component2Slider}">
+                                                    <NumericUpDown.IsVisible>
+                                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                                     ConverterParameter="{x:Static ColorModel.Rgba}"
+                                                                     Path="ColorModel"
+                                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                        </MultiBinding>
+                                                    </NumericUpDown.IsVisible>
+                                                </NumericUpDown>
+                                                <NumericUpDown my:DisableAssist.IsDisablable="False"
+                                                               FormatString="P0"
+                                                               Increment="0.01"
+                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               Maximum="{Binding Maximum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                                               Minimum="{Binding Minimum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                                               Value="{Binding Value, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
+                                                    <NumericUpDown.IsVisible>
+                                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                                     ConverterParameter="{x:Static ColorModel.Hsva}"
+                                                                     Path="ColorModel"
+                                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                        </MultiBinding>
+                                                    </NumericUpDown.IsVisible>
+                                                </NumericUpDown>
+                                                <ColorSlider Name="Component2Slider"
+                                                             my:DisableAssist.IsDisablable="False"
+                                                             ColorComponent="Component2"
+                                                             ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
+                                                             HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                             IsVisible="{TemplateBinding IsComponentSliderVisible}" />
+                                            </DockPanel>
+                                        </HeaderedContentControl>
+
+                                        <!-- Component 3 RGB:Blue HSV:Value -->
+                                        <HeaderedContentControl Name="Component3HeaderedContentControl" Grid.Row="2">
+                                            <DockPanel>
+                                                <NumericUpDown my:DisableAssist.IsDisablable="False"
+                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               Maximum="{Binding Maximum, ElementName=Component3Slider}"
+                                                               Minimum="{Binding Minimum, ElementName=Component3Slider}"
+                                                               Value="{Binding Value, ElementName=Component3Slider}">
+                                                    <NumericUpDown.IsVisible>
+                                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                                     ConverterParameter="{x:Static ColorModel.Rgba}"
+                                                                     Path="ColorModel"
+                                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                        </MultiBinding>
+                                                    </NumericUpDown.IsVisible>
+                                                </NumericUpDown>
+                                                <NumericUpDown my:DisableAssist.IsDisablable="False"
+                                                               FormatString="P0"
+                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               Increment="0.01"
+                                                               Maximum="{Binding Maximum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                                               Minimum="{Binding Minimum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                                               Value="{Binding Value, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
+                                                    <NumericUpDown.IsVisible>
+                                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                                     ConverterParameter="{x:Static ColorModel.Hsva}"
+                                                                     Path="ColorModel"
+                                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                        </MultiBinding>
+                                                    </NumericUpDown.IsVisible>
+                                                </NumericUpDown>
+                                                <ColorSlider Name="Component3Slider"
+                                                             my:DisableAssist.IsDisablable="False"
+                                                             ColorComponent="Component3"
+                                                             ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
+                                                             HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                             IsVisible="{TemplateBinding IsComponentSliderVisible}" />
+                                            </DockPanel>
+                                        </HeaderedContentControl>
+
+                                        <!-- Alpha Component -->
+                                        <HeaderedContentControl Name="AlphaComponentHeaderedContentControl" Grid.Row="3" IsVisible="{TemplateBinding IsAlphaVisible}">
+                                            <DockPanel>
+                                                <NumericUpDown Name="AlphaComponentNumericUpDown"
+                                                               my:DisableAssist.IsDisablable="False"
+                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               IsEnabled="{TemplateBinding IsAlphaEnabled}"
+                                                               Maximum="{Binding Maximum, ElementName=AlphaComponentSlider}"
+                                                               Minimum="{Binding Minimum, ElementName=AlphaComponentSlider}"
+                                                               Value="{Binding Value, ElementName=AlphaComponentSlider}">
+                                                    <NumericUpDown.IsVisible>
+                                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                                     ConverterParameter="{x:Static ColorModel.Rgba}"
+                                                                     Path="ColorModel"
+                                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                        </MultiBinding>
+                                                    </NumericUpDown.IsVisible>
+                                                </NumericUpDown>
+                                                <NumericUpDown my:DisableAssist.IsDisablable="False"
+                                                               FormatString="P0"
+                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               Increment="0.01"
+                                                               Maximum="{Binding Maximum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                                               Minimum="{Binding Minimum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                                               Value="{Binding Value, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
+                                                    <NumericUpDown.IsVisible>
+                                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                                     ConverterParameter="{x:Static ColorModel.Hsva}"
+                                                                     Path="ColorModel"
+                                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                        </MultiBinding>
+                                                    </NumericUpDown.IsVisible>
+                                                </NumericUpDown>
+                                                <ColorSlider Name="AlphaComponentSlider"
+                                                             my:DisableAssist.IsDisablable="False"
+                                                             ColorComponent="Alpha"
+                                                             ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
+                                                             HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                             IsEnabled="{TemplateBinding IsAlphaEnabled}">
+                                                    <ColorSlider.IsVisible>
+                                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                                            <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                        </MultiBinding>
+                                                    </ColorSlider.IsVisible>
+                                                </ColorSlider>
+                                            </DockPanel>
+                                        </HeaderedContentControl>
+
+                                    </Grid>
+
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
+
+                        <!-- Previewer -->
+                        <ColorPreviewer Grid.Row="1"
+                                        Height="32"
+                                        Margin="{TemplateBinding Padding, Converter={x:Static my:ThicknessConverter.RemoveTop}}"
+                                        my:DisableAssist.IsDisablable="False"
+                                        HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                        IsAccentColorsVisible="{TemplateBinding IsAccentColorsVisible}"
+                                        IsVisible="{TemplateBinding IsColorPreviewVisible}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^[ColorModel=Rgba]">
+            <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Red}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Green}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Blue}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Alpha}" />
+            </Style>
+        </Style>
+        <Style Selector="^[ColorModel=Hsva]">
+            <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Hue}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Saturation}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Value}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Alpha}" />
+            </Style>
+            <Style Selector="^ /template/ NumericUpDown#Component1NumericUpDown">
+                <Setter Property="FormatString" Value="#°" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[IsComponentSliderVisible=False] /template/ Grid#GridComponents NumericUpDown">
+            <Setter Property="Width" Value="NaN" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="DockPanel.Dock" Value="Top" />
+        </Style>
+    </ControlTheme>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- SIMPLE COLORVIEW THEME                                    -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="MyNet.Theme.ColorView.Simple" TargetType="ColorView" BasedOn="{StaticResource {x:Type ColorView}}">
+        <Setter Property="ColorSpectrumComponents" Value="SaturationValue" />
+        <Setter Property="IsAccentColorsVisible" Value="False" />
+        <Setter Property="ColorModel" Value="Hsva" />
+        <Setter Property="IsComponentTextInputVisible" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="{x:Type ColorView}">
+                <Border Padding="{TemplateBinding Padding}"
+                        my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid Name="GridComponents" RowDefinitions="Auto,10,*,Auto,Auto,Auto,Auto">
+                        <Grid.Styles>
+                            <Style Selector="HeaderedContentControl">
+                                <Setter Property="ClipToBounds" Value="False" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="{my:Thickness Sm, Vertical}" />
+                                <Setter Property="my:ClassesAssist.Classes" Value="kind-label variant-watermark position-top" />
+                            </Style>
+
+                            <Style Selector="NumericUpDown">
+                                <Setter Property="DockPanel.Dock" Value="Right" />
+                                <Setter Property="Width" Value="90" />
+                                <Setter Property="Margin" Value="{my:Thickness Md, Left}" />
+                                <Setter Property="AllowSpin" Value="True" />
+                                <Setter Property="my:DisableAssist.IsDisablable" Value="False" />
+                                <Setter Property="my:InputAssist.ShowClearButton" Value="False" />
+                            </Style>
+
+                            <Style Selector="ColorSlider">
+                                <Setter Property="my:SliderAssist.ShowValueOnMouseOver" Value="{Binding !$parent[ColorView].IsComponentTextInputVisible}" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="IsRoundingEnabled" Value="True" />
+                                <Setter Property="IsSnapToTickEnabled" Value="True" />
+                            </Style>
+                        </Grid.Styles>
+
+                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+
+                            <!-- Previewer -->
+                            <ColorPreviewer VerticalAlignment="Stretch"
+                                            my:DisableAssist.IsDisablable="False"
+                                            HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                            IsAccentColorsVisible="{TemplateBinding IsAccentColorsVisible}"
+                                            IsVisible="{TemplateBinding IsColorPreviewVisible}" />
+
+                            <!-- Hexa Value -->
+                            <TextBox Name="PART_HexTextBox"
+                                     Grid.Column="1"
+                                     my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                     my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                     Width="100"
+                                     Margin="{my:Thickness Md, Left}"
+                                     HorizontalAlignment="Stretch"
+                                     my:InputAssist.ShowClipboardButton="True"
+                                     AutomationProperties.Name="Hexadecimal Color"
+                                     my:DisableAssist.IsDisablable="False"
+                                     InnerLeftContent="#"
+                                     IsVisible="{TemplateBinding IsHexInputVisible}"
+                                     MaxLength="8"
+                                     UseFloatingPlaceholder="True"
+                                     PlaceholderText="{my:Loc Hexadecimal}" />
                         </Grid>
-                    </Border>
-                </ControlTemplate>
-            </Setter>
-            <Style Selector="^[ColorModel=Rgba]">
-                <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Red}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Green}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Blue}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Alpha}" />
-                </Style>
-            </Style>
-            <Style Selector="^[ColorModel=Hsva]">
-                <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Hue}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Saturation}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Value}" />
-                </Style>
-                <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
-                    <Setter Property="Header" Value="{my:Loc Alpha}" />
-                </Style>
-                <Style Selector="^ /template/ NumericUpDown#Component1NumericUpDown">
-                    <Setter Property="FormatString" Value="#°" />
-                </Style>
-            </Style>
 
-            <Style Selector="^[IsComponentSliderVisible=False] /template/ Grid#GridComponents NumericUpDown">
-                <Setter Property="Width" Value="NaN" />
-                <Setter Property="Margin" Value="0" />
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                <Setter Property="DockPanel.Dock" Value="Top" />
-            </Style>
-        </ControlTheme>
+                        <ColorSpectrum Name="ColorSpectrum"
+                                       Grid.Row="2"
+                                       VerticalAlignment="Stretch"
+                                       HorizontalAlignment="Stretch"
+                                       Classes="shadow-surface"
+                                       my:DisableAssist.IsDisablable="False"
+                                       Components="{TemplateBinding ColorSpectrumComponents}"
+                                       HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                       MaxHue="{TemplateBinding MaxHue}"
+                                       MaxSaturation="{TemplateBinding MaxSaturation}"
+                                       MaxValue="{TemplateBinding MaxValue}"
+                                       MinHue="{TemplateBinding MinHue}"
+                                       MinSaturation="{TemplateBinding MinSaturation}"
+                                       MinValue="{TemplateBinding MinValue}"
+                                       Shape="{TemplateBinding ColorSpectrumShape}" />
 
-    </Styles.Resources>
-</Styles>
+                        <!-- Color component editing controls -->
+                        <!-- Component 1 RGB:Red HSV:Hue -->
+                        <HeaderedContentControl Name="Component1HeaderedContentControl" Grid.Row="3">
+                            <HeaderedContentControl.IsVisible>
+                                <MultiBinding Converter="{x:Static my:ListConverter.AnyTrue}">
+                                    <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                </MultiBinding>
+                            </HeaderedContentControl.IsVisible>
+                            <DockPanel>
+                                <NumericUpDown Name="Component1NumericUpDown"
+                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               my:DisableAssist.IsDisablable="False"
+                                               IsVisible="{TemplateBinding IsComponentTextInputVisible}"
+                                               Maximum="{Binding Maximum, ElementName=Component1Slider}"
+                                               Minimum="{Binding Minimum, ElementName=Component1Slider}"
+                                               Value="{Binding Value, ElementName=Component1Slider}" />
+                                <ColorSlider Name="Component1Slider"
+                                             my:DisableAssist.IsDisablable="False"
+                                             ColorComponent="Component1"
+                                             ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
+                                             HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                             IsVisible="{TemplateBinding IsComponentSliderVisible}" />
+                            </DockPanel>
+                        </HeaderedContentControl>
+
+                        <!-- Component 2 RGB:Green HSV:Saturation -->
+                        <HeaderedContentControl Name="Component2HeaderedContentControl" Grid.Row="4">
+                            <HeaderedContentControl.IsVisible>
+                                <MultiBinding Converter="{x:Static my:ListConverter.AnyTrue}">
+                                    <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                </MultiBinding>
+                            </HeaderedContentControl.IsVisible>
+                            <DockPanel>
+                                <NumericUpDown my:DisableAssist.IsDisablable="False"
+                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               Maximum="{Binding Maximum, ElementName=Component2Slider}"
+                                               Minimum="{Binding Minimum, ElementName=Component2Slider}"
+                                               Value="{Binding Value, ElementName=Component2Slider}">
+                                    <NumericUpDown.IsVisible>
+                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                     ConverterParameter="{x:Static ColorModel.Rgba}"
+                                                     Path="ColorModel"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </NumericUpDown.IsVisible>
+                                </NumericUpDown>
+                                <NumericUpDown my:DisableAssist.IsDisablable="False"
+                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               FormatString="P0"
+                                               Increment="0.01"
+                                               Maximum="{Binding Maximum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                               Minimum="{Binding Minimum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                               Value="{Binding Value, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
+                                    <NumericUpDown.IsVisible>
+                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                     ConverterParameter="{x:Static ColorModel.Hsva}"
+                                                     Path="ColorModel"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </NumericUpDown.IsVisible>
+                                </NumericUpDown>
+                                <ColorSlider Name="Component2Slider"
+                                             my:DisableAssist.IsDisablable="False"
+                                             ColorComponent="Component2"
+                                             ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
+                                             HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                             IsVisible="{TemplateBinding IsComponentSliderVisible}" />
+                            </DockPanel>
+                        </HeaderedContentControl>
+
+                        <!-- Component 3 RGB:Blue HSV:Value -->
+                        <HeaderedContentControl Name="Component3HeaderedContentControl" Grid.Row="5">
+                            <HeaderedContentControl.IsVisible>
+                                <MultiBinding Converter="{x:Static my:ListConverter.AnyTrue}">
+                                    <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                </MultiBinding>
+                            </HeaderedContentControl.IsVisible>
+                            <DockPanel>
+                                <NumericUpDown my:DisableAssist.IsDisablable="False"
+                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               Maximum="{Binding Maximum, ElementName=Component3Slider}"
+                                               Minimum="{Binding Minimum, ElementName=Component3Slider}"
+                                               Value="{Binding Value, ElementName=Component3Slider}">
+                                    <NumericUpDown.IsVisible>
+                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                     ConverterParameter="{x:Static ColorModel.Rgba}"
+                                                     Path="ColorModel"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </NumericUpDown.IsVisible>
+                                </NumericUpDown>
+                                <NumericUpDown my:DisableAssist.IsDisablable="False"
+                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               FormatString="P0"
+                                               Increment="0.01"
+                                               Maximum="{Binding Maximum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                               Minimum="{Binding Minimum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                               Value="{Binding Value, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
+                                    <NumericUpDown.IsVisible>
+                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                     ConverterParameter="{x:Static ColorModel.Hsva}"
+                                                     Path="ColorModel"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </NumericUpDown.IsVisible>
+                                </NumericUpDown>
+                                <ColorSlider Name="Component3Slider"
+                                             my:DisableAssist.IsDisablable="False"
+                                             ColorComponent="Component3"
+                                             ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
+                                             HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                             IsVisible="{TemplateBinding IsComponentSliderVisible}" />
+                            </DockPanel>
+                        </HeaderedContentControl>
+
+                        <!-- Alpha Component -->
+                        <HeaderedContentControl Name="AlphaComponentHeaderedContentControl" Grid.Row="6">
+                            <HeaderedContentControl.IsVisible>
+                                <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                    <Binding Path="IsAlphaVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <MultiBinding Converter="{x:Static my:ListConverter.AnyTrue}">
+                                        <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    </MultiBinding>
+                                </MultiBinding>
+                            </HeaderedContentControl.IsVisible>
+                            <DockPanel>
+                                <NumericUpDown Name="AlphaComponentNumericUpDown"
+                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               my:DisableAssist.IsDisablable="False"
+                                               IsEnabled="{TemplateBinding IsAlphaEnabled}"
+                                               Maximum="{Binding Maximum, ElementName=AlphaComponentSlider}"
+                                               Minimum="{Binding Minimum, ElementName=AlphaComponentSlider}"
+                                               Value="{Binding Value, ElementName=AlphaComponentSlider}">
+                                    <NumericUpDown.IsVisible>
+                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                     ConverterParameter="{x:Static ColorModel.Rgba}"
+                                                     Path="ColorModel"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </NumericUpDown.IsVisible>
+                                </NumericUpDown>
+                                <NumericUpDown my:DisableAssist.IsDisablable="False"
+                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               FormatString="P0"
+                                               Increment="0.01"
+                                               Maximum="{Binding Maximum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                               Minimum="{Binding Minimum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
+                                               Value="{Binding Value, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
+                                    <NumericUpDown.IsVisible>
+                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                            <Binding Converter="{x:Static my:EnumConverter.Any}"
+                                                     ConverterParameter="{x:Static ColorModel.Hsva}"
+                                                     Path="ColorModel"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Path="IsComponentTextInputVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </NumericUpDown.IsVisible>
+                                </NumericUpDown>
+                                <ColorSlider Name="AlphaComponentSlider"
+                                             my:DisableAssist.IsDisablable="False"
+                                             ColorComponent="Alpha"
+                                             ColorModel="{TemplateBinding ColorModel, Mode=OneWay}"
+                                             HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                             IsEnabled="{TemplateBinding IsAlphaEnabled}">
+                                    <ColorSlider.IsVisible>
+                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                            <Binding Path="IsComponentSliderVisible" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </ColorSlider.IsVisible>
+                                </ColorSlider>
+                            </DockPanel>
+                        </HeaderedContentControl>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^[ColorModel=Rgba]">
+            <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Red}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Green}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Blue}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Alpha}" />
+            </Style>
+        </Style>
+        <Style Selector="^[ColorModel=Hsva]">
+            <Style Selector="^ /template/ HeaderedContentControl#Component1HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Hue}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#Component2HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Saturation}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#Component3HeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Value}" />
+            </Style>
+            <Style Selector="^ /template/ HeaderedContentControl#AlphaComponentHeaderedContentControl">
+                <Setter Property="Header" Value="{my:Loc Alpha}" />
+            </Style>
+            <Style Selector="^ /template/ NumericUpDown#Component1NumericUpDown">
+                <Setter Property="FormatString" Value="#°" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[IsComponentSliderVisible=False] /template/ Grid#GridComponents NumericUpDown">
+            <Setter Property="Width" Value="NaN" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="DockPanel.Dock" Value="Top" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

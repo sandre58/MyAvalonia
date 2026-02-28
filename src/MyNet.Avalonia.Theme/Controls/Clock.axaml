@@ -1,115 +1,112 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia"
-        xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals">
-    <Styles.Resources>
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals">
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DEFAULT CLOCK THEME                                       -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="{x:Type my:Clock}" TargetType="my:Clock">
-            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
-            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="Padding" Value="{my:Thickness Sm}" />
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT CLOCK THEME                                       -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type my:Clock}" TargetType="my:Clock">
+        <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Padding" Value="{my:Thickness Sm}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
 
-            <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
-            <!-- Surface -->
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="{my:ThemeRole Background}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeRole Border}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-            <Setter Property="TickBrush" Value="{my:Foreground Opacity=High}" />
-            <Setter Property="HourHandBrush" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
-            <Setter Property="MinuteHandBrush" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
-            <Setter Property="SecondHandBrush" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
-            <Setter Property="CenterBackground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
-            <Setter Property="CenterBorderBrush" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
-            <Setter Property="CenterBorderThickness" Value="0" />
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
-            <Setter Property="Template">
-                <ControlTemplate TargetType="my:Clock">
-                    <Grid>
-                        <Border Name="PART_ShadowBorder"
-                                IsHitTestVisible="False"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="{StaticResource MyNet.Corners.Round}"
-                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}" />
+        <!-- Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <Setter Property="TickBrush" Value="{my:Foreground Opacity=High}" />
+        <Setter Property="HourHandBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="MinuteHandBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="SecondHandBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="CenterBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="CenterBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="CenterBorderThickness" Value="0" />
 
-                        <Ellipse Fill="{TemplateBinding Background}"
-                                 Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
-                        <Grid Margin="{TemplateBinding Padding}">
-                            <my:ClockTicks Margin="{TemplateBinding Padding}"
-                                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                           HourTickForeground="{TemplateBinding TickBrush}"
-                                           MinuteTickForeground="{my:ThemeBrush TickBrush, RelativeSource={RelativeSource TemplatedParent}, Opacity=High}"
-                                           ShowHourTicks="{TemplateBinding ShowHourTicks}"
-                                           ShowMinuteTicks="{TemplateBinding ShowMinuteTicks}"
-                                           HourTickLength="{TemplateBinding HourTickLength}"
-                                           MinuteTickLength="{TemplateBinding MinuteTickLength}"
-                                           HourTickWidth="{TemplateBinding HourTickWidth}"
-                                           MinuteTickWidth="{TemplateBinding MinuteTickWidth}" />
-                            <UniformGrid IsVisible="{TemplateBinding ShowHourHand}" Rows="2">
-                                <Border Width="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.02}"
-                                        Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Bounds.Width, Converter={x:Static c:ClockHandLengthConverter.Hour}}"
-                                        VerticalAlignment="Bottom"
-                                        Background="{TemplateBinding HourHandBrush}"
-                                        CornerRadius="{StaticResource MyNet.Corners.Round}" />
-                                <UniformGrid.RenderTransform>
-                                    <RotateTransform Angle="{Binding HourAngle, RelativeSource={RelativeSource TemplatedParent}}" />
-                                </UniformGrid.RenderTransform>
-                            </UniformGrid>
-                            <UniformGrid IsVisible="{TemplateBinding ShowMinuteHand}" Rows="2">
-                                <Border Width="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.01}"
-                                        Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Bounds.Width, Converter={x:Static c:ClockHandLengthConverter.Minute}}"
-                                        VerticalAlignment="Bottom"
-                                        Background="{TemplateBinding MinuteHandBrush}"
-                                        CornerRadius="{StaticResource MyNet.Corners.Round}" />
-                                <UniformGrid.RenderTransform>
-                                    <RotateTransform Angle="{Binding MinuteAngle, RelativeSource={RelativeSource TemplatedParent}}" />
-                                </UniformGrid.RenderTransform>
-                            </UniformGrid>
-                            <UniformGrid IsVisible="{TemplateBinding ShowSecondHand}" Rows="2">
-                                <Border Width="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.005}"
-                                        Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Bounds.Width, Converter={x:Static c:ClockHandLengthConverter.Second}}"
-                                        VerticalAlignment="Bottom"
-                                        Background="{TemplateBinding SecondHandBrush}"
-                                        CornerRadius="{StaticResource MyNet.Corners.Round}" />
-                                <UniformGrid.RenderTransform>
-                                    <RotateTransform Angle="{Binding SecondAngle, RelativeSource={RelativeSource TemplatedParent}}" />
-                                </UniformGrid.RenderTransform>
-                            </UniformGrid>
-                            <Ellipse Width="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.08}"
-                                     Height="{Binding Bounds.Height, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.08}"
-                                     Fill="{TemplateBinding CenterBackground}"
-                                     Stroke="{TemplateBinding CenterBorderBrush}"
-                                     StrokeThickness="{TemplateBinding CenterBorderThickness}" />
-                        </Grid>
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:Clock">
+                <Grid>
+                    <Border Name="PART_ShadowBorder"
+                            IsHitTestVisible="False"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{StaticResource MyNet.Corners.Round}"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}" />
+
+                    <Ellipse Fill="{TemplateBinding Background}"
+                             Stroke="{TemplateBinding BorderBrush}"
+                             StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
+                    <Grid Margin="{TemplateBinding Padding}">
+                        <my:ClockTicks Margin="{TemplateBinding Padding}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                       HourTickForeground="{TemplateBinding TickBrush}"
+                                       MinuteTickForeground="{my:ThemeBrush TickBrush, RelativeSource={RelativeSource TemplatedParent}, Opacity=High}"
+                                       ShowHourTicks="{TemplateBinding ShowHourTicks}"
+                                       ShowMinuteTicks="{TemplateBinding ShowMinuteTicks}"
+                                       HourTickLength="{TemplateBinding HourTickLength}"
+                                       MinuteTickLength="{TemplateBinding MinuteTickLength}"
+                                       HourTickWidth="{TemplateBinding HourTickWidth}"
+                                       MinuteTickWidth="{TemplateBinding MinuteTickWidth}" />
+                        <UniformGrid IsVisible="{TemplateBinding ShowHourHand}" Rows="2">
+                            <Border Width="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.02}"
+                                    Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Bounds.Width, Converter={x:Static c:ClockHandLengthConverter.Hour}}"
+                                    VerticalAlignment="Bottom"
+                                    Background="{TemplateBinding HourHandBrush}"
+                                    CornerRadius="{StaticResource MyNet.Corners.Round}" />
+                            <UniformGrid.RenderTransform>
+                                <RotateTransform Angle="{Binding HourAngle, RelativeSource={RelativeSource TemplatedParent}}" />
+                            </UniformGrid.RenderTransform>
+                        </UniformGrid>
+                        <UniformGrid IsVisible="{TemplateBinding ShowMinuteHand}" Rows="2">
+                            <Border Width="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.01}"
+                                    Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Bounds.Width, Converter={x:Static c:ClockHandLengthConverter.Minute}}"
+                                    VerticalAlignment="Bottom"
+                                    Background="{TemplateBinding MinuteHandBrush}"
+                                    CornerRadius="{StaticResource MyNet.Corners.Round}" />
+                            <UniformGrid.RenderTransform>
+                                <RotateTransform Angle="{Binding MinuteAngle, RelativeSource={RelativeSource TemplatedParent}}" />
+                            </UniformGrid.RenderTransform>
+                        </UniformGrid>
+                        <UniformGrid IsVisible="{TemplateBinding ShowSecondHand}" Rows="2">
+                            <Border Width="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.005}"
+                                    Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Bounds.Width, Converter={x:Static c:ClockHandLengthConverter.Second}}"
+                                    VerticalAlignment="Bottom"
+                                    Background="{TemplateBinding SecondHandBrush}"
+                                    CornerRadius="{StaticResource MyNet.Corners.Round}" />
+                            <UniformGrid.RenderTransform>
+                                <RotateTransform Angle="{Binding SecondAngle, RelativeSource={RelativeSource TemplatedParent}}" />
+                            </UniformGrid.RenderTransform>
+                        </UniformGrid>
+                        <Ellipse Width="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.08}"
+                                 Height="{Binding Bounds.Height, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.08}"
+                                 Fill="{TemplateBinding CenterBackground}"
+                                 Stroke="{TemplateBinding CenterBorderBrush}"
+                                 StrokeThickness="{TemplateBinding CenterBorderThickness}" />
                     </Grid>
-                </ControlTemplate>
-            </Setter>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
 
-        </ControlTheme>
+    </ControlTheme>
 
-    </Styles.Resources>
-
-    <Style Selector="my|Clock">
-
-        <Style Selector="^[(my|ItemsAssist.Role)=Contrast]">
-            <Setter Property="HourHandBrush" Value="{my:Foreground}" />
-            <Setter Property="MinuteHandBrush" Value="{my:Foreground}" />
-            <Setter Property="SecondHandBrush" Value="{my:Foreground}" />
-            <Setter Property="CenterBackground" Value="{my:Foreground}" />
-            <Setter Property="CenterBorderBrush" Value="{my:Foreground}" />
-        </Style>
-    </Style>
-</Styles>
+</ResourceDictionary>

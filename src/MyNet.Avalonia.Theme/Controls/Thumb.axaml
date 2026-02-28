@@ -1,18 +1,21 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- THUMB BORDER THEME                                        -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.Thumb.Border" TargetType="{x:Type Thumb}">
+            <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
             <Setter Property="Focusable" Value="False" />
             <Setter Property="BorderThickness" Value="0" />
+            
+            <!-- Default colors -->
+            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:Foreground AncestorType=Control}" />
 
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:Foreground AncestorType=Control}" />
+            <!-- Theme -->
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
             <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:ThemeRole Primary, Opacity=Hover}" />
@@ -115,5 +118,5 @@
             </Style>
         </ControlTheme>
 
-    </Styles.Resources>
-</Styles>
+    
+</ResourceDictionary>

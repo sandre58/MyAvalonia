@@ -1,252 +1,82 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DEFAULT BUTTON THEME                                      -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="{x:Type Button}" TargetType="Button">
-            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
-            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
-            <Setter Property="UseLayoutRounding" Value="False" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Md}" />
-            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Md}" />
-            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Button}" />
-            <Setter Property="FontWeight" Value="{StaticResource MyNet.Font.Weight.Button}" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Focusable" Value="True" />
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT BUTTON THEME                                      -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type Button}" TargetType="Button">
+        <Setter Property="my:ThemeAssist.Category" Value="Action" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="UseLayoutRounding" Value="False" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Md}" />
+        <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Md}" />
+        <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Button}" />
+        <Setter Property="FontWeight" Value="{StaticResource MyNet.Font.Weight.Button}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Focusable" Value="True" />
 
-            <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Control.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
-            <!-- Default Theme -->
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="{my:ThemeRole Background}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeRole Border}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
-            <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
-            <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
-            <!-- Used by Toggle and Split Button -->
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeRole Primary}" />
-            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary}" />
-            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), Contrast=True}" />
+        <!-- Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
+        <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
 
-            <Setter Property="Template">
-                <ControlTemplate TargetType="Button">
-                    <Panel Name="PART_RootPanel">
+        <!-- Used by Toggle and Split Button -->
+        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), Contrast=True}" />
 
-                        <Border Name="PART_MainBorder"
-                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="Button">
+                <Panel Name="PART_RootPanel">
 
-                        <Border Name="PART_ActiveBorder"
-                                Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
-                                BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}"
-                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+                    <Border Name="PART_MainBorder"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
 
-                        <Border Name="PART_HoverBorder"
-                                Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
-                                BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}"
-                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+                    <Border Name="PART_ActiveBorder"
+                            Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                            BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Theme="{StaticResource MyNet.Theme.Border.State}" />
 
-                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
-                                <my:IconContentControl Name="IconContent"
-                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                       Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
-                                                       Padding="{TemplateBinding Padding}"
-                                                       HorizontalAlignment="Stretch"
-                                                       VerticalAlignment="Stretch"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                       BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                                                       BorderThickness="{TemplateBinding BorderThickness}"
-                                                       CornerRadius="{TemplateBinding CornerRadius}"
-                                                       Foreground="{TemplateBinding Foreground}"
-                                                       TextElement.FontSize="{TemplateBinding FontSize}"
-                                                       TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                                       UseLayoutRounding="False">
-                                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                                </my:IconContentControl>
-                            </my:Ripple>
-                        </Border>
-                    </Panel>
-                </ControlTemplate>
-            </Setter>
+                    <Border Name="PART_HoverBorder"
+                            Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                            BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Theme="{StaticResource MyNet.Theme.Border.State}" />
 
-            <!-- Hover -->
-            <Style Selector="^:not(:disabled):pointerover">
-                <Style Selector="^ /template/ my|IconContentControl#IconContent">
-                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                </Style>
-
-                <Style Selector="^.shadow-control /template/ Border#PART_MainBorder, ^.shadow-surface /template/ Border#PART_MainBorder">
-                    <Setter Property="my:ShadowAssist.Darken" Value="True" />
-                </Style>
-
-                <Style Selector="^ /template/ Border#PART_HoverBorder">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
-            </Style>
-
-            <!-- Active (for button with state "selected") -->
-            <Style Selector="^:selected, ^:checked, ^.is-selected">
-                <Style Selector="^ /template/ my|IconContentControl#IconContent">
-                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                </Style>
-
-                <Style Selector="^.shadow-control /template/ Border#PART_MainBorder, ^.shadow-surface /template/ Border#PART_MainBorder">
-                    <Setter Property="my:ShadowAssist.Darken" Value="True" />
-                </Style>
-
-                <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
-            </Style>
-        </ControlTheme>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- ROUNDED BUTTON THEME                                      -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="MyNet.Theme.Button.Rounded" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="my:ThemeAssist.Kind" Value="rounded" />
-            <Setter Property="Padding" Value="1" />
-            <Setter Property="MinHeight" Value="0" />
-            <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Md}" />
-            <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Md}" />
-            <Setter Property="FocusAdorner">
-                <FocusAdornerTemplate>
-                    <Ellipse Classes="kind-focus" />
-                </FocusAdornerTemplate>
-            </Setter>
-
-            <Setter Property="Template">
-                <ControlTemplate TargetType="Button">
-                    <Panel Name="PART_RootPanel">
-
-                        <Border Name="PART_ShadowBorder"
-                                IsHitTestVisible="False"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="{StaticResource MyNet.Corners.Round}"
-                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}" />
-
-                        <Ellipse Name="PART_MainEllipse"
-                                 Fill="{TemplateBinding Background}"
-                                 Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
-
-                        <Ellipse Name="PART_ActiveEllipse"
-                                 Fill="{TemplateBinding my:InteractionAssist.ActiveBackground}"
-                                 Stroke="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
-                                 Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
-
-                        <Ellipse Name="PART_HoverEllipse"
-                                 Fill="{TemplateBinding my:InteractionAssist.HoverBackground}"
-                                 Stroke="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
-                                 Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
-
-                        <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Round}">
-                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
-                                <my:IconContentControl Name="IconContent"
-                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                       Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
-                                                       Padding="{TemplateBinding Padding}"
-                                                       HorizontalAlignment="Stretch"
-                                                       VerticalAlignment="Stretch"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                       BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                                                       BorderThickness="{TemplateBinding BorderThickness}"
-                                                       CornerRadius="{TemplateBinding CornerRadius}"
-                                                       Foreground="{TemplateBinding Foreground}"
-                                                       TextElement.FontSize="{TemplateBinding FontSize}"
-                                                       TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                                       UseLayoutRounding="False">
-                                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                                </my:IconContentControl>
-                            </my:Ripple>
-                        </Border>
-                    </Panel>
-                </ControlTemplate>
-            </Setter>
-
-            <!-- Hover -->
-            <Style Selector="^:not(:disabled):pointerover">
-
-                <Style Selector="^.shadow-control /template/ Border#PART_ShadowBorder, ^.shadow-surface /template/ Border#PART_ShadowBorder">
-                    <Setter Property="my:ShadowAssist.Darken" Value="True" />
-                </Style>
-
-                <Style Selector="^ /template/ Ellipse#PART_HoverEllipse">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
-            </Style>
-
-            <!-- Active -->
-            <Style Selector="^:selected, ^:checked, ^.is-selected">
-                <Style Selector="^.shadow-control /template/ Border#PART_ShadowBorder, ^.shadow-surface /template/ Border#PART_ShadowBorder">
-                    <Setter Property="my:ShadowAssist.Darken" Value="True" />
-                </Style>
-
-                <Style Selector="^ /template/ Ellipse#PART_ActiveEllipse">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
-            </Style>
-        </ControlTheme>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- ICON BUTTON THEME                                         -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="MyNet.Theme.Button.Icon" TargetType="Button" BasedOn="{StaticResource MyNet.Theme.Button.Rounded}">
-            <Setter Property="my:ThemeAssist.Kind" Value="icon" />
-            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
-            <Setter Property="MinHeight" Value="0" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
-            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Md}" />
-            <Setter Property="ClipToBounds" Value="False" />
-
-            <!-- Default theme -->
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Foreground}" />
-            <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:ThemeRole Foreground}" />
-
-            <Setter Property="Template">
-                <ControlTemplate TargetType="Button">
-                    <Border Name="PART_MainBorder">
-                        <my:Ripple Name="PART_Ripple"
-                                   IsCentered="True"
-                                   RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}"
-                                   SizeMultiplier="3">
+                    <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                        <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
                             <my:IconContentControl Name="IconContent"
                                                    Icon="{TemplateBinding (my:IconAssist.Icon)}"
                                                    IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
@@ -258,7 +88,6 @@
                                                    VerticalAlignment="Stretch"
                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Background="{TemplateBinding Background}"
                                                    BackgroundSizing="{TemplateBinding BackgroundSizing}"
                                                    BorderThickness="{TemplateBinding BorderThickness}"
                                                    CornerRadius="{TemplateBinding CornerRadius}"
@@ -270,228 +99,230 @@
                             </my:IconContentControl>
                         </my:Ripple>
                     </Border>
-                </ControlTemplate>
-            </Setter>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
 
-            <!-- Hover -->
-            <Style Selector="^:not(:disabled):pointerover">
-                <Setter Property="Opacity" Value="1" />
+        <!-- Hover -->
+        <Style Selector="^:not(:disabled):pointerover">
+            <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
             </Style>
 
-            <!-- Active -->
-            <Style Selector="^:selected, ^:checked, ^.is-selected">
-                <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground)}" />
-                <Setter Property="Opacity" Value="1" />
-            </Style>
-        </ControlTheme>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- CLEAN BUTTON THEME (no visual feedback)                   -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="MyNet.Theme.Button.Clean" TargetType="Button">
-            <Setter Property="FocusAdorner" Value="{x:Null}" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="ClipToBounds" Value="False" />
-            <Setter Property="Template">
-                <ControlTemplate TargetType="Button">
-                    <ContentPresenter Name="PART_ContentPresenter"
-                                      Padding="{TemplateBinding Padding}"
-                                      HorizontalContentAlignment="Stretch"
-                                      VerticalContentAlignment="Stretch"
-                                      Content="{TemplateBinding Content}"
-                                      Foreground="{TemplateBinding Foreground}">
-                        <ContentPresenter.Background>
-                            <SolidColorBrush Opacity="0.002" Color="White" />
-                        </ContentPresenter.Background>
-                    </ContentPresenter>
-                </ControlTemplate>
-            </Setter>
-        </ControlTheme>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- REPEAT BUTTON (based on Icon button)                      -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="{x:Type RepeatButton}" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource {x:Type Button}}" />
-
-    </Styles.Resources>
-
-    <Style Selector=":is(Button)">
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- VARIANTS                                                  -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <Style Selector="^[(my|ThemeAssist.Kind)=default], ^[(my|ThemeAssist.Kind)=rounded]">
-
-            <!-- Variant: Light (semi-transparent theme-colored background) -->
-            <Style Selector="^.variant-light">
-                <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:ThemeRole Background, Opacity=Hover}" />
-                <Setter Property="my:InteractionAssist.RippleColor" Value="{my:ThemeRole Foreground}" />
+            <Style Selector="^.shadow-control /template/ Border#PART_MainBorder, ^.shadow-surface /template/ Border#PART_MainBorder">
+                <Setter Property="my:ShadowAssist.Darken" Value="True" />
             </Style>
 
-            <!-- Variant: Light + Text combination -->
-            <Style Selector="^.variant-light.variant-text">
-                <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:ThemeRole Foreground}" />
-            </Style>
-
-            <!-- Variant: Outlined + Light combination -->
-            <Style Selector="^.variant-outlined.variant-light">
-                <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:ThemeRole Background, Opacity=Hover}" />
-                <Setter Property="my:InteractionAssist.RippleColor" Value="{my:ThemeRole Foreground}" />
-            </Style>
-
-            <!-- Variant: Outlined + Text combination -->
-            <Style Selector="^.variant-outlined.variant-text">
-                <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:ThemeRole Foreground}" />
-            </Style>
-
-        </Style>
-
-        <Style Selector="^.kind-tool">
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
-            <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
-            <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
-            <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Tool}" />
-            <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Tool}" />
-            <Setter Property="MinHeight" Value="0" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
-
-            <!-- Hover -->
-            <Style Selector="^:not(:disabled):pointerover">
-                <Setter Property="Opacity" Value="1" />
-            </Style>
-
-            <Style Selector="^:selected, ^:checked, ^.is-selected">
+            <Style Selector="^ /template/ Border#PART_HoverBorder">
                 <Setter Property="Opacity" Value="1" />
             </Style>
         </Style>
 
-        <Style Selector="^.kind-caption">
-            <Setter Property="Margin" Value="0, 4" />
-            <Setter Property="Padding" Value="4" />
-            <Setter Property="Height" Value="28" />
-            <Setter Property="Width" Value="28" />
-            <Setter Property="VerticalAlignment" Value="Stretch" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control, Opacity=High}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
-            <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
-            <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
+        <!-- Active (for button with state "selected") -->
+        <Style Selector="^:selected, ^:checked, ^.is-selected">
+            <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
 
-            <Style Selector="^.variant-close">
-                <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Theme Button.Close.Hover}" />
-                <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:ThemeBrush (my:InteractionAssist.HoverBackground), Contrast=True}" />
-                <Setter Property="my:InteractionAssist.RippleColor" Value="{my:ThemeBrush (my:InteractionAssist.HoverBackground), Contrast=True}" />
+            <Style Selector="^.shadow-control /template/ Border#PART_MainBorder, ^.shadow-surface /template/ Border#PART_MainBorder">
+                <Setter Property="my:ShadowAssist.Darken" Value="True" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- ROUNDED BUTTON THEME                                      -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="MyNet.Theme.Button.Rounded" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="my:ThemeAssist.Kind" Value="rounded" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Md}" />
+        <Setter Property="FocusAdorner">
+            <FocusAdornerTemplate>
+                <Ellipse Classes="kind-focus" />
+            </FocusAdornerTemplate>
+        </Setter>
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="Button">
+                <Panel Name="PART_RootPanel">
+
+                    <Border Name="PART_ShadowBorder"
+                            IsHitTestVisible="False"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{StaticResource MyNet.Corners.Round}"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}" />
+
+                    <Ellipse Name="PART_MainEllipse"
+                             Fill="{TemplateBinding Background}"
+                             Stroke="{TemplateBinding BorderBrush}"
+                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
+
+                    <Ellipse Name="PART_ActiveEllipse"
+                             Fill="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                             Stroke="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
+                             Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
+
+                    <Ellipse Name="PART_HoverEllipse"
+                             Fill="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                             Stroke="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
+                             Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
+
+                    <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Round}">
+                        <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                            <my:IconContentControl Name="IconContent"
+                                                   Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                                   IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                   IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                   IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   HorizontalAlignment="Stretch"
+                                                   VerticalAlignment="Stretch"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                                   BorderThickness="{TemplateBinding BorderThickness}"
+                                                   CornerRadius="{TemplateBinding CornerRadius}"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   TextElement.FontSize="{TemplateBinding FontSize}"
+                                                   TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                   UseLayoutRounding="False">
+                                <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                            </my:IconContentControl>
+                        </my:Ripple>
+                    </Border>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- Hover -->
+        <Style Selector="^:not(:disabled):pointerover">
+
+            <Style Selector="^.shadow-control /template/ Border#PART_ShadowBorder, ^.shadow-surface /template/ Border#PART_ShadowBorder">
+                <Setter Property="my:ShadowAssist.Darken" Value="True" />
+            </Style>
+
+            <Style Selector="^ /template/ Ellipse#PART_HoverEllipse">
+                <Setter Property="Opacity" Value="1" />
             </Style>
         </Style>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- SPECIFIC BEHAVIOR STYLES                                  -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- Active -->
+        <Style Selector="^:selected, ^:checked, ^.is-selected">
+            <Style Selector="^.shadow-control /template/ Border#PART_ShadowBorder, ^.shadow-surface /template/ Border#PART_ShadowBorder">
+                <Setter Property="my:ShadowAssist.Darken" Value="True" />
+            </Style>
 
-        <Style Selector="^.is-stretch">
-            <Setter Property="CornerRadius" Value="0" />
-            <Setter Property="VerticalAlignment" Value="Stretch" />
-            <Setter Property="Padding" Value="{my:Thickness Sm, Horizontal}" />
-            <Setter Property="Height" Value="NaN" />
-            <Setter Property="Width" Value="NaN" />
+            <Style Selector="^ /template/ Ellipse#PART_ActiveEllipse">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- ICON BUTTON THEME                                         -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="MyNet.Theme.Button.Icon" TargetType="Button" BasedOn="{StaticResource MyNet.Theme.Button.Rounded}">
+        <Setter Property="my:ThemeAssist.Kind" Value="icon" />
+        <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        <Setter Property="ClipToBounds" Value="False" />
+
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Foreground AncestorType=Control}" />
+
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground}" />
+
+        <!-- Theme -->
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="Button">
+                <Border Name="PART_MainBorder">
+                    <my:Ripple Name="PART_Ripple"
+                               IsCentered="True"
+                               RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}"
+                               SizeMultiplier="3">
+                        <my:IconContentControl Name="IconContent"
+                                               Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                               IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                               IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                               IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                               Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                               Padding="{TemplateBinding Padding}"
+                                               HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Stretch"
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               Background="{TemplateBinding Background}"
+                                               BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                               BorderThickness="{TemplateBinding BorderThickness}"
+                                               CornerRadius="{TemplateBinding CornerRadius}"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               TextElement.FontSize="{TemplateBinding FontSize}"
+                                               TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                               UseLayoutRounding="False">
+                            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        </my:IconContentControl>
+                    </my:Ripple>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- Hover -->
+        <Style Selector="^:not(:disabled):pointerover">
+            <Setter Property="Opacity" Value="1" />
         </Style>
 
-        <!-- Clipboard: Pre-configured button to copy to clipboard -->
-        <Style Selector="^.is-clipboard">
-            <Setter Property="ToolTip.Tip">
-                <Template>
-                    <TextBlock Text="{my:Loc CopyInClipBoard}" />
-                </Template>
-            </Setter>
-            <Setter Property="Command" Value="{x:Static my:ClipboardAssist.CopyTextCommand}" />
-            <Setter Property="Content">
-                <Setter.Value>
-                    <Template>
-                        <PathIcon Data="{StaticResource MyNet.Geometry.ContentCopy}" />
-                    </Template>
-                </Setter.Value>
-            </Setter>
+        <!-- Active -->
+        <Style Selector="^:selected, ^:checked, ^.is-selected">
+            <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground)}" />
+            <Setter Property="Opacity" Value="1" />
         </Style>
+    </ControlTheme>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- SIZES                                                     -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- CLEAN BUTTON THEME (no visual feedback)                   -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="MyNet.Theme.Button.Clean" TargetType="Button">
+        <Setter Property="FocusAdorner" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="Button">
+                <ContentPresenter Name="PART_ContentPresenter"
+                                  Padding="{TemplateBinding Padding}"
+                                  HorizontalContentAlignment="Stretch"
+                                  VerticalContentAlignment="Stretch"
+                                  Content="{TemplateBinding Content}"
+                                  Foreground="{TemplateBinding Foreground}">
+                    <ContentPresenter.Background>
+                        <SolidColorBrush Opacity="0.002" Color="White" />
+                    </ContentPresenter.Background>
+                </ContentPresenter>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 
-        <Style Selector="^[(my|ThemeAssist.Kind)=default]">
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- REPEAT BUTTON (based on Icon button)                      -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type RepeatButton}" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource {x:Type Button}}" />
 
-            <!-- Size: Small -->
-            <Style Selector="^.size-sm">
-                <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Sm}" />
-                <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Sm}" />
-            </Style>
-
-            <!-- Size: Medium (default) -->
-            <Style Selector="^.size-md">
-                <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Md}" />
-                <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Md}" />
-            </Style>
-
-            <!-- Size: Large -->
-            <Style Selector="^.size-lg">
-                <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Lg}" />
-                <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Lg}" />
-            </Style>
-
-        </Style>
-
-        <Style Selector="^.kind-tool">
-
-            <Style Selector="^.size-sm">
-                <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Tool.Sm}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Tool.Sm}" />
-                <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Tool.Sm}" />
-                <Setter Property="Padding" Value="0" />
-            </Style>
-
-        </Style>
-
-        <Style Selector="^[(my|ThemeAssist.Kind)=rounded]">
-
-            <Style Selector="^.size-sm">
-                <Setter Property="Padding" Value="1" />
-                <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Sm}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Sm}" />
-            </Style>
-            <Style Selector="^.size-md">
-                <Setter Property="Padding" Value="1" />
-                <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Md}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Md}" />
-            </Style>
-            <Style Selector="^.size-lg">
-                <Setter Property="Padding" Value="1" />
-                <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Lg}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Lg}" />
-            </Style>
-
-        </Style>
-
-        <Style Selector="^[(my|ThemeAssist.Kind)=icon]">
-
-            <Style Selector="^.size-sm">
-                <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
-            </Style>
-            <Style Selector="^.size-md">
-                <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Md}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
-            </Style>
-            <Style Selector="^.size-lg">
-                <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Lg}" />
-                <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Lg}" />
-            </Style>
-
-        </Style>
-
-    </Style>
-</Styles>
+</ResourceDictionary>

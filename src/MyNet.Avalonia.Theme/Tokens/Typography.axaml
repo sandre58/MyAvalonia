@@ -1,49 +1,46 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:sys="clr-namespace:System;assembly=System.Runtime">
-    <Styles.Resources>
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
-        <!-- ===================================================================== -->
-        <!-- Font Family Tokens -->
-        <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- Font Family Tokens -->
+    <!-- ===================================================================== -->
 
-        <FontFamily x:Key="MyNet.Font.FontFamily">fonts:Inter#Inter, Segoe UI, Helvetica Neue, Arial, sans-serif</FontFamily>
-        <FontFamily x:Key="MyNet.Font.FontFamily.Code">fonts:Cascadia Code#Cascadia Code, Consolas, monospace</FontFamily>
+    <FontFamily x:Key="MyNet.Font.FontFamily">fonts:Inter#Inter, Segoe UI, Helvetica Neue, Arial, sans-serif</FontFamily>
+    <FontFamily x:Key="MyNet.Font.FontFamily.Code">fonts:Cascadia Code#Cascadia Code, Consolas, monospace</FontFamily>
 
-        <!-- ===================================================================== -->
-        <!-- Font Size Tokens -->
-        <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- Font Size Tokens -->
+    <!-- ===================================================================== -->
 
-        <sys:Double x:Key="MyNet.Font.Size.Xs">8</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.Sm">10</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.Md">12</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.Lg">14</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.Xl">16</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Xs">8</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Sm">10</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Md">12</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Lg">14</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Xl">16</sys:Double>
 
-        <sys:Double x:Key="MyNet.Font.Size.H6">16</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.H5">18</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.H4">20</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.H3">24</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.H2">28</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.H1">32</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H6">16</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H5">18</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H4">20</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H3">24</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H2">28</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.H1">32</sys:Double>
 
-        <sys:Double x:Key="MyNet.Font.Size">12</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.Tag">11</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.Button">13</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.Menu">13</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.TextField">12</sys:Double>
-        <sys:Double x:Key="MyNet.Font.Size.Tab">13</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size">12</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Tag">11</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Button">13</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Menu">13</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Input">12</sys:Double>
+    <sys:Double x:Key="MyNet.Font.Size.Tab">13</sys:Double>
 
-        <!-- ===================================================================== -->
-        <!-- Font Weight Tokens -->
-        <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- Font Weight Tokens -->
+    <!-- ===================================================================== -->
 
-        <FontWeight x:Key="MyNet.Font.Weight">Regular</FontWeight>
-        <FontWeight x:Key="MyNet.Font.Weight.Caption">SemiBold</FontWeight>
-        <FontWeight x:Key="MyNet.Font.Weight.Header">Bold</FontWeight>
-        <FontWeight x:Key="MyNet.Font.Weight.Button">Medium</FontWeight>
-        <FontWeight x:Key="MyNet.Font.Weight.Tab">Medium</FontWeight>
-        <FontWeight x:Key="MyNet.Font.Weight.Avatar">Bold</FontWeight>
-
-    </Styles.Resources>
-</Styles>
+    <FontWeight x:Key="MyNet.Font.Weight">Regular</FontWeight>
+    <FontWeight x:Key="MyNet.Font.Weight.Caption">Medium</FontWeight>
+    <FontWeight x:Key="MyNet.Font.Weight.Header">SemiBold</FontWeight>
+    <FontWeight x:Key="MyNet.Font.Weight.Button">Medium</FontWeight>
+    <FontWeight x:Key="MyNet.Font.Weight.Tab">Medium</FontWeight>
+    <FontWeight x:Key="MyNet.Font.Weight.Avatar">Bold</FontWeight>
+</ResourceDictionary>

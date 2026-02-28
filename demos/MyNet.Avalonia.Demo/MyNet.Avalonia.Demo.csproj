@@ -76,6 +76,11 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>NotificationPageResources.resx</DependentUpon>
       </Compile>
+      <Compile Update="Resources\ThemePageResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ThemePageResources.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -114,6 +119,10 @@
         <EmbeddedResource Update="Resources\NotificationPageResources.resx">
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>NotificationPageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\ThemePageResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>ThemePageResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 </Project>

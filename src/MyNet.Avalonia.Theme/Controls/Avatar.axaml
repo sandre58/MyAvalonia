@@ -1,81 +1,70 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DEFAULT AVATAR THEME                                      -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="{x:Type my:Avatar}" TargetType="{x:Type my:Avatar}">
-            <Setter Property="FontSize" Value="{Binding $self.Width, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=1.5}" />
-            <Setter Property="FontWeight" Value="{StaticResource MyNet.Font.Weight.Avatar}" />
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Md}" />
-            <Setter Property="Height" Value="{Binding $self.Width}" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT AVATAR THEME                                      -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type my:Avatar}" TargetType="{x:Type my:Avatar}">
+        <Setter Property="my:ThemeAssist.Category" Value="Surface" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="FontSize" Value="{Binding $self.Width, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=1.5}" />
+        <Setter Property="FontWeight" Value="{StaticResource MyNet.Font.Weight.Avatar}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Md}" />
+        <Setter Property="Height" Value="{Binding $self.Width}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
 
-            <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
 
-            <!-- Default Theme -->
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="{my:ThemeRole Background}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeRole Border}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
-            <Setter Property="Template">
-                <ControlTemplate TargetType="{x:Type my:Avatar}">
-                    <Panel>
-                        <Border my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}">
-                            <Border.IsVisible>
-                                <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                    <Binding Path="ShowBackground" RelativeSource="{RelativeSource TemplatedParent}" />
-                                    <Binding Converter="{x:Static ObjectConverters.IsNull}" Path="Source" RelativeSource="{RelativeSource TemplatedParent}" />
-                                </MultiBinding>
-                            </Border.IsVisible>
-                        </Border>
-                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                            <Panel>
-                                <ContentPresenter Name="PART_ContentPresenter"
-                                                  HorizontalContentAlignment="Center"
-                                                  VerticalContentAlignment="Center"
-                                                  Content="{TemplateBinding Content}"
-                                                  CornerRadius="{TemplateBinding CornerRadius}"
-                                                  IsVisible="{TemplateBinding Source, Converter={x:Static ObjectConverters.IsNull}}" />
-                                <Image Source="{TemplateBinding Source}" Stretch="{TemplateBinding Stretch}" />
-                            </Panel>
-                        </Border>
-                    </Panel>
-                </ControlTemplate>
-            </Setter>
-        </ControlTheme>
+        <!-- Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
 
-    </Styles.Resources>
+        <Setter Property="Template">
+            <ControlTemplate TargetType="{x:Type my:Avatar}">
+                <Panel>
+                    <Border my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                <Binding Path="ShowBackground" RelativeSource="{RelativeSource TemplatedParent}" />
+                                <Binding Converter="{x:Static ObjectConverters.IsNull}" Path="Source" RelativeSource="{RelativeSource TemplatedParent}" />
+                            </MultiBinding>
+                        </Border.IsVisible>
+                    </Border>
+                    <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                        <Panel>
+                            <ContentPresenter Name="PART_ContentPresenter"
+                                              HorizontalContentAlignment="Center"
+                                              VerticalContentAlignment="Center"
+                                              Content="{TemplateBinding Content}"
+                                              CornerRadius="{TemplateBinding CornerRadius}"
+                                              IsVisible="{TemplateBinding Source, Converter={x:Static ObjectConverters.IsNull}}" />
+                            <Image Source="{TemplateBinding Source}" Stretch="{TemplateBinding Stretch}" />
+                        </Panel>
+                    </Border>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 
-    <Style Selector="my|Avatar">
-        <Style Selector="^.size-xs">
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Xs}" />
-        </Style>
-        <Style Selector="^.size-sm">
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Sm}" />
-        </Style>
-        <Style Selector="^.size-md">
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Md}" />
-        </Style>
-        <Style Selector="^.size-lg">
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Lg}" />
-        </Style>
-        <Style Selector="^.size-xl">
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Xl}" />
-        </Style>
-    </Style>
-</Styles>
+</ResourceDictionary>

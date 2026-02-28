@@ -1,7 +1,7 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+﻿
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:DataType="WindowNotificationManager">
-    <Styles.Resources>
         
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- DEFAULT WINDOWNOTIFICATIONMANAGER THEME                   -->
@@ -48,5 +48,5 @@
             </Style>
         </ControlTheme>
 
-    </Styles.Resources>
-</Styles>
+
+</ResourceDictionary>

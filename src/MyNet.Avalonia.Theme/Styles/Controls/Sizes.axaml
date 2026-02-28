@@ -1,0 +1,342 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="using:Avalonia.Controls.Converters"
+        xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- AVATAR                                                    -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="my|Avatar.size-xs">
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Xs}" />
+    </Style>
+    <Style Selector="my|Avatar.size-sm">
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Sm}" />
+    </Style>
+    <Style Selector="my|Avatar.size-md">
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Md}" />
+    </Style>
+    <Style Selector="my|Avatar.size-lg">
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Lg}" />
+    </Style>
+    <Style Selector="my|Avatar.size-xl">
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Xl}" />
+    </Style>
+
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- BADGE                                                     -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="my|Badge.size-sm">
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Sm}" />
+        <Setter Property="BadgeFontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+    </Style>
+
+    <Style Selector="my|Badge.size-md">
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Md}" />
+        <Setter Property="BadgeFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+    </Style>
+
+    <Style Selector="my|Badge.size-lg">
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Lg}" />
+        <Setter Property="BadgeFontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
+    </Style>
+
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- BANNER                                                    -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="my|Banner.size-sm">
+        <Setter Property="Padding" Value="{my:Thickness Sm}" />
+        <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Bottom}" />
+    </Style>
+
+    <Style Selector="my|Banner.size-lg">
+        <Setter Property="Padding" Value="{my:Thickness Lg}" />
+        <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Md, Bottom}" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- BUTTONS                                                   -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <!-- Size: Small -->
+    <Style Selector=":is(Button)[(my|ThemeAssist.Kind)=default].size-sm, :is(SplitButton).size-sm">
+        <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Sm}" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Sm}" />
+    </Style>
+
+    <!-- Size: Medium (default) -->
+    <Style Selector=":is(Button)[(my|ThemeAssist.Kind)=default].size-md, :is(SplitButton).size-md">
+        <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Md}" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Md}" />
+    </Style>
+
+    <!-- Size: Large -->
+    <Style Selector=":is(Button)[(my|ThemeAssist.Kind)=default].size-lg, :is(SplitButton).size-lg">
+        <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Lg}" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Lg}" />
+    </Style>
+
+    <Style Selector=":is(Button)[(my|ThemeAssist.Kind)=rounded].size-sm">
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Sm}" />
+    </Style>
+    <Style Selector=":is(Button)[(my|ThemeAssist.Kind)=rounded].size-md">
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Md}" />
+    </Style>
+    <Style Selector=":is(Button)[(my|ThemeAssist.Kind)=rounded].size-lg">
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Lg}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Lg}" />
+    </Style>
+
+    <Style Selector="DropDownButton[(my|ThemeAssist.Kind)=rounded].size-sm">
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Sm}" />
+    </Style>
+    <Style Selector="DropDownButton[(my|ThemeAssist.Kind)=rounded].size-md">
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
+    </Style>
+    <Style Selector="DropDownButton[(my|ThemeAssist.Kind)=rounded].size-lg">
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Lg}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Lg}" />
+    </Style>
+
+    <Style Selector=":is(Button)[(my|ThemeAssist.Kind)=icon].size-sm">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+    </Style>
+    <Style Selector=":is(Button)[(my|ThemeAssist.Kind)=icon].size-md">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
+    </Style>
+    <Style Selector=":is(Button)[(my|ThemeAssist.Kind)=icon].size-lg">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+    </Style>
+
+    <Style Selector=":is(Button).kind-tool.size-sm">
+        <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Tool.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Tool.Sm}" />
+        <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Tool.Sm}" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- CALENDAR                                                  -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="Calendar.size-sm, my|Calendar.size-sm">
+        <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Sm}" />
+    </Style>
+
+    <Style Selector="Calendar.size-md, my|Calendar.size-md">
+        <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Md}" />
+    </Style>
+
+    <Style Selector="Calendar.size-lg, my|Calendar.size-lg">
+        <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Lg}" />
+    </Style>
+
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- HEADEREDCONTENTCONTROL                                    -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector=":is(HeaderedContentControl).size-sm">
+        <Setter Property="Padding" Value="{my:Thickness Sm}" />
+        <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Sm}" />
+    </Style>
+
+    <Style Selector=":is(HeaderedContentControl).size-lg">
+        <Setter Property="Padding" Value="{my:Thickness Lg}" />
+        <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Lg}" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- ICONS                                                     -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="my|OutlinedIcon.size-xs, PathIcon.size-xs">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+    </Style>
+    <Style Selector="my|OutlinedIcon.size-sm, PathIcon.size-sm">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+    </Style>
+    <Style Selector="my|OutlinedIcon.size-md, PathIcon.size-md">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
+    </Style>
+    <Style Selector="my|OutlinedIcon.size-lg, PathIcon.size-lg">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+    </Style>
+    <Style Selector="my|OutlinedIcon.size-xl, PathIcon.size-xl">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Xl}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Xl}" />
+    </Style>
+
+    <Style Selector="PathIcon.kind-glyph.size-xs">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Xs}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Xs}" />
+    </Style>
+    <Style Selector="PathIcon.kind-glyph.size-sm">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+    </Style>
+    <Style Selector="PathIcon.kind-glyph.size-md">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+    </Style>
+    <Style Selector="PathIcon.kind-glyph.size-lg">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+    </Style>
+    <Style Selector="PathIcon.kind-glyph.size-xl">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Xl}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Xl}" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- INPUTS                                                    -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="TemplatedControl.category-input.size-sm">
+        <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Sm}" />
+    </Style>
+
+    <Style Selector="TemplatedControl.category-input.size-lg">
+        <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Lg}" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- LABEL                                                     -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="Label.size-sm">
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Sm}" />
+    </Style>
+
+    <Style Selector="Label.size-md">
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Md}" />
+    </Style>
+
+    <Style Selector="Label.size-lg">
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Lg}" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- LISTBOX                                                   -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="ListBox.size-sm, TreeView.size-sm, TabStrip.size-sm">
+        <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Sm}" />
+    </Style>
+
+    <Style Selector="ListBox.size-md, TreeView.size-md, TabStrip.size-md">
+        <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Md}" />
+    </Style>
+
+    <Style Selector="ListBox.size-lg, TreeView.size-lg, TabStrip.size-lg">
+        <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Lg}" />
+    </Style>
+
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- PROGRESSBAR                                               -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="ProgressBar[(my|ThemeAssist.Kind)=default].size-sm">
+        <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Sm}" />
+    </Style>
+    <Style Selector="ProgressBar[(my|ThemeAssist.Kind)=default].size-md">
+        <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Md}" />
+    </Style>
+    <Style Selector="ProgressBar[(my|ThemeAssist.Kind)=default].size-lg">
+        <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Lg}" />
+    </Style>
+
+    <Style Selector="ProgressBar[(my|ThemeAssist.Kind)=circular].size-sm">
+        <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Circular.Sm}" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Sm}" />
+    </Style>
+    <Style Selector="ProgressBar[(my|ThemeAssist.Kind)=circular].size-md">
+        <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Circular.Md}" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Md}" />
+    </Style>
+    <Style Selector="ProgressBar[(my|ThemeAssist.Kind)=circular].size-lg">
+        <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Circular.Lg}" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Lg}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Lg}" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- TABCONTROL                                                   -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="TabControl.size-sm">
+        <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Sm}" />
+    </Style>
+
+    <Style Selector="TabControl.size-md">
+        <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md}" />
+    </Style>
+
+    <Style Selector="TabControl.size-lg">
+        <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Lg}" />
+    </Style>
+
+    <Style Selector="TabControl.kind-indicator">
+        <Style Selector="^.size-sm">
+            <Setter Property="my:ItemsAssist.Size" Value="40" />
+        </Style>
+
+        <Style Selector="^.size-md">
+            <Setter Property="my:ItemsAssist.Size" Value="55" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="my:ItemsAssist.Size" Value="65" />
+        </Style>
+    </Style>
+
+    <Style Selector="TabControl.variant-items-solid, TabControl.variant-items-outlined, TabControl.variant-items-light, TabControl.variant-items-text">
+
+        <Style Selector="^.size-xs">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
+        </Style>
+        <Style Selector="^.size-sm">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Md}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Lg}" />
+        </Style>
+        <Style Selector="^.size-xl">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xl}" />
+        </Style>
+        <Style Selector="^.size-xxl">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xxl}" />
+        </Style>
+        <Style Selector="^.size-xxxl">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xxxl}" />
+        </Style>
+    </Style>
+</Styles>

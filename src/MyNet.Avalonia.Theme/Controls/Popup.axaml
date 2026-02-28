@@ -1,40 +1,18 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Styles.Resources>
-        
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DEFAULT POPUPROOT THEME                                   -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="{x:Type PopupRoot}" TargetType="PopupRoot">
-            <Setter Property="Background" Value="{x:Null}" />
-            <Setter Property="TransparencyLevelHint" Value="Transparent" />
-            <Setter Property="Cursor" Value="Arrow" />
-            <Setter Property="Template">
-                <ControlTemplate TargetType="PopupRoot">
-                    <LayoutTransformControl LayoutTransform="{TemplateBinding Transform}">
-                        <Panel>
-                            <Border Name="PART_TransparencyFallback" IsHitTestVisible="False" />
-                            <VisualLayerManager IsPopup="True">
-                                <ContentPresenter Name="PART_ContentPresenter"
-                                                  Padding="{TemplateBinding Padding}"
-                                                  Background="{TemplateBinding Background}"
-                                                  Content="{TemplateBinding Content}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}" />
-                            </VisualLayerManager>
-                        </Panel>
-                    </LayoutTransformControl>
-                </ControlTemplate>
-            </Setter>
-        </ControlTheme>
-        
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DEFAULT OVERLAYPOPUPHOST THEME                            -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="{x:Type OverlayPopupHost}" TargetType="OverlayPopupHost">
-            <Setter Property="Cursor" Value="Arrow" />
-            <Setter Property="Template">
-                <ControlTemplate>
-                    <LayoutTransformControl LayoutTransform="{TemplateBinding Transform}">
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT POPUPROOT THEME                                   -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type PopupRoot}" TargetType="PopupRoot">
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="TransparencyLevelHint" Value="Transparent" />
+        <Setter Property="Cursor" Value="Arrow" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="PopupRoot">
+                <LayoutTransformControl LayoutTransform="{TemplateBinding Transform}">
+                    <Panel>
+                        <Border Name="PART_TransparencyFallback" IsHitTestVisible="False" />
                         <VisualLayerManager IsPopup="True">
                             <ContentPresenter Name="PART_ContentPresenter"
                                               Padding="{TemplateBinding Padding}"
@@ -42,10 +20,31 @@
                                               Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}" />
                         </VisualLayerManager>
-                    </LayoutTransformControl>
-                </ControlTemplate>
-            </Setter>
-        </ControlTheme>
+                    </Panel>
+                </LayoutTransformControl>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 
-    </Styles.Resources>
-</Styles>
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT OVERLAYPOPUPHOST THEME                            -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type OverlayPopupHost}" TargetType="OverlayPopupHost">
+        <Setter Property="Cursor" Value="Arrow" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <LayoutTransformControl LayoutTransform="{TemplateBinding Transform}">
+                    <VisualLayerManager IsPopup="True">
+                        <ContentPresenter Name="PART_ContentPresenter"
+                                          Padding="{TemplateBinding Padding}"
+                                          Background="{TemplateBinding Background}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    </VisualLayerManager>
+                </LayoutTransformControl>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+
+</ResourceDictionary>

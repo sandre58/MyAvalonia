@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using MyNet.Avalonia.Theme.Extensions;
+using MyNet.Avalonia.Extensions;
 
 namespace MyNet.Avalonia.Theme.Palettes;
 
@@ -73,16 +73,16 @@ public class OpacityLevels
     public Dictionary<string, object> ToResourceDictionary(string prefix = nameof(ThemeVariantColors.Opacity))
         => new()
         {
-            [nameof(Overlay).WithPrefix(prefix)] = Overlay,
-            [nameof(Hover).WithPrefix(prefix)] = Hover,
-            [nameof(Focus).WithPrefix(prefix)] = Focus,
-            [nameof(Pressed).WithPrefix(prefix)] = Pressed,
-            [nameof(Drag).WithPrefix(prefix)] = Drag,
-            [nameof(Scrim).WithPrefix(prefix)] = Scrim,
-            [nameof(Disabled).WithPrefix(prefix)] = Disabled,
-            [nameof(Low).WithPrefix(prefix)] = Low,
-            [nameof(Medium).WithPrefix(prefix)] = Medium,
-            [nameof(High).WithPrefix(prefix)] = High
+            [nameof(Overlay).WithPrefix(prefix, ".")] = Overlay,
+            [nameof(Hover).WithPrefix(prefix, ".")] = Hover,
+            [nameof(Focus).WithPrefix(prefix, ".")] = Focus,
+            [nameof(Pressed).WithPrefix(prefix, ".")] = Pressed,
+            [nameof(Drag).WithPrefix(prefix, ".")] = Drag,
+            [nameof(Scrim).WithPrefix(prefix, ".")] = Scrim,
+            [nameof(Disabled).WithPrefix(prefix, ".")] = Disabled,
+            [nameof(Low).WithPrefix(prefix, ".")] = Low,
+            [nameof(Medium).WithPrefix(prefix, ".")] = Medium,
+            [nameof(High).WithPrefix(prefix, ".")] = High
         };
 
     /// <summary>
@@ -93,15 +93,15 @@ public class OpacityLevels
     /// <returns>A new OpacityLevels instance.</returns>
     public static OpacityLevels FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary, string prefix = nameof(ThemeVariantColors.Opacity)) => new()
     {
-        Overlay = (double)dictionary.GetValueOrDefault(nameof(Overlay).WithPrefix(prefix), 0.5),
-        Hover = (double)dictionary.GetValueOrDefault(nameof(Hover).WithPrefix(prefix), 0.08),
-        Focus = (double)dictionary.GetValueOrDefault(nameof(Focus).WithPrefix(prefix), 0.12),
-        Pressed = (double)dictionary.GetValueOrDefault(nameof(Pressed).WithPrefix(prefix), 0.12),
-        Drag = (double)dictionary.GetValueOrDefault(nameof(Drag).WithPrefix(prefix), 0.16),
-        Scrim = (double)dictionary.GetValueOrDefault(nameof(Scrim).WithPrefix(prefix), 0.32),
-        Disabled = (double)dictionary.GetValueOrDefault(nameof(Disabled).WithPrefix(prefix), 0.38),
-        Low = (double)dictionary.GetValueOrDefault(nameof(Low).WithPrefix(prefix), 0.05),
-        Medium = (double)dictionary.GetValueOrDefault(nameof(Medium).WithPrefix(prefix), 0.08),
-        High = (double)dictionary.GetValueOrDefault(nameof(High).WithPrefix(prefix), 0.14)
+        Overlay = (double)dictionary.GetValueOrDefault(nameof(Overlay).WithPrefix(prefix, "."), 0.5),
+        Hover = (double)dictionary.GetValueOrDefault(nameof(Hover).WithPrefix(prefix, "."), 0.08),
+        Focus = (double)dictionary.GetValueOrDefault(nameof(Focus).WithPrefix(prefix, "."), 0.12),
+        Pressed = (double)dictionary.GetValueOrDefault(nameof(Pressed).WithPrefix(prefix, "."), 0.12),
+        Drag = (double)dictionary.GetValueOrDefault(nameof(Drag).WithPrefix(prefix, "."), 0.16),
+        Scrim = (double)dictionary.GetValueOrDefault(nameof(Scrim).WithPrefix(prefix, "."), 0.32),
+        Disabled = (double)dictionary.GetValueOrDefault(nameof(Disabled).WithPrefix(prefix, "."), 0.38),
+        Low = (double)dictionary.GetValueOrDefault(nameof(Low).WithPrefix(prefix, "."), 0.05),
+        Medium = (double)dictionary.GetValueOrDefault(nameof(Medium).WithPrefix(prefix, "."), 0.08),
+        High = (double)dictionary.GetValueOrDefault(nameof(High).WithPrefix(prefix, "."), 0.14)
     };
 }

@@ -6,6 +6,7 @@
 
 using System;
 using System.Windows.Input;
+using MyNet.Avalonia.Extended.WarmUp;
 using MyNet.UI.Commands;
 using MyNet.UI.Locators;
 using MyNet.UI.Navigation;
@@ -21,10 +22,12 @@ internal sealed class MainViewModel : MainWindowViewModelBase
     public MainViewModel(INotificationsManager notificationsManager,
                          IAppCommandsService appCommandsService,
                          INavigationService navigationService,
+                         IWarmUpService warmUpService,
                          IViewModelLocator viewModelLocator)
         : base(notificationsManager, appCommandsService, AppBusyManager.MainBusyService, UIContext.Globalization)
     {
         NavigationService = navigationService;
+        WarmUpService = warmUpService;
 
         GoBackCommand = CommandsManager.Create(() => NavigationService.GoBack(), () => NavigationService.CanGoBack());
         GoForwardCommand = CommandsManager.Create(() => NavigationService.GoForward(), () => NavigationService.CanGoForward());
@@ -35,6 +38,8 @@ internal sealed class MainViewModel : MainWindowViewModelBase
     }
 
     public INavigationService NavigationService { get; }
+
+    public IWarmUpService WarmUpService { get; }
 
     public ICommand GoBackCommand { get; }
 

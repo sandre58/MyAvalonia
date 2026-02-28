@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia.Media;
+using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Extensions;
 
@@ -298,7 +299,41 @@ public static class ColorExtensions
     }
 }
 
+/// <summary>
+/// Gets or sets color interpolation parameters for opacity, contrast, darkening, and lightening adjustments.
+/// </summary>
+/// <param name="Opacity">The opacity value (0.0 to 1.0).</param>
+/// <param name="Contrast">Whether to apply contrast transformation.</param>
+/// <param name="Darken">The darken factor (0.0 to 1.0).</param>
+/// <param name="Lighten">The lighten factor (0.0 to 1.0).</param>
 public record ColorInterpolation(double? Opacity = null, bool Contrast = false, double? Darken = null, double? Lighten = null)
 {
+    /// <summary>
+    /// Gets a value indicating whether no interpolation parameters are set (i.e., all are null or false).
+    /// </summary>
+    public bool IsEmpty => (!Opacity.HasValue || Opacity.Value.NearlyEqual(1.0)) && !Darken.HasValue && !Lighten.HasValue;
+
+    /// <summary>
+    /// Gets a value indicating whether the opacity has been explicitly set for the element.
+    /// </summary>
+    /// <remarks>This property returns <see langword="true"/> if the Opacity property has a value assigned;
+    /// otherwise, it returns <see langword="false"/>. Use this property to determine if the element's opacity is
+    /// controlled by a specific value or is using the default behavior.</remarks>
+    public bool HasOpacity => Opacity.HasValue;
+
+    /// <summary>
+    /// Gets a value indicating whether the darken factor has been explicitly set for the element.
+    /// </summary>
+    public bool HasDarken => Darken.HasValue;
+
+    /// <summary>
+    /// Gets a value indicating whether the Lighten property has been set.
+    /// </summary>
+    public bool HasLighten => Lighten.HasValue;
+
+    /// <summary>
+    /// Provides a string representation of the ColorInterpolation instance, showing the values of Opacity, Contrast, Darken, and Lighten.
+    /// </summary>
+    /// <returns>A string representation of the ColorInterpolation instance.</returns>
     public override string ToString() => $"Opacity: {Opacity}, Contrast: {Contrast}, Darken: {Darken}, Lighten: {Lighten}";
 }

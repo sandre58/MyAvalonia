@@ -79,34 +79,45 @@ public class WindowDialogBox : WindowDialog
     private void SetButtonVisibility()
     {
         // ClosePopup button should be hidden instead if invisible to retain layout.
-        IsVisibleProperty.SetValue(true, CloseButton);
+        CloseButton?.SetValue(IsVisibleProperty, true);
         var closeButtonVisible = IsCloseButtonVisible && (DataContext is IDialogViewModel || Buttons != MessageBoxResultOption.YesNo);
-        IsHitTestVisibleProperty.SetValue(closeButtonVisible, CloseButton);
-        if (!closeButtonVisible)
+        CloseButton?.SetValue(IsHitTestVisibleProperty, closeButtonVisible);
+        if (!closeButtonVisible && CloseButton != null)
         {
-            OpacityProperty.SetValue(0, CloseButton);
+            CloseButton.SetValue(OpacityProperty, 0);
         }
 
         switch (Buttons)
         {
             case MessageBoxResultOption.None:
-                IsVisibleProperty.SetValue(false, _okButton, _cancelButton, _yesButton, _noButton);
+                _okButton?.SetValue(IsVisibleProperty, false);
+                _cancelButton?.SetValue(IsVisibleProperty, false);
+                _yesButton?.SetValue(IsVisibleProperty, false);
+                _noButton?.SetValue(IsVisibleProperty, false);
                 break;
             case MessageBoxResultOption.Ok:
-                IsVisibleProperty.SetValue(true, _okButton);
-                IsVisibleProperty.SetValue(false, _cancelButton, _yesButton, _noButton);
+                _okButton?.SetValue(IsVisibleProperty, true);
+                _cancelButton?.SetValue(IsVisibleProperty, false);
+                _yesButton?.SetValue(IsVisibleProperty, false);
+                _noButton?.SetValue(IsVisibleProperty, false);
                 break;
             case MessageBoxResultOption.OkCancel:
-                IsVisibleProperty.SetValue(true, _okButton, _cancelButton);
-                IsVisibleProperty.SetValue(false, _yesButton, _noButton);
+                _okButton?.SetValue(IsVisibleProperty, true);
+                _cancelButton?.SetValue(IsVisibleProperty, true);
+                _yesButton?.SetValue(IsVisibleProperty, false);
+                _noButton?.SetValue(IsVisibleProperty, false);
                 break;
             case MessageBoxResultOption.YesNo:
-                IsVisibleProperty.SetValue(false, _okButton, _cancelButton);
-                IsVisibleProperty.SetValue(true, _yesButton, _noButton);
+                _okButton?.SetValue(IsVisibleProperty, false);
+                _cancelButton?.SetValue(IsVisibleProperty, false);
+                _yesButton?.SetValue(IsVisibleProperty, true);
+                _noButton?.SetValue(IsVisibleProperty, true);
                 break;
             case MessageBoxResultOption.YesNoCancel:
-                IsVisibleProperty.SetValue(false, _okButton);
-                IsVisibleProperty.SetValue(true, _cancelButton, _yesButton, _noButton);
+                _okButton?.SetValue(IsVisibleProperty, false);
+                _cancelButton?.SetValue(IsVisibleProperty, true);
+                _yesButton?.SetValue(IsVisibleProperty, true);
+                _noButton?.SetValue(IsVisibleProperty, true);
                 break;
         }
     }

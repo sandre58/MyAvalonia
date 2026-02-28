@@ -45,13 +45,13 @@
                         <Style Selector="AutoCompleteBox, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|ColorPickerEx, my|MultiComboBox, my|TagBox, my|TimePickerEx">
                             <Setter Property="HorizontalAlignment" Value="Stretch" />
                             <Setter Property="MaxWidth" Value="250" />
-                            <Setter Property="my:TextFieldAssist.UnderText" Value="{Binding #UnderText.Text}" />
-                            <Setter Property="my:TextFieldAssist.InnerLeftContent" Value="{Binding #InnerLeftContent.Text}" />
-                            <Setter Property="my:TextFieldAssist.InnerRightContent" Value="{Binding #InnerLeftContent.Text}" />
-                            <Setter Property="my:TextFieldAssist.ShowClearButton" Value="{Binding #ShowClearButton.IsChecked}" />
-                            <Setter Property="my:TextFieldAssist.ShowClipboardButton" Value="{Binding #ShowClipboardButton.IsChecked}" />
-                            <Setter Property="my:TextFieldAssist.UseFloatingPlaceholder" Value="{Binding #IsFloating.IsChecked}" />
-                            <Setter Property="my:TextFieldBehavior.IsTextEditable" Value="{Binding #IsEditable.IsChecked}" />
+                            <Setter Property="my:InputAssist.UnderText" Value="{Binding #UnderText.Text}" />
+                            <Setter Property="my:InputAssist.InnerLeftContent" Value="{Binding #InnerLeftContent.Text}" />
+                            <Setter Property="my:InputAssist.InnerRightContent" Value="{Binding #InnerLeftContent.Text}" />
+                            <Setter Property="my:InputAssist.ShowClearButton" Value="{Binding #ShowClearButton.IsChecked}" />
+                            <Setter Property="my:InputAssist.ShowClipboardButton" Value="{Binding #ShowClipboardButton.IsChecked}" />
+                            <Setter Property="my:InputAssist.UseFloatingPlaceholder" Value="{Binding #IsFloating.IsChecked}" />
+                            <Setter Property="my:InputBehavior.IsTextEditable" Value="{Binding #IsEditable.IsChecked}" />
                             <Setter Property="my:IconAssist.Icon" Value="{Binding IconProvider.Icon}" />
                         </Style>
                         <Style Selector="AutoCompleteBox.is-underline">
@@ -115,10 +115,10 @@
                             <Setter Property="PlaceholderText" Value="CalendarDatePickerEx" />
                         </Style>
                         <Style Selector="DatePicker.has-watermark">
-                            <Setter Property="my:TextFieldAssist.PlaceholderText" Value="DatePicker" />
+                            <Setter Property="my:InputAssist.PlaceholderText" Value="DatePicker" />
                         </Style>
                         <Style Selector="TimePicker.has-watermark">
-                            <Setter Property="my:TextFieldAssist.PlaceholderText" Value="TimePicker" />
+                            <Setter Property="my:InputAssist.PlaceholderText" Value="TimePicker" />
                         </Style>
                         <Style Selector="my|TimePickerEx.has-watermark">
                             <Setter Property="PlaceholderText" Value="TimePickerEx" />
@@ -133,7 +133,7 @@
                              InnerRightContent="{Binding #InnerRightContent.Text}"
                              UseFloatingPlaceholder="{Binding #IsFloating.IsChecked}"
                              PasswordChar="{ReflectionBinding Data.PasswordChar, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
-                             my:TextFieldAssist.ShowRevealButton="{ReflectionBinding Data.IsPassword, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                             my:InputAssist.ShowRevealButton="{ReflectionBinding Data.IsPassword, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
                              IsReadOnly="{Binding #IsEditable.IsChecked, Converter={x:Static BoolConverters.Not}}" />
 
                     <AutoCompleteBox my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"

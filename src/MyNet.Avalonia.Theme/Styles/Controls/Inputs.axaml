@@ -1,0 +1,66 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <!-- =============================================================== -->
+    <!-- INPUTS                                                          -->
+    <!-- AutoCompleteBox, ComboBox, CalendarDatePicker, DatePicker,      -->
+    <!-- NumericUpDown, TimePicker, TextBox, CalendarDatePickerEx,       -->
+    <!-- CodeBlock, ColorPickerEx, DateRangePicker, DateTimePicker,      -->
+    <!-- MultiComboBox, TagBox, TimePickerEx, TimeRangePicker            -->
+    <!-- =============================================================== -->
+
+    <!-- Shape -->
+    <Style Selector="TemplatedControl.category-input.shape-circle">
+        <Setter Property="Padding" Value="8 0 0 0" />
+        <Setter Property="my:InputAssist.InnerPadding" Value="0 4 8 4" />
+    </Style>
+
+    <!-- Icon -->
+    <Style Selector="TemplatedControl.category-input /template/ ContentControl#PART_Icon PathIcon">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+    </Style>
+
+    <Style Selector="TemplatedControl.category-input.size-sm /template/ ContentControl#PART_Icon PathIcon">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+    </Style>
+
+    <Style Selector="TemplatedControl.category-input.size-lg /template/ ContentControl#PART_Icon PathIcon">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- VARIANTS                                                  -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <!-- Solid -->
+    <Style Selector="TemplatedControl.category-input.variant-solid">
+        <Setter Property="my:VariantAssist.BorderBrush" Value="Transparent" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="Transparent" />
+    </Style>
+
+    <!-- Style -->
+    <Style Selector="TemplatedControl.category-input.variant-outlined">
+        <Setter Property="my:VariantAssist.Background" Value="Transparent" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="Transparent" />
+        <Setter Property="my:InteractionAssist.ActiveBackground" Value="Transparent" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="Transparent" />
+    </Style>
+
+    <!-- Outlined + Solid -->
+    <Style Selector="TemplatedControl.category-input.variant-outlined.variant-solid">
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:ThemeContext Control.Border.Hover}" />
+    </Style>
+
+    <Style Selector="TemplatedControl.category-input.variant-outlined.variant-solid.role-contrast">
+        <Setter Property="my:VariantAssist.Background" Value="{my:Foreground Opacity=Overlay}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:Foreground Opacity=Focus}" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:Foreground Opacity=Hover}" />
+    </Style>
+</Styles>

@@ -1,12 +1,14 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+﻿
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- SLIDER BUTTON THEMES                                      -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.Button.Embedded.Slider.Horizontal" TargetType="RepeatButton">
+            <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+            <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
             <Setter Property="Template">
                 <ControlTemplate TargetType="RepeatButton">
                     <Grid>
@@ -128,7 +130,7 @@
                 <Setter Property="Content" Value="{Binding $parent[Slider].Value}" />
             </Style>
 
-            <Style Selector="^:not(.no-transitions) /template/ Panel#PART_InnerPanel">
+            <Style Selector="^ /template/ Panel#PART_InnerPanel">
                 <Setter Property="Transitions">
                     <Transitions>
                         <DoubleTransition Easing="CircularEaseOut" Property="Opacity" Duration="{StaticResource MyNet.Animation.Slide}" />
@@ -147,6 +149,7 @@
         <!-- DEFAULT SLIDER THEME                                      -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type Slider}" TargetType="Slider">
+            <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
             <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
             <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
@@ -159,16 +162,17 @@
             <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
 
             <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
             <!-- Default Theme -->
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeRole Primary}" />
-            <Setter Property="my:InteractionAssist.IndicatorColor" Value="{my:ThemeRole Primary}" />
+            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+            <Setter Property="my:InteractionAssist.IndicatorColor" Value="{Binding $self.(my:VariantAssist.Primary)}" />
 
             <Style Selector="^:horizontal">
                 <Setter Property="Template">
@@ -384,5 +388,5 @@
             </Style>
         </ControlTheme>
 
-    </Styles.Resources>
-</Styles>
+
+</ResourceDictionary>

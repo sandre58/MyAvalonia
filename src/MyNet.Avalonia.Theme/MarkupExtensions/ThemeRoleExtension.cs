@@ -7,10 +7,10 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Data;
+using Avalonia.Media;
 using Avalonia.Metadata;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Converters.Internals;
-using MyNet.Avalonia.Theme.Palettes;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -21,10 +21,10 @@ namespace MyNet.Avalonia.Theme.MarkupExtensions;
 public class ThemeRoleExtension : ThemeBrushExtensionBase
 {
     /// <summary>
-    /// Gets or sets the palette color type to use (Primary, Secondary, Tertiary). Default is Primary.
+    /// Gets or sets the variant brush type to use (Background, BorderBrush, Foreground, Primary). Default is Primary.
     /// </summary>
-    [ConstructorArgument("type")]
-    public PaletteColor Type { get; set; } = PaletteColor.Primary;
+    [ConstructorArgument("variant")]
+    public VariantBrush? VariantBrush { get; set; }
 
     /// <summary>
     /// Gets or sets the path to provide role.
@@ -32,10 +32,10 @@ public class ThemeRoleExtension : ThemeBrushExtensionBase
     public string Role { get; set; } = $"(my:{nameof(ThemeAssist)}.Role)";
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ThemeRoleExtension"/> class with the specified color type.
+    /// Initializes a new instance of the <see cref="ThemeRoleExtension"/> class with the specified variant brush.
     /// </summary>
-    /// <param name="type">The palette color type to use.</param>
-    public ThemeRoleExtension(PaletteColor type) => Type = type;
+    /// <param name="variant">The variant brush to use.</param>
+    public ThemeRoleExtension(VariantBrush variant) => VariantBrush = variant;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ThemeRoleExtension"/> class with Primary as default.
@@ -62,12 +62,13 @@ public class ThemeRoleExtension : ThemeBrushExtensionBase
                 RelativeSource = RelativeSource,
                 TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
             },
-            new ReflectionBinding($"(my:{nameof(PaletteAssist)}.{Type})")
+            VariantBrush.HasValue ? new ReflectionBinding($"(my:{nameof(VariantAssist)}.Default{VariantBrush})")
             {
                 Mode = BindingMode.OneWay,
                 RelativeSource = RelativeSource,
                 TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
-            },
+            }
+            : CompiledBinding.Create<object, IBrush?>(_ => null),
             new ReflectionBinding
             {
                 Mode = BindingMode.OneWay,
@@ -86,4 +87,30 @@ public class ThemeRoleExtension : ThemeBrushExtensionBase
         Converter = ThemeConverter.Default,
         ConverterParameter = new ThemeRoleParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten)
     };
+}
+
+/// <summary>
+/// Enumerates variant brush types.
+/// </summary>
+public enum VariantBrush
+{
+    /// <summary>
+    /// Background variant brush.
+    /// </summary>
+    Background,
+
+    /// <summary>
+    /// Border variant brush.
+    /// </summary>
+    BorderBrush,
+
+    /// <summary>
+    /// Foreground variant brush.
+    /// </summary>
+    Foreground,
+
+    /// <summary>
+    /// Primary variant brush.
+    /// </summary>
+    Primary
 }

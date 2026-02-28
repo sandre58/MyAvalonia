@@ -4,9 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using MyNet.Avalonia.Helpers;
 using MyNet.Avalonia.Theme.Palettes;
 
 namespace MyNet.Avalonia.Theme.Assists;
@@ -27,7 +29,7 @@ public static class ThemeAssist
     /// <summary>
     /// Provides Context Property for attached ThemeAssist element.
     /// </summary>
-    public static readonly AttachedProperty<ThemeContext> ContextProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, ThemeContext>("Context", typeof(ThemeAssist), inherits: true);
+    public static readonly AttachedProperty<ThemeContext> ContextProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Context", ThemeContext.Default, ClassName.Prefix.Context);
 
     /// <summary>
     /// Accessor for Attached  <see cref="ContextProperty"/>.
@@ -89,21 +91,25 @@ public static class ThemeAssist
         {
             case null:
                 return;
+
             case FlyoutBase flyout:
-                flyout.Opened += (_, _) =>
-                {
-                    var context = GetContext(source);
-                    SetContext(flyout, context);
-                };
+                flyout.Opened -= onOpened;
+                flyout.Opened += onOpened;
                 break;
+
             case ContextMenu contextMenu:
-                contextMenu.Opened += (_, _) =>
-                {
-                    var context = GetContext(source);
-                    SetContext(contextMenu, context);
-                };
+                contextMenu.Opened -= onOpened;
+                contextMenu.Opened += onOpened;
                 break;
         }
+
+        void applyContext()
+        {
+            var context = GetContext(source);
+            SetContext(popup, context);
+        }
+
+        void onOpened(object? sender, EventArgs e) => applyContext();
     }
 
     #endregion
@@ -113,7 +119,7 @@ public static class ThemeAssist
     /// <summary>
     /// Defines the Role attached property for assigning a semantic color role to a control.
     /// </summary>
-    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaProperty.RegisterAttached<AvaloniaObject, ThemeRole>("Role", typeof(ThemeAssist));
+    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Role", ThemeRole.Default, ClassName.Prefix.Role);
 
     /// <summary>
     /// Gets the theme role for the specified control.
@@ -144,7 +150,7 @@ public static class ThemeAssist
     /// <summary>
     /// Provides HasRole Property for attached ThemeAssist element.
     /// </summary>
-    public static readonly AttachedProperty<bool> HasRoleProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("HasRole", typeof(ThemeAssist));
+    public static readonly AttachedProperty<bool> HasRoleProperty = AvaloniaPropertyHelper.RegisterBoolProperty("HasRole", ClassName.HasRole);
 
     /// <summary>
     /// Accessor for Attached  <see cref="HasRoleProperty"/>.
@@ -161,12 +167,34 @@ public static class ThemeAssist
 
     #endregion
 
+    #region Category
+
+    /// <summary>
+    /// Provides Category Property for attached ThemeAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<ControlCategory> CategoryProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Category", ControlCategory.Unknown, ClassName.Prefix.Category);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="CategoryProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="CategoryProperty"/>.</param>
+    public static void SetCategory(StyledElement element, ControlCategory value) => element.SetValue(CategoryProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="CategoryProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static ControlCategory GetCategory(StyledElement element) => element.GetValue(CategoryProperty);
+
+    #endregion
+
     #region Kind
 
     /// <summary>
     /// Provides Kind Property for attached ThemeAssist element.
     /// </summary>
-    public static readonly AttachedProperty<string> KindProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("Kind", typeof(ThemeAssist), "default");
+    public static readonly AttachedProperty<string> KindProperty = AvaloniaPropertyHelper.RegisterStringProperty("Kind", "default", ClassName.Prefix.Kind);
 
     /// <summary>
     /// Accessor for Attached  <see cref="KindProperty"/>.
@@ -182,4 +210,66 @@ public static class ThemeAssist
     public static string GetKind(StyledElement element) => element.GetValue(KindProperty);
 
     #endregion
+}
+
+/// <summary>
+/// Defines categories of controls for theming purposes, allowing for consistent styling and behavior across different types of UI elements.
+/// </summary>
+public enum ControlCategory
+{
+    /// <summary>
+    /// Represents an unspecified or undetermined category or value.
+    /// </summary>
+    /// <remarks>Use this value as a placeholder when the specific category or value is not known or cannot be
+    /// determined at compile time. This is commonly used in scenarios where category information is unavailable or
+    /// deferred.</remarks>
+    Unknown,
+
+    /// <summary>
+    /// Represents a surface that can be rendered or interacted with in a graphical context.
+    /// </summary>
+    /// <remarks>This class provides methods and properties to manipulate the surface's appearance and
+    /// behavior. It is commonly used in graphical applications to define areas where drawing or user interaction
+    /// occurs.</remarks>
+    Surface,
+
+    /// <summary>
+    /// Represents an input control that allows users to enter or manipulate data, such as text boxes, sliders,
+    /// or other interactive elements.
+    /// </summary>
+    /// <remarks>This control is commonly used in user interfaces to capture user input or provide interactive functionality.
+    /// It may have various properties and events to handle user interactions and data validation.</remarks>
+    Input,
+
+    /// <summary>
+    /// Represents a delegate that encapsulates a method with no parameters and does not return a value.
+    /// </summary>
+    /// <remarks>Use this delegate to pass methods as arguments for callbacks, event handling, or deferred
+    /// execution scenarios where no input or output is required. This delegate is commonly used in asynchronous
+    /// programming and command patterns.</remarks>
+    Action,
+
+    /// <summary>
+    /// Represents a navigation element that facilitates user movement within the application.
+    /// </summary>
+    /// <remarks>This class may include methods and properties that allow for navigating between different
+    /// views or pages in the application. It is essential for implementing a user-friendly interface that enhances user
+    /// experience.</remarks>
+    Navigation,
+
+    /// <summary>
+    /// Represents a selection of items within a collection, allowing for operations on the selected items.
+    /// </summary>
+    /// <remarks>This class provides methods to manipulate and retrieve information about the selected items.
+    /// It is commonly used in scenarios where user interaction with a list or grid is required, such as in UI
+    /// applications.</remarks>
+    Selection,
+
+    /// <summary>
+    /// Represents a visual indicator that provides feedback or status information within a user interface.
+    /// </summary>
+    /// <remarks>Use this class to display various states, such as loading, success, or error, to inform users
+    /// about ongoing processes or outcomes. The indicator is designed to be customizable to accommodate different
+    /// design requirements and can be integrated into a variety of UI scenarios.</remarks>
+    Indicator
 }

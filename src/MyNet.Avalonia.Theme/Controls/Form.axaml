@@ -1,8 +1,7 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia"
         xmlns:o="using:MyNet.Observable.Translatables">
-    <Styles.Resources>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- FORM ITEM CONTAINER                                       -->
@@ -15,7 +14,7 @@
                     <!-- Label Layout -->
                     <Grid Name="PART_Grid">
                         <Label Name="PART_Label"
-                               Classes="no-disablable"
+                               my:DisableAssist.IsDisablable="False"
                                Classes.text-wrapping="{TemplateBinding TextWrapping}"
                                Target="{Binding #PART_ContentPresenter.Content}"
                                Content="{TemplateBinding Label}"
@@ -121,6 +120,7 @@
         <!-- FORM                                                      -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type my:Form}" TargetType="my:Form">
+            <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="Columns" Value="1" />
@@ -153,6 +153,7 @@
         <!-- FORM GROUP                                                -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type my:FormGroup}" TargetType="my:FormGroup">
+            <Setter Property="my:ThemeAssist.Category" Value="Surface" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
             <Setter Property="Padding" Value="{my:Thickness Md, Top}" />
@@ -169,7 +170,17 @@
             <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
             <Setter Property="ClipToBounds" Value="True" />
 
-            <Setter Property="Background" Value="Transparent" />
+            <!-- Default colors -->
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="Transparent" />
+            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="Transparent" />
+
+            <!-- Variant -->
+            <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
+
+            <!-- Theme -->
+            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
             <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
             <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 1" />
             <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:ThemeContext Surface.Border}" />
@@ -218,5 +229,4 @@
             </Setter>
         </ControlTheme>
 
-    </Styles.Resources>
-</Styles>
+</ResourceDictionary>

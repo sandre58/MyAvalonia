@@ -87,7 +87,7 @@ public class Ripple : ContentControl
     private void PointerPressedHandler(object? sender, PointerPressedEventArgs e)
     {
         var (x, y) = e.GetPosition(this);
-        if (_container is null || x < 0 || x > Bounds.Width || y < 0 || y > Bounds.Height)
+        if (_container is null || x < 0 || x > Bounds.Width || y < 0 || y > Bounds.Height || RippleFill is null)
         {
             return;
         }

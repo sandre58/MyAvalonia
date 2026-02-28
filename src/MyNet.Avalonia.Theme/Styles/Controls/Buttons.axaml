@@ -1,0 +1,105 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- VARIANTS                                                  -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <!-- Variant: Light (semi-transparent theme-colored background) -->
+    <Style Selector=":is(Button)[(my|ThemeAssist.Kind)=default], :is(Button)[(my|ThemeAssist.Kind)=rounded].variant-light">
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:ThemeBrush $self.(my:VariantAssist.Background), Opacity=Hover}" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- CHECKBOX VARIANTS                                         -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <!-- Styles -->
+    <Style Selector="ToggleButton.kind-checkbox.shape-circle">
+        <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxMarkedCircle}" />
+        <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{StaticResource MyNet.Geometry.MinusCircle}" />
+        <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxBlankCircleOutline}" />
+    </Style>
+
+    <Style Selector="ToggleButton.kind-checkbox.shape-alternate">
+        <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{StaticResource MyNet.Geometry.Check}" />
+        <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{StaticResource MyNet.Geometry.Minus}" />
+        <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxBlankCircleOutline}" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- KINDS                                                     -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <Style Selector=":is(Button).kind-tool">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
+        <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Tool}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Tool}" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+
+        <!-- Hover -->
+        <Style Selector="^:not(:disabled):pointerover">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <Style Selector="^:selected, ^:checked, ^.is-selected">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </Style>
+
+    <Style Selector="Button.kind-caption">
+        <Setter Property="Margin" Value="0, 4" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="Height" Value="28" />
+        <Setter Property="Width" Value="28" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control, Opacity=High}" />
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
+        <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
+
+        <Style Selector="^.variant-close">
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Theme Button.Close.Hover}" />
+            <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:ThemeBrush (my:InteractionAssist.HoverBackground), Contrast=True}" />
+            <Setter Property="my:InteractionAssist.RippleColor" Value="{my:ThemeBrush (my:InteractionAssist.HoverBackground), Contrast=True}" />
+        </Style>
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- SPECIFIC BEHAVIOR STYLES                                  -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <!-- Clipboard: Pre-configured button to copy to clipboard -->
+    <Style Selector="Button.is-clipboard">
+        <Setter Property="ToolTip.Tip">
+            <Template>
+                <TextBlock Text="{my:Loc CopyInClipBoard}" />
+            </Template>
+        </Setter>
+        <Setter Property="Command" Value="{x:Static my:ClipboardAssist.CopyTextCommand}" />
+        <Setter Property="Content">
+            <Setter.Value>
+                <Template>
+                    <PathIcon Data="{StaticResource MyNet.Geometry.ContentCopy}" />
+                </Template>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style Selector="ButtonSpinner RepeatButton">
+        <Setter Property="Height" Value="NaN" />
+        <Setter Property="Width" Value="NaN" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+    </Style>
+</Styles>

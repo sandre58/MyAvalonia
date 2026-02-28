@@ -1,31 +1,33 @@
-<Styles xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime">
-    <Styles.Resources>
 
         <ControlTheme x:Key="{x:Type my:ColorPickerEx}" TargetType="my:ColorPickerEx">
 
             <!-- Common -->
+            <Setter Property="my:ThemeAssist.Category" Value="Input" />    
+            <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+            <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
             <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
             <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.TextField}" />
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Input}" />
             <Setter Property="FontWeight" Value="Normal" />
             <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.TextField.Md}" />
-            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.TextField.Md}" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Md}" />
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Md}" />
             <Setter Property="FocusAdorner" Value="{x:Null}" />
             <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
             <Setter Property="my:IconAssist.Alignment" Value="Left" />
             <Setter Property="my:IconAssist.Spacing" Value="{StaticResource MyNet.Spacing.Icon}" />
             <Setter Property="my:IconAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
-            <Setter Property="my:TextFieldAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
-            <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Inner.Md}" />
-            <Setter Property="my:TextFieldAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
-            <Setter Property="my:TextFieldAssist.PlaceholderFontSize" Value="{Binding $self.FontSize}" />
-            <Setter Property="my:TextFieldAssist.FloatingScale" Value="0.75" />
-            <Setter Property="my:TextFieldAssist.FloatingOffset" Value="12" />
+            <Setter Property="my:InputAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
+            <Setter Property="my:InputAssist.InnerPadding" Value="{StaticResource MyNet.Padding.Input.Inner.Md}" />
+            <Setter Property="my:InputAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+            <Setter Property="my:InputAssist.PlaceholderFontSize" Value="{Binding $self.FontSize}" />
+            <Setter Property="my:InputAssist.FloatingScale" Value="0.75" />
+            <Setter Property="my:InputAssist.FloatingOffset" Value="12" />
             <Setter Property="my:ProxyBehavior.Enable" Value="True" />
             <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
             <Setter Property="Focusable" Value="True" />
@@ -44,26 +46,30 @@
             </Setter>
 
             <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Control.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
+            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
-            <!-- Default Theme -->
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="{Binding $self.(my:PaletteAssist.Background)}" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:PaletteAssist.Border)}" />
-            <Setter Property="Foreground" Value="{Binding $self.(my:PaletteAssist.Foreground)}" />
-            <Setter Property="my:TextFieldAssist.UnderForeground" Value="{my:Foreground Opacity=High}" />
-            <Setter Property="my:TextFieldAssist.InnerForeground" Value="{my:Foreground Opacity=High}" />
-            <Setter Property="my:TextFieldAssist.PlaceholderForeground" Value="{my:Foreground Opacity=Medium}" />
+            <!-- Variant -->
+            <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+
+            <!-- Theme -->
+            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+            <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+            <Setter Property="my:InputAssist.UnderForeground" Value="{my:Foreground Opacity=High}" />
+            <Setter Property="my:InputAssist.InnerForeground" Value="{my:Foreground Opacity=High}" />
+            <Setter Property="my:InputAssist.PlaceholderForeground" Value="{my:Foreground Opacity=Medium}" />
             <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:ThemeContext Control.Border.Hover}" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
             <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:Foreground Opacity=Focus}" />
-            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeRole Primary}" />
-            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
             <Setter Property="my:PopupAssist.Background" Value="{my:ThemeContext Surface.Level1}" />
             <Setter Property="my:PopupAssist.Role" Value="{Binding $self.(my:ThemeAssist.Role)}" />
 
@@ -116,21 +122,21 @@
 
                                         <my:TextField Name="PART_TextField"
                                                       Grid.Column="1"
-                                                      Padding="{TemplateBinding (my:TextFieldAssist.InnerPadding)}"
+                                                      Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                                       HorizontalAlignment="Stretch"
                                                       VerticalAlignment="Center"
                                                       ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
-                                                      FloatingOffset="{TemplateBinding (my:TextFieldAssist.FloatingOffset)}"
-                                                      FloatingScale="{TemplateBinding (my:TextFieldAssist.FloatingScale)}"
-                                                      InactiveForeground="{TemplateBinding (my:TextFieldAssist.PlaceholderForeground)}"
-                                                      InnerFontSize="{TemplateBinding (my:TextFieldAssist.InnerFontSize)}"
-                                                      InnerForeground="{TemplateBinding (my:TextFieldAssist.InnerForeground)}"
-                                                      InnerLeftContent="{TemplateBinding (my:TextFieldAssist.InnerLeftContent)}"
-                                                      InnerRightContent="{TemplateBinding (my:TextFieldAssist.InnerRightContent)}"
+                                                      FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
+                                                      FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
+                                                      InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
+                                                      InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
+                                                      InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
+                                                      InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
+                                                      InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
                                                       Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                                      UseFloatingPlaceholder="{TemplateBinding (my:TextFieldAssist.UseFloatingPlaceholder)}"
+                                                      UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
                                                       PlaceholderText="{TemplateBinding PlaceholderText}"
-                                                      PlaceholderFontSize="{TemplateBinding (my:TextFieldAssist.PlaceholderFontSize)}">
+                                                      PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
 
                                             <Grid Name="PART_ButtonContentGrid" ColumnDefinitions="Auto,*">
 
@@ -145,38 +151,40 @@
                                                     <Ellipse HorizontalAlignment="Stretch"
                                                              VerticalAlignment="Stretch"
                                                              Fill="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:BrushConverter.Default}}" />
+                                                    </Grid>
+
+                                                    <!-- Text -->
+                                                    <TextBox Name="PART_TextBox"
+                                                             Grid.Column="1"
+                                                             HorizontalAlignment="Stretch"
+                                                             VerticalAlignment="Stretch"
+                                                             CaretBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                             my:DisableAssist.IsDisablable="False"
+                                                             DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
+                                                             Focusable="{TemplateBinding (my:InputBehavior.IsTextEditable)}"
+                                                             IsHitTestVisible="{TemplateBinding (my:InputBehavior.IsTextEditable)}"
+                                                             IsReadOnly="{Binding !(my:InputBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
+                                                             SelectionBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
+                                                             SelectionForegroundBrush="{TemplateBinding Foreground}"
+                                                             Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                             Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
+
                                                 </Grid>
-
-                                                <!-- Text -->
-                                                <TextBox Name="PART_TextBox"
-                                                         Grid.Column="1"
-                                                         HorizontalAlignment="Stretch"
-                                                         VerticalAlignment="Stretch"
-                                                         CaretBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                         Classes="no-disablable"
-                                                         DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                         Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
-                                                         IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
-                                                         IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                         SelectionBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
-                                                         SelectionForegroundBrush="{TemplateBinding Foreground}"
-                                                         Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                         Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
-
-                                            </Grid>
                                         </my:TextField>
 
                                         <!-- Clipboard button -->
                                         <Button Name="PART_ClipboardButton"
                                                 Grid.Column="2"
-                                                Classes="kind-tool is-clipboard is-stretch size-xs no-disablable"
+                                                Classes="kind-tool is-clipboard is-stretch size-xs"
+                                                my:DisableAssist.IsDisablable="False"
                                                 CommandParameter="{TemplateBinding (my:ClipboardAssist.Content)}"
                                                 IsVisible="False" />
 
                                         <!-- Clear button -->
                                         <Button Name="PART_ClearButton"
                                                 Grid.Column="3"
-                                                Classes="kind-tool is-stretch no-disablable"
+                                                Classes="kind-tool is-stretch"
+                                                my:DisableAssist.IsDisablable="False"
                                                 Command="{Binding Clear, ElementName=PART_TextBox}"
                                                 Content="{my:Icon Close}"
                                                 IsVisible="False" />
@@ -184,12 +192,13 @@
                                         <!-- Color button -->
                                         <ToggleButton Name="PART_Button"
                                                       Grid.Column="5"
-                                                      Classes="kind-tool is-stretch no-disablable"
+                                                      Classes="kind-tool is-stretch"
+                                                      my:DisableAssist.IsDisablable="False"
                                                       Content="{my:Icon Palette}"
                                                       Cursor="Hand"
                                                       IsChecked="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
                                                       my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                      my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}" />
+                                                      my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}" />
                                     </Grid>
                                 </my:Ripple>
                             </Border>
@@ -200,12 +209,12 @@
                                            Margin="0 0 0 -15"
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="Bottom"
-                                           FontSize="{TemplateBinding (my:TextFieldAssist.UnderFontSize)}"
-                                           FontStyle="{TemplateBinding (my:TextFieldAssist.UnderFontStyle)}"
-                                           FontWeight="{TemplateBinding (my:TextFieldAssist.UnderFontWeight)}"
-                                           Foreground="{TemplateBinding (my:TextFieldAssist.UnderForeground)}"
-                                           IsVisible="{Binding (my:TextFieldAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
-                                           Text="{TemplateBinding (my:TextFieldAssist.UnderText)}" />
+                                           FontSize="{TemplateBinding (my:InputAssist.UnderFontSize)}"
+                                           FontStyle="{TemplateBinding (my:InputAssist.UnderFontStyle)}"
+                                           FontWeight="{TemplateBinding (my:InputAssist.UnderFontWeight)}"
+                                           Foreground="{TemplateBinding (my:InputAssist.UnderForeground)}"
+                                           IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                           Text="{TemplateBinding (my:InputAssist.UnderText)}" />
                             </Border>
 
                             <Panel Name="PART_PopupContainer">
@@ -226,7 +235,7 @@
                                                 CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                             <ColorView Name="PART_Previewer"
                                                        my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
-                                                       my:PaletteAssist.Primary="{my:Theme Primary}"
+                                                       my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
                                                        Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
                                                        Background="Transparent"
                                                        BorderThickness="0"
@@ -284,9 +293,9 @@
                 <Setter Property="Margin" Value="0" />
             </Style>
 
-            <Style Selector="^[(my|TextFieldAssist.UseFloatingPlaceholder)=True]">
+            <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
                 <Style Selector="^ /template/ my|TextField#PART_TextField">
-                    <Setter Property="Margin" Value="{Binding (my:TextFieldAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
+                    <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
                 </Style>
                 <Style Selector="^ /template/ Button#PART_ClearButton">
                     <Setter Property="Padding" Value="{my:Thickness Sm}" />
@@ -294,21 +303,21 @@
             </Style>
 
             <!-- With clear button -->
-            <Style Selector="^[(my|TextFieldAssist.ShowClearButton)=True]">
+            <Style Selector="^[(my|InputAssist.ShowClearButton)=True]">
                 <Style Selector="^[(my|ProxyBehavior.IsEmpty)=False] /template/ Button#PART_ClearButton">
                     <Setter Property="IsVisible" Value="True" />
                 </Style>
             </Style>
 
             <!-- With clipboard button -->
-            <Style Selector="^[(my|TextFieldAssist.ShowClipboardButton)=True]">
+            <Style Selector="^[(my|InputAssist.ShowClipboardButton)=True]">
                 <Style Selector="^[(my|ProxyBehavior.IsEmpty)=False] /template/ Button#PART_ClipboardButton">
                     <Setter Property="IsVisible" Value="True" />
                 </Style>
             </Style>
 
             <!-- Is Read only -->
-            <Style Selector="^[(my|TextFieldBehavior.IsTextEditable)=False]">
+            <Style Selector="^[(my|InputBehavior.IsTextEditable)=False]">
                 <Setter Property="Cursor" Value="Arrow" />
             </Style>
 
@@ -348,13 +357,13 @@
 
         <ControlTheme x:Key="MyNet.Theme.ColorPickerEx.Underline" TargetType="my:ColorPickerEx" BasedOn="{StaticResource {x:Type my:ColorPickerEx}}">
             <Setter Property="MinHeight" Value="0" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.TextField.Underline.Md}" />
-            <Setter Property="my:TextFieldAssist.InnerPadding" Value="{StaticResource MyNet.Padding.TextField.Underline.Inner.Md}" />
-            <Setter Property="my:TextFieldAssist.UseFloatingPlaceholder" Value="True" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Underline.Md}" />
+            <Setter Property="my:InputAssist.InnerPadding" Value="{StaticResource MyNet.Padding.Input.Underline.Inner.Md}" />
+            <Setter Property="my:InputAssist.UseFloatingPlaceholder" Value="True" />
 
             <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="Transparent" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="Transparent" />
+            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Foreground AncestorType=Control}" />
 
             <!-- Default Theme -->
             <Setter Property="BorderThickness" Value="0 0 0 1" />
@@ -403,21 +412,21 @@
                                     </ContentControl>
 
                                     <my:TextField Grid.Column="1"
-                                                  Margin="{TemplateBinding (my:TextFieldAssist.InnerPadding)}"
+                                                  Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                                   HorizontalAlignment="Stretch"
                                                   VerticalAlignment="Center"
                                                   ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
-                                                  FloatingOffset="{TemplateBinding (my:TextFieldAssist.FloatingOffset)}"
-                                                  FloatingScale="{TemplateBinding (my:TextFieldAssist.FloatingScale)}"
-                                                  InactiveForeground="{TemplateBinding (my:TextFieldAssist.PlaceholderForeground)}"
-                                                  InnerFontSize="{TemplateBinding (my:TextFieldAssist.InnerFontSize)}"
-                                                  InnerForeground="{TemplateBinding (my:TextFieldAssist.InnerForeground)}"
-                                                  InnerLeftContent="{TemplateBinding (my:TextFieldAssist.InnerLeftContent)}"
-                                                  InnerRightContent="{TemplateBinding (my:TextFieldAssist.InnerRightContent)}"
+                                                  FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
+                                                  FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
+                                                  InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
+                                                  InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
+                                                  InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
+                                                  InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
+                                                  InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
                                                   Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                                  UseFloatingPlaceholder="{TemplateBinding (my:TextFieldAssist.UseFloatingPlaceholder)}"
+                                                  UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
                                                   PlaceholderText="{TemplateBinding PlaceholderText}"
-                                                  PlaceholderFontSize="{TemplateBinding (my:TextFieldAssist.PlaceholderFontSize)}">
+                                                  PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
 
                                         <Grid Name="PART_ButtonContentGrid" ColumnDefinitions="Auto,*">
 
@@ -440,11 +449,11 @@
                                                      HorizontalAlignment="Stretch"
                                                      VerticalAlignment="Stretch"
                                                      CaretBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                     Classes="no-disablable"
+                                                     my:DisableAssist.IsDisablable="False"
                                                      DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                     Focusable="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
-                                                     IsHitTestVisible="{TemplateBinding (my:TextFieldBehavior.IsTextEditable)}"
-                                                     IsReadOnly="{Binding !(my:TextFieldBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
+                                                     Focusable="{TemplateBinding (my:InputBehavior.IsTextEditable)}"
+                                                     IsHitTestVisible="{TemplateBinding (my:InputBehavior.IsTextEditable)}"
+                                                     IsReadOnly="{Binding !(my:InputBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
                                                      SelectionBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
                                                      SelectionForegroundBrush="{TemplateBinding Foreground}"
                                                      Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
@@ -457,7 +466,8 @@
                                     <Button Name="PART_ClipboardButton"
                                             Grid.Column="2"
                                             Margin="{my:Thickness Xs, Left}"
-                                            Classes="kind-tool is-clipboard no-disablable"
+                                            Classes="kind-tool is-clipboard"
+                                            my:DisableAssist.IsDisablable="False"
                                             CommandParameter="{TemplateBinding (my:ClipboardAssist.Content)}"
                                             IsVisible="False" />
 
@@ -465,7 +475,8 @@
                                     <Button Name="PART_ClearButton"
                                             Grid.Column="3"
                                             Margin="{my:Thickness Xs, Left}"
-                                            Classes="kind-tool no-disablable"
+                                            Classes="kind-tool"
+                                            my:DisableAssist.IsDisablable="False"
                                             Command="{Binding Clear, ElementName=PART_TextBox}"
                                             Content="{my:Icon Close}"
                                             IsVisible="False" />
@@ -474,12 +485,13 @@
                                     <ToggleButton Name="PART_Button"
                                                   Grid.Column="5"
                                                   Margin="{my:Thickness Xs, Left}"
-                                                  Classes="kind-tool no-disablable"
+                                                  Classes="kind-tool"
+                                                  my:DisableAssist.IsDisablable="False"
                                                   Content="{my:Icon Palette}"
                                                   Cursor="Hand"
                                                   IsChecked="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                  my:PaletteAssist.Primary="{TemplateBinding (my:PaletteAssist.Primary)}" />
+                                                  my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}" />
                                 </Grid>
                             </Border>
 
@@ -502,12 +514,12 @@
                                            Margin="0 0 0 -15"
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="Bottom"
-                                           FontSize="{TemplateBinding (my:TextFieldAssist.UnderFontSize)}"
-                                           FontStyle="{TemplateBinding (my:TextFieldAssist.UnderFontStyle)}"
-                                           FontWeight="{TemplateBinding (my:TextFieldAssist.UnderFontWeight)}"
-                                           Foreground="{TemplateBinding (my:TextFieldAssist.UnderForeground)}"
-                                           IsVisible="{Binding (my:TextFieldAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
-                                           Text="{TemplateBinding (my:TextFieldAssist.UnderText)}" />
+                                           FontSize="{TemplateBinding (my:InputAssist.UnderFontSize)}"
+                                           FontStyle="{TemplateBinding (my:InputAssist.UnderFontStyle)}"
+                                           FontWeight="{TemplateBinding (my:InputAssist.UnderFontWeight)}"
+                                           Foreground="{TemplateBinding (my:InputAssist.UnderForeground)}"
+                                           IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                           Text="{TemplateBinding (my:InputAssist.UnderText)}" />
                             </Border>
 
                             <Panel Name="PART_PopupContainer">
@@ -528,7 +540,7 @@
                                                 CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                             <ColorView Name="PART_Previewer"
                                                        my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
-                                                       my:PaletteAssist.Primary="{my:Theme Primary}"
+                                                       my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
                                                        Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
                                                        Background="Transparent"
                                                        BorderThickness="0"
@@ -591,5 +603,4 @@
 
         </ControlTheme>
 
-    </Styles.Resources>
-</Styles>
+</ResourceDictionary>

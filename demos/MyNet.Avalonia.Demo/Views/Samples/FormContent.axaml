@@ -34,13 +34,13 @@
             <Grid my:FormItem.IsRequired="True" my:FormItem.Label="{my:Icon Lock}" ColumnDefinitions="*,10,*">
                 <TextBox Classes="StretchH"
                          PasswordChar="*"
-                         my:TextFieldAssist.ShowRevealButton="True"
+                         my:InputAssist.ShowRevealButton="True"
                          Text="{Binding Password}"
                          PlaceholderText="{my:Loc Password}" />
                 <TextBox Grid.Column="2"
                          Classes="StretchH"
                          PasswordChar="*"
-                         my:TextFieldAssist.ShowRevealButton="True"
+                         my:InputAssist.ShowRevealButton="True"
                          Text="{Binding ConfirmPassword}"
                          PlaceholderText="{my:Loc ConfirmPassword}" />
             </Grid>
@@ -72,7 +72,7 @@
                                    PlaceholderText="{my:Loc BirthDate}" />
             <DatePicker Width="200" my:FormItem.Label="{my:Icon Calendar}"
                         SelectedDate="{Binding BirthDate}"
-                        my:TextFieldAssist.PlaceholderText="{my:Loc BirthDate}" />
+                        my:InputAssist.PlaceholderText="{my:Loc BirthDate}" />
 
             <!-- Phone Number -->
             <TextBox Width="300"

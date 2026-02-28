@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 using Avalonia.Media;
-using MyNet.Avalonia.Theme.Extensions;
+using MyNet.Avalonia.Extensions;
 
 namespace MyNet.Avalonia.Theme.Palettes;
 
@@ -31,8 +31,8 @@ public class GenderPalette
     /// <returns>A dictionary containing all gender colors with their corresponding resource keys.</returns>
     public IReadOnlyDictionary<string, object> ToResourceDictionary(string prefix = nameof(ThemeVariantColors.Gender)) => new Dictionary<string, object>
         {
-            { nameof(Male).WithPrefix(prefix), Male },
-            { nameof(Female).WithPrefix(prefix), Female }
+            { nameof(Male).WithPrefix(prefix, "."), Male },
+            { nameof(Female).WithPrefix(prefix, "."), Female }
         };
 
     /// <summary>
@@ -43,7 +43,7 @@ public class GenderPalette
     /// <returns>A new GenderPalette instance.</returns>
     public static GenderPalette FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary, string prefix = nameof(ThemeVariantColors.Gender)) => new()
     {
-        Male = (Color)dictionary.GetValueOrDefault(nameof(Male).WithPrefix(prefix), Colors.Blue),
-        Female = (Color)dictionary.GetValueOrDefault(nameof(Female).WithPrefix(prefix), Colors.Pink)
+        Male = (Color)dictionary.GetValueOrDefault(nameof(Male).WithPrefix(prefix, "."), Colors.Blue),
+        Female = (Color)dictionary.GetValueOrDefault(nameof(Female).WithPrefix(prefix, "."), Colors.Pink)
     };
 }

@@ -7,27 +7,28 @@
 using System;
 using System.Linq;
 using Avalonia;
+using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using Avalonia.Threading;
+using MyNet.Avalonia.Extended.WarmUp;
 using MyNet.Avalonia.Helpers;
 using MyNet.UI.Navigation;
-using MyNet.UI.Navigation.Models;
 using MyNet.Utilities.Caching;
-using MyNet.Utilities.Caching.Policies;
-using MyNet.Utilities.Logging;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Extended.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
 /// <summary>
-/// Navigation host control that displays pages from INavigationService with optional caching support.
-/// Supports three cache strategies: None (no caching), ByInstance (cache per page instance), and ByType (cache one view per page type).
+/// Navigation host control that displays pages from INavigationService with caching support.
+/// Caches views to improve navigation performance on subsequent visits.
 /// </summary>
-public class NavigationHost : ContentControl, IDisposable
+public class NavigationHost : TransitioningContentControl, IDisposable
 {
     private readonly CacheStorage<object, Control> _cache;
     private INavigationService? _navigationService;
+    private IWarmUpService? _warmUpService;
     private Control? _currentView;
     private bool _disposed;
 
@@ -36,8 +37,7 @@ public class NavigationHost : ContentControl, IDisposable
     /// <summary>
     /// Defines the <see cref="NavigationService"/> property.
     /// </summary>
-    public static readonly StyledProperty<INavigationService?> NavigationServiceProperty =
-        AvaloniaProperty.Register<NavigationHost, INavigationService?>(nameof(NavigationService));
+    public static readonly StyledProperty<INavigationService?> NavigationServiceProperty = AvaloniaProperty.Register<NavigationHost, INavigationService?>(nameof(NavigationService));
 
     /// <summary>
     /// Gets or sets the navigation service that manages page navigation.
@@ -46,6 +46,20 @@ public class NavigationHost : ContentControl, IDisposable
     {
         get => GetValue(NavigationServiceProperty);
         set => SetValue(NavigationServiceProperty, value);
+    }
+
+    /// <summary>
+    /// Defines the <see cref="WarmUpService"/> property.
+    /// </summary>
+    public static readonly StyledProperty<IWarmUpService?> WarmUpServiceProperty = AvaloniaProperty.Register<NavigationHost, IWarmUpService?>(nameof(WarmUpService));
+
+    /// <summary>
+    /// Gets or sets the warm-up service that manages page warm-up.
+    /// </summary>
+    public IWarmUpService? WarmUpService
+    {
+        get => GetValue(WarmUpServiceProperty);
+        set => SetValue(WarmUpServiceProperty, value);
     }
 
     /// <summary>
@@ -65,12 +79,10 @@ public class NavigationHost : ContentControl, IDisposable
     /// <summary>
     /// Defines the <see cref="EnableCaching"/> property.
     /// </summary>
-    public static readonly StyledProperty<bool> EnableCachingProperty =
-        AvaloniaProperty.Register<NavigationHost, bool>(nameof(EnableCaching), true);
+    public static readonly StyledProperty<bool> EnableCachingProperty = AvaloniaProperty.Register<NavigationHost, bool>(nameof(EnableCaching), true);
 
     /// <summary>
-    /// Gets or sets a value indicating whether gets or sets whether caching is enabled. Default is true.
-    /// When false, views are always recreated regardless of CacheMode.
+    /// Gets or sets a value indicating whether caching is enabled. Default is true.
     /// </summary>
     public bool EnableCaching
     {
@@ -79,45 +91,23 @@ public class NavigationHost : ContentControl, IDisposable
     }
 
     /// <summary>
-    /// Defines the <see cref="CacheExpiration"/> property.
-    /// </summary>
-    public static readonly StyledProperty<TimeSpan> CacheExpirationProperty =
-        AvaloniaProperty.Register<NavigationHost, TimeSpan>(nameof(CacheExpiration), TimeSpan.Zero);
-
-    /// <summary>
-    /// Gets or sets the cache expiration time for views.
-    /// Set to TimeSpan.Zero for no expiration (default).
-    /// When set, views that haven't been accessed for this duration will be removed from cache.
-    /// </summary>
-    public TimeSpan CacheExpiration
-    {
-        get => GetValue(CacheExpirationProperty);
-        set => SetValue(CacheExpirationProperty, value);
-    }
-
-    /// <summary>
-    /// Defines the <see cref="DisposeOnRemoval"/> property.
-    /// </summary>
-    public static readonly StyledProperty<bool> DisposeOnRemovalProperty =
-        AvaloniaProperty.Register<NavigationHost, bool>(nameof(DisposeOnRemoval), true);
-
-    /// <summary>
-    /// Gets or sets a value indicating whether gets or sets whether to dispose views when removed from cache. Default is true.
-    /// </summary>
-    public bool DisposeOnRemoval
-    {
-        get => GetValue(DisposeOnRemovalProperty);
-        set
-        {
-            SetValue(DisposeOnRemovalProperty, value);
-            _cache.DisposeValuesOnRemoval = value;
-        }
-    }
-
-    /// <summary>
     /// Gets the current number of cached views.
     /// </summary>
     public int CacheSize => _cache.Keys.Count();
+
+    /// <summary>
+    /// Defines the <see cref="MemorySafeMode"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> MemorySafeModeProperty = AvaloniaProperty.Register<NavigationHost, bool>(nameof(MemorySafeMode));
+
+    /// <summary>
+    /// Gets or sets a value indicating whether memory safe mode is enabled. When enabled, the control will attempt to minimize memory usage by allowing views to be garbage collected when not in use. This may result in slightly slower navigation performance on subsequent visits due to view re-creation, but can help reduce memory footprint in applications with many pages or limited resources.
+    /// </summary>
+    public bool MemorySafeMode
+    {
+        get => GetValue(MemorySafeModeProperty);
+        set => SetValue(MemorySafeModeProperty, value);
+    }
 
     #endregion
 
@@ -126,19 +116,17 @@ public class NavigationHost : ContentControl, IDisposable
     /// </summary>
     public NavigationHost()
     {
-        _cache = new CacheStorage<object, Control>(
-            defaultExpirationPolicyInitCode: CacheExpiration != TimeSpan.Zero ? () => ExpirationPolicy.Duration(CacheExpiration)! : null,
-            storeNullValues: false)
-        {
-            DisposeValuesOnRemoval = true
-        };
+        _cache = new CacheStorage<object, Control>(storeNullValues: false) { DisposeValuesOnRemoval = true };
 
-        // Subscribe to cache expiration events to prevent current view from being removed
+        // Subscribe to cache events
         _cache.Expiring += OnCacheExpiring;
         _cache.Expired += OnCacheExpired;
 
+        PageTransition = new CrossFade(TimeSpan.FromMilliseconds(1500));
+
         // Subscribe to NavigationService property changes
         this.GetObservable(NavigationServiceProperty).Subscribe(OnNavigationServiceChanged);
+        this.GetObservable(WarmUpServiceProperty).Subscribe(OnWarmUpServiceChanged);
     }
 
     #region Navigation Service Management
@@ -164,7 +152,6 @@ public class NavigationHost : ContentControl, IDisposable
 
                 if (_navigationService.CurrentContext?.Page != null)
                 {
-                    PerformanceMonitor.Debug("[NavigationHost] Displaying current page: {_navigationService.CurrentContext.Page.GetType().Name}", PerformanceCategory.Pages);
                     DisplayPage(_navigationService.CurrentContext.Page);
                 }
             }
@@ -175,93 +162,116 @@ public class NavigationHost : ContentControl, IDisposable
     {
         using (PerformanceMonitor.Measure($"[NavigationHost] Navigation to {e.NewPage.GetType().Name}", category: PerformanceCategory.Pages))
         {
-            DisplayPage(e.NewPage);
+            Dispatcher.UIThread.Post(() => DisplayPage(e.NewPage));
         }
     }
 
     #endregion
 
-    #region View Management
+    #region WarmUp Service Management
 
-    private void DisplayPage(INavigationPage? page)
+    private void OnWarmUpServiceChanged(IWarmUpService? service)
+    {
+        using (PerformanceMonitor.Measure("[NavigationHost] WarmUp service changed", category: PerformanceCategory.Pages))
+        {
+            // Unsubscribe from old service
+            if (_warmUpService != null)
+            {
+                _warmUpService.WarmUpProgress -= OnWarmUpProgress;
+            }
+
+            _warmUpService = service;
+
+            // Subscribe to new service and display current page if exists
+            if (_warmUpService != null)
+            {
+                _warmUpService.WarmUpProgress += OnWarmUpProgress;
+            }
+        }
+    }
+
+    private void OnWarmUpProgress(object? sender, WarmUpProgressEventArgs e)
+    {
+        using (PerformanceMonitor.Measure($"[NavigationHost] WarmUp to {e.CurrentType.Name}", category: PerformanceCategory.Pages))
+        {
+            if (e.CurrentObject is not null)
+                Dispatcher.UIThread.Post(() => GetOrCreateView(e.CurrentObject));
+        }
+    }
+
+    #endregion
+
+    #region View Display
+
+    private void DisplayPage(object? page)
     {
         if (page is null)
         {
             PerformanceMonitor.Debug("[NavigationHost] Clearing content (null page)", PerformanceCategory.Pages);
-            _currentView = null;
             Content = null;
             return;
         }
 
-        // If caching is disabled, always create new view
-        if (!EnableCaching || CacheStrategy == CacheStrategy.None)
-        {
-            using (PerformanceMonitor.Measure($"[NavigationHost] Creating new view for {page.GetType().Name} (caching disabled)", category: PerformanceCategory.Pages))
-            {
-                _currentView = CreateView(page);
-                if (_currentView == null)
-                {
-                    LogManager.Error($"[NavigationHost] No DataTemplate found for {page.GetType().Name}");
-                    throw new InvalidOperationException($"No DataTemplate found for {page.GetType().Name}");
-                }
-
-                _currentView.DataContext = page;
-                Content = _currentView;
-            }
-
-            return;
-        }
-
-        var cacheKey = GetCacheKey(page);
         var pageTypeName = page.GetType().Name;
 
-        using (PerformanceMonitor.Measure($"[NavigationHost] Total view resolution for {pageTypeName}", category: PerformanceCategory.Pages))
+        using (PerformanceMonitor.Measure($"[NavigationHost] Displaying {pageTypeName}", category: PerformanceCategory.Pages))
         {
-            var isInCache = _cache.Contains(cacheKey);
+            var oldView = _currentView;
+            var view = GetOrCreateView(page);
 
-            PerformanceMonitor.Debug(isInCache ? $"[NavigationHost] Cache HIT for {pageTypeName} (CacheMode={CacheStrategy})" : $"[NavigationHost] Cache MISS for {pageTypeName} (CacheMode={CacheStrategy}) - creating new view", PerformanceCategory.Pages);
+            _currentView = view;
+            Content = page; // view;
 
-            // Use CacheStorage.GetFromCacheOrFetch for clean cache-or-create pattern
-            var cachedView = _cache.GetFromCacheOrFetch(
-                key: cacheKey,
-                code: () => CreateView(page) ?? throw new InvalidOperationException($"No DataTemplate found for {pageTypeName}"),
-                @override: false);
+            CleanupOldView(oldView, view);
 
-            if (!ReferenceEquals(Content, cachedView))
-            {
-                _currentView = cachedView;
-                _currentView.DataContext = page;
-                Content = cachedView;
-
-                PerformanceMonitor.Debug($"[NavigationHost] Displaying view: {pageTypeName}", PerformanceCategory.Pages);
-            }
-            else
-            {
-                // Mise à jour du DataContext si la vue est réutilisée
-                _currentView?.DataContext = page;
-            }
-
-            PerformanceMonitor.Debug($"[NavigationHost] Cache size: {CacheSize} view(s)", PerformanceCategory.Pages);
+            PerformanceMonitor.Debug($"[NavigationHost] Content set to {pageTypeName} - Cache size: {CacheSize}", PerformanceCategory.Pages);
         }
     }
 
-    private object GetCacheKey(INavigationPage page) =>
+    private Control? GetOrCreateView(object page)
+    {
+        if (!EnableCaching || CacheStrategy == CacheStrategy.None)
+        {
+            var view = CreateView(page);
+            view?.DataContext = page;
+
+            return view;
+        }
+
+        var pageTypeName = page.GetType().Name;
+
+        // Use cache
+        var cacheKey = GetCacheKey(page);
+        var isInCache = _cache.Contains(cacheKey);
+
+        PerformanceMonitor.Debug(isInCache ? $"[NavigationHost] Cache HIT for {pageTypeName} (CacheStrategy={CacheStrategy})" : $"[NavigationHost] Cache MISS for {pageTypeName} (CacheStrategy={CacheStrategy}) - creating view", PerformanceCategory.Pages);
+
+        // Get or create the view
+        var newView = _cache.GetFromCacheOrFetch(
+            key: cacheKey,
+            code: () => CreateView(page) ?? throw new InvalidOperationException($"Failed to create view for {pageTypeName}"),
+            @override: false);
+        newView.DataContext = page;
+        return newView;
+    }
+
+    private object GetCacheKey(object page) =>
         CacheStrategy switch
         {
             CacheStrategy.ByType => page.GetType(),
             _ => page
         };
 
-    private Control? CreateView(object viewModel)
+    private Control? CreateView(object? viewModel)
     {
-        using (PerformanceMonitor.Measure($"[NavigationHost] DataTemplate.Build for {viewModel.GetType().Name}", category: PerformanceCategory.Pages))
+        using (PerformanceMonitor.Measure($"[NavigationHost] Creating view for {viewModel?.GetType().Name}", category: PerformanceCategory.Pages))
         {
             var template = this.FindDataTemplate(viewModel) ?? ContentTemplate;
             var control = template?.Build(viewModel);
 
             if (control != null)
             {
-                PerformanceMonitor.Debug($"[NavigationHost] View created successfully for {viewModel.GetType().Name}", PerformanceCategory.Pages);
+                PerformanceMonitor.Debug($"[NavigationHost] View created for {viewModel?.GetType().Name}", PerformanceCategory.Pages);
             }
 
             return control;
@@ -271,6 +281,20 @@ public class NavigationHost : ContentControl, IDisposable
     #endregion
 
     #region Cache Management
+
+    private void CleanupOldView(Control? oldView, Control? newView)
+    {
+        if (oldView == null || oldView == newView)
+            return;
+
+        if (!EnableCaching || MemorySafeMode)
+        {
+            if (oldView is IReusableView reusable)
+                reusable.Reset();
+
+            oldView.DataContext = null;
+        }
+    }
 
     /// <summary>
     /// Clears all cached views.
@@ -283,17 +307,6 @@ public class NavigationHost : ContentControl, IDisposable
             _cache.Clear();
             PerformanceMonitor.Debug($"[NavigationHost] Cleared {count} cached view(s)", PerformanceCategory.Pages);
         }
-    }
-
-    /// <summary>
-    /// Removes a specific page from the cache.
-    /// </summary>
-    /// <param name="page">The page to remove from cache.</param>
-    public void RemoveFromCache(INavigationPage page)
-    {
-        var cacheKey = GetCacheKey(page);
-        _cache.Remove(cacheKey);
-        PerformanceMonitor.Debug($"[NavigationHost] Removed {page.GetType().Name} from cache", PerformanceCategory.Pages);
     }
 
     private void OnCacheExpiring(object? sender, ExpiringEventArgs<object, Control> e)
@@ -310,7 +323,8 @@ public class NavigationHost : ContentControl, IDisposable
         }
     }
 
-    private static void OnCacheExpired(object? sender, ExpiredEventArgs<object, Control> e) => PerformanceMonitor.Debug("[NavigationHost] View expired and removed from cache", PerformanceCategory.Pages);
+    private static void OnCacheExpired(object? sender, ExpiredEventArgs<object, Control> e) =>
+        PerformanceMonitor.Debug("[NavigationHost] View expired and removed from cache", PerformanceCategory.Pages);
 
     #endregion
 
@@ -344,7 +358,7 @@ public class NavigationHost : ContentControl, IDisposable
             _cache.Expiring -= OnCacheExpiring;
             _cache.Expired -= OnCacheExpired;
 
-            // Clear cache (will dispose views if DisposeOnRemoval is true)
+            // Clear cache
             ClearCache();
 
             PerformanceMonitor.Debug("[NavigationHost] Disposed", PerformanceCategory.Pages);

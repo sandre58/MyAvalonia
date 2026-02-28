@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 using Avalonia.Media;
-using MyNet.Avalonia.Theme.Extensions;
+using MyNet.Avalonia.Extensions;
 
 namespace MyNet.Avalonia.Theme.Palettes;
 
@@ -66,15 +66,15 @@ public class CodeBlockPalette
     /// <returns>A dictionary containing all code block colors with their corresponding resource keys.</returns>
     public IReadOnlyDictionary<string, object> ToResourceDictionary(string prefix = nameof(ThemeVariantColors.CodeBlock)) => new Dictionary<string, object>
         {
-            { nameof(Unknown).WithPrefix(prefix), Unknown },
-            { nameof(Space).WithPrefix(prefix), Space },
-            { nameof(Comment).WithPrefix(prefix), Comment },
-            { nameof(Tag).WithPrefix(prefix), Tag },
-            { nameof(Quote).WithPrefix(prefix), Quote },
-            { nameof(AttributeValue).WithPrefix(prefix), AttributeValue },
-            { nameof(AttributeKey).WithPrefix(prefix), AttributeKey },
-            { nameof(Brace).WithPrefix(prefix), Brace },
-            { nameof(Entity).WithPrefix(prefix), Entity }
+            { nameof(Unknown).WithPrefix(prefix, "."), Unknown },
+            { nameof(Space).WithPrefix(prefix, "."), Space },
+            { nameof(Comment).WithPrefix(prefix, "."), Comment },
+            { nameof(Tag).WithPrefix(prefix, "."), Tag },
+            { nameof(Quote).WithPrefix(prefix, "."), Quote },
+            { nameof(AttributeValue).WithPrefix(prefix, "."), AttributeValue },
+            { nameof(AttributeKey).WithPrefix(prefix, "."), AttributeKey },
+            { nameof(Brace).WithPrefix(prefix, "."), Brace },
+            { nameof(Entity).WithPrefix(prefix, "."), Entity }
         };
 
     /// <summary>
@@ -88,15 +88,15 @@ public class CodeBlockPalette
         var defaultColor = Colors.Gray;
         return new CodeBlockPalette
         {
-            Unknown = (Color)dictionary.GetValueOrDefault(nameof(Unknown).WithPrefix(prefix), defaultColor),
-            Space = (Color)dictionary.GetValueOrDefault(nameof(Space).WithPrefix(prefix), defaultColor),
-            Comment = (Color)dictionary.GetValueOrDefault(nameof(Comment).WithPrefix(prefix), defaultColor),
-            Tag = (Color)dictionary.GetValueOrDefault(nameof(Tag).WithPrefix(prefix), defaultColor),
-            Quote = (Color)dictionary.GetValueOrDefault(nameof(Quote).WithPrefix(prefix), defaultColor),
-            AttributeValue = (Color)dictionary.GetValueOrDefault(nameof(AttributeValue).WithPrefix(prefix), defaultColor),
-            AttributeKey = (Color)dictionary.GetValueOrDefault(nameof(AttributeKey).WithPrefix(prefix), defaultColor),
-            Brace = (Color)dictionary.GetValueOrDefault(nameof(Brace).WithPrefix(prefix), defaultColor),
-            Entity = (Color)dictionary.GetValueOrDefault(nameof(Entity).WithPrefix(prefix), defaultColor)
+            Unknown = (Color)dictionary.GetValueOrDefault(nameof(Unknown).WithPrefix(prefix, "."), defaultColor),
+            Space = (Color)dictionary.GetValueOrDefault(nameof(Space).WithPrefix(prefix, "."), defaultColor),
+            Comment = (Color)dictionary.GetValueOrDefault(nameof(Comment).WithPrefix(prefix, "."), defaultColor),
+            Tag = (Color)dictionary.GetValueOrDefault(nameof(Tag).WithPrefix(prefix, "."), defaultColor),
+            Quote = (Color)dictionary.GetValueOrDefault(nameof(Quote).WithPrefix(prefix, "."), defaultColor),
+            AttributeValue = (Color)dictionary.GetValueOrDefault(nameof(AttributeValue).WithPrefix(prefix, "."), defaultColor),
+            AttributeKey = (Color)dictionary.GetValueOrDefault(nameof(AttributeKey).WithPrefix(prefix, "."), defaultColor),
+            Brace = (Color)dictionary.GetValueOrDefault(nameof(Brace).WithPrefix(prefix, "."), defaultColor),
+            Entity = (Color)dictionary.GetValueOrDefault(nameof(Entity).WithPrefix(prefix, "."), defaultColor)
         };
     }
 }

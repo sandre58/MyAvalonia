@@ -1,40 +1,22 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
 
-        <ControlTheme x:Key="{x:Type TextBlock}" TargetType="TextBlock">
-            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
-            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
-            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-            <Setter Property="TextWrapping" Value="NoWrap" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
-        </ControlTheme>
+    <ControlTheme x:Key="{x:Type TextBlock}" TargetType="TextBlock">
+        <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        <Setter Property="TextWrapping" Value="NoWrap" />
+        <Setter Property="Focusable" Value="False" />
 
-    </Styles.Resources>
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Foreground AncestorType=Control}" />
 
-    <Style Selector=":is(TextBlock)">
-        <Style Selector="^[(my|ThemeAssist.HasRole)=True]">
+        <Style Selector="^.has-role">
             <Setter Property="Foreground" Value="{my:ThemeRole Foreground}" />
         </Style>
+    </ControlTheme>
 
-        <Style Selector="^.variant-underline">
-            <Setter Property="TextDecorations" Value="Underline" />
-        </Style>
 
-        <Style Selector="^.variant-delete">
-            <Setter Property="TextDecorations" Value="StrikeThrough" />
-        </Style>
-
-        <Style Selector="^.variant-underline.variant-delete">
-            <Setter Property="TextDecorations">
-                <TextDecorationCollection>
-                    <TextDecoration Location="Underline" />
-                    <TextDecoration Location="Strikethrough" />
-                </TextDecorationCollection>
-            </Setter>
-        </Style>
-
-    </Style>
-</Styles>
+</ResourceDictionary>

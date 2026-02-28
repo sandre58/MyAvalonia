@@ -49,8 +49,8 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
 
         opacities?.ForEach(opacity =>
         {
-            TrackBrush(newBrushSet.GetOpacityBrush(opacity), newBrushSet, false);
-            TrackBrush(newBrushSet.GetContrastedOpacityBrush(opacity), newBrushSet, true);
+            TrackBrush(newBrushSet.GetTransformedBrush(new ColorInterpolation(opacity, false, null, null)), newBrushSet, false);
+            TrackBrush(newBrushSet.GetTransformedBrush(new ColorInterpolation(opacity, true, null, null)), newBrushSet, true);
         });
 
         return newBrushSet.Brush;
@@ -60,23 +60,20 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
     /// Retrieves the main brush set associated with the specified key.
     /// </summary>
     /// <param name="key">The key identifying the brush set.</param>
-    /// <param name="opacity">The desired opacity value.</param>
-    /// <param name="contrast">Whether to apply contrast transformation.</param>
-    /// <param name="darken">Optional darken factor (value between 0.0 and 1.0).</param>
-    /// <param name="lighten">Optional lighten factor (value between 0.0 and 1.0).</param>
+    /// <param name="colorInterpolation">The color interpolation settings.</param>
     /// <returns>The <see cref="SolidColorBrush"/> associated with the key.</returns>
     /// <exception cref="KeyNotFoundException">Thrown if the key does not exist in the manager.</exception>
-    public IBrush Get(string key, double? opacity = null, bool contrast = false, double? darken = null, double? lighten = null)
+    public IBrush Get(string key, ColorInterpolation colorInterpolation)
     {
-        using (PerformanceMonitor.Measure($"[BrushManager] GetBrush(key: '{key}', Opacity: {opacity}, Contrast: {contrast}, Darken: {darken}, Lighten: {lighten})", maxBeforeWarning: 1.Milliseconds(), category: PerformanceCategory.Brushes))
+        using (PerformanceMonitor.Measure($"[BrushManager] GetBrush(key: '{key}', {colorInterpolation})", maxBeforeWarning: 1.Milliseconds(), category: PerformanceCategory.Brushes))
         {
             if (!_sets.TryGetValue(key, out var set))
             {
-                PerformanceMonitor.Warning($"[BrushManager] Brush not found (key: '{key}', Opacity: {opacity}, Contrast: {contrast}, Darken: {darken}, Lighten: {lighten})", category: PerformanceCategory.Brushes);
+                PerformanceMonitor.Warning($"[BrushManager] Brush not found (key: '{key}', {colorInterpolation})", category: PerformanceCategory.Brushes);
                 return FallbackBrush;
             }
 
-            return ResolveBrushFromSet(set, opacity, contrast, darken, lighten);
+            return ResolveBrushFromSet(set, colorInterpolation);
         }
     }
 
@@ -84,36 +81,34 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
     /// Retrieves a brush set from the manager matching the specified brush instance, applying color interpolation options such as opacity and contrast.
     /// </summary>
     /// <param name="brush">The brush instance to search for.</param>
-    /// <param name="opacity">The desired opacity value.</param>
-    /// <param name="contrast">Whether to apply contrast transformation.</param>
-    /// <param name="darken">Optional darken factor (value between 0.0 and 1.0).</param>
-    /// <param name="lighten">Optional lighten factor (value between 0.0 and 1.0).</param>
+    /// <param name="colorInterpolation">The color interpolation settings.</param>
     /// <returns>The matching <see cref="SolidColorBrush"/> with the specified transformations applied.</returns>
-    public IBrush Get(IBrush brush, double? opacity = null, bool contrast = false, double? darken = null, double? lighten = null)
+    public IBrush Get(IBrush brush, ColorInterpolation colorInterpolation)
     {
         switch (brush)
         {
             case SolidColorBrush solidColorBrush:
-                var computedOpacity = opacity.HasValue ? opacity.Value * solidColorBrush.Opacity : solidColorBrush.Opacity;
-                using (PerformanceMonitor.Measure($"[BrushManager] Get Brush({solidColorBrush.Color}, Opacity: {computedOpacity}, Contrast: {contrast}, Darken: {darken}, Lighten: {lighten})", 1.Milliseconds(), category: PerformanceCategory.Brushes))
+                using (PerformanceMonitor.Measure($"[BrushManager] Get Brush({solidColorBrush.Color}, {colorInterpolation})", 1.Milliseconds(), category: PerformanceCategory.Brushes))
                 {
                     if (_reverse.TryGetValue(solidColorBrush, out var registration))
                     {
-                        return contrast && registration.IsContrast
-                            ? ComputeUnknownBrush(solidColorBrush, computedOpacity, contrast, darken, lighten)
-                            : ResolveBrushFromSet(registration.Set, computedOpacity, contrast ^ registration.IsContrast, darken, lighten);
+                        var computedColorInterpolation = new ColorInterpolation(
+                            colorInterpolation.Opacity.HasValue ? colorInterpolation.Opacity.Value * solidColorBrush.Opacity : solidColorBrush.Opacity,
+                            colorInterpolation.Contrast ^ registration.IsContrast,
+                            colorInterpolation.Darken,
+                            colorInterpolation.Lighten);
+                        return colorInterpolation.Contrast && registration.IsContrast
+                            ? ComputeUnknownBrush(solidColorBrush, computedColorInterpolation)
+                            : ResolveBrushFromSet(registration.Set, computedColorInterpolation);
                     }
 
-                    PerformanceMonitor.Warning($"[BrushManager] Brush not registered ({solidColorBrush.Color}, Opacity: {computedOpacity}, Contrast: {contrast}, Darken: {darken}, Lighten: {lighten})", PerformanceCategory.Theme);
-
-                    return ComputeUnknownBrush(solidColorBrush, computedOpacity, contrast, darken, lighten);
+                    PerformanceMonitor.Warning($"[BrushManager] Brush not registered ({solidColorBrush.Color}, {colorInterpolation})", PerformanceCategory.Theme);
+                    return ComputeUnknownBrush(solidColorBrush, colorInterpolation);
                 }
 
             case IImmutableSolidColorBrush immutableSolidColorBrush:
-                var computedOpacity1 = opacity.HasValue ? opacity.Value * immutableSolidColorBrush.Opacity : immutableSolidColorBrush.Opacity;
-                PerformanceMonitor.Warning($"[BrushManager] Try to get ImmutableSolidColorBrush({immutableSolidColorBrush.Color}, Opacity: {computedOpacity1}, Contrast: {contrast})", category: PerformanceCategory.Theme);
-
-                return ComputeUnknownBrush(immutableSolidColorBrush, computedOpacity1, contrast, darken, lighten);
+                PerformanceMonitor.Warning($"[BrushManager] Try to get ImmutableSolidColorBrush({immutableSolidColorBrush.Color}, {colorInterpolation})", category: PerformanceCategory.Theme);
+                return ComputeUnknownBrush(immutableSolidColorBrush, colorInterpolation);
 
             default:
                 PerformanceMonitor.Warning($"[BrushManager] Try to get Brush({brush})", category: PerformanceCategory.Theme);
@@ -125,49 +120,27 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
     /// Computes a new brush based on an unknown brush instance by applying color interpolation transformations such as opacity, contrast, darkening, and lightening.
     /// </summary>
     /// <param name="brush">The unknown brush instance.</param>
-    /// <param name="opacity">The desired opacity value.</param>
-    /// <param name="contrast">Whether to apply contrast transformation.</param>
-    /// <param name="darken">Optional darken factor (value between 0.0 and 1.0).</param>
-    /// <param name="lighten">Optional lighten factor (value between 0.0 and 1.0).</param>
+    /// <param name="colorInterpolation">The color interpolation settings.</param>
     /// <returns>The computed brush with the specified transformations applied.</returns>
-    private static ISolidColorBrush ComputeUnknownBrush(ISolidColorBrush brush, double opacity, bool contrast, double? darken, double? lighten)
+    private static ISolidColorBrush ComputeUnknownBrush(ISolidColorBrush brush, ColorInterpolation colorInterpolation)
     {
-        if (opacity.NearlyEqual(1.0) && !contrast && !darken.HasValue && !lighten.HasValue)
+        if (colorInterpolation.IsEmpty)
             return brush;
 
-        var color = brush.Color.Apply(new ColorInterpolation(null, contrast, darken, lighten));
-        return opacity < 1.0 || contrast || darken.HasValue || lighten.HasValue
-            ? new SolidColorBrush(color, opacity)
-            : brush;
+        var color = brush.Color.Apply(colorInterpolation);
+        return new SolidColorBrush(color);
     }
 
     /// <summary>
     /// Resolves the correct brush from a <see cref="BrushSet"/> based on opacity and contrast settings.
     /// </summary>
     /// <param name="set">The brush set to resolve from.</param>
-    /// <param name="opacity">The desired opacity value.</param>
-    /// <param name="contrast">Whether to apply contrast transformation.</param>
-    /// <param name="darken">Optional darken factor (value between 0.0 and 1.0).</param>
-    /// <param name="lighten">Optional lighten factor (value between 0.0 and 1.0).</param>
+    /// <param name="colorInterpolation">The color interpolation settings.</param>
     /// <returns>The resolved <see cref="SolidColorBrush"/>.</returns>
-    private ISolidColorBrush ResolveBrushFromSet(BrushSet set, double? opacity, bool contrast, double? darken, double? lighten)
-    {
-        // If we need to darken or lighten, we create a new brush with the transformed color
-        if (darken.HasValue || lighten.HasValue)
-        {
-            var baseBrush = contrast
-                ? opacity is < 1.0 ? set.GetContrastedOpacityBrush(opacity.Value) : set.Contrast
-                : opacity is < 1.0 ? set.GetOpacityBrush(opacity.Value) : set.Brush;
-
-            var transformedColor = baseBrush.Color.Apply(new ColorInterpolation(null, contrast, darken, lighten));
-            return new SolidColorBrush(transformedColor, baseBrush.Opacity);
-        }
-
-        // Otherwise, use the standard resolution
-        return contrast
-            ? opacity is < 1.0 ? TrackBrush(set.GetContrastedOpacityBrush(opacity.Value), set, true) : set.Contrast
-            : opacity is < 1.0 ? TrackBrush(set.GetOpacityBrush(opacity.Value), set, false) : set.Brush;
-    }
+    private ISolidColorBrush ResolveBrushFromSet(BrushSet set, ColorInterpolation colorInterpolation)
+        => colorInterpolation.IsEmpty
+            ? colorInterpolation.Contrast ? set.Contrast : set.Brush
+            : TrackBrush(set.GetTransformedBrush(colorInterpolation), set, colorInterpolation.Contrast);
 
     /// <summary>
     /// Registers the main and contrast brushes of a <see cref="BrushSet"/> in the reverse lookup table.

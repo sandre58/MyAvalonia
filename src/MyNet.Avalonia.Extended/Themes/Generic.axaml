@@ -1,0 +1,17 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/Drawer.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/ExtendedView.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/ExtendedWindow.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/MessageNotificationControl.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/NavigationHost.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/OverlayDialogHost.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowDialog.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowNotificationManager.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+</Styles>

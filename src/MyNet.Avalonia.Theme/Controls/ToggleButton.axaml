@@ -1,46 +1,52 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+﻿
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- DEFAULT TOGGLEBUTTON THEME                                -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type ToggleButton}" TargetType="ToggleButton" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="my:ThemeAssist.Category" Value="Selection" />
             <Setter Property="Cursor" Value="Arrow" />
             
-            <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeContext Control.Border}" />
-            <Setter Property="Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
+            <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
         </ControlTheme>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- ROUNDED TOGGLEBUTTON THEME                                -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.ToggleButton.Rounded" TargetType="ToggleButton" BasedOn="{StaticResource MyNet.Theme.Button.Rounded}">
+            <Setter Property="my:ThemeAssist.Category" Value="Selection" />
             <Setter Property="Cursor" Value="Arrow" />
             
-            <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeContext Control.Border}" />
-            <Setter Property="Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
+            <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
         </ControlTheme>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- ICON TOGGLEBUTTON THEME                                   -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.ToggleButton.Icon" TargetType="ToggleButton" BasedOn="{StaticResource MyNet.Theme.Button.Icon}">
+            <Setter Property="my:ThemeAssist.Category" Value="Selection" />
             <Setter Property="Cursor" Value="Arrow" />
             
-            <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
+            <Setter Property="my:VariantAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
-            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeRole Primary}" />
-            <Setter Property="my:InteractionAssist.RippleColor" Value="{my:ThemeRole Primary}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+            <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $self.(my:VariantAssist.Primary)}" />
         </ControlTheme>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- CHECKBOX TOGGLEBUTTON THEME                               -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.ToggleButton.CheckBox" TargetType="ToggleButton">
+            <Setter Property="my:ThemeAssist.Category" Value="Selection" />
+            <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+            <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
             <Setter Property="my:ThemeAssist.Kind" Value="checkbox" />
             <Setter Property="Cursor" Value="Arrow" />
             <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
@@ -55,10 +61,17 @@
             <Setter Property="ClipToBounds" Value="False" />
 
             <!-- Default Theme -->
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeContext Control.Border}" />
-            <Setter Property="my:InteractionAssist.RippleColor" Value="{my:ThemeRole Primary}" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeRole Primary}" />
+            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
+            
+            <!-- Variant -->
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+
+            <!-- Theme -->
+            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+
+            <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
             <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), Contrast=True, Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:ThemeBrush BorderBrush, Contrast=True, Opacity=Hover}" />
 
@@ -117,7 +130,7 @@
                 </Setter.Value>
             </Setter>
 
-            <Style Selector="^:not(.no-transitions) /template/ Path#GraphicHover">
+            <Style Selector="^.use-transitions /template/ Path#GraphicHover">
                 <Setter Property="Transitions">
                     <Transitions>
                         <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
@@ -209,28 +222,5 @@
             </Setter>
         </ControlTheme>
 
-    </Styles.Resources>
 
-    <Style Selector=":is(ToggleButton)">
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- CHECKBOX VARIANTS                                         -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <Style Selector="^[(my|ThemeAssist.Kind)=checkbox]">
-
-            <!-- Styles -->
-            <Style Selector="^.shape-circle">
-                <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxMarkedCircle}" />
-                <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{StaticResource MyNet.Geometry.MinusCircle}" />
-                <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxBlankCircleOutline}" />
-            </Style>
-
-            <Style Selector="^.shape-alternate">
-                <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{StaticResource MyNet.Geometry.Check}" />
-                <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{StaticResource MyNet.Geometry.Minus}" />
-                <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxBlankCircleOutline}" />
-            </Style>
-        </Style>
-
-    </Style>
-</Styles>
+</ResourceDictionary>

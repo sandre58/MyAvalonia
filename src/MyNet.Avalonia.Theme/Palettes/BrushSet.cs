@@ -6,9 +6,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Globalization;
+using System.Linq;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Media;
+using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Helpers;
 using MyNet.Utilities;
 
@@ -21,8 +25,7 @@ namespace MyNet.Avalonia.Theme.Palettes;
 public class BrushSet
 {
     private readonly ColorTransition? _colorTransition;
-    private readonly Dictionary<double, SolidColorBrush> _brushes = [];
-    private readonly Dictionary<double, SolidColorBrush> _contrastedBrushes = [];
+    private readonly Dictionary<ColorInterpolation, SolidColorBrush> _brushes = [];
     private bool _transitionsEnabled;
 
     /// <summary>
@@ -62,44 +65,19 @@ public class BrushSet
     public SolidColorBrush Contrast { get; }
 
     /// <summary>
-    /// Gets a brush with the specified opacity, using the current color and animated transitions.
-    /// If a brush with the requested opacity already exists, it is returned; otherwise, a new one is created and cached.
+    /// Gets a transformed brush based on the specified color interpolation value.
     /// </summary>
-    /// <param name="opacity">The opacity value for the brush (0.0 to 1.0).</param>
-    /// <returns>A <see cref="SolidColorBrush"/> with the specified opacity.</returns>
-    public SolidColorBrush GetOpacityBrush(double opacity)
+    /// <param name="value">The color interpolation value.</param>
+    /// <returns>A <see cref="SolidColorBrush"/> with the specified transformation.</returns>
+    public SolidColorBrush GetTransformedBrush(ColorInterpolation value)
     {
-        opacity = NormalizeOpacity(opacity);
-        if (_brushes.TryGetValue(opacity, out var existing)) return existing;
+        if (_brushes.TryGetValue(value, out var existing)) return existing;
 
-        using (PerformanceMonitor.Measure($"[BrushSet] Created new opacity brush ({opacity:F2}) (Current opacity variants: {_brushes.Count})", maxBeforeWarning: 1.Milliseconds(), category: PerformanceCategory.Brushes))
+        using (PerformanceMonitor.Measure($"[BrushSet] Created new brush ({value})", maxBeforeWarning: 1.Milliseconds(), category: PerformanceCategory.Brushes))
         {
             // Create new brush with color transition animation
-            var newBrush = CreateBrush(Brush.Color, opacity);
-
-            _brushes.AddOrUpdate(opacity, newBrush);
-
-            return newBrush;
-        }
-    }
-
-    /// <summary>
-    /// Gets a brush with the specified opacity, using the current color and animated transitions.
-    /// If a brush with the requested opacity already exists, it is returned; otherwise, a new one is created and cached.
-    /// </summary>
-    /// <param name="opacity">The opacity value for the brush (0.0 to 1.0).</param>
-    /// <returns>A <see cref="SolidColorBrush"/> with the specified opacity.</returns>
-    public SolidColorBrush GetContrastedOpacityBrush(double opacity)
-    {
-        opacity = NormalizeOpacity(opacity);
-        if (_contrastedBrushes.TryGetValue(opacity, out var existing)) return existing;
-
-        using (PerformanceMonitor.Measure($"[BrushSet] Created new contrasted opacity brush ({opacity:F2}) (Current opacity variants: {_contrastedBrushes.Count})", maxBeforeWarning: 1.Milliseconds(), category: PerformanceCategory.Brushes))
-        {
-            // Create new brush with color transition animation
-            var newBrush = CreateBrush(Contrast.Color, opacity);
-
-            _contrastedBrushes.AddOrUpdate(opacity, newBrush);
+            var newBrush = CreateBrush(value.Contrast ? Contrast.Color : Brush.Color, value.Opacity ?? 1.0, value.Darken, value.Lighten);
+            _brushes.AddOrUpdate(value, newBrush);
 
             return newBrush;
         }
@@ -122,14 +100,9 @@ public class BrushSet
         Contrast.Color = contrastedColor;
 
         // Update all opacity brushes
-        foreach (var brush in _brushes.Values)
+        foreach (var brush in _brushes)
         {
-            brush.Color = newColor;
-        }
-
-        foreach (var brush in _contrastedBrushes.Values)
-        {
-            brush.Color = contrastedColor;
+            brush.Value.Color = CreateColor(brush.Key.Contrast ? contrastedColor : newColor, brush.Key.Darken, brush.Key.Lighten);
         }
     }
 
@@ -153,23 +126,7 @@ public class BrushSet
             brush.Transitions = [_colorTransition];
         }
 
-        foreach (var brush in _contrastedBrushes.Values)
-        {
-            brush.Transitions = [_colorTransition];
-        }
-
-        PerformanceMonitor.Debug($"[BrushSet] Enabled transitions for {_brushes.Count + _contrastedBrushes.Count + 2} brushes", PerformanceCategory.Brushes);
-    }
-
-    /// <summary>
-    /// Normalizes an opacity value to the range [0, 1] and rounds to three decimals for consistent caching.
-    /// </summary>
-    /// <param name="opacity">The opacity value to normalize.</param>
-    /// <returns>The normalized opacity value.</returns>
-    private static double NormalizeOpacity(double opacity)
-    {
-        var clamped = Math.Clamp(opacity, 0d, 1d);
-        return Math.Round(clamped, 3, MidpointRounding.AwayFromZero);
+        PerformanceMonitor.Debug($"[BrushSet] Enabled transitions for {_brushes.Count + 2} brushes", PerformanceCategory.Brushes);
     }
 
     /// <summary>
@@ -178,9 +135,13 @@ public class BrushSet
     /// </summary>
     /// <param name="color">Color of the brush.</param>
     /// <param name="opacity">The opacity value for the brush (optional; defaults to 1.0).</param>
+    /// <param name="darken">The amount to darken the color (optional).</param>
+    /// <param name="lighten">The amount to lighten the color (optional).</param>
     /// <returns>A new <see cref="SolidColorBrush"/> instance.</returns>
-    private SolidColorBrush CreateBrush(Color color, double opacity = 1.0)
+    private SolidColorBrush CreateBrush(Color color, double opacity = 1.0, double? darken = null, double? lighten = null)
     {
+        color = CreateColor(color, darken, lighten);
+
         var brush = new SolidColorBrush(color) { Opacity = opacity };
 
         // Only add transitions if already enabled (during theme change)
@@ -190,5 +151,23 @@ public class BrushSet
         }
 
         return brush;
+    }
+
+    /// <summary>
+    /// Creates a new color by applying optional darkening or lightening adjustments to the specified color.
+    /// </summary>
+    /// <remarks>If both <paramref name="darken"/> and <paramref name="lighten"/> are null, the method returns
+    /// the input color unchanged.</remarks>
+    /// <param name="color">The base color to modify.</param>
+    /// <param name="darken">An optional value specifying the amount to darken the color. If provided, the color is darkened by this amount.</param>
+    /// <param name="lighten">An optional value specifying the amount to lighten the color. If provided, the color is lightened by this
+    /// amount.</param>
+    /// <returns>A new color instance with the specified darkening or lightening applied. If neither adjustment is specified, the
+    /// original color is returned.</returns>
+    private static Color CreateColor(Color color, double? darken, double? lighten)
+    {
+        if (darken.HasValue || lighten.HasValue)
+            color = color.Apply(new ColorInterpolation(null, false, darken, lighten));
+        return color;
     }
 }

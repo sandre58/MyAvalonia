@@ -1,0 +1,139 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:MyNet.Avalonia.PerfTest.ViewModels"
+             x:Class="MyNet.Avalonia.PerfTest.Views.FormsView"
+             x:DataType="vm:FormsViewModel">
+
+    <ScrollViewer>
+        <StackPanel Spacing="20" MaxWidth="800">
+            <TextBlock Text="Forms Performance Test" 
+                      FontSize="24" 
+                      FontWeight="Bold"/>
+
+            <!-- Personal Information -->
+            <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                    Padding="20"
+                    CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Personal Information" 
+                              FontSize="18" 
+                              FontWeight="SemiBold"/>
+                    
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="First Name"/>
+                        <TextBox Text="{Binding TextField1}" Watermark="Enter your first name"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Last Name"/>
+                        <TextBox Text="{Binding TextField2}" Watermark="Enter your last name"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Display Name"/>
+                        <TextBox Text="{Binding TextField3}" Watermark="Enter your display name"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Email"/>
+                        <TextBox Text="{Binding Email}" Watermark="email@example.com"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Phone"/>
+                        <TextBox Text="{Binding Phone}" Watermark="+33 6 12 34 56 78"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Address Information -->
+            <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                    Padding="20"
+                    CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Address" 
+                              FontSize="18" 
+                              FontWeight="SemiBold"/>
+                    
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Street Address"/>
+                        <TextBox Text="{Binding Address}" Watermark="123 Main Street"/>
+                    </StackPanel>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <StackPanel Grid.Column="0" Spacing="5">
+                            <TextBlock Text="City"/>
+                            <TextBox Text="{Binding City}" Watermark="Paris"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Spacing="5">
+                            <TextBlock Text="Zip Code"/>
+                            <TextBox Text="{Binding ZipCode}" Watermark="75001"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Country"/>
+                        <TextBox Text="{Binding Country}" Watermark="France"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Preferences -->
+            <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                    Padding="20"
+                    CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Preferences" 
+                              FontSize="18" 
+                              FontWeight="SemiBold"/>
+                    
+                    <CheckBox Content="Option 1 - Enable notifications" IsChecked="{Binding Checkbox1}"/>
+                    <CheckBox Content="Option 2 - Subscribe to newsletter" IsChecked="{Binding Checkbox2}"/>
+                    <CheckBox Content="Option 3 - Share data for analytics" IsChecked="{Binding Checkbox3}"/>
+                    <CheckBox Content="Option 4 - Enable dark mode" IsChecked="{Binding Checkbox4}"/>
+                    <CheckBox Content="Option 5 - Auto-save changes" IsChecked="{Binding Checkbox5}"/>
+
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Select an option"/>
+                        <ComboBox ItemsSource="{Binding ComboBoxItems}"
+                                 SelectedItem="{Binding SelectedItem}"
+                                 HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Select a date"/>
+                        <DatePicker SelectedDate="{Binding SelectedDate}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Comments -->
+            <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                    Padding="20"
+                    CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Additional Information" 
+                              FontSize="18" 
+                              FontWeight="SemiBold"/>
+                    
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="Comments"/>
+                        <TextBox Text="{Binding MultilineText}"
+                                AcceptsReturn="True"
+                                TextWrapping="Wrap"
+                                Height="150"
+                                Watermark="Enter any additional comments here..."/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Action Buttons -->
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                <Button Content="Cancel" Width="100"/>
+                <Button Content="Save" Width="100" Classes="accent"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

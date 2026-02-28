@@ -1,0 +1,230 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+    
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- BUTTON, TOGGLEBUTTON, HYPERLINKBUTTON, DROPDOWNBUTTON,    -->
+    <!-- SPLITBUTTON, TOGGLESPLITBUTTON, CHECKBOX, RADIOBUTTON,    -->
+    <!-- LABEL, TAG, TREEVIEWITEM, LISTBOXITEM, TABITEM,           -->
+    <!-- TABSTRIPITEM, TOGGLESWITCH, BADGE                         -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="
+    :is(Button) PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    :is(SplitButton) PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    Label PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Tag PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    TreeViewItem PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    ListBoxItem PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    TabItem PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    TabStripItem PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Badge /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Badge /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    ToggleSwitch PathIcon">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+    </Style>
+
+    <Style Selector="
+    :is(Button) PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    :is(SplitButton) PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    Label PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    my|Tag PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    TreeViewItem PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    ListBoxItem PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    TabItem PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    TabStripItem PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph)">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
+    </Style>
+
+    <Style Selector="
+    :is(Button).kind-tool PathIcon:not(.kind-glyph),
+    Button.kind-caption PathIcon:not(.kind-glyph)">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Tool}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Tool}" />
+    </Style>
+
+    <Style Selector="
+    :is(Button) PathIcon.kind-glyph,
+    :is(SplitButton) PathIcon.kind-glyph,
+    Label PathIcon.kind-glyph,
+    my|Tag PathIcon.kind-glyph,
+    TreeViewItem PathIcon.kind-glyph,
+    ListBoxItem PathIcon.kind-glyph,
+    TabItem PathIcon.kind-glyph,
+    TabStripItem PathIcon.kind-glyph">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+    </Style>
+
+        <Style Selector="
+    :is(Button).size-sm PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    :is(SplitButton).size-sm PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    Label.size-sm PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Tag.size-sm PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    TreeViewItem.size-sm PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    ListBoxItem.size-sm PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    TabItem.size-sm PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    TabStripItem.size-sm PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Badge.size-sm /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Badge.size-sm /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    ToggleSwitch.size-sm PathIcon">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+    </Style>
+
+    <Style Selector="
+    :is(Button).size-sm PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    :is(SplitButton).size-sm PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    Label.size-sm PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    my|Tag.size-sm PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    TreeViewItem.size-sm PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    ListBoxItem.size-sm PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    TabItem.size-sm PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    TabStripItem.size-sm PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph)">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+    </Style>
+
+    <Style Selector="
+    :is(Button).kind-tool.size-sm PathIcon:not(.kind-glyph),
+    Button.kind-caption.size-sm PathIcon:not(.kind-glyph)">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Tool.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Tool.Sm}" />
+    </Style>
+
+    <Style Selector="
+    :is(Button).size-sm PathIcon.kind-glyph,
+    :is(SplitButton).size-sm PathIcon.kind-glyph,
+    Label.size-sm PathIcon.kind-glyph,
+    my|Tag.size-sm PathIcon.kind-glyph,
+    TreeViewItem.size-sm PathIcon.kind-glyph,
+    ListBoxItem.size-sm PathIcon.kind-glyph,
+    TabItem.size-sm PathIcon.kind-glyph,
+    TabStripItem.size-sm PathIcon.kind-glyph">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+    </Style>
+
+        <Style Selector="
+    :is(Button).size-lg PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    :is(SplitButton).size-lg PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    Label.size-lg PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Tag.size-lg PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    TreeViewItem.size-lg PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    ListBoxItem.size-lg PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    TabItem.size-lg PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    TabStripItem.size-lg PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Badge.size-lg /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Badge.size-lg /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    ToggleSwitch.size-lg PathIcon">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
+    </Style>
+
+    <Style Selector="
+    :is(Button).size-lg PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    :is(SplitButton).size-lg PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    Label.size-lg PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    my|Tag.size-lg PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    TreeViewItem.size-lg PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    ListBoxItem.size-lg PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    TabItem.size-lg PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    TabStripItem.size-lg PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph)">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+    </Style>
+
+    <Style Selector="
+    :is(Button).size-lg PathIcon.kind-glyph,
+    :is(SplitButton).size-lg PathIcon.kind-glyph,
+    Label.size-lg PathIcon.kind-glyph,
+    my|Tag.size-lg PathIcon.kind-glyph,
+    TreeViewItem.size-lg PathIcon.kind-glyph,
+    ListBoxItem.size-lg PathIcon.kind-glyph,
+    TabItem.size-lg PathIcon.kind-glyph,
+    TabStripItem.size-lg PathIcon.kind-glyph">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- HEADEREDCONTENTCONTROL, EXPANDER, BANNER                  -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="
+    HeaderedContentControl /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    HeaderedContentControl /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    Expander /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    Expander /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    my|Banner /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Banner /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph)">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
+    </Style>
+
+    <Style Selector="
+    HeaderedContentControl /template/ Border#PART_Header PathIcon.kind-glyph,
+    HeaderedContentControl /template/ Border#PART_Header PathIcon.kind-glyph,
+    Expander /template/ Border#PART_Header PathIcon.kind-glyph,
+    Expander /template/ Border#PART_Header PathIcon.kind-glyph,
+    my|Banner /template/ Border#PART_Header PathIcon.kind-glyph,
+    my|Banner /template/ Border#PART_Header PathIcon.kind-glyph">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+    </Style>
+
+    <Style Selector="
+    HeaderedContentControl.size-sm /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    HeaderedContentControl.size-sm /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    Expander.size-sm /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    Expander.size-sm /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    my|Banner.size-sm /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Banner.size-sm /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph)">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+    </Style>
+
+    <Style Selector="
+    HeaderedContentControl.size-sm /template/ Border#PART_Header PathIcon.kind-glyph,
+    HeaderedContentControl.size-sm /template/ Border#PART_Header PathIcon.kind-glyph,
+    Expander.size-sm /template/ Border#PART_Header PathIcon.kind-glyph,
+    Expander.size-sm /template/ Border#PART_Header PathIcon.kind-glyph,
+    my|Banner.size-sm /template/ Border#PART_Header PathIcon.kind-glyph,
+    my|Banner.size-sm /template/ Border#PART_Header PathIcon.kind-glyph">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+    </Style>
+
+    <Style Selector="
+    HeaderedContentControl.size-lg /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    HeaderedContentControl.size-lg /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    Expander.size-lg /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    Expander.size-lg /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph),
+    my|Banner.size-lg /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Label]:not(.kind-glyph),
+    my|Banner.size-lg /template/ Border#PART_Header PathIcon[(my|IconAssist.Role)=Primary]:not(.kind-glyph)">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+    </Style>
+
+    <Style Selector="
+    HeaderedContentControl.size-lg /template/ Border#PART_Header PathIcon.kind-glyph,
+    HeaderedContentControl.size-lg /template/ Border#PART_Header PathIcon.kind-glyph,
+    Expander.size-lg /template/ Border#PART_Header PathIcon.kind-glyph,
+    Expander.size-lg /template/ Border#PART_Header PathIcon.kind-glyph,
+    my|Banner.size-lg /template/ Border#PART_Header PathIcon.kind-glyph,
+    my|Banner.size-lg /template/ Border#PART_Header PathIcon.kind-glyph">
+        <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- AVATAR                                                    -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="my|Avatar PathIcon">
+        <Setter Property="Height" Value="{Binding $parent[my:Avatar].Width, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=1.5}" />
+        <Setter Property="Width" Value="{Binding $parent[my:Avatar].Width, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=1.5}" />
+    </Style>
+</Styles>

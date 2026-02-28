@@ -1,0 +1,126 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- KIND: CARD                                                -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <Style Selector="Border.kind-card">
+        <Setter Property="my:ThemeAssist.Category" Value="Surface" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
+
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+
+        <!-- Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+
+        <!-- Override transitions for card (instant by default) -->
+        <Style Selector="^.use-transitions">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BoxShadowsTransition Property="BoxShadow" Duration="{StaticResource MyNet.Animation.Instant}" />
+                </Transitions>
+            </Setter>
+        </Style>
+
+        <!-- Re-enable shadow transitions when explicitly requested -->
+        <Style Selector="^.shadow-surface.use-transitions, ^.shadow-control.use-transitions">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BoxShadowsTransition Property="BoxShadow" Duration="{StaticResource MyNet.Animation.Shadow}" />
+                </Transitions>
+            </Setter>
+        </Style>
+
+        <!-- Hover effect -->
+        <Style Selector="^.is-hover:pointerover">
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
+            <Setter Property="my:ShadowAssist.Darken" Value="True" />
+        </Style>
+    </Style>
+
+    <Style Selector="Ellipse.kind-card">
+        <Setter Property="my:ThemeAssist.Category" Value="Surface" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+
+        <!-- Theme -->
+        <Setter Property="StrokeThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness), Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
+        <Setter Property="Fill" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="Stroke" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+
+        <Style Selector="^.is-hover:pointerover">
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
+            <Setter Property="my:ShadowAssist.Darken" Value="True" />
+        </Style>
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- KIND: POPUP                                               -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <Style Selector="Border.kind-popup">
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="Margin" Value="{StaticResource MyNet.Margin.Popup}" />
+
+        <!-- Default Theme -->
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level1}" />
+
+        <Style Selector="^:not(.override-style)">
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Popup}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+            <Setter Property="TextElement.Foreground" Value="{my:ThemeBrush $self.Background, Contrast=True}" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Popup}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style Selector="^:not(.override-style):not(.override-background)">
+            <Setter Property="Background" Value="{my:ThemeRole Background}" />
+        </Style>
+
+        <!-- Popup-specific transitions -->
+        <Style Selector="^.use-transitions">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="{StaticResource MyNet.Animation.Fade}" Easing="CircularEaseOut" />
+                    <TransformOperationsTransition Property="RenderTransform" Duration="{StaticResource MyNet.Animation.Slide}" Easing="CircularEaseOut" />
+                </Transitions>
+            </Setter>
+        </Style>
+    </Style>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- VARIANTS                                                  -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="Rectangle.variant-dashed">
+        <Setter Property="RadiusX" Value="{Binding Source={StaticResource MyNet.Corners.Surface}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="RadiusY" Value="{Binding Source={StaticResource MyNet.Corners.Surface}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="Stroke" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeDashArray" Value="2,3" />
+    </Style>
+
+</Styles>

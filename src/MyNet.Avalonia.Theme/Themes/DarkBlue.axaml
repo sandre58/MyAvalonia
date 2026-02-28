@@ -13,9 +13,6 @@
     <Color x:Key="MyNet.Color.Surface.Inverse">#F9F9F9</Color> <!-- Tooltip -->
     <Color x:Key="MyNet.Color.Surface.Border">#3C475A</Color> <!-- All surfaces -->
 
-    <!-- Divider -->
-    <Color x:Key="MyNet.Color.Divider">#3C475A</Color>
-
     <!-- Foreground -->
     <Color x:Key="MyNet.Color.Foreground.Primary">#F9F9F9</Color>
     <Color x:Key="MyNet.Color.Foreground.Secondary">#C0C0C0</Color>
@@ -26,6 +23,9 @@
     <Color x:Key="MyNet.Color.Control.Border">#5E708D</Color>
     <Color x:Key="MyNet.Color.Control.Border.Hover">#7084A7</Color>
     <Color x:Key="MyNet.Color.Control.Border.Focus">#41EDFF</Color>
+
+    <!-- Divider -->
+    <Color x:Key="MyNet.Color.Divider">#3C475A</Color>
 
     <!-- Overlay -->
     <Color x:Key="MyNet.Color.Overlay.Background">#000000</Color>

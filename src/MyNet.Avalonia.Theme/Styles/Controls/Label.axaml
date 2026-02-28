@@ -1,0 +1,46 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- VARIANTS                                                  -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <!-- Code label -->
+    <Style Selector="Label.kind-code">
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="Background" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="Foreground" Value="{my:ThemeRole Foreground, Opacity=High}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Sm}" />
+        <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily.Code}" />
+        <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
+    </Style>
+
+    <!-- Badge -->
+    <Style Selector="Label.kind-badge">
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Md}" />
+        <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+
+        <!-- Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+    </Style>
+
+</Styles>

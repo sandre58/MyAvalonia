@@ -1,292 +1,217 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DEFAULT HEADEREDCONTENTCONTROL THEME                      -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="{x:Type HeaderedContentControl}" TargetType="HeaderedContentControl">
-            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
-            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
-            <Setter Property="Focusable" Value="false" />
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-            <Setter Property="VerticalContentAlignment" Value="Top" />
-            <Setter Property="my:HeaderAssist.CornerRadius" Value="0" />
-            <Setter Property="my:HeaderAssist.ShadowDepth" Value="Depth0" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
-            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
-            <Setter Property="my:HeaderAssist.FontFamily" Value="{Binding $self.FontFamily}" />
-            <Setter Property="my:HeaderAssist.FontStyle" Value="{Binding $self.FontStyle}" />
-            <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
-            <Setter Property="my:HeaderAssist.Opacity" Value="1" />
-            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
-            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
-            <Setter Property="ClipToBounds" Value="True" />
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT HEADEREDCONTENTCONTROL THEME                      -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type HeaderedContentControl}" TargetType="HeaderedContentControl">
+        <Setter Property="my:ThemeAssist.Category" Value="Surface" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="my:HeaderAssist.CornerRadius" Value="0" />
+        <Setter Property="my:HeaderAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
+        <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
+        <Setter Property="my:HeaderAssist.FontFamily" Value="{Binding $self.FontFamily}" />
+        <Setter Property="my:HeaderAssist.FontStyle" Value="{Binding $self.FontStyle}" />
+        <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+        <Setter Property="my:HeaderAssist.Opacity" Value="1" />
+        <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
+        <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
+        <Setter Property="ClipToBounds" Value="True" />
 
-            <!-- Default colors -->
-            <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
-            <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:PaletteAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
 
-            <!-- Default Theme -->
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="{my:ThemeRole Background}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeRole Border}" />
-            <Setter Property="Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-            <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
-            <Setter Property="my:HeaderAssist.BorderBrush" Value="Transparent" />
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
-            <Setter Property="Template">
-                <ControlTemplate>
-                    <Border Name="PART_Root"
-                            Padding="0"
-                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
-                        <Border ClipToBounds="{TemplateBinding ClipToBounds}" CornerRadius="{TemplateBinding CornerRadius}">
-                            <Grid Name="PART_Grid" RowDefinitions="Auto,*">
-                                <Border Name="PART_Header"
-                                        Grid.Row="0"
-                                        Height="{TemplateBinding my:HeaderAssist.Size}"
-                                        Padding="{TemplateBinding my:HeaderAssist.Padding}"
-                                        Margin="{TemplateBinding my:HeaderAssist.Margin}"
-                                        my:ShadowAssist.ShadowDepth="{TemplateBinding my:HeaderAssist.ShadowDepth}"
-                                        Background="{TemplateBinding my:HeaderAssist.Background}"
-                                        BorderBrush="{TemplateBinding my:HeaderAssist.BorderBrush}"
-                                        BorderThickness="{TemplateBinding my:HeaderAssist.BorderThickness}"
-                                        CornerRadius="{TemplateBinding my:HeaderAssist.CornerRadius}"
-                                        IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
-                                        Opacity="{TemplateBinding my:HeaderAssist.Opacity}">
-                                    <my:IconContentControl Name="IconContent"
-                                                           Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                           IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                           IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                           IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                           Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
-                                                           HorizontalAlignment="Stretch"
-                                                           VerticalAlignment="Stretch"
-                                                           HorizontalContentAlignment="{TemplateBinding my:HeaderAssist.HorizontalAlignment}"
-                                                           VerticalContentAlignment="{TemplateBinding my:HeaderAssist.VerticalAlignment}"
-                                                           FontFamily="{TemplateBinding my:HeaderAssist.FontFamily}"
-                                                           FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
-                                                           FontStyle="{TemplateBinding my:HeaderAssist.FontStyle}"
-                                                           FontWeight="{TemplateBinding my:HeaderAssist.FontWeight}"
-                                                           Foreground="{TemplateBinding my:HeaderAssist.Foreground}"
-                                                           UseLayoutRounding="False">
-                                        <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
-                                    </my:IconContentControl>
-                                </Border>
-                                <ContentPresenter Name="PART_ContentPresenter"
-                                                  Grid.Row="1"
-                                                  Padding="{TemplateBinding Padding}"
-                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  Content="{TemplateBinding Content}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                  FontFamily="{TemplateBinding FontFamily}"
-                                                  FontSize="{TemplateBinding FontSize}"
-                                                  FontStyle="{TemplateBinding FontStyle}"
-                                                  FontWeight="{TemplateBinding FontWeight}"
-                                                  RecognizesAccessKey="True" />
-                            </Grid>
-                        </Border>
+        <!-- Default Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
+        <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
+        <Setter Property="my:HeaderAssist.BorderBrush" Value="Transparent" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="PART_Root"
+                        Padding="0"
+                        my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Border ClipToBounds="{TemplateBinding ClipToBounds}" CornerRadius="{TemplateBinding CornerRadius}">
+                        <Grid Name="PART_Grid" RowDefinitions="Auto,*">
+                            <Border Name="PART_Header"
+                                    Grid.Row="0"
+                                    Height="{TemplateBinding my:HeaderAssist.Size}"
+                                    Padding="{TemplateBinding my:HeaderAssist.Padding}"
+                                    Margin="{TemplateBinding my:HeaderAssist.Margin}"
+                                    my:ShadowAssist.ShadowDepth="{TemplateBinding my:HeaderAssist.ShadowDepth}"
+                                    Background="{TemplateBinding my:HeaderAssist.Background}"
+                                    BorderBrush="{TemplateBinding my:HeaderAssist.BorderBrush}"
+                                    BorderThickness="{TemplateBinding my:HeaderAssist.BorderThickness}"
+                                    CornerRadius="{TemplateBinding my:HeaderAssist.CornerRadius}"
+                                    IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                    Opacity="{TemplateBinding my:HeaderAssist.Opacity}">
+                                <my:IconContentControl Name="IconContent"
+                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                                       HorizontalAlignment="Stretch"
+                                                       VerticalAlignment="Stretch"
+                                                       HorizontalContentAlignment="{TemplateBinding my:HeaderAssist.HorizontalAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding my:HeaderAssist.VerticalAlignment}"
+                                                       FontFamily="{TemplateBinding my:HeaderAssist.FontFamily}"
+                                                       FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                                       FontStyle="{TemplateBinding my:HeaderAssist.FontStyle}"
+                                                       FontWeight="{TemplateBinding my:HeaderAssist.FontWeight}"
+                                                       Foreground="{TemplateBinding my:HeaderAssist.Foreground}"
+                                                       UseLayoutRounding="False">
+                                    <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
+                                </my:IconContentControl>
+                            </Border>
+                            <ContentPresenter Name="PART_ContentPresenter"
+                                              Grid.Row="1"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              FontFamily="{TemplateBinding FontFamily}"
+                                              FontSize="{TemplateBinding FontSize}"
+                                              FontStyle="{TemplateBinding FontStyle}"
+                                              FontWeight="{TemplateBinding FontWeight}"
+                                              RecognizesAccessKey="True" />
+                        </Grid>
                     </Border>
-                </ControlTemplate>
-            </Setter>
-
-            <Style Selector="^.kind-label">
-                <Style Selector="^ /template/ Grid#PART_Grid">
-                    <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
-                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="Auto,*" />
-                </Style>
-                <Style Selector="^ /template/ Border#PART_Header">
-                    <Setter Property="Width" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
-                    <Setter Property="Height" Value="{x:Static x:Double.NaN}" />
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="0" />
-                </Style>
-                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="1" />
-                </Style>
-            </Style>
-
-            <Style Selector="^.variant-headered /template/ Border#PART_Header">
-                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}}" />
-            </Style>
-
-            <Style Selector="^.variant-light.variant-headered, ^.variant-outlined.variant-headered">
-                <Style Selector="^ /template/ Border#PART_Header">
-                    <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Top}}" />
-                </Style>
-
-                <Style Selector="^.position-left /template/ Border#PART_Header">
-                    <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Left}}" />
-                </Style>
-
-                <Style Selector="^.position-right /template/ Border#PART_Header">
-                    <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Right}}" />
-                </Style>
-
-                <Style Selector="^.position-bottom /template/ Border#PART_Header">
-                    <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Bottom}}" />
-                </Style>
-            </Style>
-
-            <Style Selector="^.position-left">
-                <Style Selector="^ /template/ Grid#PART_Grid">
-                    <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
-                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="Auto,*" />
-                </Style>
-                <Style Selector="^ /template/ Border#PART_Header">
-                    <Setter Property="Width" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
-                    <Setter Property="Height" Value="{x:Static x:Double.NaN}" />
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="0" />
-                </Style>
-                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="1" />
-                </Style>
-            </Style>
-            <Style Selector="^.position-right">
-                <Style Selector="^ /template/ Grid#PART_Grid">
-                    <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
-                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*,Auto" />
-                </Style>
-                <Style Selector="^ /template/ Border#PART_Header">
-                    <Setter Property="Width" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
-                    <Setter Property="Height" Value="{x:Static x:Double.NaN}" />
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="1" />
-                </Style>
-                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="0" />
-                </Style>
-            </Style>
-            <Style Selector="^.position-top">
-                <Style Selector="^ /template/ Grid#PART_Grid">
-                    <Setter Property="my:GridBehavior.RowDefinitions" Value="Auto,*" />
-                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
-                </Style>
-                <Style Selector="^ /template/ Border#PART_Header">
-                    <Setter Property="Height" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
-                    <Setter Property="Width" Value="{x:Static x:Double.NaN}" />
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="0" />
-                </Style>
-                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                    <Setter Property="Grid.Row" Value="1" />
-                    <Setter Property="Grid.Column" Value="0" />
-                </Style>
-            </Style>
-            <Style Selector="^.position-bottom">
-                <Style Selector="^ /template/ Grid#PART_Grid">
-                    <Setter Property="my:GridBehavior.RowDefinitions" Value="*,Auto" />
-                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
-                </Style>
-                <Style Selector="^ /template/ Border#PART_Header">
-                    <Setter Property="Height" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
-                    <Setter Property="Width" Value="{x:Static x:Double.NaN}" />
-                    <Setter Property="Grid.Row" Value="1" />
-                    <Setter Property="Grid.Column" Value="0" />
-                </Style>
-                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="0" />
-                </Style>
-            </Style>
-
-        </ControlTheme>
-
-    </Styles.Resources>
-
-    <Style Selector=":is(HeaderedContentControl)">
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- KINDS                                                     -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+                </Border>
+            </ControlTemplate>
+        </Setter>
 
         <Style Selector="^.kind-label">
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
-            <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Right}" />
-            <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
-            <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize}" />
-
-            <Style Selector="^.variant-watermark">
-                <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
-                <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
-                <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
+                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="Auto,*" />
             </Style>
-
-            <Style Selector="^.position-left">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Right}" />
+            <Style Selector="^ /template/ Border#PART_Header">
+                <Setter Property="Width" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
+                <Setter Property="Height" Value="{x:Static x:Double.NaN}" />
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
             </Style>
-
-            <Style Selector="^.position-right">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Left}" />
-            </Style>
-
-            <Style Selector="^.position-top">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Bottom}" />
-            </Style>
-
-            <Style Selector="^.position-bottom">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Top}" />
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="1" />
             </Style>
         </Style>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- VARIANTS                                                  -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <Style Selector="^.variant-headered /template/ Border#PART_Header">
+            <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}}" />
+        </Style>
 
-        <Style Selector="^.variant-underline">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
-            <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
-            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 1" />
-            <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:ThemeRole Border}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Bottom}" />
-
-            <Style Selector="^.variant-solid, ^.variant-outlined, ^.variant-light">
-                <Setter Property="my:HeaderAssist.Margin" Value="{my:Thickness Md, Bottom=0}" />
+        <Style Selector="^.variant-light.variant-headered, ^.variant-outlined.variant-headered">
+            <Style Selector="^ /template/ Border#PART_Header">
+                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Top}}" />
             </Style>
 
-            <Style Selector="^:not(.variant-solid):not(.variant-outlined):not(.variant-light)">
-                <Setter Property="Padding" Value="{my:Thickness Md, Top}" />
+            <Style Selector="^.position-left /template/ Border#PART_Header">
+                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Left}}" />
+            </Style>
+
+            <Style Selector="^.position-right /template/ Border#PART_Header">
+                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Right}}" />
+            </Style>
+
+            <Style Selector="^.position-bottom /template/ Border#PART_Header">
+                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Bottom}}" />
             </Style>
         </Style>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- SIZES                                                     -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-
-        <Style Selector="^:not(my|Banner):not(my|Badge).size-sm">
-            <Setter Property="Padding" Value="{my:Thickness Sm}" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Sm}" />
+        <Style Selector="^.position-left">
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
+                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="Auto,*" />
+            </Style>
+            <Style Selector="^ /template/ Border#PART_Header">
+                <Setter Property="Width" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
+                <Setter Property="Height" Value="{x:Static x:Double.NaN}" />
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="1" />
+            </Style>
+        </Style>
+        <Style Selector="^.position-right">
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
+                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*,Auto" />
+            </Style>
+            <Style Selector="^ /template/ Border#PART_Header">
+                <Setter Property="Width" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
+                <Setter Property="Height" Value="{x:Static x:Double.NaN}" />
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="1" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
+        </Style>
+        <Style Selector="^.position-top">
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions" Value="Auto,*" />
+                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
+            </Style>
+            <Style Selector="^ /template/ Border#PART_Header">
+                <Setter Property="Height" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
+                <Setter Property="Width" Value="{x:Static x:Double.NaN}" />
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Grid.Row" Value="1" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
+        </Style>
+        <Style Selector="^.position-bottom">
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions" Value="*,Auto" />
+                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
+            </Style>
+            <Style Selector="^ /template/ Border#PART_Header">
+                <Setter Property="Height" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
+                <Setter Property="Width" Value="{x:Static x:Double.NaN}" />
+                <Setter Property="Grid.Row" Value="1" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
         </Style>
 
-        <Style Selector="^:not(my|Banner):not(my|Badge).size-lg">
-            <Setter Property="Padding" Value="{my:Thickness Lg}" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Lg}" />
-        </Style>
+    </ControlTheme>
 
-    </Style>
-</Styles>
+</ResourceDictionary>

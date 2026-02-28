@@ -48,7 +48,7 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate x:DataType="{x:Type sys:String}">
-                                            <my:CodeBlock HorizontalAlignment="Stretch" my:TextFieldAssist.ShowClipboardButton="True" Content="{Binding}" />
+                                            <my:CodeBlock HorizontalAlignment="Stretch" my:InputAssist.ShowClipboardButton="True" Content="{Binding}" />
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
@@ -75,7 +75,7 @@
                 <TextBox Margin="{my:Thickness Sm, Right}"
                          HorizontalAlignment="Stretch"
                          my:IconAssist.Icon="{my:Icon Magnify}"
-                         my:TextFieldAssist.ShowClearButton="True"
+                         my:InputAssist.ShowClearButton="True"
                          Classes="size-lg"
                          FontSize="{StaticResource MyNet.Font.Size.Lg}"
                          Text="{ReflectionBinding Icons.Filters.Value, Delay=50, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

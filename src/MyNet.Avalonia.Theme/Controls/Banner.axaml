@@ -1,173 +1,159 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
 
-        <ControlTheme x:Key="{x:Type my:Banner}" TargetType="my:Banner" BasedOn="{StaticResource {x:Type HeaderedContentControl}}">
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Banner}" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Bottom}" />
-            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
+    <ControlTheme x:Key="{x:Type my:Banner}" TargetType="my:Banner" BasedOn="{StaticResource {x:Type HeaderedContentControl}}">
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Banner}" />
+        <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Bottom}" />
+        <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
 
-            <Setter Property="Template">
-                <ControlTemplate>
-                    <Border Name="PART_Root"
-                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
-                        <Border ClipToBounds="{TemplateBinding ClipToBounds}" CornerRadius="{TemplateBinding CornerRadius}">
-                            <Grid>
-                                <Grid Name="PART_Grid" RowDefinitions="Auto,*" Margin="{TemplateBinding Padding}">
-                                    <Border Name="PART_Header"
-                                            Grid.Row="0"
-                                            Height="{TemplateBinding my:HeaderAssist.Size}"
-                                            Padding="{TemplateBinding my:HeaderAssist.Padding}"
-                                            Margin="{TemplateBinding my:HeaderAssist.Margin}"
-                                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:HeaderAssist.ShadowDepth}"
-                                            Background="{TemplateBinding my:HeaderAssist.Background}"
-                                            BorderBrush="{TemplateBinding my:HeaderAssist.BorderBrush}"
-                                            BorderThickness="{TemplateBinding my:HeaderAssist.BorderThickness}"
-                                            CornerRadius="{TemplateBinding my:HeaderAssist.CornerRadius}"
-                                            IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
-                                            Opacity="{TemplateBinding my:HeaderAssist.Opacity}">
-                                        <my:IconContentControl Name="IconContent"
-                                                               Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                               IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                               IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                               IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                               Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
-                                                               HorizontalAlignment="Stretch"
-                                                               VerticalAlignment="Stretch"
-                                                               HorizontalContentAlignment="{TemplateBinding my:HeaderAssist.HorizontalAlignment}"
-                                                               VerticalContentAlignment="{TemplateBinding my:HeaderAssist.VerticalAlignment}"
-                                                               FontFamily="{TemplateBinding my:HeaderAssist.FontFamily}"
-                                                               FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
-                                                               FontStyle="{TemplateBinding my:HeaderAssist.FontStyle}"
-                                                               FontWeight="{TemplateBinding my:HeaderAssist.FontWeight}"
-                                                               Foreground="{TemplateBinding my:HeaderAssist.Foreground}"
-                                                               UseLayoutRounding="False">
-                                            <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
-                                        </my:IconContentControl>
-                                    </Border>
-                                    <ContentPresenter Name="PART_ContentPresenter"
-                                                      Grid.Row="1"
-                                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                      Content="{TemplateBinding Content}"
-                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                      FontFamily="{TemplateBinding FontFamily}"
-                                                      FontSize="{TemplateBinding FontSize}"
-                                                      FontStyle="{TemplateBinding FontStyle}"
-                                                      FontWeight="{TemplateBinding FontWeight}"
-                                                      RecognizesAccessKey="True" />
-                                </Grid>
-
-                                <Button Name="PART_CloseButton"
-                                        Grid.RowSpan="2"
-                                        Margin="{my:Thickness Sm}"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        Content="{my:Icon WindowClose}"
-                                        IsVisible="False"
-                                        Classes="kind-tool no-disablable"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="PART_Root"
+                        my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Border ClipToBounds="{TemplateBinding ClipToBounds}" CornerRadius="{TemplateBinding CornerRadius}">
+                        <Grid>
+                            <Grid Name="PART_Grid" RowDefinitions="Auto,*" Margin="{TemplateBinding Padding}">
+                                <Border Name="PART_Header"
+                                        Grid.Row="0"
+                                        Height="{TemplateBinding my:HeaderAssist.Size}"
+                                        Padding="{TemplateBinding my:HeaderAssist.Padding}"
+                                        Margin="{TemplateBinding my:HeaderAssist.Margin}"
+                                        my:ShadowAssist.ShadowDepth="{TemplateBinding my:HeaderAssist.ShadowDepth}"
+                                        Background="{TemplateBinding my:HeaderAssist.Background}"
+                                        BorderBrush="{TemplateBinding my:HeaderAssist.BorderBrush}"
+                                        BorderThickness="{TemplateBinding my:HeaderAssist.BorderThickness}"
+                                        CornerRadius="{TemplateBinding my:HeaderAssist.CornerRadius}"
+                                        IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                        Opacity="{TemplateBinding my:HeaderAssist.Opacity}">
+                                    <my:IconContentControl Name="IconContent"
+                                                           Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                                           IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                           IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                           IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                           Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                                           HorizontalAlignment="Stretch"
+                                                           VerticalAlignment="Stretch"
+                                                           HorizontalContentAlignment="{TemplateBinding my:HeaderAssist.HorizontalAlignment}"
+                                                           VerticalContentAlignment="{TemplateBinding my:HeaderAssist.VerticalAlignment}"
+                                                           FontFamily="{TemplateBinding my:HeaderAssist.FontFamily}"
+                                                           FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                                           FontStyle="{TemplateBinding my:HeaderAssist.FontStyle}"
+                                                           FontWeight="{TemplateBinding my:HeaderAssist.FontWeight}"
+                                                           Foreground="{TemplateBinding my:HeaderAssist.Foreground}"
+                                                           UseLayoutRounding="False">
+                                        <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
+                                    </my:IconContentControl>
+                                </Border>
+                                <ContentPresenter Name="PART_ContentPresenter"
+                                                  Grid.Row="1"
+                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  FontFamily="{TemplateBinding FontFamily}"
+                                                  FontSize="{TemplateBinding FontSize}"
+                                                  FontStyle="{TemplateBinding FontStyle}"
+                                                  FontWeight="{TemplateBinding FontWeight}"
+                                                  RecognizesAccessKey="True" />
                             </Grid>
-                        </Border>
+
+                            <Button Name="PART_CloseButton"
+                                    Grid.RowSpan="2"
+                                    Margin="{my:Thickness Sm}"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Content="{my:Icon WindowClose}"
+                                    IsVisible="False"
+                                    Classes="kind-tool"
+                                    my:DisableAssist.IsDisablable="False"/>
+                        </Grid>
                     </Border>
-                </ControlTemplate>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^[CanClose=True] /template/ Button#PART_CloseButton">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+
+        <Style Selector="^:success">
+            <Setter Property="my:ThemeAssist.Role" Value="Success" />
+            <Setter Property="Header">
+                <Template>
+                    <TextBlock Text="{my:Loc Success}" />
+                </Template>
             </Setter>
-
-            <Style Selector="^[CanClose=True] /template/ Button#PART_CloseButton">
-                <Setter Property="IsVisible" Value="True" />
-            </Style>
-
-            <Style Selector="^:success">
-                <Setter Property="my:ThemeAssist.Role" Value="Success" />
-                <Setter Property="Header">
+            <Setter Property="my:IconAssist.Icon">
+                <Setter.Value>
                     <Template>
-                        <TextBlock Text="{my:Loc Success}" />
+                        <PathIcon Data="{StaticResource MyNet.Geometry.CheckCircle}" />
                     </Template>
-                </Setter>
-                <Setter Property="my:IconAssist.Icon">
-                    <Setter.Value>
-                        <Template>
-                            <PathIcon Data="{StaticResource MyNet.Geometry.CheckCircle}" />
-                        </Template>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
-                <Setter Property="ClipToBounds" Value="False" />
-            </Style>
-
-            <Style Selector="^:warning">
-                <Setter Property="my:ThemeAssist.Role" Value="Warning" />
-                <Setter Property="Header">
-                    <Template>
-                        <TextBlock Text="{my:Loc Warning}" />
-                    </Template>
-                </Setter>
-                <Setter Property="my:IconAssist.Icon">
-                    <Setter.Value>
-                        <Template>
-                            <PathIcon Data="{StaticResource MyNet.Geometry.AlertCircle}" />
-                        </Template>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
-                <Setter Property="ClipToBounds" Value="False" />
-            </Style>
-
-            <Style Selector="^:error">
-                <Setter Property="my:ThemeAssist.Role" Value="Error" />
-                <Setter Property="Header">
-                    <Template>
-                        <TextBlock Text="{my:Loc Error}" />
-                    </Template>
-                </Setter>
-                <Setter Property="my:IconAssist.Icon">
-                    <Setter.Value>
-                        <Template>
-                            <PathIcon Data="{StaticResource MyNet.Geometry.CloseCircle}" />
-                        </Template>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
-                <Setter Property="ClipToBounds" Value="False" />
-            </Style>
-
-            <Style Selector="^:information">
-                <Setter Property="my:ThemeAssist.Role" Value="Information" />
-                <Setter Property="Header">
-                    <Template>
-                        <TextBlock Text="{my:Loc Information}" />
-                    </Template>
-                </Setter>
-                <Setter Property="my:IconAssist.Icon">
-                    <Setter.Value>
-                        <Template>
-                            <PathIcon Data="{StaticResource MyNet.Geometry.InformationVariantCircle}" />
-                        </Template>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
-                <Setter Property="ClipToBounds" Value="False" />
-            </Style>
-
-        </ControlTheme>
-
-    </Styles.Resources>
-
-    <Style Selector="my|Banner">
-
-        <Style Selector="^.size-sm">
-            <Setter Property="Padding" Value="{my:Thickness Sm}" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Bottom}" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
+            <Setter Property="ClipToBounds" Value="False" />
         </Style>
 
-        <Style Selector="^.size-lg">
-            <Setter Property="Padding" Value="{my:Thickness Lg}" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Md, Bottom}" />
+        <Style Selector="^:warning">
+            <Setter Property="my:ThemeAssist.Role" Value="Warning" />
+            <Setter Property="Header">
+                <Template>
+                    <TextBlock Text="{my:Loc Warning}" />
+                </Template>
+            </Setter>
+            <Setter Property="my:IconAssist.Icon">
+                <Setter.Value>
+                    <Template>
+                        <PathIcon Data="{StaticResource MyNet.Geometry.AlertCircle}" />
+                    </Template>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
+            <Setter Property="ClipToBounds" Value="False" />
         </Style>
-    </Style>
-</Styles>
+
+        <Style Selector="^:error">
+            <Setter Property="my:ThemeAssist.Role" Value="Error" />
+            <Setter Property="Header">
+                <Template>
+                    <TextBlock Text="{my:Loc Error}" />
+                </Template>
+            </Setter>
+            <Setter Property="my:IconAssist.Icon">
+                <Setter.Value>
+                    <Template>
+                        <PathIcon Data="{StaticResource MyNet.Geometry.CloseCircle}" />
+                    </Template>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
+            <Setter Property="ClipToBounds" Value="False" />
+        </Style>
+
+        <Style Selector="^:information">
+            <Setter Property="my:ThemeAssist.Role" Value="Information" />
+            <Setter Property="Header">
+                <Template>
+                    <TextBlock Text="{my:Loc Information}" />
+                </Template>
+            </Setter>
+            <Setter Property="my:IconAssist.Icon">
+                <Setter.Value>
+                    <Template>
+                        <PathIcon Data="{StaticResource MyNet.Geometry.InformationVariantCircle}" />
+                    </Template>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
+            <Setter Property="ClipToBounds" Value="False" />
+        </Style>
+
+    </ControlTheme>
+
+</ResourceDictionary>

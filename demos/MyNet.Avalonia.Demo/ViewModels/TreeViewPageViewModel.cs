@@ -14,7 +14,7 @@ internal sealed class TreeViewPageViewModel : ControlCatalogViewModel
     public TreeViewPageViewModel()
         : base(nameof(TreeView), [
             new ControlThemeBuilder()
-            .AddVariants("variant-solid-items", "variant-light-items", "variant-outlined-items", "variant-text-items", "shadow-items")
+            .AddVariants("variant-items-solid", "variant-items-light", "variant-items-outlined", "variant-items-text", "shadow-items")
             .AddItemsThemeRoles().AddDefaultSizes()
         ])
     { }

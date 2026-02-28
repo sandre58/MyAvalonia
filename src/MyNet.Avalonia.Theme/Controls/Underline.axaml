@@ -1,7 +1,7 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+﻿
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia">
-    <Styles.Resources>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- DEFAULT UNDERLINE THEME                                   -->
@@ -11,11 +11,13 @@
             <Setter Property="IsHitTestVisible" Value="False" />
             <Setter Property="InactiveHeight" Value="0" />
             <Setter Property="ActiveHeight" Value="2" />
-            <Setter Property="my:PaletteAssist.Primary" Value="{my:ThemeContext Primary}" />
-            <Setter Property="ActiveBrush" Value="{my:ThemeRole Primary}" />
-            <Setter Property="BorderBrush" Value="{my:ThemeContext Control.Border}" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Bottom" />
+            
+            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+            <Setter Property="ActiveBrush" Value="{my:ThemeRole Primary}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeContext Control.Border}" />
+
             <Setter Property="Template">
                 <ControlTemplate>
                     <Panel Name="PART_RootPanel">
@@ -26,7 +28,7 @@
             </Setter>
 
             <!-- Transitions -->
-            <Style Selector="^:not(.no-transitions) /template/ Rectangle#PART_ActiveIndicator">
+            <Style Selector="^ /template/ Rectangle#PART_ActiveIndicator">
                 <Setter Property="Transitions">
                     <Transitions>
                         <DoubleTransition Easing="CircularEaseOut" Property="Width" Duration="{StaticResource MyNet.Animation.Underline}" />
@@ -52,5 +54,5 @@
 
         </ControlTheme>
 
-    </Styles.Resources>
-</Styles>
+
+</ResourceDictionary>

@@ -1,0 +1,142 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MyNet.Avalonia.PerfTest.ViewModels"
+        xmlns:views="using:MyNet.Avalonia.PerfTest.Views"
+        x:Class="MyNet.Avalonia.PerfTest.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Performance Test - Avalonia Fluent Theme"
+        Width="1200"
+        Height="800">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Window.Styles>
+        <Style Selector="Button.nav">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="15,8"/>
+        </Style>
+    </Window.Styles>
+
+    <DockPanel>
+        <!-- Top Navigation Bar -->
+        <Border DockPanel.Dock="Top" 
+                Background="{DynamicResource SystemAccentColor}" 
+                Padding="10">
+            <StackPanel Orientation="Vertical" Spacing="10">
+                <TextBlock Text="Performance Test Application" 
+                          FontSize="20" 
+                          FontWeight="Bold"
+                          Foreground="White"/>
+
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Button Content="🏠 Home" 
+                            Classes="nav"
+                            Command="{Binding NavigateToHomeCommand}"/>
+                    <Button Content="📊 DataGrid (500 items)" 
+                            Classes="nav"
+                            Command="{Binding NavigateToDataGridCommand}"/>
+                    <Button Content="🎨 Complex Layout" 
+                            Classes="nav"
+                            Command="{Binding NavigateToComplexLayoutCommand}"/>
+                    <Button Content="📝 List (1000 items)" 
+                            Classes="nav"
+                            Command="{Binding NavigateToListCommand}"/>
+                    <Button Content="📋 Forms" 
+                            Classes="nav"
+                            Command="{Binding NavigateToFormsCommand}"/>
+                </StackPanel>
+
+                <!-- Performance Monitor -->
+                <Border Background="#33000000" 
+                        Padding="10" 
+                        CornerRadius="4">
+                    <StackPanel Orientation="Horizontal" Spacing="20">
+                        <TextBlock Foreground="White">
+                            <Run Text="⏱️ Navigation Time: "/>
+                            <Run Text="{Binding NavigationTime}" FontWeight="Bold"/>
+                        </TextBlock>
+                        <TextBlock Foreground="White">
+                            <Run Text="💾 Memory Delta: "/>
+                            <Run Text="{Binding MemoryUsage}" FontWeight="Bold"/>
+                        </TextBlock>
+                        <TextBlock Text="{Binding CurrentPage, StringFormat='📄 Current: {0}'}" 
+                                  Foreground="White"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- Performance History Sidebar -->
+        <Border DockPanel.Dock="Right" 
+                Width="300" 
+                Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                BorderBrush="{DynamicResource SystemControlForegroundBaseMediumLowBrush}"
+                BorderThickness="1,0,0,0"
+                Padding="10">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" 
+                          Text="📈 Performance History" 
+                          FontSize="16" 
+                          FontWeight="SemiBold"
+                          Margin="0,0,0,10"/>
+
+                <ScrollViewer>
+                    <ItemsControl ItemsSource="{Binding PerformanceHistory}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{DynamicResource SystemControlBackgroundBaseLowBrush}"
+                                        Padding="8"
+                                        Margin="0,0,0,5"
+                                        CornerRadius="4">
+                                    <StackPanel Spacing="3">
+                                        <TextBlock Text="{Binding OperationName}" 
+                                                  FontWeight="SemiBold"
+                                                  FontSize="12"/>
+                                        <TextBlock FontSize="11" Opacity="0.8">
+                                            <Run Text="⏱️"/>
+                                            <Run Text="{Binding ElapsedMilliseconds}"/>
+                                            <Run Text="ms"/>
+                                        </TextBlock>
+                                        <TextBlock FontSize="11" Opacity="0.8">
+                                            <Run Text="💾 "/>
+                                            <Run Text="{Binding MemoryFormatted}"/>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding Timestamp, StringFormat='{}{0:HH:mm:ss}'}" 
+                                                  FontSize="10"
+                                                  Opacity="0.6"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+
+        <!-- Content Area with ContentControl for page switching -->
+        <Border Padding="20">
+            <ContentControl Content="{Binding CurrentPage}">
+                <ContentControl.DataTemplates>
+                    <DataTemplate DataType="vm:HomeViewModel">
+                        <views:HomeView />
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:DataGridViewModel">
+                        <views:DataGridView />
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:ComplexLayoutViewModel">
+                        <views:ComplexLayoutView />
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:ListViewModel">
+                        <views:ListView />
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:FormsViewModel">
+                        <views:FormsView />
+                    </DataTemplate>
+                </ContentControl.DataTemplates>
+            </ContentControl>
+        </Border>
+    </DockPanel>
+
+</Window>

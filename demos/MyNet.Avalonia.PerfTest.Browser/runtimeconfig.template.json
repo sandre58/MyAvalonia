@@ -1,0 +1,14 @@
+{
+  "wasmHostProperties": {
+    "perHostConfig": [
+      {
+        "name": "browser",
+        "properties": {
+          "browser-tools": {
+            "enabled": true
+          }
+        }
+      }
+    ]
+  }
+}

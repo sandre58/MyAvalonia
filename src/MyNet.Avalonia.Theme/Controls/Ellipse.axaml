@@ -1,51 +1,28 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia">
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
+    <ControlTheme x:Key="{x:Type Ellipse}" TargetType="Ellipse">
+        <Setter Property="Focusable" Value="False" />
+    </ControlTheme>
 
-    <Styles.Resources>
-        <ControlTheme x:Key="{x:Type Ellipse}" TargetType="Ellipse">
-            <Setter Property="Focusable" Value="False" />
-        </ControlTheme>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- CONTROL THEME FOR STATE ELLIPSES                          -->
-        <!-- Must be in ControlTheme to have lower priority than       -->
-        <!-- template setters (so template can override Opacity)       -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="MyNet.Theme.Ellipse.State" TargetType="Ellipse">
-            <Setter Property="Opacity" Value="0" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="IsHitTestVisible" Value="False" />
-
-            <!-- Smooth opacity transitions for state changes -->
-            <Style Selector="^:not(.no-transitions)">
-                <Setter Property="Transitions">
-                    <Transitions>
-                        <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
-                    </Transitions>
-                </Setter>
-            </Style>
-        </ControlTheme>
-    </Styles.Resources>
-    
     <!-- ═════════════════════════════════════════════════════════ -->
-    <!-- KIND: CARD                                                -->
+    <!-- CONTROL THEME FOR STATE ELLIPSES                          -->
+    <!-- Must be in ControlTheme to have lower priority than       -->
+    <!-- template setters (so template can override Opacity)       -->
     <!-- ═════════════════════════════════════════════════════════ -->
-    <Style Selector="Ellipse.kind-card">
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+    <ControlTheme x:Key="MyNet.Theme.Ellipse.State" TargetType="Ellipse">
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsHitTestVisible" Value="False" />
 
-        <!-- Default colors -->
-        <Setter Property="my:PaletteAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
-        <Setter Property="my:PaletteAssist.Border" Value="{my:ThemeContext Surface.Border}" />
-
-        <!-- Default Theme -->
-        <Setter Property="StrokeThickness" Value="1" />
-        <Setter Property="Fill" Value="{my:ThemeRole Background}" />
-        <Setter Property="Stroke" Value="{my:ThemeRole Border}" />
-
-        <Style Selector="^.is-hover:pointerover">
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
-            <Setter Property="my:ShadowAssist.Darken" Value="True" />
+        <!-- Smooth opacity transitions for state changes -->
+        <Style Selector="^.use-transitions">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                </Transitions>
+            </Setter>
         </Style>
-    </Style>
-</Styles>
+    </ControlTheme>
+</ResourceDictionary>

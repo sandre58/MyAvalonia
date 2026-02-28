@@ -1,129 +1,127 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:sys="clr-namespace:System;assembly=System.Runtime">
-    <Styles.Resources>
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
-        <!-- ===================================================================== -->
-        <!-- Corner Radius Tokens                                                  -->
-        <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- Corner Radius Tokens                                                  -->
+    <!-- ===================================================================== -->
 
-        <CornerRadius x:Key="MyNet.Corners.None">0</CornerRadius>
-        <CornerRadius x:Key="MyNet.Corners.Xs">2</CornerRadius>
-        <CornerRadius x:Key="MyNet.Corners.Sm">4</CornerRadius>
-        <CornerRadius x:Key="MyNet.Corners.Md">8</CornerRadius>
-        <CornerRadius x:Key="MyNet.Corners.Lg">12</CornerRadius>
-        <CornerRadius x:Key="MyNet.Corners.Xl">16</CornerRadius>
-        <CornerRadius x:Key="MyNet.Corners.Round">9999</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.None">0</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.Xs">2</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.Sm">4</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.Md">8</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.Lg">12</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.Xl">16</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.Round">9999</CornerRadius>
 
-        <CornerRadius x:Key="MyNet.Corners.Control">3</CornerRadius>
-        <CornerRadius x:Key="MyNet.Corners.Popup">4</CornerRadius>
-        <CornerRadius x:Key="MyNet.Corners.ToolTip">4</CornerRadius>
-        <CornerRadius x:Key="MyNet.Corners.Surface">4</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.Control">3</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.Popup">4</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.ToolTip">4</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.Surface">4</CornerRadius>
 
-        <!-- ToggleSwitch Corner Radii -->
-        <CornerRadius x:Key="MyNet.Corners.ToggleSwitch.Sm">8</CornerRadius>
-        <CornerRadius x:Key="MyNet.Corners.ToggleSwitch.Md">12</CornerRadius>
-        <CornerRadius x:Key="MyNet.Corners.ToggleSwitch.Lg">16</CornerRadius>
+    <!-- ToggleSwitch Corner Radii -->
+    <CornerRadius x:Key="MyNet.Corners.ToggleSwitch.Sm">8</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.ToggleSwitch.Md">12</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.ToggleSwitch.Lg">16</CornerRadius>
 
-        <!-- ===================================================================== -->
-        <!-- Height Tokens                                                         -->
-        <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- Height Tokens                                                         -->
+    <!-- ===================================================================== -->
 
-        <!-- Button Heights -->
-        <sys:Double x:Key="MyNet.Height.Button.Sm">24</sys:Double>
-        <sys:Double x:Key="MyNet.Height.Button.Md">32</sys:Double>
-        <sys:Double x:Key="MyNet.Height.Button.Lg">40</sys:Double>
-        <sys:Double x:Key="MyNet.Height.Button.Tool.Sm">12</sys:Double>
-        <sys:Double x:Key="MyNet.Height.Button.Tool">16</sys:Double>
+    <!-- Button Heights -->
+    <sys:Double x:Key="MyNet.Height.Button.Sm">24</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Button.Md">32</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Button.Lg">40</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Button.Tool.Sm">12</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Button.Tool">16</sys:Double>
 
-        <!-- DropDownButton Heights (Rounded) -->
-        <sys:Double x:Key="MyNet.Height.DropDownButton.Rounded.Sm">40</sys:Double>
-        <sys:Double x:Key="MyNet.Height.DropDownButton.Rounded.Md">52</sys:Double>
-        <sys:Double x:Key="MyNet.Height.DropDownButton.Rounded.Lg">56</sys:Double>
+    <!-- DropDownButton Heights (Rounded) -->
+    <sys:Double x:Key="MyNet.Height.DropDownButton.Rounded.Sm">40</sys:Double>
+    <sys:Double x:Key="MyNet.Height.DropDownButton.Rounded.Md">52</sys:Double>
+    <sys:Double x:Key="MyNet.Height.DropDownButton.Rounded.Lg">56</sys:Double>
 
-        <!-- TextField Heights -->
-        <sys:Double x:Key="MyNet.Height.TextField.Sm">24</sys:Double>
-        <sys:Double x:Key="MyNet.Height.TextField.Md">28</sys:Double>
-        <sys:Double x:Key="MyNet.Height.TextField.Lg">36</sys:Double>
+    <!-- Input Heights -->
+    <sys:Double x:Key="MyNet.Height.Input.Sm">24</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Input.Md">28</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Input.Lg">36</sys:Double>
 
-        <!-- ToggleSwitch Heights -->
-        <sys:Double x:Key="MyNet.Height.ToggleSwitch.Sm">16</sys:Double>
-        <sys:Double x:Key="MyNet.Height.ToggleSwitch.Md">24</sys:Double>
-        <sys:Double x:Key="MyNet.Height.ToggleSwitch.Lg">32</sys:Double>
-        <sys:Double x:Key="MyNet.Height.ToggleSwitch.Indicator.Sm">12</sys:Double>
-        <sys:Double x:Key="MyNet.Height.ToggleSwitch.Indicator.Md">18</sys:Double>
-        <sys:Double x:Key="MyNet.Height.ToggleSwitch.Indicator.Lg">24</sys:Double>
+    <!-- ToggleSwitch Heights -->
+    <sys:Double x:Key="MyNet.Height.ToggleSwitch.Sm">16</sys:Double>
+    <sys:Double x:Key="MyNet.Height.ToggleSwitch.Md">24</sys:Double>
+    <sys:Double x:Key="MyNet.Height.ToggleSwitch.Lg">32</sys:Double>
+    <sys:Double x:Key="MyNet.Height.ToggleSwitch.Indicator.Sm">12</sys:Double>
+    <sys:Double x:Key="MyNet.Height.ToggleSwitch.Indicator.Md">18</sys:Double>
+    <sys:Double x:Key="MyNet.Height.ToggleSwitch.Indicator.Lg">24</sys:Double>
 
-        <!-- CheckBox Heights -->
-        <sys:Double x:Key="MyNet.Height.CheckBox.Sm">12</sys:Double>
-        <sys:Double x:Key="MyNet.Height.CheckBox.Md">18</sys:Double>
-        <sys:Double x:Key="MyNet.Height.CheckBox.Lg">24</sys:Double>
+    <!-- CheckBox Heights -->
+    <sys:Double x:Key="MyNet.Height.CheckBox.Sm">12</sys:Double>
+    <sys:Double x:Key="MyNet.Height.CheckBox.Md">18</sys:Double>
+    <sys:Double x:Key="MyNet.Height.CheckBox.Lg">24</sys:Double>
 
-        <!-- ProgressBar Heights -->
-        <sys:Double x:Key="MyNet.Height.ProgressBar.Sm">4</sys:Double>
-        <sys:Double x:Key="MyNet.Height.ProgressBar.Md">16</sys:Double>
-        <sys:Double x:Key="MyNet.Height.ProgressBar.Lg">24</sys:Double>
-        <sys:Double x:Key="MyNet.Height.ProgressBar.Circular.Sm">2</sys:Double>
-        <sys:Double x:Key="MyNet.Height.ProgressBar.Circular.Md">6</sys:Double>
-        <sys:Double x:Key="MyNet.Height.ProgressBar.Circular.Lg">12</sys:Double>
+    <!-- ProgressBar Heights -->
+    <sys:Double x:Key="MyNet.Height.ProgressBar.Sm">4</sys:Double>
+    <sys:Double x:Key="MyNet.Height.ProgressBar.Md">16</sys:Double>
+    <sys:Double x:Key="MyNet.Height.ProgressBar.Lg">24</sys:Double>
+    <sys:Double x:Key="MyNet.Height.ProgressBar.Circular.Sm">2</sys:Double>
+    <sys:Double x:Key="MyNet.Height.ProgressBar.Circular.Md">6</sys:Double>
+    <sys:Double x:Key="MyNet.Height.ProgressBar.Circular.Lg">12</sys:Double>
 
-        <!-- ===================================================================== -->
-        <!-- Width Tokens                                                          -->
-        <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- Width Tokens                                                          -->
+    <!-- ===================================================================== -->
 
-        <!-- ToggleSwitch Widths -->
-        <sys:Double x:Key="MyNet.Width.ToggleSwitch.Sm">28</sys:Double>
-        <sys:Double x:Key="MyNet.Width.ToggleSwitch.Md">44</sys:Double>
-        <sys:Double x:Key="MyNet.Width.ToggleSwitch.Lg">54</sys:Double>
+    <!-- ToggleSwitch Widths -->
+    <sys:Double x:Key="MyNet.Width.ToggleSwitch.Sm">28</sys:Double>
+    <sys:Double x:Key="MyNet.Width.ToggleSwitch.Md">44</sys:Double>
+    <sys:Double x:Key="MyNet.Width.ToggleSwitch.Lg">54</sys:Double>
 
-        <!-- ===================================================================== -->
-        <!-- Max Dimensions                                                        -->
-        <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- Max Dimensions                                                        -->
+    <!-- ===================================================================== -->
 
-        <sys:Double x:Key="MyNet.MaxHeight.Menu">500</sys:Double>
-        <sys:Double x:Key="MyNet.MaxWidth.Menu">500</sys:Double>
+    <sys:Double x:Key="MyNet.MaxHeight.Menu">500</sys:Double>
+    <sys:Double x:Key="MyNet.MaxWidth.Menu">500</sys:Double>
 
-        <!-- ===================================================================== -->
-        <!-- Size Tokens                                                           -->
-        <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- Size Tokens                                                           -->
+    <!-- ===================================================================== -->
 
-        <!-- Glyph Sizes -->
-        <sys:Double x:Key="MyNet.Size.Glyph.Xs">6</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Glyph.Sm">8</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Glyph.Md">10</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Glyph.Lg">12</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Glyph.Xl">15</sys:Double>
+    <!-- Glyph Sizes -->
+    <sys:Double x:Key="MyNet.Size.Glyph.Xs">6</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Glyph.Sm">8</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Glyph.Md">10</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Glyph.Lg">12</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Glyph.Xl">15</sys:Double>
 
-        <!-- Icon Sizes -->
-        <sys:Double x:Key="MyNet.Size.Icon.Tool.Sm">7</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Icon.Tool">11</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Icon.Xs">12</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Icon.Sm">15</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Icon.Md">18</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Icon.Lg">24</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Icon.Xl">30</sys:Double>
+    <!-- Icon Sizes -->
+    <sys:Double x:Key="MyNet.Size.Icon.Tool.Sm">7</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Tool">11</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Xs">12</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Sm">15</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Md">18</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Lg">24</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Xl">30</sys:Double>
 
-        <!-- Circular ProgressBar Sizes -->
-        <sys:Double x:Key="MyNet.Size.ProgressBar.Circular.Sm">30</sys:Double>
-        <sys:Double x:Key="MyNet.Size.ProgressBar.Circular.Md">80</sys:Double>
-        <sys:Double x:Key="MyNet.Size.ProgressBar.Circular.Lg">120</sys:Double>
+    <!-- Circular ProgressBar Sizes -->
+    <sys:Double x:Key="MyNet.Size.ProgressBar.Circular.Sm">30</sys:Double>
+    <sys:Double x:Key="MyNet.Size.ProgressBar.Circular.Md">80</sys:Double>
+    <sys:Double x:Key="MyNet.Size.ProgressBar.Circular.Lg">120</sys:Double>
 
-        <!-- Avatar Sizes -->
-        <sys:Double x:Key="MyNet.Size.Avatar.Xs">20</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Avatar.Sm">40</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Avatar.Md">70</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Avatar.Lg">100</sys:Double>
-        <sys:Double x:Key="MyNet.Size.Avatar.Xl">140</sys:Double>
+    <!-- Avatar Sizes -->
+    <sys:Double x:Key="MyNet.Size.Avatar.Xs">20</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Avatar.Sm">40</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Avatar.Md">70</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Avatar.Lg">100</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Avatar.Xl">140</sys:Double>
 
-        <!-- ===================================================================== -->
-        <!-- Alignment Tokens                                                      -->
-        <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- Alignment Tokens                                                      -->
+    <!-- ===================================================================== -->
 
-        <VerticalAlignment x:Key="MyNet.VerticalAlignment.Control">Center</VerticalAlignment>
-        <VerticalAlignment x:Key="MyNet.VerticalAlignment.Surface">Stretch</VerticalAlignment>
+    <VerticalAlignment x:Key="MyNet.VerticalAlignment.Control">Center</VerticalAlignment>
+    <VerticalAlignment x:Key="MyNet.VerticalAlignment.Surface">Stretch</VerticalAlignment>
 
-        <HorizontalAlignment x:Key="MyNet.HorizontalAlignment.Control">Left</HorizontalAlignment>
-        <HorizontalAlignment x:Key="MyNet.HorizontalAlignment.Surface">Stretch</HorizontalAlignment>
+    <HorizontalAlignment x:Key="MyNet.HorizontalAlignment.Control">Left</HorizontalAlignment>
+    <HorizontalAlignment x:Key="MyNet.HorizontalAlignment.Surface">Stretch</HorizontalAlignment>
 
-    </Styles.Resources>
-</Styles>
+</ResourceDictionary>
