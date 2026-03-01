@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using PropertyChanged;
 using MyNet.Avalonia.Extended.Controls;
+using PropertyChanged;
 
 namespace MyNet.Avalonia.Demo.Views;
 
@@ -14,5 +14,3 @@ public partial class MainView : ExtendedView
 {
     public MainView() => InitializeComponent();
 }
-
-

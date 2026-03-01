@@ -22,8 +22,8 @@ public static class VariantAssist
 
         static void update(AttachedProperty<IBrush> property, StyledElement element, AvaloniaPropertyChangedEventArgs args)
         {
-            if (args.NewValue is IBrush brush)
-                element.SetValue(property, brush);
+            // if (element.GetValue(property) is null && args.NewValue is IBrush brush)
+            //     element.SetValue(property, brush);
         }
     }
 

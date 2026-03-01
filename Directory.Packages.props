@@ -3,17 +3,17 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Avalonia" Version="12.0.0-preview1" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.0.0-preview1" />
+    <PackageVersion Include="Avalonia" Version="12.0.999-cibuild0062426-alpha" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.0.999-cibuild0062426-alpha" />
     <PackageVersion Include="Avalonia.ReactiveUI" Version="11.3.9" />
-    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.0.0-preview1" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.0.999-cibuild0062426-alpha" />
     <PackageVersion Include="Avalonia.Android" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.0.0-preview1" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.0.999-cibuild0062426-alpha" />
     <PackageVersion Include="Avalonia.Controls.DataGrid" Version="12.0.0-preview1" />
     <PackageVersion Include="Avalonia.Controls.ItemsRepeater" Version="11.1.5" />
     <PackageVersion Include="Avalonia.Browser" Version="11.3.10" />
     <PackageVersion Include="Avalonia.Skia" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.Desktop" Version="12.0.0-preview1" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.0.999-cibuild0062426-alpha" />
     <PackageVersion Include="Avalonia.iOS" Version="11.3.10" />
     <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0-beta2" />
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.14" />

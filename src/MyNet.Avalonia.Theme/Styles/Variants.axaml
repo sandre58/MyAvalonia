@@ -22,11 +22,11 @@
 
     <!-- Transparent -->
     <Style Selector="
-    Visual.category-surface.variant-transparent,
-    Visual.category-navigation.variant-transparent,
-    Visual.category-action.variant-transparent,
-    Visual.category-selection.variant-transparent,
-    Visual.category-indicator.variant-transparent">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-transparent,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-transparent,
+    Visual[(my|ThemeAssist.Category)=Action].variant-transparent,
+    Visual[(my|ThemeAssist.Category)=Selection].variant-transparent,
+    Visual[(my|ThemeAssist.Category)=Indicator].variant-transparent">
         <Setter Property="my:VariantAssist.Background" Value="Transparent" />
         <Setter Property="my:VariantAssist.BorderBrush" Value="Transparent" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
@@ -40,11 +40,11 @@
 
     <!-- Solid -->
     <Style Selector="
-    Visual.category-surface.variant-solid,
-    Visual.category-navigation.variant-solid,
-    Visual.category-action.variant-solid,
-    Visual.category-selection.variant-solid,
-    Visual.category-indicator.variant-solid">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-solid,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-solid,
+    Visual[(my|ThemeAssist.Category)=Action].variant-solid,
+    Visual[(my|ThemeAssist.Category)=Selection].variant-solid,
+    Visual[(my|ThemeAssist.Category)=Indicator].variant-solid">
         <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
         <Setter Property="my:VariantAssist.BorderBrush" Value="Transparent" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
@@ -60,11 +60,11 @@
 
     <!-- Light -->
     <Style Selector="
-    Visual.category-surface.variant-light,
-    Visual.category-navigation.variant-light,
-    Visual.category-action.variant-light,
-    Visual.category-selection.variant-light,
-    Visual.category-indicator.variant-light">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-light,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-light,
+    Visual[(my|ThemeAssist.Category)=Action].variant-light,
+    Visual[(my|ThemeAssist.Category)=Selection].variant-light,
+    Visual[(my|ThemeAssist.Category)=Indicator].variant-light">
         <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background, Opacity=Overlay}" />
         <Setter Property="my:VariantAssist.BorderBrush" Value="Transparent" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
@@ -75,11 +75,11 @@
 
     <!-- Text -->
     <Style Selector="
-    Visual.category-surface.variant-text,
-    Visual.category-navigation.variant-text,
-    Visual.category-action.variant-text,
-    Visual.category-selection.variant-text,
-    Visual.category-indicator.variant-text">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-text,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-text,
+    Visual[(my|ThemeAssist.Category)=Action].variant-text,
+    Visual[(my|ThemeAssist.Category)=Selection].variant-text,
+    Visual[(my|ThemeAssist.Category)=Indicator].variant-text">
         <Setter Property="my:VariantAssist.Background" Value="Transparent" />
         <Setter Property="my:VariantAssist.BorderBrush" Value="Transparent" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
@@ -100,11 +100,11 @@
 
     <!-- Outlined -->
     <Style Selector="
-    Visual.category-surface.variant-outlined,
-    Visual.category-navigation.variant-outlined,
-    Visual.category-action.variant-outlined,
-    Visual.category-selection.variant-outlined,
-    Visual.category-indicator.variant-outlined">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-outlined,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-outlined,
+    Visual[(my|ThemeAssist.Category)=Action].variant-outlined,
+    Visual[(my|ThemeAssist.Category)=Selection].variant-outlined,
+    Visual[(my|ThemeAssist.Category)=Indicator].variant-outlined">
         <Setter Property="my:VariantAssist.Background" Value="Transparent" />
         <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
@@ -118,41 +118,41 @@
 
     <!-- Outlined + Solid -->
     <Style Selector="
-    Visual.category-surface.variant-outlined.variant-solid,
-    Visual.category-navigation.variant-outlined.variant-solid">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-outlined.variant-solid,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-outlined.variant-solid">
         <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
     </Style>
     <Style Selector="
-    Visual.category-indicator.variant-outlined.variant-solid,
-    Visual.category-action.variant-outlined.variant-solid,
-    Visual.category-selection.variant-outlined.variant-solid">
+    Visual[(my|ThemeAssist.Category)=Indicator].variant-outlined.variant-solid,
+    Visual[(my|ThemeAssist.Category)=Action].variant-outlined.variant-solid,
+    Visual[(my|ThemeAssist.Category)=Selection].variant-outlined.variant-solid">
         <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
     </Style>
 
     <!-- Outlined + Light -->
     <Style Selector="
-    Visual.category-surface.variant-outlined.variant-light,
-    Visual.category-navigation.variant-outlined.variant-light,
-    Visual.category-action.variant-outlined.variant-light,
-    Visual.category-selection.variant-outlined.variant-light,
-    Visual.category-indicator.variant-outlined.variant-light">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-outlined.variant-light,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-outlined.variant-light,
+    Visual[(my|ThemeAssist.Category)=Action].variant-outlined.variant-light,
+    Visual[(my|ThemeAssist.Category)=Selection].variant-outlined.variant-light,
+    Visual[(my|ThemeAssist.Category)=Indicator].variant-outlined.variant-light">
         <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background, Opacity=Overlay}" />
     </Style>
 
     <!-- Text + Light -->
     <Style Selector="
-    Visual.category-surface.variant-text.variant-light,
-    Visual.category-navigation.variant-text.variant-light,
-    Visual.category-action.variant-text.variant-light,
-    Visual.category-selection.variant-text.variant-light,
-    Visual.category-indicator.variant-text.variant-light">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-text.variant-light,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-text.variant-light,
+    Visual[(my|ThemeAssist.Category)=Action].variant-text.variant-light,
+    Visual[(my|ThemeAssist.Category)=Selection].variant-text.variant-light,
+    Visual[(my|ThemeAssist.Category)=Indicator].variant-text.variant-light">
         <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background, Opacity=Overlay}" />
     </Style>
 
     <!-- Headered -->
     <Style Selector="
-    Visual.category-surface.variant-headered,
-    Visual.category-navigation.variant-headered">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-headered,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-headered">
         <Setter Property="my:VariantAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
 
         <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
@@ -169,8 +169,8 @@
 
     <!-- Headered : Solid -->
     <Style Selector="
-    Visual.category-surface.variant-headered-solid,
-    Visual.category-navigation.variant-headered-solid">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-headered-solid,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-headered-solid">
         <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeRole Background}" />
         <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
         <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
@@ -178,8 +178,8 @@
 
     <!-- Headered : Light -->
     <Style Selector="
-    Visual.category-surface.variant-headered-light,
-    Visual.category-navigation.variant-headered-light">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-headered-light,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-headered-light">
         <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeRole Background, Opacity=Overlay}" />
         <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
         <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
@@ -187,8 +187,8 @@
 
     <!-- Headered : Outlined -->
     <Style Selector="
-    Visual.category-surface.variant-headered-outlined,
-    Visual.category-navigation.variant-headered-outlined">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-headered-outlined,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-headered-outlined">
         <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
         <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
         <Setter Property="my:HeaderAssist.BorderThickness" Value="1" />
@@ -197,20 +197,20 @@
 
     <!-- Headered : Outlined + Solid -->
     <Style Selector="
-    Visual.category-surface.variant-headered-outlined.variant-headered-solid,
-    Visual.category-navigation.variant-headered-outlined.variant-headered-solid">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-headered-outlined.variant-headered-solid,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-headered-outlined.variant-headered-solid">
         <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
     </Style>
 
     <!-- Headered : Outlined + Light -->
     <Style Selector="
-    Visual.category-surface.variant-headered-outlined.variant-headered-light,
-    Visual.category-navigation.variant-headered-outlined.variant-headered-light">
+    Visual[(my|ThemeAssist.Category)=Surface].variant-headered-outlined.variant-headered-light,
+    Visual[(my|ThemeAssist.Category)=Navigation].variant-headered-outlined.variant-headered-light">
         <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeRole Background, Opacity=Overlay}" />
     </Style>
 
     <!-- Items : Solid -->
-    <Style Selector="Visual.category-navigation.variant-items-solid">
+    <Style Selector="Visual[(my|ThemeAssist.Category)=Navigation].variant-items-solid">
         <Setter Property="my:ItemsAssist.Background" Value="{my:ThemeBrush (my:ItemsAssist.Foreground), Opacity=Overlay}" />
         <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:ItemsAssist.Foreground), Opacity=Hover}" />
         <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:ItemsAssist.Foreground)}" />
@@ -224,7 +224,7 @@
     </Style>
 
     <!-- Items : Text -->
-    <Style Selector="Visual.category-navigation.variant-items-text">
+    <Style Selector="Visual[(my|ThemeAssist.Category)=Navigation].variant-items-text">
         <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground Opacity=High}" />
         <Setter Property="my:ItemsAssist.HoverBackground" Value="Transparent" />
         <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
@@ -240,7 +240,7 @@
     </Style>
 
     <!-- Items : Light -->
-    <Style Selector="Visual.category-navigation.variant-items-light">
+    <Style Selector="Visual[(my|ThemeAssist.Category)=Navigation].variant-items-light">
         <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
         <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role), Opacity=Focus}" />
@@ -253,7 +253,7 @@
     </Style>
 
     <!-- Items : Outlined -->
-    <Style Selector="Visual.category-navigation.variant-items-outlined">
+    <Style Selector="Visual[(my|ThemeAssist.Category)=Navigation].variant-items-outlined">
         <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
         <Setter Property="my:ItemsAssist.BorderThickness" Value="1.4" />
         <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
@@ -269,13 +269,13 @@
     </Style>
 
     <!-- Items : Outlined + Solid -->
-    <Style Selector="Visual.category-navigation.variant-items-outlined.variant-items-solid">
+    <Style Selector="Visual[(my|ThemeAssist.Category)=Navigation].variant-items-outlined.variant-items-solid">
         <Setter Property="my:ItemsAssist.Background" Value="{my:ThemeBrush (my:ItemsAssist.Foreground), Opacity=Overlay}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Foreground Opacity=Focus}" />
     </Style>
 
     <!-- Items : Outlined + Light -->
-    <Style Selector="Visual.category-navigation.variant-items-outlined.variant-items-light">
+    <Style Selector="Visual[(my|ThemeAssist.Category)=Navigation].variant-items-outlined.variant-items-light">
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role), Opacity=Focus}" />
 
         <Style Selector="^.role-contrast">
@@ -284,7 +284,7 @@
     </Style>
 
     <!-- Items : Outlined + Text -->
-    <Style Selector="Visual.category-navigation.variant-items-outlined.variant-items-text">
+    <Style Selector="Visual[(my|ThemeAssist.Category)=Navigation].variant-items-outlined.variant-items-text">
         <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
 
         <Style Selector="^.role-contrast">
@@ -293,7 +293,7 @@
     </Style>
 
     <!-- Items : Light + Text -->
-    <Style Selector="Visual.category-navigation.variant-items-light.variant-items-text">
+    <Style Selector="Visual[(my|ThemeAssist.Category)=Navigation].variant-items-light.variant-items-text">
         <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
 
         <Style Selector="^.role-contrast">

@@ -215,7 +215,7 @@
                         <ToggleButton Name="ExpanderHeader"
                                       HorizontalContentAlignment="Stretch"
                                       HorizontalAlignment="Stretch"
-                                      my:ClassesAssist.ClassSource="{TemplateBinding}"
+                                      my:ClassesAssist.Classes="{TemplateBinding}"
                                       my:DisableAssist.IsDisablable="False"
                                       IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}"
                                       IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"

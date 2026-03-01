@@ -99,7 +99,7 @@ public class App : Application
                 {
                     var warmUpService = services.GetRequiredService<IWarmUpService>();
 
-                    await warmUpService.WarmUpAsync(pageTypes, delayMs: 800);
+                    await warmUpService.WarmUpAsync(pageTypes, delayMs: 800).ConfigureAwait(false);
                 };
                 break;
             case ISingleViewApplicationLifetime singleView:

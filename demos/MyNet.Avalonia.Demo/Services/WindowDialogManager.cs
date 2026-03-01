@@ -33,7 +33,7 @@ public static class WindowDialogManager
 
     public static IList<IDialogViewModel> OpenedDialogs => DialogService.OpenedDialogs;
 
-    public static bool HasOpenedDialogs => OpenedDialogs.Any() ;
+    public static bool HasOpenedDialogs => OpenedDialogs.Any();
 
     public static WindowDialogService DialogService { get; } = new();
 

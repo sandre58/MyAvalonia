@@ -3,11 +3,10 @@
     <PropertyGroup>
         <Product>My .NET Avalonia - Performance Test</Product>
         <Description>Performance testing application for Avalonia UI with base Fluent theme.</Description>
-        <NeutralLanguage>en</NeutralLanguage>
+        <NeutralLanguage>fr</NeutralLanguage>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" />
         <PackageReference Include="Avalonia.Controls.DataGrid" />
         <PackageReference Include="Avalonia.Themes.Fluent" />
         <PackageReference Include="Avalonia.Fonts.Inter" />

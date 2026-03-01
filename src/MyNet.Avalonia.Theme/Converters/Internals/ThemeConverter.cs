@@ -39,6 +39,14 @@ internal sealed class ThemeConverter : IValueConverter, IMultiValueConverter
     /// <returns>The resolved <see cref="IBrush"/> or <see cref="AvaloniaProperty.UnsetValue"/> if conversion fails.</returns>
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value], targetType, parameter, culture);
 
+/// <summary>
+/// Converts multiple values to a theme brush or role-based palette brush, applying opacity and contrast as specified.
+/// </summary>
+/// <param name="values">The list of values to convert, typically including a brush or theme context and optional foreground.</param>
+    /// <param name="targetType">The target type for the conversion (usually <see cref="IBrush"/>).</param>
+    /// <param name="parameter">A parameter describing the theme brush or role to resolve.</param>
+    /// <param name="culture">The culture for conversion (not used).</param>
+/// <returns>The resolved <see cref="IBrush"/> or <see cref="AvaloniaProperty.UnsetValue"/> if conversion fails.</returns>
     public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
         if (values.Count == 0) return AvaloniaProperty.UnsetValue;

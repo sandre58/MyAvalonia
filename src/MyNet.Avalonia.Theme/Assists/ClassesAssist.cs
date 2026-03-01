@@ -8,69 +8,214 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
-using Avalonia.Collections;
-using MyNet.Avalonia.Extensions;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
 public static class ClassesAssist
 {
-    public static readonly AttachedProperty<string?> AddClassesProperty = AvaloniaProperty.RegisterAttached<StyledElement, string?>("AddClasses", typeof(ClassesAssist));
+    #region Internal storage
 
-    public static readonly AttachedProperty<object> ClassesProperty = AvaloniaProperty.RegisterAttached<StyledElement, object>("Classes", typeof(ClassesAssist));
+    private sealed class Layer
+    {
+        public HashSet<string> Classes { get; } = new();
+    }
 
-    public static readonly AttachedProperty<StyledElement> ClassSourceProperty = AvaloniaProperty.RegisterAttached<StyledElement, StyledElement>("ClassSource", typeof(ClassesAssist));
+    private static readonly AttachedProperty<Dictionary<string, Layer>> LayersProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, Dictionary<string, Layer>>(
+            "Layers",
+            typeof(ClassesAssist));
+
+    private static Dictionary<string, Layer> GetLayers(StyledElement element)
+    {
+        var layers = element.GetValue(LayersProperty);
+        if (layers == null)
+        {
+            layers = new Dictionary<string, Layer>();
+            element.SetValue(LayersProperty, layers);
+        }
+
+        return layers;
+    }
+
+    private static readonly AttachedProperty<HashSet<string>> ManagedClassesProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, HashSet<string>>(
+            "ManagedClasses",
+            typeof(ClassesAssist));
+
+    private static HashSet<string> GetManagedClasses(StyledElement element)
+    {
+        var set = element.GetValue(ManagedClassesProperty);
+        if (set == null)
+        {
+            set = new HashSet<string>();
+            element.SetValue(ManagedClassesProperty, set);
+        }
+
+        return set;
+    }
+
+    #endregion
 
     static ClassesAssist()
     {
-        _ = AddClassesProperty.Changed.AddClassHandler<StyledElement>(OnAddClassesChanged);
-        _ = ClassesProperty.Changed.AddClassHandler<StyledElement>(OnClassesChanged);
-        _ = ClassSourceProperty.Changed.AddClassHandler<StyledElement>(OnClassSourceChanged);
+        ClassesProperty.Changed.AddClassHandler<AvaloniaObject>(OnClassesChanged);
+        AddClassesProperty.Changed.AddClassHandler<AvaloniaObject>(OnAddClassesChanged);
+        RemoveClassesProperty.Changed.AddClassHandler<AvaloniaObject>(OnRemoveClassesChanged);
     }
 
-    public static void SetClasses(AvaloniaObject obj, object value) => obj.SetValue(ClassesProperty, value);
+    #region Classes (replace layer)
 
-    public static object GetClasses(AvaloniaObject obj) => obj.GetValue(ClassesProperty);
+    public static readonly AttachedProperty<object?> ClassesProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, object?>(
+            "Classes",
+            typeof(ClassesAssist));
 
-    private static void OnClassesChanged(StyledElement sender, AvaloniaPropertyChangedEventArgs value)
+    public static void SetClasses(AvaloniaObject element, object? value)
+        => element.SetValue(ClassesProperty, value);
+
+    public static object? GetClasses(AvaloniaObject element)
+        => element.GetValue(ClassesProperty);
+
+    private static void OnClassesChanged(AvaloniaObject sender, AvaloniaPropertyChangedEventArgs args)
     {
-        var classes = value.NewValue is IEnumerable<string> classesEnumerable ? classesEnumerable.ToArray() : (value.NewValue as string)?.Split([' '], StringSplitOptions.RemoveEmptyEntries);
-        if (classes is null) return;
-        var removeNonPseudoClasses = sender.Classes.Where(c => !c.StartsWith(':') && !classes.Contains(c)).ToList();
-        removeNonPseudoClasses.ForEach(x => sender.Classes.Set(x, false));
-        classes.ForEach(x => sender.Classes.Set(x, true));
+        if (sender is not StyledElement element) return;
+
+        var value = args.GetNewValue<object?>();
+        SetLayer(element, "Replace", Extract(value));
     }
 
-    public static void SetAddClasses(AvaloniaObject obj, string? value) => obj.SetValue(AddClassesProperty, value);
+    #endregion
 
-    public static string? GetAddClasses(AvaloniaObject obj) => obj.GetValue(AddClassesProperty);
+    #region AddClasses
 
-    private static void OnAddClassesChanged(StyledElement sender, AvaloniaPropertyChangedEventArgs value)
+    public static readonly AttachedProperty<object?> AddClassesProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, object?>(
+            "AddClasses",
+            typeof(ClassesAssist));
+
+    public static void SetAddClasses(AvaloniaObject element, object? value)
+        => element.SetValue(AddClassesProperty, value);
+
+    public static object? GetAddClasses(AvaloniaObject element)
+        => element.GetValue(AddClassesProperty);
+
+    private static void OnAddClassesChanged(AvaloniaObject sender, AvaloniaPropertyChangedEventArgs args)
     {
-        if (value.NewValue is not string classes) return;
+        if (sender is not StyledElement element) return;
 
-        sender.AddClasses(classes);
+        var value = args.GetNewValue<object?>();
+        SetLayer(element, "Add", Extract(value));
     }
 
-    public static void SetClassSource(StyledElement obj, StyledElement value) => obj.SetValue(ClassSourceProperty, value);
+    #endregion
 
-    public static StyledElement GetClassSource(StyledElement obj) => obj.GetValue(ClassSourceProperty);
+    #region RemoveClasses
 
-    private static void OnClassSourceChanged(StyledElement arg1, AvaloniaPropertyChangedEventArgs arg2)
+    public static readonly AttachedProperty<object?> RemoveClassesProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, object?>(
+            "RemoveClasses",
+            typeof(ClassesAssist));
+
+    public static void SetRemoveClasses(AvaloniaObject element, object? value)
+        => element.SetValue(RemoveClassesProperty, value);
+
+    public static object? GetRemoveClasses(AvaloniaObject element)
+        => element.GetValue(RemoveClassesProperty);
+
+    private static void OnRemoveClassesChanged(AvaloniaObject sender, AvaloniaPropertyChangedEventArgs args)
     {
-        if (arg2.NewValue is not StyledElement styledElement) return;
-        arg1.Classes.Clear();
-        var nonPseudoClasses = styledElement.Classes.Where(c => !c.StartsWith(':'));
-        arg1.Classes.AddRange(nonPseudoClasses);
-        _ = styledElement.Classes.WeakSubscribe((o, _) => OnSourceClassesChanged(o, arg1));
+        if (sender is not StyledElement element) return;
+
+        var value = args.GetNewValue<object?>();
+        SetLayer(element, "Remove", Extract(value));
     }
 
-    private static void OnSourceClassesChanged(object? sender, StyledElement target)
+    #endregion
+
+    #region Core logic
+
+    private static void SetLayer(StyledElement element, string name, IEnumerable<string> classes)
     {
-        if (sender is not AvaloniaList<string> classes) return;
-        target.Classes.Clear();
-        var nonPseudoClasses = classes.Where(c => !c.StartsWith(':'));
-        target.Classes.AddRange(nonPseudoClasses);
+        var layers = GetLayers(element);
+
+        if (!layers.TryGetValue(name, out var layer))
+        {
+            layer = new Layer();
+            layers[name] = layer;
+        }
+
+        layer.Classes.Clear();
+
+        foreach (var c in classes)
+            layer.Classes.Add(c);
+
+        Rebuild(element);
     }
+
+    private static void Rebuild(StyledElement element)
+    {
+        var layers = GetLayers(element);
+        var managed = GetManagedClasses(element);
+
+        var newManaged = new HashSet<string>();
+
+        // Replace layer (prioritaire)
+        if (layers.TryGetValue("Replace", out var replaceLayer))
+        {
+            foreach (var c in replaceLayer.Classes)
+                newManaged.Add(c);
+        }
+
+        // Add layer
+        if (layers.TryGetValue("Add", out var addLayer))
+        {
+            foreach (var c in addLayer.Classes)
+                newManaged.Add(c);
+        }
+
+        // Remove layer
+        if (layers.TryGetValue("Remove", out var removeLayer))
+        {
+            foreach (var c in removeLayer.Classes)
+                newManaged.Remove(c);
+        }
+
+        // 🔥 Diff propre
+
+        // Supprimer anciennes classes gérées
+        foreach (var old in managed.ToList())
+        {
+            if (!newManaged.Contains(old))
+            {
+                element.Classes.Remove(old);
+                managed.Remove(old);
+            }
+        }
+
+        // Ajouter nouvelles
+        foreach (var c in newManaged)
+        {
+            if (!managed.Contains(c))
+            {
+                element.Classes.Add(c);
+                managed.Add(c);
+            }
+        }
+    }
+
+    private static IEnumerable<string> Extract(object? value)
+    {
+        if (value == null)
+            return [];
+
+        if (value is string s)
+            return s.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        if (value is IEnumerable<string> enumerable)
+            return enumerable.Where(x => !string.IsNullOrWhiteSpace(x));
+
+        return [];
+    }
+
+    #endregion
 }

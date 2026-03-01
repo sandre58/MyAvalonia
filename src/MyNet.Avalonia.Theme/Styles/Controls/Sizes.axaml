@@ -214,11 +214,11 @@
     <!-- INPUTS                                                    -->
     <!-- ═════════════════════════════════════════════════════════ -->
 
-    <Style Selector="TemplatedControl.category-input.size-sm">
+    <Style Selector="TemplatedControl[(my|ThemeAssist.Category)=Input].size-sm">
         <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Sm}" />
     </Style>
 
-    <Style Selector="TemplatedControl.category-input.size-lg">
+    <Style Selector="TemplatedControl[(my|ThemeAssist.Category)=Input].size-lg">
         <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Lg}" />
     </Style>
 

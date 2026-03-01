@@ -28,7 +28,7 @@ namespace MyNet.Avalonia.Theme;
 /// Provides the main theme engine for the application, managing theme variants (Dark, Light, HighContrast), brand color palettes (Primary, Accent), and resource injection.
 /// Supports hot-reload for theme changes and dynamic color updates, ensuring consistent styling and smooth transitions across the UI.
 /// </summary>
-public class MyTheme : Styles, IResourceNode, IMyTheme
+public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
 {
     private static readonly ColorShades DefaultPrimary = new(Color.Parse("#1756BD"));
     private static readonly ColorShades DefaultAccent = new(Color.Parse("#FFAE18"));
@@ -59,6 +59,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     {
         _serviceProvider = serviceProvider;
         _brushManager = new(ColorTransitionDuration, ColorTransitionEasing);
+
         if (Application.Current is not null)
         {
             Theme = Application.Current.ActualThemeVariant.Key.ToString();
@@ -484,7 +485,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
         return Resources.TryGetResource(key, theme, out value) || base.TryGetResource(key, theme, out value);
     }
 
-    /// <summary>
+        /// <summary>
     /// Gets a brush from the theme resources by path.
     /// </summary>
     /// <param name="path">The resource path for the brush.</param>
@@ -496,6 +497,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     public IBrush GetBrush(string path, string? opacityKey = null, bool contrast = false, double? darken = null, double? lighten = null)
     {
         var opacity = GetOpacity(opacityKey);
+
         return _brushManager.Get(ThemeResourceKeyFactory.Brush(path), new ColorInterpolation(opacity, contrast, darken, lighten));
     }
 
@@ -511,6 +513,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme
     public IBrush GetBrush(IBrush brush, string? opacityKey = null, bool contrast = false, double? darken = null, double? lighten = null)
     {
         var opacity = GetOpacity(opacityKey);
+
         return _brushManager.Get(brush, new ColorInterpolation(opacity, contrast, darken, lighten));
     }
 
