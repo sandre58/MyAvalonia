@@ -27,6 +27,7 @@ using MyNet.Avalonia.Extended.Toasting;
 using MyNet.Avalonia.Extended.WarmUp;
 using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Infrastructure;
+using MyNet.Avalonia.Theme.Palettes;
 using MyNet.Avalonia.Theme.Themes;
 using MyNet.UI.Commands;
 using MyNet.UI.Loading;
@@ -116,7 +117,7 @@ public class App : Application
         => collection.AddSingleton<ILogger, Logger>()
             .AddSingleton<IViewModelLocator, ViewModelLocator>()
             .AddSingleton<IWarmUpService, ViewModelWarmUpService>()
-            .AddSingleton<IMyTheme>(MyTheme.Current)
+            .AddSingleton<IThemeBrushService>(MyTheme.Current)
             .AddSingleton<IThemeBaseRegistry, ThemeVariantsRegistry>()
             .AddSingleton<IThemeService, ThemeService>()
             .AddSingleton<INotificationsManager, NotificationsManager>()

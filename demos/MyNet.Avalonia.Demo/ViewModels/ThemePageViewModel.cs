@@ -12,7 +12,6 @@ using System.Linq;
 using Avalonia.Media;
 using DynamicData;
 using MyNet.Avalonia.Extensions;
-using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Palettes;
 using MyNet.Observable.Attributes;
 using MyNet.UI.Theming;
@@ -26,12 +25,14 @@ namespace MyNet.Avalonia.Demo.ViewModels;
 internal sealed class ThemePageViewModel : PageViewModel
 {
     private readonly IThemeService _themeService;
+    private readonly IThemeBrushService _themeBrushService;
     private readonly Suspender _updateSuspender = new();
     private readonly Suspender _refreshThemePropertiesSuspender = new();
 
-    public ThemePageViewModel(IThemeService themeService, IThemeBaseRegistry themeBaseRegistry)
+    public ThemePageViewModel(IThemeService themeService, IThemeBrushService themeBrushService, IThemeBaseRegistry themeBaseRegistry)
     {
         _themeService = themeService;
+        _themeBrushService = themeBrushService;
 
         AvailableThemeVariants.AddRange(themeBaseRegistry.Availables);
 
@@ -39,28 +40,27 @@ internal sealed class ThemePageViewModel : PageViewModel
 
         _themeService.ThemeChanged += OnThemeChanged;
 
-        var currentTheme = MyTheme.Current;
-        var currentThemeColorVariant = currentTheme.GetCurrentThemeVariantColors();
+        var currentThemeColorVariant = _themeBrushService.GetThemeVariantColors();
 
         if (currentThemeColorVariant is not null)
         {
             var baseKeys = currentThemeColorVariant.Base.ToResourceDictionary().Keys.ToList();
             var opacityLevels = currentThemeColorVariant.Opacity.ToResourceDictionary(string.Empty).Keys;
 
-            Primary.AddRange(GetBrushDefinitions(currentTheme, nameof(Primary), MyTheme.Current.Primary));
-            Accent.AddRange(GetBrushDefinitions(currentTheme, nameof(Accent), MyTheme.Current.Accent));
+            Primary.AddRange(GetBrushDefinitions(nameof(Primary), _themeBrushService.GetPrimary()));
+            Accent.AddRange(GetBrushDefinitions(nameof(Accent), _themeBrushService.GetAccent()));
 
-            Surfaces.AddRange(GetBrushDefinitions([.. baseKeys.Where(x => x.Contains("Surface", StringComparison.OrdinalIgnoreCase) && !x.Contains("Border", StringComparison.OrdinalIgnoreCase))], currentTheme));
-            Borders.AddRange(GetBrushDefinitions([.. baseKeys.Where(x => x.Contains("Border", StringComparison.OrdinalIgnoreCase) || x.Contains("Divider", StringComparison.OrdinalIgnoreCase))], currentTheme));
-            Foregrounds.AddRange(GetBrushDefinitions([.. baseKeys.Where(x => x.Contains("Foreground", StringComparison.OrdinalIgnoreCase))], currentTheme));
+            Surfaces.AddRange(GetBrushDefinitions([.. baseKeys.Where(x => x.Contains("Surface", StringComparison.OrdinalIgnoreCase) && !x.Contains("Border", StringComparison.OrdinalIgnoreCase))]));
+            Borders.AddRange(GetBrushDefinitions([.. baseKeys.Where(x => x.Contains("Border", StringComparison.OrdinalIgnoreCase) || x.Contains("Divider", StringComparison.OrdinalIgnoreCase))]));
+            Foregrounds.AddRange(GetBrushDefinitions([.. baseKeys.Where(x => x.Contains("Foreground", StringComparison.OrdinalIgnoreCase))]));
 
-            Semantic.Add(GetBrushDefinitions(currentTheme, nameof(ThemeVariantColors.Success), currentThemeColorVariant.Success));
-            Semantic.Add(GetBrushDefinitions(currentTheme, nameof(ThemeVariantColors.Error), currentThemeColorVariant.Error));
-            Semantic.Add(GetBrushDefinitions(currentTheme, nameof(ThemeVariantColors.Warning), currentThemeColorVariant.Warning));
-            Semantic.Add(GetBrushDefinitions(currentTheme, nameof(ThemeVariantColors.Information), currentThemeColorVariant.Information));
-            Semantic.Add(GetBrushDefinitions(currentTheme, nameof(ThemeVariantColors.Neutral), currentThemeColorVariant.Neutral));
+            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantColors.Success), currentThemeColorVariant.Success));
+            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantColors.Error), currentThemeColorVariant.Error));
+            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantColors.Warning), currentThemeColorVariant.Warning));
+            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantColors.Information), currentThemeColorVariant.Information));
+            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantColors.Neutral), currentThemeColorVariant.Neutral));
 
-            OpacityLevels.AddRange(opacityLevels.Select(x => new OpacityDefinition(x, currentTheme.GetOpacity(x) ?? 0.0)));
+            OpacityLevels.AddRange(opacityLevels.Select(x => new OpacityDefinition(x, themeBrushService.GetOpacity(x) ?? 0.0)));
         }
     }
 
@@ -89,15 +89,15 @@ internal sealed class ThemePageViewModel : PageViewModel
 
     public ObservableCollection<OpacityDefinition> OpacityLevels { get; } = [];
 
-    private static ObservableCollection<BrushDefinition> GetBrushDefinitions(MyTheme theme, string prefix, ColorShades shades)
+    private ObservableCollection<BrushDefinition> GetBrushDefinitions(string prefix, ColorShades shades)
         => shades.ToResourceDictionary(prefix)
             .Where(x => !x.Key.Contains(nameof(ColorShades.Foreground), StringComparison.OrdinalIgnoreCase))
-            .Select(x => new BrushDefinition(x.Key, (ISolidColorBrush)theme.GetBrush(x.Key), (ISolidColorBrush)theme.GetBrush(x.Key, contrast: true)))
+            .Select(x => new BrushDefinition(x.Key, (ISolidColorBrush)_themeBrushService.GetBrush(x.Key), (ISolidColorBrush)_themeBrushService.GetBrush(x.Key, contrast: true)))
             .ToObservableCollection();
 
-    private static ObservableCollection<BrushDefinition> GetBrushDefinitions(IReadOnlyCollection<string> resourceKeys, MyTheme currentTheme)
+    private ObservableCollection<BrushDefinition> GetBrushDefinitions(IReadOnlyCollection<string> resourceKeys)
         => resourceKeys
-            .Select(x => new BrushDefinition(x, (ISolidColorBrush)currentTheme.GetBrush(x), (ISolidColorBrush)currentTheme.GetBrush(x, contrast: true)))
+            .Select(x => new BrushDefinition(x, (ISolidColorBrush)_themeBrushService.GetBrush(x), (ISolidColorBrush)_themeBrushService.GetBrush(x, contrast: true)))
             .ToObservableCollection();
 
     private void UpdatePropertiesFromCurrentTheme()

@@ -9,6 +9,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Avalonia;
 using Avalonia.Styling;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ContentProviders;
 using MyNet.Avalonia.Theme;
@@ -222,8 +223,7 @@ internal sealed class ControlThemeBuilder(string? themeName = null, string? kind
         if (ThemeCache.TryGetValue(themeKey, out var cached))
             return cached;
 
-        if (MyTheme.Current.TryGetResource(themeKey, null, out var value)
-            && value is ControlTheme theme)
+        if (Application.Current?.TryGetResource(themeKey, null, out var value) == true && value is ControlTheme theme)
         {
             ThemeCache[themeKey] = theme;
             return theme;

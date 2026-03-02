@@ -241,12 +241,6 @@ public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
     /// </summary>
     /// <param name="completeTheme">The complete theme to apply.</param>
     /// <exception cref="ArgumentNullException">Thrown when completeTheme is null.</exception>
-    /// <example>
-    /// <code>
-    /// var theme = CompleteTheme.Create("#124378", "#FFAE18");
-    /// MyTheme.Current.ApplyTheme(theme);
-    /// </code>
-    /// </example>
     public void ApplyTheme(CompleteTheme completeTheme)
     {
         ArgumentNullException.ThrowIfNull(completeTheme);
@@ -259,18 +253,6 @@ public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
         // Force update of brushes
         UpdateBrushesFromCurrentTheme();
         RaiseThemeChanged();
-    }
-
-    /// <summary>
-    /// Gets the current theme variant colors for the active theme.
-    /// </summary>
-    /// <returns>The ThemeVariantColors for the current theme variant.</returns>
-    public ThemeVariantColors? GetCurrentThemeVariantColors()
-    {
-        var currentVariant = Application.Current?.ActualThemeVariant ?? ThemeVariant.Default;
-        return Resources.ThemeDictionaries.TryGetValue(currentVariant, out var rd) && rd is ResourceDictionary resourceDict
-            ? ThemeVariantColors.FromResourceDictionary(currentVariant, resourceDict.ToDictionary(x => x.Key.ToString().OrEmpty().Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase), x => x.Value!))
-            : null;
     }
 
     #endregion
@@ -456,36 +438,21 @@ public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
 
     #endregion
 
-    #region IResourceNode Implementation
-
-    private bool _isResourcedAccessed;
+    #region IThemeBrushService Implementation
 
     /// <summary>
-    /// Tries to get a resource from the theme's resources dictionary. Implements IResourceNode to integrate with Avalonia's resources lookup system.
+    /// Gets the current theme variant colors for the active theme.
     /// </summary>
-    /// <param name="key">The resource key to look up.</param>
-    /// <param name="theme">The theme variant context (not used in this implementation).</param>
-    /// <param name="value">The resource value if found.</param>
-    /// <returns>True if the resource was found; otherwise, false.</returns>
-    bool IResourceNode.TryGetResource(object key, ThemeVariant? theme, out object? value) => TryGetResource(key, theme, out value);
-
-    /// <summary>
-    /// Tries to get a resource from the theme's resources dictionary, loading resources if accessed for the first time.
-    /// </summary>
-    /// <param name="key">The resource key to look up.</param>
-    /// <param name="theme">The theme variant context.</param>
-    /// <param name="value">The resource value if found.</param>
-    /// <returns>True if the resource was found; otherwise, false.</returns>
-    protected new virtual bool TryGetResource(object key, ThemeVariant? theme, out object? value)
+    /// <returns>The ThemeVariantColors for the current theme variant.</returns>
+    public ThemeVariantColors? GetThemeVariantColors()
     {
-        if (_isResourcedAccessed)
-            return Resources.TryGetResource(key, theme, out value) || base.TryGetResource(key, theme, out value);
-        _isResourcedAccessed = true;
-        OnResourcedAccessed();
-        return Resources.TryGetResource(key, theme, out value) || base.TryGetResource(key, theme, out value);
+        var currentVariant = Application.Current?.ActualThemeVariant ?? ThemeVariant.Default;
+        return Resources.ThemeDictionaries.TryGetValue(currentVariant, out var rd) && rd is ResourceDictionary resourceDict
+            ? ThemeVariantColors.FromResourceDictionary(currentVariant, resourceDict.ToDictionary(x => x.Key.ToString().OrEmpty().Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase), x => x.Value!))
+            : null;
     }
 
-        /// <summary>
+    /// <summary>
     /// Gets a brush from the theme resources by path.
     /// </summary>
     /// <param name="path">The resource path for the brush.</param>
@@ -536,6 +503,37 @@ public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
         }
 
         return opacity;
+    }
+
+    #endregion
+
+    #region IResourceNode Implementation
+
+    private bool _isResourcedAccessed;
+
+    /// <summary>
+    /// Tries to get a resource from the theme's resources dictionary. Implements IResourceNode to integrate with Avalonia's resources lookup system.
+    /// </summary>
+    /// <param name="key">The resource key to look up.</param>
+    /// <param name="theme">The theme variant context (not used in this implementation).</param>
+    /// <param name="value">The resource value if found.</param>
+    /// <returns>True if the resource was found; otherwise, false.</returns>
+    bool IResourceNode.TryGetResource(object key, ThemeVariant? theme, out object? value) => TryGetResource(key, theme, out value);
+
+    /// <summary>
+    /// Tries to get a resource from the theme's resources dictionary, loading resources if accessed for the first time.
+    /// </summary>
+    /// <param name="key">The resource key to look up.</param>
+    /// <param name="theme">The theme variant context.</param>
+    /// <param name="value">The resource value if found.</param>
+    /// <returns>True if the resource was found; otherwise, false.</returns>
+    protected new virtual bool TryGetResource(object key, ThemeVariant? theme, out object? value)
+    {
+        if (_isResourcedAccessed)
+            return Resources.TryGetResource(key, theme, out value) || base.TryGetResource(key, theme, out value);
+        _isResourcedAccessed = true;
+        OnResourcedAccessed();
+        return Resources.TryGetResource(key, theme, out value) || base.TryGetResource(key, theme, out value);
     }
 
     /// <summary>

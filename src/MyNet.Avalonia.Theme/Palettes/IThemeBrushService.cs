@@ -45,11 +45,11 @@ public interface IThemeBrushService
     /// <returns>The resolved opacity value, or null if not found.</returns>
     double? GetOpacity(string? opacityKey);
 
-    string? GetTheme();
+    ThemeVariantColors? GetThemeVariantColors();
 
-    (string? Color, string Foreground) GetPrimary();
+    ColorShades GetPrimary();
 
-    (string? Color, string Foreground) GetAccent();
+    ColorShades GetAccent();
 
     void SetPrimary(string color, string? foreground);
 
