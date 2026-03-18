@@ -15,7 +15,7 @@
             ClipToBounds="False"
             mc:Ignorable="d">
 
-    <v:ControlCatalogView>
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
@@ -34,7 +34,7 @@
                     </TreeView.ItemTemplate>
                     <TreeView.DataTemplates>
                         <TreeDataTemplate DataType="{x:Type countries:Country}">
-                            <StackPanel Classes="size-md" Orientation="Horizontal">
+                            <StackPanel Classes="gap-md" Orientation="Horizontal">
                                 <Image Width="16"
                                        Height="16"
                                        VerticalAlignment="Center"
@@ -62,7 +62,7 @@
                     </TreeView.ItemTemplate>
                     <TreeView.DataTemplates>
                         <TreeDataTemplate DataType="{x:Type countries:Country}">
-                            <StackPanel Classes="size-md" Orientation="Horizontal">
+                            <StackPanel Classes="gap-md" Orientation="Horizontal">
                                 <Image Width="16"
                                        Height="16"
                                        VerticalAlignment="Center"

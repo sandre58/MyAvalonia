@@ -102,4 +102,40 @@ public class IconContentControl : ContentControl
     }
 
     #endregion
+
+    #region LabelIconSize
+
+    /// <summary>
+    /// Provides LabelIconSize Property.
+    /// </summary>
+    public static readonly StyledProperty<double> LabelIconSizeProperty = AvaloniaProperty.Register<IconContentControl, double>(nameof(LabelIconSize), 15.0d);
+
+    /// <summary>
+    /// Gets or sets the LabelIconSize property.
+    /// </summary>
+    public double LabelIconSize
+    {
+        get => GetValue(LabelIconSizeProperty);
+        set => SetValue(LabelIconSizeProperty, value);
+    }
+
+    #endregion
+
+    #region PrimaryIconSize
+
+    /// <summary>
+    /// Provides PrimaryIconSize Property.
+    /// </summary>
+    public static readonly StyledProperty<double> PrimaryIconSizeProperty = AvaloniaProperty.Register<IconContentControl, double>(nameof(PrimaryIconSize), 18.0d);
+
+    /// <summary>
+    /// Gets or sets the PrimaryIconSize property.
+    /// </summary>
+    public double PrimaryIconSize
+    {
+        get => GetValue(PrimaryIconSizeProperty);
+        set => SetValue(PrimaryIconSizeProperty, value);
+    }
+
+    #endregion
 }

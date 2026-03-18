@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Avalonia.Media;
+using MyNet.Avalonia.Resources;
 
 namespace MyNet.Avalonia.Extensions;
 
@@ -61,11 +62,10 @@ public static class ColorNameExtensions
             // Try named color lookup first (if not starting with '#')
             if (!colorName.StartsWith('#'))
             {
-                var namedColor = ResourceLocator.ColorResourcesDictionary
-                    .FirstOrDefault(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase));
+                var namedColor = ColorResourcesLocator.FromName(colorName);
 
-                if (!namedColor.Equals(default(KeyValuePair<Color, string>)))
-                    return namedColor.Key;
+                if (namedColor.HasValue)
+                    return namedColor;
             }
 
             // Try parsing as hex code

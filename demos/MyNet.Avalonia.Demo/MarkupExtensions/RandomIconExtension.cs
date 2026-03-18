@@ -5,12 +5,12 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Metadata;
-using MyNet.Avalonia.Theme.Enums;
+using MyNet.Avalonia.Theme.Classes;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities.Generator;
 
@@ -68,7 +68,7 @@ internal sealed class RandomIconExtension : MarkupExtension
         }
         else if (DefinedSize.HasValue)
         {
-            result.Classes.Add($"size-{DefinedSize.ToString()?.ToLower(CultureInfo.CurrentCulture)}");
+            result.AddClasses(CssClass.Size(DefinedSize.ToString()));
         }
 
         return result;

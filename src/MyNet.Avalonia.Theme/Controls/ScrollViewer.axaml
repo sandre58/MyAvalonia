@@ -59,7 +59,7 @@
                                           Margin="1 0 0 0"
                                           Padding="0"
                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                          my:VariantAssist.DefaultPrimary="{Binding $parent[ScrollBar].BorderBrush}"
+                                          my:VariantAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="variant-text"
                                           Content="{my:Icon ChevronLeft, Size=8}"
                                           Focusable="False"
@@ -94,7 +94,7 @@
                                           Margin="0 0 1 0"
                                           Padding="0"
                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                          my:VariantAssist.DefaultPrimary="{Binding $parent[ScrollBar].BorderBrush}"
+                                          my:VariantAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="variant-text"
                                           Content="{my:Icon ChevronRight, Size=8}"
                                           Focusable="False"
@@ -129,7 +129,7 @@
                                           Margin="0 0 0 1"
                                           Padding="0"
                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                          my:VariantAssist.DefaultPrimary="{Binding $parent[ScrollBar].BorderBrush}"
+                                          my:VariantAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="variant-text"
                                           Content="{my:Icon ChevronUp, Size=8}"
                                           Focusable="False"
@@ -165,7 +165,7 @@
                                           Margin="0 1 0 0"
                                           Padding="0"
                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                          my:VariantAssist.DefaultPrimary="{Binding $parent[ScrollBar].BorderBrush}"
+                                          my:VariantAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="variant-text"
                                           Content="{my:Icon ChevronDown, Size=8}"
                                           Focusable="False"
@@ -208,7 +208,7 @@
         <Setter Property="ClipToBounds" Value="True" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:Foreground AncestorType=Control}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:Foreground}" />
 
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{my:ThemeRole BorderBrush}" />

@@ -12,8 +12,8 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Styling;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ContentProviders;
-using MyNet.Avalonia.Theme;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming;
+using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Humanizer;
 using MyNet.Utilities;
 
@@ -120,22 +120,19 @@ internal sealed class ControlThemeBuilder(string? themeName = null, string? kind
     /// Adds default role definitions (Primary, Accent, Inverse, Success, Warning, Error, Information).
     /// </summary>
     /// <returns>The current builder instance for method chaining.</returns>
-    public ControlThemeBuilder AddAllRoles()
-        => AddRoles([.. Enum.GetValues<ThemeRole>().Except([ThemeRole.Custom])]);
+    public ControlThemeBuilder AddAllRoles() => AddRoles([.. Enum.GetValues<ThemeRole>()]);
 
     /// <summary>
     /// Adds default role definitions (Primary, Accent, Contrast, Success, Warning, Error, Information).
     /// </summary>
     /// <returns>The current builder instance for method chaining.</returns>
-    public ControlThemeBuilder AddDefaultRoles()
-        => AddRoles([.. Enum.GetValues<ThemeRole>().Except([ThemeRole.Neutral, ThemeRole.Inverse, ThemeRole.Custom])]);
+    public ControlThemeBuilder AddDefaultRoles() => AddRoles([.. Enum.GetValues<ThemeRole>().Except([ThemeRole.Neutral, ThemeRole.Inverse])]);
 
     /// <summary>
     /// Adds theme role definitions (Primary, Accent, Contrast).
     /// </summary>
     /// <returns>The current builder instance for method chaining.</returns>
-    public ControlThemeBuilder AddThemeRoles()
-        => AddRoles(ThemeRole.Default, ThemeRole.Primary, ThemeRole.Accent, ThemeRole.Contrast);
+    public ControlThemeBuilder AddThemeRoles() => AddRoles(ThemeRole.Default, ThemeRole.Primary, ThemeRole.Accent, ThemeRole.Contrast);
 
     /// <summary>
     /// Adds role definitions to the builder for items.
@@ -157,22 +154,19 @@ internal sealed class ControlThemeBuilder(string? themeName = null, string? kind
     /// Adds default role definitions (Primary, Accent, Inverse, Success, Warning, Error, Information) for items.
     /// </summary>
     /// <returns>The current builder instance for method chaining.</returns>
-    public ControlThemeBuilder AddItemsAllRoles()
-        => AddItemsRoles([.. Enum.GetValues<ThemeRole>().Except([ThemeRole.Custom])]);
+    public ControlThemeBuilder AddItemsAllRoles() => AddItemsRoles([.. Enum.GetValues<ThemeRole>()]);
 
     /// <summary>
     /// Adds default role definitions (Primary, Accent, Inverse, Success, Warning, Error, Information) for items.
     /// </summary>
     /// <returns>The current builder instance for method chaining.</returns>
-    public ControlThemeBuilder AddItemsDefaultRoles()
-        => AddItemsRoles([.. Enum.GetValues<ThemeRole>().Except([ThemeRole.Neutral, ThemeRole.Inverse, ThemeRole.Custom])]);
+    public ControlThemeBuilder AddItemsDefaultRoles() => AddItemsRoles([.. Enum.GetValues<ThemeRole>().Except([ThemeRole.Neutral, ThemeRole.Inverse])]);
 
     /// <summary>
     /// Adds theme role definitions (Primary, Accent, Inverse) for items.
     /// </summary>
     /// <returns>The current builder instance for method chaining.</returns>
-    public ControlThemeBuilder AddItemsThemeRoles()
-        => AddItemsRoles(ThemeRole.Default, ThemeRole.Primary, ThemeRole.Accent, ThemeRole.Contrast);
+    public ControlThemeBuilder AddItemsThemeRoles() => AddItemsRoles(ThemeRole.Default, ThemeRole.Primary, ThemeRole.Accent, ThemeRole.Contrast);
 
     #endregion
 
@@ -185,10 +179,10 @@ internal sealed class ControlThemeBuilder(string? themeName = null, string? kind
     /// <returns>The constructed control theme definition.</returns>
     public ControlThemeDefinition Build(string controlName)
     {
-        var key = ResolveKey(controlName, themeName);
-        var theme = ResolveTheme(key);
+        var fullKey = ResolveKey(controlName, themeName);
+        var theme = ResolveTheme(fullKey);
 
-        var definition = new ControlThemeDefinition(theme, kind, key, themeName, defaultContentType);
+        var definition = new ControlThemeDefinition(theme, kind, fullKey, themeName, themeName, defaultContentType);
         definition.Variants.AddRange(_variants);
         definition.Sizes.AddRange(_sizes);
         definition.Roles.AddRange(_roles);
@@ -240,10 +234,11 @@ internal sealed class ControlThemeBuilder(string? themeName = null, string? kind
 /// </summary>
 /// <param name="Theme">The control theme.</param>
 /// <param name="Kind">The kind identifier for the theme.</param>
-/// <param name="Key">The resource key for the theme.</param>
+/// <param name="FullKey">The resource key for the theme.</param>
+/// <param name="Key">The theme name.</param>
 /// <param name="DisplayName">The display name for the theme.</param>
 /// <param name="DefaultContentType">The default content to display.</param>
-internal sealed record ControlThemeDefinition(ControlTheme? Theme, string? Kind, string? Key, string? DisplayName, ContentProviderType DefaultContentType = ContentProviderType.None)
+internal sealed record ControlThemeDefinition(ControlTheme? Theme, string? Kind, string? FullKey, string? Key, string? DisplayName, ContentProviderType DefaultContentType = ContentProviderType.None)
     : AppearanceDefinition(DisplayName + (!string.IsNullOrEmpty(Kind) ? $" [{Kind}]" : string.Empty))
 {
     /// <summary>

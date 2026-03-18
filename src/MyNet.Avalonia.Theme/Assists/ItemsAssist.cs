@@ -8,8 +8,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
-using MyNet.Avalonia.Theme.Enums;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.Avalonia.Theme.Theming.Core;
 
 namespace MyNet.Avalonia.Theme.Assists;
 

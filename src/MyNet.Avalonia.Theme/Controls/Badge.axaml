@@ -39,6 +39,10 @@
         <Setter Property="BadgeForeground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
         <Setter Property="MaskBackground" Value="{my:Theme Surface.Level2}" />
 
+        <Style Selector="^.context-contrast">
+            <Setter Property="MaskBackground" Value="Transparent" />
+        </Style>
+
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type my:Badge}">
                 <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" ClipToBounds="False">
@@ -61,6 +65,8 @@
                                                    IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                    IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                    IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                    HorizontalAlignment="Stretch"
                                                    VerticalAlignment="Stretch"
@@ -113,6 +119,8 @@
                                                        IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                        IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                        IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                        Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                        HorizontalAlignment="Stretch"
                                                        VerticalAlignment="Stretch"
@@ -131,6 +139,31 @@
                     </Grid>
                 </ControlTemplate>
             </Setter>
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Sm}" />
+            <Setter Property="BadgeFontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+
+        <Style Selector="^.size-md">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Md}" />
+            <Setter Property="BadgeFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Lg}" />
+            <Setter Property="BadgeFontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Lg}" />
         </Style>
 
     </ControlTheme>

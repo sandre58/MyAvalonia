@@ -576,15 +576,18 @@
 
         <!-- Default colors -->
         <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
-        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
         <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="Transparent" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
         <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
 
         <!-- Theme -->
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
         <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
         <Setter Property="HorizontalGridLinesBrush" Value="{my:ThemeContext Divider}" />

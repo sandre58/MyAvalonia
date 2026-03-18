@@ -19,7 +19,7 @@
 
     <!-- Configuration -->
     <PropertyGroup>
-        <TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>
+        <TargetFrameworks>net10.0</TargetFrameworks>
         <LangVersion>preview</LangVersion>
         <Nullable Condition="'$(Nullable)' == ''">enable</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -51,7 +51,7 @@
         <VersionSuffix Condition="'$(GitVersion_PreReleaseLabel)' != ''">$(GitVersion_PreReleaseLabel).$(GitVersion_PreReleaseNumber)</VersionSuffix>
 
     </PropertyGroup>
-    
+
     <!-- Configuration for test projects - use .runsettings for coverage -->
     <PropertyGroup Condition="'$(IsTestProject)' == 'True'">
         <!-- Path to the .runsettings file -->

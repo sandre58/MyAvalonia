@@ -26,13 +26,11 @@
             <Setter Property="Focusable" Value="True" />
 
             <!-- Default colors -->
-            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
             <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
             <!-- Variant -->
-            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
-            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Surface.Border}" />
             <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
             <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
             
@@ -345,7 +343,7 @@
                                                      HorizontalAlignment="Center"
                                                      VerticalAlignment="Center"
                                                      Fill="{TemplateBinding my:InteractionAssist.IndicatorColor}" />
-                                            <AdornerLayer>
+                                            <!--<AdornerLayer>-->
                                                 <Border Name="SwitchKnobIndicator"
                                                         Width="20"
                                                         Height="20"
@@ -359,7 +357,7 @@
                                                         <ContentPresenter Name="OffContentPresenter" Content="{TemplateBinding OffContent}" ContentTemplate="{TemplateBinding OffContentTemplate}" />
                                                     </Panel>
                                                 </Border>
-                                            </AdornerLayer>
+                                            <!--</AdornerLayer>-->
                                         </Panel>
                                     </Canvas>
                                 </Panel>
@@ -460,7 +458,7 @@
                                                       ContentTemplate="{TemplateBinding OnContentTemplate}"
                                                       CornerRadius="{TemplateBinding CornerRadius}"
                                                       Foreground="{TemplateBinding Foreground}"
-                                                      IsVisible="{TemplateBinding IsChecked}"
+                                                      IsVisible="{Binding IsChecked.Value, RelativeSource={RelativeSource TemplatedParent}}"
                                                       RecognizesAccessKey="True"
                                                       TextElement.FontSize="{TemplateBinding FontSize}"
                                                       TextElement.FontWeight="{TemplateBinding FontWeight}"
@@ -578,7 +576,7 @@
                                                       ContentTemplate="{TemplateBinding OnContentTemplate}"
                                                       CornerRadius="{TemplateBinding CornerRadius}"
                                                       Foreground="{TemplateBinding Foreground}"
-                                                      IsVisible="{TemplateBinding IsChecked}"
+                                                      IsVisible="{Binding IsChecked.Value, RelativeSource={RelativeSource TemplatedParent}}"
                                                       RecognizesAccessKey="True"
                                                       TextElement.FontSize="{TemplateBinding FontSize}"
                                                       TextElement.FontWeight="{TemplateBinding FontWeight}"
@@ -672,7 +670,7 @@
                                                   ContentTemplate="{TemplateBinding OnContentTemplate}"
                                                   CornerRadius="{TemplateBinding CornerRadius}"
                                                   Foreground="{TemplateBinding Foreground}"
-                                                  IsVisible="{TemplateBinding IsChecked}"
+                                                  IsVisible="{Binding IsChecked.Value, RelativeSource={RelativeSource TemplatedParent}}"
                                                   RecognizesAccessKey="True"
                                                   TextElement.FontSize="{TemplateBinding FontSize}"
                                                   TextElement.FontWeight="{TemplateBinding FontWeight}"

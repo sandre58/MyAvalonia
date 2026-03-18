@@ -5,8 +5,11 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Metadata;
+using MyNet.Avalonia.Theme.Converters.Internals;
+using MyNet.Avalonia.Theme.Theming;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -37,7 +40,7 @@ public class ThemeExtension(string path) : ThemeBrushExtensionBase
     {
         var hasTransform = Opacity.HasValue || !string.IsNullOrWhiteSpace(CustomOpacity) || Contrast || Darken.HasValue || Lighten.HasValue;
         return hasTransform
-            ? MyTheme.Current.GetBrush(Path, Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten)
+            ? ThemeConverter.Default.Convert([Path], typeof(object), new ThemeBrushParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten), CultureInfo.CurrentCulture)
             : new DynamicResourceExtension(ThemeResourceKeyFactory.Brush(Path)).ProvideValue(serviceProvider);
     }
 }

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using MyNet.Avalonia.Theme.Enums;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities.Generator;
 

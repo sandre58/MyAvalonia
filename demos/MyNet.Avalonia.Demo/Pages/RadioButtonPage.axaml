@@ -17,7 +17,7 @@
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
-                <StackPanel Classes="size-md"
+                <StackPanel Classes="gap-md"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
                     <RadioButton Theme="{Binding Appearance.ActiveTheme}"

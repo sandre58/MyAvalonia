@@ -6,7 +6,7 @@
 
 using Avalonia;
 using Avalonia.Media;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming.Core;
 
 namespace MyNet.Avalonia.Theme.Assists;
 

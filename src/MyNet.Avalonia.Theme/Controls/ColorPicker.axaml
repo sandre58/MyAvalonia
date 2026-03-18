@@ -78,6 +78,33 @@
                 </DropDownButton>
             </ControlTemplate>
         </Setter>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- KINDS                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <Style Selector="^.kind-light">
+            <Setter Property="my:ColorPickerAssist.ColorViewTheme" Value="{StaticResource MyNet.Theme.ColorView.Simple}" />
+            <Setter Property="ColorSpectrumComponents" Value="SaturationValue" />
+            <Setter Property="IsAccentColorsVisible" Value="False" />
+            <Setter Property="ColorModel" Value="Hsva" />
+            <Setter Property="IsComponentTextInputVisible" Value="False" />
+            <Setter Property="my:PopupAssist.Width" Value="260" />
+            <Setter Property="my:PopupAssist.Height" Value="NaN" />
+        </Style>
+
+        <Style Selector="^.hide-value">
+            <Setter Property="ContentTemplate">
+                <DataTemplate DataType="{x:Type Color}">
+                    <Border Padding="0"
+                            Background="{my:Theme Transparency.Small}"
+                            ClipToBounds="True"
+                            Classes="kind-card"
+                            ToolTip.Tip="{my:TranslateTextBlock}">
+                        <Border Background="{Binding Converter={x:Static my:BrushConverter.Default}}" />
+                    </Border>
+                </DataTemplate>
+            </Setter>
+        </Style>
     </ControlTheme>
 
 </ResourceDictionary>

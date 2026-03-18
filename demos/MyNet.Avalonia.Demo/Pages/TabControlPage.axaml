@@ -16,6 +16,14 @@
             x:Name="Root"
             ClipToBounds="False">
 
+    <pages:Page.Resources>
+        <DataTemplate x:Key="LargeTabContentTemplate">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <samples:LargeContent1 BorderBrush="{Binding}" />
+            </ScrollViewer>
+        </DataTemplate>
+    </pages:Page.Resources>
+
     <v:ControlCatalogView ShowContent="False">
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
@@ -24,30 +32,14 @@
                             my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
                             my:ItemsAssist.Role="{Binding Appearance.ActiveItemsRole}"
                             my:ClassesAssist.Classes="{Binding ComputedClasses}"
-                            TabStripPlacement="{Binding #TabPlacement.SelectedValue}"
+                            TabStripPlacement="{ReflectionBinding #TabPlacement.SelectedValue}"
                             MaxWidth="600"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
-                    <TabItem Header="Tab 1">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                        </ScrollViewer>
-                    </TabItem>
-                    <TabItem Header="Tab 2">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                        </ScrollViewer>
-                    </TabItem>
-                    <TabItem Header="Tab 3">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                        </ScrollViewer>
-                    </TabItem>
-                    <TabItem Header="Tab 4">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                        </ScrollViewer>
-                    </TabItem>
+                    <TabItem my:IconAssist.Icon="{Binding IconProvider.Icon}" Header="Tab 1" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
+                    <TabItem my:IconAssist.Icon="{Binding IconProvider.Icon}" Header="Tab 2" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
+                    <TabItem my:IconAssist.Icon="{Binding IconProvider.Icon}" Header="Tab 3" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
+                    <TabItem my:IconAssist.Icon="{Binding IconProvider.Icon}" Header="Tab 4" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
                 </TabControl>
             </DataTemplate>
         </v:ControlCatalogView.PlaygroundControlTemplate>
@@ -59,26 +51,10 @@
                             my:ItemsAssist.Role="{Binding ItemsRole}"
                             my:ClassesAssist.Classes="{Binding Classes}"
                             MaxWidth="500">
-                    <TabItem Header="Tab 1">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                        </ScrollViewer>
-                    </TabItem>
-                    <TabItem Header="Tab 2">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                        </ScrollViewer>
-                    </TabItem>
-                    <TabItem Header="Tab 3">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                        </ScrollViewer>
-                    </TabItem>
-                    <TabItem Header="Tab 4">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                            <samples:LargeContent1 BorderBrush="{m:RandomBrush}" />
-                        </ScrollViewer>
-                    </TabItem>
+                    <TabItem Header="Tab 1" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
+                    <TabItem Header="Tab 2" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
+                    <TabItem Header="Tab 3" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
+                    <TabItem Header="Tab 4" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
                 </TabControl>
             </DataTemplate>
         </v:ControlCatalogView.ThemeControlTemplate>

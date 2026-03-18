@@ -14,7 +14,7 @@
             x:Name="Root"
             ClipToBounds="False">
 
-    <v:ControlCatalogView>
+    <v:ControlCatalogView ShowContent="False" ShowIcon="False">
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">

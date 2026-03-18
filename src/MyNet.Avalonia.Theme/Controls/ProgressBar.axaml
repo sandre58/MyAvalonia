@@ -280,6 +280,20 @@
                 <Setter Property="Margin" Value="0 4" />
             </Style>
         </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                               -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Sm}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Md}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Lg}" />
+        </Style>
     </ControlTheme>
 
     <!-- ═════════════════════════════════════════════════════════ -->
@@ -287,7 +301,6 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.ProgressBar.Circular" TargetType="ProgressBar">
         <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
-        <Setter Property="my:ThemeAssist.Kind" Value="circular" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
         <Setter Property="FontWeight" Value="Bold" />
@@ -306,6 +319,10 @@
         <!-- Default Theme -->
         <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
         <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+
+        <Style Selector="^.role-contrast">
+            <Setter Property="Background" Value="{my:Foreground Opacity=Overlay}" />
+        </Style>
 
         <Setter Property="Template">
             <ControlTemplate TargetType="ProgressBar">
@@ -377,9 +394,20 @@
             </Style.Animations>
         </Style>
 
-        <!-- Colors -->
-        <Style Selector="^.role-contrast">
-            <Setter Property="Background" Value="{my:Foreground Opacity=Overlay}" />
+        <Style Selector="^.size-sm">
+            <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Circular.Sm}" />
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Sm}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Sm}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Circular.Md}" />
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Md}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Md}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Circular.Lg}" />
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Lg}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Lg}" />
         </Style>
     </ControlTheme>
 

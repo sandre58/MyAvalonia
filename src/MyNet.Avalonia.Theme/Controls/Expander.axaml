@@ -46,6 +46,8 @@
                                                                    IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                                    IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                                    IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                                    HorizontalAlignment="Stretch"
                                                                    VerticalAlignment="Stretch"
@@ -185,6 +187,20 @@
                 <Setter Property="Orientation" Value="Vertical" />
             </Style>
         </Style>
+
+        <!-- Sizes -->
+        <Style Selector="^.size-sm /template/ PathIcon#PART_ExpanderIcon">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+        </Style>
+        <Style Selector="^.size-md /template/ PathIcon#PART_ExpanderIcon">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+        </Style>
+        <Style Selector="^.size-lg /template/ PathIcon#PART_ExpanderIcon">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+        </Style>
     </ControlTheme>
 
     <!-- ═════════════════════════════════════════════════════════ -->
@@ -228,6 +244,8 @@
                                                        IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                        IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                        IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                        Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                        HorizontalAlignment="Stretch"
                                                        VerticalAlignment="Stretch"

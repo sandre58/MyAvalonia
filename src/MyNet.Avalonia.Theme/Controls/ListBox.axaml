@@ -20,6 +20,8 @@
         <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[ListBox].(my:IconAssist.Alignment)}" />
         <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[ListBox].(my:IconAssist.Spacing)}" />
         <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[ListBox].(my:IconAssist.Opacity)}" />
+        <Setter Property="my:IconAssist.LabelSize" Value="{Binding $parent[ListBox].(my:IconAssist.LabelSize)}" />
+        <Setter Property="my:IconAssist.PrimarySize" Value="{Binding $parent[ListBox].(my:IconAssist.PrimarySize)}" />
         <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -69,6 +71,8 @@
                                                    IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                    IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                    IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalAlignment="Stretch"
@@ -215,6 +219,167 @@
                 </Panel>
             </ControlTemplate>
         </Setter>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- KINDS                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.kind-cards">
+            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="my:ItemsAssist.Margin" Value="0" />
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md}" />
+            <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Left" />
+            <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Top" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <my:ElasticWrapPanel Orientation="Horizontal" ItemSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}"  LineSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="^.kind-focus">
+            <Setter Property="my:ItemsAssist.BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="1" />
+            <Setter Property="my:ItemsAssist.Background" Value="{my:ThemeBrush (my:ItemsAssist.Foreground), Opacity=Overlay}" />
+            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
+            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Foreground Opacity=Focus}" />
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Foreground}" />
+
+            <Style Selector="^.role-contrast">
+                <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Foreground}" />
+                <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:Foreground}" />
+            </Style>
+
+            <Setter Property="ItemContainerTheme">
+                <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+
+                    <Style Selector="^:not(:selected)">
+                        <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+                    </Style>
+
+                    <Style Selector="^:selected">
+                        <Setter Property="BorderThickness" Value="2" />
+                    </Style>
+                </ControlTheme>
+            </Setter>
+        </Style>
+
+        <Style Selector="^.kind-toggle">
+            <Setter Property="my:ItemsAssist.Spacing" Value="0" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
+            <Setter Property="my:ItemsAssist.Margin" Value="0" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Md}" />
+            <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
+            <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
+            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="Background" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="^.kind-gender">
+            <Setter Property="my:ClassesAssist.Classes" Value="flex-uniform" />
+
+            <Style Selector="^ ListBoxItem, ^ TabStripItem">
+                <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding Value, Converter={x:Static my:GenderTypeConverter.Brush}, x:DataType=t:EnumTranslatable}" />
+                <Setter Property="my:IconAssist.Icon" Value="{Binding Value, Converter={x:Static my:GenderTypeConverter.Icon}, x:DataType=t:EnumTranslatable}" />
+                <Setter Property="Content" Value="{Binding Display, x:DataType=t:EnumTranslatable}" />
+            </Style>
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- LAYOUTS                                                   -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^:not(.kind-toggle)">
+            <Style Selector="^.variant-solid, ^.variant-light, ^.variant-outlined">
+                <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+                <Setter Property="Padding" Value="{my:Thickness Sm}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.flex-horizontal">
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        </Style>
+        <Style Selector="^.flex-uniform:not(.flex-vertical)">
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        </Style>
+        <Style Selector="^.flex-wrap, ^.flex-uniform, ^.flex-horizontal, ^.flex-vertical">
+            <Setter Property="my:ItemsAssist.Margin" Value="0" />
+        </Style>
+
+        <Style Selector="^.gap-sm, ^.gap-md, ^.gap-lg, ^.gap-xl, ^.gap-xxl, ^.gap-xxxl">
+            <Setter Property="my:ItemsAssist.Margin" Value="0" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        </Style>
+
+        <Style Selector="^.gap">
+            <Setter Property="Padding" Value="{my:Thickness Sm}" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="^.gap-xs">
+            <Setter Property="Padding" Value="{my:Thickness Xs}" />
+        </Style>
+
+        <Style Selector="^.gap-sm">
+            <Setter Property="Padding" Value="{my:Thickness Sm}" />
+        </Style>
+
+        <Style Selector="^.gap-md">
+            <Setter Property="Padding" Value="{my:Thickness Md}" />
+        </Style>
+
+        <Style Selector="^.gap-lg">
+            <Setter Property="Padding" Value="{my:Thickness Lg}" />
+        </Style>
+
+        <Style Selector="^.gap-xl">
+            <Setter Property="Padding" Value="{my:Thickness Xl}" />
+        </Style>
+
+        <Style Selector="^.gap-xxl">
+            <Setter Property="Padding" Value="{my:Thickness Xxl}" />
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Sm}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+
+        <Style Selector="^.size-md">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Md}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Lg}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+        </Style>
     </ControlTheme>
 
     <!-- ═════════════════════════════════════════════════════════ -->
@@ -238,7 +403,6 @@
     <!-- TAB LISTBOX THEME                                         -->
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.ListBox.Tabs" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
-        <Setter Property="my:ThemeAssist.Kind" Value="tabs" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.ListBoxItem.Tab}" />
         <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
         <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Center" />
@@ -296,6 +460,20 @@
                 </Border>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^.variant-solid, ^.variant-light, ^.variant-outlined">
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+
+            <Style Selector="^.variant-items-solid, ^.variant-items-outlined, ^.variant-items-light, ^.variant-items-text">
+                <Setter Property="Padding" Value="{my:Thickness Sm}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.variant-items-solid, ^.variant-items-outlined, ^.variant-items-light, ^.variant-items-text">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
     </ControlTheme>
 
     <!-- ═════════════════════════════════════════════════════════ -->
@@ -320,6 +498,8 @@
                                                IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                               LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                               PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                Padding="{TemplateBinding Padding}"
                                                HorizontalAlignment="Stretch"
@@ -359,7 +539,6 @@
     <!-- ICON LISTBOX THEME                                        -->
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.ListBox.Icon" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
-        <Setter Property="my:ThemeAssist.Kind" Value="icon" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.ListBoxItem.Icon}" />
         <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md, Horizontal}" />
         <Setter Property="my:ItemsAssist.Margin" Value="0" />
@@ -402,7 +581,7 @@
         </Setter>
 
         <!-- Layout -->
-        <Style Selector="^.layout-vertical">
+        <Style Selector="^.flex-vertical">
             <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md, Vertical}" />
         </Style>
     </ControlTheme>

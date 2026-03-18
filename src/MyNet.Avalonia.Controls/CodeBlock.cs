@@ -57,6 +57,8 @@ public class CodeBlock : ContentControl
         Entity
     }
 
+    private SelectableTextBlock? _textBlock;
+
     static CodeBlock() => ContentProperty.Changed.AddClassHandler<CodeBlock, object?>((x, _) => x.Refresh());
 
     public CodeBlock() => ActualThemeVariantChanged += (_, _) => Refresh();
@@ -68,7 +70,18 @@ public class CodeBlock : ContentControl
         Refresh();
     }
 
-    public virtual void Refresh() => Presenter?.Content = CreateFormattedTextBlock(Clean(Content as string ?? string.Empty));
+    public virtual void Refresh()
+    {
+        if (Presenter is null) return;
+
+        _textBlock ??= new SelectableTextBlock { TextWrapping = TextWrapping.Wrap, IsTabStop = false };
+
+        if (Presenter.Content != _textBlock)
+            Presenter.Content = _textBlock;
+
+        _textBlock.Inlines?.Clear();
+        PopulateFormattedTextBlock(_textBlock, Clean(Content as string ?? string.Empty));
+    }
 
     private static string Clean(string code)
     {
@@ -83,10 +96,8 @@ public class CodeBlock : ContentControl
         return code;
     }
 
-    private SelectableTextBlock CreateFormattedTextBlock(string code)
+    private void PopulateFormattedTextBlock(SelectableTextBlock returnText, string code)
     {
-        var returnText = new SelectableTextBlock { TextWrapping = TextWrapping.Wrap, IsTabStop = false };
-
         var pattern = string.Empty;
         pattern += EndlinePattern;
         pattern += "|" + TabPattern;
@@ -180,15 +191,13 @@ public class CodeBlock : ContentControl
         {
             returnText.Inlines?.Add(Line(code, CodeType.Unknown));
         }
-
-        return returnText;
     }
 
     private Run Line(string line, CodeType type)
     {
         var result = new Run(line)
         {
-            Foreground = Avalonia.ResourceLocator.TryGetResource<IBrush>($"MyNet.Brush.CodeBlock.{type}", ActualThemeVariant)
+            Foreground = ThemeResources.TryGetResource<IBrush>($"MyNet.Brush.CodeBlock.{type}", ActualThemeVariant)
         };
 
         return result;

@@ -79,6 +79,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exemples.
+        /// </summary>
+        internal static string Examples {
+            get {
+                return ResourceManager.GetString("Examples", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Couleurs de texte.
         /// </summary>
         internal static string Foregrounds {
@@ -93,6 +102,15 @@ namespace MyNet.Avalonia.Demo.Resources {
         internal static string HighContrast {
             get {
                 return ResourceManager.GetString("HighContrast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opacités.
+        /// </summary>
+        internal static string Opacities {
+            get {
+                return ResourceManager.GetString("Opacities", resourceCulture);
             }
         }
         

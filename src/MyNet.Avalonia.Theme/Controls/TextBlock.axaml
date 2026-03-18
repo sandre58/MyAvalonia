@@ -10,13 +10,10 @@
         <Setter Property="TextWrapping" Value="NoWrap" />
         <Setter Property="Focusable" Value="False" />
 
-        <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Foreground AncestorType=Control}" />
-
         <Style Selector="^.has-role">
+            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Foreground AncestorType=Control}" />
             <Setter Property="Foreground" Value="{my:ThemeRole Foreground}" />
         </Style>
     </ControlTheme>
-
 
 </ResourceDictionary>

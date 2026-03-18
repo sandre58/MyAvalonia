@@ -14,7 +14,7 @@ internal sealed class SplitViewPageViewModel : ControlCatalogViewModel
     public SplitViewPageViewModel()
         : base(nameof(SplitView), [
             new ControlThemeBuilder()
-            .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-transparent", "shadow-surface")
+            .AddVariants("variant-solid", "shadow-surface")
             .AddThemeRoles()
         ])
     { }

@@ -17,8 +17,12 @@ using Avalonia.Media;
 using Avalonia.Styling;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Helpers;
-using MyNet.Avalonia.Theme.Infrastructure;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Classes;
+using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.Avalonia.Theme.Theming;
+using MyNet.Avalonia.Theme.Theming.Brushes;
+using MyNet.Avalonia.Theme.Theming.Core;
+using MyNet.Avalonia.Theme.Theming.Palettes;
 using MyNet.Avalonia.Theme.TypeConverters;
 using MyNet.Utilities;
 
@@ -28,7 +32,7 @@ namespace MyNet.Avalonia.Theme;
 /// Provides the main theme engine for the application, managing theme variants (Dark, Light, HighContrast), brand color palettes (Primary, Accent), and resource injection.
 /// Supports hot-reload for theme changes and dynamic color updates, ensuring consistent styling and smooth transitions across the UI.
 /// </summary>
-public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
+public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
 {
     private static readonly ColorShades DefaultPrimary = new(Color.Parse("#1756BD"));
     private static readonly ColorShades DefaultAccent = new(Color.Parse("#FFAE18"));
@@ -59,6 +63,8 @@ public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
     {
         _serviceProvider = serviceProvider;
         _brushManager = new(ColorTransitionDuration, ColorTransitionEasing);
+
+        ClassesBootstrapper.Initialize();
 
         if (Application.Current is not null)
         {
@@ -228,7 +234,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
     /// MyTheme.RegisterThemeProvider(neonTheme);
     /// </code>
     /// </example>
-    public void RegisterThemeProvider(ThemeVariantColors theme)
+    public void RegisterThemeProvider(ThemeVariantPalette theme)
     {
         ArgumentNullException.ThrowIfNull(theme);
         var rd = new ResourceDictionary();
@@ -241,7 +247,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
     /// </summary>
     /// <param name="completeTheme">The complete theme to apply.</param>
     /// <exception cref="ArgumentNullException">Thrown when completeTheme is null.</exception>
-    public void ApplyTheme(CompleteTheme completeTheme)
+    public void ApplyTheme(ThemePalette completeTheme)
     {
         ArgumentNullException.ThrowIfNull(completeTheme);
 
@@ -299,7 +305,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
                     {
                         var contrastedColor = GetContrastedColorForKey(colorKey, activeTheme);
 
-                        if (new List<string> { nameof(ThemeVariantColors.Success), nameof(ThemeVariantColors.Error), nameof(ThemeVariantColors.Warning), nameof(ThemeVariantColors.Information), nameof(ThemeVariantColors.Neutral) }.Contains(colorKey))
+                        if (new List<string> { nameof(ThemeVariantPalette.Success), nameof(ThemeVariantPalette.Error), nameof(ThemeVariantPalette.Warning), nameof(ThemeVariantPalette.Information), nameof(ThemeVariantPalette.Neutral) }.Contains(colorKey))
                         {
                             var shades = new ColorShades(color, contrastedColor);
                             shades.ToResourceDictionary(colorKey).ForEach(x =>
@@ -441,16 +447,66 @@ public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
     #region IThemeBrushService Implementation
 
     /// <summary>
-    /// Gets the current theme variant colors for the active theme.
+    /// Retrieves the set of theme variant colors associated with the application's current theme variant.
     /// </summary>
-    /// <returns>The ThemeVariantColors for the current theme variant.</returns>
-    public ThemeVariantColors? GetThemeVariantColors()
+    /// <remarks>This method obtains the current theme variant from the application and attempts to retrieve
+    /// its corresponding resource dictionary. If the resource dictionary is available, it is converted into a <see
+    /// cref="ThemeVariantPalette"/> instance. If the theme variant is not set or the resource dictionary is missing, the
+    /// method returns <see langword="null"/>.</remarks>
+    /// <returns>A <see cref="ThemeVariantPalette"/> object containing the colors for the current theme variant, or <see
+    /// langword="null"/> if the variant colors cannot be determined.</returns>
+    public ThemeVariantPalette? GetThemePalette()
     {
         var currentVariant = Application.Current?.ActualThemeVariant ?? ThemeVariant.Default;
         return Resources.ThemeDictionaries.TryGetValue(currentVariant, out var rd) && rd is ResourceDictionary resourceDict
-            ? ThemeVariantColors.FromResourceDictionary(currentVariant, resourceDict.ToDictionary(x => x.Key.ToString().OrEmpty().Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase), x => x.Value!))
+            ? ThemeVariantPalette.FromResourceDictionary(currentVariant, resourceDict.ToDictionary(x => x.Key.ToString().OrEmpty().Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase), x => x.Value!))
             : null;
     }
+
+    /// <summary>
+    /// Gets the current theme as a string, which defines the visual style of the application.
+    /// </summary>
+    /// <returns>A string representing the current theme. Returns null if no theme is set.</returns>
+    string? IThemeBrushService.GetTheme() => Theme;
+
+    /// <summary>
+    /// Gets the primary color shade used in the theme.
+    /// </summary>
+    /// <returns>A nullable <see cref="ColorShades"/> representing the primary color shade. Returns null if no primary color is
+    /// set.</returns>
+    ColorShades? IThemeBrushService.GetPrimary() => Primary;
+
+    /// <summary>
+    /// Gets the current accent color used in the theme.
+    /// </summary>
+    /// <returns>A nullable <see cref="ColorShades"/> representing the accent color. Returns null if no accent color is set.</returns>
+    ColorShades? IThemeBrushService.GetAccent() => Accent;
+
+    /// <summary>
+    /// Sets the current theme for the application.
+    /// </summary>
+    /// <param name="theme">The name of the theme to apply. This value must not be null or empty.</param>
+    public void SetTheme(string theme) => Theme = theme;
+
+    /// <summary>
+    /// Sets the primary color and an optional foreground color for the primary color shades.
+    /// </summary>
+    /// <remarks>This method updates the <c>Primary</c> property with a new <c>ColorShades</c> instance using
+    /// the specified colors. Ensure that the provided colors are appropriate for the intended visual theme.</remarks>
+    /// <param name="color">The base color used to generate the primary color shades. This value must be a valid color.</param>
+    /// <param name="foreground">An optional foreground color to be associated with the primary color shades. If <see langword="null"/>, no
+    /// foreground color is set.</param>
+    public void SetPrimary(Color color, Color? foreground) => Primary = new ColorShades(color, foreground);
+
+    /// <summary>
+    /// Sets the application's accent color and an optional foreground color for the theme.
+    /// </summary>
+    /// <remarks>Use colors that provide sufficient contrast for accessibility. The method updates the
+    /// application's color scheme immediately.</remarks>
+    /// <param name="color">The accent color to apply to the application's theme.</param>
+    /// <param name="foreground">An optional foreground color to use with the accent color. If <see langword="null"/>, a default foreground color
+    /// is selected.</param>
+    public void SetAccent(Color color, Color? foreground) => Accent = new ColorShades(color, foreground);
 
     /// <summary>
     /// Gets a brush from the theme resources by path.
@@ -527,7 +583,7 @@ public class MyTheme : Styles, IResourceNode, IMyTheme, IThemeBrushService
     /// <param name="theme">The theme variant context.</param>
     /// <param name="value">The resource value if found.</param>
     /// <returns>True if the resource was found; otherwise, false.</returns>
-    protected new virtual bool TryGetResource(object key, ThemeVariant? theme, out object? value)
+    private new bool TryGetResource(object key, ThemeVariant? theme, out object? value)
     {
         if (_isResourcedAccessed)
             return Resources.TryGetResource(key, theme, out value) || base.TryGetResource(key, theme, out value);

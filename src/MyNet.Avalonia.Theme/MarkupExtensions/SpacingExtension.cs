@@ -7,7 +7,7 @@
 using System;
 using Avalonia.Markup.Xaml;
 using Avalonia.Metadata;
-using MyNet.Avalonia.Theme.Enums;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -38,5 +38,5 @@ public class SpacingExtension : MarkupExtension
     /// </summary>
     /// <param name="serviceProvider">The service provider for the markup extension.</param>
     /// <returns>A <see cref="double"/> instance configured with the specified values.</returns>
-    public override object ProvideValue(IServiceProvider serviceProvider) => (double)Size;
+    public override object ProvideValue(IServiceProvider serviceProvider) => ThemeResources.Spacing.Get(Size).Value;
 }

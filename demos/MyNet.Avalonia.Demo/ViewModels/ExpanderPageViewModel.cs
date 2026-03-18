@@ -20,10 +20,10 @@ internal sealed class ExpanderPageViewModel : ControlCatalogViewModel
         : base(nameof(Expander),
             [
                 new ControlThemeBuilder()
-                    .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-text",  "variant-headered", "variant-transparent", "shadow-surface", "shadow-header")
+                    .AddVariants("variant-solid", "variant-light", "variant-outlined", "variant-text", "variant-underline", "variant-header", "variant-header-light", "variant-header-outlined", "variant-header-text", "variant-transparent", "shadow-surface", "shadow-header")
                     .AddDefaultRoles()
                     .AddDefaultSizes()
-                    .AddSizes("header-watermark", "header-sub-caption", "header-caption", "header-h1", "header-h2", "header-h3", "header-h4", "header-h5", "header-h6"),
+                    .AddSizes("header-xs", "header-sm", "header-md", "header-lg", "header-xl", "header-h6", "header-h5", "header-h4", "header-h3", "header-h2", "header-h1"),
 
                 new ControlThemeBuilder("Button")
                     .AddShapes("shape-circle")

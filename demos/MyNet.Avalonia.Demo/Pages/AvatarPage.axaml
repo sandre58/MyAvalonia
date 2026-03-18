@@ -23,10 +23,16 @@
                            my:ThemeAssist.Role="{Binding Appearance.ActiveRole}"
                            my:ClassesAssist.Classes="{Binding ComputedClasses}"
                            ShowBackground="{Binding #ShowBackground.IsChecked}"
-                           Source="{m:RandomImage AllowNull=False}"
-                           my:IconAssist.Icon="{Binding IconProvider.Icon}"
+                           Content="{m:RandomIcon}"
+                           Classes.show-image="{Binding #ShowImage.IsChecked}"
                            HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
+                           VerticalAlignment="Center">
+                    <my:Avatar.Styles>
+                        <Style Selector="my|Avatar.show-image">
+                            <Setter Property="Source" Value="{m:RandomImage AllowNull=False}" />
+                        </Style>
+                    </my:Avatar.Styles>
+                </my:Avatar>
             </DataTemplate>
         </v:ControlCatalogView.PlaygroundControlTemplate>
 
@@ -43,6 +49,7 @@
         <v:ControlCatalogView.Settings>
             <my:Form>
                 <ToggleSwitch x:Name="ShowBackground" my:FormItem.Label="{my:LocObject ShowBackground}" IsChecked="True" />
+                <ToggleSwitch x:Name="ShowImage" my:FormItem.Label="{my:LocObject ShowImage}" IsChecked="True" />
             </my:Form>
         </v:ControlCatalogView.Settings>
 

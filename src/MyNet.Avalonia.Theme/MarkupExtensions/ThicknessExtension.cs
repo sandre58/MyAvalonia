@@ -8,7 +8,7 @@ using System;
 using Avalonia;
 using Avalonia.Markup.Xaml;
 using Avalonia.Metadata;
-using MyNet.Avalonia.Theme.Enums;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -98,6 +98,6 @@ public class ThicknessExtension : MarkupExtension
 
         return new Thickness(left, top, right, bottom);
 
-        double getSize(double? prioritySize, bool condition) => prioritySize ?? (condition ? (int)Size : 0);
+        double getSize(double? prioritySize, bool condition) => prioritySize ?? (condition ? ThemeResources.Spacing.Get(Size).Value : 0);
     }
 }

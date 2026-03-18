@@ -3,6 +3,35 @@
                     xmlns:my="http://mynet.com/avalonia">
     <ControlTheme x:Key="{x:Type Ellipse}" TargetType="Ellipse">
         <Setter Property="Focusable" Value="False" />
+
+        <Style Selector="^.kind-card">
+            <Setter Property="my:ThemeAssist.Category" Value="Surface" />
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+
+            <!-- Default colors -->
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+
+            <!-- Variant -->
+            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+
+            <!-- Theme -->
+            <Setter Property="StrokeThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness), Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
+            <Setter Property="Fill" Value="{Binding $self.(my:VariantAssist.Background)}" />
+            <Setter Property="Stroke" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+
+            <Style Selector="^.is-hover:pointerover">
+                <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
+                <Setter Property="my:ShadowAssist.Darken" Value="True" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.kind-focus">
+            <Setter Property="Stroke" Value="{my:Theme Control.Border.Focus}" />
+            <Setter Property="StrokeThickness" Value="2" />
+        </Style>
     </ControlTheme>
 
     <!-- ═════════════════════════════════════════════════════════ -->

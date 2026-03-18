@@ -14,7 +14,7 @@
             x:DataType="vm:OutlinedIconPageViewModel"
             ClipToBounds="False">
 
-    <v:ControlCatalogView>
+    <v:ControlCatalogView ShowIcon="False" ShowContent="False">
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">

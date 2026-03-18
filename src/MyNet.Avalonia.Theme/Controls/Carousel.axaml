@@ -6,9 +6,9 @@
     <!-- CAROUSEL LISTBOXITEM THEMES                               -->
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Embedded.Carousel.Dot" TargetType="ListBoxItem">
-        <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $parent[Carousel].(my:ItemsAssist.ActiveBackground)}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $parent[Carousel].(my:ItemsAssist.ActiveBackground)}" />
         <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
-        <Setter Property="Background" Value="{my:Foreground AncestorType={x:Type Carousel}}" />
+        <Setter Property="Background" Value="{Binding $parent[Carousel].(TextElement.Foreground)}" />
         <Setter Property="Margin" Value="4 0" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
@@ -24,7 +24,7 @@
         </Style>
         <Style Selector="^:selected">
             <Setter Property="Opacity" Value="1" />
-            <Setter Property="Background" Value="{my:ThemeBrush $self.(my:ItemsAssist.ActiveBackground)}" />
+            <Setter Property="Background" Value="{my:ThemeBrush $self.(my:InteractionAssist.ActiveBackground)}" />
         </Style>
     </ControlTheme>
 
@@ -117,7 +117,7 @@
         <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
         <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
-        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="Carousel">

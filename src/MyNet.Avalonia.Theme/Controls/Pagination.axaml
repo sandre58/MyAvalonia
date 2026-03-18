@@ -91,7 +91,7 @@
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary}" />
         <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary}" />
         <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
-        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
+        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:Foreground}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="my:Pagination">
@@ -131,7 +131,7 @@
                                     IsVisible="{TemplateBinding ShowPageSizeSelector}">
                         <DropDownButton.ContentTemplate>
                             <DataTemplate DataType="{x:Type sys:Int32}">
-                                <HeaderedContentControl Classes="kind-label position-right" Content="{Binding}" Header="{my:Loc ItemsByPage}" />
+                                <my:IconContentControl Icon="{my:Loc ItemsByPage}" Content="{Binding}" IconPosition="Right" />
                             </DataTemplate>
                         </DropDownButton.ContentTemplate>
                         <DropDownButton.Flyout>

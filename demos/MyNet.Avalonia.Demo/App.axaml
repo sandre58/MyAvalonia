@@ -1,7 +1,7 @@
 <Application x:Class="MyNet.Avalonia.Demo.App" xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:my="http://mynet.com/avalonia"
-             RequestedThemeVariant="Dark">
+             RequestedThemeVariant="Light">
 
     <!-- Styles -->
     <Application.Styles>

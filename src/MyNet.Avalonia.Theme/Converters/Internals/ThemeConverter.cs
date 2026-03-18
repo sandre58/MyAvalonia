@@ -7,12 +7,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Documents;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Converters.Internals;
@@ -22,12 +21,28 @@ namespace MyNet.Avalonia.Theme.Converters.Internals;
 /// Supports conversion from theme parameters to the correct <see cref="IBrush"/> instance, including opacity and contrast transformations.
 /// Used by markup extensions and bindings to resolve theme resources dynamically.
 /// </summary>
-internal sealed class ThemeConverter : IValueConverter, IMultiValueConverter
+/// <remarks>
+/// Initializes a new instance of the <see cref="ThemeConverter"/> class with specified services.
+/// </remarks>
+/// <param name="brushService">The theme brush service.</param>
+/// <param name="resolver">The theme resolver.</param>
+internal sealed class ThemeConverter(IThemeBrushService brushService, IThemeResolver resolver) : IValueConverter, IMultiValueConverter
 {
+    private readonly IThemeBrushService _brushService = brushService;
+    private readonly IThemeResolver _resolver = resolver;
+
     /// <summary>
     /// Gets the default singleton instance of <see cref="ThemeConverter"/>.
     /// </summary>
     public static readonly ThemeConverter Default = new();
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ThemeConverter"/> class.
+    /// </summary>
+    public ThemeConverter()
+        : this(MyTheme.Current, new ThemeResolver())
+    {
+    }
 
     /// <summary>
     /// Converts a value to a theme brush or role-based palette brush, applying opacity and contrast as specified.
@@ -39,108 +54,58 @@ internal sealed class ThemeConverter : IValueConverter, IMultiValueConverter
     /// <returns>The resolved <see cref="IBrush"/> or <see cref="AvaloniaProperty.UnsetValue"/> if conversion fails.</returns>
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value], targetType, parameter, culture);
 
-/// <summary>
-/// Converts multiple values to a theme brush or role-based palette brush, applying opacity and contrast as specified.
-/// </summary>
-/// <param name="values">The list of values to convert, typically including a brush or theme context and optional foreground.</param>
+    /// <summary>
+    /// Converts multiple values to a theme brush or role-based palette brush, applying opacity and contrast as specified.
+    /// </summary>
+    /// <param name="values">The list of values to convert, typically including a brush or theme context and optional foreground.</param>
     /// <param name="targetType">The target type for the conversion (usually <see cref="IBrush"/>).</param>
     /// <param name="parameter">A parameter describing the theme brush or role to resolve.</param>
     /// <param name="culture">The culture for conversion (not used).</param>
-/// <returns>The resolved <see cref="IBrush"/> or <see cref="AvaloniaProperty.UnsetValue"/> if conversion fails.</returns>
+    /// <returns>The resolved <see cref="IBrush"/> or <see cref="AvaloniaProperty.UnsetValue"/> if conversion fails.</returns>
     public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
         if (values.Count == 0) return AvaloniaProperty.UnsetValue;
-        var value = values[0];
 
-        switch (parameter)
+        var brushParameters = parameter as ThemeBrushParameters;
+        var role = values.OfType<ThemeRole?>().FirstOrDefault();
+        var context = values.OfType<ThemeContext?>().FirstOrDefault();
+        var resourceKey = values.OfType<string>().FirstOrDefault();
+        var brushes = values.OfType<IBrush>().ToList();
+        var directBrush = brushes.FirstOrDefault();
+        var foreground = brushes.Count > 1 ? brushes[1] : brushes.FirstOrDefault();
+
+        var result = _resolver.Resolve(role, context, resourceKey);
+
+        var contrast = result.UseContrast && brushParameters?.Contrast == true;
+
+        switch (result.Kind)
         {
-            case ThemeContextParameters themeContextParameters:
-                if (value is not ThemeContext context) return AvaloniaProperty.UnsetValue;
+            case ThemeBrushResolutionKind.UseDirectBrush:
+                return _brushService.GetBrush(directBrush, brushParameters?.Opacity, contrast, brushParameters?.Darken, brushParameters?.Lighten);
 
-                switch (context)
+            case ThemeBrushResolutionKind.UseForeground:
+                if (!string.IsNullOrEmpty(result.OpacityKey))
                 {
-                    case ThemeContext.Contrast:
-                        var inheritedForeground = provideForeground(values.GetByIndex(2) as IBrush, values.GetByIndex(1) as Control);
-                        var contrastOpacity = MyTheme.Current.GetOpacity(themeContextParameters.BrushKey);
-                        var contrastForeground = ResolveBrush(inheritedForeground, new ThemeBrushParameters(contrastOpacity?.ToString(CultureInfo.InvariantCulture).OrEmpty(), false, themeContextParameters.Darken, themeContextParameters.Lighten));
-                        return ResolveBrush(contrastForeground, themeContextParameters);
-
-                    default:
-                        return ResolveBrush(themeContextParameters.BrushKey, themeContextParameters);
+                    var contrastOpacity = _brushService.GetOpacity(result.OpacityKey);
+                    foreground = _brushService.GetBrush(foreground, contrastOpacity?.ToString(CultureInfo.InvariantCulture).OrEmpty());
                 }
 
-            case ThemeRoleParameters roleParameters:
-                if (value is not ThemeRole role) return AvaloniaProperty.UnsetValue;
+                return _brushService.GetBrush(foreground, brushParameters?.Opacity, contrast, brushParameters?.Darken, brushParameters?.Lighten);
 
-                switch (role)
-                {
-                    case ThemeRole.Default:
-                        if (values.GetByIndex(1) is not IBrush brush) return AvaloniaProperty.UnsetValue;
-                        return ResolveBrush(brush, new ThemeBrushParameters(roleParameters.Opacity, false, roleParameters.Darken, roleParameters.Lighten));
-
-                    case ThemeRole.Custom:
-                        if (values.GetByIndex(1) is not IBrush brush1) return AvaloniaProperty.UnsetValue;
-                        return ResolveBrush(brush1, roleParameters);
-
-                    case ThemeRole.Contrast:
-                        var inheritedForeground = provideForeground(values.GetByIndex(3) as IBrush, values.GetByIndex(2) as Control);
-                        return ResolveBrush(inheritedForeground, roleParameters);
-
-                    case ThemeRole.Inverse:
-                        return MyTheme.Current.GetBrush(ThemeResourceKeyFactory.InverseSurfaceKey, roleParameters.Opacity, roleParameters.Contrast, roleParameters.Darken, roleParameters.Lighten);
-
-                    default:
-                        return MyTheme.Current.GetBrush(role.ToString(), roleParameters.Opacity, roleParameters.Contrast, roleParameters.Darken, roleParameters.Lighten);
-                }
-
-            case ThemeBrushParameters brushParameters:
-                if (value is not IBrush brush2) return AvaloniaProperty.UnsetValue;
-                return ResolveBrush(brush2, brushParameters);
-
-            default:
-                return value as IBrush ?? AvaloniaProperty.UnsetValue;
+            case ThemeBrushResolutionKind.UseKey:
+                return _brushService.GetBrush(result.BrushKey, brushParameters?.Opacity, contrast, brushParameters?.Darken, brushParameters?.Lighten);
         }
 
-        static IBrush? provideForeground(IBrush? foreground, Control? control) => foreground ?? (control?.Parent is Control parent ? TextElement.GetForeground(parent) : null);
+        return AvaloniaProperty.UnsetValue;
     }
 
     /// <summary>
     /// Not supported. Always returns <see cref="AvaloniaProperty.UnsetValue"/>.
     /// </summary>
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => AvaloniaProperty.UnsetValue;
-
-    /// <summary>
-    /// Resolves a theme brush from a <see cref="IBrush"/> and brush parameters.
-    /// </summary>
-    /// <param name="brush">The base brush to transform.</param>
-    /// <param name="parameters">Parameters specifying opacity, contrast, darken, and lighten.</param>
-    /// <returns>The resolved <see cref="IBrush"/>.</returns>
-    private static IBrush ResolveBrush(IBrush? brush, ThemeBrushParameters parameters) => brush is null
-            ? BrushManager.FallbackBrush
-            : MyTheme.Current.GetBrush(brush, parameters.Opacity, parameters.Contrast, parameters.Darken, parameters.Lighten);
-
-    /// <summary>
-    /// Resolves a theme brush from a <see cref="IBrush"/> and brush parameters.
-    /// </summary>
-    /// <param name="brushKey">The base brush to transform.</param>
-    /// <param name="parameters">Parameters specifying opacity, contrast, darken, and lighten.</param>
-    /// <returns>The resolved <see cref="IBrush"/>.</returns>
-    private static IBrush ResolveBrush(string? brushKey, ThemeBrushParameters parameters) => brushKey is null
-            ? BrushManager.FallbackBrush
-            : MyTheme.Current.GetBrush(brushKey, parameters.Opacity, parameters.Contrast, parameters.Darken, parameters.Lighten);
 }
 
 /// <summary>
-/// Describes parameters for resolving a theme brush, including opacity, contrast, darken, and lighten.
+/// Describes parameters for resolving and transforming a theme brush, including opacity, contrast, darken, and lighten.
 /// </summary>
 public record ThemeBrushParameters(string? Opacity, bool Contrast, double? Darken = null, double? Lighten = null);
-
-/// <summary>
-/// Describes parameters for resolving a role-based theme brush, including palette color type, opacity, contrast, darken, and lighten.
-/// </summary>
-internal sealed record ThemeRoleParameters(string? Opacity, bool Contrast, double? Darken = null, double? Lighten = null) : ThemeBrushParameters(Opacity, Contrast, Darken, Lighten);
-
-/// <summary>
-/// Describes parameters for resolving a theme context brush, including resource key, opacity, contrast, darken, and lighten.
-/// </summary>
-internal sealed record ThemeContextParameters(string? BrushKey, string? Opacity, bool Contrast, double? Darken = null, double? Lighten = null) : ThemeBrushParameters(Opacity, Contrast, Darken, Lighten);

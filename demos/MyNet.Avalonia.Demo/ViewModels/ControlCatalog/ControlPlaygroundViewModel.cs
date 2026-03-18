@@ -12,7 +12,7 @@ using DynamicData;
 using DynamicData.Binding;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ClassProviders;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ContentProviders;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Observable;
 using MyNet.Utilities;
 
@@ -126,7 +126,7 @@ internal sealed class ControlPlaygroundViewModel : ObservableObject
         var activeTheme = Appearance.GetActiveThemeDefinition();
         var propertyStrings = new[]
         {
-            getFullProperty("Theme", !string.IsNullOrEmpty(activeTheme?.Key) ? $"{{StaticResource {activeTheme.Key}}}" : null),
+            getFullProperty("Theme", !string.IsNullOrEmpty(activeTheme?.FullKey) ? $"{{StaticResource {activeTheme.FullKey}}}" : null),
             getFullProperty("my:ThemeAssist.Role", Appearance.ActiveRole != ThemeRole.Default ? Appearance.ActiveRole.ToString() : null),
             getFullProperty("my:ItemsAssist.Role", Appearance.ActiveItemsRole != ThemeRole.Default ? Appearance.ActiveItemsRole.ToString() : null),
             getFullProperty("Classes", string.Join(" ", ComputedClasses)),

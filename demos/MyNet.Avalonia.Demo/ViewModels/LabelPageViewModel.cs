@@ -15,9 +15,9 @@ internal sealed class LabelPageViewModel : ControlCatalogViewModel
         : base(nameof(Label),
             [
                 new ControlThemeBuilder()
-                    .AddVariants("opacity-high", "opacity-medium", "opacity-low")
+                    .AddVariants("opacity-high", "opacity-medium", "opacity-low", "text-helper", "text-watermark")
                     .AddAllRoles()
-                    .AddSizes("font-sub-caption", "font-caption", "h6", "h5", "h4", "h3", "h2", "h1"),
+                    .AddSizes("font-xs", "font-sm", "font-md", "font-lg", "font-xl", "font-h6", "font-h5", "font-h4", "font-h3", "font-h2", "font-h1"),
 
                 new ControlThemeBuilder(kind: "kind-badge")
                     .AddShapes("shape-circle")

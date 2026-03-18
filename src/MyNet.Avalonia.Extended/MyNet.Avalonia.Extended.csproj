@@ -20,4 +20,8 @@
         <AvaloniaResource Include="Themes/**/*.axaml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AvaloniaXaml Remove="Themes\Controls\WindowNotificationManager.axaml" />
+    </ItemGroup>
+
 </Project>

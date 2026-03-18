@@ -7,16 +7,15 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Media;
-using Avalonia.Threading;
 using DynamicData;
-using MyNet.Avalonia.Theme;
-using MyNet.Avalonia.Theme.Enums;
-using MyNet.Avalonia.Theme.Extensions;
+using DynamicData.Binding;
+using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.Avalonia.Theme.Theming;
 using MyNet.Humanizer;
+using MyNet.Observable.Collections.Providers;
 using MyNet.UI.Navigation.Models;
 using MyNet.UI.ViewModels.List;
 using MyNet.UI.ViewModels.List.Filtering;
@@ -24,17 +23,17 @@ using MyNet.UI.ViewModels.List.Filtering.Filters;
 using MyNet.UI.ViewModels.List.Paging;
 using MyNet.UI.ViewModels.List.Sorting;
 using MyNet.Utilities;
+using static MyNet.Avalonia.Theme.ThemeResources;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
 internal sealed class IconsPageViewModel : PageViewModel
 {
-    [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup method")]
-    private readonly SourceList<IconBuilderData> _allIcons = new();
+    private readonly ObservableCollection<IconBuilderData> _allIcons = [];
 
     public ListViewModel<IconBuilderData> Icons { get; }
 
-    public IconsPageViewModel() => Icons = new ListViewModel<IconBuilderData>(_allIcons.Connect(), new IconsControllerProvider())
+    public IconsPageViewModel() => Icons = new ListViewModel<IconBuilderData>(_allIcons.ToObservableChangeSet(), new IconsControllerProvider())
     {
         CanPage = true
     };
@@ -43,45 +42,40 @@ internal sealed class IconsPageViewModel : PageViewModel
 
     protected override async Task RefreshCoreAsync()
     {
-        // Get all icon names on background thread (no UI access)
-        var iconNames = await Task.Run(() => Enum.GetValues<IconData>().Select(x => x.ToString()).ToList()).ConfigureAwait(false);
+        var icons = Enum.GetValues<IconData>();
+        _allIcons.Set(icons.Select(static icon => new IconBuilderData(icon.ToString())).Take(5));
+        //await Dispatcher.UIThread.InvokeAsync(async () =>
+        //{
+        //    _allIcons.Edit(static list => list.Clear());
 
-        // Create IconBuilderData on UI thread progressively
-        var newIcons = new List<IconBuilderData>();
+        //    const int batchSize = 400;
+        //    for (var i = 0; i < icons.Length; i += batchSize)
+        //    {
+        //        var batch = icons
+        //            .Skip(i)
+        //            .Take(batchSize)
+        //            .Select(static icon => new IconBuilderData(icon.ToString()))
+        //            .ToList();
 
-        await Dispatcher.UIThread.InvokeAsync(async () =>
-        {
-            // Create and add items in batches to keep UI responsive
-            const int batchSize = 50;
-            for (var i = 0; i < iconNames.Count; i += batchSize)
-            {
-                foreach (var iconName in iconNames.Skip(i).Take(batchSize))
-                {
-                    // ToGeometry() must be called on UI thread
-                    if (Enum.TryParse<IconData>(iconName, out var iconEnum))
-                    {
-                        var iconData = new IconBuilderData(iconName, iconEnum.ToGeometry());
-                        _allIcons.Add(iconData);
-                    }
-                }
+        //        _allIcons.Edit(list => list.AddRange(batch));
 
-                // Small delay to keep UI responsive
-                if (i + batchSize < iconNames.Count)
-                {
-                    await Task.Delay(1).ConfigureAwait(true);
-                }
-            }
+        //        if (i + batchSize < icons.Length)
+        //        {
+        //            await Task.Yield();
+        //        }
+        //    }
 
-            MarkAsLoaded();
-        },
-        DispatcherPriority.Background).ConfigureAwait(false);
+        //    MarkAsLoaded();
+        //},
+        //DispatcherPriority.Background).ConfigureAwait(false);
     }
+}
 
-    protected override void Cleanup()
-    {
-        _allIcons.Dispose();
-        base.Cleanup();
-    }
+internal sealed class IconsProvider : ISourceProvider<IconBuilderData>
+{
+    public ReadOnlyObservableCollection<IconBuilderData> Source => throw new NotImplementedException();
+
+    public IObservable<IChangeSet<IconBuilderData>> Connect() => throw new NotImplementedException();
 }
 
 internal sealed class IconsControllerProvider : ListParametersProvider
@@ -90,10 +84,10 @@ internal sealed class IconsControllerProvider : ListParametersProvider
 
     public override ISortingViewModel ProvideSorting() => new SortingViewModel(nameof(IconBuilderData.Name));
 
-    public override IPagingViewModel ProvidePaging() => new PagingViewModel(150);
+    public override IPagingViewModel ProvidePaging() => new PagingViewModel(100);
 }
 
-internal sealed class IconBuilderData(string name, Geometry? geometry)
+internal sealed class IconBuilderData(string name)
 {
     public static readonly ICollection<string> CodePatterns = [
         "{0}",
@@ -106,7 +100,9 @@ internal sealed class IconBuilderData(string name, Geometry? geometry)
 
     public string DisplayName { get; } = name.Humanize().ToTitle();
 
-    public Geometry? Geometry { get; } = geometry;
+    public Geometry? Geometry => _geometry ??= Icons.Get(Name).Value;
 
     public ObservableCollection<string> CodeBlocks { get; } = [.. CodePatterns.Select(x => x.FormatWith(name))];
+
+    private Geometry? _geometry;
 }

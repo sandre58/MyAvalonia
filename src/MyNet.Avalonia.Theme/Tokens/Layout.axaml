@@ -93,6 +93,12 @@
     <sys:Double x:Key="MyNet.Size.Glyph.Lg">12</sys:Double>
     <sys:Double x:Key="MyNet.Size.Glyph.Xl">15</sys:Double>
 
+    <!-- Caption Button Sizes -->
+    <sys:Double x:Key="MyNet.Size.Icon.Caption">11</sys:Double>
+    <sys:Double x:Key="MyNet.Width.Button.Caption">45</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Button.Caption">30</sys:Double>
+    <sys:Double x:Key="MyNet.Height.TitleBar">30</sys:Double>
+
     <!-- Icon Sizes -->
     <sys:Double x:Key="MyNet.Size.Icon.Tool.Sm">7</sys:Double>
     <sys:Double x:Key="MyNet.Size.Icon.Tool">11</sys:Double>

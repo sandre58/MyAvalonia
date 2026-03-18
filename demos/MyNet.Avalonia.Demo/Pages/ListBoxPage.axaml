@@ -59,17 +59,17 @@
                                 </Setter>
                             </Style>
 
-                            <Style Selector="^[(my|ThemeAssist.Kind)=default]">
+                            <Style Selector="^.theme-default">
                                 <Setter Property="Width" Value="300" />
                                 <Setter Property="ItemsSource" Value="{m:RandomCountries Min=10, Max=200}" />
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country}" />
 
-                                <Style Selector="^.layout-horizontal, ^.layout-uniform:not(.layout-vertical)">
+                                <Style Selector="^.flex-horizontal, ^.flex-uniform:not(.flex-vertical)">
                                     <Setter Property="Width" Value="NaN" />
                                     <Setter Property="ItemsSource" Value="{m:RandomCountries Min=8, Max=15}" />
                                 </Style>
 
-                                <Style Selector="^.layout-wrap">
+                                <Style Selector="^.flex-wrap">
                                     <Setter Property="Width" Value="NaN" />
                                     <Setter Property="ItemsSource" Value="{m:RandomCountries All=True}" />
 
@@ -85,19 +85,19 @@
                                 </Style>
                             </Style>
 
-                            <Style Selector="^.kind-toggle, ^.kind-tabs, ^.kind-icon">
+                            <Style Selector="^.theme-toggle, ^.theme-tabs, ^.theme-icon">
                                 <Setter Property="Width" Value="NaN" />
                                 <Setter Property="ItemsSource" Value="{m:RandomCountries Min=3, Max=5}" />
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country}" />
 
-                                <Style Selector="^.layout-wrap">
+                                <Style Selector="^.flex-wrap">
                                     <Style Selector="^ ListBoxItem">
                                         <Setter Property="Width" Value="120" />
                                     </Style>
                                 </Style>
                             </Style>
 
-                            <Style Selector="^.kind-icon">
+                            <Style Selector="^.theme-icon">
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
                             </Style>
                         </Style>
@@ -121,7 +121,7 @@
                     <Panel.Styles>
                         <Style Selector="ListBox">
 
-                            <Style Selector="^[(my|ThemeAssist.Kind)=default]">
+                            <Style Selector="^.theme-default">
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country}" />
 
                                 <Style Selector="^.kind-cards">
@@ -129,11 +129,11 @@
                                 </Style>
                             </Style>
 
-                            <Style Selector="^.kind-toggle, ^[(my|ThemeAssist.Kind)=tabs], ^[(my|ThemeAssist.Kind)=icon]">
+                            <Style Selector="^.theme-toggle, ^.theme-tabs, ^.theme-icon">
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country}" />
                             </Style>
 
-                            <Style Selector="^.kind-icon">
+                            <Style Selector="^.theme-icon">
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Icon}" />
                             </Style>
                         </Style>

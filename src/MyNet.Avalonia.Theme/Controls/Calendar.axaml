@@ -328,6 +328,22 @@
                 </StackPanel>
             </ControlTemplate>
         </Setter>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Sm}" />
+        </Style>
+
+        <Style Selector="^.size-md">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Md}" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Lg}" />
+        </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type my:Calendar}" TargetType="my:Calendar">
@@ -498,6 +514,22 @@
             <Style Selector="^ /template/ Grid#PART_MonthGrid">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Sm}" />
+        </Style>
+
+        <Style Selector="^.size-md">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Md}" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Lg}" />
         </Style>
     </ControlTheme>
 

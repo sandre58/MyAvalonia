@@ -29,6 +29,8 @@
         <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[TabControl].(my:IconAssist.Alignment)}" />
         <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[TabControl].(my:IconAssist.Spacing)}" />
         <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[TabControl].(my:IconAssist.Opacity)}" />
+        <Setter Property="my:IconAssist.LabelSize" Value="{Binding $parent[TabControl].(my:IconAssist.LabelSize)}" />
+        <Setter Property="my:IconAssist.PrimarySize" Value="{Binding $parent[TabControl].(my:IconAssist.PrimarySize)}" />
         <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -65,6 +67,8 @@
                                                    IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                    IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                    IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalAlignment="Stretch"
@@ -164,7 +168,7 @@
         <!-- Variant -->
         <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
         <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
-        <Setter Property="my:VariantAssist.Foreground" Value="{my:Foreground}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
         <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="0 0 0 3" />
 
@@ -182,7 +186,7 @@
         <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
         <Setter Property="my:ItemsAssist.HoverBackground" Value="Transparent" />
         <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
         <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
         <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
@@ -237,6 +241,115 @@
         <Style Selector="^[TabStripPlacement=Right] /template/ ItemsPresenter#PART_ItemsPresenter > WrapPanel">
             <Setter Property="Orientation" Value="Vertical" />
         </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- TAB STRIP PLACEMENT STYLES                                -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^[TabStripPlacement=Left]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 3 0" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 3 0" />
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Top" />
+            <Style Selector="^.flex-uniform">
+                <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Right]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="3 0 0 0" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="3 0 0 0" />
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Top" />
+
+            <Style Selector="^.flex-uniform">
+                <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Top]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 3" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 0 3" />
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
+
+            <Style Selector="^.flex-uniform">
+                <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Bottom]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 3 0 0" />
+            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 3 0 0" />
+            <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
+            <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
+
+            <Style Selector="^.flex-uniform">
+                <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.variant-header-solid, ^.variant-header-light, ^.variant-header-outlined">
+            <Setter Property="my:HeaderAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+
+            <Style Selector="^.variant-items-solid, ^.variant-items-outlined, ^.variant-items-light, ^.variant-items-text">
+                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.variant-items-solid, ^.variant-items-outlined, ^.variant-items-light, ^.variant-items-text">
+            <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- TABCONTROL                                                   -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Sm}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+
+        <Style Selector="^.size-md">
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Lg}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+        </Style>
+
+        <Style Selector="^.variant-items-solid, ^.variant-items-outlined, ^.variant-items-light, ^.variant-items-text">
+
+            <Style Selector="^.size-xs">
+                <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
+            </Style>
+            <Style Selector="^.size-sm">
+                <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+            </Style>
+            <Style Selector="^.size-md">
+                <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Md}" />
+            </Style>
+            <Style Selector="^.size-lg">
+                <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Lg}" />
+            </Style>
+            <Style Selector="^.size-xl">
+                <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xl}" />
+            </Style>
+            <Style Selector="^.size-xxl">
+                <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xxl}" />
+            </Style>
+            <Style Selector="^.size-xxxl">
+                <Setter Property="my:ItemsAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xxxl}" />
+            </Style>
+        </Style>
+
     </ControlTheme>
 
     <!-- ═════════════════════════════════════════════════════════ -->
@@ -385,7 +498,6 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.TabControl.Indicator" TargetType="TabControl">
         <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
-        <Setter Property="my:ThemeAssist.Kind" Value="indicator" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.TabItem.Indicator}" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
@@ -494,6 +606,40 @@
         </Style>
         <Style Selector="^[TabStripPlacement=Right] /template/ ItemsPresenter#PART_ItemsPresenter > WrapPanel">
             <Setter Property="Orientation" Value="Vertical" />
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Left]">
+            <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="Right" />
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Right]">
+            <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="Left" />
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Top]">
+            <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="Bottom" />
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Bottom]">
+            <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="Top" />
+        </Style>
+
+        <Style Selector="^.size-sm">
+            <Setter Property="my:ItemsAssist.Size" Value="40" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+
+        <Style Selector="^.size-md">
+            <Setter Property="my:ItemsAssist.Size" Value="55" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="my:ItemsAssist.Size" Value="65" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Lg}" />
         </Style>
     </ControlTheme>
 

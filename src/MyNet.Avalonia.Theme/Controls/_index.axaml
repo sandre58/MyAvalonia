@@ -3,7 +3,6 @@
                     x:ClassModifier="internal">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/AccessText.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/AdornerLayer.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/AutoCompleteBox.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Avatar.axaml" />
@@ -15,7 +14,6 @@
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Calendar.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/CalendarDatePicker.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/CalendarDatePickerEx.axaml" />
-        <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/CaptionButtons.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Carousel.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/CheckBox.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Clock.axaml" />
@@ -80,7 +78,6 @@
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/TimePicker.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/TimePickerEx.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/TimeView.axaml" />
-        <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/TitleBar.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/ToggleButton.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/ToggleSwitch.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Tooltip.axaml" />
@@ -88,6 +85,7 @@
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/TreeView.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Underline.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/Window.axaml" />
+        <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/WindowDrawnDecorations.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Controls/WindowNotificationManager.axaml" />
 
         <!-- Default -->

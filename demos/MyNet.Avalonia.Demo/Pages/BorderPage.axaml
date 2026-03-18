@@ -37,8 +37,8 @@
 
         <v:ControlCatalogView.CustomContent>
             <StackPanel>
-                <HeaderedContentControl Header="kind-popup">
-                    <Border Width="190" Height="130" Classes="kind-popup" />
+                <HeaderedContentControl Header="Popup">
+                    <Border Width="190" Height="130" Theme="{StaticResource MyNet.Theme.Border.Popup}" />
                 </HeaderedContentControl>
             </StackPanel>
         </v:ControlCatalogView.CustomContent>

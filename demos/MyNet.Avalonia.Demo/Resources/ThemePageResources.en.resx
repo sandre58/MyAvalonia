@@ -132,4 +132,10 @@
   <data name="Semantic" xml:space="preserve">
     <value>Semantic</value>
   </data>
+  <data name="Opacities" xml:space="preserve">
+    <value>Opacities</value>
+  </data>
+  <data name="Examples" xml:space="preserve">
+    <value>Examples</value>
+  </data>
 </root>

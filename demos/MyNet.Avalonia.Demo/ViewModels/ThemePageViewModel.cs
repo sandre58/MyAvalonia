@@ -12,7 +12,8 @@ using System.Linq;
 using Avalonia.Media;
 using DynamicData;
 using MyNet.Avalonia.Extensions;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming.Core;
+using MyNet.Avalonia.Theme.Theming.Palettes;
 using MyNet.Observable.Attributes;
 using MyNet.UI.Theming;
 using MyNet.Utilities;
@@ -40,12 +41,12 @@ internal sealed class ThemePageViewModel : PageViewModel
 
         _themeService.ThemeChanged += OnThemeChanged;
 
-        var currentThemeColorVariant = _themeBrushService.GetThemeVariantColors();
+        var currentPalette = _themeBrushService.GetThemePalette();
 
-        if (currentThemeColorVariant is not null)
+        if (currentPalette is not null)
         {
-            var baseKeys = currentThemeColorVariant.Base.ToResourceDictionary().Keys.ToList();
-            var opacityLevels = currentThemeColorVariant.Opacity.ToResourceDictionary(string.Empty).Keys;
+            var baseKeys = currentPalette.Base.ToResourceDictionary().Keys.ToList();
+            var opacityLevels = currentPalette.Opacity.ToResourceDictionary(string.Empty).Keys;
 
             Primary.AddRange(GetBrushDefinitions(nameof(Primary), _themeBrushService.GetPrimary()));
             Accent.AddRange(GetBrushDefinitions(nameof(Accent), _themeBrushService.GetAccent()));
@@ -54,11 +55,11 @@ internal sealed class ThemePageViewModel : PageViewModel
             Borders.AddRange(GetBrushDefinitions([.. baseKeys.Where(x => x.Contains("Border", StringComparison.OrdinalIgnoreCase) || x.Contains("Divider", StringComparison.OrdinalIgnoreCase))]));
             Foregrounds.AddRange(GetBrushDefinitions([.. baseKeys.Where(x => x.Contains("Foreground", StringComparison.OrdinalIgnoreCase))]));
 
-            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantColors.Success), currentThemeColorVariant.Success));
-            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantColors.Error), currentThemeColorVariant.Error));
-            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantColors.Warning), currentThemeColorVariant.Warning));
-            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantColors.Information), currentThemeColorVariant.Information));
-            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantColors.Neutral), currentThemeColorVariant.Neutral));
+            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantPalette.Success), currentPalette.Success));
+            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantPalette.Error), currentPalette.Error));
+            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantPalette.Warning), currentPalette.Warning));
+            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantPalette.Information), currentPalette.Information));
+            Semantic.Add(GetBrushDefinitions(nameof(ThemeVariantPalette.Neutral), currentPalette.Neutral));
 
             OpacityLevels.AddRange(opacityLevels.Select(x => new OpacityDefinition(x, themeBrushService.GetOpacity(x) ?? 0.0)));
         }

@@ -42,16 +42,28 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <Grid ColumnDefinitions="*,Auto">
-                        <ContentPresenter Name="PART_ContentPresenter"
-                                          MinWidth="{TemplateBinding MinWidth}"
-                                          MinHeight="{TemplateBinding MinHeight}"
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          FontSize="{TemplateBinding FontSize}"
-                                          RecognizesAccessKey="True"
-                                          UseLayoutRounding="True" />
+                        <my:IconContentControl Name="IconContent"
+                                               Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                               IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                               IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                               IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                               LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                               PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                               Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                               Padding="{TemplateBinding Padding}"
+                                               HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Stretch"
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                               BorderThickness="{TemplateBinding BorderThickness}"
+                                               CornerRadius="{TemplateBinding CornerRadius}"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               TextElement.FontSize="{TemplateBinding FontSize}"
+                                               TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                               UseLayoutRounding="False">
+                            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        </my:IconContentControl>
                         <Button Name="PART_CloseButton"
                                 Grid.Column="1"
                                 Margin="{my:Thickness Xs, Left}"
@@ -65,6 +77,28 @@
                 </Border>
             </ControlTemplate>
         </Setter>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Sm}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+
+        <Style Selector="^.size-md">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Md}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Label.Lg}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+        </Style>
     </ControlTheme>
 
 

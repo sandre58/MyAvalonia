@@ -1,565 +1,304 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia"
-        xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
-        <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Embedded.DatePicker" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HorizontalAlignment)}" />
-            <Setter Property="VerticalAlignment" Value="{Binding $parent[DatePicker].(my:ItemsAssist.VerticalAlignment)}" />
-            <Setter Property="Margin" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Margin)}" />
-            <Setter Property="Padding" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Padding)}" />
-            <Setter Property="CornerRadius" Value="{Binding $parent[DatePicker].(my:ItemsAssist.CornerRadius)}" />
-            <Setter Property="Background" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Background)}" />
-            <Setter Property="BorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderBrush)}" />
-            <Setter Property="Foreground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Foreground)}" />
-            <Setter Property="BorderThickness" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderThickness)}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBackground)}" />
-            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBorderBrush)}" />
-            <Setter Property="my:InteractionAssist.HoverForeground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverForeground)}" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveBackground)}" />
-            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveBorderBrush)}" />
-            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveForeground)}" />
-            <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $parent[DatePicker].(my:ItemsAssist.RippleColor)}" />
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ShadowDepth)}" />
-            <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[DatePicker].(my:IconAssist.Alignment)}" />
-            <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[DatePicker].(my:IconAssist.Spacing)}" />
-            <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[DatePicker].(my:IconAssist.Opacity)}" />
+    <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Embedded.DatePicker" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HorizontalAlignment)}" />
+        <Setter Property="VerticalAlignment" Value="{Binding $parent[DatePicker].(my:ItemsAssist.VerticalAlignment)}" />
+        <Setter Property="Margin" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Margin)}" />
+        <Setter Property="Padding" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Padding)}" />
+        <Setter Property="CornerRadius" Value="{Binding $parent[DatePicker].(my:ItemsAssist.CornerRadius)}" />
+        <Setter Property="Background" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Foreground)}" />
+        <Setter Property="BorderThickness" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderThickness)}" />
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBackground)}" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.HoverForeground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverForeground)}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveBackground)}" />
+        <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveForeground)}" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $parent[DatePicker].(my:ItemsAssist.RippleColor)}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ShadowDepth)}" />
+        <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[DatePicker].(my:IconAssist.Alignment)}" />
+        <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[DatePicker].(my:IconAssist.Spacing)}" />
+        <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[DatePicker].(my:IconAssist.Opacity)}" />
 
-            <Style Selector="^:selected">
-                <Setter Property="IsHitTestVisible" Value="False" />
-                <Setter Property="CornerRadius" Value="0" />
-            </Style>
-
-            <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="my:TransitionsAssist.UseTransitions" Value="False" />
-            </Style>
-        </ControlTheme>
-
-        <ControlTheme x:Key="{x:Type DatePickerPresenter}" TargetType="DatePickerPresenter">
-            <Setter Property="Width" Value="{Binding $parent[DatePicker].Bounds.Width}" />
-            <Setter Property="MinWidth" Value="{Binding $parent[DatePicker].Bounds.Width}" />
-            <Setter Property="MaxHeight" Value="300" />
-            <Setter Property="Padding" Value="{my:Thickness Sm}" />
-            <Setter Property="Template">
-                <ControlTemplate TargetType="DatePickerPresenter">
-                    <Border Name="Background"
-                            HorizontalAlignment="Stretch"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
-                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                            <Grid Name="ContentPanel" RowDefinitions="*,Auto" Margin="{TemplateBinding Padding}">
-                                <Grid Name="PART_PickerContainer">
-                                    <Grid.Styles>
-                                        <Style Selector="DateTimePickerPanel">
-                                            <Setter Property="ItemHeight" Value="{Binding $parent[DatePicker].Bounds.Height}" />
-
-                                            <Style Selector="^ > ListBoxItem">
-                                                <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ListBoxItem.Embedded.DatePicker}" />
-                                                <Setter Property="ContentTemplate">
-                                                    <Setter.Value>
-                                                        <DataTemplate>
-                                                            <TextBlock Text="{my:Translate Casing=Title}" />
-                                                        </DataTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </Style>
-                                    </Grid.Styles>
-
-                                    <!-- Column Definitions set in code, ignore here -->
-                                    <Panel Name="PART_DayHost" Grid.Column="0">
-                                        <DockPanel>
-                                            <RepeatButton Name="PART_DayUpButton"
-                                                          DockPanel.Dock="Top"
-                                                          Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                          Opacity="0"
-                                                          Content="{my:Icon ChevronUp, DefinedSize=Xs}" />
-                                            <RepeatButton Name="PART_DayDownButton"
-                                                          DockPanel.Dock="Bottom"
-                                                          Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                          Opacity="0"
-                                                          Content="{my:Icon ChevronDown, DefinedSize=Xs}" />
-                                            <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-                                                <DateTimePickerPanel Name="PART_DaySelector" PanelType="Day" ShouldLoop="True" />
-                                            </ScrollViewer>
-                                        </DockPanel>
-                                    </Panel>
-                                    <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                                    <Panel Name="PART_MonthHost" Grid.Column="2">
-                                        <DockPanel>
-                                            <RepeatButton Name="PART_MonthUpButton"
-                                                          DockPanel.Dock="Top"
-                                                          Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                          Opacity="0"
-                                                          Content="{my:Icon ChevronUp, DefinedSize=Xs}" />
-                                            <RepeatButton Name="PART_MonthDownButton"
-                                                          DockPanel.Dock="Bottom"
-                                                          Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                          Opacity="0"
-                                                          Content="{my:Icon ChevronDown, DefinedSize=Xs}" />
-                                            <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-                                                <DateTimePickerPanel Name="PART_MonthSelector" PanelType="Month" ShouldLoop="True" />
-                                            </ScrollViewer>
-                                        </DockPanel>
-                                    </Panel>
-                                    <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
-                                    <Panel Name="PART_YearHost" Grid.Column="4">
-                                        <DockPanel>
-                                            <RepeatButton Name="PART_YearUpButton"
-                                                          DockPanel.Dock="Top"
-                                                          Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                          Opacity="0"
-                                                          Content="{my:Icon ChevronUp, DefinedSize=Xs}" />
-                                            <RepeatButton Name="PART_YearDownButton"
-                                                          DockPanel.Dock="Bottom"
-                                                          Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                          Opacity="0"
-                                                          Content="{my:Icon ChevronDown, DefinedSize=Xs}" />
-                                            <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-                                                <DateTimePickerPanel Name="PART_YearSelector" PanelType="Year" ShouldLoop="False" />
-                                            </ScrollViewer>
-                                        </DockPanel>
-                                    </Panel>
-
-                                    <Rectangle Name="PART_FirstSpacer"
-                                               Width="0"
-                                               HorizontalAlignment="Center"
-                                               Fill="{my:ThemeContext Surface.Border}" />
-                                    <Rectangle Name="PART_SecondSpacer"
-                                               Width="0"
-                                               HorizontalAlignment="Center"
-                                               Fill="{my:ThemeContext Surface.Border}" />
-                                </Grid>
-
-                                <Grid Name="AcceptDismissGrid" Grid.Row="1" ColumnDefinitions="*,Auto,*" Margin="0 3 0 0">
-                                    <Button Name="PART_AcceptButton"
-                                            Grid.Column="0"
-                                            HorizontalAlignment="Stretch"
-                                            Margin="{my:Thickness Sm}"
-                                            IsDefault="True"
-                                            Focusable="False"
-                                            Classes="variant-solid size-sm"
-                                            my:VariantAssist.DefaultForeground="{my:Theme Primary, Contrast=True}"
-                                            my:VariantAssist.DefaultBackground="{my:Theme Primary}"
-                                            my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                            ToolTip.Tip="{my:Loc Validate}"
-                                            Content="{my:Icon Check}" />
-                                    <Button Name="PART_DismissButton"
-                                            Grid.Column="2"
-                                            IsCancel="True"
-                                            Focusable="False"
-                                            HorizontalAlignment="Stretch"
-                                            Margin="{my:Thickness Sm}"
-                                            Classes="variant-text size-sm"
-                                            ToolTip.Tip="{my:Loc Cancel}"
-                                            Content="{my:Icon Close}" />
-                                </Grid>
-                            </Grid>
-                        </Border>
-                    </Border>
-                </ControlTemplate>
-            </Setter>
-
-            <Style Selector="^ /template/ Panel">
-                <Style Selector="^:pointerover RepeatButton">
-                    <Setter Property="Opacity" Value="1.0" />
-                </Style>
-            </Style>
-        </ControlTheme>
-
-        <ControlTheme x:Key="{x:Type DatePicker}" TargetType="DatePicker">
-
-            <!-- Common -->
-            <Setter Property="my:ThemeAssist.Category" Value="Input" />
-            <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
-            <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
-            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
-            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Input}" />
-            <Setter Property="FontWeight" Value="Normal" />
-            <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Md}" />
-            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Md}" />
-            <Setter Property="FocusAdorner" Value="{x:Null}" />
-            <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
-            <Setter Property="my:IconAssist.Alignment" Value="Left" />
-            <Setter Property="my:IconAssist.Spacing" Value="{StaticResource MyNet.Spacing.Icon}" />
-            <Setter Property="my:IconAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
-            <Setter Property="my:InputAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
-            <Setter Property="my:InputAssist.InnerPadding" Value="{StaticResource MyNet.Padding.Input.Inner.Md}" />
-            <Setter Property="my:InputAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
-            <Setter Property="my:InputAssist.PlaceholderFontSize" Value="{Binding $self.FontSize}" />
-            <Setter Property="my:InputAssist.FloatingScale" Value="0.75" />
-            <Setter Property="my:InputAssist.FloatingOffset" Value="12" />
-            <Setter Property="my:ProxyBehavior.Enable" Value="True" />
-            <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
-            <Setter Property="Focusable" Value="True" />
-            <Setter Property="ClipToBounds" Value="False" />
-
-            <!-- Specific -->
-            <Setter Property="InputMethod.IsInputMethodEnabled" Value="True" />
-            <Setter Property="my:InputAssist.PlaceholderText" Value="{x:Static sys:String.Empty}" />
-            <Setter Property="my:InputBehavior.UpdateValueOnKeyboard" Value="True" />
-            <Setter Property="my:InputBehavior.UpdateValueOnMouseWheel" Value="True" />
-            <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
-            <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Center" />
-            <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
-            <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
-            <Setter Property="my:ItemsAssist.Margin" Value="0" />
-            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Xs}" />
-            <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
-            <Setter Property="my:DateTimePickerAssist.PlaceholderDay" Value="{my:Loc Day}" />
-            <Setter Property="my:DateTimePickerAssist.PlaceholderMonth" Value="{my:Loc Month}" />
-            <Setter Property="my:DateTimePickerAssist.PlaceholderYear" Value="{my:Loc Year}" />
-            <Setter Property="my:DateTimePickerBehavior.OverridePlaceholderText" Value="True" />
-            <Setter Property="my:GlobalizationBehavior.UpdateOnCultureChanged" Value="True" />
-            <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
-            <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
-
-            <!-- Default colors -->
-            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
-            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
-
-            <!-- Variant -->
-            <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
-            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
-
-            <!-- Theme -->
-            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
-            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
-            <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
-            <Setter Property="my:InputAssist.UnderForeground" Value="{my:Foreground Opacity=High}" />
-            <Setter Property="my:InputAssist.InnerForeground" Value="{my:Foreground Opacity=High}" />
-            <Setter Property="my:InputAssist.PlaceholderForeground" Value="{my:Foreground Opacity=Medium}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
-            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:ThemeContext Control.Border.Hover}" />
-            <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
-            <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:Foreground Opacity=Focus}" />
-            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
-            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
-            <Setter Property="my:PopupAssist.Background" Value="{my:ThemeContext Surface.Level1}" />
-            <Setter Property="my:PopupAssist.Role" Value="{Binding $self.(my:ThemeAssist.Role)}" />
-            <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0.75" />
-            <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True, Opacity=Medium}" />
-            <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:PopupAssist.Background), Opacity=Hover, Contrast=True}" />
-            <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
-            <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
-            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary, Role='(my:PopupAssist.Role)'}" />
-            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
-            <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
-
-            <Style Selector="^[(my|ThemeAssist.Context)=Contrast]">
-                <Style Selector="^[(my|ThemeAssist.HasRole)=False]">
-                    <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:Theme Primary}" />
-                </Style>
-            </Style>
-
-            <Setter Property="Template">
-                <ControlTemplate TargetType="DatePicker">
-                    <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
-                        <Panel Name="PART_RootPanel">
-
-                            <Border Name="PART_MainBorder"
-                                    my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding CornerRadius}" />
-
-                            <Border Name="PART_HoverBorder"
-                                    Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
-                                    BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding CornerRadius}"
-                                    Theme="{StaticResource MyNet.Theme.Border.State}" />
-
-                            <Border Name="PART_ActiveBorder"
-                                    Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
-                                    BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding CornerRadius}"
-                                    Theme="{StaticResource MyNet.Theme.Border.State}" />
-
-                            <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                                <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
-                                    <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto,Auto,Auto">
-
-                                        <!-- Icon -->
-                                        <ContentControl x:Name="PART_Icon"
-                                                        Grid.Column="0"
-                                                        Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
-                                                        VerticalAlignment="Stretch"
-                                                        Content="{TemplateBinding (my:IconAssist.Icon)}"
-                                                        ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                        Focusable="False"
-                                                        Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
-                                            <ContentControl.IsVisible>
-                                                <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                                    <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                    <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                </MultiBinding>
-                                            </ContentControl.IsVisible>
-                                        </ContentControl>
-
-                                        <Button Name="PART_FlyoutButton"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Stretch"
-                                                my:DisableAssist.IsDisablable="False"
-                                                Theme="{StaticResource MyNet.Theme.Button.Clean}">
-                                            <my:TextField Name="PART_TextField"
-                                                          Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
-                                                          HorizontalAlignment="Stretch"
-                                                          VerticalAlignment="Center"
-                                                          ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
-                                                          FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
-                                                          FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
-                                                          InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
-                                                          InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
-                                                          InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
-                                                          InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
-                                                          InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
-                                                          Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                                          UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
-                                                          PlaceholderText="{TemplateBinding (my:InputAssist.PlaceholderText)}"
-                                                          PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
-
-                                                <Grid Name="PART_ButtonContentGrid" VerticalAlignment="Center" ColumnDefinitions="78*,Auto,132*,Auto,78*">
-                                                    <TextBlock Name="PART_DayTextBlock"
-                                                               Padding="{my:Thickness Sm, Horizontal}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"
-                                                               FontFamily="{TemplateBinding FontFamily}"
-                                                               FontSize="{TemplateBinding FontSize}"
-                                                               FontWeight="{TemplateBinding FontWeight}"
-                                                               Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderDay}" />
-                                                    <TextBlock Name="PART_MonthTextBlock"
-                                                               Grid.Column="0"
-                                                               Padding="{my:Thickness Sm, Horizontal}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"
-                                                               FontFamily="{TemplateBinding FontFamily}"
-                                                               FontSize="{TemplateBinding FontSize}"
-                                                               FontWeight="{TemplateBinding FontWeight}"
-                                                               Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderMonth}"
-                                                               TextAlignment="Left" />
-                                                    <TextBlock Name="PART_YearTextBlock"
-                                                               Grid.Column="0"
-                                                               Padding="{my:Thickness Sm, Horizontal}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"
-                                                               FontFamily="{TemplateBinding FontFamily}"
-                                                               FontSize="{TemplateBinding FontSize}"
-                                                               FontWeight="{TemplateBinding FontWeight}"
-                                                               Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderYear}" />
-                                                    <Rectangle Name="PART_FirstSpacer"
-                                                               Grid.Column="1"
-                                                               Width="1"
-                                                               Height="{TemplateBinding Height}"
-                                                               HorizontalAlignment="Center"
-                                                               Fill="{TemplateBinding BorderBrush}" />
-                                                    <Rectangle Name="PART_SecondSpacer"
-                                                               Grid.Column="3"
-                                                               Width="1"
-                                                               Height="{TemplateBinding Height}"
-                                                               HorizontalAlignment="Center"
-                                                               Fill="{TemplateBinding BorderBrush}" />
-                                                </Grid>
-                                            </my:TextField>
-                                        </Button>
-
-                                        <!-- Clear button -->
-                                        <Button Name="PART_ClearButton"
-                                                Grid.Column="2"
-                                                Classes="kind-tool is-stretch"
-                                                my:DisableAssist.IsDisablable="False"
-                                                Command="{Binding $parent[DatePicker].Clear}"
-                                                Content="{my:Icon Close}"
-                                                IsVisible="False" />
-                                    </Grid>
-                                </my:Ripple>
-                            </Border>
-
-                            <!-- UnderText -->
-                            <Border Name="PART_BorderUnderText">
-                                <TextBlock Name="PART_UnderText"
-                                           Margin="0 0 0 -15"
-                                           HorizontalAlignment="Stretch"
-                                           VerticalAlignment="Bottom"
-                                           FontSize="{TemplateBinding (my:InputAssist.UnderFontSize)}"
-                                           FontStyle="{TemplateBinding (my:InputAssist.UnderFontStyle)}"
-                                           FontWeight="{TemplateBinding (my:InputAssist.UnderFontWeight)}"
-                                           Foreground="{TemplateBinding (my:InputAssist.UnderForeground)}"
-                                           IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
-                                           Text="{TemplateBinding (my:InputAssist.UnderText)}" />
-                            </Border>
-
-                            <Popup Name="PART_Popup"
-                                   my:PopupBehavior.EnableSlide="True"
-                                   HorizontalOffset="3"
-                                   InheritsTransform="True"
-                                   IsLightDismissEnabled="True"
-                                   Placement="Bottom"
-                                   PlacementTarget="{TemplateBinding}"
-                                   WindowManagerAddShadowHint="False">
-                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                                        Classes="kind-popup override-background"
-                                        Background="{TemplateBinding (my:PopupAssist.Background)}">
-                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                        <DatePickerPresenter Name="PART_PickerPresenter"
-                                                             Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
-                                                             my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}" />
-                                    </Border>
-                                </Border>
-                            </Popup>
-                        </Panel>
-                    </DataValidationErrors>
-                </ControlTemplate>
-            </Setter>
-
-            <!-- Layout -->
-            <Style Selector="^.icon-right, ^.button-right">
-                <Style Selector="^ /template/ ContentControl#PART_Icon">
-                    <Setter Property="Grid.Column" Value="3" />
-                </Style>
-            </Style>
-
-            <Style Selector="^.icon-right:not(.button-right) /template/ Grid#PART_Grid">
-                <Setter Property="Margin" Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.AddLeftToRight}}" />
-            </Style>
-
-            <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
-                <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Left}}" />
-            </Style>
-
-            <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
-                <Setter Property="Margin" Value="0" />
-            </Style>
-
-            <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
-                <Style Selector="^ /template/ my|TextField#PART_TextField">
-                    <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
-                </Style>
-                <Style Selector="^ /template/ Button#PART_ClearButton">
-                    <Setter Property="Padding" Value="{my:Thickness Sm}" />
-                </Style>
-            </Style>
-
-            <!-- With clear button -->
-            <Style Selector="^[(my|InputAssist.ShowClearButton)=True]">
-                <Style Selector="^[(my|ProxyBehavior.IsEmpty)=False] /template/ Button#PART_ClearButton">
-                    <Setter Property="IsVisible" Value="True" />
-                </Style>
-            </Style>
-
-            <!-- Hover -->
-            <Style Selector="^:not(:disabled):not(:focus-within):pointerover">
-                <Style Selector="^ /template/ Border#PART_HoverBorder">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
-            </Style>
-
-            <!-- Focused -->
-            <Style Selector="^:focus-within, ^:flyout-open">
-                <Setter Property="BorderThickness" Value="1" />
-
-                <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
-            </Style>
-
-            <!-- No date -->
-            <Style Selector="^:hasnodate">
-                <Style Selector="^[(my|DateTimePickerBehavior.OverridePlaceholderText)=False] /template/ Grid#PART_ButtonContentGrid">
-                    <Setter Property="IsVisible" Value="False" />
-                </Style>
-
-                <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=False]">
-                    <Style Selector="^[(my|DateTimePickerBehavior.OverridePlaceholderText)=True] /template/ Button#PART_FlyoutButton > my|TextField">
-                        <Setter Property="InactiveForeground" Value="Transparent" />
-                    </Style>
-                </Style>
-
-                <Style Selector="^ /template/ Button#PART_FlyoutButton > my|TextField TextBlock">
-                    <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
-                </Style>
-            </Style>
-
-            <!-- Error -->
-            <Style Selector="^:error">
-                <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="BorderBrush" Value="{my:Theme Validation.Error}" />
-                <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:Theme Validation.Error}" />
-                <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:Theme Validation.Error}" />
-                <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Validation.Error}" />
-
-                <Style Selector="^ /template/ my|Underline#PART_Underline">
-                    <Setter Property="ActiveBrush" Value="{my:Theme Validation.Error}" />
-                </Style>
-
-                <Style Selector="^ /template/ Border#PART_BorderUnderText">
-                    <Setter Property="IsVisible" Value="False" />
-                </Style>
-            </Style>
-        </ControlTheme>
-
-        <ControlTheme x:Key="MyNet.Theme.DatePicker.Underline" TargetType="DatePicker" BasedOn="{StaticResource {x:Type DatePicker}}">
-            <Setter Property="MinHeight" Value="0" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Underline.Md}" />
-            <Setter Property="my:InputAssist.InnerPadding" Value="{StaticResource MyNet.Padding.Input.Underline.Inner.Md}" />
-            <Setter Property="my:InputAssist.UseFloatingPlaceholder" Value="True" />
-
-            <!-- Default colors -->
-            <Setter Property="my:VariantAssist.DefaultBackground" Value="Transparent" />
-            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Foreground AncestorType=Control}" />
-
-            <!-- Default Theme -->
-            <Setter Property="BorderThickness" Value="0 0 0 1" />
+        <Style Selector="^:selected">
+            <Setter Property="IsHitTestVisible" Value="False" />
             <Setter Property="CornerRadius" Value="0" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="Transparent" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="Transparent" />
-            <Setter Property="my:InteractionAssist.RippleColor" Value="Transparent" />
+        </Style>
 
-            <Setter Property="Template">
-                <ControlTemplate TargetType="DatePicker">
-                    <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
-                        <Panel Name="PART_RootPanel">
+        <Style Selector="^ /template/ Border#PART_ActiveBorder">
+            <Setter Property="my:TransitionsAssist.UseTransitions" Value="False" />
+        </Style>
+    </ControlTheme>
 
-                            <Border Name="PART_MainBorder"
-                                    my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding CornerRadius}" />
+    <ControlTheme x:Key="{x:Type DatePickerPresenter}" TargetType="DatePickerPresenter">
+        <Setter Property="Width" Value="{Binding $parent[DatePicker].Bounds.Width}" />
+        <Setter Property="MinWidth" Value="{Binding $parent[DatePicker].Bounds.Width}" />
+        <Setter Property="MaxHeight" Value="300" />
+        <Setter Property="Padding" Value="{my:Thickness Sm}" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="DatePickerPresenter">
+                <Border Name="Background"
+                        HorizontalAlignment="Stretch"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                        <Grid Name="ContentPanel" RowDefinitions="*,Auto" Margin="{TemplateBinding Padding}">
+                            <Grid Name="PART_PickerContainer">
+                                <Grid.Styles>
+                                    <Style Selector="DateTimePickerPanel">
+                                        <Setter Property="ItemHeight" Value="{Binding $parent[DatePicker].Bounds.Height}" />
 
-                            <Border Name="PART_HoverBorder"
-                                    Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
-                                    BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding CornerRadius}"
-                                    Theme="{StaticResource MyNet.Theme.Border.State}" />
+                                        <Style Selector="^ > ListBoxItem">
+                                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ListBoxItem.Embedded.DatePicker}" />
+                                            <Setter Property="ContentTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{my:Translate Casing=Title}" />
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Style>
+                                </Grid.Styles>
 
-                            <Border ClipToBounds="False">
-                                <Grid Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto,Auto,Auto">
+                                <!-- Column Definitions set in code, ignore here -->
+                                <Panel Name="PART_DayHost" Grid.Column="0">
+                                    <DockPanel>
+                                        <RepeatButton Name="PART_DayUpButton"
+                                                      DockPanel.Dock="Top"
+                                                      Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
+                                                      Opacity="0"
+                                                      Content="{my:Icon ChevronUp, DefinedSize=Xs}" />
+                                        <RepeatButton Name="PART_DayDownButton"
+                                                      DockPanel.Dock="Bottom"
+                                                      Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
+                                                      Opacity="0"
+                                                      Content="{my:Icon ChevronDown, DefinedSize=Xs}" />
+                                        <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
+                                            <DateTimePickerPanel Name="PART_DaySelector" PanelType="Day" ShouldLoop="True" />
+                                        </ScrollViewer>
+                                    </DockPanel>
+                                </Panel>
+                                <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
+                                <Panel Name="PART_MonthHost" Grid.Column="2">
+                                    <DockPanel>
+                                        <RepeatButton Name="PART_MonthUpButton"
+                                                      DockPanel.Dock="Top"
+                                                      Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
+                                                      Opacity="0"
+                                                      Content="{my:Icon ChevronUp, DefinedSize=Xs}" />
+                                        <RepeatButton Name="PART_MonthDownButton"
+                                                      DockPanel.Dock="Bottom"
+                                                      Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
+                                                      Opacity="0"
+                                                      Content="{my:Icon ChevronDown, DefinedSize=Xs}" />
+                                        <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
+                                            <DateTimePickerPanel Name="PART_MonthSelector" PanelType="Month" ShouldLoop="True" />
+                                        </ScrollViewer>
+                                    </DockPanel>
+                                </Panel>
+                                <!-- ReSharper disable once Xaml.IndexOutOfGridDefinition -->
+                                <Panel Name="PART_YearHost" Grid.Column="4">
+                                    <DockPanel>
+                                        <RepeatButton Name="PART_YearUpButton"
+                                                      DockPanel.Dock="Top"
+                                                      Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
+                                                      Opacity="0"
+                                                      Content="{my:Icon ChevronUp, DefinedSize=Xs}" />
+                                        <RepeatButton Name="PART_YearDownButton"
+                                                      DockPanel.Dock="Bottom"
+                                                      Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
+                                                      Opacity="0"
+                                                      Content="{my:Icon ChevronDown, DefinedSize=Xs}" />
+                                        <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
+                                            <DateTimePickerPanel Name="PART_YearSelector" PanelType="Year" ShouldLoop="False" />
+                                        </ScrollViewer>
+                                    </DockPanel>
+                                </Panel>
+
+                                <Rectangle Name="PART_FirstSpacer"
+                                           Width="0"
+                                           HorizontalAlignment="Center"
+                                           Fill="{my:ThemeContext Surface.Border}" />
+                                <Rectangle Name="PART_SecondSpacer"
+                                           Width="0"
+                                           HorizontalAlignment="Center"
+                                           Fill="{my:ThemeContext Surface.Border}" />
+                            </Grid>
+
+                            <Grid Name="AcceptDismissGrid" Grid.Row="1" ColumnDefinitions="*,Auto,*" Margin="0 3 0 0">
+                                <Button Name="PART_AcceptButton"
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Stretch"
+                                        Margin="{my:Thickness Sm}"
+                                        IsDefault="True"
+                                        Focusable="False"
+                                        Classes="variant-solid size-sm"
+                                        my:VariantAssist.DefaultForeground="{my:Theme Primary, Contrast=True}"
+                                        my:VariantAssist.DefaultBackground="{my:Theme Primary}"
+                                        my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                        ToolTip.Tip="{my:Loc Validate}"
+                                        Content="{my:Icon Check}" />
+                                <Button Name="PART_DismissButton"
+                                        Grid.Column="2"
+                                        IsCancel="True"
+                                        Focusable="False"
+                                        HorizontalAlignment="Stretch"
+                                        Margin="{my:Thickness Sm}"
+                                        Classes="variant-text size-sm"
+                                        ToolTip.Tip="{my:Loc Cancel}"
+                                        Content="{my:Icon Close}" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ /template/ Panel">
+            <Style Selector="^:pointerover RepeatButton">
+                <Setter Property="Opacity" Value="1.0" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type DatePicker}" TargetType="DatePicker">
+
+        <!-- Common -->
+        <Setter Property="my:ThemeAssist.Category" Value="Input" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Input}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Md}" />
+        <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Md}" />
+        <Setter Property="FocusAdorner" Value="{x:Null}" />
+        <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
+        <Setter Property="my:IconAssist.Alignment" Value="Left" />
+        <Setter Property="my:IconAssist.Spacing" Value="{StaticResource MyNet.Spacing.Icon}" />
+        <Setter Property="my:IconAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+        <Setter Property="my:InputAssist.InnerFontSize" Value="{Binding $self.FontSize}" />
+        <Setter Property="my:InputAssist.InnerPadding" Value="{StaticResource MyNet.Padding.Input.Inner.Md}" />
+        <Setter Property="my:InputAssist.UnderFontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+        <Setter Property="my:InputAssist.PlaceholderFontSize" Value="{Binding $self.FontSize}" />
+        <Setter Property="my:InputAssist.FloatingScale" Value="0.75" />
+        <Setter Property="my:InputAssist.FloatingOffset" Value="12" />
+        <Setter Property="my:ProxyBehavior.Enable" Value="True" />
+        <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="ClipToBounds" Value="False" />
+
+        <!-- Specific -->
+        <Setter Property="InputMethod.IsInputMethodEnabled" Value="True" />
+        <Setter Property="my:InputAssist.PlaceholderText" Value="{x:Static sys:String.Empty}" />
+        <Setter Property="my:InputBehavior.UpdateValueOnKeyboard" Value="True" />
+        <Setter Property="my:InputBehavior.UpdateValueOnMouseWheel" Value="True" />
+        <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
+        <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Center" />
+        <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
+        <Setter Property="my:ItemsAssist.Margin" Value="0" />
+        <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Xs}" />
+        <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="my:DateTimePickerAssist.PlaceholderDay" Value="{my:Loc Day}" />
+        <Setter Property="my:DateTimePickerAssist.PlaceholderMonth" Value="{my:Loc Month}" />
+        <Setter Property="my:DateTimePickerAssist.PlaceholderYear" Value="{my:Loc Year}" />
+        <Setter Property="my:DateTimePickerBehavior.OverridePlaceholderText" Value="True" />
+        <Setter Property="my:GlobalizationBehavior.UpdateOnCultureChanged" Value="True" />
+        <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
+        <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
+
+        <!-- Default -->
+        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+
+        <!-- Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <Setter Property="my:InputAssist.UnderForeground" Value="{my:Foreground Opacity=High}" />
+        <Setter Property="my:InputAssist.InnerForeground" Value="{my:Foreground Opacity=High}" />
+        <Setter Property="my:InputAssist.PlaceholderForeground" Value="{my:Foreground Opacity=Medium}" />
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:ThemeContext Control.Border.Hover}" />
+        <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:Foreground Opacity=Focus}" />
+        <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="my:PopupAssist.Background" Value="{my:ThemeContext Surface.Level1}" />
+        <Setter Property="my:PopupAssist.Role" Value="{Binding $self.(my:ThemeAssist.Role)}" />
+        <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0.75" />
+        <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True, Opacity=Medium}" />
+        <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:PopupAssist.Background), Opacity=Hover, Contrast=True}" />
+        <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary, Role='(my:PopupAssist.Role)'}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
+
+        <Style Selector="^.context-contrast:not(.has-role)">
+            <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:Theme Primary}" />
+        </Style>
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="DatePicker">
+                <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
+                    <Panel Name="PART_RootPanel">
+
+                        <Border Name="PART_MainBorder"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+
+                        <Border Name="PART_HoverBorder"
+                                Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                        <Border Name="PART_ActiveBorder"
+                                Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                                BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                                <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto,Auto,Auto">
 
                                     <!-- Icon -->
                                     <ContentControl x:Name="PART_Icon"
                                                     Grid.Column="0"
                                                     Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
                                                     VerticalAlignment="Stretch"
+                                                    my:IconAssist.Role="Label"
                                                     Content="{TemplateBinding (my:IconAssist.Icon)}"
                                                     ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                     Focusable="False"
@@ -578,7 +317,8 @@
                                             VerticalAlignment="Stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Theme="{StaticResource MyNet.Theme.Button.Clean}">
-                                        <my:TextField Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
+                                        <my:TextField Name="PART_TextField"
+                                                      Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                                       HorizontalAlignment="Stretch"
                                                       VerticalAlignment="Center"
                                                       ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
@@ -635,90 +375,367 @@
                                                            HorizontalAlignment="Center"
                                                            Fill="{TemplateBinding BorderBrush}" />
                                             </Grid>
-
                                         </my:TextField>
                                     </Button>
 
                                     <!-- Clear button -->
                                     <Button Name="PART_ClearButton"
                                             Grid.Column="2"
-                                            Margin="{my:Thickness Xs, Left}"
-                                            Classes="kind-tool"
+                                            Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Command="{Binding $parent[DatePicker].Clear}"
                                             Content="{my:Icon Close}"
                                             IsVisible="False" />
                                 </Grid>
-                            </Border>
+                            </my:Ripple>
+                        </Border>
 
-                            <!-- Underline -->
-                            <my:Underline x:Name="PART_Underline"
-                                          HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Bottom"
-                                          ActiveBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                                          ActiveHeight="1.4"
-                                          BorderBrush="{TemplateBinding BorderBrush}"
-                                          CornerRadius="0"
-                                          Focusable="False"
-                                          InactiveHeight="0"
-                                          IsHitTestVisible="False"
-                                          Opacity="1" />
+                        <!-- UnderText -->
+                        <Border Name="PART_BorderUnderText">
+                            <TextBlock Name="PART_UnderText"
+                                       Margin="0 0 0 -15"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Bottom"
+                                       FontSize="{TemplateBinding (my:InputAssist.UnderFontSize)}"
+                                       FontStyle="{TemplateBinding (my:InputAssist.UnderFontStyle)}"
+                                       FontWeight="{TemplateBinding (my:InputAssist.UnderFontWeight)}"
+                                       Foreground="{TemplateBinding (my:InputAssist.UnderForeground)}"
+                                       IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                       Text="{TemplateBinding (my:InputAssist.UnderText)}" />
+                        </Border>
 
-                            <!-- UnderText -->
-                            <Border Name="PART_BorderUnderText">
-                                <TextBlock Name="PART_UnderText"
-                                           Margin="0 0 0 -15"
-                                           HorizontalAlignment="Stretch"
-                                           VerticalAlignment="Bottom"
-                                           FontSize="{TemplateBinding (my:InputAssist.UnderFontSize)}"
-                                           FontStyle="{TemplateBinding (my:InputAssist.UnderFontStyle)}"
-                                           FontWeight="{TemplateBinding (my:InputAssist.UnderFontWeight)}"
-                                           Foreground="{TemplateBinding (my:InputAssist.UnderForeground)}"
-                                           IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
-                                           Text="{TemplateBinding (my:InputAssist.UnderText)}" />
-                            </Border>
-
-                            <Popup Name="PART_Popup"
-                                   my:PopupBehavior.EnableSlide="True"
-                                   HorizontalOffset="3"
-                                   InheritsTransform="True"
-                                   IsLightDismissEnabled="True"
-                                   Placement="Bottom"
-                                   PlacementTarget="{TemplateBinding}"
-                                   WindowManagerAddShadowHint="False">
-                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                                        Classes="kind-popup override-background"
-                                        Background="{TemplateBinding (my:PopupAssist.Background)}">
-                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                        <DatePickerPresenter Name="PART_PickerPresenter"
-                                                             Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
-                                                             my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}" />
-                                    </Border>
+                        <Popup Name="PART_Popup"
+                               my:PopupBehavior.EnableSlide="True"
+                               HorizontalOffset="3"
+                               InheritsTransform="True"
+                               IsLightDismissEnabled="True"
+                               Placement="Bottom"
+                               PlacementTarget="{TemplateBinding}"
+                               WindowManagerAddShadowHint="False">
+                            <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Theme="{StaticResource MyNet.Theme.Border.Popup}"
+                                    Background="{TemplateBinding (my:PopupAssist.Background)}">
+                                <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                    <DatePickerPresenter Name="PART_PickerPresenter"
+                                                         Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
+                                                         my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}" />
                                 </Border>
-                            </Popup>
-                        </Panel>
-                    </DataValidationErrors>
-                </ControlTemplate>
-            </Setter>
+                            </Border>
+                        </Popup>
+                    </Panel>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
 
-            <!-- Focused -->
-            <Style Selector="^:focus-within, ^:flyout-open">
-                <Setter Property="BorderThickness" Value="0 0 0 1" />
+        <!-- Layout -->
+        <Style Selector="^ /template/ ContentControl#PART_Icon">
+            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
 
-                <Style Selector="^ /template/ my|Underline#PART_Underline">
-                    <Setter Property="IsActive" Value="True" />
+        <Style Selector="^.icon-right, ^.button-right">
+            <Style Selector="^ /template/ ContentControl#PART_Icon">
+                <Setter Property="Grid.Column" Value="3" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.icon-right:not(.button-right) /template/ Grid#PART_Grid">
+            <Setter Property="Margin" Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.AddLeftToRight}}" />
+        </Style>
+
+        <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
+            <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Left}}" />
+        </Style>
+
+        <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
+            <Setter Property="Margin" Value="0" />
+        </Style>
+
+        <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
+            <Style Selector="^ /template/ my|TextField#PART_TextField">
+                <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
+            </Style>
+            <Style Selector="^ /template/ Button#PART_ClearButton">
+                <Setter Property="Padding" Value="{my:Thickness Sm}" />
+            </Style>
+        </Style>
+
+        <!-- With clear button -->
+        <Style Selector="^[(my|InputAssist.ShowClearButton)=True]">
+            <Style Selector="^[(my|ProxyBehavior.IsEmpty)=False] /template/ Button#PART_ClearButton">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+        </Style>
+
+        <!-- Hover -->
+        <Style Selector="^:not(:disabled):not(:focus-within):pointerover">
+            <Style Selector="^ /template/ Border#PART_HoverBorder">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+
+        <!-- Focused -->
+        <Style Selector="^:focus-within, ^:flyout-open">
+            <Setter Property="BorderThickness" Value="1" />
+
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+
+        <!-- No date -->
+        <Style Selector="^:hasnodate">
+            <Style Selector="^[(my|DateTimePickerBehavior.OverridePlaceholderText)=False] /template/ Grid#PART_ButtonContentGrid">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+
+            <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=False]">
+                <Style Selector="^[(my|DateTimePickerBehavior.OverridePlaceholderText)=True] /template/ Button#PART_FlyoutButton > my|TextField">
+                    <Setter Property="InactiveForeground" Value="Transparent" />
                 </Style>
             </Style>
 
-            <!-- Error -->
-            <Style Selector="^:error">
-                <Setter Property="BorderThickness" Value="0 0 0 1" />
+            <Style Selector="^ /template/ Button#PART_FlyoutButton > my|TextField TextBlock">
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+            </Style>
+        </Style>
+
+        <!-- Error -->
+        <Style Selector="^:error">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:Theme Validation.Error}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Validation.Error}" />
+
+            <Style Selector="^ /template/ my|Underline#PART_Underline">
+                <Setter Property="ActiveBrush" Value="{my:Theme Validation.Error}" />
             </Style>
 
-            <Style Selector="^[(my|ThemeAssist.Role)=Contrast]">
-                <Setter Property="Background" Value="Transparent" />
+            <Style Selector="^ /template/ Border#PART_BorderUnderText">
+                <Setter Property="IsVisible" Value="False" />
             </Style>
+        </Style>
 
-        </ControlTheme>
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Sm}" />
+
+            <Style Selector="^ /template/ ContentControl#PART_Icon">
+                <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Lg}" />
+
+            <Style Selector="^ /template/ ContentControl#PART_Icon">
+                <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="MyNet.Theme.DatePicker.Underline" TargetType="DatePicker" BasedOn="{StaticResource {x:Type DatePicker}}">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Underline.Md}" />
+        <Setter Property="my:InputAssist.InnerPadding" Value="{StaticResource MyNet.Padding.Input.Underline.Inner.Md}" />
+        <Setter Property="my:InputAssist.UseFloatingPlaceholder" Value="True" />
+
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.Background" Value="Transparent" />
+
+        <!-- Default Theme -->
+        <Setter Property="BorderThickness" Value="0 0 0 1" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="Transparent" />
+        <Setter Property="my:InteractionAssist.ActiveBackground" Value="Transparent" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="Transparent" />
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="DatePicker">
+                <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
+                    <Panel Name="PART_RootPanel">
+
+                        <Border Name="PART_MainBorder"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+
+                        <Border Name="PART_HoverBorder"
+                                Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                        <Border ClipToBounds="False">
+                            <Grid Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto,Auto,Auto">
+
+                                <!-- Icon -->
+                                <ContentControl x:Name="PART_Icon"
+                                                Grid.Column="0"
+                                                Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
+                                                VerticalAlignment="Stretch"
+                                                my:IconAssist.Role="Label"
+                                                Content="{TemplateBinding (my:IconAssist.Icon)}"
+                                                ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                Focusable="False"
+                                                Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
+                                    <ContentControl.IsVisible>
+                                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </ContentControl.IsVisible>
+                                </ContentControl>
+
+                                <Button Name="PART_FlyoutButton"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        my:DisableAssist.IsDisablable="False"
+                                        Theme="{StaticResource MyNet.Theme.Button.Clean}">
+                                    <my:TextField Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
+                                                  HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Center"
+                                                  ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
+                                                  FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
+                                                  FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
+                                                  InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
+                                                  InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
+                                                  InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
+                                                  InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
+                                                  InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
+                                                  Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
+                                                  UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
+                                                  PlaceholderText="{TemplateBinding (my:InputAssist.PlaceholderText)}"
+                                                  PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
+
+                                        <Grid Name="PART_ButtonContentGrid" VerticalAlignment="Center" ColumnDefinitions="78*,Auto,132*,Auto,78*">
+                                            <TextBlock Name="PART_DayTextBlock"
+                                                       Padding="{my:Thickness Sm, Horizontal}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}"
+                                                       Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderDay}" />
+                                            <TextBlock Name="PART_MonthTextBlock"
+                                                       Grid.Column="0"
+                                                       Padding="{my:Thickness Sm, Horizontal}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}"
+                                                       Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderMonth}"
+                                                       TextAlignment="Left" />
+                                            <TextBlock Name="PART_YearTextBlock"
+                                                       Grid.Column="0"
+                                                       Padding="{my:Thickness Sm, Horizontal}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}"
+                                                       Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderYear}" />
+                                            <Rectangle Name="PART_FirstSpacer"
+                                                       Grid.Column="1"
+                                                       Width="1"
+                                                       Height="{TemplateBinding Height}"
+                                                       HorizontalAlignment="Center"
+                                                       Fill="{TemplateBinding BorderBrush}" />
+                                            <Rectangle Name="PART_SecondSpacer"
+                                                       Grid.Column="3"
+                                                       Width="1"
+                                                       Height="{TemplateBinding Height}"
+                                                       HorizontalAlignment="Center"
+                                                       Fill="{TemplateBinding BorderBrush}" />
+                                        </Grid>
+
+                                    </my:TextField>
+                                </Button>
+
+                                <!-- Clear button -->
+                                <Button Name="PART_ClearButton"
+                                        Grid.Column="2"
+                                        Margin="{my:Thickness Xs, Left}"
+                                        Classes="kind-tool"
+                                        my:DisableAssist.IsDisablable="False"
+                                        Command="{Binding $parent[DatePicker].Clear}"
+                                        Content="{my:Icon Close}"
+                                        IsVisible="False" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Underline -->
+                        <my:Underline x:Name="PART_Underline"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Bottom"
+                                      ActiveBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                      ActiveHeight="1.4"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      CornerRadius="0"
+                                      Focusable="False"
+                                      InactiveHeight="0"
+                                      IsHitTestVisible="False"
+                                      Opacity="1" />
+
+                        <!-- UnderText -->
+                        <Border Name="PART_BorderUnderText">
+                            <TextBlock Name="PART_UnderText"
+                                       Margin="0 0 0 -15"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Bottom"
+                                       FontSize="{TemplateBinding (my:InputAssist.UnderFontSize)}"
+                                       FontStyle="{TemplateBinding (my:InputAssist.UnderFontStyle)}"
+                                       FontWeight="{TemplateBinding (my:InputAssist.UnderFontWeight)}"
+                                       Foreground="{TemplateBinding (my:InputAssist.UnderForeground)}"
+                                       IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                       Text="{TemplateBinding (my:InputAssist.UnderText)}" />
+                        </Border>
+
+                        <Popup Name="PART_Popup"
+                               my:PopupBehavior.EnableSlide="True"
+                               HorizontalOffset="3"
+                               InheritsTransform="True"
+                               IsLightDismissEnabled="True"
+                               Placement="Bottom"
+                               PlacementTarget="{TemplateBinding}"
+                               WindowManagerAddShadowHint="False">
+                            <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Theme="{StaticResource MyNet.Theme.Border.Popup}"
+                                    Background="{TemplateBinding (my:PopupAssist.Background)}">
+                                <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                    <DatePickerPresenter Name="PART_PickerPresenter"
+                                                         Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
+                                                         my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}" />
+                                </Border>
+                            </Border>
+                        </Popup>
+                    </Panel>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- Focused -->
+        <Style Selector="^:focus-within, ^:flyout-open">
+            <Setter Property="BorderThickness" Value="0 0 0 1" />
+
+            <Style Selector="^ /template/ my|Underline#PART_Underline">
+                <Setter Property="IsActive" Value="True" />
+            </Style>
+        </Style>
+
+        <!-- Error -->
+        <Style Selector="^:error">
+            <Setter Property="BorderThickness" Value="0 0 0 1" />
+        </Style>
+
+    </ControlTheme>
 
 </ResourceDictionary>

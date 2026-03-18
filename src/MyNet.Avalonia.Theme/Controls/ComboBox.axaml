@@ -18,6 +18,8 @@
         <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[ComboBox].(my:IconAssist.Alignment)}" />
         <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[ComboBox].(my:IconAssist.Spacing)}" />
         <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[ComboBox].(my:IconAssist.Opacity)}" />
+        <Setter Property="my:IconAssist.LabelSize" Value="{Binding $parent[ComboBox].(my:IconAssist.LabelSize)}" />
+        <Setter Property="my:IconAssist.PrimarySize" Value="{Binding $parent[ComboBox].(my:IconAssist.PrimarySize)}" />
         <Setter Property="my:InteractionAssist.HoverBackground" Value="{Binding $parent[ComboBox].(my:ItemsAssist.HoverBackground)}" />
         <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{Binding $parent[ComboBox].(my:ItemsAssist.HoverBorderBrush)}" />
         <Setter Property="my:InteractionAssist.HoverForeground" Value="{Binding $parent[ComboBox].(my:ItemsAssist.HoverForeground)}" />
@@ -70,13 +72,11 @@
         <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
 
-        <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
-        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
-        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+        <!-- Default -->
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
-
-        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
         <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
@@ -144,6 +144,7 @@
                                                     Grid.Column="0"
                                                     Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
                                                     VerticalAlignment="Stretch"
+                                                    my:IconAssist.Role="Label"
                                                     Content="{TemplateBinding (my:IconAssist.Icon)}"
                                                     ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                     Focusable="False"
@@ -240,7 +241,7 @@
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                                        Classes="kind-popup override-background"
+                                        Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
@@ -267,6 +268,10 @@
         </Style>
 
         <!-- Layout -->
+        <Style Selector="^ /template/ ContentControl#PART_Icon">
+            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+
         <Style Selector="^.icon-right, ^.button-right">
             <Style Selector="^ /template/ ContentControl#PART_Icon">
                 <Setter Property="Grid.Column" Value="4" />
@@ -356,6 +361,26 @@
                 <Setter Property="Opacity" Value="1" />
             </Style>
         </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Sm}" />
+
+            <Style Selector="^ /template/ ContentControl#PART_Icon">
+                <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Lg}" />
+
+            <Style Selector="^ /template/ ContentControl#PART_Icon">
+                <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+            </Style>
+        </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.ComboBox.Underline" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
@@ -365,8 +390,7 @@
         <Setter Property="my:InputAssist.UseFloatingPlaceholder" Value="True" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="Transparent" />
-        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Foreground AncestorType=Control}" />
+        <Setter Property="my:VariantAssist.Background" Value="Transparent" />
 
         <!-- Default Theme -->
         <Setter Property="BorderThickness" Value="0 0 0 1" />
@@ -402,6 +426,7 @@
                                                 Grid.Column="0"
                                                 Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
                                                 VerticalAlignment="Stretch"
+                                                my:IconAssist.Role="Label"
                                                 Content="{TemplateBinding (my:IconAssist.Icon)}"
                                                 ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                 Focusable="False"
@@ -512,7 +537,7 @@
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                                        Classes="kind-popup override-background"
+                                        Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">

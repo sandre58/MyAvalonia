@@ -14,7 +14,7 @@ using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.Views.Samples;
 using MyNet.Avalonia.Extended.Toasting;
 using MyNet.Avalonia.Templates;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Observable;
 using MyNet.UI.Commands;
 using MyNet.UI.Notifications;
@@ -35,7 +35,7 @@ internal sealed class NotificationPageViewModel : ControlCatalogViewModel
         : base("Notifications",
             [
                 new ControlThemeBuilder()
-                    .AddRoles(ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information, ThemeRole.Custom)
+                    .AddRoles(ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information, ThemeRole.Inverse)
             ])
     {
         ResetToasterService();
@@ -83,7 +83,7 @@ internal sealed class NotificationPageViewModel : ControlCatalogViewModel
 
     private static INotification CreateNotificationFromRole(ThemeRole role)
     {
-        if (role == ThemeRole.Custom) return new CustomNotification();
+        if (role == ThemeRole.Inverse) return new CustomNotification();
 
         var severity = role switch
         {

@@ -158,7 +158,7 @@ public class NavigationHost : TransitioningContentControl, IDisposable
         }
     }
 
-    private void OnNavigated(object? sender, NavigationEventArgs e)
+    private void OnNavigated(object? sender, UI.Navigation.NavigationEventArgs e)
     {
         using (PerformanceMonitor.Measure($"[NavigationHost] Navigation to {e.NewPage.GetType().Name}", category: PerformanceCategory.Pages))
         {

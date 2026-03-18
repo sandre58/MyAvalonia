@@ -1,0 +1,244 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    x:ClassModifier="internal">
+
+    <ControlTheme x:Key="MyNet.Theme.Button.Caption" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control, Opacity=High}" />
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
+        <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Width.Button.Caption}" />
+        <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Caption}" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Caption}" />
+        <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Caption}" />
+
+        <Style Selector="^.variant-close">
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Theme Button.Close.Hover}" />
+            <Setter Property="my:InteractionAssist.HoverForeground" Value="White" />
+            <Setter Property="my:InteractionAssist.RippleColor" Value="White" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type WindowDrawnDecorations}" TargetType="WindowDrawnDecorations">
+
+        <!-- Default values -->
+        <Setter Property="DefaultTitleBarHeight" Value="30" />
+        <Setter Property="DefaultFrameThickness" Value="1"/>
+        <Setter Property="DefaultShadowThickness" Value="8"/>
+
+        <Setter Property="Template">
+
+            <WindowDrawnDecorationsTemplate>
+                <WindowDrawnDecorationsContent>
+
+                    <!-- ===================================================== -->
+                    <!-- UNDERLAY                                              -->
+                    <!-- ===================================================== -->
+
+                    <WindowDrawnDecorationsContent.Underlay>
+
+                        <Panel x:Name="PART_UnderlayWrapper">
+
+                            <!-- Window border -->
+                            <Border x:Name="PART_WindowBorder"
+                                    Background="{my:ThemeRole Background, IgnoreForegroundParent=True}"
+                                    BorderBrush="{my:ThemeRole BorderBrush, IgnoreForegroundParent=True}"
+                                    BorderThickness="{TemplateBinding FrameThickness}"
+                                    IsHitTestVisible="False"/>
+
+                            <!-- Titlebar visual background -->
+                            <Border x:Name="PART_TitleBarBackground"
+                                    VerticalAlignment="Top"
+                                    Height="{TemplateBinding TitleBarHeight}"
+                                    Background="{TemplateBinding (my:WindowAssist.TitleBarBackground)}"
+                                    IsHitTestVisible="False"
+                                    IsVisible="{TemplateBinding HasTitleBar}"/>
+
+                            <!-- Drag region -->
+                            <Panel x:Name="PART_TitleBar"
+                                   VerticalAlignment="Top"
+                                   Height="{TemplateBinding TitleBarHeight}"
+                                   Background="Transparent"
+                                   IsVisible="{TemplateBinding HasTitleBar}"
+                                   WindowDecorationProperties.ElementRole="TitleBar"/>
+
+                        </Panel>
+
+                    </WindowDrawnDecorationsContent.Underlay>
+
+
+                    <!-- ===================================================== -->
+                    <!-- OVERLAY                                               -->
+                    <!-- ===================================================== -->
+
+                    <WindowDrawnDecorationsContent.Overlay>
+
+                        <Panel x:Name="PART_OverlayWrapper">
+
+                            <DockPanel x:Name="PART_TitleBarContent"
+                                       VerticalAlignment="Top"
+                                       Height="{TemplateBinding TitleBarHeight}"
+                                       LastChildFill="True"
+                                       IsVisible="{TemplateBinding HasTitleBar}"
+                                       WindowDecorationProperties.ElementRole="DecorationsElement">
+
+                                <!-- Caption buttons -->
+                                <StackPanel DockPanel.Dock="Right"
+                                            Orientation="Horizontal"
+                                            Spacing="0">
+
+                                    <Button x:Name="PART_FullScreenButton"
+                                            Theme="{StaticResource MyNet.Theme.Button.Caption}"
+                                            IsVisible="{TemplateBinding (my:WindowAssist.ShowFullScreenButton)}"
+                                            WindowDecorationProperties.ElementRole="FullScreenButton">
+                                        <PathIcon x:Name="FullScreenButtonIcon" Data="{StaticResource MyNet.Geometry.ArrowExpand}" />
+                                    </Button>
+
+                                    <Button x:Name="PART_MinimizeButton"
+                                            Theme="{StaticResource MyNet.Theme.Button.Caption}"
+                                            IsVisible="{TemplateBinding (my:WindowAssist.ShowMinimizeButton)}"
+                                            WindowDecorationProperties.ElementRole="MinimizeButton">
+                                        <PathIcon Data="{StaticResource MyNet.Geometry.WindowMinimize}" />
+                                    </Button>
+
+                                    <Button x:Name="PART_MaximizeButton"
+                                            Theme="{StaticResource MyNet.Theme.Button.Caption}"
+                                            IsVisible="{TemplateBinding (my:WindowAssist.ShowMaximizeButton)}"
+                                            WindowDecorationProperties.ElementRole="MaximizeButton">
+                                        <PathIcon x:Name="RestoreButtonIcon" Data="{StaticResource MyNet.Geometry.WindowMaximize}" />
+                                    </Button>
+
+                                    <Button x:Name="PART_CloseButton"
+                                            Theme="{StaticResource MyNet.Theme.Button.Caption}"
+                                            Classes="variant-close"
+                                            IsVisible="{TemplateBinding (my:WindowAssist.ShowCloseButton)}"
+                                            WindowDecorationProperties.ElementRole="CloseButton">
+                                        <PathIcon Data="{StaticResource MyNet.Geometry.WindowClose}" />
+                                    </Button>
+
+                                </StackPanel>
+
+
+                                <!-- Right custom content -->
+                                <ContentPresenter DockPanel.Dock="Right"
+                                                  VerticalAlignment="Center"
+                                                  Content="{TemplateBinding (my:WindowAssist.RightTitleBarContent)}"
+                                                  WindowDecorationProperties.ElementRole="DecorationsElement"/>
+
+
+                                <!-- Left custom content -->
+                                <ContentPresenter DockPanel.Dock="Left"
+                                                  VerticalAlignment="Center"
+                                                  Content="{TemplateBinding (my:WindowAssist.LeftTitleBarContent)}"
+                                                  WindowDecorationProperties.ElementRole="DecorationsElement"/>
+
+
+                                <!-- Title -->
+                                <Panel IsHitTestVisible="False" ClipToBounds="True">
+                                    <TextBlock Text="{TemplateBinding Title}"
+                                               Margin="12,0,0,0"
+                                               VerticalAlignment="Center"
+                                               FontSize="12"
+                                               IsVisible="{TemplateBinding (my:WindowAssist.IsTitleVisible)}"/>
+                                </Panel>
+
+                            </DockPanel>
+
+                        </Panel>
+
+                    </WindowDrawnDecorationsContent.Overlay>
+
+
+                    <!-- ===================================================== -->
+                    <!-- FULLSCREEN POPOVER                                    -->
+                    <!-- ===================================================== -->
+
+                    <WindowDrawnDecorationsContent.FullscreenPopover>
+
+                        <Panel Height="{TemplateBinding DefaultTitleBarHeight}"
+                               VerticalAlignment="Top"
+                               Background="{my:Theme Surface.Level3}"
+                               WindowDecorationProperties.ElementRole="TitleBar">
+
+                            <TextBlock Text="{TemplateBinding Title}"
+                                       VerticalAlignment="Center"
+                                       Margin="12,0,0,0"
+                                       IsHitTestVisible="False"/>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                                <Button Theme="{StaticResource MyNet.Theme.Button.Caption}"
+                                        WindowDecorationProperties.ElementRole="FullScreenButton">
+                                    <PathIcon Data="{StaticResource MyNet.Geometry.ArrowCollapse}"/>
+                                </Button>
+
+                                <Button Theme="{StaticResource MyNet.Theme.Button.Caption}"
+                                        Classes="variant-close"
+                                        WindowDecorationProperties.ElementRole="CloseButton">
+                                    <PathIcon Data="{StaticResource MyNet.Geometry.WindowClose}"/>
+                                </Button>
+
+                            </StackPanel>
+
+                        </Panel>
+
+                    </WindowDrawnDecorationsContent.FullscreenPopover>
+
+                </WindowDrawnDecorationsContent>
+            </WindowDrawnDecorationsTemplate>
+
+        </Setter>
+
+
+        <!-- ===================================================== -->
+        <!-- STATES                                                -->
+        <!-- ===================================================== -->
+
+        <!-- Maximized -->
+        <Style Selector="^:maximized /template/ PathIcon#RestoreButtonIcon">
+            <Setter Property="Data" Value="{StaticResource MyNet.Geometry.WindowRestore}" />
+        </Style>
+
+        <!-- Fullscreen -->
+        <Style Selector="^:fullscreen /template/ PathIcon#FullScreenButtonIcon">
+            <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ArrowCollapse}" />
+        </Style>
+
+
+        <!-- Shadow -->
+        <Style Selector="^:has-shadow /template/ Panel#PART_UnderlayWrapper">
+            <Setter Property="Margin" Value="{TemplateBinding ShadowThickness}" />
+        </Style>
+
+        <Style Selector="^:has-shadow /template/ Panel#PART_OverlayWrapper">
+            <Setter Property="Margin" Value="{TemplateBinding ShadowThickness}" />
+        </Style>
+
+        <Style Selector="^:has-shadow /template/ Border#PART_WindowBorder">
+            <Setter Property="BoxShadow" Value="0 2 10 2 #80000000"/>
+        </Style>
+
+
+        <!-- Border -->
+        <Style Selector="^:has-border /template/ DockPanel#PART_TitleBarContent">
+            <Setter Property="Margin" Value="1,1,1,0"/>
+        </Style>
+
+        <Style Selector="^:has-border /template/ Panel#PART_TitleBar">
+            <Setter Property="Margin" Value="1,1,1,0"/>
+        </Style>
+
+        <Style Selector="^:has-border /template/ Border#PART_TitleBarBackground">
+            <Setter Property="Margin" Value="1,1,1,0"/>
+        </Style>
+
+    </ControlTheme>
+
+</ResourceDictionary>

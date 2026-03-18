@@ -8,7 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using Avalonia.Media;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming.Palettes;
 
 namespace MyNet.Avalonia.Theme.TypeConverters;
 

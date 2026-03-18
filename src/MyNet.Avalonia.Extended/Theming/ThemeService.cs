@@ -6,8 +6,7 @@
 
 using System;
 using MyNet.Avalonia.Extensions;
-using MyNet.Avalonia.Theme.Infrastructure;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.UI.Theming;
 using MyNet.Utilities;
 
@@ -17,7 +16,7 @@ namespace MyNet.Avalonia.Extended.Theming;
 /// Service for managing application myTheme (Dark/Light/HighContrast) and brand colors (Primary/Accent).
 /// Integrates with MyNet.Avalonia.Theme.MyTheme for hot-reload support.
 /// </summary>
-public class ThemeService(IMyTheme myTheme, IThemeBaseRegistry themeBaseRegistry) : IThemeService
+public class ThemeService(IThemeBrushService themeBrushService, IThemeBaseRegistry themeBaseRegistry) : IThemeService
 {
     /// <summary>
     /// Event raised when the myTheme changes.
@@ -31,9 +30,9 @@ public class ThemeService(IMyTheme myTheme, IThemeBaseRegistry themeBaseRegistry
     {
         get
         {
-            var primary = myTheme.Primary;
-            var accent = myTheme.Accent;
-            return new(themeBaseRegistry.Get(myTheme.Theme.OrEmpty()) ?? themeBaseRegistry.Dark, primary.Base.ToHex(), accent.Base.ToHex(), primary.Foreground.ToHex(), accent.Foreground.ToHex());
+            var primary = themeBrushService.GetPrimary();
+            var accent = themeBrushService.GetAccent();
+            return new(themeBaseRegistry.Get(themeBrushService.GetTheme().OrEmpty()) ?? themeBaseRegistry.Dark, primary?.Base.ToHex(), accent?.Base.ToHex(), primary?.Foreground.ToHex(), accent?.Foreground.ToHex());
         }
     }
 
@@ -43,20 +42,20 @@ public class ThemeService(IMyTheme myTheme, IThemeBaseRegistry themeBaseRegistry
     /// <param name="theme">The myTheme to apply.</param>
     public void ApplyTheme(UI.Theming.Theme theme)
     {
-        myTheme.Theme = theme.Base.ToString();
+        themeBrushService.SetTheme(theme.Base.ToString().OrEmpty());
 
         var primaryColor = theme.PrimaryColor.ToColor();
         var primaryForegroundColor = theme.PrimaryForegroundColor.ToColor();
         if (primaryColor.HasValue)
         {
-            myTheme.Primary = new ColorShades(primaryColor.Value, primaryForegroundColor);
+            themeBrushService.SetPrimary(primaryColor.Value, primaryForegroundColor);
         }
 
         var accentColor = theme.AccentColor.ToColor();
         var accentForegroundColor = theme.AccentForegroundColor.ToColor();
         if (accentColor.HasValue)
         {
-            myTheme.Accent = new ColorShades(accentColor.Value, accentForegroundColor);
+            themeBrushService.SetAccent(accentColor.Value, accentForegroundColor);
         }
 
         ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(CurrentTheme));

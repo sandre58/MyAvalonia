@@ -12,7 +12,7 @@ namespace MyNet.Avalonia.Demo.ViewModels;
 internal sealed class SelectableTextBlockPageViewModel() : ControlCatalogViewModel(nameof(SelectableTextBlock),
 [
     new ControlThemeBuilder()
-        .AddVariants("opacity-high", "opacity-medium", "opacity-low", "variant-underline", "variant-delete", "is-disablable")
+        .AddVariants("opacity-high", "opacity-medium", "opacity-low", "text-helper", "text-watermark", "variant-underline", "variant-strikethrough", "is-disablable")
         .AddDefaultRoles()
-        .AddSizes("font-sub-caption", "font-caption", "h6", "h5", "h4", "h3", "h2", "h1")
+        .AddSizes("font-xs", "font-sm", "font-md", "font-lg", "font-xl", "font-h6", "font-h5", "font-h4", "font-h3", "font-h2", "font-h1")
 ]);

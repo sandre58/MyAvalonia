@@ -5,27 +5,27 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Reactive.Disposables;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using MyNet.Avalonia.Extended.Controls;
-using MyNet.Avalonia.Extended.Toasting.Lifetime;
 using MyNet.Avalonia.Extended.Toasting.Lifetime.Clear;
 using MyNet.Avalonia.Templates;
 using MyNet.UI.Notifications;
 using MyNet.UI.Toasting;
 using MyNet.UI.Toasting.Settings;
-using MyNet.Utilities;
+using WindowNotificationManager = Avalonia.Controls.Notifications.WindowNotificationManager;
 
 namespace MyNet.Avalonia.Extended.Toasting;
 
 public class ToasterService : IToasterService, IDisposable
 {
-    private readonly Lazy<WindowNotificationManager> _windowNotificationManager;
-    private readonly TimeAndCountBasedLifetimeSupervisor _lifetimeSupervisor;
-    private readonly CompositeDisposable _cleanup = [];
+    private WindowNotificationManager? _windowNotificationManager;
+    private readonly TimeSpan _defaultDuration;
+    private readonly ConcurrentDictionary<int, Toast> _activeToasts = new();
 
     public event EventHandler<ToastEventArgs>? ToastShown;
 
@@ -39,22 +39,14 @@ public class ToasterService : IToasterService, IDisposable
 
     public ToasterService(Func<TopLevel?> topLevel, ToasterSettings settings)
     {
-        _lifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(settings.Duration, MaximumToastsCount.FromCount(settings.MaxItems));
+        _defaultDuration = settings.Duration;
 
-        _windowNotificationManager = new Lazy<WindowNotificationManager>(() => Dispatcher.UIThread.Invoke(() => new WindowNotificationManager(topLevel())
+        Dispatcher.UIThread.Post(() => _windowNotificationManager = new WindowNotificationManager(topLevel())
         {
             Position = ConvertPosition(settings.Position),
+            MaxItems = settings.MaxItems,
             Margin = new Thickness(settings.OffsetX, settings.OffsetY)
-        }));
-
-        _cleanup.AddRange([
-
-            System.Reactive.Linq.Observable.FromEventPattern<ShowToastEventArgs>(x => _lifetimeSupervisor.ShowToastRequested += x, x => _lifetimeSupervisor.ShowToastRequested -= x)
-                      .Subscribe(x => ShowToast(x.EventArgs.Toast)),
-
-            System.Reactive.Linq.Observable.FromEventPattern<CloseToastEventArgs>(x => _lifetimeSupervisor.CloseToastRequested += x, x => _lifetimeSupervisor.CloseToastRequested -= x)
-                      .Subscribe(x => CloseToast(x.EventArgs.Toast))
-        ]);
+        });
 
         RegisteredDataTemplate.Register<MessageNotification>(x => new MessageNotificationControl
         {
@@ -72,14 +64,15 @@ public class ToasterService : IToasterService, IDisposable
     #region IToasterService
 
     /// <summary>
-    /// Displays a modal dialog of a type that is determined by the dialog type locator.
+    /// Shows a toast notification using the native <see cref="WindowNotificationManager"/>.
     /// </summary>
     public void Show(INotification notification, ToastSettings settings, bool isUnique = false, Action<INotification>? onClick = null, Action? onClose = null)
     {
         if (isUnique)
             ClearToasts(new ClearBySimilarNotification(notification));
 
-        _lifetimeSupervisor.PushToast(CreateToast(notification, settings, onClick, onClose));
+        var toast = CreateToast(notification, settings, onClick, onClose);
+        ShowToast(toast);
     }
 
     /// <summary>
@@ -93,7 +86,14 @@ public class ToasterService : IToasterService, IDisposable
     /// <param name="notification">.</param>
     public void Hide(INotification notification) => ClearToasts(new ClearByNotification(notification));
 
-    private void ClearToasts(IClearStrategy clearStrategy) => _lifetimeSupervisor.ClearToasts(clearStrategy);
+    public IEnumerable<INotification> GetActiveToasts() => [.. _activeToasts.Values.Select(x => x.Notification)];
+
+    private void ClearToasts(IClearStrategy clearStrategy)
+    {
+        var toastsToRemove = clearStrategy.GetToastsToRemove(_activeToasts.Values).ToList();
+        foreach (var toast in toastsToRemove)
+            CloseToast(toast);
+    }
 
     #endregion
 
@@ -116,17 +116,11 @@ public class ToasterService : IToasterService, IDisposable
             _ => throw new InvalidOperationException()
         };
 
-        var onEnter = new Action(() =>
-        {
-            if (toast.Settings.FreezeOnMouseEnter)
-                toast.IsLocked = true;
-        });
+        var expiration = toast.Settings.ClosingStrategy is ToastClosingStrategy.AutoClose or ToastClosingStrategy.Both
+            ? _defaultDuration
+            : TimeSpan.Zero;
 
-        var onLeave = new Action(() =>
-        {
-            if (toast.Settings.FreezeOnMouseEnter)
-                toast.IsLocked = false;
-        });
+        _activeToasts[toast.GetHashCode()] = toast;
 
         var onClick = new Action(() =>
         {
@@ -134,16 +128,30 @@ public class ToasterService : IToasterService, IDisposable
             ToastClicked?.Invoke(this, new ToastEventArgs(toast.Notification));
         });
 
-        _windowNotificationManager.Value.Show(toast.Notification, type, TimeSpan.FromHours(1), onClick, toast.OnClose, onEnter, onLeave, [.. classes]);
+        var onClose = new Action(() =>
+        {
+            if (_activeToasts.TryRemove(toast.GetHashCode(), out _))
+                ToastClosed?.Invoke(this, new ToastEventArgs(toast.Notification));
+            toast.OnClose?.Invoke();
+        });
 
-        ToastShown?.Invoke(this, new ToastEventArgs(toast.Notification));
+        // Use Background priority to ensure the manager's OnApplyTemplate has run
+        // (layout pass executes at higher priority than Background).
+        Dispatcher.UIThread.Post(() =>
+        {
+            _windowNotificationManager?.Show(toast.Notification, type, expiration, onClick, onClose, [.. classes]);
+            ToastShown?.Invoke(this, new ToastEventArgs(toast.Notification));
+        },
+        DispatcherPriority.Background);
     }
 
     private void CloseToast(Toast toast)
     {
-        _windowNotificationManager.Value.Close(toast.Notification);
-
-        ToastClosed?.Invoke(this, new ToastEventArgs(toast.Notification));
+        if (_activeToasts.TryRemove(toast.GetHashCode(), out _))
+        {
+            Dispatcher.UIThread.Post(() => _windowNotificationManager?.Close(toast.Notification));
+            ToastClosed?.Invoke(this, new ToastEventArgs(toast.Notification));
+        }
     }
 
     #endregion
@@ -160,23 +168,20 @@ public class ToasterService : IToasterService, IDisposable
     {
         if (!disposing)
             return;
-        _cleanup.Dispose();
-        _lifetimeSupervisor.Dispose();
+        _activeToasts.Clear();
     }
 
     #endregion IDisposable
 
     private static global::Avalonia.Controls.Notifications.NotificationPosition ConvertPosition(ToasterPosition position)
-    => position switch
-    {
-        ToasterPosition.TopLeft => global::Avalonia.Controls.Notifications.NotificationPosition.TopLeft,
-        ToasterPosition.TopRight => global::Avalonia.Controls.Notifications.NotificationPosition.TopRight,
-        ToasterPosition.BottomLeft => global::Avalonia.Controls.Notifications.NotificationPosition.BottomLeft,
-        ToasterPosition.BottomRight => global::Avalonia.Controls.Notifications.NotificationPosition.BottomRight,
-        ToasterPosition.TopCenter => global::Avalonia.Controls.Notifications.NotificationPosition.TopCenter,
-        ToasterPosition.BottomCenter => global::Avalonia.Controls.Notifications.NotificationPosition.BottomCenter,
-        _ => throw new ArgumentOutOfRangeException(nameof(position), position, null)
-    };
-
-    public IEnumerable<INotification> GetActiveToasts() => [];
+        => position switch
+        {
+            ToasterPosition.TopLeft => global::Avalonia.Controls.Notifications.NotificationPosition.TopLeft,
+            ToasterPosition.TopRight => global::Avalonia.Controls.Notifications.NotificationPosition.TopRight,
+            ToasterPosition.BottomLeft => global::Avalonia.Controls.Notifications.NotificationPosition.BottomLeft,
+            ToasterPosition.BottomRight => global::Avalonia.Controls.Notifications.NotificationPosition.BottomRight,
+            ToasterPosition.TopCenter => global::Avalonia.Controls.Notifications.NotificationPosition.TopCenter,
+            ToasterPosition.BottomCenter => global::Avalonia.Controls.Notifications.NotificationPosition.BottomCenter,
+            _ => throw new ArgumentOutOfRangeException(nameof(position), position, null)
+        };
 }

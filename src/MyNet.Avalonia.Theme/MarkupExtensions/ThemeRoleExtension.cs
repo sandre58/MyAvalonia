@@ -5,9 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia.Controls;
 using Avalonia.Data;
-using Avalonia.Media;
 using Avalonia.Metadata;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Converters.Internals;
@@ -18,13 +16,17 @@ namespace MyNet.Avalonia.Theme.MarkupExtensions;
 /// Markup extension for binding to role-based theme brushes with optional modifiers.
 /// Resolves the brush based on the control's theme role and palette color type, applying optional effects such as opacity, contrast, darken, and lighten.
 /// </summary>
-public class ThemeRoleExtension : ThemeBrushExtensionBase
+/// <remarks>
+/// Initializes a new instance of the <see cref="ThemeRoleExtension"/> class with the specified variant brush.
+/// </remarks>
+/// <param name="variant">The variant brush to use.</param>
+public class ThemeRoleExtension(VariantBrush variant) : ThemeBrushExtensionBase
 {
     /// <summary>
     /// Gets or sets the variant brush type to use (Background, BorderBrush, Foreground, Primary). Default is Primary.
     /// </summary>
     [ConstructorArgument("variant")]
-    public VariantBrush? VariantBrush { get; set; }
+    public VariantBrush VariantBrush { get; set; } = variant;
 
     /// <summary>
     /// Gets or sets the path to provide role.
@@ -32,15 +34,9 @@ public class ThemeRoleExtension : ThemeBrushExtensionBase
     public string Role { get; set; } = $"(my:{nameof(ThemeAssist)}.Role)";
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ThemeRoleExtension"/> class with the specified variant brush.
+    /// Gets or sets a value indicating whether to ignore the foreground of the parent control when resolving the theme brush. Default is false.
     /// </summary>
-    /// <param name="variant">The variant brush to use.</param>
-    public ThemeRoleExtension(VariantBrush variant) => VariantBrush = variant;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ThemeRoleExtension"/> class with Primary as default.
-    /// </summary>
-    public ThemeRoleExtension() { }
+    public bool IgnoreForegroundParent { get; set; }
 
     /// <summary>
     /// Gets or sets the relative source for the binding. Default is self.
@@ -52,41 +48,44 @@ public class ThemeRoleExtension : ThemeBrushExtensionBase
     /// </summary>
     /// <param name="serviceProvider">The service provider for the markup extension.</param>
     /// <returns>A binding to the theme brush with the specified opacity and contrast settings.</returns>
-    public override object ProvideValue(IServiceProvider serviceProvider) => new MultiBinding
+    public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        Bindings =
+        var result = new MultiBinding
         {
-            new ReflectionBinding(Role)
+            Converter = ThemeConverter.Default,
+            ConverterParameter = new ThemeBrushParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten),
+
+            Bindings =
             {
-                Mode = BindingMode.OneWay,
-                RelativeSource = RelativeSource,
-                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
-            },
-            VariantBrush.HasValue ? new ReflectionBinding($"(my:{nameof(VariantAssist)}.Default{VariantBrush})")
-            {
-                Mode = BindingMode.OneWay,
-                RelativeSource = RelativeSource,
-                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
-            }
-            : CompiledBinding.Create<object, IBrush?>(_ => null),
-            new ReflectionBinding
-            {
-                Mode = BindingMode.OneWay,
-                RelativeSource = RelativeSource
-            },
-            new ReflectionBinding("(TextElement.Foreground)")
-            {
-                Mode = BindingMode.OneWay,
-                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor)
+                // Resolve the role using the specified Role path, which defaults to (my:ThemeAssist.Role). This allows the extension to determine the theme role of the control and select the appropriate brush.
+                new ReflectionBinding(Role)
                 {
-                    AncestorType = typeof(Control)
+                    Mode = BindingMode.OneWay,
+                    RelativeSource = RelativeSource,
+                    TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
                 },
-                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
+
+                new ReflectionBinding($"(my:{nameof(VariantAssist)}.Default{VariantBrush})")
+                {
+                    Mode = BindingMode.OneWay,
+                    RelativeSource = RelativeSource,
+                    TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
+                }
             }
-        },
-        Converter = ThemeConverter.Default,
-        ConverterParameter = new ThemeRoleParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten)
-    };
+        };
+
+        if (!IgnoreForegroundParent)
+        {
+            result.Bindings.Add(new ReflectionBinding("Parent.(TextElement.Foreground)")
+            {
+                Mode = BindingMode.OneWay,
+                RelativeSource = new RelativeSource(RelativeSourceMode.Self),
+                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
+            });
+        }
+
+        return result;
+    }
 }
 
 /// <summary>

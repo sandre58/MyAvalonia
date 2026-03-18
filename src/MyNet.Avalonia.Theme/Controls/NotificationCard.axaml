@@ -1,4 +1,5 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
@@ -16,9 +17,14 @@
         <Setter Property="UseLayoutRounding" Value="True" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
-        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
-        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3, IgnoreForegroundParent=True}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border, IgnoreForegroundParent=True}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary, IgnoreForegroundParent=True}" />
+
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background, IgnoreForegroundParent=True}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush, IgnoreForegroundParent=True}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True, IgnoreForegroundParent=True}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
         <!-- Default Theme -->
@@ -35,7 +41,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding CornerRadius}"
-                            Classes="kind-popup override-style"
+                            TextElement.Foreground="{TemplateBinding Foreground}"
+                            Theme="{StaticResource MyNet.Theme.Border.Popup}"
                             my:TransitionsAssist.UseTransitions="False">
                         <Border Name="PART_RootBorder"
                                 Padding="{TemplateBinding Padding}"

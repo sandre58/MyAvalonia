@@ -9,7 +9,7 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media.Imaging;
-using MyNet.Avalonia.Theme.Enums;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;

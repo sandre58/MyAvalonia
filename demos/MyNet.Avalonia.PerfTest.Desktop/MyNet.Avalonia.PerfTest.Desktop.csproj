@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <Product>My .NET Avalonia - Performance Test</Product>
         <OutputType>WinExe</OutputType>
@@ -7,6 +7,11 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <NeutralLanguage>en</NeutralLanguage>
     </PropertyGroup>
+    <ItemGroup>
+      <Content Include="config\NLog.config">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Avalonia.Desktop" />

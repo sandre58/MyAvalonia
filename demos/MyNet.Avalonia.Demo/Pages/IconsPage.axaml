@@ -11,93 +11,98 @@
             ClipToBounds="False"
             mc:Ignorable="d">
 
-    <SplitView Classes="Dark Shadow"
-               DisplayMode="Inline"
-               IsPaneOpen="True"
-               OpenPaneLength="300"
-               PanePlacement="Right">
-        <SplitView.Pane>
-            <my:PlaceholderContentControl my:IconAssist.Icon="{my:Icon CircleOffOutline, Size=80}"
-                                          Classes="PlaceholderText ExtraLarge"
-                                          Content="{Binding Icons.SelectedItem}"
-                                          PlaceholderText="{my:Loc SelectItem}">
-                <my:PlaceholderContentControl.ContentTemplate>
-                    <DataTemplate x:DataType="{x:Type vm:IconBuilderData}">
-                        <HeaderedContentControl HorizontalContentAlignment="Stretch"
-                                                my:HeaderAssist.HorizontalAlignment="Center"
-                                                Classes="Text H2"
-                                                Header="{Binding DisplayName}">
-                            <HeaderedContentControl.HeaderTemplate>
-                                <DataTemplate DataType="{x:Type vm:IconBuilderData}">
-                                    <TextBlock Text="{Binding}" TextAlignment="Center" TextWrapping="Wrap" />
-                                </DataTemplate>
-                            </HeaderedContentControl.HeaderTemplate>
+    <Grid RowDefinitions="40,Auto, *">
 
-                            <Grid RowDefinitions="Auto,40,*">
-                                <PathIcon x:Name="Icon"
-                                          Grid.Row="0"
-                                          Width="100"
-                                          Height="100"
-                                          HorizontalAlignment="Center"
-                                          Data="{Binding Geometry}" />
-                                <ItemsControl Grid.Row="2" ItemsSource="{Binding CodeBlocks}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel HorizontalAlignment="Stretch" Spacing="{StaticResource MyNet.Spacing.Md}" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate x:DataType="{x:Type sys:String}">
-                                            <my:CodeBlock HorizontalAlignment="Stretch" my:InputAssist.ShowClipboardButton="True" Content="{Binding}" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </Grid>
-                        </HeaderedContentControl>
-                    </DataTemplate>
-                </my:PlaceholderContentControl.ContentTemplate>
-            </my:PlaceholderContentControl>
-        </SplitView.Pane>
-
-        <Grid Margin="{my:Thickness Sm}" ColumnDefinitions="*" RowDefinitions="Auto,10,*">
-
+        <!-- Header -->
+        <Border Grid.Row="1" Classes="shadow-surface"
+                Background="{my:Theme Surface.Level0}"
+                Padding="{my:Thickness Md}">
             <DockPanel>
 
-                <my:Pagination Command="{ReflectionBinding Icons.Paging.MoveToPageCommand}"
+                <my:Pagination Command="{Binding Icons.Paging.MoveToPageCommand}"
                                CommandParameter="{Binding $self.CurrentPage}"
-                               CurrentPage="{ReflectionBinding Icons.Paging.CurrentPage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                               CurrentPage="{Binding Icons.Paging.CurrentPage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                DockPanel.Dock="Right"
-                               PageSize="{ReflectionBinding Icons.Paging.PageSize, Mode=TwoWay}"
+                               PageSize="{Binding Icons.Paging.PageSize, Mode=TwoWay}"
                                PageSizeOptions="10,20,30,50,75,100,150,200,300,500,750,1000"
                                ShowPageSizeSelector="True"
                                ShowQuickJump="True"
-                               TotalCount="{ReflectionBinding Icons.Paging.TotalItems, Mode=OneWay}" />
+                               TotalCount="{Binding Icons.Paging.TotalItems, Mode=OneWay}" />
                 <TextBox Margin="{my:Thickness Sm, Right}"
                          HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
                          my:IconAssist.Icon="{my:Icon Magnify}"
                          my:InputAssist.ShowClearButton="True"
-                         Classes="size-lg"
-                         FontSize="{StaticResource MyNet.Font.Size.Lg}"
                          Text="{ReflectionBinding Icons.Filters.Value, Delay=50, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          PlaceholderText="{my:Loc Search}" />
 
             </DockPanel>
+        </Border>
 
-            <ListBox Grid.Row="2"
-                     Grid.Column="0"
-                     HorizontalAlignment="Stretch"
+        <SplitView Grid.Row="2"
+                   Classes="variant-solid shadow-surface"
+                   DisplayMode="Inline"
+                   IsPaneOpen="True"
+                   OpenPaneLength="300"
+                   PanePlacement="Right">
+            <SplitView.Pane>
+                <my:PlaceholderContentControl my:IconAssist.Icon="{my:Icon CircleOffOutline, Size=80}"
+                                              Classes="PlaceholderText ExtraLarge"
+                                              Content="{Binding Icons.SelectedItem}"
+                                              PlaceholderText="{my:Loc SelectItem}">
+                    <my:PlaceholderContentControl.ContentTemplate>
+                        <DataTemplate x:DataType="{x:Type vm:IconBuilderData}">
+                            <HeaderedContentControl HorizontalContentAlignment="Stretch"
+                                                    my:HeaderAssist.HorizontalAlignment="Center"
+                                                    Classes="Text H2"
+                                                    Header="{Binding DisplayName}">
+                                <HeaderedContentControl.HeaderTemplate>
+                                    <DataTemplate DataType="{x:Type vm:IconBuilderData}">
+                                        <TextBlock Text="{Binding}" TextAlignment="Center" TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </HeaderedContentControl.HeaderTemplate>
+
+                                <Grid RowDefinitions="Auto,40,*">
+                                    <PathIcon x:Name="Icon"
+                                              Grid.Row="0"
+                                              Width="100"
+                                              Height="100"
+                                              HorizontalAlignment="Center"
+                                              Data="{Binding Geometry}" />
+                                    <ItemsControl Grid.Row="2" ItemsSource="{Binding CodeBlocks}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel HorizontalAlignment="Stretch" Spacing="{StaticResource MyNet.Spacing.Md}" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="{x:Type sys:String}">
+                                                <my:CodeBlock HorizontalAlignment="Stretch" my:InputAssist.ShowClipboardButton="True" Content="{Binding}" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </HeaderedContentControl>
+                        </DataTemplate>
+                    </my:PlaceholderContentControl.ContentTemplate>
+                </my:PlaceholderContentControl>
+
+            </SplitView.Pane>
+
+            <ListBox HorizontalAlignment="Stretch"
                      VerticalAlignment="Stretch"
+                     Margin="{my:Thickness Md}"
                      my:ScrollViewerBehavior.RefreshOnScroll="True"
                      ItemsSource="{Binding Icons.PagedItems}"
                      SelectedItem="{Binding Icons.SelectedItem}"
-                     Classes="Cards">
+                     Classes="kind-cards variant-items-solid">
                 <ListBox.ItemContainerTheme>
                     <ControlTheme TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                         <Setter Property="ToolTip.Tip" Value="{ReflectionBinding DisplayName}" />
                     </ControlTheme>
                 </ListBox.ItemContainerTheme>
                 <ListBox.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="{x:Type vm:IconBuilderData}">
                         <PathIcon Width="30"
                                   Height="30"
                                   Margin="{my:Thickness Lg}"
@@ -105,6 +110,10 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </Grid>
-    </SplitView>
+
+        </SplitView>
+
+        <!-- Background Top -->
+        <Border Grid.Row="0" Background="{my:Theme Surface.Level0}" VerticalAlignment="Stretch" />
+    </Grid>
 </pages:Page>

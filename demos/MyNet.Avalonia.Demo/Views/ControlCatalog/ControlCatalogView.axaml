@@ -18,10 +18,10 @@
 
         <!-- Tabs -->
         <TabControl Grid.Row="1"
+                    Classes="shadow-header"
                     my:HeaderAssist.Background="{my:Theme Surface.Level0}"
-                    my:HeaderAssist.CornerRadius="0"
+                    my:HeaderAssist.BorderThickness="0"
                     my:ItemsAssist.ActiveForeground="{my:Foreground AncestorType=TemplatedControl}"
-                    Classes="variant-solid shadow-header"
                     ClipToBounds="False">
             <TabControl.ItemContainerTheme>
                 <ControlTheme TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">

@@ -42,6 +42,14 @@
         <Setter Property="CenterBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
         <Setter Property="CenterBorderThickness" Value="0" />
 
+        <Style Selector="^.role-contrast">
+            <Setter Property="HourHandBrush" Value="{my:Foreground}" />
+            <Setter Property="MinuteHandBrush" Value="{my:Foreground}" />
+            <Setter Property="SecondHandBrush" Value="{my:Foreground}" />
+            <Setter Property="CenterBackground" Value="{my:Foreground}" />
+            <Setter Property="CenterBorderBrush" Value="{my:Foreground}" />
+        </Style>
+
         <Setter Property="Template">
             <ControlTemplate TargetType="my:Clock">
                 <Grid>
@@ -106,7 +114,6 @@
                 </Grid>
             </ControlTemplate>
         </Setter>
-
     </ControlTheme>
 
 </ResourceDictionary>

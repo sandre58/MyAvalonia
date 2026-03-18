@@ -46,9 +46,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{2C7D6C1B-A6CA-44B6-B604-FDD86A107640}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{761E88AC-1747-465B-BFFA-B7EFFD3F47B6}"
-	ProjectSection(SolutionItems) = preProject
-		Directory.Packages.props = Directory.Packages.props
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia", "src\MyNet.Avalonia\MyNet.Avalonia.csproj", "{E8784201-C89B-F664-69DA-4E1393DA067F}"
 EndProject

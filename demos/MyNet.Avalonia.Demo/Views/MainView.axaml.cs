@@ -4,13 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using MyNet.Avalonia.Extended.Controls;
+using Avalonia.Controls;
 using PropertyChanged;
 
 namespace MyNet.Avalonia.Demo.Views;
 
 [DoNotNotify]
-public partial class MainView : ExtendedView
+public partial class MainView : UserControl
 {
     public MainView() => InitializeComponent();
 }

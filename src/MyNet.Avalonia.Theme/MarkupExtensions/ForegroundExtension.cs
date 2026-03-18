@@ -47,6 +47,7 @@ public class ForegroundExtension : ThemeBrushExtensionBase
     public override object ProvideValue(IServiceProvider serviceProvider) => new ReflectionBinding("(TextElement.Foreground)")
     {
         Mode = BindingMode.OneWay,
+        FallbackValue = null,
         RelativeSource = new RelativeSource(AncestorType is not null ? RelativeSourceMode.FindAncestor : RelativeSourceMode)
         {
             AncestorType = AncestorType

@@ -7,7 +7,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Avalonia.Controls;
 using Avalonia.Media;
-using MyNet.Avalonia.Theme.Enums;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Theme.Extensions;
 
@@ -20,7 +20,7 @@ public static class GeometryExtensions
         /// Converts an <see cref="IconData"/> value to a <see cref="StreamGeometry"/> by looking up the corresponding resource.
         /// </summary>
         /// <returns>The <see cref="StreamGeometry"/> associated with the icon.</returns>
-        public StreamGeometry ToGeometry() => ResourceLocator.GetResource<StreamGeometry>(ThemeResourceKeyFactory.Geometry(icon.ToString()));
+        public StreamGeometry ToGeometry() => ThemeResources.Icons.Get(icon.ToString()).Value;
 
         /// <summary>
         /// Converts an <see cref="IconData"/> value to a <see cref="PathIcon"/> control, optionally specifying the icon size.

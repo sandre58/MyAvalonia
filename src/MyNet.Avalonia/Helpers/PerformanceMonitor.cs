@@ -26,7 +26,8 @@ public enum PerformanceCategory
     Pages = 2,
     Theme = 4,
     Controls = 8,
-    All = None | Brushes | Pages | Theme | Controls
+    Utilities = 16,
+    All = None | Brushes | Pages | Theme | Controls | Utilities
 }
 
 public static class PerformanceMonitor
@@ -86,7 +87,11 @@ public static class PerformanceMonitor
     /// <param name="message">The message to log.</param>
     /// <param name="category">The category of the performance measurement.</param>
     public static void Debug(string message, PerformanceCategory category = PerformanceCategory.All)
-        => ((EnabledCategories & category) != 0).IfTrue(() => LogManager.Debug(message));
+        => ((EnabledCategories & category) != 0).IfTrue(() =>
+        {
+            LogManager.Debug(message);
+            System.Diagnostics.Debug.WriteLine(message);
+        });
 
     /// <summary>
     /// Logs a warning message if performance logging is enabled.
@@ -94,6 +99,10 @@ public static class PerformanceMonitor
     /// <param name="message">The message to log.</param>
     /// <param name="category">The category of the performance measurement.</param>
     public static void Warning(string message, PerformanceCategory category = PerformanceCategory.All)
-        => ((EnabledCategories & category) != 0).IfTrue(() => LogManager.Warning(message));
+        => ((EnabledCategories & category) != 0).IfTrue(() =>
+        {
+            LogManager.Warning(message);
+            System.Diagnostics.Debug.WriteLine(message);
+        });
 }
 #pragma warning restore CS0162 // Unreachable code detected

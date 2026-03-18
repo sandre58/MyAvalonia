@@ -9,7 +9,7 @@ using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ContentProviders;
-using MyNet.Avalonia.Theme.Enums;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Utilities.Generator;
 

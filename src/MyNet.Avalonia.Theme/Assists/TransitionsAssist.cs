@@ -8,7 +8,8 @@ using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Animation;
-using MyNet.Avalonia.Helpers;
+using MyNet.Avalonia.Theme.Classes;
+using MyNet.Avalonia.Theme.Classes.Helpers;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
@@ -53,7 +54,7 @@ public static class TransitionsAssist
     /// <summary>
     /// Provides UseTransitions Property for attached TransitionsAssist element.
     /// </summary>
-    public static readonly AttachedProperty<bool> UseTransitionsProperty = AvaloniaPropertyHelper.RegisterBoolProperty("UseTransitions", ClassName.UseTransitions);
+    public static readonly AttachedProperty<bool> UseTransitionsProperty = AvaloniaPropertyHelper.RegisterBoolProperty("UseTransitions", CssClass.UseTransitions);
 
     /// <summary>
     /// Accessor for Attached  <see cref="UseTransitionsProperty"/>.

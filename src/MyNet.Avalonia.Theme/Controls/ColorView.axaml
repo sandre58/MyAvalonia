@@ -58,13 +58,15 @@
         <Setter Property="Palette">
             <my:DarkColorPalette />
         </Setter>
-
+        
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
-        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
-        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
         <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
         <!-- Surface -->
@@ -85,9 +87,9 @@
                         <TabControl Name="PART_TabControl"
                                     Grid.Row="0"
                                     Padding="{TemplateBinding Padding}"
+                                    Classes="flex-uniform"
                                     my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                    my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
-                                    Classes="layout-uniform"
+                                    my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                     my:DisableAssist.IsDisablable="False"
                                     SelectedIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
                             <my:HeaderAssist.IsVisible>
@@ -153,7 +155,7 @@
                             <TabItem my:DisableAssist.IsDisablable="False" Header="{my:Icon PaletteSwatchVariant}" IsVisible="{TemplateBinding IsColorPaletteVisible}">
                                 <ListBox my:DisableAssist.IsDisablable="False"
                                          my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                         my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                         my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                          ItemContainerTheme="{StaticResource MyNet.Theme.ListBoxItem.ColorPalette}"
                                          ItemsSource="{TemplateBinding PaletteColors}"
                                          SelectedItem="{Binding Color, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullFallbackConverter.Default}, Mode=TwoWay}"
@@ -191,10 +193,10 @@
 
                                         <!-- RGB / HSV -->
                                         <ListBox VerticalAlignment="Stretch"
-                                                 Classes="kind-toggle layout-uniform"
+                                                 Classes="kind-toggle flex-uniform"
                                                  my:DisableAssist.IsDisablable="False"
                                                  my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                 my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                 my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                  my:ItemsBehavior.EnumSourceType="{x:Type ColorModel}"
                                                  IsVisible="{TemplateBinding IsColorModelVisible}"
                                                  SelectedValue="{Binding ColorModel, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
@@ -204,7 +206,7 @@
                                                  Grid.Column="1"
                                                  Width="130"
                                                  my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                 my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                 my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                  Margin="{my:Thickness Md, Left}"
                                                  HorizontalAlignment="Stretch"
                                                  my:InputAssist.ShowClipboardButton="True"
@@ -232,7 +234,7 @@
                                                 <NumericUpDown Name="Component1NumericUpDown"
                                                                my:DisableAssist.IsDisablable="False"
                                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                                IsVisible="{TemplateBinding IsComponentTextInputVisible}"
                                                                Maximum="{Binding Maximum, ElementName=Component1Slider}"
                                                                Minimum="{Binding Minimum, ElementName=Component1Slider}"
@@ -251,7 +253,7 @@
                                             <DockPanel>
                                                 <NumericUpDown my:DisableAssist.IsDisablable="False"
                                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                                Maximum="{Binding Maximum, ElementName=Component2Slider}"
                                                                Minimum="{Binding Minimum, ElementName=Component2Slider}"
                                                                Value="{Binding Value, ElementName=Component2Slider}">
@@ -269,7 +271,7 @@
                                                                FormatString="P0"
                                                                Increment="0.01"
                                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                                Maximum="{Binding Maximum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
                                                                Minimum="{Binding Minimum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
                                                                Value="{Binding Value, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}">
@@ -297,7 +299,7 @@
                                             <DockPanel>
                                                 <NumericUpDown my:DisableAssist.IsDisablable="False"
                                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                                Maximum="{Binding Maximum, ElementName=Component3Slider}"
                                                                Minimum="{Binding Minimum, ElementName=Component3Slider}"
                                                                Value="{Binding Value, ElementName=Component3Slider}">
@@ -314,7 +316,7 @@
                                                 <NumericUpDown my:DisableAssist.IsDisablable="False"
                                                                FormatString="P0"
                                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                                Increment="0.01"
                                                                Maximum="{Binding Maximum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
                                                                Minimum="{Binding Minimum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
@@ -344,7 +346,7 @@
                                                 <NumericUpDown Name="AlphaComponentNumericUpDown"
                                                                my:DisableAssist.IsDisablable="False"
                                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                                IsEnabled="{TemplateBinding IsAlphaEnabled}"
                                                                Maximum="{Binding Maximum, ElementName=AlphaComponentSlider}"
                                                                Minimum="{Binding Minimum, ElementName=AlphaComponentSlider}"
@@ -362,7 +364,7 @@
                                                 <NumericUpDown my:DisableAssist.IsDisablable="False"
                                                                FormatString="P0"
                                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                                Increment="0.01"
                                                                Maximum="{Binding Maximum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
                                                                Minimum="{Binding Minimum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
@@ -505,7 +507,7 @@
                             <TextBox Name="PART_HexTextBox"
                                      Grid.Column="1"
                                      my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                     my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                     my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                      Width="100"
                                      Margin="{my:Thickness Md, Left}"
                                      HorizontalAlignment="Stretch"
@@ -547,7 +549,7 @@
                             <DockPanel>
                                 <NumericUpDown Name="Component1NumericUpDown"
                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                my:DisableAssist.IsDisablable="False"
                                                IsVisible="{TemplateBinding IsComponentTextInputVisible}"
                                                Maximum="{Binding Maximum, ElementName=Component1Slider}"
@@ -573,7 +575,7 @@
                             <DockPanel>
                                 <NumericUpDown my:DisableAssist.IsDisablable="False"
                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                Maximum="{Binding Maximum, ElementName=Component2Slider}"
                                                Minimum="{Binding Minimum, ElementName=Component2Slider}"
                                                Value="{Binding Value, ElementName=Component2Slider}">
@@ -589,7 +591,7 @@
                                 </NumericUpDown>
                                 <NumericUpDown my:DisableAssist.IsDisablable="False"
                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                FormatString="P0"
                                                Increment="0.01"
                                                Maximum="{Binding Maximum, ElementName=Component2Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
@@ -625,7 +627,7 @@
                             <DockPanel>
                                 <NumericUpDown my:DisableAssist.IsDisablable="False"
                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                Maximum="{Binding Maximum, ElementName=Component3Slider}"
                                                Minimum="{Binding Minimum, ElementName=Component3Slider}"
                                                Value="{Binding Value, ElementName=Component3Slider}">
@@ -641,7 +643,7 @@
                                 </NumericUpDown>
                                 <NumericUpDown my:DisableAssist.IsDisablable="False"
                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                FormatString="P0"
                                                Increment="0.01"
                                                Maximum="{Binding Maximum, ElementName=Component3Slider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"
@@ -680,7 +682,7 @@
                             <DockPanel>
                                 <NumericUpDown Name="AlphaComponentNumericUpDown"
                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                my:DisableAssist.IsDisablable="False"
                                                IsEnabled="{TemplateBinding IsAlphaEnabled}"
                                                Maximum="{Binding Maximum, ElementName=AlphaComponentSlider}"
@@ -698,7 +700,7 @@
                                 </NumericUpDown>
                                 <NumericUpDown my:DisableAssist.IsDisablable="False"
                                                my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                               my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                                FormatString="P0"
                                                Increment="0.01"
                                                Maximum="{Binding Maximum, ElementName=AlphaComponentSlider, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=100}"

@@ -47,13 +47,11 @@
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="my:GlobalizationBehavior.UpdateOnCultureChanged" Value="True" />
 
-        <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
-        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
-        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+        <!-- Default -->
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
-
-        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
         <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
@@ -120,6 +118,7 @@
                                                     Grid.Column="0"
                                                     Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
                                                     VerticalAlignment="Stretch"
+                                                    my:IconAssist.Role="Label"
                                                     Content="{TemplateBinding (my:IconAssist.Icon)}"
                                                     ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                     Focusable="False"
@@ -190,7 +189,7 @@
                                             Classes.is-selected="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
                                             Content="{my:Icon Clock}"
                                             my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                            my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}" />
+                                            my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}" />
                                 </Grid>
                             </my:Ripple>
                         </Border>
@@ -219,14 +218,14 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border Classes="kind-popup override-background"
+                                <Border Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <DockPanel>
                                             <my:TimeView Name="PART_Previewer"
                                                          my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                          my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
-                                                         Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
+                                                         Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
                                                          Background="Transparent"
                                                          BorderThickness="0"
                                                          Width="{TemplateBinding my:PopupAssist.Width}"
@@ -250,6 +249,10 @@
         </Setter>
 
         <!-- Layout -->
+        <Style Selector="^ /template/ ContentControl#PART_Icon">
+            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+
         <Style Selector="^.icon-right, ^.button-right">
             <Style Selector="^ /template/ ContentControl#PART_Icon">
                 <Setter Property="Grid.Column" Value="4" />
@@ -324,6 +327,26 @@
                 <Setter Property="IsVisible" Value="False" />
             </Style>
         </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Sm}" />
+
+            <Style Selector="^ /template/ ContentControl#PART_Icon">
+                <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Lg}" />
+
+            <Style Selector="^ /template/ ContentControl#PART_Icon">
+                <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+            </Style>
+        </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.TimePickerEx.Underline" TargetType="my:TimePickerEx" BasedOn="{StaticResource {x:Type my:TimePickerEx}}">
@@ -333,8 +356,7 @@
         <Setter Property="my:InputAssist.UseFloatingPlaceholder" Value="True" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="Transparent" />
-        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Foreground AncestorType=Control}" />
+        <Setter Property="my:VariantAssist.Background" Value="Transparent" />
 
         <!-- Default Theme -->
         <Setter Property="BorderThickness" Value="0 0 0 1" />
@@ -370,6 +392,7 @@
                                                 Grid.Column="0"
                                                 Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
                                                 VerticalAlignment="Stretch"
+                                                my:IconAssist.Role="Label"
                                                 Content="{TemplateBinding (my:IconAssist.Icon)}"
                                                 ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                 Focusable="False"
@@ -443,7 +466,7 @@
                                         Classes.is-selected="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
                                         Content="{my:Icon Clock}"
                                         my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                        my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}" />
+                                        my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}" />
                             </Grid>
                         </Border>
 
@@ -484,14 +507,14 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border Classes="kind-popup override-background"
+                                <Border Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <DockPanel>
                                             <my:TimeView Name="PART_Previewer"
                                                          my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                          my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
-                                                         Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
+                                                         Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
                                                          Background="Transparent"
                                                          BorderThickness="0"
                                                          Width="{TemplateBinding my:PopupAssist.Width}"
@@ -528,11 +551,6 @@
             <Setter Property="BorderThickness" Value="0 0 0 1" />
         </Style>
 
-        <Style Selector="^[(my|ThemeAssist.Role)=Contrast]">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-
     </ControlTheme>
-
 
 </ResourceDictionary>

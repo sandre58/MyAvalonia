@@ -55,6 +55,15 @@
             <Style Selector="^:open">
                 <Setter Property="Opacity" Value="1" />
             </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- VARIANTS                                                  -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.variant-error">
+            <Setter Property="Background" Value="{my:Theme Validation.Error}" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
         </ControlTheme>
 
     </ResourceDictionary>

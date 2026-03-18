@@ -20,7 +20,7 @@ namespace MyNet.Avalonia.Extended.Controls;
 
 [TemplatePart(PartCloseButton, typeof(Button))]
 [TemplatePart(PartTitleArea, typeof(Panel))]
-public class WindowDialog : ExtendedWindow
+public class WindowDialog : Window
 {
     public const string PartCloseButton = "PART_CloseButton";
     public const string PartTitleArea = "PART_TitleArea";
@@ -48,7 +48,7 @@ public class WindowDialog : ExtendedWindow
         Button.ClickEvent.RemoveHandler(OnCloseButtonClicked, CloseButton);
         _titleArea?.RemoveHandler(PointerPressedEvent, OnTitlePointerPressed);
         CloseButton = e.NameScope.Find<Button>(PartCloseButton);
-        IsVisibleProperty.SetValue(IsCloseButtonVisible, CloseButton);
+        //IsVisibleProperty.SetValue(IsCloseButtonVisible, CloseButton);
         Button.ClickEvent.AddHandler(OnCloseButtonClicked, CloseButton);
         _titleArea = e.NameScope.Find<Panel>(PartTitleArea);
         IsHitTestVisibleProperty.SetValue(CanDragMove, _titleArea);

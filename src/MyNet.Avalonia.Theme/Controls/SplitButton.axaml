@@ -42,6 +42,8 @@
                                                        IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                        IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                        IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                        Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                        Padding="{TemplateBinding Padding}"
                                                        HorizontalAlignment="Stretch"
@@ -146,6 +148,8 @@
                                     my:IconAssist.Icon="{TemplateBinding my:IconAssist.Icon}"
                                     my:IconAssist.Spacing="{TemplateBinding my:IconAssist.Spacing}"
                                     my:IconAssist.Opacity="{TemplateBinding my:IconAssist.Opacity}"
+                                    my:IconAssist.LabelSize="{TemplateBinding my:IconAssist.LabelSize}"
+                                    my:IconAssist.PrimarySize="{TemplateBinding my:IconAssist.PrimarySize}"
                                     my:ShadowAssist.ShadowDepth="{TemplateBinding (my:ShadowAssist.ShadowDepth)}"
                                     my:InteractionAssist.ActiveBackground="{TemplateBinding my:InteractionAssist.ActiveBackground}"
                                     my:InteractionAssist.ActiveBorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
@@ -381,8 +385,17 @@
                 </Style>
             </Style>
 
-            <!-- Sizes -->
-            <Style Selector="^.size-sm">
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <!-- Size: Small -->
+        <Style Selector="^.size-sm">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Sm}" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Sm}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+
                 <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                     <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
                     <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
@@ -391,8 +404,15 @@
                 <Style Selector="^ /template/ Button#PART_SecondaryButton">
                     <Setter Property="Padding" Value="{my:Thickness Xs}" />
                 </Style>
-            </Style>
-            <Style Selector="^.size-md">
+        </Style>
+
+        <!-- Size: Medium (default) -->
+        <Style Selector="^.size-md">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Md}" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Md}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            
                 <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                     <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Md}" />
                     <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Md}" />
@@ -401,8 +421,15 @@
                 <Style Selector="^ /template/ Button#PART_SecondaryButton">
                     <Setter Property="Padding" Value="{my:Thickness Sm}" />
                 </Style>
-            </Style>
-            <Style Selector="^.size-lg">
+        </Style>
+
+        <!-- Size: Large -->
+        <Style Selector="^.size-lg">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Lg}" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Lg}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            
                 <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                     <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
                     <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
@@ -411,7 +438,7 @@
                 <Style Selector="^ /template/ Button#PART_SecondaryButton">
                     <Setter Property="Padding" Value="{my:Thickness Sm}" />
                 </Style>
-            </Style>
+        </Style>
         </ControlTheme>
 
 

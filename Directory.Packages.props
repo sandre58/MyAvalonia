@@ -2,35 +2,47 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
+  <!-- Versions Configuration -->
+  <PropertyGroup>
+    <UseAvaloniaPrerelease Condition="'$(UseAvaloniaPrerelease)' == ''">false</UseAvaloniaPrerelease>
+  </PropertyGroup>
+  <!-- Avalonia version -->
+  <PropertyGroup Condition="'$(UseAvaloniaPrerelease)' == 'true'">
+    <AvaloniaVersion>12.0.999-cibuild0062426-alpha</AvaloniaVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(UseAvaloniaPrerelease)' != 'true'">
+    <AvaloniaVersion>12.0.0-preview2</AvaloniaVersion>
+  </PropertyGroup>
+  <!-- Versions -->
   <ItemGroup>
-    <PackageVersion Include="Avalonia" Version="12.0.999-cibuild0062426-alpha" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.0.999-cibuild0062426-alpha" />
-    <PackageVersion Include="Avalonia.ReactiveUI" Version="11.3.9" />
-    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.0.999-cibuild0062426-alpha" />
-    <PackageVersion Include="Avalonia.Android" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.0.999-cibuild0062426-alpha" />
-    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="12.0.0-preview1" />
+    <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0-beta3" />
+    <PackageVersion Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Android" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Browser" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="12.0.0-preview2-2" />
     <PackageVersion Include="Avalonia.Controls.ItemsRepeater" Version="11.1.5" />
-    <PackageVersion Include="Avalonia.Browser" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.Skia" Version="11.3.10" />
-    <PackageVersion Include="Avalonia.Desktop" Version="12.0.999-cibuild0062426-alpha" />
-    <PackageVersion Include="Avalonia.iOS" Version="11.3.10" />
-    <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0-beta2" />
-    <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.14" />
+    <PackageVersion Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.iOS" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Skia" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Fody" Version="6.9.3" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0-preview.2.26159.112" />
     <PackageVersion Include="MyNet.Humanizer" Version="16.0.2" />
     <PackageVersion Include="MyNet.Observable" Version="16.0.2" />
+    <PackageVersion Include="MyNet.UI" Version="16.0.2" />
     <PackageVersion Include="MyNet.Utilities" Version="16.0.2" />
     <PackageVersion Include="MyNet.Utilities.Generator.Extensions" Version="16.0.2" />
     <PackageVersion Include="MyNet.Utilities.Geography.Extensions" Version="16.0.2" />
     <PackageVersion Include="MyNet.Utilities.Localization.Extensions" Version="16.0.2" />
     <PackageVersion Include="MyNet.Utilities.Logging.NLog" Version="16.0.2" />
-    <PackageVersion Include="MyNet.UI" Version="16.0.2" />
-    <PackageVersion Include="System.Reactive" Version="7.0.0-preview.1" />
-    <PackageVersion Include="Fody" Version="6.9.3" />
     <PackageVersion Include="PropertyChanged.Fody" Version="4.1.0" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0-preview.1.26104.118" />
+    <PackageVersion Include="System.Reactive" Version="7.0.0-preview.1" />
+    <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.14" />
     <!-- Code Analysis -->
-    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="11.0.100-preview.1.26104.118" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="11.0.100-preview.2.26159.112" />
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
     <PackageVersion Include="Roslynator.Analyzers" Version="4.15.0" />
     <!-- Tests -->
@@ -46,6 +58,6 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
     <!-- SourceLink -->
-    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="11.0.100-preview.1.26104.118" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="11.0.100-preview.2.26159.112" />
   </ItemGroup>
 </Project>

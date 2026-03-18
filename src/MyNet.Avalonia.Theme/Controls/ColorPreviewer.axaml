@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <my:BrushConverter x:Key="MyNet.Converter.Brush.Lighten.High" Lighten="2" />
-    <my:BrushConverter x:Key="MyNet.Converter.Brush.Lighten.Low" Lighten="1" />
-    <my:BrushConverter x:Key="MyNet.Converter.Brush.Darken.High" Darken="2" />
-    <my:BrushConverter x:Key="MyNet.Converter.Brush.Darken.Low" Darken="1" />
+    <my:BrushConverter x:Key="MyNet.Converter.Brush.Lighten.High" Lighten="0.6" />
+    <my:BrushConverter x:Key="MyNet.Converter.Brush.Lighten.Low" Lighten="0.3" />
+    <my:BrushConverter x:Key="MyNet.Converter.Brush.Darken.High" Darken="0.6" />
+    <my:BrushConverter x:Key="MyNet.Converter.Brush.Darken.Low" Darken="0.3" />
 
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT COLORPREVIEWER THEME                              -->

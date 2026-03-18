@@ -7,7 +7,7 @@
 using Avalonia.Controls;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ClassProviders;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;

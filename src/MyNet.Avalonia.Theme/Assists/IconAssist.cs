@@ -7,6 +7,8 @@
 using Avalonia;
 using Avalonia.Controls.Templates;
 using MyNet.Avalonia.Controls.Enums;
+using MyNet.Avalonia.Theme.Classes;
+using MyNet.Avalonia.Theme.Classes.Helpers;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
@@ -127,7 +129,7 @@ public static class IconAssist
     /// <summary>
     /// Provides Role Property for attached IconAssist element.
     /// </summary>
-    public static readonly AttachedProperty<IconRole> RoleProperty = AvaloniaProperty.RegisterAttached<StyledElement, IconRole>("Role", typeof(IconAssist), inherits: true);
+    public static readonly AttachedProperty<IconRole> RoleProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Role", IconRole.None, CssPrefix.Icon, inherits: true);
 
     /// <summary>
     /// Accessor for Attached  <see cref="RoleProperty"/>.
@@ -141,6 +143,72 @@ public static class IconAssist
     /// </summary>
     /// <param name="element">Target element.</param>
     public static IconRole GetRole(StyledElement element) => element.GetValue(RoleProperty);
+
+    #endregion
+
+    #region Size
+
+    /// <summary>
+    /// Provides Size Property for attached IconAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<double> SizeProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("Size", typeof(IconAssist), 18.0d, inherits: true);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="SizeProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="SizeProperty"/>.</param>
+    public static void SetSize(StyledElement element, double value) => element.SetValue(SizeProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="SizeProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetSize(StyledElement element) => element.GetValue(SizeProperty);
+
+    #endregion
+
+    #region LabelSize
+
+    /// <summary>
+    /// Provides LabelSize Property for attached IconAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<double> LabelSizeProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("LabelSize", typeof(IconAssist), 15.0d);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="LabelSizeProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="LabelSizeProperty"/>.</param>
+    public static void SetLabelSize(StyledElement element, double value) => element.SetValue(LabelSizeProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="LabelSizeProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetLabelSize(StyledElement element) => element.GetValue(LabelSizeProperty);
+
+    #endregion
+
+    #region PrimarySize
+
+    /// <summary>
+    /// Provides PrimarySize Property for attached IconAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<double> PrimarySizeProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("PrimarySize", typeof(IconAssist), 18.0d);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PrimarySizeProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="PrimarySizeProperty"/>.</param>
+    public static void SetPrimarySize(StyledElement element, double value) => element.SetValue(PrimarySizeProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PrimarySizeProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetPrimarySize(StyledElement element) => element.GetValue(PrimarySizeProperty);
 
     #endregion
 }

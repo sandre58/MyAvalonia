@@ -15,7 +15,7 @@
             ClipToBounds="False"
             mc:Ignorable="d">
 
-    <v:ControlCatalogView ShowContent="False">
+    <v:ControlCatalogView>
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
@@ -25,11 +25,9 @@
                            my:IconAssist.Icon="{Binding IconProvider.Icon}"
                            CanClose="{Binding #CanClose.IsChecked}"
                            MaxWidth="500"
+                           Header="{Binding ContentProvider.Content}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center">
-                    <my:Banner.Header>
-                        <TextBlock Text="{Binding ContentProvider.Content}" />
-                    </my:Banner.Header>
                     <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
                 </my:Banner>
             </DataTemplate>

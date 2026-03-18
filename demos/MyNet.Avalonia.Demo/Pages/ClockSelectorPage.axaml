@@ -19,7 +19,7 @@
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
-                <StackPanel Classes="size-md"
+                <StackPanel Classes="gap-md"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center">
                     <my:ClockSelector x:Name="Clock"

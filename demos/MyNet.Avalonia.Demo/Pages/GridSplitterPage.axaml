@@ -13,7 +13,7 @@
             x:DataType="vm:GridSplitterPageViewModel"
             ClipToBounds="False">
 
-    <v:ControlCatalogView ShowAppearance="False">
+    <v:ControlCatalogView ShowAppearance="False" ShowContent="False" ShowIcon="False">
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">

@@ -17,7 +17,7 @@ internal sealed class ListBoxPageViewModel : ControlCatalogViewModel
             .AddShapes("shape-items-circle")
             .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
             .AddVariants("variant-items-solid", "variant-items-light", "variant-items-outlined", "variant-items-text", "shadow-items")
-            .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
+            .AddVariants("flex-vertical", "flex-horizontal", "flex-uniform", "flex-wrap")
             .AddThemeRoles()
             .AddItemsThemeRoles()
             .AddDefaultSizes(),
@@ -26,7 +26,7 @@ internal sealed class ListBoxPageViewModel : ControlCatalogViewModel
             .AddShapes("shape-items-circle")
             .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
             .AddVariants("variant-items-solid", "variant-items-light", "variant-items-outlined", "variant-items-text", "shadow-items")
-            .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
+            .AddVariants("flex-vertical", "flex-horizontal", "flex-uniform", "flex-wrap")
             .AddThemeRoles()
             .AddItemsThemeRoles()
             .AddDefaultSizes(),
@@ -34,7 +34,7 @@ internal sealed class ListBoxPageViewModel : ControlCatalogViewModel
             new ControlThemeBuilder(null, "kind-toggle")
             .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
             .AddVariants("variant-items-solid", "variant-items-light", "variant-items-outlined", "variant-items-text", "shadow-items")
-            .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
+            .AddVariants("flex-vertical", "flex-horizontal", "flex-uniform", "flex-wrap")
             .AddDefaultRoles()
             .AddItemsThemeRoles()
             .AddDefaultSizes(),
@@ -42,13 +42,13 @@ internal sealed class ListBoxPageViewModel : ControlCatalogViewModel
             new ControlThemeBuilder("Tabs")
             .AddVariants("variant-solid", "variant-light", "variant-outlined", "shadow-surface")
             .AddVariants("variant-items-solid", "variant-items-light", "variant-items-outlined", "variant-items-text", "shadow-items")
-            .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
+            .AddVariants("flex-vertical", "flex-horizontal", "flex-uniform", "flex-wrap")
             .AddThemeRoles()
             .AddItemsThemeRoles()
             .AddDefaultSizes(),
 
             new ControlThemeBuilder("Icon")
-            .AddVariants("layout-spacing", "layout-vertical", "layout-horizontal", "layout-uniform", "layout-wrap")
+            .AddVariants("flex-vertical", "flex-horizontal", "flex-uniform", "flex-wrap")
             .AddItemsThemeRoles()
             .AddDefaultSizes()
         ])

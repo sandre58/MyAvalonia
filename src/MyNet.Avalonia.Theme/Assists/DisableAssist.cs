@@ -5,7 +5,8 @@
 // -----------------------------------------------------------------------
 
 using Avalonia;
-using MyNet.Avalonia.Helpers;
+using MyNet.Avalonia.Theme.Classes;
+using MyNet.Avalonia.Theme.Classes.Helpers;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
@@ -16,7 +17,7 @@ public static class DisableAssist
     /// <summary>
     /// Provides IsDisablable Property for attached DisableAssist element.
     /// </summary>
-    public static readonly AttachedProperty<bool> IsDisablableProperty = AvaloniaPropertyHelper.RegisterBoolProperty("IsDisablable", ClassName.IsDisablable);
+    public static readonly AttachedProperty<bool> IsDisablableProperty = AvaloniaPropertyHelper.RegisterBoolProperty("IsDisablable", CssClass.IsDisablable);
 
     /// <summary>
     /// Accessor for Attached  <see cref="IsDisablableProperty"/>.

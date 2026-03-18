@@ -7,21 +7,18 @@
         <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />
         <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="1" />
         <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
-        <Setter Property="ExtendClientAreaChromeHints" Value="SystemChrome" />
         <Setter Property="SizeToContent" Value="WidthAndHeight" />
         <Setter Property="MinWidth" Value="150" />
         <Setter Property="MinHeight" Value="100" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level1}" />
-        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
-        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:Theme Surface.Level1}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Theme Foreground.Primary}" />
 
         <!-- Variant -->
-        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
-        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
-        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background, IgnoreForegroundParent=True}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush, IgnoreForegroundParent=True}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True, IgnoreForegroundParent=True}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
 
         <!-- Theme -->
@@ -32,7 +29,7 @@
         <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
         <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
 
-        <Setter Property="IsMinimizeButtonVisible">
+        <!--<Setter Property="IsMinimizeButtonVisible">
             <OnPlatform>
                 <On Options="Default, Windows, Linux">
                     <x:Boolean>True</x:Boolean>
@@ -61,8 +58,8 @@
                     <x:Boolean>False</x:Boolean>
                 </On>
             </OnPlatform>
-        </Setter>
-        <Setter Property="SystemDecorations">
+        </Setter>-->
+<!--        <Setter Property="SystemDecorations">
             <OnPlatform>
                 <On Options="Default, Windows, macOS">
                     <SystemDecorations>Full</SystemDecorations>
@@ -71,7 +68,7 @@
                     <SystemDecorations>None</SystemDecorations>
                 </On>
             </OnPlatform>
-        </Setter>
+        </Setter>-->
         <Setter Property="Template">
             <ControlTemplate TargetType="my:WindowDialog">
                 <Panel>
@@ -83,7 +80,7 @@
                             IsHitTestVisible="False" />
                     <Panel Margin="{TemplateBinding WindowDecorationMargin}" Background="Transparent" />
                     <VisualLayerManager Margin="{Binding $parent[my:WindowDialog].OffScreenMargin}">
-                        <VisualLayerManager.ChromeOverlayLayer>
+                        <!--<VisualLayerManager.ChromeOverlayLayer>
                             <Panel Margin="{Binding $parent[my:WindowDialog].OffScreenMargin}">
                                 <my:TitleBar Margin="{Binding $parent[my:WindowDialog].TitleBarMargin}"
                                              Padding="{Binding $parent[my:WindowDialog].TitleBarPadding}"
@@ -97,7 +94,7 @@
                                     </Panel>
                                 </VisualLayerManager>
                             </Panel>
-                        </VisualLayerManager.ChromeOverlayLayer>
+                        </VisualLayerManager.ChromeOverlayLayer>-->
                         <Panel>
                             <ContentPresenter Name="PART_ContentPresenter"
                                               Margin="{TemplateBinding Padding}"

@@ -12,7 +12,7 @@ using Avalonia.Data.Converters;
 using Avalonia.Styling;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ContentProviders;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.Converters;
@@ -27,7 +27,7 @@ internal sealed class ControlDefinitionConverter : IMultiValueConverter, IValueC
     {
         if (values.Count == 0 || values[0] is not ControlThemeDefinition themeDefinition) return AvaloniaProperty.UnsetValue;
 
-        var result = new ControlDefinition(themeDefinition.Theme, ThemeRole.Default, [themeDefinition.Kind.OrEmpty()], themeDefinition.DisplayName, ThemeRole.Default, themeDefinition.DefaultContentType);
+        var result = new ControlDefinition(themeDefinition.Theme, ThemeRole.Default, [$"theme-{themeDefinition.Key?.ToLower(CultureInfo.CurrentCulture) ?? "default"}", themeDefinition.Kind.OrEmpty()], themeDefinition.DisplayName, ThemeRole.Default, themeDefinition.DefaultContentType);
 
         if (values.Count > 1 && values[1] is AppearanceDefinition appearanceDefinition)
         {

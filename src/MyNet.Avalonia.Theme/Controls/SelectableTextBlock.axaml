@@ -15,11 +15,14 @@
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=selectall}" />
     </MenuFlyout>
 
-    <ControlTheme x:Key="{x:Type SelectableTextBlock}" TargetType="SelectableTextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+    <ControlTheme x:Key="{x:Type SelectableTextBlock}" TargetType="SelectableTextBlock">
+        <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
         <Setter Property="Cursor" Value="Ibeam" />
         <Setter Property="Focusable" Value="True" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        <Setter Property="TextWrapping" Value="NoWrap" />
 
         <!-- Default colors -->
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
@@ -27,10 +30,14 @@
         <!-- Theme -->
         <Setter Property="SelectionBrush" Value="{my:ThemeRole Primary, Opacity=Scrim}" />
 
+        <Style Selector="^.has-role">
+            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Foreground AncestorType=Control}" />
+            <Setter Property="Foreground" Value="{my:ThemeRole Foreground}" />
+        </Style>
+
         <Style Selector="^[IsEnabled=True]">
             <Setter Property="ContextFlyout" Value="{StaticResource MyNet.MenuFlyout.Embedded.SelectableTextBlock}" />
         </Style>
     </ControlTheme>
-
 
 </ResourceDictionary>

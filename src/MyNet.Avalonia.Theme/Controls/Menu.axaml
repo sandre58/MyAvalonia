@@ -144,7 +144,7 @@
                                 BorderThickness="0"
                                 CornerRadius="{StaticResource MyNet.Corners.Popup}"
                                 TextElement.Foreground="{TemplateBinding Foreground}"
-                                Classes="kind-popup override-style">
+                                Theme="{StaticResource MyNet.Theme.Border.Popup}">
                             <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                 <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
                                     <ItemsPresenter Name="PART_ItemsPresenter"
@@ -159,10 +159,10 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^[(my|ThemeAssist.Context)=Default] /template/ Border#InnerPopup">
+        <Style Selector="^.context-default /template/ Border#InnerPopup">
             <Setter Property="Background" Value="{my:ThemeContext Surface.Level1}" />
         </Style>
-        <Style Selector="^[(my|ThemeAssist.Context)=Contrast] /template/ Border#InnerPopup">
+        <Style Selector="^.context-contrast /template/ Border#InnerPopup">
             <Setter Property="Background" Value="{my:Foreground Contrast=True}" />
         </Style>
 
@@ -252,7 +252,7 @@
                            Placement="BottomEdgeAlignedLeft"
                            VerticalOffset="2"
                            WindowManagerAddShadowHint="False">
-                        <Border MaxHeight="{StaticResource MyNet.MaxHeight.Menu}" Classes="kind-popup">
+                        <Border MaxHeight="{StaticResource MyNet.MaxHeight.Menu}" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                             <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                 <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
                                     <ItemsPresenter Name="PART_ItemsPresenter"
@@ -355,7 +355,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         TextElement.Foreground="{TemplateBinding Foreground}"
-                        Classes="kind-popup override-style"
+                        Theme="{StaticResource MyNet.Theme.Border.Popup}"
                         my:TransitionsAssist.UseTransitions="False">
                     <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                         <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
@@ -412,7 +412,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         TextElement.Foreground="{TemplateBinding Foreground}"
-                        Classes="kind-popup override-style"
+                        Theme="{StaticResource MyNet.Theme.Border.Popup}"
                         my:TransitionsAssist.UseTransitions="False">
                     <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                         <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
@@ -467,7 +467,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         TextElement.Foreground="{TemplateBinding Foreground}"
-                        Classes="kind-popup override-style"
+                        Theme="{StaticResource MyNet.Theme.Border.Popup}"
                         my:TransitionsAssist.UseTransitions="False">
                     <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                         <ScrollViewer CornerRadius="{TemplateBinding CornerRadius}"

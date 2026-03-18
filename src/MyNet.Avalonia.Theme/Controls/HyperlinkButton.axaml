@@ -20,16 +20,16 @@
         <Setter Property="Padding" Value="3 3 3 1" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="Transparent" />
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
         <!-- Variant -->
-        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
         <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
 
         <!-- Default Theme -->
         <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
         <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
         <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
 
         <Setter Property="Template">
@@ -40,6 +40,8 @@
                                            IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                            IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                            IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                           LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                           PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                            Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                            Padding="{TemplateBinding Padding}"
                                            HorizontalAlignment="Stretch"
@@ -88,6 +90,28 @@
             <Style Selector="^ /template/ my|Underline#PART_Underline">
                 <Setter Property="IsActive" Value="True" />
             </Style>
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <!-- Size: Small -->
+        <Style Selector="^.size-sm">
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+
+        <!-- Size: Medium (default) -->
+        <Style Selector="^.size-md">
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+
+        <!-- Size: Large -->
+        <Style Selector="^.size-lg">
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Xl}" />
         </Style>
     </ControlTheme>
 

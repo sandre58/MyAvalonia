@@ -18,6 +18,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="my:IconAssist.PrimarySize" Value="{Binding $self.Bounds.Width, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=1.5}" />
 
         <!-- Default colors -->
         <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
@@ -53,18 +54,54 @@
                     </Border>
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
                         <Panel>
-                            <ContentPresenter Name="PART_ContentPresenter"
-                                              HorizontalContentAlignment="Center"
-                                              VerticalContentAlignment="Center"
-                                              Content="{TemplateBinding Content}"
-                                              CornerRadius="{TemplateBinding CornerRadius}"
-                                              IsVisible="{TemplateBinding Source, Converter={x:Static ObjectConverters.IsNull}}" />
+                            <my:IconContentControl Name="IconContent"
+                                                   Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                                   IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                   IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                   IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                                   Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   HorizontalAlignment="Stretch"
+                                                   VerticalAlignment="Stretch"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                                   BorderThickness="{TemplateBinding BorderThickness}"
+                                                   CornerRadius="{TemplateBinding CornerRadius}"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   TextElement.FontSize="{TemplateBinding FontSize}"
+                                                   TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                   UseLayoutRounding="False"
+                                                   IsVisible="{TemplateBinding Source, Converter={x:Static ObjectConverters.IsNull}}">
+                                <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                            </my:IconContentControl>
                             <Image Source="{TemplateBinding Source}" Stretch="{TemplateBinding Stretch}" />
                         </Panel>
                     </Border>
                 </Panel>
             </ControlTemplate>
         </Setter>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZE                                                      -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-xs">
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Xs}" />
+        </Style>
+        <Style Selector="^.size-sm">
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Sm}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Md}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Lg}" />
+        </Style>
+        <Style Selector="^.size-xl">
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Avatar.Xl}" />
+        </Style>
     </ControlTheme>
 
 </ResourceDictionary>

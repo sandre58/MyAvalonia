@@ -47,7 +47,6 @@
             <Setter Property="my:ThemeAssist.Category" Value="Selection" />
             <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
             <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
-            <Setter Property="my:ThemeAssist.Kind" Value="checkbox" />
             <Setter Property="Cursor" Value="Arrow" />
             <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
             <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
@@ -62,10 +61,10 @@
 
             <!-- Default Theme -->
             <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
-            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
             
             <!-- Variant -->
-            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
+            <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
 
             <!-- Theme -->
             <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
@@ -108,6 +107,8 @@
                                                    IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                    IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                    IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                    Margin="{TemplateBinding Padding}"
                                                    HorizontalAlignment="Stretch"
@@ -196,6 +197,23 @@
             </Style>
             <Style Selector="^.size-lg /template/ Viewbox#Viewbox">
                 <Setter Property="Width" Value="{StaticResource MyNet.Height.CheckBox.Lg}" />
+            </Style>
+
+            <!-- ═════════════════════════════════════════════════════════ -->
+            <!-- CHECKBOX VARIANTS                                         -->
+            <!-- ═════════════════════════════════════════════════════════ -->
+
+            <!-- Styles -->
+            <Style Selector="^.shape-circle">
+                <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxMarkedCircle}" />
+                <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{StaticResource MyNet.Geometry.MinusCircle}" />
+                <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxBlankCircleOutline}" />
+            </Style>
+
+            <Style Selector="^.shape-alternate">
+                <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{StaticResource MyNet.Geometry.Check}" />
+                <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{StaticResource MyNet.Geometry.Minus}" />
+                <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxBlankCircleOutline}" />
             </Style>
         </ControlTheme>
 

@@ -50,6 +50,11 @@
         <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
         <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), Contrast=True}" />
 
+        <Style Selector="^.variant-light">
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:ThemeRole Background, Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.RippleColor" Value="{my:ThemeRole Background}" />
+        </Style>
+
         <Setter Property="Template">
             <ControlTemplate TargetType="Button">
                 <Panel Name="PART_RootPanel">
@@ -82,6 +87,8 @@
                                                    IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                    IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                    IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalAlignment="Stretch"
@@ -132,13 +139,99 @@
                 <Setter Property="Opacity" Value="1" />
             </Style>
         </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <!-- Size: Small -->
+        <Style Selector="^.size-sm">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Sm}" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Sm}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+
+        <!-- Size: Medium (default) -->
+        <Style Selector="^.size-md">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Md}" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Md}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+
+        <!-- Size: Large -->
+        <Style Selector="^.size-lg">
+            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Lg}" />
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Lg}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Xl}" />
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- KINDS                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <Style Selector="^.kind-tool">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
+            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
+            <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
+            <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
+            <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Tool}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Tool}" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Tool}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Tool}" />
+
+            <!-- Hover -->
+            <Style Selector="^:not(:disabled):pointerover">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+
+            <Style Selector="^:selected, ^:checked, ^.is-selected">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+
+            <Style Selector="^.size-sm">
+                <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Tool.Sm}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Tool.Sm}" />
+                <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Tool.Sm}" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Tool.Sm}" />
+                <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Tool.Sm}" />
+            </Style>
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SPECIFIC BEHAVIOR STYLES                                  -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <!-- Clipboard: Pre-configured button to copy to clipboard -->
+        <Style Selector="^.is-clipboard">
+            <Setter Property="ToolTip.Tip">
+                <Template>
+                    <TextBlock Text="{my:Loc CopyInClipBoard}" />
+                </Template>
+            </Setter>
+            <Setter Property="Command" Value="{x:Static my:ClipboardAssist.CopyTextCommand}" />
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Template>
+                        <PathIcon Data="{StaticResource MyNet.Geometry.ContentCopy}" />
+                    </Template>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </ControlTheme>
 
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- ROUNDED BUTTON THEME                                      -->
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.Button.Rounded" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="my:ThemeAssist.Kind" Value="rounded" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Md}" />
@@ -185,6 +278,8 @@
                                                    IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                    IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                    IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalAlignment="Stretch"
@@ -228,13 +323,28 @@
                 <Setter Property="Opacity" Value="1" />
             </Style>
         </Style>
+
+        <Style Selector="^.size-sm">
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Sm}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Sm}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Md}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Md}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Lg}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Lg}" />
+        </Style>
     </ControlTheme>
 
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- ICON BUTTON THEME                                         -->
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.Button.Icon" TargetType="Button" BasedOn="{StaticResource MyNet.Theme.Button.Rounded}">
-        <Setter Property="my:ThemeAssist.Kind" Value="icon" />
         <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="0" />
@@ -264,6 +374,8 @@
                                                IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                               LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                               PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                Padding="{TemplateBinding Padding}"
                                                HorizontalAlignment="Stretch"
@@ -294,6 +406,19 @@
         <Style Selector="^:selected, ^:checked, ^.is-selected">
             <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground)}" />
             <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <Style Selector="^^.size-sm">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Lg}" />
         </Style>
     </ControlTheme>
 

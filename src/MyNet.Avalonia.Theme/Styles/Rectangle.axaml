@@ -1,0 +1,23 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- VARIANTS                                                  -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <Style Selector="Rectangle.variant-dashed">
+        <Setter Property="RadiusX" Value="{Binding Source={StaticResource MyNet.Corners.Surface}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="RadiusY" Value="{Binding Source={StaticResource MyNet.Corners.Surface}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="Stroke" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeDashArray" Value="2,3" />
+    </Style>
+
+    <Style Selector="Rectangle.kind-focus">
+        <Setter Property="RadiusX" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="RadiusY" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+        <Setter Property="Stroke" Value="{my:Theme Control.Border.Focus}" />
+        <Setter Property="StrokeThickness" Value="2" />
+    </Style>
+</Styles>

@@ -1,24 +1,24 @@
-<my:ExtendedWindow x:Class="MyNet.Avalonia.Demo.Views.MainWindow"
-                   xmlns="https://github.com/avaloniaui"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
-                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:my="http://mynet.com/avalonia"
-                   xmlns:views="clr-namespace:MyNet.Avalonia.Demo.Views"
-                   xmlns:vm="using:MyNet.Avalonia.Demo.ViewModels"
-                   Title="My .NET Avalonia"
-                   d:DesignHeight="450"
-                   d:DesignWidth="800"
-                   x:DataType="vm:MainViewModel"
-                   Icon="/Assets/Demo.ico"
-                   IsFullScreenButtonVisible="{OnPlatform True, macOS=False}"
-                   IsManagedResizerVisible="{OnPlatform False, Linux=True}"
-                   mc:Ignorable="d">
-    <my:ExtendedWindow.RightContent>
+<Window x:Class="MyNet.Avalonia.Demo.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:my="http://mynet.com/avalonia"
+        xmlns:views="clr-namespace:MyNet.Avalonia.Demo.Views"
+        xmlns:vm="using:MyNet.Avalonia.Demo.ViewModels"
+        Title="My .NET Avalonia"
+        d:DesignHeight="450"
+        d:DesignWidth="800"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/Demo.ico"
+        my:WindowAssist.ShowFullScreenButton="{OnPlatform True, macOS=False}"
+        my:WindowAssist.IsTitleVisible="False"
+        mc:Ignorable="d">
+    <my:WindowAssist.RightTitleBarContent>
         <StackPanel Margin="{my:Thickness Md, Horizontal}"
                     VerticalAlignment="Center"
-                    Classes="size-sm"
+                    Classes="gap-sm"
                     Orientation="Horizontal">
 
             <!-- Language -->
@@ -45,7 +45,7 @@
             <!-- Theme -->
             <StackPanel Margin="{my:Thickness Sm, Horizontal}"
                         VerticalAlignment="Center"
-                        Classes="size-md"
+                        Classes="gap-md"
                         Orientation="Horizontal">
                 <Button Classes="size-sm"
                         Command="{Binding IsLightCommand}"
@@ -60,6 +60,6 @@
                         ToolTip.Tip="{my:Loc Dark}" />
             </StackPanel>
         </StackPanel>
-    </my:ExtendedWindow.RightContent>
+    </my:WindowAssist.RightTitleBarContent>
     <views:MainView />
-</my:ExtendedWindow>
+</Window>

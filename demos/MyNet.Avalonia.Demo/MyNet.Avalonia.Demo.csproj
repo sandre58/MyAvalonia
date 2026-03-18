@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia.Fonts.Inter" />
         <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Condition="$(Configuration) == 'Debug'" />
+        <PackageReference Include="Avalonia.Fonts.Inter" />
         <PackageReference Include="Fody" PrivateAssets="all" />
         <PackageReference Include="MyNet.UI" />
         <PackageReference Include="MyNet.Utilities.Generator.Extensions" />

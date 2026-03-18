@@ -11,7 +11,11 @@ using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Metadata;
-using MyNet.Avalonia.Theme.Enums;
+using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Theme.Classes;
+using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.Avalonia.Theme.Extensions;
+using MyNet.Avalonia.Theme.Theming;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -25,14 +29,14 @@ public class IconExtension : MarkupExtension
     /// Initializes a new instance of the <see cref="IconExtension"/> class with the specified icon data key.
     /// </summary>
     /// <param name="data">The geometry resource key for the icon.</param>
-    public IconExtension(string data) => Data = data;
+    public IconExtension(IconData data) => Data = data;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="IconExtension"/> class with the specified icon data key and size category.
     /// </summary>
     /// <param name="data">The geometry resource key for the icon.</param>
     /// <param name="size">The predefined icon size category.</param>
-    public IconExtension(string data, IconSize size)
+    public IconExtension(IconData data, IconSize size)
     {
         Data = data;
         DefinedSize = size;
@@ -42,7 +46,7 @@ public class IconExtension : MarkupExtension
     /// Gets or sets the geometry resource key for the icon.
     /// </summary>
     [ConstructorArgument("data")]
-    public string Data { get; set; }
+    public IconData Data { get; set; }
 
     /// <summary>
     /// Gets or sets the predefined icon size category.
@@ -70,7 +74,7 @@ public class IconExtension : MarkupExtension
             Opacity = 1
         };
 
-        var data = new StaticResourceExtension(ThemeResourceKeyFactory.Geometry(Data)).ProvideValue(serviceProvider);
+        var data = new StaticResourceExtension(ThemeResourceKeyFactory.Geometry(Data.ToString())).ProvideValue(serviceProvider);
         _ = result.SetValue(PathIcon.DataProperty, data);
         if (Size.HasValue)
         {
@@ -79,7 +83,7 @@ public class IconExtension : MarkupExtension
         }
         else if (DefinedSize.HasValue)
         {
-            result.Classes.Add($"size-{DefinedSize.ToString()?.ToLower(CultureInfo.CurrentCulture)}");
+            result.AddClasses(CssClass.Size(DefinedSize.ToString()));
         }
 
         return result;

@@ -44,16 +44,6 @@ public class OutlinedIcon : PathIcon
         set => SetValue(ActiveBorderBrushProperty, value);
     }
 
-    public static readonly StyledProperty<double> StrokeThicknessProperty =
-        AvaloniaProperty.Register<OutlinedIcon, double>(
-            nameof(StrokeThickness));
-
-    public double StrokeThickness
-    {
-        get => GetValue(StrokeThicknessProperty);
-        set => SetValue(StrokeThicknessProperty, value);
-    }
-
     static OutlinedIcon()
     {
         AffectsRender<OutlinedIcon>(

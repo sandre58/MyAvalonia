@@ -175,7 +175,7 @@
                                        IsLightDismissEnabled="True"
                                        Placement="RightEdgeAlignedTop"
                                        PlacementTarget="{Binding #PART_MainBorder}">
-                                    <Border HorizontalAlignment="Stretch" Classes="kind-popup">
+                                    <Border HorizontalAlignment="Stretch" Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                         <StackPanel Name="PART_OverflowPanel" />
                                     </Border>
                                 </Popup>

@@ -14,7 +14,7 @@
             ClipToBounds="False"
             mc:Ignorable="d">
 
-    <v:ControlCatalogView ShowAppearance="False" ShowThemes="False" ShowPreviewCode="False">
+    <v:ControlCatalogView ShowAppearance="False" ShowThemes="False" ShowPreviewCode="False" ShowContent="False" ShowIcon="False">
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">

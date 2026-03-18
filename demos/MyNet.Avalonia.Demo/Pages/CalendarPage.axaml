@@ -17,7 +17,7 @@
 
         <v:ControlCatalogView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:ControlPlaygroundViewModel">
-                <StackPanel Classes="size-lg"
+                <StackPanel Classes="gap-lg"
                             Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
@@ -37,7 +37,7 @@
 
         <v:ControlCatalogView.ThemeControlTemplate>
             <DataTemplate x:DataType="c:ControlDefinition">
-                <StackPanel Classes="size-md" Orientation="Horizontal">
+                <StackPanel Classes="gap-md" Orientation="Horizontal">
                     <Calendar my:ThemeAssist.Role="{Binding Role}" my:ItemsAssist.Role="{Binding ItemsRole}" my:ClassesAssist.Classes="{Binding Classes}" />
                     <my:Calendar my:ThemeAssist.Role="{Binding Role}" my:ItemsAssist.Role="{Binding ItemsRole}" my:ClassesAssist.Classes="{Binding Classes}" />
                 </StackPanel>

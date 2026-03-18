@@ -52,6 +52,8 @@
                                                        IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                        IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                        IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                        Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                        Padding="{TemplateBinding Padding}"
                                                        HorizontalAlignment="Stretch"
@@ -208,7 +210,6 @@
     <!-- ROUNDED DROPDOWNBUTTON THEME                              -->
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.DropDownButton.Rounded" TargetType="DropDownButton" BasedOn="{StaticResource {x:Type DropDownButton}}">
-        <Setter Property="my:ThemeAssist.Kind" Value="rounded" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
@@ -257,6 +258,8 @@
                                                        IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                        IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                        IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                        Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                        Padding="{TemplateBinding Padding}"
                                                        HorizontalAlignment="Stretch"
@@ -312,6 +315,22 @@
                 <Setter Property="Opacity" Value="1" />
             </Style>
 
+        </Style>
+
+        <Style Selector="^.size-sm">
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Sm}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Sm}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Lg}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Lg}" />
         </Style>
     </ControlTheme>
 

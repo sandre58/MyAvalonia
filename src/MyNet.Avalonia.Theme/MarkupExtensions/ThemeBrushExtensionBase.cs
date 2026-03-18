@@ -8,7 +8,7 @@ using System;
 using System.Collections.Concurrent;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 

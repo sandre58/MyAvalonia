@@ -643,4 +643,7 @@
   <data name="FullScreen" xml:space="preserve">
     <value>Plein écran</value>
   </data>
+  <data name="ShowImage" xml:space="preserve">
+    <value>Afficher l'image</value>
+  </data>
 </root>

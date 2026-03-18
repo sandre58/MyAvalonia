@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia.Media;
+using MyNet.Avalonia.Resources;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Extensions;
@@ -38,8 +39,7 @@ public static class ColorExtensions
         /// Gets the localized or resource name of a color, or its hex representation if no name is found.
         /// </summary>
         /// <returns>The localized color name or hex string if no name exists.</returns>
-        public string ToName()
-            => ResourceLocator.ColorResourcesDictionary.TryGetValue(color, out var name) ? $"{name}" : color.ToHex();
+        public string ToName() => ColorResourcesLocator.GetName(color) is string name ? $"{name}" : color.ToHex();
 
         /// <summary>
         /// Determines the contrasting foreground color (black or white) for optimal readability against the given background color.

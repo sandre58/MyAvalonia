@@ -46,13 +46,17 @@
                             <RepeatButton Name="PART_IncreaseButton"
                                           Grid.Row="0"
                                           my:SpinnerAssist.Layout="{TemplateBinding (my:SpinnerAssist.Layout)}"
-                                          Classes="kind-tool"
+                                          Classes="kind-tool align-stretch-stretch"
+                                          Height="NaN"
+                                          Width="NaN"
                                           my:DisableAssist.IsDisablable="False"
                                           Content="{TemplateBinding (my:SpinnerAssist.IncreaseContent)}" />
                             <RepeatButton Name="PART_DecreaseButton"
                                           Grid.Row="1"
                                           my:SpinnerAssist.Layout="{TemplateBinding (my:SpinnerAssist.Layout)}"
-                                          Classes="kind-tool"
+                                          Classes="kind-tool align-stretch-stretch"
+                                          Height="NaN"
+                                          Width="NaN"
                                           my:DisableAssist.IsDisablable="False"
                                           Content="{TemplateBinding (my:SpinnerAssist.DecreaseContent)}" />
                         </Grid>
@@ -127,7 +131,9 @@
                                           Grid.Column="0"
                                           my:SpinnerAssist.Layout="{TemplateBinding (my:SpinnerAssist.Layout)}"
                                           Content="{TemplateBinding (my:SpinnerAssist.DecreaseContent)}"
-                                          Classes="kind-tool"
+                                          Classes="kind-tool align-stretch-stretch"
+                                          Height="NaN"
+                                          Width="NaN"
                                           my:DisableAssist.IsDisablable="False"
                                           IsVisible="{TemplateBinding ShowButtonSpinner}" />
                             <ContentPresenter Name="PART_ContentPresenter"
@@ -141,7 +147,9 @@
                                           Grid.Column="2"
                                           my:SpinnerAssist.Layout="{TemplateBinding (my:SpinnerAssist.Layout)}"
                                           Content="{TemplateBinding (my:SpinnerAssist.IncreaseContent)}"
-                                          Classes="kind-tool"
+                                          Classes="kind-tool align-stretch-stretch"
+                                          Height="NaN"
+                                          Width="NaN"
                                           my:DisableAssist.IsDisablable="False"
                                           IsVisible="{TemplateBinding ShowButtonSpinner}" />
                         </Grid>

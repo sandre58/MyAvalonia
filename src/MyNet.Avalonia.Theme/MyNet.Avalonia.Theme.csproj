@@ -15,8 +15,4 @@
         <AvaloniaResource Include="**/*.axaml" Exclude="MyTheme.axaml" />
     </ItemGroup>
 
-    <ItemGroup>
-      <AvaloniaXaml Remove="Styles\Controls\_index.axaml" />
-    </ItemGroup>
-
 </Project>

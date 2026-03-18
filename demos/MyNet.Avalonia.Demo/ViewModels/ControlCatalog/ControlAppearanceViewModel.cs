@@ -7,10 +7,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using Avalonia.Styling;
 using DynamicData.Binding;
-using MyNet.Avalonia.Theme.Palettes;
+using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Observable;
 using MyNet.Utilities;
 using PropertyChanged;
@@ -131,6 +132,8 @@ internal sealed class ControlAppearanceViewModel : ObservableObject
         {
             var classes = new List<string>();
             var activeTheme = GetActiveThemeDefinition();
+
+            classes.Add($"theme-{activeTheme?.Key?.ToLower(CultureInfo.CurrentCulture) ?? "default"}");
 
             if (activeTheme is not null && !string.IsNullOrEmpty(activeTheme.Kind))
                 classes.Add(activeTheme.Kind);

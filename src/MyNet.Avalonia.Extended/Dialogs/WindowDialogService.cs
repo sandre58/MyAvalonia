@@ -12,6 +12,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Theme.Extensions;
 using MyNet.UI.Dialogs.ContentDialogs;
 
 namespace MyNet.Avalonia.Extended.Dialogs;
@@ -74,7 +75,7 @@ public class WindowDialogService : ContentDialogServiceBase
 
         if (contentDialog is not null)
         {
-            dialog.TitleBarContent = contentDialog.Header;
+            //dialog.TitleBarContent = contentDialog.Header;
         }
 
         // Load view Model on opening control
@@ -120,7 +121,7 @@ public class WindowDialogService : ContentDialogServiceBase
         if (content is null) return;
 
         window.WindowStartupLocation = content.StartupLocation;
-        window.TitleBarContent = content.Header ?? dialogViewModel?.Title;
+        //window.TitleBarContent = content.Header ?? dialogViewModel?.Title;
 
         // Optimize ToString() call - avoid boxing
         window.Title = dialogViewModel?.Title ?? content.Header switch
@@ -130,10 +131,10 @@ public class WindowDialogService : ContentDialogServiceBase
             var header => header.ToString()
         };
 
-        window.IsCloseButtonVisible = content.ShowCloseButton;
+        //window.IsCloseButtonVisible = content.ShowCloseButton;
         window.CanDragMove = content.CanDragMove;
         window.CanResize = content.CanResize;
-        window.IsManagedResizerVisible = content.CanResize;
+        //window.IsManagedResizerVisible = content.CanResize;
         window.ShowInTaskbar = content.ShowInTaskBar;
 
         if (content.StartupLocation == WindowStartupLocation.Manual)

@@ -10,7 +10,6 @@
         <!-- EMBEDDED TREEVIEWITEM TOGGLEBUTTON THEME                  -->
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.ToggleButton.Embedded.TreeViewItem" TargetType="ToggleButton">
-            <Setter Property="my:ThemeAssist.Kind" Value="treeviewitem" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="Cursor" Value="Arrow" />
             <Setter Property="Template">
@@ -57,6 +56,8 @@
             <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[TreeView].(my:IconAssist.Alignment)}" />
             <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[TreeView].(my:IconAssist.Spacing)}" />
             <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[TreeView].(my:IconAssist.Opacity)}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{Binding $parent[TreeView].(my:IconAssist.LabelSize)}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{Binding $parent[TreeView].(my:IconAssist.PrimarySize)}" />
             <Setter Property="UseLayoutRounding" Value="False" />
             <Setter Property="Focusable" Value="True" />
             <Setter Property="Template">
@@ -102,6 +103,8 @@
                                                                IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                                IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                                IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                               LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                               PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                                Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
@@ -228,7 +231,28 @@
                     </Border>
                 </ControlTemplate>
             </Setter>
-        </ControlTheme>
 
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-sm">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Sm}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+
+        <Style Selector="^.size-md">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Md}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+
+        <Style Selector="^.size-lg">
+            <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.ListBoxItem.Lg}" />
+            <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+        </Style>
+        </ControlTheme>
 
 </ResourceDictionary>

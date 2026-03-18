@@ -7,7 +7,7 @@
 using Avalonia;
 using Avalonia.Layout;
 using Avalonia.Media;
-using MyNet.Avalonia.Theme.Enums;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Theme.Assists;
 

@@ -26,9 +26,8 @@ using MyNet.Avalonia.Extended.Theming;
 using MyNet.Avalonia.Extended.Toasting;
 using MyNet.Avalonia.Extended.WarmUp;
 using MyNet.Avalonia.Theme;
-using MyNet.Avalonia.Theme.Infrastructure;
-using MyNet.Avalonia.Theme.Palettes;
 using MyNet.Avalonia.Theme.Themes;
+using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.UI.Commands;
 using MyNet.UI.Loading;
 using MyNet.UI.Locators;
@@ -50,22 +49,6 @@ namespace MyNet.Avalonia.Demo;
 [DoNotNotify]
 public class App : Application
 {
-    /// <summary>
-    /// Delay in milliseconds before starting the warm-up process.
-    /// This allows the first page to render completely before preloading others.
-    /// </summary>
-    public const int WarmUpDelayMs = 800;
-
-    /// <summary>
-    /// Gets a value indicating whether warm-up is enabled in DEBUG mode.
-    /// </summary>
-    public static bool IsWarmUpEnabled =>
-#if DEBUG
-        true; // Enable in DEBUG to test performance improvements
-#else
-        true; // Enable in RELEASE for production
-#endif
-
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -165,8 +148,8 @@ public class App : Application
 
     private static void InitializeResources()
     {
-        Extended.ResourceLocator.Initialize();
-        Controls.ResourceLocator.Initialize();
+        Extended.ResourcesBootstrapper.Initialize();
+        Controls.ResourcesBootstrapper.Initialize();
         TranslationService.RegisterResources(nameof(CountryResources), CountryResources.ResourceManager);
         TranslationService.RegisterResources(nameof(CommonResources), CommonResources.ResourceManager);
         TranslationService.RegisterResources(nameof(MenuResources), MenuResources.ResourceManager);

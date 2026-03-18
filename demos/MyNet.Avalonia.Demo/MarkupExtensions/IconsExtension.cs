@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using MyNet.Avalonia.Theme.Enums;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Extensions;
 using MyNet.Observable.Translatables;
 

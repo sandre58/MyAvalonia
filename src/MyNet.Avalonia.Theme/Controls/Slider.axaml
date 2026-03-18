@@ -52,9 +52,9 @@
             <Setter Property="BorderBrush" Value="{Binding $parent[Slider].(my:InteractionAssist.ActiveBackground)}" />
             <Setter Property="Background" Value="White" />
             <Setter Property="my:InteractionAssist.HoverBackground" Value="Transparent" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeBrush BorderBrush, Lighten=1}" />
-            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:ThemeBrush BorderBrush, Lighten=1}" />
-            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeBrush BorderBrush, Lighten=1}" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeBrush BorderBrush, Lighten=0.5}" />
+            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:ThemeBrush BorderBrush, Lighten=0.5}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeBrush BorderBrush, Lighten=0.5}" />
 
             <Setter Property="Template">
                 <ControlTemplate TargetType="Thumb">
@@ -99,7 +99,7 @@
 
                                 <Border Name="PART_Positioner" Grid.Row="0">
                                     <Border Name="PART_ContentContainer">
-                                        <ContentPresenter Name="PART_ContentPresenter" />
+                                        <ContentPresenter Name="PART_ContentPresenter" Foreground="{my:ThemeContext Surface.Level1, Contrast=True}" />
                                     </Border>
                                 </Border>
                             </Grid>
@@ -150,6 +150,8 @@
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type Slider}" TargetType="Slider">
             <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
             <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
             <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
@@ -161,17 +163,22 @@
             <Setter Property="my:SliderAssist.ThumbTheme" Value="{StaticResource MyNet.Theme.Thumb.Embedded.Slider}" />
             <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
 
-            <!-- Default colors -->
-            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
-            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
-            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
-            <!-- Default Theme -->
-            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
-            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+
+        <!-- Default Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
             <Setter Property="my:InteractionAssist.IndicatorColor" Value="{Binding $self.(my:VariantAssist.Primary)}" />
 
             <Style Selector="^:horizontal">
@@ -240,6 +247,7 @@
                                        Value="{TemplateBinding Value, Mode=TwoWay}">
                                     <Track.DecreaseButton>
                                         <RepeatButton Name="PART_DecreaseButton"
+                                                      my:DisableAssist.IsDisablable="False"
                                                       Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
                                                       CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Left}}"
                                                       Focusable="False"
@@ -248,6 +256,7 @@
                                     <Track.IncreaseButton>
                                         <RepeatButton Name="PART_IncreaseButton"
                                                       Background="Transparent"
+                                                      my:DisableAssist.IsDisablable="False"
                                                       CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Right}}"
                                                       Focusable="False"
                                                       Theme="{StaticResource MyNet.Theme.Button.Embedded.Slider.Horizontal}" />
@@ -335,6 +344,7 @@
                                        Value="{TemplateBinding Value, Mode=TwoWay}">
                                     <Track.DecreaseButton>
                                         <RepeatButton Name="PART_DecreaseButton"
+                                                      my:DisableAssist.IsDisablable="False"
                                                       Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
                                                       CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Bottom}}"
                                                       Focusable="False"
@@ -343,6 +353,7 @@
                                     <Track.IncreaseButton>
                                         <RepeatButton Name="PART_IncreaseButton"
                                                       Background="Transparent"
+                                                      my:DisableAssist.IsDisablable="False"
                                                       CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Top}}"
                                                       Focusable="False"
                                                       Theme="{StaticResource MyNet.Theme.Button.Embedded.Slider.Vertical}" />
