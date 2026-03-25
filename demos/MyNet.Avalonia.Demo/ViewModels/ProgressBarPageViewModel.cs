@@ -10,6 +10,7 @@ using Avalonia.Layout;
 using DynamicData.Binding;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ClassProviders;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
@@ -39,6 +40,9 @@ internal sealed class ProgressBarPageViewModel : ControlCatalogViewModel
                 Playground.Appearance.WhenPropertyChanged(x => x.SelectedTheme).Subscribe(_ => UpdateLatyout())
             ]);
     }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.ProgressCheck;
 
     private void UpdateLatyout()
     {

@@ -7,6 +7,7 @@
 using Avalonia.Controls;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ClassProviders;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Utilities;
 
@@ -22,6 +23,9 @@ internal sealed class CarouselPageViewModel : ControlCatalogViewModel
                 new ControlThemeBuilder("Full")
                     .AddRoles(ThemeRole.Default, ThemeRole.Accent, ThemeRole.Contrast)
             ]) => Playground.ClassProviders.AddRange([TypeClassProvider, IndicatorClassProvider]);
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.ViewCarousel;
 
     public ClassProvider TypeClassProvider { get; } = new("variant-dots");
 

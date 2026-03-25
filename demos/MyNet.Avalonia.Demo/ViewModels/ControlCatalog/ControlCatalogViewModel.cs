@@ -4,8 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Avalonia.Media;
+using MyNet.Avalonia.Theme;
+using MyNet.Avalonia.Theme.Theming;
+using MyNet.Avalonia.Theme.Theming.Core;
+using MyNet.Avalonia.Theme.Theming.Palettes;
 
 namespace MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 
@@ -33,7 +39,31 @@ internal abstract class ControlCatalogViewModel : PageViewModel
     {
         var definitions = builders.Select(x => x.Build(controlName)).ToList();
         Themes = new(definitions);
-        Playground = new(controlName, definitions);
+        Playground = new(controlName, definitions, CreateBackgroundContexts());
+    }
+
+    /// <summary>
+    /// Retrieves a collection of background contexts representing different visual themes for the application UI.
+    /// </summary>
+    /// <remarks>Each <see cref="BackgroundContext"/> in the returned collection is initialized with brushes
+    /// corresponding to a particular theme element, ensuring consistent theming across various UI components. Override
+    /// this method to customize or extend the available background contexts for derived classes.</remarks>
+    /// <returns>An enumerable collection of <see cref="BackgroundContext"/> instances, each configured with specific theme
+    /// brushes for accent, primary, and surface backgrounds.</returns>
+    private static IEnumerable<BackgroundContext> CreateBackgroundContexts()
+    {
+        var theme = MyTheme.Current;
+        var accent = theme.GetBrush(nameof(MyTheme.Accent));
+        var accentForeground = theme.GetBrush($"{nameof(MyTheme.Accent)}.{nameof(ColorShades.Foreground)}");
+        var primary = theme.GetBrush(nameof(MyTheme.Primary));
+        var primaryForeground = theme.GetBrush($"{nameof(MyTheme.Primary)}.{nameof(ColorShades.Foreground)}");
+        var surface = theme.GetBrush("Surface.Level2");
+        var surfaceForeground = theme.GetBrush(ThemeResourceKeyFactory.PrimaryForeground);
+        return [
+            new BackgroundContext(surface, surfaceForeground, ThemeContext.Default),
+            new BackgroundContext(primary, primaryForeground, ThemeContext.Contrast),
+            new BackgroundContext(accent, accentForeground, ThemeContext.Contrast),
+        ];
     }
 
     /// <summary>

@@ -7,6 +7,7 @@
 using Avalonia.Controls;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ClassProviders;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
@@ -22,6 +23,9 @@ internal sealed class SplitButtonPageViewModel : ControlCatalogViewModel
                     .AddDefaultSizes()
                     .AddDefaultRoles()
             ]) => Playground.ClassProviders.AddRange([PlacementClassProvider]);
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.FormDropdown;
 
     public ClassProvider PlacementClassProvider { get; } = new("position-right");
 }

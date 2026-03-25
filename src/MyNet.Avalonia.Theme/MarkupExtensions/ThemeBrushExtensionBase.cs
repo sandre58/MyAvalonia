@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Concurrent;
 using Avalonia.Markup.Xaml;
-using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
@@ -59,7 +58,8 @@ public abstract class ThemeBrushExtensionBase : MarkupExtension
         if (TypeCache.TryGetValue(name, out var cachedType))
             return cachedType;
 
-        var tr = ctx.GetRequiredService<IXamlTypeResolver>();
+        var tr = (IXamlTypeResolver?)ctx.GetService(typeof(IXamlTypeResolver))
+            ?? throw new InvalidOperationException("IXamlTypeResolver service not found");
         var resolvedType = tr.Resolve(name);
         TypeCache.TryAdd(name, resolvedType);
         return resolvedType;

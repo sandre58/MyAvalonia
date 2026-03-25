@@ -6,12 +6,16 @@
 
 using System;
 using System.Collections.ObjectModel;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
 internal sealed class FormPageViewModel : PageViewModel
 {
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.FormatLineStyle;
+
     // Account Information
     public string? Login { get; set; }
 

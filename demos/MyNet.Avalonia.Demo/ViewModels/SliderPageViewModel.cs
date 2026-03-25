@@ -9,6 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Layout;
 using DynamicData.Binding;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
@@ -25,6 +26,9 @@ internal sealed class SliderPageViewModel : ControlCatalogViewModel
             [
                 this.WhenPropertyChanged(x => x.Orientation).Subscribe(_ => UpdateLatyout())
             ]);
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.TuneVariant;
 
     private void UpdateLatyout()
     {

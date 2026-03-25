@@ -1,4 +1,4 @@
-<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.IconsPage"
+<ContentPage x:Class="MyNet.Avalonia.Demo.Pages.IconsPage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,52 +9,30 @@
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             x:DataType="vm:IconsPageViewModel"
             ClipToBounds="False"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
             mc:Ignorable="d">
 
-    <Grid RowDefinitions="40,Auto, *">
+    <Grid RowDefinitions="Auto, *">
 
-        <!-- Header -->
-        <Border Grid.Row="1" Classes="shadow-surface"
-                Background="{my:Theme Surface.Level0}"
-                Padding="{my:Thickness Md}">
-            <DockPanel>
-
-                <my:Pagination Command="{Binding Icons.Paging.MoveToPageCommand}"
-                               CommandParameter="{Binding $self.CurrentPage}"
-                               CurrentPage="{Binding Icons.Paging.CurrentPage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                               DockPanel.Dock="Right"
-                               PageSize="{Binding Icons.Paging.PageSize, Mode=TwoWay}"
-                               PageSizeOptions="10,20,30,50,75,100,150,200,300,500,750,1000"
-                               ShowPageSizeSelector="True"
-                               ShowQuickJump="True"
-                               TotalCount="{Binding Icons.Paging.TotalItems, Mode=OneWay}" />
-                <TextBox Margin="{my:Thickness Sm, Right}"
-                         HorizontalAlignment="Stretch"
-                         VerticalAlignment="Stretch"
-                         my:IconAssist.Icon="{my:Icon Magnify}"
-                         my:InputAssist.ShowClearButton="True"
-                         Text="{ReflectionBinding Icons.Filters.Value, Delay=50, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         PlaceholderText="{my:Loc Search}" />
-
-            </DockPanel>
-        </Border>
-
-        <SplitView Grid.Row="2"
+        <!-- Icons -->
+        <SplitView Grid.Row="1"
                    Classes="variant-solid shadow-surface"
+                   CornerRadius="0"
+                   BorderThickness="0"
                    DisplayMode="Inline"
                    IsPaneOpen="True"
                    OpenPaneLength="300"
                    PanePlacement="Right">
             <SplitView.Pane>
                 <my:PlaceholderContentControl my:IconAssist.Icon="{my:Icon CircleOffOutline, Size=80}"
-                                              Classes="PlaceholderText ExtraLarge"
+                                              Classes="variant-watermark size-xl"
                                               Content="{Binding Icons.SelectedItem}"
                                               PlaceholderText="{my:Loc SelectItem}">
                     <my:PlaceholderContentControl.ContentTemplate>
                         <DataTemplate x:DataType="{x:Type vm:IconBuilderData}">
                             <HeaderedContentControl HorizontalContentAlignment="Stretch"
                                                     my:HeaderAssist.HorizontalAlignment="Center"
-                                                    Classes="Text H2"
+                                                    Classes="variant-transparent header-h2"
                                                     Header="{Binding DisplayName}">
                                 <HeaderedContentControl.HeaderTemplate>
                                     <DataTemplate DataType="{x:Type vm:IconBuilderData}">
@@ -96,24 +74,43 @@
                      ItemsSource="{Binding Icons.PagedItems}"
                      SelectedItem="{Binding Icons.SelectedItem}"
                      Classes="kind-cards variant-items-solid">
-                <ListBox.ItemContainerTheme>
-                    <ControlTheme TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                        <Setter Property="ToolTip.Tip" Value="{ReflectionBinding DisplayName}" />
-                    </ControlTheme>
-                </ListBox.ItemContainerTheme>
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type vm:IconBuilderData}">
-                        <PathIcon Width="30"
-                                  Height="30"
-                                  Margin="{my:Thickness Lg}"
-                                  Data="{Binding Geometry}" />
+                        <Grid RowDefinitions="Auto,*" RowSpacing="{StaticResource MyNet.Spacing.Lg}" Width="85" Height="85">
+                            <PathIcon HorizontalAlignment="Center" Width="37" Height="37" Data="{Binding Geometry}" />
+                            <TextBlock Grid.Row="1" Text="{Binding DisplayName}" TextAlignment="Center" TextWrapping="Wrap" Classes="align-top-center opacity-high" />
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
         </SplitView>
 
-        <!-- Background Top -->
-        <Border Grid.Row="0" Background="{my:Theme Surface.Level0}" VerticalAlignment="Stretch" />
+        <!-- Header -->
+        <Border Grid.Row="0" Classes="shadow-surface"
+                Background="{my:Theme Surface.Level0}"
+                Padding="{my:Thickness Md}">
+            <DockPanel>
+
+                <my:Pagination Command="{Binding Icons.Paging.MoveToPageCommand}"
+                               CommandParameter="{Binding $self.CurrentPage}"
+                               CurrentPage="{Binding Icons.Paging.CurrentPage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                               DockPanel.Dock="Right"
+                               PageSize="{Binding Icons.Paging.PageSize, Mode=TwoWay}"
+                               PageSizeOptions="10,20,30,50,75,100,150,200,300,500,750,1000"
+                               ShowPageSizeSelector="True"
+                               ShowQuickJump="True"
+                               TotalCount="{Binding Icons.Paging.TotalItems, Mode=OneWay}" />
+                <TextBox Margin="{my:Thickness Sm, Right}"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         my:IconAssist.Icon="{my:Icon Magnify}"
+                         my:InputAssist.ShowClearButton="True"
+                         Text="{ReflectionBinding Icons.Filters.Value, Delay=50, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         PlaceholderText="{my:Loc Search}" />
+
+            </DockPanel>
+        </Border>
+
     </Grid>
-</pages:Page>
+</ContentPage>

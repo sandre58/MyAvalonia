@@ -106,4 +106,14 @@ public interface IThemeBrushService
     /// <param name="foreground">An optional foreground color used for text or icons. If <paramref name="foreground"/> is <see langword="null"/>,
     /// a default foreground color will be used.</param>
     void SetAccent(Color color, Color? foreground);
+
+    /// <summary>
+    /// Sets the application's theme along with optional primary and accent colors and their respective foreground colors.
+    /// </summary>
+    /// <param name="theme">The name of the theme to apply. This value must correspond to a valid theme identifier.</param>
+    /// <param name="primary">An optional primary color to apply to the theme.</param>
+    /// <param name="accent">An optional accent color to apply to the theme.</param>
+    /// <param name="primaryForeground">An optional foreground color for the primary color.</param>
+    /// <param name="accentForeground">An optional foreground color for the accent color.</param>
+    void SetTheme(string theme, Color primary, Color accent, Color? primaryForeground = null, Color? accentForeground = null);
 }

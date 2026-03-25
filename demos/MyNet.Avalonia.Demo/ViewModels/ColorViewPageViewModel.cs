@@ -11,6 +11,7 @@ using System.Linq;
 using Avalonia.Controls;
 using MyNet.Avalonia.Controls.ColorPalettes;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Observable.Translatables;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
@@ -42,4 +43,7 @@ internal sealed class ColorViewPageViewModel : ControlCatalogViewModel
             ])
     {
     }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.Palette;
 }

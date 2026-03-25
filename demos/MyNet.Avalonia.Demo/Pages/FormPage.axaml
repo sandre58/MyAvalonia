@@ -1,4 +1,4 @@
-<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.FormPage"
+<ContentPage x:Class="MyNet.Avalonia.Demo.Pages.FormPage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,6 +9,7 @@
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             x:DataType="vm:FormPageViewModel"
             ClipToBounds="False"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
             mc:Ignorable="d">
     <ScrollViewer>
         <Border Width="550"
@@ -19,4 +20,4 @@
             <samples:FormContent DataContext="{Binding}" />
         </Border>
     </ScrollViewer>
-</pages:Page>
+</ContentPage>

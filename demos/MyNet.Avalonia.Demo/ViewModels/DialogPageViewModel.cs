@@ -10,6 +10,7 @@ using MyNet.Avalonia.Demo.ViewModels.Dialogs;
 using MyNet.Avalonia.Demo.Views.Dialogs;
 using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Extended.Dialogs;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.UI.Commands;
 using MyNet.UI.Toasting;
 
@@ -125,6 +126,9 @@ internal sealed class DialogPageViewModel : PageViewModel
             var result = await _overlayDialogService.ShowDialogCoreAsync(view, vm, null, options).ConfigureAwait(false);
         });
     }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.DockWindow;
 
     private static void ShowToasterResult(LoginDialogViewModel viewModel)
     {

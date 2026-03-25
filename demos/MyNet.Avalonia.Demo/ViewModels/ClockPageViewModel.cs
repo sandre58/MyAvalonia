@@ -6,6 +6,7 @@
 
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
@@ -19,4 +20,7 @@ internal sealed class ClockPageViewModel : ControlCatalogViewModel
             .AddItemsThemeRoles()
         ])
     { }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.Clock;
 }

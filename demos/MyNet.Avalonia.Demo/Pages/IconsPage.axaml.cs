@@ -4,11 +4,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Avalonia.Controls;
+
 using MyNet.Avalonia.Demo.ViewModels;
+using PropertyChanged;
 
 namespace MyNet.Avalonia.Demo.Pages;
 
-internal sealed partial class IconsPage : Page
+[DoNotNotify]
+internal sealed partial class IconsPage : ContentPage
 {
     public IconsPage()
     {

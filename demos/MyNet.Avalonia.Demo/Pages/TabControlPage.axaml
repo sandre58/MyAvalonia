@@ -1,4 +1,4 @@
-<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.TabControlPage"
+<ContentPage x:Class="MyNet.Avalonia.Demo.Pages.TabControlPage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,16 +13,16 @@
             xmlns:samples="clr-namespace:MyNet.Avalonia.Demo.Views.Samples"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:TabControlPageViewModel"
-            x:Name="Root"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
             ClipToBounds="False">
 
-    <pages:Page.Resources>
+    <ContentPage.Resources>
         <DataTemplate x:Key="LargeTabContentTemplate">
             <ScrollViewer HorizontalScrollBarVisibility="Auto">
                 <samples:LargeContent1 BorderBrush="{Binding}" />
             </ScrollViewer>
         </DataTemplate>
-    </pages:Page.Resources>
+    </ContentPage.Resources>
 
     <v:ControlCatalogView ShowContent="False">
 
@@ -36,10 +36,10 @@
                             MaxWidth="600"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
-                    <TabItem my:IconAssist.Icon="{Binding IconProvider.Icon}" Header="Tab 1" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
-                    <TabItem my:IconAssist.Icon="{Binding IconProvider.Icon}" Header="Tab 2" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
-                    <TabItem my:IconAssist.Icon="{Binding IconProvider.Icon}" Header="Tab 3" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
-                    <TabItem my:IconAssist.Icon="{Binding IconProvider.Icon}" Header="Tab 4" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
+                    <TabItem Icon="{Binding IconProvider.Icon}" Header="Tab 1" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
+                    <TabItem Icon="{Binding IconProvider.Icon}" Header="Tab 2" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
+                    <TabItem Icon="{Binding IconProvider.Icon}" Header="Tab 3" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
+                    <TabItem Icon="{Binding IconProvider.Icon}" Header="Tab 4" Content="{m:RandomBrush}" ContentTemplate="{StaticResource LargeTabContentTemplate}" />
                 </TabControl>
             </DataTemplate>
         </v:ControlCatalogView.PlaygroundControlTemplate>
@@ -72,4 +72,4 @@
 
     </v:ControlCatalogView>
 
-</pages:Page>
+</ContentPage>

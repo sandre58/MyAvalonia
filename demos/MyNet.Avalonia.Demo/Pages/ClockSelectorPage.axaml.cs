@@ -4,13 +4,17 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Avalonia.Controls;
+
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extensions;
+using PropertyChanged;
 
 namespace MyNet.Avalonia.Demo.Pages;
 
-internal sealed partial class ClockSelectorPage : Page
+[DoNotNotify]
+internal sealed partial class ClockSelectorPage : ContentPage
 {
     public ClockSelectorPage() => InitializeComponent();
 

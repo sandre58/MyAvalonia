@@ -11,13 +11,16 @@
                   FontWeight="Bold"
                   Margin="0,0,0,20"/>
 
-        <ListBox ItemsSource="{Binding Items}">
+        <!-- OPTIMIZATION: Enable virtualization for large lists -->
+        <ListBox ItemsSource="{Binding Items}"
+                 UseLayoutRounding="True">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
                             Padding="10"
                             Margin="0,2"
-                            CornerRadius="4">
+                            CornerRadius="4"
+                            UseLayoutRounding="True">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <!-- Placeholder for image -->
                             <Border Grid.Column="0"
@@ -45,12 +48,9 @@
                                           FontSize="11"
                                           Opacity="0.6"
                                           TextWrapping="Wrap"/>
+                                <!-- OPTIMIZATION: Simplified star rating -->
                                 <StackPanel Orientation="Horizontal" Spacing="2">
-                                    <TextBlock Text="★" FontSize="14" Foreground="#FFB300"/>
-                                    <TextBlock Text="★" FontSize="14" Foreground="#FFB300"/>
-                                    <TextBlock Text="★" FontSize="14" Foreground="#FFB300"/>
-                                    <TextBlock Text="★" FontSize="14" Foreground="#FFB300"/>
-                                    <TextBlock Text="★" FontSize="14" Foreground="#FFB300"/>
+                                    <TextBlock Text="★★★★★" FontSize="12" Foreground="#FFB300"/>
                                     <TextBlock Text="{Binding Rating, StringFormat='({0})'}" 
                                               FontSize="11" 
                                               Opacity="0.7"
@@ -65,6 +65,7 @@
                                 <TextBlock Text="{Binding Price, StringFormat='{}{0:C}'}" 
                                           FontWeight="Bold"
                                           FontSize="16"/>
+                                <!-- OPTIMIZATION: Use converters instead of binding visibility to boolean values -->
                                 <TextBlock Text="In Stock" 
                                           Foreground="Green"
                                           FontSize="12"

@@ -42,20 +42,29 @@ public class ThemeService(IThemeBrushService themeBrushService, IThemeBaseRegist
     /// <param name="theme">The myTheme to apply.</param>
     public void ApplyTheme(UI.Theming.Theme theme)
     {
-        themeBrushService.SetTheme(theme.Base.ToString().OrEmpty());
-
         var primaryColor = theme.PrimaryColor.ToColor();
         var primaryForegroundColor = theme.PrimaryForegroundColor.ToColor();
-        if (primaryColor.HasValue)
-        {
-            themeBrushService.SetPrimary(primaryColor.Value, primaryForegroundColor);
-        }
 
         var accentColor = theme.AccentColor.ToColor();
         var accentForegroundColor = theme.AccentForegroundColor.ToColor();
-        if (accentColor.HasValue)
+
+        if (primaryColor.HasValue && accentColor.HasValue)
         {
-            themeBrushService.SetAccent(accentColor.Value, accentForegroundColor);
+            themeBrushService.SetTheme(theme.Base.ToString().OrEmpty(), primaryColor.Value, accentColor.Value, primaryForegroundColor, accentForegroundColor);
+        }
+        else
+        {
+            themeBrushService.SetTheme(theme.Base.ToString().OrEmpty());
+
+            if (primaryColor.HasValue)
+            {
+                themeBrushService.SetPrimary(primaryColor.Value, primaryForegroundColor);
+            }
+
+            if (accentColor.HasValue)
+            {
+                themeBrushService.SetAccent(accentColor.Value, accentForegroundColor);
+            }
         }
 
         ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(CurrentTheme));

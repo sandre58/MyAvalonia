@@ -132,4 +132,7 @@
   <data name="Notifications" xml:space="preserve">
     <value>Notifications</value>
   </data>
+  <data name="Showcase" xml:space="preserve">
+    <value>Showcase</value>
+  </data>
 </root>

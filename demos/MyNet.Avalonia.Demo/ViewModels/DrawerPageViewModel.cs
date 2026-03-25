@@ -9,6 +9,7 @@ using System.Windows.Input;
 using MyNet.Avalonia.Demo.ViewModels.Dialogs;
 using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Extended.Dialogs;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Demo.ViewModels
@@ -18,6 +19,9 @@ namespace MyNet.Avalonia.Demo.ViewModels
         public ICommand OpenCommand { get; set; }
 
         public DrawerPageViewModel() => OpenCommand = CommandsManager.Create<string>(async _ => await ShowAsync().ConfigureAwait(false));
+
+        /// <inheritdoc/>
+        public override IconData Icon => IconData.ViewSplitVertical;
 
         private async Task ShowAsync()
         {

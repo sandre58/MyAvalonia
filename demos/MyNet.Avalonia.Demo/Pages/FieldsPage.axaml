@@ -1,4 +1,4 @@
-<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.FieldsPage"
+<ContentPage x:Class="MyNet.Avalonia.Demo.Pages.FieldsPage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,9 +14,9 @@
             xmlns:u="clr-namespace:MyNet.Utilities.DateTimes;assembly=MyNet.Utilities"
             xmlns:geo="using:MyNet.Utilities.Geography"
             x:DataType="vm:FieldsPageViewModel"
-            x:Name="Root"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
             ClipToBounds="False">
-    <pages:Page.Resources>
+    <ContentPage.Resources>
         <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
 
         <DataTemplate x:Key="MyNet.DataTemplate.Country" DataType="{x:Type geo:Country}">
@@ -30,7 +30,7 @@
                 <TextBlock Text="{my:Translate}" Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
             </DockPanel>
         </DataTemplate>
-    </pages:Page.Resources>
+    </ContentPage.Resources>
 
     <v:ControlCatalogView ShowThemes="False" ShowPreviewCode="False" ShowContent="False">
 
@@ -253,4 +253,4 @@
         </v:ControlCatalogView.Settings>
 
     </v:ControlCatalogView>
-</pages:Page>
+</ContentPage>

@@ -7,6 +7,7 @@
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ContentProviders;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
@@ -21,4 +22,7 @@ internal sealed class AvatarPageViewModel : ControlCatalogViewModel
             .AddSizes("size-xs", "size-sm", "size-md", "size-lg", "size-xl")
         ])
     { }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.AccountBox;
 }

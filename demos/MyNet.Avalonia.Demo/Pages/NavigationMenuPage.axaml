@@ -1,4 +1,4 @@
-<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.NavigationMenuPage"
+<ContentPage x:Class="MyNet.Avalonia.Demo.Pages.NavigationMenuPage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,7 @@
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:NavigationMenuPageViewModel"
-            x:Name="Root"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
             mc:Ignorable="d">
 
     <v:ControlCatalogView ShowContent="False" ShowIcon="False">
@@ -27,16 +27,16 @@
                     <my:NavigationMenu.Header>
                         <ToggleButton Margin="0 0 0 10" IsChecked="{Binding #menu.IsHorizontalCollapsed}" Content="{my:Icon Menu}" />
                     </my:NavigationMenu.Header>
-                    <my:NavigationMenuItem Header="{my:Loc Home}" Icon="{StaticResource MyNet.Geometry.Home}" />
-                    <my:NavigationMenuItem Header="{my:Loc Dashboard}" Icon="{StaticResource MyNet.Geometry.ViewDashboard}">
-                        <my:NavigationMenuItem Header="{my:Loc Statistics}" Icon="{StaticResource MyNet.Geometry.ChartLine}" />
-                        <my:NavigationMenuItem Header="{my:Loc Reports}" Icon="{StaticResource MyNet.Geometry.FileDocument}" />
+                    <my:NavigationMenuItem Header="{my:Loc Home}" Icon="{my:Icon Home}" />
+                    <my:NavigationMenuItem Header="{my:Loc Dashboard}" Icon="{my:Icon ViewDashboard}">
+                        <my:NavigationMenuItem Header="{my:Loc Statistics}" Icon="{my:Icon ChartLine}" />
+                        <my:NavigationMenuItem Header="{my:Loc Reports}" Icon="{my:Icon FileDocument}" />
                     </my:NavigationMenuItem>
-                    <my:NavigationMenuItem Header="{my:Loc Settings}" Icon="{StaticResource MyNet.Geometry.Cog}">
-                        <my:NavigationMenuItem Header="{my:Loc General}" Icon="{StaticResource MyNet.Geometry.Tune}" />
-                        <my:NavigationMenuItem Header="{my:Loc Advanced}" Icon="{StaticResource MyNet.Geometry.TuneVariant}" />
+                    <my:NavigationMenuItem Header="{my:Loc Settings}" Icon="{my:Icon Cog}">
+                        <my:NavigationMenuItem Header="{my:Loc General}" Icon="{my:Icon Tune}" />
+                        <my:NavigationMenuItem Header="{my:Loc Advanced}" Icon="{my:Icon TuneVariant}" />
                     </my:NavigationMenuItem>
-                    <my:NavigationMenuItem Header="{my:Loc Help}" Icon="{StaticResource MyNet.Geometry.Help}" />
+                    <my:NavigationMenuItem Header="{my:Loc Help}" Icon="{my:Icon Help}" />
                 </my:NavigationMenu>
             </DataTemplate>
         </v:ControlCatalogView.PlaygroundControlTemplate>
@@ -51,16 +51,16 @@
                         <ToggleButton Margin="0 0 0 10" Content="{my:Icon Menu}" />
                     </my:NavigationMenu.Header>
                     <my:NavigationMenuItem Header="{my:Loc Home}"
-                                           Icon="{StaticResource MyNet.Geometry.Home}" />
-                    <my:NavigationMenuItem Header="{my:Loc Dashboard}" Icon="{StaticResource MyNet.Geometry.ViewDashboard}">
-                        <my:NavigationMenuItem Header="{my:Loc Statistics}" Icon="{StaticResource MyNet.Geometry.ChartLine}" />
-                        <my:NavigationMenuItem Header="{my:Loc Reports}" Icon="{StaticResource MyNet.Geometry.FileDocument}" />
+                                           Icon="{my:Icon Home}" />
+                    <my:NavigationMenuItem Header="{my:Loc Dashboard}" Icon="{my:Icon ViewDashboard}">
+                        <my:NavigationMenuItem Header="{my:Loc Statistics}" Icon="{my:Icon ChartLine}" />
+                        <my:NavigationMenuItem Header="{my:Loc Reports}" Icon="{my:Icon FileDocument}" />
                     </my:NavigationMenuItem>
-                    <my:NavigationMenuItem Header="{my:Loc Settings}" Icon="{StaticResource MyNet.Geometry.Cog}">
-                        <my:NavigationMenuItem Header="{my:Loc General}" Icon="{StaticResource MyNet.Geometry.Tune}" />
-                        <my:NavigationMenuItem Header="{my:Loc Advanced}" Icon="{StaticResource MyNet.Geometry.TuneVariant}" />
+                    <my:NavigationMenuItem Header="{my:Loc Settings}" Icon="{my:Icon Cog}">
+                        <my:NavigationMenuItem Header="{my:Loc General}" Icon="{my:Icon Tune}" />
+                        <my:NavigationMenuItem Header="{my:Loc Advanced}" Icon="{my:Icon TuneVariant}" />
                     </my:NavigationMenuItem>
-                    <my:NavigationMenuItem Header="{my:Loc Help}" Icon="{StaticResource MyNet.Geometry.Help}" />
+                    <my:NavigationMenuItem Header="{my:Loc Help}" Icon="{my:Icon Help}" />
                 </my:NavigationMenu>
             </DataTemplate>
         </v:ControlCatalogView.ThemeControlTemplate>
@@ -88,4 +88,4 @@
 
     </v:ControlCatalogView>
 
-</pages:Page>
+</ContentPage>

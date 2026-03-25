@@ -1,12 +1,14 @@
-<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.DrawerPage"
+<ContentPage x:Class="MyNet.Avalonia.Demo.Pages.DrawerPage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:my="http://mynet.com/avalonia"
             xmlns:pages="clr-namespace:MyNet.Avalonia.Demo.Pages"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             x:DataType="vm:DrawerPageViewModel"
             ClipToBounds="False"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
             mc:Ignorable="d">
     <DockPanel>
 
@@ -21,4 +23,4 @@
             <Button Command="{Binding OpenCommand}" />
         </StackPanel>
     </DockPanel>
-</pages:Page>
+</ContentPage>

@@ -6,6 +6,7 @@
 
 using Avalonia.Controls;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
@@ -50,7 +51,15 @@ internal sealed class ListBoxPageViewModel : ControlCatalogViewModel
             new ControlThemeBuilder("Icon")
             .AddVariants("flex-vertical", "flex-horizontal", "flex-uniform", "flex-wrap")
             .AddItemsThemeRoles()
+            .AddDefaultSizes(),
+
+            new ControlThemeBuilder("Indicator")
+            .AddVariants("flex-vertical", "flex-horizontal", "flex-uniform", "flex-wrap")
+            .AddItemsThemeRoles()
             .AddDefaultSizes()
         ])
     { }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.ListBox;
 }

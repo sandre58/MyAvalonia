@@ -4,9 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Avalonia.Controls;
+using PropertyChanged;
+
 namespace MyNet.Avalonia.Demo.Pages;
 
-internal sealed partial class HyperLinkButtonPage : Page
+[DoNotNotify]
+internal sealed partial class HyperLinkButtonPage : ContentPage
 {
     public HyperLinkButtonPage() => InitializeComponent();
 }

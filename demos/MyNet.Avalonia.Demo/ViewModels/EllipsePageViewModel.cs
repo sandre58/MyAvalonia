@@ -6,6 +6,7 @@
 
 using Avalonia.Controls.Shapes;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
@@ -20,4 +21,7 @@ internal sealed class EllipsePageViewModel : ControlCatalogViewModel
             ])
     {
     }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.Circle;
 }

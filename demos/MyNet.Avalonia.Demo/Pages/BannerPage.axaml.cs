@@ -4,13 +4,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extensions;
+using PropertyChanged;
 
 namespace MyNet.Avalonia.Demo.Pages;
 
-internal sealed partial class BannerPage : Page
+[DoNotNotify]
+internal sealed partial class BannerPage : ContentPage
 {
     public BannerPage() => InitializeComponent();
 

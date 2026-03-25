@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ClassProviders;
@@ -31,12 +32,15 @@ internal sealed class ControlPlaygroundViewModel : ObservableObject
     /// </summary>
     /// <param name="controlName">The name of the control being tested.</param>
     /// <param name="themes">The collection of available theme definitions.</param>
-    public ControlPlaygroundViewModel(string controlName, IEnumerable<ControlThemeDefinition> themes)
+    /// <param name="backgroundContexts">Optional factory to rebuild background contexts with fresh brushes on theme change.</param>
+    public ControlPlaygroundViewModel(string controlName, IEnumerable<ControlThemeDefinition> themes, IEnumerable<BackgroundContext> backgroundContexts)
     {
         _controlName = controlName;
         Appearance = new(themes);
         ContentProvider = new();
         IconProvider = new();
+        BackgroundContexts.AddRange(backgroundContexts);
+        SelectedBackgroundContext = BackgroundContexts[0];
 
         Disposables.AddRange(
             [
@@ -77,14 +81,19 @@ internal sealed class ControlPlaygroundViewModel : ObservableObject
     public ObservableCollection<IClassProvider> ClassProviders { get; } = [];
 
     /// <summary>
+    /// Gets backgrounds contexts.
+    /// </summary>
+    public ObservableCollection<BackgroundContext> BackgroundContexts { get; } = [];
+
+    /// <summary>
     /// Gets or sets a value indicating whether the control is disabled.
     /// </summary>
     public bool IsDisabled { get; set; }
 
     /// <summary>
-    /// Gets or sets the background theme role.
+    /// Gets or sets the background context.
     /// </summary>
-    public ThemeRole BackgroundRole { get; set; }
+    public BackgroundContext? SelectedBackgroundContext { get; set; }
 
     /// <summary>
     /// Gets the CSS classes name to apply to the control.
@@ -150,3 +159,11 @@ internal sealed class ControlPlaygroundViewModel : ObservableObject
         IconProvider.Dispose();
     }
 }
+
+/// <summary>
+/// Represents the background context, including brush and theme information, used for rendering visual elements.
+/// </summary>
+/// <param name="Brush">The brush used to render the background of the visual element.</param>
+/// <param name="Foreground">The brush used to render the foreground content, such as text or icons, within the visual element.</param>
+/// <param name="Context">The theme context that provides additional styling and theming information for rendering.</param>
+public record class BackgroundContext(IBrush Brush, IBrush Foreground, ThemeContext Context);

@@ -10,6 +10,7 @@ using Avalonia.Layout;
 using DynamicData.Binding;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ClassProviders;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
@@ -68,6 +69,9 @@ internal sealed class ExpanderPageViewModel : ControlCatalogViewModel
             }
         }));
     }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.Expand;
 
     public ClassProvider HeaderAlignmentClassProvider { get; } = new("align-header-left");
 

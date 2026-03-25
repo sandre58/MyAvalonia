@@ -6,6 +6,7 @@
 
 using Avalonia.Controls;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
@@ -21,8 +22,12 @@ internal sealed class TabControlPageViewModel : ControlCatalogViewModel
             .AddDefaultSizes(),
 
             new ControlThemeBuilder("Indicator")
+            .AddVariants("hide-content",  "flex-uniform")
             .AddItemsThemeRoles()
             .AddDefaultSizes()
         ])
     { }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.Tab;
 }

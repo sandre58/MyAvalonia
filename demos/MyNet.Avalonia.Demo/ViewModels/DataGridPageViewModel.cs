@@ -15,6 +15,7 @@ using DynamicData;
 using DynamicData.Binding;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Humanizer;
 using MyNet.Observable;
 using MyNet.Observable.Attributes;
@@ -47,6 +48,9 @@ internal sealed class DataGridPageViewModel : ControlCatalogViewModel
             _fixtures.ToObservableChangeSet().WhenPropertyChanged(x => x.IsSelected).Subscribe(_ => OnPropertyChanged(nameof(AreAllSelected)))
         ]);
     }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.Table;
 
     public DataGridCollectionView Fixtures { get; }
 

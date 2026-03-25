@@ -14,6 +14,7 @@ using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.Views.Samples;
 using MyNet.Avalonia.Extended.Toasting;
 using MyNet.Avalonia.Templates;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Observable;
 using MyNet.UI.Commands;
@@ -41,6 +42,9 @@ internal sealed class NotificationPageViewModel : ControlCatalogViewModel
         ResetToasterService();
         ShowNotificationCommand = CommandsManager.CreateNotNull<ThemeRole>(ShowNotification);
     }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.MessageAlert;
 
     public int Duration { get; set; } = 2;
 

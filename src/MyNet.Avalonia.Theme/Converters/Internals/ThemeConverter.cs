@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
@@ -67,12 +66,35 @@ internal sealed class ThemeConverter(IThemeBrushService brushService, IThemeReso
         if (values.Count == 0) return AvaloniaProperty.UnsetValue;
 
         var brushParameters = parameter as ThemeBrushParameters;
-        var role = values.OfType<ThemeRole?>().FirstOrDefault();
-        var context = values.OfType<ThemeContext?>().FirstOrDefault();
-        var resourceKey = values.OfType<string>().FirstOrDefault();
-        var brushes = values.OfType<IBrush>().ToList();
-        var directBrush = brushes.FirstOrDefault();
-        var foreground = brushes.Count > 1 ? brushes[1] : brushes.FirstOrDefault();
+
+        ThemeRole? role = null;
+        ThemeContext? context = null;
+        string? resourceKey = null;
+        IBrush? directBrush = null;
+        IBrush? foreground = null;
+
+        for (var i = 0; i < values.Count; i++)
+        {
+            switch (values[i])
+            {
+                case ThemeRole r:
+                    role = r;
+                    break;
+                case ThemeContext c:
+                    context = c;
+                    break;
+                case string s:
+                    resourceKey = s;
+                    break;
+                case IBrush brush when directBrush is null:
+                    directBrush = brush;
+                    foreground = brush;
+                    break;
+                case IBrush brush:
+                    foreground = brush;
+                    break;
+            }
+        }
 
         var result = _resolver.Resolve(role, context, resourceKey);
 

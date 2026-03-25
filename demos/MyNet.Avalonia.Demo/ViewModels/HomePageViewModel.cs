@@ -4,6 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using MyNet.Avalonia.Theme.Classes.Enums;
+
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class HomePageViewModel : PageViewModel;
+internal sealed class HomePageViewModel : PageViewModel
+{
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.Home;
+}

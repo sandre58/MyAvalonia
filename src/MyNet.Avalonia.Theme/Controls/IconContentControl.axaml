@@ -16,6 +16,8 @@
                                       DockPanel.Dock="{TemplateBinding IconPosition, Converter={x:Static my:PositionToDockConverter.Default}}"
                                       my:IconAssist.Role="Label"
                                       my:IconAssist.Size="{TemplateBinding LabelIconSize}"
+                                      Height="{TemplateBinding LabelIconSize}"
+                                      Width="{TemplateBinding LabelIconSize}"
                                       HorizontalContentAlignment="Center"
                                       VerticalContentAlignment="Center"
                                       Content="{TemplateBinding Icon}"

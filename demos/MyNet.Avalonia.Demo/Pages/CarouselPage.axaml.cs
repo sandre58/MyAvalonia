@@ -4,9 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Avalonia.Controls;
+using PropertyChanged;
+
 namespace MyNet.Avalonia.Demo.Pages;
 
-internal sealed partial class CarouselPage : Page
+[DoNotNotify]
+internal sealed partial class CarouselPage : ContentPage
 {
     public CarouselPage() => InitializeComponent();
 }

@@ -12,6 +12,7 @@ using System.Linq;
 using Avalonia.Media;
 using DynamicData;
 using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Avalonia.Theme.Theming.Palettes;
 using MyNet.Observable.Attributes;
@@ -64,6 +65,9 @@ internal sealed class ThemePageViewModel : PageViewModel
             OpacityLevels.AddRange(opacityLevels.Select(x => new OpacityDefinition(x, themeBrushService.GetOpacity(x) ?? 0.0)));
         }
     }
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.PaletteSwatchVariant;
 
     public ObservableCollection<IThemeBase> AvailableThemeVariants { get; } = [];
 

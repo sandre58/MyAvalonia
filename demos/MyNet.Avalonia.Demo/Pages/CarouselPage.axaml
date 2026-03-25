@@ -1,4 +1,4 @@
-<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.CarouselPage"
+<ContentPage x:Class="MyNet.Avalonia.Demo.Pages.CarouselPage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
@@ -10,7 +10,7 @@
             xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
-            x:Name="Root"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
             x:DataType="vm:CarouselPageViewModel"
             ClipToBounds="False"
             mc:Ignorable="d">
@@ -89,4 +89,4 @@
         </v:ControlCatalogView.Settings>
 
     </v:ControlCatalogView>
-</pages:Page>
+</ContentPage>

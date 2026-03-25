@@ -25,6 +25,7 @@ using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Avalonia.Theme.Theming.Palettes;
 using MyNet.Avalonia.Theme.TypeConverters;
 using MyNet.Utilities;
+using MyNet.Utilities.Deferring;
 
 namespace MyNet.Avalonia.Theme;
 
@@ -39,6 +40,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
 
     private readonly IServiceProvider? _serviceProvider;
     private readonly BrushManager _brushManager;
+    private readonly Deferrer _themeChangedDeferrer;
 
     /// <summary>
     /// Gets the current theme instance from the application, providing color palettes, theme management, and resource injection.
@@ -63,6 +65,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     {
         _serviceProvider = serviceProvider;
         _brushManager = new(ColorTransitionDuration, ColorTransitionEasing);
+        _themeChangedDeferrer = new(RaiseThemeChanged);
 
         ClassesBootstrapper.Initialize();
 
@@ -112,6 +115,22 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     {
         get => GetValue(TransitionIsEnabledProperty);
         set => SetValue(TransitionIsEnabledProperty, value);
+    }
+
+    #endregion
+
+    #region ThemeVersion Property
+
+    private static readonly StyledProperty<int> ThemeVersionProperty = AvaloniaProperty.Register<MyTheme, int>(nameof(ThemeVersion));
+
+    /// <summary>
+    /// Gets a counter that increments each time the theme changes, after all brushes have been updated.
+    /// Can be used in bindings to force re-evaluation when the theme changes.
+    /// </summary>
+    public int ThemeVersion
+    {
+        get => GetValue(ThemeVersionProperty);
+        private set => SetValue(ThemeVersionProperty, value);
     }
 
     #endregion
@@ -209,9 +228,12 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     /// </summary>
     private void OnActualThemeVariantChanged()
     {
-        Theme = Application.Current?.ActualThemeVariant.Key.ToString();
-        UpdateBrushesFromCurrentTheme();
-        RaiseThemeChanged();
+        using (_themeChangedDeferrer.Defer())
+        {
+            Theme = Application.Current?.ActualThemeVariant.Key.ToString();
+            InvalidateResourceCache();
+            UpdateBrushesFromCurrentTheme();
+        }
     }
 
     #endregion
@@ -251,27 +273,30 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     {
         ArgumentNullException.ThrowIfNull(completeTheme);
 
-        // Apply brand colors
-        Primary = completeTheme.Primary;
-        Accent = completeTheme.Accent;
-        Theme = completeTheme.ThemeVariant.Variant.Key.ToString();
+        using (_themeChangedDeferrer.Defer())
+        {
+            // Apply brand colors
+            Primary = completeTheme.Primary;
+            Accent = completeTheme.Accent;
+            Theme = completeTheme.ThemeVariant.Variant.Key.ToString();
 
-        // Force update of brushes
-        UpdateBrushesFromCurrentTheme();
-        RaiseThemeChanged();
+            // Force update of brushes
+            UpdateBrushesFromCurrentTheme();
+        }
     }
 
     #endregion
 
-    #region Resource Injection
+        #region Resource Injection
 
-    /// <summary>
-    /// Injects all accent brand palette resources into the ResourceDictionary, including base color, foreground, and all shades.
-    /// </summary>
+        /// <summary>
+        /// Injects all accent brand palette resources into the ResourceDictionary, including base color, foreground, and all shades.
+        /// </summary>
     private void AddOrUpdatePrimaryShades()
     {
         using (PerformanceMonitor.Measure("AddOrUpdatePrimaryShades", category: PerformanceCategory.Theme))
             AddOrUpdateColorShades(Primary, nameof(Primary));
+        InvalidateResourceCache();
     }
 
     /// <summary>
@@ -281,6 +306,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     {
         using (PerformanceMonitor.Measure("AddOrUpdateAccentShades", category: PerformanceCategory.Theme))
             AddOrUpdateColorShades(Accent, nameof(Accent));
+        InvalidateResourceCache();
     }
 
     /// <summary>
@@ -329,8 +355,10 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
             if (!Resources.ContainsKey(ThemeResourceKeyFactory.Brush(transparencySmallKey)))
                 Resources.Add(ThemeResourceKeyFactory.Brush(transparencySmallKey), createTransparencyBrush(8));
 
-            PerformanceMonitor.Debug($"UpdateBrushesFromCurrentTheme processed {count + 2} brushes", category: PerformanceCategory.Theme);
+            PerformanceMonitor.Debug($"UpdateBrushesFromCurrentTheme processed {count + 3} brushes", category: PerformanceCategory.Theme);
         }
+
+        InvalidateResourceCache();
 
         VisualBrush createTransparencyBrush(double size) => new(new Image
         {
@@ -430,7 +458,13 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     /// <summary>
     /// Raises the ThemeChanged event asynchronously.
     /// </summary>
-    private void RaiseThemeChanged() => ThemeChanged?.Invoke(this, EventArgs.Empty);
+    private void RaiseThemeChanged()
+    {
+        if (_themeChangedDeferrer.IsDeferred) return;
+
+        ThemeVersion++;
+        ThemeChanged?.Invoke(this, EventArgs.Empty);
+    }
 
     /// <summary>
     /// Retrieves actual resources dictionary from current theme.
@@ -509,6 +543,24 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     public void SetAccent(Color color, Color? foreground) => Accent = new ColorShades(color, foreground);
 
     /// <summary>
+    /// Sets the application's theme along with optional primary and accent colors and their respective foreground colors.
+    /// </summary>
+    /// <param name="theme">The name of the theme to apply. This value must correspond to a valid theme identifier.</param>
+    /// <param name="primary">An optional primary color to apply to the theme.</param>
+    /// <param name="accent">An optional accent color to apply to the theme.</param>
+    /// <param name="primaryForeground">An optional foreground color for the primary color.</param>
+    /// <param name="accentForeground">An optional foreground color for the accent color.</param>
+    public void SetTheme(string theme, Color primary, Color accent, Color? primaryForeground = null, Color? accentForeground = null)
+    {
+        using (_themeChangedDeferrer.Defer())
+        {
+            Theme = theme;
+            Primary = new ColorShades(primary, primaryForeground);
+            Accent = new ColorShades(accent, accentForeground);
+        }
+    }
+
+    /// <summary>
     /// Gets a brush from the theme resources by path.
     /// </summary>
     /// <param name="path">The resource path for the brush.</param>
@@ -566,6 +618,9 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     #region IResourceNode Implementation
 
     private bool _isResourcedAccessed;
+    private static readonly object NotFoundSentinel = new();
+    private Dictionary<object, object?>? _resourceCache;
+    private ThemeVariant? _cachedThemeVariant;
 
     /// <summary>
     /// Tries to get a resource from the theme's resources dictionary. Implements IResourceNode to integrate with Avalonia's resources lookup system.
@@ -578,6 +633,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
 
     /// <summary>
     /// Tries to get a resource from the theme's resources dictionary, loading resources if accessed for the first time.
+    /// Uses a per-theme-variant cache to avoid repeated dictionary walks through merged dictionaries and child styles.
     /// </summary>
     /// <param name="key">The resource key to look up.</param>
     /// <param name="theme">The theme variant context.</param>
@@ -585,12 +641,45 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     /// <returns>True if the resource was found; otherwise, false.</returns>
     private new bool TryGetResource(object key, ThemeVariant? theme, out object? value)
     {
-        if (_isResourcedAccessed)
-            return Resources.TryGetResource(key, theme, out value) || base.TryGetResource(key, theme, out value);
-        _isResourcedAccessed = true;
-        OnResourcedAccessed();
-        return Resources.TryGetResource(key, theme, out value) || base.TryGetResource(key, theme, out value);
+        if (!_isResourcedAccessed)
+        {
+            _isResourcedAccessed = true;
+            OnResourcedAccessed();
+        }
+
+        // Fast path: check cache for the current theme variant
+        if (_resourceCache is not null && theme == _cachedThemeVariant && _resourceCache.TryGetValue(key, out var cached))
+        {
+            if (ReferenceEquals(cached, NotFoundSentinel))
+            {
+                value = null;
+                return false;
+            }
+
+            value = cached;
+            return true;
+        }
+
+        // Slow path: walk dictionaries and child styles
+        var found = Resources.TryGetResource(key, theme, out value) || base.TryGetResource(key, theme, out value);
+
+        // Populate cache (invalidate if theme variant changed)
+        if (theme != _cachedThemeVariant)
+        {
+            _resourceCache?.Clear();
+            _cachedThemeVariant = theme;
+        }
+
+        _resourceCache ??= new Dictionary<object, object?>(256);
+        _resourceCache[key] = found ? value : NotFoundSentinel;
+
+        return found;
     }
+
+    /// <summary>
+    /// Invalidates the resource lookup cache. Must be called whenever theme resources are modified.
+    /// </summary>
+    private void InvalidateResourceCache() => _resourceCache?.Clear();
 
     /// <summary>
     /// Loads theme resources and injects palettes and brushes when accessed for the first time.

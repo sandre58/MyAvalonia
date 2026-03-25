@@ -1,4 +1,4 @@
-<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.ClockPage"
+<ContentPage x:Class="MyNet.Avalonia.Demo.Pages.ClockPage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,7 @@
             xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:ClockPageViewModel"
-            x:Name="Root"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
             ClipToBounds="False"
             mc:Ignorable="d">
 
@@ -64,4 +64,4 @@
         </v:ControlCatalogView.Settings>
 
     </v:ControlCatalogView>
-</pages:Page>
+</ContentPage>

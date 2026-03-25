@@ -75,6 +75,7 @@ public class ThemeContextExtension(string path) : ThemeBrushExtensionBase
             result.Bindings.Add(new ReflectionBinding("Parent.(TextElement.Foreground)")
             {
                 Mode = BindingMode.OneWay,
+                FallbackValue = null,
                 RelativeSource = new RelativeSource(RelativeSourceMode.Self),
                 TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
             });

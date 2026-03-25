@@ -1,4 +1,4 @@
-<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.ListBoxPage"
+<ContentPage x:Class="MyNet.Avalonia.Demo.Pages.ListBoxPage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:c="using:MyNet.Avalonia.Demo.Converters"
@@ -12,10 +12,10 @@
             xmlns:v="clr-namespace:MyNet.Avalonia.Demo.Views.ControlCatalog"
             xmlns:m="clr-namespace:MyNet.Avalonia.Demo.MarkupExtensions"
             x:DataType="vm:ListBoxPageViewModel"
-            x:Name="Root"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
             ClipToBounds="False"
             mc:Ignorable="d">
-    <pages:Page.Resources>
+    <ContentPage.Resources>
         <DataTemplate x:Key="MyNet.DataTemplate.Country" DataType="{x:Type geo:Country}">
             <DockPanel>
                 <Image Width="16"
@@ -42,7 +42,7 @@
         <DataTemplate x:Key="MyNet.DataTemplate.Icon" DataType="{x:Type geo:Country}">
             <ContentControl Content="{m:RandomIcon}" />
         </DataTemplate>
-    </pages:Page.Resources>
+    </ContentPage.Resources>
 
     <v:ControlCatalogView ShowContent="False">
 
@@ -85,7 +85,7 @@
                                 </Style>
                             </Style>
 
-                            <Style Selector="^.theme-toggle, ^.theme-tabs, ^.theme-icon">
+                            <Style Selector="^.theme-toggle, ^.theme-tabs, ^.theme-icon, ^.theme-indicator">
                                 <Setter Property="Width" Value="NaN" />
                                 <Setter Property="ItemsSource" Value="{m:RandomCountries Min=3, Max=5}" />
                                 <Setter Property="ItemTemplate" Value="{StaticResource MyNet.DataTemplate.Country}" />
@@ -161,4 +161,4 @@
         </v:ControlCatalogView.Settings>
 
     </v:ControlCatalogView>
-</pages:Page>
+</ContentPage>

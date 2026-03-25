@@ -555,6 +555,72 @@ public static class ItemsAssist
 
     #endregion
 
+    #region IndicatorLength
+
+    /// <summary>
+    /// Provides IndicatorLength Property for attached ItemsAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<double> IndicatorLengthProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("IndicatorLength", typeof(ItemsAssist), 20.0d);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="IndicatorLengthProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="IndicatorLengthProperty"/>.</param>
+    public static void SetIndicatorLength(StyledElement element, double value) => element.SetValue(IndicatorLengthProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="IndicatorLengthProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetIndicatorLength(StyledElement element) => element.GetValue(IndicatorLengthProperty);
+
+    #endregion
+
+    #region IndicatorThickness
+
+    /// <summary>
+    /// Provides IndicatorThickness Property for attached ItemsAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<double> IndicatorThicknessProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("IndicatorThickness", typeof(ItemsAssist), 3.0d);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="IndicatorThicknessProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="IndicatorThicknessProperty"/>.</param>
+    public static void SetIndicatorThickness(StyledElement element, double value) => element.SetValue(IndicatorThicknessProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="IndicatorThicknessProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static double GetIndicatorThickness(StyledElement element) => element.GetValue(IndicatorThicknessProperty);
+
+    #endregion
+
+    #region IndicatorMargin
+
+    /// <summary>
+    /// Provides IndicatorMargin Property for attached ItemsAssist element.
+    /// </summary>
+    public static readonly AttachedProperty<Thickness> IndicatorMarginProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("IndicatorMargin", typeof(ItemsAssist));
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="IndicatorMarginProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="IndicatorMarginProperty"/>.</param>
+    public static void SetIndicatorMargin(StyledElement element, Thickness value) => element.SetValue(IndicatorMarginProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="IndicatorMarginProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static Thickness GetIndicatorMargin(StyledElement element) => element.GetValue(IndicatorMarginProperty);
+
+    #endregion
+
     #region Role
 
     /// <summary>

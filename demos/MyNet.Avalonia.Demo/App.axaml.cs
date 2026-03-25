@@ -5,26 +5,27 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reactive.Concurrency;
-using System.Reflection;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Clipboard;
+using MyNet.Avalonia.Demo.Pages;
 using MyNet.Avalonia.Demo.Resources;
 using MyNet.Avalonia.Demo.ViewModels;
 using MyNet.Avalonia.Demo.Views;
 using MyNet.Avalonia.Extended.Busy;
 using MyNet.Avalonia.Extended.Clipboard;
 using MyNet.Avalonia.Extended.Commands;
+using MyNet.Avalonia.Extended.Navigation;
 using MyNet.Avalonia.Extended.Schedulers;
 using MyNet.Avalonia.Extended.Services;
 using MyNet.Avalonia.Extended.Theming;
 using MyNet.Avalonia.Extended.Toasting;
-using MyNet.Avalonia.Extended.WarmUp;
 using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Themes;
 using MyNet.Avalonia.Theme.Theming.Core;
@@ -37,6 +38,7 @@ using MyNet.UI.Notifications;
 using MyNet.UI.Services;
 using MyNet.UI.Theming;
 using MyNet.UI.Toasting;
+using MyNet.Utilities;
 using MyNet.Utilities.Geography.Extensions;
 using MyNet.Utilities.Localization;
 using MyNet.Utilities.Logging;
@@ -49,84 +51,162 @@ namespace MyNet.Avalonia.Demo;
 [DoNotNotify]
 public class App : Application
 {
-    public override void Initialize()
-    {
-        AvaloniaXamlLoader.Load(this);
+    /// <summary>
+    /// Initializes the application by loading the XAML markup for the App class. This method is called during the application startup process to set up the application's resources and UI components defined in the App.xaml file.
+    /// </summary>
+    public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
-#if DEBUG
-        this.AttachDeveloperTools();
-#endif
-    }
-
+    /// <summary>
+    /// Initializes the application framework and configures the main window or view based on the application's
+    /// lifetime.
+    /// </summary>
+    /// <remarks>This method registers required services and view models, builds the service provider, and
+    /// initializes application resources. It determines whether to display a main window or a main view depending on
+    /// the application's lifetime type. Override this method to customize application startup behavior.</remarks>
     public override void OnFrameworkInitializationCompleted()
     {
+        var viewModelTypes = ProvidePages();
+
         // Register all the services needed for the application to run
         var collection = new ServiceCollection();
         RegisterServices(collection);
-        var pageTypes = RegisterPageViewModels(collection);
+        RegisterPageViewModels(collection, viewModelTypes.Keys);
 
         // Creates a ServiceProvider containing services from the provided IServiceCollection
         var services = collection.BuildServiceProvider();
 
         InitializeServices(services);
-
         InitializeTheme(services);
         InitializeResources();
 
         var vm = ViewModelManager.Get<MainViewModel>();
+        RegisterPages(services, vm, viewModelTypes);
+
         switch (ApplicationLifetime)
         {
             case IClassicDesktopStyleApplicationLifetime desktop:
                 desktop.MainWindow = new MainWindow { DataContext = vm };
-
-                desktop.MainWindow.Opened += async (_, _) =>
-                {
-                    var warmUpService = services.GetRequiredService<IWarmUpService>();
-
-                    await warmUpService.WarmUpAsync(pageTypes, delayMs: 800).ConfigureAwait(false);
-                };
                 break;
             case ISingleViewApplicationLifetime singleView:
                 singleView.MainView = new MainView { DataContext = vm };
                 break;
         }
 
-        _ = NavigationManager.NavigateTo<HomePageViewModel>();
+        NavigationManager.NavigateTo<HomePageViewModel>();
 
         base.OnFrameworkInitializationCompleted();
     }
 
+    /// <summary>
+    /// Registers the services required for the application to run. This method adds various services to the provided
+    /// <see cref="ServiceCollection"/>.
+    /// </summary>
+    /// <param name="collection">The service collection to register services with.</param>
     private void RegisterServices(ServiceCollection collection)
         => collection.AddSingleton<ILogger, Logger>()
+            .AddSingleton<IViewResolver, ViewResolver>()
             .AddSingleton<IViewModelLocator, ViewModelLocator>()
-            .AddSingleton<IWarmUpService, ViewModelWarmUpService>()
+            .AddSingleton<IPageResolver, PageResolver>()
             .AddSingleton<IThemeBrushService>(MyTheme.Current)
             .AddSingleton<IThemeBaseRegistry, ThemeVariantsRegistry>()
             .AddSingleton<IThemeService, ThemeService>()
             .AddSingleton<INotificationsManager, NotificationsManager>()
-            .AddSingleton<INavigationService, NavigationService>()
+            .AddSingleton<INavigationService, Extended.Navigation.NavigationService>()
             .AddSingleton<IToasterService>(new ToasterService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
             .AddSingleton<IClipboardService>(new ClipboardService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
-            // .AddSingleton<IDialogService, OverlayDialogService>()
             .AddScoped<IBusyServiceFactory, BusyServiceFactory>()
-            // .AddScoped<IMessageBoxFactory, MessageBoxFactory>()
             .AddScoped<IScheduler, AvaloniaScheduler>(_ => AvaloniaScheduler.Current)
             .AddScoped<ICommandFactory, AvaloniaCommandFactory>()
             .AddScoped<IAppCommandsService, AppCommandsService>();
 
-    private static Type[] RegisterPageViewModels(ServiceCollection collection)
+    /// <summary>
+    /// Provides a mapping of ViewModel types to their corresponding Page types.
+    /// </summary>
+    /// <remarks>This method is used to facilitate the navigation between different pages in the application
+    /// by linking ViewModels to their respective UI representations.</remarks>
+    /// <returns>A dictionary where the key is a ViewModel type and the value is the associated Page type.</returns>
+    private static Dictionary<Type, Type> ProvidePages() => new()
+    {
+        [typeof(HomePageViewModel)] = typeof(HomePage),
+        [typeof(ThemePageViewModel)] = typeof(ThemePage),
+        [typeof(IconsPageViewModel)] = typeof(IconsPage),
+        [typeof(AvatarPageViewModel)] = typeof(AvatarPage),
+        [typeof(BadgePageViewModel)] = typeof(BadgePage),
+        [typeof(BannerPageViewModel)] = typeof(BannerPage),
+        [typeof(BorderPageViewModel)] = typeof(BorderPage),
+        [typeof(ButtonPageViewModel)] = typeof(ButtonPage),
+        [typeof(CalendarPageViewModel)] = typeof(CalendarPage),
+        [typeof(CarouselPageViewModel)] = typeof(CarouselPage),
+        [typeof(CheckBoxPageViewModel)] = typeof(CheckBoxPage),
+        [typeof(ClockPageViewModel)] = typeof(ClockPage),
+        [typeof(ClockSelectorPageViewModel)] = typeof(ClockSelectorPage),
+        [typeof(ColorViewPageViewModel)] = typeof(ColorViewPage),
+        [typeof(DataGridPageViewModel)] = typeof(DataGridPage),
+        [typeof(DialogPageViewModel)] = typeof(DialogPage),
+        [typeof(DrawerPageViewModel)] = typeof(DrawerPage),
+        [typeof(DropDownButtonPageViewModel)] = typeof(DropDownButtonPage),
+        [typeof(EllipsePageViewModel)] = typeof(EllipsePage),
+        [typeof(ExpanderPageViewModel)] = typeof(ExpanderPage),
+        [typeof(FieldsPageViewModel)] = typeof(FieldsPage),
+        [typeof(FormPageViewModel)] = typeof(FormPage),
+        [typeof(GridSplitterPageViewModel)] = typeof(GridSplitterPage),
+        [typeof(HeaderedContentControlPageViewModel)] = typeof(HeaderedContentControlPage),
+        [typeof(HyperLinkButtonPageViewModel)] = typeof(HyperLinkButtonPage),
+        [typeof(LabelPageViewModel)] = typeof(LabelPage),
+        [typeof(ListBoxPageViewModel)] = typeof(ListBoxPage),
+        [typeof(MenuPageViewModel)] = typeof(MenuPage),
+        [typeof(NavigationMenuPageViewModel)] = typeof(NavigationMenuPage),
+        [typeof(NotificationPageViewModel)] = typeof(NotificationPage),
+        [typeof(OutlinedIconPageViewModel)] = typeof(OutlinedIconPage),
+        [typeof(PaginationPageViewModel)] = typeof(PaginationPage),
+        [typeof(ProgressBarPageViewModel)] = typeof(ProgressBarPage),
+        [typeof(RadioButtonPageViewModel)] = typeof(RadioButtonPage),
+        [typeof(SelectableTextBlockPageViewModel)] = typeof(SelectableTextBlockPage),
+        [typeof(SliderPageViewModel)] = typeof(SliderPage),
+        [typeof(SplitButtonPageViewModel)] = typeof(SplitButtonPage),
+        [typeof(SplitViewPageViewModel)] = typeof(SplitViewPage),
+        [typeof(TabControlPageViewModel)] = typeof(TabControlPage),
+        [typeof(TextBlockPageViewModel)] = typeof(TextBlockPage),
+        [typeof(TimeViewPageViewModel)] = typeof(TimeViewPage),
+        [typeof(ToggleButtonPageViewModel)] = typeof(ToggleButtonPage),
+        [typeof(ToggleSplitButtonPageViewModel)] = typeof(ToggleSplitButtonPage),
+        [typeof(ToggleSwitchPageViewModel)] = typeof(ToggleSwitchPage),
+        [typeof(TreeViewPageViewModel)] = typeof(TreeViewPage)
+    };
+
+    /// <summary>
+    /// Registers the specified view model types with the provided service collection as singleton services.
+    /// </summary>
+    /// <remarks>This method always registers the MainViewModel as a singleton in addition to any types
+    /// provided in the viewModelTypes parameter.</remarks>
+    /// <param name="collection">The service collection to which the view models will be registered.</param>
+    /// <param name="viewModelTypes">An enumerable collection of view model types to register as singletons.</param>
+    private static void RegisterPageViewModels(ServiceCollection collection, IEnumerable<Type> viewModelTypes)
     {
         collection.AddSingleton<MainViewModel>();
-
-        var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t is { IsClass: true, IsAbstract: false } && t.IsAssignableTo(typeof(INavigationPage))).ToArray();
-        foreach (var viewModelType in types)
-        {
-            collection.AddSingleton(viewModelType);
-        }
-
-        return types;
+        viewModelTypes.ForEach(x => collection.AddSingleton(x));
     }
 
+    /// <summary>
+    /// Registers the pages with the view resolver and adds them to the main view model's navigation pages collection.
+    /// </summary>
+    /// <param name="services">The service provider to resolve dependencies.</param>
+    /// <param name="mainViewModel">The main view model to which the pages will be added.</param>
+    /// <param name="pages">A dictionary mapping view model types to their corresponding page types.</param>
+    private static void RegisterPages(ServiceProvider services, MainViewModel mainViewModel, Dictionary<Type, Type> pages)
+    {
+        var viewResolver = services.GetRequiredService<IViewResolver>();
+        pages.ForEach(x => viewResolver.Register(x.Key, x.Value));
+        mainViewModel.AddPages([.. pages.Keys.Select(x => (INavigationPage)services.GetRequiredService(x))]);
+    }
+
+    /// <summary>
+    /// Initializes core application services and configures essential components required for application startup.
+    /// </summary>
+    /// <remarks>This method must be called during application startup to ensure that logging, view models,
+    /// theming, navigation, clipboard, and other infrastructure services are properly configured and available
+    /// throughout the application's lifetime.</remarks>
+    /// <param name="services">The service provider used to resolve and supply dependencies for service initialization. Cannot be null.</param>
     private static void InitializeServices(ServiceProvider services)
     {
         // Logging
@@ -146,6 +226,9 @@ public class App : Application
         Scheduler.Initialize(services.GetRequiredService<IScheduler>());
     }
 
+    /// <summary>
+    /// Initializes the application's resources by calling the initialization methods of the Extended and Controls resource bootstrappers, and registering various resource managers with the translation service for localization support. This method ensures that all necessary resources are loaded and available for use throughout the application, enabling proper localization and theming functionality.
+    /// </summary>
     private static void InitializeResources()
     {
         Extended.ResourcesBootstrapper.Initialize();
@@ -163,6 +246,10 @@ public class App : Application
         TranslationService.RegisterResources(nameof(ThemePageResources), ThemePageResources.ResourceManager);
     }
 
+    /// <summary>
+    /// Initializes the application's theme by registering various theme variants with the theme base registry. This method ensures that the application has access to different themes, such as dark, light, high contrast, and a custom dark blue theme, allowing users to switch between them based on their preferences or accessibility needs.
+    /// </summary>
+    /// <param name="services">The service provider to resolve dependencies.</param>
     private static void InitializeTheme(ServiceProvider services)
     {
         var registry = services.GetRequiredService<IThemeBaseRegistry>();

@@ -18,7 +18,8 @@
                         <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
                                 Margin="0,0,0,15"
                                 Padding="15"
-                                CornerRadius="8">
+                                CornerRadius="8"
+                                UseLayoutRounding="True">
                             <StackPanel Spacing="10">
                                 <TextBlock Text="{Binding Title}" 
                                           FontSize="18" 
@@ -27,6 +28,7 @@
                                           FontSize="12" 
                                           Opacity="0.7"/>
                                 
+                                <!-- OPTIMIZATION: Use simpler layout and add UseLayoutRounding -->
                                 <ItemsControl ItemsSource="{Binding Items}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -40,7 +42,8 @@
                                                     Padding="10"
                                                     CornerRadius="4"
                                                     Width="180"
-                                                    Height="100">
+                                                    Height="100"
+                                                    UseLayoutRounding="True">
                                                 <StackPanel Spacing="5">
                                                     <StackPanel Orientation="Horizontal" Spacing="5">
                                                         <TextBlock Text="{Binding Icon}" FontSize="20"/>

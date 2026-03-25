@@ -65,6 +65,11 @@
     <sys:Double x:Key="MyNet.Height.ProgressBar.Circular.Sm">2</sys:Double>
     <sys:Double x:Key="MyNet.Height.ProgressBar.Circular.Md">6</sys:Double>
     <sys:Double x:Key="MyNet.Height.ProgressBar.Circular.Lg">12</sys:Double>
+    
+    <!-- Drawer Header Heights -->
+    <sys:Double x:Key="MyNet.Height.Drawer.Header.Sm">30</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Drawer.Header.Md">40</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Drawer.Header.Lg">50</sys:Double>
 
     <!-- ===================================================================== -->
     <!-- Width Tokens                                                          -->
@@ -119,6 +124,19 @@
     <sys:Double x:Key="MyNet.Size.Avatar.Md">70</sys:Double>
     <sys:Double x:Key="MyNet.Size.Avatar.Lg">100</sys:Double>
     <sys:Double x:Key="MyNet.Size.Avatar.Xl">140</sys:Double>
+
+    <!-- Indicator Sizes -->
+    <sys:Double x:Key="MyNet.Height.Indicator.Xs">10</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Indicator.Sm">15</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Indicator.Md">20</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Indicator.Lg">30</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Indicator.Xl">40</sys:Double>
+
+    <sys:Double x:Key="MyNet.Width.Indicator.Xs">2</sys:Double>
+    <sys:Double x:Key="MyNet.Width.Indicator.Sm">4</sys:Double>
+    <sys:Double x:Key="MyNet.Width.Indicator.Md">5</sys:Double>
+    <sys:Double x:Key="MyNet.Width.Indicator.Lg">6</sys:Double>
+    <sys:Double x:Key="MyNet.Width.Indicator.Xl">8</sys:Double>
 
     <!-- ===================================================================== -->
     <!-- Alignment Tokens                                                      -->

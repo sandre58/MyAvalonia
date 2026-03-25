@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls;
 using MyNet.UI.Commands;
 using MyNet.UI.Locators;
@@ -46,6 +47,10 @@ public static class NavigationAssist
     /// <param name="element">Target element.</param>
     public static INavigationService GetAttachService(StyledElement element) => element.GetValue(AttachServiceProperty);
 
+    /// <summary>
+    /// Attaches the navigation service to the element and sets up the necessary event handlers to synchronize navigation with UI elements like SelectingItemsControl, NavigationMenu, ContentControl, and NavigationPage.
+    /// </summary>
+    /// <param name="args">The event arguments containing information about the property change.</param>
     private static void AttachServiceChangedCallback(AvaloniaPropertyChangedEventArgs args)
     {
         if (args.NewValue is not INavigationService navigationService)
@@ -54,6 +59,32 @@ public static class NavigationAssist
         var defaultCommand = CommandsManager.Create<object>(x => NavigateTo(navigationService, x));
         switch (args.Sender)
         {
+            case SelectingItemsControl selectingItemsControl:
+                {
+                    // Synchronise la sélection avec la navigation
+                    selectingItemsControl.SelectionChanged += (_, e) =>
+                    {
+                        if (e.AddedItems.Count > 0)
+                        {
+                            var selectedItem = e.AddedItems[0];
+                            NavigateTo(navigationService, selectedItem);
+                        }
+                    };
+
+                    // Synchronise la navigation avec la sélection
+                    navigationService.Navigated += (_, e) =>
+                    {
+                        var matchingItem = FindMatchingItem(selectingItemsControl.ItemsSource, e.NewPage);
+
+                        if (matchingItem != null && !Equals(selectingItemsControl.SelectedItem, matchingItem))
+                        {
+                            selectingItemsControl.SelectedItem = matchingItem;
+                        }
+                    };
+
+                    break;
+                }
+
             case NavigationMenu menu:
                 {
                     RegisterCommand(menu.Items.OfType<NavigationMenuItem>(), defaultCommand, false);
@@ -65,7 +96,15 @@ public static class NavigationAssist
                         }
                     };
 
-                    navigationService.Navigated += (_, e) => menu.SelectedItem = menu.Items.OfType<NavigationMenuItem>().FirstOrDefault(x => Equals(x.CommandParameter, e.NewPage.GetType()));
+                    navigationService.Navigated += (_, e) =>
+                    {
+                        var matchingItem = FindMatchingItem(menu.ItemsSource, e.NewPage);
+
+                        if (matchingItem != null && !Equals(menu.SelectedItem, matchingItem))
+                        {
+                            menu.SelectedItem = matchingItem;
+                        }
+                    };
 
                     break;
                 }
@@ -75,9 +114,24 @@ public static class NavigationAssist
                     navigationService.Navigated += (_, e) => contentControl.Content = e.NewPage;
                     break;
                 }
+
+            case NavigationPage navigationPage:
+                {
+                    if (navigationService is Navigation.NavigationService avaloniaNavigationService)
+                        avaloniaNavigationService.AttachNavigationPage(navigationPage);
+                    break;
+                }
         }
     }
 
+    /// <summary>
+    /// Navigates to the specified page or view model using the provided navigation service.
+    /// </summary>
+    /// <remarks>If the provided object is a type, the method attempts to retrieve the corresponding view or
+    /// view model. If a valid navigation page is found, navigation is performed. This method does not return a
+    /// value.</remarks>
+    /// <param name="navigationService">The navigation service used to perform the navigation operation.</param>
+    /// <param name="obj">An object that can be either a navigation page or a type representing a view or view model to navigate to.</param>
     private static void NavigateTo(INavigationService navigationService, object? obj)
     {
         switch (obj)
@@ -107,6 +161,38 @@ public static class NavigationAssist
                     break;
                 }
         }
+    }
+
+    /// <summary>
+    /// Searches the specified collection and returns the first item that matches the given page type.
+    /// </summary>
+    /// <remarks>An item is considered a match if it is directly of the specified type, implements
+    /// INavigationPage with the matching type, has a 'PageType' property equal to the specified type, or is associated
+    /// with the specified type via a View or ViewModel. The method does not throw exceptions for null collections and
+    /// returns null in such cases.</remarks>
+    /// <param name="items">An enumerable collection of items to search. Can be null, in which case the method returns null.</param>
+    /// <param name="obj">The object to match against items in the collection. Can be null, in which case the method returns null.</param>
+    /// <returns>The first item in the collection that matches the specified object, or null if no matching item is found or
+    /// if the collection is null.</returns>
+    private static object? FindMatchingItem(System.Collections.IEnumerable? items, object? obj)
+    {
+        if (items is null) return null;
+
+        var objType = obj?.GetType();
+        foreach (var item in items)
+        {
+            if (item is Type itemType && itemType == objType)
+            {
+                return item;
+            }
+
+            if (item is INavigationPage page && Equals(page, obj))
+            {
+                    return item;
+            }
+        }
+
+        return null;
     }
 
     #endregion

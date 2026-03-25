@@ -8,6 +8,7 @@ using Avalonia.Controls;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ClassProviders;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ContentProviders;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
@@ -28,6 +29,9 @@ internal sealed class DropDownButtonPageViewModel : ControlCatalogViewModel
                     .AddDefaultSizes()
                     .AddDefaultRoles()
             ]) => Playground.ClassProviders.AddRange([PlacementClassProvider]);
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.FormSelect;
 
     public ClassProvider PlacementClassProvider { get; } = new("position-right");
 }

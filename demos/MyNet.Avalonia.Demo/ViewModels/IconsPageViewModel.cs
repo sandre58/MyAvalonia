@@ -8,14 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using Avalonia.Media;
-using DynamicData;
-using DynamicData.Binding;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Theming;
 using MyNet.Humanizer;
-using MyNet.Observable.Collections.Providers;
 using MyNet.UI.Navigation.Models;
 using MyNet.UI.ViewModels.List;
 using MyNet.UI.ViewModels.List.Filtering;
@@ -29,53 +25,17 @@ namespace MyNet.Avalonia.Demo.ViewModels;
 
 internal sealed class IconsPageViewModel : PageViewModel
 {
-    private readonly ObservableCollection<IconBuilderData> _allIcons = [];
-
     public ListViewModel<IconBuilderData> Icons { get; }
 
-    public IconsPageViewModel() => Icons = new ListViewModel<IconBuilderData>(_allIcons.ToObservableChangeSet(), new IconsControllerProvider())
+    public IconsPageViewModel() => Icons = new ListViewModel<IconBuilderData>([.. Enum.GetValues<IconData>().Select(static icon => new IconBuilderData(icon.ToString()))], new IconsControllerProvider())
     {
         CanPage = true
     };
 
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.TagFaces;
+
     protected override bool CanRefreshOnNavigatedTo(NavigationContext navigationContext) => !IsLoaded;
-
-    protected override async Task RefreshCoreAsync()
-    {
-        var icons = Enum.GetValues<IconData>();
-        _allIcons.Set(icons.Select(static icon => new IconBuilderData(icon.ToString())).Take(5));
-        //await Dispatcher.UIThread.InvokeAsync(async () =>
-        //{
-        //    _allIcons.Edit(static list => list.Clear());
-
-        //    const int batchSize = 400;
-        //    for (var i = 0; i < icons.Length; i += batchSize)
-        //    {
-        //        var batch = icons
-        //            .Skip(i)
-        //            .Take(batchSize)
-        //            .Select(static icon => new IconBuilderData(icon.ToString()))
-        //            .ToList();
-
-        //        _allIcons.Edit(list => list.AddRange(batch));
-
-        //        if (i + batchSize < icons.Length)
-        //        {
-        //            await Task.Yield();
-        //        }
-        //    }
-
-        //    MarkAsLoaded();
-        //},
-        //DispatcherPriority.Background).ConfigureAwait(false);
-    }
-}
-
-internal sealed class IconsProvider : ISourceProvider<IconBuilderData>
-{
-    public ReadOnlyObservableCollection<IconBuilderData> Source => throw new NotImplementedException();
-
-    public IObservable<IChangeSet<IconBuilderData>> Connect() => throw new NotImplementedException();
 }
 
 internal sealed class IconsControllerProvider : ListParametersProvider

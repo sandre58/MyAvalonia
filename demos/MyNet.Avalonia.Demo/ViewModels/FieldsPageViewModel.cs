@@ -7,6 +7,7 @@
 using System;
 using DynamicData.Binding;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Utilities;
 using MyNet.Utilities.DateTimes;
 using PropertyChanged;
@@ -31,6 +32,9 @@ internal sealed class FieldsPageViewModel : ControlCatalogViewModel
             Playground.Appearance.WhenPropertyChanged(x => x.SelectedTheme).Subscribe(_ => Playground.AddOrRemoveCustomClass("is-underline", Playground.Appearance.GetActiveThemeDefinition()?.DisplayName == "Underline")),
             this.WhenPropertyChanged(x => x.ShowPlaceholderText).Subscribe(_ => Playground.AddOrRemoveCustomClass("has-watermark", ShowPlaceholderText))
         ]);
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.FocusFieldHorizontal;
 
     public bool ShowPlaceholderText { get; set; } = true;
 

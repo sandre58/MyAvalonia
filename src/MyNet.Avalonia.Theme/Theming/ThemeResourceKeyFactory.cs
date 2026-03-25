@@ -118,7 +118,7 @@ public static class ThemeResourceKeyFactory
     /// <summary>
     /// Represents the resource key for the primary foreground color.
     /// </summary>
-    private const string PrimaryForeground = "Foreground.Primary";
+    public const string PrimaryForeground = "Foreground.Primary";
 
     /// <summary>
     /// Gets a resource key using the specified type and name.

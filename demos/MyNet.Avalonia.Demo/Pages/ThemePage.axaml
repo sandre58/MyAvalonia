@@ -1,4 +1,4 @@
-<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.ThemePage"
+<ContentPage x:Class="MyNet.Avalonia.Demo.Pages.ThemePage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,8 +9,9 @@
             xmlns:vm="clr-namespace:MyNet.Avalonia.Demo.ViewModels"
             xmlns:t="using:MyNet.UI.Theming"
             x:DataType="vm:ThemePageViewModel"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
             mc:Ignorable="d">
-    <pages:Page.Resources>
+    <ContentPage.Resources>
         <DataTemplate x:Key="BrushDefinitionTemplate" DataType="{x:Type vm:BrushDefinition}">
             <HeaderedContentControl Height="120"
                                     Width="250"
@@ -93,12 +94,12 @@
                 </UniformGrid>
             </Grid>
         </DataTemplate>
-    </pages:Page.Resources>
+    </ContentPage.Resources>
 
-    <Grid RowDefinitions="40,Auto, *">
+    <Grid RowDefinitions="Auto, *">
 
         <!-- Header -->
-        <Border Grid.Row="1" Classes="shadow-surface"
+        <Border Grid.Row="0" Classes="shadow-surface"
                 Background="{my:Theme Surface.Level0}"
                 Padding="{my:Thickness Md}">
             <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource MyNet.Spacing.Xl}" LineSpacing="{StaticResource MyNet.Spacing.Md}">
@@ -128,7 +129,7 @@
         </Border>
 
         <!-- Main content -->
-        <ScrollViewer Grid.Row="2" Margin="{my:Thickness Md}">
+        <ScrollViewer Grid.Row="1" Margin="{my:Thickness Md}">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{my:Spacing Md}">
 
                 <!-- Brushes -->
@@ -269,8 +270,5 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
-
-        <!-- Background Top -->
-        <Border Grid.Row="0" Background="{my:Theme Surface.Level0}" VerticalAlignment="Stretch" />
     </Grid>
-</pages:Page>
+</ContentPage>

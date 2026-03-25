@@ -63,7 +63,7 @@
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
                         <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
                             <my:IconContentControl Name="IconContent"
-                                                   Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                                   Icon="{TemplateBinding Icon}"
                                                    IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                    IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
                                                    IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
@@ -81,7 +81,7 @@
                                                    TextElement.FontSize="{Binding $parent[TabControl].(my:HeaderAssist.FontSize)}"
                                                    TextElement.FontWeight="{Binding $parent[TabControl].(my:HeaderAssist.FontWeight)}"
                                                    UseLayoutRounding="False">
-                                <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
+                                <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
                             </my:IconContentControl>
                         </my:Ripple>
                     </Border>
@@ -189,7 +189,7 @@
         <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
         <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
-        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
         <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
 
         <Setter Property="Template">
@@ -247,8 +247,7 @@
         <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^[TabStripPlacement=Left]">
-            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 3 0" />
-            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 3 0" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="0 0 3 0" />
             <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
             <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Top" />
             <Style Selector="^.flex-uniform">
@@ -257,8 +256,7 @@
         </Style>
 
         <Style Selector="^[TabStripPlacement=Right]">
-            <Setter Property="my:HeaderAssist.BorderThickness" Value="3 0 0 0" />
-            <Setter Property="my:ItemsAssist.BorderThickness" Value="3 0 0 0" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="3 0 0 0" />
             <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Stretch" />
             <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Top" />
 
@@ -268,8 +266,7 @@
         </Style>
 
         <Style Selector="^[TabStripPlacement=Top]">
-            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 3" />
-            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0 0 3" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="0 0 0 3" />
             <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
             <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
 
@@ -279,8 +276,7 @@
         </Style>
 
         <Style Selector="^[TabStripPlacement=Bottom]">
-            <Setter Property="my:HeaderAssist.BorderThickness" Value="0 3 0 0" />
-            <Setter Property="my:ItemsAssist.BorderThickness" Value="0 3 0 0" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="0 3 0 0" />
             <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
             <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
 
@@ -359,8 +355,12 @@
         <Setter Property="HeaderTemplate" Value="{x:Null}" />
         <Setter Property="my:InteractionAssist.ActiveIndicatorColor" Value="{Binding $parent[TabControl].(my:ItemsAssist.ActiveBorderBrush)}" />
         <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="{Binding $parent[TabControl].(my:ItemsAssist.IndicatorPlacement)}" />
+        <Setter Property="my:ItemsAssist.IndicatorThickness" Value="{Binding $parent[TabControl].(my:ItemsAssist.IndicatorThickness)}" />
+        <Setter Property="my:ItemsAssist.IndicatorLength" Value="{Binding $parent[TabControl].(my:ItemsAssist.IndicatorLength)}" />
+        <Setter Property="my:ItemsAssist.IndicatorMargin" Value="{Binding $parent[TabControl].(my:ItemsAssist.IndicatorMargin)}" />
         <Setter Property="Width" Value="{Binding $parent[TabControl].(my:ItemsAssist.Size)}" />
         <Setter Property="Height" Value="{Binding $parent[TabControl].(my:ItemsAssist.Size)}" />
+        <Setter Property="Opacity" Value="1" />
         <Setter Property="Template">
             <ControlTemplate TargetType="TabItem">
                 <Panel Name="PART_RootPanel">
@@ -390,13 +390,14 @@
                         <Grid>
 
                             <Rectangle x:Name="ActiveRectangle"
-                                       Width="24"
-                                       Height="4"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Bottom"
+                                       Width="{TemplateBinding (my:ItemsAssist.IndicatorThickness)}"
+                                       Height="{TemplateBinding (my:ItemsAssist.IndicatorLength)}"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
                                        Fill="{TemplateBinding my:InteractionAssist.ActiveIndicatorColor}"
                                        RadiusX="2"
-                                       RadiusY="2" />
+                                       RadiusY="2"
+                                       Margin="{TemplateBinding (my:ItemsAssist.IndicatorMargin)}" />
 
                             <my:Ripple Name="PART_Ripple"
                                        Padding="{TemplateBinding Padding}"
@@ -404,10 +405,13 @@
                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                        RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
                                 <Grid RowDefinitions="*,Auto">
-                                    <ContentControl x:Name="Icon" VerticalAlignment="Center" Content="{TemplateBinding my:IconAssist.Icon}" />
-                                    <Grid x:Name="ContentGrid" Grid.Row="1" Margin="{my:Thickness Sm, Top}">
+                                    <ContentControl x:Name="Icon" VerticalAlignment="Center"
+                                                    Content="{TemplateBinding my:IconAssist.Icon}"
+                                                    Margin="{my:Thickness Sm, Bottom}"
+                                                    IsVisible="{TemplateBinding (my:IconAssist.Icon), Converter={x:Static my:NullConverter.IsNotNull}}" />
+                                    <Grid x:Name="ContentGrid" Grid.Row="1">
                                         <ContentPresenter Name="PART_ContentPresenter"
-                                                          HorizontalAlignment="Stretch"
+                                                          HorizontalAlignment="Center"
                                                           VerticalAlignment="Stretch"
                                                           Content="{TemplateBinding Header}"
                                                           ContentTemplate="{TemplateBinding HeaderTemplate}"
@@ -422,6 +426,9 @@
             </ControlTemplate>
         </Setter>
 
+        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Foreground" Value="{my:ThemeBrush (my:ItemsAssist.Foreground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+        </Style>
         <Style Selector="^ /template/ ContentControl#Icon">
             <Setter Property="Foreground" Value="{Binding $parent[TabControl].(my:ItemsAssist.Foreground)}" />
         </Style>
@@ -430,19 +437,12 @@
             <Setter Property="Opacity" Value="0" />
         </Style>
 
-        <Style Selector="^ /template/ Grid#ContentGrid">
-            <Setter Property="Height" Value="15" />
-            <Setter Property="Transitions">
-                <Transitions>
-                    <DoubleTransition Easing="LinearEasing" Property="Height" Duration="{StaticResource MyNet.Animation.Opacity}" />
-                </Transitions>
-            </Setter>
-        </Style>
-
         <!-- Hover -->
         <Style Selector="^:not(:disabled):pointerover">
-
             <Style Selector="^ /template/ ContentControl#Icon">
+                <Setter Property="Foreground" Value="{Binding $parent[TabItem].(my:InteractionAssist.HoverForeground)}" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Foreground" Value="{Binding $parent[TabItem].(my:InteractionAssist.HoverForeground)}" />
             </Style>
         </Style>
@@ -453,64 +453,72 @@
                 <Setter Property="Opacity" Value="1" />
             </Style>
 
-            <Style Selector="^ /template/ Grid#ContentGrid">
-                <Setter Property="Height" Value="0" />
-            </Style>
-
             <Style Selector="^ /template/ ContentControl#Icon">
                 <Setter Property="Foreground" Value="{Binding $parent[TabItem].(my:InteractionAssist.ActiveForeground)}" />
             </Style>
-
-
-            <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Top] /template/ Rectangle#ActiveRectangle">
-                <Setter Property="Height" Value="4" />
-                <Setter Property="Width" Value="24" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="VerticalAlignment" Value="Top" />
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{Binding $parent[TabItem].(my:InteractionAssist.ActiveForeground)}" />
             </Style>
+        </Style>
 
-            <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Bottom] /template/ Rectangle#ActiveRectangle">
-                <Setter Property="Height" Value="4" />
-                <Setter Property="Width" Value="24" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="VerticalAlignment" Value="Bottom" />
-            </Style>
+        <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Top] /template/ Rectangle#ActiveRectangle">
+            <Setter Property="Height" Value="{TemplateBinding (my:ItemsAssist.IndicatorThickness)}" />
+            <Setter Property="Width" Value="{TemplateBinding (my:ItemsAssist.IndicatorLength)}" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
 
-            <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Left] /template/ Rectangle#ActiveRectangle">
-                <Setter Property="Height" Value="24" />
-                <Setter Property="Width" Value="4" />
-                <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-            </Style>
+        <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Bottom] /template/ Rectangle#ActiveRectangle">
+            <Setter Property="Height" Value="{TemplateBinding (my:ItemsAssist.IndicatorThickness)}" />
+            <Setter Property="Width" Value="{TemplateBinding (my:ItemsAssist.IndicatorLength)}" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+        </Style>
 
-            <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Right] /template/ Rectangle#ActiveRectangle">
-                <Setter Property="Height" Value="24" />
-                <Setter Property="Width" Value="4" />
-                <Setter Property="HorizontalAlignment" Value="Right" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-            </Style>
+        <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Left] /template/ Rectangle#ActiveRectangle">
+            <Setter Property="Height" Value="{TemplateBinding (my:ItemsAssist.IndicatorLength)}" />
+            <Setter Property="Width" Value="{TemplateBinding (my:ItemsAssist.IndicatorThickness)}" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Right] /template/ Rectangle#ActiveRectangle">
+            <Setter Property="Height" Value="{TemplateBinding (my:ItemsAssist.IndicatorLength)}" />
+            <Setter Property="Width" Value="{TemplateBinding (my:ItemsAssist.IndicatorThickness)}" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
     </ControlTheme>
 
+    <ControlTheme x:Key="MyNet.Theme.TabItem.Indicator.HideContent" TargetType="TabItem" BasedOn="{StaticResource MyNet.Theme.TabItem.Indicator}">
+        <Style Selector="^ /template/ Grid#ContentGrid">
+            <Setter Property="Height" Value="15" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <DoubleTransition Easing="LinearEasing" Property="Height" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                </Transitions>
+            </Setter>
+        </Style>
+
+        <!-- Selected -->
+        <Style Selector="^:selected">
+            <Style Selector="^ /template/ ContentControl#Icon">
+                <Setter Property="Margin" Value="0" />
+            </Style>
+
+            <Style Selector="^ /template/ Grid#ContentGrid">
+                <Setter Property="Height" Value="0" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- INDICATOR TABCONTROL THEME                                -->
     <!-- ═════════════════════════════════════════════════════════ -->
-    <ControlTheme x:Key="MyNet.Theme.TabControl.Indicator" TargetType="TabControl">
-        <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
+    <ControlTheme x:Key="MyNet.Theme.TabControl.Indicator" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
         <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.TabItem.Indicator}" />
-        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
-        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
-        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
-        <Setter Property="Focusable" Value="false" />
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="ItemsPanel">
-            <ItemsPanelTemplate>
-                <WrapPanel Orientation="Horizontal" ItemSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}"  LineSpacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
-            </ItemsPanelTemplate>
-        </Setter>
 
         <!-- Header -->
         <Setter Property="my:HeaderAssist.CornerRadius" Value="0" />
@@ -522,7 +530,7 @@
         <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Stretch" />
 
         <!-- Tabs -->
-        <Setter Property="my:ItemsAssist.Size" Value="55" />
+        <Setter Property="my:ItemsAssist.Size" Value="NaN" />
         <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Center" />
         <Setter Property="my:ItemsAssist.Margin" Value="0" />
@@ -530,36 +538,20 @@
         <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md}" />
         <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
-
-        <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="Transparent" />
-        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
-        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
-        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
-
-        <!-- Variant -->
-        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
-        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
-        <Setter Property="my:VariantAssist.Foreground" Value="{my:Foreground}" />
-        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+        <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="Bottom" />
+        <Setter Property="my:ItemsAssist.IndicatorLength" Value="{StaticResource MyNet.Height.Indicator.Sm}" />
+        <Setter Property="my:ItemsAssist.IndicatorThickness" Value="{StaticResource MyNet.Width.Indicator.Sm}" />
+        <Setter Property="my:ItemsAssist.IndicatorMargin" Value="{my:Thickness Xs}" />
 
         <!-- Theme -->
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="my:HeaderAssist.Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
-        <Setter Property="my:HeaderAssist.BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
-        <Setter Property="my:HeaderAssist.Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <Setter Property="BorderThickness" Value="0" />
 
         <!-- Items -->
-        <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
         <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Hover}" />
-        <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
         <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground), Opacity=Focus}" />
-        <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
-        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
-        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:HeaderAssist.Foreground)}" />
+        <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="TabControl">
@@ -600,6 +592,10 @@
                 </Border>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^.hide-content">
+            <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.TabItem.Indicator.HideContent}" />
+        </Style>
 
         <Style Selector="^[TabStripPlacement=Left] /template/ ItemsPresenter#PART_ItemsPresenter > WrapPanel">
             <Setter Property="Orientation" Value="Vertical" />

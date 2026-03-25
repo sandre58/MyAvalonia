@@ -1,4 +1,4 @@
-<pages:Page x:Class="MyNet.Avalonia.Demo.Pages.LabelPage"
+<ContentPage x:Class="MyNet.Avalonia.Demo.Pages.LabelPage"
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,6 +11,7 @@
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Demo.ViewModels.ControlCatalog"
             xmlns:c="clr-namespace:MyNet.Avalonia.Demo.Converters"
             x:DataType="vm:LabelPageViewModel"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
             ClipToBounds="False">
 
     <v:ControlCatalogView>
@@ -37,4 +38,4 @@
         </v:ControlCatalogView.ThemeControlTemplate>
 
     </v:ControlCatalogView>
-</pages:Page>
+</ContentPage>

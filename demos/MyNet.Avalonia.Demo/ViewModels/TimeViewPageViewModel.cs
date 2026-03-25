@@ -6,17 +6,16 @@
 
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
-internal sealed class TimeViewPageViewModel : ControlCatalogViewModel
+internal sealed class TimeViewPageViewModel() : ControlCatalogViewModel(nameof(TimeView),
+    [
+        new ControlThemeBuilder()
+               .AddThemeRoles()
+    ])
 {
-    public TimeViewPageViewModel()
-        : base(nameof(TimeView),
-            [
-                new ControlThemeBuilder()
-                    .AddThemeRoles()
-            ])
-    {
-    }
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.ClockEdit;
 }

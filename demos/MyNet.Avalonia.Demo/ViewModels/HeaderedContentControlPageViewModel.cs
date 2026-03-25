@@ -8,6 +8,7 @@ using Avalonia.Controls.Primitives;
 using DynamicData;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog;
 using MyNet.Avalonia.Demo.ViewModels.ControlCatalog.ClassProviders;
+using MyNet.Avalonia.Theme.Classes.Enums;
 
 namespace MyNet.Avalonia.Demo.ViewModels;
 
@@ -27,6 +28,9 @@ internal sealed class HeaderedContentControlPageViewModel : ControlCatalogViewMo
                     .AddDefaultSizes()
                     .AddSizes("header-xs", "header-sm", "header-md", "header-lg", "header-xl", "header-h6", "header-h5", "header-h4", "header-h3", "header-h2", "header-h1")
             ]) => Playground.ClassProviders.AddRange([PositionClassProvider, HeaderAlignmentClassProvider]);
+
+    /// <inheritdoc/>
+    public override IconData Icon => IconData.CardBulleted;
 
     public ClassProvider PositionClassProvider { get; } = new("position-top");
 

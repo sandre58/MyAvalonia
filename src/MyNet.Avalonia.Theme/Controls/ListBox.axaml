@@ -321,7 +321,7 @@
             <Setter Property="my:ItemsAssist.Margin" Value="0" />
         </Style>
 
-        <Style Selector="^.gap-sm, ^.gap-md, ^.gap-lg, ^.gap-xl, ^.gap-xxl, ^.gap-xxxl">
+        <Style Selector="^.gap-xxxs, ^.gap-xxs, ^.gap-xs, ^.gap-sm, ^.gap-md, ^.gap-lg, ^.gap-xl, ^.gap-xxl, ^.gap-xxxl">
             <Setter Property="my:ItemsAssist.Margin" Value="0" />
             <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         </Style>
@@ -584,5 +584,144 @@
         <Style Selector="^.flex-vertical">
             <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Md, Vertical}" />
         </Style>
+    </ControlTheme>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- INDICATOR LISTBOXITEM THEME                               -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Indicator" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+        <Setter Property="my:InteractionAssist.ActiveIndicatorColor" Value="{Binding $parent[ListBox].(my:ItemsAssist.ActiveBorderBrush)}" />
+        <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="{Binding $parent[ListBox].(my:ItemsAssist.IndicatorPlacement)}" />
+        <Setter Property="my:ItemsAssist.IndicatorThickness" Value="{Binding $parent[ListBox].(my:ItemsAssist.IndicatorThickness)}" />
+        <Setter Property="my:ItemsAssist.IndicatorLength" Value="{Binding $parent[ListBox].(my:ItemsAssist.IndicatorLength)}" />
+        <Setter Property="my:ItemsAssist.IndicatorMargin" Value="{Binding $parent[ListBox].(my:ItemsAssist.IndicatorMargin)}" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="ListBoxItem">
+                <Panel Name="PART_RootPanel">
+                    <Border Name="PART_MainBorder"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
+
+                    <Border Name="PART_ActiveBorder"
+                            Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                            BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                    <Border Name="PART_HoverBorder"
+                            Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                            BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                    <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                        <Grid>
+                            <Rectangle x:Name="ActiveRectangle"
+                                       Width="{TemplateBinding (my:ItemsAssist.IndicatorThickness)}"
+                                       Height="{TemplateBinding (my:ItemsAssist.IndicatorLength)}"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       Fill="{TemplateBinding my:InteractionAssist.ActiveIndicatorColor}"
+                                       RadiusX="2"
+                                       RadiusY="2"
+                                       Margin="{TemplateBinding (my:ItemsAssist.IndicatorMargin)}" />
+
+                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                                <my:IconContentControl Name="IconContent"
+                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                                       Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       HorizontalAlignment="Stretch"
+                                                       VerticalAlignment="Stretch"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                                       BorderThickness="{TemplateBinding BorderThickness}"
+                                                       CornerRadius="{TemplateBinding CornerRadius}"
+                                                       Foreground="{TemplateBinding Foreground}"
+                                                       TextElement.FontSize="{TemplateBinding FontSize}"
+                                                       TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                       UseLayoutRounding="False">
+                                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                </my:IconContentControl>
+                            </my:Ripple>
+                        </Grid>
+                    </Border>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ /template/ Rectangle#ActiveRectangle">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+
+        <!-- Active -->
+        <Style Selector="^:selected">
+            <Style Selector="^ /template/ Rectangle#ActiveRectangle">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Top] /template/ Rectangle#ActiveRectangle">
+            <Setter Property="Height" Value="{TemplateBinding (my:ItemsAssist.IndicatorThickness)}" />
+            <Setter Property="Width" Value="{TemplateBinding (my:ItemsAssist.IndicatorLength)}" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+
+        <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Bottom] /template/ Rectangle#ActiveRectangle">
+            <Setter Property="Height" Value="{TemplateBinding (my:ItemsAssist.IndicatorThickness)}" />
+            <Setter Property="Width" Value="{TemplateBinding (my:ItemsAssist.IndicatorLength)}" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+        </Style>
+
+        <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Left] /template/ Rectangle#ActiveRectangle">
+            <Setter Property="Height" Value="{TemplateBinding (my:ItemsAssist.IndicatorLength)}" />
+            <Setter Property="Width" Value="{TemplateBinding (my:ItemsAssist.IndicatorThickness)}" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="^[(my|ItemsAssist.IndicatorPlacement)=Right] /template/ Rectangle#ActiveRectangle">
+            <Setter Property="Height" Value="{TemplateBinding (my:ItemsAssist.IndicatorLength)}" />
+            <Setter Property="Width" Value="{TemplateBinding (my:ItemsAssist.IndicatorThickness)}" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </ControlTheme>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- INDICATOR LISTBOX THEME                                   -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="MyNet.Theme.ListBox.Indicator" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+        <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.ListBoxItem.Indicator}" />
+        <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="Left" />
+        <Setter Property="my:ItemsAssist.IndicatorLength" Value="{StaticResource MyNet.Height.Indicator.Sm}" />
+        <Setter Property="my:ItemsAssist.IndicatorThickness" Value="{StaticResource MyNet.Width.Indicator.Sm}" />
+        <Setter Property="my:ItemsAssist.IndicatorMargin" Value="{my:Thickness Xs}" />
+
+        <!-- Items -->
+        <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
+        <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
+        <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
+        <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Foreground Opacity=Focus}" />
+        <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Foreground}" />
+        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
     </ControlTheme>
 </ResourceDictionary>

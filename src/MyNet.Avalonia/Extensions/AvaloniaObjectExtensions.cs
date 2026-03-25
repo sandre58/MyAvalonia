@@ -7,6 +7,7 @@
 using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
@@ -31,21 +32,27 @@ public static class AvaloniaObjectExtensions
     /// <param name="property">The AvaloniaProperty that identifies the property to set. Cannot be null.</param>
     /// <param name="value">The value to assign to the property. This can be a direct value, a BindingBase for data binding, or a
     /// MarkupExtension to resolve a binding or value.</param>
+    /// <param name="priority">The binding priority.</param>
     /// <returns>An IDisposable that, when disposed, clears the value of the specified property from the object.</returns>
-    public static IDisposable SetProperty(this AvaloniaObject obj, AvaloniaProperty property, object? value)
+    public static IDisposable SetProperty(this AvaloniaObject obj, AvaloniaProperty property, object? value, BindingPriority priority = BindingPriority.StyleTrigger)
     {
-        if (value is BindingBase binding)
+        if (value is BindingBase bindingBase)
         {
-            return obj.Bind(property, binding);
+            if (bindingBase is Binding binding)
+            {
+                binding.Priority = priority;
+            }
+
+            return obj.Bind(property, bindingBase);
         }
         else if (value is MarkupExtension markupExtension)
         {
             var serviceProvider = new MarkupServiceProvider(obj, property);
-            return SetProperty(obj, property, markupExtension.ProvideValue(serviceProvider));
+            return SetProperty(obj, property, markupExtension.ProvideValue(serviceProvider), priority);
         }
         else if (value is IObservable<object?> observable)
         {
-            return obj.Bind(property, observable);
+            return obj.Bind(property, observable, priority);
         }
 
         if (value is not null)
@@ -55,13 +62,17 @@ public static class AvaloniaObjectExtensions
             {
                 // Convert any IObservable<T> to IObservable<object?> and bind.
                 var converted = System.Reactive.Linq.Observable.Select((dynamic)value, (Func<dynamic, object?>)(x => (object?)x));
-                return obj.Bind(property, converted);
+                return obj.Bind(property, converted, priority);
             }
         }
 
-        // value is null
-        obj.SetValue(property, value);
-        return Disposable.Create(() => obj.ClearValue(property));
+        // Wrap the value in an observable and bind at the requested priority.
+        // When the returned disposable is disposed, the value at this priority
+        // is properly removed and the property falls back to lower priorities
+        // (e.g. ControlTheme).
+        var source = new BehaviorSubject<object?>(value);
+        var bindingDisposable = obj.Bind(property, source, priority);
+        return new CompositeDisposable(bindingDisposable, source);
     }
 
     public static ResultDisposable TryBind(this AvaloniaObject obj, AvaloniaProperty property, BindingBase? binding)

@@ -1,0 +1,71 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
+
+    <ControlTheme x:Key="{x:Type TabbedPage}" TargetType="TabbedPage">
+
+        <Setter Property="my:ThemeAssist.Category" Value="Surface" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="my:TabbedPageAssist.TabControlTheme">
+            <ControlTheme TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
+                <Setter Property="Template">
+                    <ControlTemplate TargetType="TabControl">
+                        <Border Name="PART_Root"
+                                Padding="0"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                            <Border ClipToBounds="{TemplateBinding ClipToBounds}" CornerRadius="{TemplateBinding CornerRadius}">
+                                <DockPanel>
+                                    <Panel Name="PART_Header"
+                                           DockPanel.Dock="{TemplateBinding TabStripPlacement}"
+                                           IsVisible="{TemplateBinding my:HeaderAssist.IsVisible}"
+                                           Opacity="{TemplateBinding my:HeaderAssist.Opacity}">
+                                        <Border Name="PART_HeaderBorder"
+                                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:HeaderAssist.ShadowDepth}"
+                                                Background="{TemplateBinding my:HeaderAssist.Background}"
+                                                BorderBrush="{TemplateBinding my:HeaderAssist.BorderBrush}"
+                                                BorderThickness="{TemplateBinding my:HeaderAssist.BorderThickness}"
+                                                CornerRadius="{TemplateBinding my:HeaderAssist.CornerRadius}" />
+                                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding my:HeaderAssist.CornerRadius}">
+                                            <ItemsPresenter Name="PART_ItemsPresenter"
+                                                            Margin="{TemplateBinding my:HeaderAssist.Padding}"
+                                                            HorizontalAlignment="{TemplateBinding my:HeaderAssist.HorizontalAlignment}"
+                                                            VerticalAlignment="{TemplateBinding my:HeaderAssist.VerticalAlignment}"
+                                                            ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                            TextElement.Foreground="{TemplateBinding my:HeaderAssist.Foreground}" />
+                                        </Border>
+                                    </Panel>
+                                    <Panel ClipToBounds="True" Margin="{TemplateBinding Padding}">
+                                        <ContentPresenter Name="PART_SelectedContentHost2"
+                                                          HorizontalContentAlignment="Stretch"
+                                                          VerticalContentAlignment="Stretch"
+                                                          IsVisible="False" />
+                                        <ContentPresenter Name="PART_SelectedContentHost"
+                                                          HorizontalContentAlignment="Stretch"
+                                                          VerticalContentAlignment="Stretch" />
+                                    </Panel>
+                                </DockPanel>
+                            </Border>
+                        </Border>
+                    </ControlTemplate>
+                </Setter>
+            </ControlTheme>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel Background="{TemplateBinding Background}">
+                    <TabControl Name="PART_TabControl"
+                                Theme="{TemplateBinding (my:TabbedPageAssist.TabControlTheme)}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                ItemsSource="{TemplateBinding Pages}" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>
