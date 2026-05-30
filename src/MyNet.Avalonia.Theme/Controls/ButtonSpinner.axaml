@@ -50,7 +50,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="my:ClipboardAssist.Content"
-                Value="{Binding $self.Content, Converter={x:Static my:StringConverter.Default}, Mode=OneWay}" />
+                Value="{my:Display Content, RelativeSource={RelativeSource Self}}" />
         <Setter Property="my:TextField.PlaceholderText" Value="{x:Static sys:String.Empty}" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />

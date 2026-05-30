@@ -22,7 +22,7 @@ using MyNet.Avalonia.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.DateTimes;
 using MyNet.Utilities.Helpers;
-using MyNet.Utilities.Localization;
+using MyNet.Globalization.Facade;
 using MyNet.Utilities.Suspending;
 using CalendarBlackoutDatesCollection = MyNet.Avalonia.Controls.Primitives.CalendarBlackoutDatesCollection;
 using CalendarDateChangedEventArgs = MyNet.Avalonia.Controls.Primitives.CalendarDateChangedEventArgs;
@@ -96,7 +96,7 @@ public class Calendar : TemplatedControl
         UpdateDisplayDate(DisplayDate, DateTime.MinValue);
         BlackoutDates = new(this);
         SelectedDates = new(this);
-        GlobalizationService.Current.CultureChanged += (_, _) => Refresh();
+        GlobalizationServices.Current.CultureChanged += (_, _) => Refresh();
         SelectedDates.CollectionChanged += OnSelectedDatesCollectionChanged;
         BlackoutDates.CollectionChanged += OnBlackoutDatesCollectionChanged;
     }

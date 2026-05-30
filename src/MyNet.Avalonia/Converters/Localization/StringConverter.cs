@@ -102,10 +102,10 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
         RegisterTypeConverter<SolidColorBrush>((brush, _, _, _, _) => ConvertColor(brush.Color));
 
         // Date/Time types
-        RegisterTypeConverter<DateTime>((date, format, _, _, culture) => ConvertDateTime(date, format, culture));
-        RegisterTypeConverter<DateTimeOffset>((date, format, _, _, culture) => ConvertDateTime(date, format, culture));
-        RegisterTypeConverter<DateOnly>((date, format, _, _, culture) => ConvertDateTime(date, format, culture));
-        RegisterTypeConverter<TimeOnly>((time, format, _, _, culture) => ConvertDateTime(time, format, culture));
+        RegisterTypeConverter<DateTime>((date, format, _, _, culture) => ConvertDateTime(date, format, culture, GlobalizationServices.Current.CurrentTimeZone));
+        RegisterTypeConverter<DateTimeOffset>((date, format, _, _, culture) => ConvertDateTime(date, format, culture, GlobalizationServices.Current.CurrentTimeZone));
+        RegisterTypeConverter<DateOnly>((date, format, _, _, culture) => ConvertDateTime(date, format, culture, GlobalizationServices.Current.CurrentTimeZone));
+        RegisterTypeConverter<TimeOnly>((time, format, _, _, culture) => ConvertDateTime(time, format, culture, GlobalizationServices.Current.CurrentTimeZone));
 
         // TimeSpan
         RegisterTypeConverter<TimeSpan>((timespan, format, _, _, culture) => ConvertTimeSpan(timespan, format, culture));
@@ -147,6 +147,21 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
         TypeConverters.TryGetValue(type, out var converter)
             ? converter
             : TypeConverters.FirstOrDefault(x => x.Key.IsAssignableFrom(type)).Value;
+
+    /// <inheritdoc />
+    public override object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
+    {
+        var value = values.GetByIndex(0);
+        if (value is not null && IsDateTimeValue(value))
+        {
+            var format = values.GetByIndex(1) as string ?? parameter as string ?? Format;
+            var effectiveCulture = ResolveCulture(values, culture);
+            var timeZone = values.OfType<TimeZoneInfo>().FirstOrDefault() ?? GlobalizationServices.Current.CurrentTimeZone;
+            return ConvertDateTime(value, format, effectiveCulture, timeZone)?.ApplyCase(Casing);
+        }
+
+        return base.Convert(values, targetType, parameter, culture);
+    }
 
     /// <summary>
     /// Converts a value to a localized, formatted string with a specific format.
@@ -254,9 +269,13 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
     private static string ConvertColor(Color value) => value.ToName() == value.ToHex() ? value.ToHex() : $"{value.ToName()}";
 
     /// <summary>
-    /// Converts a date/time value to a localized string.
+    /// Converts a date/time value using the application time zone and localized date patterns.
     /// </summary>
-    private static string? ConvertDateTime(object? value, string? format, CultureInfo culture) => DateTimeConverter.Default.Convert(value, format, culture)?.ToString();
+    private static string? ConvertDateTime(object? value, string? format, CultureInfo culture, TimeZoneInfo? timeZone = null) =>
+        DateTimeConverter.ToCurrent.Convert(value, format, culture, timeZone);
+
+    private static bool IsDateTimeValue(object value) =>
+        value is DateTime or DateTimeOffset or DateOnly or TimeOnly;
 
     /// <summary>
     /// Converts an array of strings to a single string.

@@ -107,8 +107,8 @@ public sealed class DateTimeConverter(DateTimeConverterKind dateTimeConverterKin
     {
         var value = values.GetByIndex(0);
         var format = values.GetByIndex(1) as string ?? parameter as string ?? Format;
-        var effectiveCulture = values.OfType<CultureInfo>().FirstOrDefault() ?? Culture ?? culture;
-        var effectiveTimeZone = values.OfType<TimeZoneInfo>().FirstOrDefault() ?? TimeZone;
+        var effectiveCulture = ResolveCulture(values);
+        var effectiveTimeZone = values.OfType<TimeZoneInfo>().FirstOrDefault() ?? TimeZone ?? GlobalizationServices.Current.CurrentTimeZone;
 
         try
         {
@@ -139,27 +139,35 @@ public sealed class DateTimeConverter(DateTimeConverterKind dateTimeConverterKin
     /// <returns>The converted string value.</returns>
     public string? Convert(object? value, string? format, CultureInfo culture, TimeZoneInfo? customTimeZone)
     {
-        DateTime? dateToConvert = value switch
-        {
-            DateTimeOffset dateTimeOffset => dateTimeOffset.DateTime,
-            DateTime date => date,
-            DateOnly date1 => date1.BeginningOfDay(),
-            TimeSpan time => DateTime.Today.At(time),
-            TimeOnly time1 => DateTime.Today.At(time1),
-            _ => null
-        };
+        if (ToDateTimeOffset(value) is not { } dateTimeOffset) return null;
 
-        if (!dateToConvert.HasValue) return null;
-
+        var globalization = GlobalizationServices.Current;
         var effectiveDate = dateTimeConverterKind switch
         {
-            DateTimeConverterKind.Current => GlobalizationServices.Current.FromUtc(dateToConvert.Value),
-            DateTimeConverterKind.Local => dateToConvert.Value.ToLocalTime(),
-            DateTimeConverterKind.Utc => dateToConvert.Value.ToUniversalTime(),
-            _ => customTimeZone is not null ? GlobalizationServices.Current.Convert(dateToConvert.Value, TimeZone, customTimeZone) : dateToConvert.Value
+            DateTimeConverterKind.Current => globalization.FromUtc(dateTimeOffset),
+            DateTimeConverterKind.Local => dateTimeOffset.ToLocalTime(),
+            DateTimeConverterKind.Utc => dateTimeOffset.ToUniversalTime(),
+            _ => customTimeZone is not null
+                ? globalization.Convert(dateTimeOffset, TimeZone, customTimeZone)
+                : dateTimeOffset
         };
 
         var translatedFormat = !string.IsNullOrEmpty(format) ? format.TranslateDatePattern(culture) : null;
         return effectiveDate.ToString(translatedFormat, culture);
     }
+
+    private static DateTimeOffset? ToDateTimeOffset(object? value) => value switch
+    {
+        DateTimeOffset dateTimeOffset => dateTimeOffset,
+        DateTime date => date.Kind switch
+        {
+            DateTimeKind.Utc => new DateTimeOffset(date),
+            DateTimeKind.Local => new DateTimeOffset(date),
+            _ => new DateTimeOffset(DateTime.SpecifyKind(date, DateTimeKind.Utc))
+        },
+        DateOnly date => new DateTimeOffset(date.BeginningOfDay()),
+        TimeSpan time => new DateTimeOffset(DateTime.Today.At(time)),
+        TimeOnly time => new DateTimeOffset(DateTime.Today.At(time)),
+        _ => null
+    };
 }

@@ -9,6 +9,7 @@ using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Threading;
 using Avalonia.Threading;
+using MyNet.Globalization.Facade;
 
 namespace MyNet.Avalonia.Extended.Schedulers;
 
@@ -48,8 +49,8 @@ public class AvaloniaScheduler(DispatcherPriority priority) : LocalScheduler, IS
             {
                 if (d.IsDisposed)
                     return;
-                Thread.CurrentThread.CurrentCulture = UIContext.Globalization.Culture;
-                Thread.CurrentThread.CurrentUICulture = UIContext.Globalization.Culture;
+                Thread.CurrentThread.CurrentCulture = GlobalizationServices.Current.CurrentCulture;
+                Thread.CurrentThread.CurrentUICulture = GlobalizationServices.Current.CurrentCulture;
 
                 d.Disposable = action(this, state);
             },
@@ -84,8 +85,8 @@ public class AvaloniaScheduler(DispatcherPriority priority) : LocalScheduler, IS
             var t = Interlocked.Exchange(ref timer, null);
             try
             {
-                Thread.CurrentThread.CurrentCulture = UIContext.Globalization.Culture;
-                Thread.CurrentThread.CurrentUICulture = UIContext.Globalization.Culture;
+                Thread.CurrentThread.CurrentCulture = GlobalizationServices.Current.CurrentCulture;
+                Thread.CurrentThread.CurrentUICulture = GlobalizationServices.Current.CurrentCulture;
 
                 d.Disposable = action(this, state);
             }
@@ -130,8 +131,8 @@ public class AvaloniaScheduler(DispatcherPriority priority) : LocalScheduler, IS
 
         timer.Tick += (_, _) =>
         {
-            Thread.CurrentThread.CurrentCulture = UIContext.Globalization.Culture;
-            Thread.CurrentThread.CurrentUICulture = UIContext.Globalization.Culture;
+            Thread.CurrentThread.CurrentCulture = GlobalizationServices.Current.CurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = GlobalizationServices.Current.CurrentCulture;
 
             state1 = action(state1);
         };

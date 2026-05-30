@@ -9,7 +9,7 @@ using System.Globalization;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml;
-using MyNet.Observable.Globalization;
+using MyNet.Avalonia.Bindings;
 
 namespace MyNet.Avalonia.MarkupExtensions;
 
@@ -20,7 +20,7 @@ namespace MyNet.Avalonia.MarkupExtensions;
 /// <remarks>
 /// Derive from this class to create custom markup extensions that support localization and time zone awareness.
 /// The extension creates a <see cref="MultiBinding"/> that can react to culture and time zone changes by including
-/// the relevant properties from <see cref="UIContext.Globalization"/> as additional binding sources.
+/// <see cref="GlobalizationBindingSource"/> as additional binding sources for culture and time zone.
 /// </remarks>
 /// <param name="updateOnCultureChanged">Whether to update the binding when the culture changes.</param>
 /// <param name="updateOnTimeZoneChanged">Whether to update the binding when the time zone changes.</param>
@@ -82,20 +82,10 @@ public abstract class GlobalizationExtensionBase(bool updateOnCultureChanged, bo
         }
 
         if (UpdateOnCultureChanged)
-        {
-            var cultureBinding = CompiledBinding.Create<ObservableGlobalization, CultureInfo?>(x => x.Culture);
-            cultureBinding.Source = UIContext.Globalization;
-            cultureBinding.Mode = BindingMode.OneWay;
-            multiBinding.Bindings.Add(cultureBinding);
-        }
+            multiBinding.Bindings.Add(GlobalizationBinding.CreateCultureBinding());
 
         if (UpdateOnTimeZoneChanged)
-        {
-            var timeZoneBinding = CompiledBinding.Create<ObservableGlobalization, TimeZoneInfo?>(x => x.TimeZone);
-            timeZoneBinding.Source = UIContext.Globalization;
-            timeZoneBinding.Mode = BindingMode.OneWay;
-            multiBinding.Bindings.Add(timeZoneBinding);
-        }
+            multiBinding.Bindings.Add(GlobalizationBinding.CreateTimeZoneBinding());
 
         return multiBinding;
     }

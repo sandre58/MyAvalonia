@@ -10,8 +10,8 @@ using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
+using MyNet.Globalization.Facade;
 using MyNet.Utilities.DateTimes;
-using MyNet.Utilities.Localization;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;
@@ -19,7 +19,7 @@ namespace MyNet.Avalonia.Controls.Primitives;
 
 public class DatePickerBase : TemplatedControl
 {
-    protected DatePickerBase() => GlobalizationService.Current.CultureChanged += (_, _) => DisplayFormat = GlobalizationService.Current.Culture.DateTimeFormat.ShortDatePattern;
+    protected DatePickerBase() => GlobalizationServices.Current.CultureChanged += (_, _) => DisplayFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern;
 
     public static readonly StyledProperty<string?> DisplayFormatProperty = AvaloniaProperty.Register<DatePickerBase, string?>(nameof(DisplayFormat), CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 

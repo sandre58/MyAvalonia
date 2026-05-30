@@ -9,9 +9,9 @@ using Avalonia;
 using Avalonia.Controls;
 using MyNet.Avalonia.Controls.Extensions;
 using MyNet.Avalonia.Extensions;
+using MyNet.Globalization.Facade;
 using MyNet.Utilities;
 using MyNet.Utilities.DateTimes;
-using MyNet.Utilities.Localization;
 
 namespace MyNet.Avalonia.Controls.Behaviors;
 
@@ -48,13 +48,13 @@ public static class GlobalizationBehavior
             args.Sender.OnLoading<Control>(x =>
                 {
                     UpdateControl(x);
-                    GlobalizationService.Current.CultureChanged += onCultureChanged;
+                    GlobalizationServices.Current.CultureChanged += onCultureChanged;
                 },
-                _ => GlobalizationService.Current.CultureChanged -= onCultureChanged);
+                _ => GlobalizationServices.Current.CultureChanged -= onCultureChanged);
         }
         else
         {
-            GlobalizationService.Current.CultureChanged -= onCultureChanged;
+            GlobalizationServices.Current.CultureChanged -= onCultureChanged;
         }
 
         void onCultureChanged(object? sender, EventArgs e) => UpdateControl(element);
@@ -82,21 +82,21 @@ public static class GlobalizationBehavior
         }
     }
 
-    private static void UpdateTimePicker(TimePicker timePicker) => timePicker.ClockIdentifier = UIContext.Globalization.Culture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? "24HourClock" : "12HourClock";
+    private static void UpdateTimePicker(TimePicker timePicker) => timePicker.ClockIdentifier = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? "24HourClock" : "12HourClock";
 
     private static void UpdateTimePickerEx(TimePickerEx timePicker)
     {
-        timePicker.TimeFormat = UIContext.Globalization.Culture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? TimeFormat.TwentyFourHour : TimeFormat.TwelveHour;
-        timePicker.DisplayFormat = timePicker.ShowSeconds ? UIContext.Globalization.Culture.DateTimeFormat.LongTimePattern : UIContext.Globalization.Culture.DateTimeFormat.ShortTimePattern;
+        timePicker.TimeFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? TimeFormat.TwentyFourHour : TimeFormat.TwelveHour;
+        timePicker.DisplayFormat = timePicker.ShowSeconds ? GlobalizationServices.Current.CurrentCulture.DateTimeFormat.LongTimePattern : GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern;
     }
 
     private static void UpdateCalendarDatePicker(CalendarDatePicker calendarDatePicker)
     {
         calendarDatePicker.SelectedDateFormat = CalendarDatePickerFormat.Custom;
-        calendarDatePicker.CustomDateFormatString = GlobalizationService.Current.Culture.DateTimeFormat.ShortDatePattern;
+        calendarDatePicker.CustomDateFormatString = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern;
     }
 
-    private static void UpdateCalendarDatePickerEx(CalendarDatePickerEx calendarDatePicker) => calendarDatePicker.DisplayFormat = GlobalizationService.Current.Culture.DateTimeFormat.ShortDatePattern;
+    private static void UpdateCalendarDatePickerEx(CalendarDatePickerEx calendarDatePicker) => calendarDatePicker.DisplayFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern;
 
     private static void UpdateDatePicker(DatePicker datePicker)
     {

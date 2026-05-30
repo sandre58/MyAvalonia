@@ -13,6 +13,7 @@ using MyNet.UI.Navigation;
 using MyNet.UI.Navigation.Models;
 using MyNet.UI.Notifications;
 using MyNet.UI.Services;
+using MyNet.Globalization.Culture;
 using MyNet.UI.ViewModels.Shell;
 using MyNet.Utilities.Collections;
 
@@ -24,8 +25,9 @@ internal sealed class MainViewModel : MainWindowViewModelBase
 
     public MainViewModel(INotificationsManager notificationsManager,
                          IAppCommandsService appCommandsService,
-                         INavigationService navigationService)
-        : base(notificationsManager, appCommandsService, AppBusyManager.MainBusyService, UIContext.Globalization)
+                         INavigationService navigationService,
+                         ICultureService cultureService)
+        : base(notificationsManager, appCommandsService, AppBusyManager.MainBusyService, cultureService)
     {
         NavigationService = navigationService;
         MenuItems = new(_menuItems);

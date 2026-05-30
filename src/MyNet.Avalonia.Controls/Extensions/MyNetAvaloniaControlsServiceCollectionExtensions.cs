@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Resources;
 using MyNet.Avalonia.Converters;
-using MyNet.Globalization;
+using MyNet.Globalization.Facade;
 
 namespace MyNet.Avalonia.Controls;
 
@@ -31,7 +31,7 @@ public static class MyNetAvaloniaControlsServiceCollectionExtensions
         if (Interlocked.Exchange(ref _convertersRegistered, 1) == 0)
         {
             StringConverter.RegisterTypeConverter<DateContext>((dateContext, format, _, _, culture) => !string.IsNullOrEmpty(format)
-                ? DateTimeConverter.Default.Convert(dateContext.ToDate(), format, culture)?.ToString()
+                ? DateTimeConverter.ToCurrent.Convert(dateContext.ToDate(), format, culture, GlobalizationServices.Current.CurrentTimeZone)?.ToString()
                 : dateContext.ToString());
         }
 

@@ -8,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Avalonia;
 using Avalonia.Data.Converters;
 using MyNet.Collections;
+using MyNet.Globalization.Facade;
 using MyNet.Text.TextCasing;
 
 #pragma warning disable IDE0130
@@ -65,7 +67,7 @@ public abstract class LocalizableConverter(LetterCasing casing, CultureInfo? cul
     public virtual object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         var format = parameter as string ?? Format;
-        var effectiveCulture = Culture ?? culture;
+        var effectiveCulture = ResolveCulture();
 
         try
         {
@@ -90,15 +92,14 @@ public abstract class LocalizableConverter(LetterCasing casing, CultureInfo? cul
     {
         var value = values.GetByIndex(0);
         var format = values.GetByIndex(1) as string ?? parameter as string ?? Format;
-        var effectiveCulture = values.OfType<CultureInfo>().LastOrDefault() ?? Culture ?? culture;
-
+        var effectiveCulture = ResolveCulture([.. values]);
         try
         {
             return Convert(value, format, effectiveCulture);
         }
-        catch (FormatException ex)
+        catch (FormatException)
         {
-            return $"[Format error: {ex.Message}]";
+            return AvaloniaProperty.UnsetValue;
         }
     }
 
@@ -114,12 +115,10 @@ public abstract class LocalizableConverter(LetterCasing casing, CultureInfo? cul
     public abstract object? Convert(object? value, string? format, CultureInfo culture);
 
     /// <summary>
-    /// Not supported. Throws <see cref="NotSupportedException"/>.
+    /// Resolves the culture from a multi-value binding.
     /// </summary>
-    /// <param name="value">The value to convert back.</param>
-    /// <param name="targetType">The target type.</param>
-    /// <param name="parameter">The format string or additional parameter.</param>
-    /// <param name="culture">The culture to use for localization.</param>
-    /// <returns>Never returns; always throws.</returns>
+    protected CultureInfo ResolveCulture(params object?[]? values) => values.OfType<CultureInfo>().LastOrDefault() ?? Culture ?? GlobalizationServices.Current.CurrentCulture;
+
+    /// <inheritdoc/>
     public virtual object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotSupportedException();
 }

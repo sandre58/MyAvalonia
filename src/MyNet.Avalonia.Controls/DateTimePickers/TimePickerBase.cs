@@ -7,7 +7,7 @@
 using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
-using MyNet.Utilities.Localization;
+using MyNet.Globalization.Facade;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;
@@ -15,18 +15,18 @@ namespace MyNet.Avalonia.Controls.Primitives;
 
 public abstract class TimePickerBase : TemplatedControl
 {
-    protected TimePickerBase() => GlobalizationService.Current.CultureChanged += (_, _) =>
+    protected TimePickerBase() => GlobalizationServices.Current.CultureChanged += (_, _) =>
     {
-        DisplayFormat = GlobalizationService.Current.Culture.DateTimeFormat.ShortTimePattern;
-        PanelFormat = GlobalizationService.Current.Culture.DateTimeFormat.ShortTimePattern.Replace(":", " ", System.StringComparison.OrdinalIgnoreCase);
+        DisplayFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern;
+        PanelFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern.Replace(":", " ", System.StringComparison.OrdinalIgnoreCase);
     };
 
     public static readonly StyledProperty<string?> DisplayFormatProperty =
         AvaloniaProperty.Register<TimePickerBase, string?>(
-            nameof(DisplayFormat), GlobalizationService.Current.Culture.DateTimeFormat.ShortTimePattern);
+            nameof(DisplayFormat), GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern);
 
     public static readonly StyledProperty<string> PanelFormatProperty = AvaloniaProperty.Register<TimePickerBase, string>(
-        nameof(PanelFormat), GlobalizationService.Current.Culture.DateTimeFormat.ShortTimePattern.Replace(":", " ", System.StringComparison.OrdinalIgnoreCase));
+        nameof(PanelFormat), GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern.Replace(":", " ", System.StringComparison.OrdinalIgnoreCase));
 
     public static readonly StyledProperty<bool> NeedConfirmationProperty = AvaloniaProperty.Register<TimePickerBase, bool>(
         nameof(NeedConfirmation));

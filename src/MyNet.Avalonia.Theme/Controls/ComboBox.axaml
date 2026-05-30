@@ -62,7 +62,7 @@
         <!-- Specific -->
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="my:ClipboardAssist.Content" Value="{Binding $self.SelectionBoxItem, Converter={x:Static my:StringConverter.Default}, Mode=OneWay}" />
+        <Setter Property="my:ClipboardAssist.Content" Value="{my:Display SelectionBoxItem, RelativeSource={RelativeSource Self}}" />
         <Setter Property="PlaceholderText" Value="{x:Static sys:String.Empty}" />
         <Setter Property="MaxDropDownHeight" Value="350" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />

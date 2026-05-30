@@ -11,10 +11,10 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Interactivity;
+using MyNet.Avalonia.Bindings;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Converters;
 using MyNet.Humanizer;
-using MyNet.Observable.Globalization;
 using TimePickerEx = MyNet.Avalonia.Controls.TimePickerEx;
 
 namespace MyNet.Avalonia.Theme.DataGrid;
@@ -117,21 +117,9 @@ public class DataGridTimeColumn : DataGridBoundColumn<TimePickerEx, ContentContr
         contentControl.ContentTemplate = new FuncDataTemplate<TimeSpan?>((_, _) => new TextBlock { [!TextBlock.TextProperty] = new MultiBinding { Converter = new DateTimeConverter(DateTimeConverterKind.Default, LetterCasing.Title), ConverterParameter = DisplayFormat, Mode = BindingMode.OneWay, Bindings = { CreateObjectBinding(), CreateCultureBinding(), CreateTimeZoneBinding() } } });
     }
 
-    private static CompiledBinding CreateCultureBinding()
-    {
-        var binding = CompiledBinding.Create<ObservableGlobalization, CultureInfo?>(x => x.Culture);
-        binding.Source = UIContext.Globalization;
-        binding.Mode = BindingMode.OneWay;
-        return binding;
-    }
+    private static CompiledBinding CreateCultureBinding() => GlobalizationBinding.CreateCultureBinding();
 
-    private static CompiledBinding CreateTimeZoneBinding()
-    {
-        var binding = CompiledBinding.Create<ObservableGlobalization, TimeZoneInfo?>(x => x.TimeZone);
-        binding.Source = UIContext.Globalization;
-        binding.Mode = BindingMode.OneWay;
-        return binding;
-    }
+    private static CompiledBinding CreateTimeZoneBinding() => GlobalizationBinding.CreateTimeZoneBinding();
 
     private static CompiledBinding CreateObjectBinding()
     {

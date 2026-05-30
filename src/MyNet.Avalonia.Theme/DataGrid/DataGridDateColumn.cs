@@ -11,10 +11,10 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Interactivity;
+using MyNet.Avalonia.Bindings;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Converters;
 using MyNet.Humanizer;
-using MyNet.Observable.Globalization;
 using MyNet.Utilities;
 using MyNet.Utilities.Helpers;
 using CalendarDatePickerEx = MyNet.Avalonia.Controls.CalendarDatePickerEx;
@@ -136,21 +136,9 @@ public class DataGridDateColumn : DataGridBoundColumn<CalendarDatePickerEx, Cont
         });
     }
 
-    private static CompiledBinding CreateCultureBinding()
-    {
-        var binding = CompiledBinding.Create<ObservableGlobalization, CultureInfo?>(x => x.Culture);
-        binding.Source = UIContext.Globalization;
-        binding.Mode = BindingMode.OneWay;
-        return binding;
-    }
+    private static CompiledBinding CreateCultureBinding() => GlobalizationBinding.CreateCultureBinding();
 
-    private static CompiledBinding CreateTimeZoneBinding()
-    {
-        var binding = CompiledBinding.Create<ObservableGlobalization, TimeZoneInfo?>(x => x.TimeZone);
-        binding.Source = UIContext.Globalization;
-        binding.Mode = BindingMode.OneWay;
-        return binding;
-    }
+    private static CompiledBinding CreateTimeZoneBinding() => GlobalizationBinding.CreateTimeZoneBinding();
 
     private static CompiledBinding CreateObjectBinding()
     {

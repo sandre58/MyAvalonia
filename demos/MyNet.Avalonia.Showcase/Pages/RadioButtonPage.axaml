@@ -34,7 +34,7 @@
         <v:ShowcaseView.ThemeControlTemplate>
             <DataTemplate x:DataType="rendering:ControlStyle">
                 <RadioButton behavior:PlaygroundBehavior.AttachStyle="{Binding}"
-                             GroupName="{Binding Converter={x:Static my:StringConverter.Default}}"
+                             GroupName="{my:Display}"
                              IsChecked="True" />
             </DataTemplate>
         </v:ShowcaseView.ThemeControlTemplate>

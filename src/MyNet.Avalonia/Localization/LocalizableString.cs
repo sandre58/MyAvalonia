@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -39,8 +40,7 @@ public class LocalizableString : INotifyPropertyChanged
         _format = format;
         _casing = casing;
 
-        // Subscribe to culture changes
-        UIContext.Globalization.PropertyChanged += OnGlobalizationChanged;
+        GlobalizationServices.Current.CultureChanged += OnCultureChanged;
     }
 
     /// <summary>
@@ -58,33 +58,24 @@ public class LocalizableString : INotifyPropertyChanged
     /// </summary>
     private string GetTranslatedValue()
     {
+        var culture = GlobalizationServices.Current.CurrentCulture;
         var value = !string.IsNullOrEmpty(_filename)
-            ? _key.Translate(_filename, UIContext.Globalization.Culture)
-            : _key.Translate(DisplayStyle.Default, UIContext.Globalization.Culture);
+            ? _key.Translate(_filename, culture)
+            : _key.Translate(DisplayStyle.Default, culture);
 
         if (!string.IsNullOrEmpty(_format))
-        {
-            value = string.Format(CultureInfo.CurrentCulture, _format, value);
-        }
+            value = string.Format(culture, _format, value);
 
         return _casing != LetterCasing.Normal ? value.ApplyCase(_casing) : value;
     }
 
-    /// <summary>
-    /// Handles globalization property changes.
-    /// </summary>
-    private void OnGlobalizationChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == nameof(UIContext.Globalization.Culture))
-        {
-            OnPropertyChanged(nameof(Value));
-        }
-    }
+    private void OnCultureChanged(object? sender, EventArgs e) => OnPropertyChanged(nameof(Value));
 
     /// <summary>
     /// Raises the PropertyChanged event.
     /// </summary>
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new(propertyName));
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+        PropertyChanged?.Invoke(this, new(propertyName));
 
     /// <summary>
     /// Returns the translated string value.
