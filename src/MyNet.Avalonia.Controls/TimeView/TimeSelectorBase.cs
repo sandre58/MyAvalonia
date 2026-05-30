@@ -19,7 +19,7 @@ using MyNet.Utilities.Suspending;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;
-#pragma warning restore IDE0130 // Namespace does not match folder structure
+#pragma warning restore IDE0130, IDE0130 // Namespace does not match folder structure
 
 public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSpan?>
 {
@@ -115,7 +115,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
             if (removedValue is not null)
                 removedItems.Add(removedValue);
 
-            handler(this, new SelectionChangedEventArgs(SelectingItemsControl.SelectionChangedEvent, removedItems, addedItems));
+            handler(this, new(SelectingItemsControl.SelectionChangedEvent, removedItems, addedItems));
         }
     }
 
@@ -209,7 +209,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
     public static readonly StyledProperty<bool> IsAmProperty = AvaloniaProperty.Register<TimeSelectorBase, bool>(nameof(IsAm));
 
     /// <summary>
-    /// Gets or sets a value indicating whether gets or sets the IsAm property.
+    /// Gets or sets a value indicating whether it gets or sets the IsAm property.
     /// </summary>
     public bool IsAm
     {
@@ -227,7 +227,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
     public static readonly StyledProperty<bool> ShowSecondsProperty = AvaloniaProperty.Register<TimeSelectorBase, bool>(nameof(ShowSeconds));
 
     /// <summary>
-    /// Gets or sets a value indicating whether gets or sets is seconds selector is displayed.
+    /// Gets or sets a value indicating whether it gets or sets is seconds selector is displayed.
     /// </summary>
     public bool ShowSeconds
     {
@@ -438,7 +438,7 @@ internal sealed record TimeContext(int? Hours, int? Minutes, int? Seconds, bool 
 {
     public static TimeContext FromTimeSpan(TimeSpan? time, TimeFormat format)
     {
-        if (!time.HasValue) return new TimeContext(null, null, null, true);
+        if (!time.HasValue) return new(null, null, null, true);
 
         var isAm = ComputeIsAm(time.Value.Hours);
         var hours = format switch
@@ -446,7 +446,7 @@ internal sealed record TimeContext(int? Hours, int? Minutes, int? Seconds, bool 
             TimeFormat.TwelveHour => ConvertTo12FormattedHours(time.Value.Hours),
             _ => time.Value.Hours
         };
-        return new TimeContext(hours, time.Value.Minutes, time.Value.Seconds, isAm);
+        return new(hours, time.Value.Minutes, time.Value.Seconds, isAm);
     }
 
     public TimeSpan? ToTimeSpan() => !Hours.HasValue ? null : new TimeSpan(ConvertTo24FormattedHours(Hours.Value, IsAm), Minutes ?? 0, Seconds ?? 0);

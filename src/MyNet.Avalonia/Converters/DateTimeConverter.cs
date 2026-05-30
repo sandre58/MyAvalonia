@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using MyNet.Humanizer;
-using MyNet.Utilities;
-using MyNet.Utilities.Helpers;
-using MyNet.Utilities.Localization;
+using MyNet.Collections;
+using MyNet.Globalization.Facade;
+using MyNet.Primitives;
+using MyNet.Text.TextCasing;
 
 namespace MyNet.Avalonia.Converters;
 
@@ -151,13 +151,13 @@ public sealed class DateTimeConverter(DateTimeConverterKind dateTimeConverterKin
 
         var effectiveDate = dateTimeConverterKind switch
         {
-            DateTimeConverterKind.Current => GlobalizationService.Current.Convert(dateToConvert.Value),
+            DateTimeConverterKind.Current => GlobalizationServices.Current.FromUtc(dateToConvert.Value),
             DateTimeConverterKind.Local => dateToConvert.Value.ToLocalTime(),
             DateTimeConverterKind.Utc => dateToConvert.Value.ToUniversalTime(),
-            _ => customTimeZone is not null ? GlobalizationService.Current.ConvertToTimeZone(dateToConvert.Value, customTimeZone) : dateToConvert.Value
+            _ => customTimeZone is not null ? GlobalizationServices.Current.Convert(dateToConvert.Value, TimeZone, customTimeZone) : dateToConvert.Value
         };
 
-        var translatedFormat = !string.IsNullOrEmpty(format) ? DateTimeHelper.TranslateDatePattern(format, culture) : null;
+        var translatedFormat = !string.IsNullOrEmpty(format) ? format.TranslateDatePattern(culture) : null;
         return effectiveDate.ToString(translatedFormat, culture);
     }
 }

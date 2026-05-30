@@ -48,7 +48,7 @@ public class ForegroundExtension : ThemeBrushExtensionBase
     {
         Mode = BindingMode.OneWay,
         FallbackValue = null,
-        RelativeSource = new RelativeSource(AncestorType is not null ? RelativeSourceMode.FindAncestor : RelativeSourceMode)
+        RelativeSource = new(AncestorType is not null ? RelativeSourceMode.FindAncestor : RelativeSourceMode)
         {
             AncestorType = AncestorType
         },

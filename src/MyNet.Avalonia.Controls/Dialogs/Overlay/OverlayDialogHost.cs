@@ -1,0 +1,447 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="OverlayDialogHost.cs" company="Stéphane ANDRE">
+// Copyright (c) Stéphane ANDRE. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Animation;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Media;
+using Avalonia.Styling;
+using Avalonia.VisualTree;
+using MyNet.Avalonia.Controls.Behaviors;
+using MyNet.Avalonia.Controls.Enums;
+using MyNet.Avalonia.Controls.Primitives;
+using MyNet.Utilities;
+
+#pragma warning disable IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.Controls;
+#pragma warning restore IDE0130 // Namespace does not match folder structure
+
+public class OverlayDialogHost : Canvas
+{
+    private static readonly Animation MaskAppearAnimation = CreateOpacityAnimation(true);
+    private static readonly Animation MaskDisappearAnimation = CreateOpacityAnimation(false);
+
+    private readonly List<DialogPair> _layers = new(10);
+
+    static OverlayDialogHost() => ClipToBoundsProperty.OverrideDefaultValue<OverlayDialogHost>(true);
+
+    private int _modalCount;
+
+    public Thickness SnapThickness { get; set; } = new(0);
+
+    public static readonly AttachedProperty<bool> IsModalStatusScopeProperty = AvaloniaProperty.RegisterAttached<OverlayDialogHost, Control, bool>("IsModalStatusScope");
+
+    public static void SetIsModalStatusScope(Control obj, bool value) => obj.SetValue(IsModalStatusScopeProperty, value);
+
+    internal static bool GetIsModalStatusScope(Control obj) => obj.GetValue(IsModalStatusScopeProperty);
+
+    public static readonly AttachedProperty<bool> IsInModalStatusProperty = AvaloniaProperty.RegisterAttached<OverlayDialogHost, Control, bool>(nameof(IsInModalStatus));
+
+    internal static void SetIsInModalStatus(Control obj, bool value) => obj.SetValue(IsInModalStatusProperty, value);
+
+    public static bool GetIsInModalStatus(Control obj) => obj.GetValue(IsInModalStatusProperty);
+
+    public static readonly StyledProperty<bool> IsModalStatusReporterProperty = AvaloniaProperty.Register<OverlayDialogHost, bool>(nameof(IsModalStatusReporter));
+
+    public bool IsModalStatusReporter
+    {
+        get => GetValue(IsModalStatusReporterProperty);
+        set => SetValue(IsModalStatusReporterProperty, value);
+    }
+
+    public bool IsInModalStatus
+    {
+        get => GetValue(IsInModalStatusProperty);
+        set => SetValue(IsInModalStatusProperty, value);
+    }
+
+    public bool IsAnimationDisabled { get; set; }
+
+    public bool IsTopLevel { get; set; }
+
+    private static Animation CreateOpacityAnimation(bool appear)
+    {
+        var animation = new Animation
+        {
+            FillMode = FillMode.Forward
+        };
+        var keyFrame1 = new KeyFrame { Cue = new(0.0) };
+        keyFrame1.Setters.Add(new Setter { Property = OpacityProperty, Value = appear ? 0.0 : 1.0 });
+        var keyFrame2 = new KeyFrame { Cue = new(1.0) };
+        keyFrame2.Setters.Add(new Setter { Property = OpacityProperty, Value = appear ? 1.0 : 0.0 });
+        animation.Children.Add(keyFrame1);
+        animation.Children.Add(keyFrame2);
+        animation.Duration = TimeSpan.FromSeconds(0.2);
+        return animation;
+    }
+
+    public string? HostId { get; set; }
+
+    public static readonly StyledProperty<IBrush?> OverlayMaskBrushProperty =
+        AvaloniaProperty.Register<OverlayDialogHost, IBrush?>(
+            nameof(OverlayMaskBrush));
+
+    public IBrush? OverlayMaskBrush
+    {
+        get => GetValue(OverlayMaskBrushProperty);
+        set => SetValue(OverlayMaskBrushProperty, value);
+    }
+
+    private PureRectangle CreateOverlayMask(bool modal, bool canCloseOnClick)
+    {
+        PureRectangle rec = new()
+        {
+            Width = Bounds.Width,
+            Height = Bounds.Height,
+            IsVisible = true
+        };
+        if (modal)
+        {
+            rec[!PureRectangle.BackgroundProperty] = this[!OverlayMaskBrushProperty];
+        }
+        else if (canCloseOnClick)
+        {
+            rec.SetCurrentValue(PureRectangle.BackgroundProperty, Brushes.Transparent);
+        }
+
+        if (canCloseOnClick)
+        {
+            rec.AddHandler(PointerReleasedEvent, ClickMaskToCloseDialog);
+        }
+        else if (IsTopLevel)
+        {
+            rec.AddHandler(PointerPressedEvent, DragMaskToMoveWindow);
+        }
+
+        return rec;
+    }
+
+    private void DragMaskToMoveWindow(object? sender, PointerPressedEventArgs e)
+    {
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+        {
+            return;
+        }
+
+        if (sender is not PureRectangle mask) return;
+        if (TopLevel.GetTopLevel(mask) is Window window)
+        {
+            window.BeginMoveDrag(e);
+        }
+    }
+
+    private void ClickMaskToCloseDialog(object? sender, PointerReleasedEventArgs e)
+    {
+        if (sender is not PureRectangle border) return;
+        var layer = _layers.FirstOrDefault(a => a.Mask == border);
+        if (layer is null) return;
+        border.RemoveHandler(PointerReleasedEvent, ClickMaskToCloseDialog);
+        border.RemoveHandler(PointerPressedEvent, DragMaskToMoveWindow);
+        layer.Element.Close();
+    }
+
+    private IDisposable? _modalStatusSubscription;
+    private int? _toplevelHash;
+
+    protected sealed override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+        _toplevelHash = TopLevel.GetTopLevel(this)?.GetHashCode();
+        var modalHost = this.GetVisualAncestors().OfType<Control>().FirstOrDefault(GetIsModalStatusScope);
+        if (modalHost is not null)
+        {
+            _modalStatusSubscription = this.GetObservable(IsInModalStatusProperty)
+                .Subscribe(a =>
+                {
+                    if (IsModalStatusReporter)
+                    {
+                        SetIsInModalStatus(modalHost, a);
+                    }
+                });
+        }
+
+        OverlayDialogHostManager.Register(this, HostId, _toplevelHash);
+    }
+
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        while (_layers.Count > 0)
+        {
+            _layers[0].Element.Close();
+        }
+
+        _modalStatusSubscription?.Dispose();
+        OverlayDialogHostManager.Unregister(HostId, _toplevelHash);
+        base.OnDetachedFromVisualTree(e);
+    }
+
+    protected sealed override void OnSizeChanged(SizeChangedEventArgs e)
+    {
+        base.OnSizeChanged(e);
+        foreach (var t in _layers)
+        {
+            if (t.Mask is { } rect)
+            {
+                rect.Width = Bounds.Width;
+                rect.Height = Bounds.Height;
+            }
+
+            switch (t.Element)
+            {
+                case OverlayDialog d:
+                    ResetDialogPosition(d, e.NewSize);
+                    break;
+            }
+        }
+    }
+
+    private void ResetZIndices()
+    {
+        var index = 0;
+        foreach (var t in _layers)
+        {
+            if (t.Mask is { } mask)
+            {
+                mask.ZIndex = index;
+                index++;
+            }
+
+            if (t.Element is not { } dialog)
+                continue;
+            dialog.ZIndex = index;
+            index++;
+        }
+    }
+
+    public T? Recall<T>()
+    {
+        var element = _layers.LastOrDefault(a => a.Element.Content?.GetType() == typeof(T));
+        return element?.Element.Content is T t ? t : default;
+    }
+
+    private sealed class DialogPair(PureRectangle? mask, OverlayFeedbackElement element, bool modal = true)
+    {
+        internal PureRectangle? Mask { get; } = mask;
+
+        internal OverlayFeedbackElement Element { get; } = element;
+
+        internal bool Modal { get; } = modal;
+    }
+
+    private static void ResetDialogPosition(OverlayDialog control, Size newSize)
+    {
+        control.MaxWidth = newSize.Width;
+        control.MaxHeight = newSize.Height;
+        if (control.IsFullScreen)
+        {
+            control.Width = newSize.Width;
+            control.Height = newSize.Height;
+            SetLeft(control, 0);
+            SetTop(control, 0);
+            return;
+        }
+
+        var width = newSize.Width - control.Bounds.Width;
+        var height = newSize.Height - control.Bounds.Height;
+        var newLeft = width * control.HorizontalOffsetRatio ?? 0;
+        var newTop = height * control.VerticalOffsetRatio ?? 0;
+        newLeft = control.ActualHorizontalAnchor switch
+        {
+            HorizontalPosition.Left => 0,
+            HorizontalPosition.Right => newSize.Width - control.Bounds.Width,
+            HorizontalPosition.Center => newLeft,
+            _ => throw new InvalidOperationException()
+        };
+        newTop = control.ActualVerticalAnchor switch
+        {
+            VerticalPosition.Top => 0,
+            VerticalPosition.Bottom => newSize.Height - control.Bounds.Height,
+            VerticalPosition.Center => newTop,
+            _ => throw new InvalidOperationException()
+        };
+        SetLeft(control, Math.Max(0.0, newLeft));
+        SetTop(control, Math.Max(0.0, newTop));
+    }
+
+    public void AddDialog(OverlayDialog control)
+    {
+        PureRectangle? mask = null;
+        if (control.CanLightDismiss) mask = CreateOverlayMask(false, control.CanLightDismiss);
+        if (mask is not null) Children.Add(mask);
+        Children.Add(control);
+        _layers.Add(new(mask, control, false));
+        if (control.IsFullScreen)
+        {
+            control.Width = Bounds.Width;
+            control.Height = Bounds.Height;
+        }
+
+        control.MaxWidth = Bounds.Width;
+        control.MaxHeight = Bounds.Height;
+        control.Measure(Bounds.Size);
+        control.Arrange(new(control.DesiredSize));
+        SetToPosition(control);
+        control.AddHandler(OverlayFeedbackElement.ClosedEvent, OnDialogControlClosingAsync);
+        control.AddHandler(OverlayDialog.LayerChangedEvent, OnDialogLayerChanged);
+        ResetZIndices();
+    }
+
+    [SuppressMessage("Roslynator", "RCS1163:Unused parameter", Justification = "Used by AddHandler")]
+    private async Task OnDialogControlClosingAsync(object? sender, object? e)
+    {
+        if (sender is not OverlayDialog control) return;
+        var layer = _layers.FirstOrDefault(a => a.Element == control);
+        if (layer is null) return;
+        _ = _layers.Remove(layer);
+
+        control.RemoveHandler(OverlayFeedbackElement.ClosedEvent, OnDialogControlClosingAsync);
+        control.RemoveHandler(OverlayDialog.LayerChangedEvent, OnDialogLayerChanged);
+        layer.Mask?.RemoveHandler(PointerPressedEvent, DragMaskToMoveWindow);
+
+        _ = Children.Remove(control);
+
+        if (layer.Mask is not null)
+        {
+            _ = Children.Remove(layer.Mask);
+            if (layer.Modal)
+            {
+                _modalCount--;
+                IsInModalStatus = _modalCount > 0;
+                if (!IsAnimationDisabled) await MaskDisappearAnimation.RunAsync(layer.Mask).ConfigureAwait(false);
+            }
+        }
+
+        ResetZIndices();
+    }
+
+    /// <summary>
+    ///     Add a dialog as a modal dialog to the host.
+    /// </summary>
+    /// <param name="control">.</param>
+    public void AddModalDialog(OverlayDialog control)
+    {
+        var mask = CreateOverlayMask(true, control.CanLightDismiss);
+        _layers.Add(new(mask, control));
+        control.SetAsModal(true);
+        ResetZIndices();
+        Children.Add(mask);
+        Children.Add(control);
+        if (control.IsFullScreen)
+        {
+            control.Width = Bounds.Width;
+            control.Height = Bounds.Height;
+        }
+
+        control.MaxWidth = Bounds.Width;
+        control.MaxHeight = Bounds.Height;
+        control.Measure(Bounds.Size);
+        control.Arrange(new(control.DesiredSize));
+        SetToPosition(control);
+        control.AddHandler(OverlayFeedbackElement.ClosedEvent, OnDialogControlClosingAsync);
+        control.AddHandler(OverlayDialog.LayerChangedEvent, OnDialogLayerChanged);
+
+        // Notice: mask animation here is not really awaited, because currently dialogs appears immediately.
+        if (!IsAnimationDisabled) _ = MaskAppearAnimation.RunAsync(mask);
+
+        var element = control.GetVisualDescendants().OfType<InputElement>()
+                             .FirstOrDefault(FocusBehavior.GetDialogFocusHint);
+        element ??= control.GetVisualDescendants().OfType<InputElement>().FirstOrDefault(a => a.Focusable);
+        _ = element?.Focus();
+        _modalCount++;
+        IsInModalStatus = _modalCount > 0;
+        control.IsClosed = false;
+    }
+
+    // Handle dialog layer change event
+    private void OnDialogLayerChanged(object? sender, OverlayDialogLayerChangeEventArgs e)
+    {
+        if (sender is not OverlayDialog control)
+            return;
+        var layer = _layers.FirstOrDefault(a => a.Element == control);
+        if (layer is null) return;
+        var index = _layers.IndexOf(layer);
+        _ = _layers.Remove(layer);
+        var newIndex = e.ChangeType switch
+        {
+            OverlayDialogLayerChangeType.BringForward => (index + 1).SafeClamp(0, _layers.Count),
+            OverlayDialogLayerChangeType.SendBackward => (index - 1).SafeClamp(0, _layers.Count),
+            OverlayDialogLayerChangeType.BringToFront => _layers.Count,
+            OverlayDialogLayerChangeType.SendToBack => 0,
+            _ => index
+        };
+
+        _layers.Insert(newIndex, layer);
+        ResetZIndices();
+    }
+
+    private void SetToPosition(OverlayDialog? control)
+    {
+        if (control is null) return;
+        var left = GetLeftPosition(control);
+        var top = GetTopPosition(control);
+        SetLeft(control, left);
+        SetTop(control, top);
+        control.AnchorAndUpdatePositionInfo();
+    }
+
+    private double GetLeftPosition(OverlayDialog control)
+    {
+        var offset = Math.Max(0, control.HorizontalOffset ?? 0);
+        var left = Bounds.Width - control.Bounds.Width;
+        switch (control.HorizontalAnchor)
+        {
+            case HorizontalPosition.Center:
+                left *= 0.5;
+                left = left.SafeClamp(0, Bounds.Width * 0.5);
+                break;
+            case HorizontalPosition.Left:
+                left = left.SafeClamp(0, offset);
+                break;
+
+            case HorizontalPosition.Right:
+                {
+                    var leftOffset = Bounds.Width - control.Bounds.Width - offset;
+                    leftOffset = Math.Max(0, leftOffset);
+                    if (control.HorizontalOffset.HasValue) left = left.SafeClamp(0, leftOffset);
+                    break;
+                }
+
+            default:
+                throw new ArgumentOutOfRangeException(nameof(control));
+        }
+
+        return left;
+    }
+
+    private double GetTopPosition(OverlayDialog control)
+    {
+        var offset = Math.Max(0, control.VerticalOffset ?? 0);
+        var top = Bounds.Height - control.Bounds.Height;
+        switch (control.VerticalAnchor)
+        {
+            case VerticalPosition.Center:
+                top *= 0.5;
+                return top.SafeClamp(0, Bounds.Height * 0.5);
+            case VerticalPosition.Top:
+                return top.SafeClamp(0, offset);
+
+            case VerticalPosition.Bottom:
+                {
+                    var topOffset = Math.Max(0, Bounds.Height - control.Bounds.Height - offset);
+                    return top.SafeClamp(0, topOffset);
+                }
+
+            default:
+                throw new ArgumentOutOfRangeException(nameof(control));
+        }
+    }
+}

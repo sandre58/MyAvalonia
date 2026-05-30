@@ -5,14 +5,15 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT DROPDOWNBUTTON THEME                              -->
     <!-- ═════════════════════════════════════════════════════════ -->
-    <ControlTheme x:Key="{x:Type DropDownButton}" TargetType="DropDownButton" BasedOn="{StaticResource {x:Type Button}}">
+    <ControlTheme x:Key="{x:Type DropDownButton}" TargetType="DropDownButton"
+                  BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="my:ThemeAssist.Category" Value="Action" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
         <Setter Property="my:PopupBehavior.Placement" Value="BottomEdgeAlignedRight" />
         <Setter Property="Cursor" Value="Arrow" />
-        <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
-        <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
+        <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True" />
+        <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True" />
 
         <!-- Variant -->
         <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
@@ -67,7 +68,8 @@
                                                        TextElement.FontSize="{TemplateBinding FontSize}"
                                                        TextElement.FontWeight="{TemplateBinding FontWeight}"
                                                        UseLayoutRounding="False">
-                                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
                                 </my:IconContentControl>
                                 <PathIcon Name="PART_ExpanderIcon"
                                           Grid.Column="1"
@@ -91,17 +93,20 @@
         <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
             <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronDown}" />
         </Style>
-        <Style Selector="^[(my|PopupBehavior.Placement)=Right], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedBottom]">
+        <Style
+            Selector="^[(my|PopupBehavior.Placement)=Right], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedBottom]">
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronRight}" />
             </Style>
         </Style>
-        <Style Selector="^[(my|PopupBehavior.Placement)=Left], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedBottom]">
+        <Style
+            Selector="^[(my|PopupBehavior.Placement)=Left], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedBottom]">
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronLeft}" />
             </Style>
         </Style>
-        <Style Selector="^[(my|PopupBehavior.Placement)=Top], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedLeft], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedRight]">
+        <Style
+            Selector="^[(my|PopupBehavior.Placement)=Top], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedLeft], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedRight]">
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronUp}" />
             </Style>
@@ -110,17 +115,20 @@
         <!-- IsOpen -->
         <Style Selector="^:flyout-open">
             <Style Selector="^ /template/ my|IconContentControl#IconContent">
-                <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                <Setter Property="Foreground"
+                        Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
             </Style>
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
-                <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                <Setter Property="Foreground"
+                        Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
             </Style>
 
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="RenderTransform" Value="rotate(180deg)" />
             </Style>
 
-            <Style Selector="^.shadow-control /template/ Border#PART_MainBorder, ^.shadow-surface /template/ Border#PART_MainBorder">
+            <Style
+                Selector="^.shadow-control /template/ Border#PART_MainBorder, ^.shadow-surface /template/ Border#PART_MainBorder">
                 <Setter Property="my:ShadowAssist.Darken" Value="True" />
             </Style>
 
@@ -209,7 +217,8 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- ROUNDED DROPDOWNBUTTON THEME                              -->
     <!-- ═════════════════════════════════════════════════════════ -->
-    <ControlTheme x:Key="MyNet.Theme.DropDownButton.Rounded" TargetType="DropDownButton" BasedOn="{StaticResource {x:Type DropDownButton}}">
+    <ControlTheme x:Key="MyNet.Theme.DropDownButton.Rounded" TargetType="DropDownButton"
+                  BasedOn="{StaticResource {x:Type DropDownButton}}">
         <Setter Property="Padding" Value="1" />
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
@@ -273,7 +282,8 @@
                                                        TextElement.FontSize="{TemplateBinding FontSize}"
                                                        TextElement.FontWeight="{TemplateBinding FontWeight}"
                                                        UseLayoutRounding="False">
-                                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
                                 </my:IconContentControl>
                                 <PathIcon Name="PART_ExpanderIcon"
                                           Grid.Column="1"
@@ -295,7 +305,8 @@
         <!-- Hover -->
         <Style Selector="^:not(:disabled):pointerover">
 
-            <Style Selector="^.shadow-control /template/ Border#PART_ShadowBorder, ^.shadow-surface /template/ Border#PART_ShadowBorder">
+            <Style
+                Selector="^.shadow-control /template/ Border#PART_ShadowBorder, ^.shadow-surface /template/ Border#PART_ShadowBorder">
                 <Setter Property="my:ShadowAssist.Darken" Value="True" />
             </Style>
 
@@ -307,7 +318,8 @@
         <!-- IsOpen -->
         <Style Selector="^:flyout-open">
 
-            <Style Selector="^.shadow-control /template/ Border#PART_ShadowBorder, ^.shadow-surface /template/ Border#PART_ShadowBorder">
+            <Style
+                Selector="^.shadow-control /template/ Border#PART_ShadowBorder, ^.shadow-surface /template/ Border#PART_ShadowBorder">
                 <Setter Property="my:ShadowAssist.Darken" Value="True" />
             </Style>
 

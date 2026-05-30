@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
@@ -46,7 +45,7 @@ public static class ClassesAssist
     /// allowing for advanced visual composition scenarios. The dictionary uses string keys to identify individual
     /// layers. Before accessing or modifying the dictionary, ensure it is initialized to avoid null reference
     /// exceptions.</remarks>
-    private static readonly AttachedProperty<Dictionary<string, Layer>> LayersProperty = AvaloniaProperty.RegisterAttached<StyledElement, Dictionary<string, Layer>>("Layers", typeof(ClassesAssist));
+    private static readonly AttachedProperty<Dictionary<string, Layer>?> LayersProperty = AvaloniaProperty.RegisterAttached<StyledElement, Dictionary<string, Layer>?>("Layers", typeof(ClassesAssist));
 
     /// <summary>
     /// Gets the dictionary of layers associated with the specified styled element. If the dictionary does not exist, it initializes a new one and associates it with the element.
@@ -72,7 +71,7 @@ public static class ClassesAssist
     /// used to apply dynamic or conditional styling. When using this property, ensure that the set of class names is
     /// managed consistently to maintain the intended visual appearance. The property is typically accessed through
     /// static methods that get or set its value on a target element.</remarks>
-    private static readonly AttachedProperty<HashSet<string>> ManagedClassesProperty = AvaloniaProperty.RegisterAttached<StyledElement, HashSet<string>>("ManagedClasses", typeof(ClassesAssist));
+    private static readonly AttachedProperty<HashSet<string>?> ManagedClassesProperty = AvaloniaProperty.RegisterAttached<StyledElement, HashSet<string>?>("ManagedClasses", typeof(ClassesAssist));
 
     /// <summary>
     /// Gets the set of managed class names associated with the specified styled element.
@@ -306,7 +305,7 @@ public static class ClassesAssist
                     // classes collection (ToObservable would enumerate and emit items
                     // synchronously, which could cause Recompile to modify the collection
                     // while it is being iterated). Using FromEventPattern avoids that.
-                    var sub = global::System.Reactive.Linq.Observable.FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
+                    var sub = System.Reactive.Linq.Observable.FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                         h => control.Classes.CollectionChanged += h,
                         h => control.Classes.CollectionChanged -= h)
                         .Subscribe(_ => Recompile(control));
@@ -340,7 +339,7 @@ public static class ClassesAssist
 
         if (state is null)
         {
-            state = new ClassesRuntimeState();
+            state = new();
             ctrl.SetValue(RuntimeStateProperty, state);
         }
 
@@ -373,7 +372,7 @@ public static class ClassesAssist
 
         if (!layers.TryGetValue(name, out var layer))
         {
-            layer = new Layer();
+            layer = new();
             layers[name] = layer;
         }
 
@@ -423,23 +422,17 @@ public static class ClassesAssist
         }
 
         // Remove old managed classes
-        foreach (var old in managed.ToList())
+        foreach (var old in managed.ToList().Where(old => !newManaged.Contains(old)))
         {
-            if (!newManaged.Contains(old))
-            {
-                element.Classes.Remove(old);
-                managed.Remove(old);
-            }
+            element.Classes.Remove(old);
+            managed.Remove(old);
         }
 
         // Add new managed classes
-        foreach (var c in newManaged)
+        foreach (var c in newManaged.Where(c => !managed.Contains(c)))
         {
-            if (!managed.Contains(c))
-            {
-                element.Classes.Add(c);
-                managed.Add(c);
-            }
+            element.Classes.Add(c);
+            managed.Add(c);
         }
     }
 
@@ -454,11 +447,13 @@ public static class ClassesAssist
     /// an empty collection is returned.</param>
     /// <returns>An enumerable collection of non-empty strings extracted from the input value. Returns an empty collection if the
     /// input is null or contains only whitespace strings.</returns>
-    private static IEnumerable<string> Extract(object? value) => value == null
-            ? []
-            : value is string s
-            ? s.Split(' ', StringSplitOptions.RemoveEmptyEntries)
-            : value is IEnumerable<string> enumerable ? enumerable.Where(x => !string.IsNullOrWhiteSpace(x)) : [];
+    private static IEnumerable<string> Extract(object? value) => value switch
+    {
+        null => [],
+        string s => s.Split(' ', StringSplitOptions.RemoveEmptyEntries),
+        IEnumerable<string> enumerable => enumerable.Where(x => !string.IsNullOrWhiteSpace(x)),
+        _ => []
+    };
 
     #endregion
 }

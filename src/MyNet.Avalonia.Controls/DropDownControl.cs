@@ -98,8 +98,7 @@ public class DropDownControl : TemplatedControl, IPopupControl
     protected void UpdatePseudoClasses() => PseudoClasses.Set(PseudoClassName.FlyoutOpen, IsDropDownOpen);
 
     #region Focus
-
-    protected override void OnLostFocus(RoutedEventArgs e)
+    protected override void OnLostFocus(FocusChangedEventArgs e)
     {
         base.OnLostFocus(e);
 

@@ -94,8 +94,8 @@ public class Calendar : TemplatedControl
         DisplayDateContext = new MonthContext(DateTime.Today.Month, DateTime.Today.Year);
         SetCurrentValue(DisplayDateProperty, DateTime.Today);
         UpdateDisplayDate(DisplayDate, DateTime.MinValue);
-        BlackoutDates = new CalendarBlackoutDatesCollection(this);
-        SelectedDates = new SelectedDatesCollection(this);
+        BlackoutDates = new(this);
+        SelectedDates = new(this);
         GlobalizationService.Current.CultureChanged += (_, _) => Refresh();
         SelectedDates.CollectionChanged += OnSelectedDatesCollectionChanged;
         BlackoutDates.CollectionChanged += OnBlackoutDatesCollectionChanged;
@@ -302,7 +302,7 @@ public class Calendar : TemplatedControl
             _cells.ForEach(x => ChangeSelectedState(x.Key, false));
         }
 
-        SelectedDatesChanged?.Invoke(this, new SelectionChangedEventArgs(SelectingItemsControl.SelectionChangedEvent, oldItems, newItems)
+        SelectedDatesChanged?.Invoke(this, new(SelectingItemsControl.SelectionChangedEvent, oldItems, newItems)
         {
             Source = this
         });
@@ -358,8 +358,8 @@ public class Calendar : TemplatedControl
 
     private static DateContext CoerceDisplayDateContext(AvaloniaObject sender, DateContext value) => value switch
     {
-        DecadeContext decadeContext => decadeContext.StartYear % 10 == 0 ? decadeContext : new DecadeContext(DateTimeHelper.GetDecade(decadeContext.StartYear).Start),
-        CenturyContext centuryContaxt => centuryContaxt.StartYear % 100 == 0 ? centuryContaxt : new CenturyContext(DateTimeHelper.GetCentury(centuryContaxt.StartYear).Start),
+        DecadeContext decadeContext => decadeContext.StartYear % 10 == 0 ? decadeContext : new(DateTimeHelper.GetDecade(decadeContext.StartYear).Start),
+        CenturyContext centuryContaxt => centuryContaxt.StartYear % 100 == 0 ? centuryContaxt : new(DateTimeHelper.GetCentury(centuryContaxt.StartYear).Start),
         _ => value
     };
 
@@ -406,7 +406,7 @@ public class Calendar : TemplatedControl
 
         DisplayDateContext = DisplayDateContext.FromDate(addedDate);
 
-        OnDisplayDate(new CalendarDateChangedEventArgs(removedDate, addedDate));
+        OnDisplayDate(new(removedDate, addedDate));
     }
 
     private void OnDisplayDateChanged(AvaloniaPropertyChangedEventArgs e) => UpdateDisplayDate((DateTime)e.NewValue!, (DateTime)e.OldValue!);

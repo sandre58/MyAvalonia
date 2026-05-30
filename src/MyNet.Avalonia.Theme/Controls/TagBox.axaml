@@ -48,8 +48,10 @@
                     <Setter Property="Margin" Value="1 1 0 0" />
                     <Setter Property="HorizontalAlignment" Value="Stretch" />
                     <Setter Property="VerticalAlignment" Value="Stretch" />
-                    <Setter Property="IsReadOnly" Value="{Binding $parent[my:TagBox].(my:InputBehavior.IsTextEditable), Converter={x:Static BoolConverters.Not}}" />
-                    <Setter Property="my:VariantAssist.DefaultPrimary" Value="{Binding $parent[my:TagBox].(my:VariantAssist.DefaultPrimary)}" />
+                    <Setter Property="IsReadOnly"
+                            Value="{Binding $parent[my:TagBox].(my:InputBehavior.IsTextEditable), Converter={x:Static BoolConverters.Not}}" />
+                    <Setter Property="my:VariantAssist.DefaultPrimary"
+                            Value="{Binding $parent[my:TagBox].(my:VariantAssist.DefaultPrimary)}" />
                     <Setter Property="my:ThemeAssist.Role" Value="{Binding $parent[my:TagBox].(my:ThemeAssist.Role)}" />
                     <Setter Property="CaretBrush" Value="{my:ThemeRole Primary}" />
                     <Setter Property="SelectionBrush" Value="{my:ThemeRole Primary, Opacity=Scrim}" />
@@ -111,8 +113,10 @@
                                 Theme="{StaticResource MyNet.Theme.Border.State}" />
 
                         <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
-                                <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto,Auto">
+                            <my:Ripple Name="PART_Ripple"
+                                       RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                                <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}"
+                                      ColumnDefinitions="Auto,*,Auto,Auto">
 
                                     <!-- Icon -->
                                     <ContentControl x:Name="PART_Icon"
@@ -126,8 +130,12 @@
                                                     Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
                                         <ContentControl.IsVisible>
                                             <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                         Path="(my:IconAssist.Icon)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                         Path="(my:IconAssist.IconTemplate)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
                                             </MultiBinding>
                                         </ContentControl.IsVisible>
                                     </ContentControl>
@@ -149,17 +157,17 @@
                                                   UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
                                                   PlaceholderText="{TemplateBinding PlaceholderText}"
                                                   PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
-                                        <ItemsControl Name="PART_ItemsControl"
-                                                      HorizontalAlignment="Stretch"
-                                                      VerticalAlignment="Stretch"
-                                                      ItemTemplate="{TemplateBinding ItemTemplate}"
-                                                      ItemsSource="{TemplateBinding Items}">
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <my:TagBoxPanel VerticalAlignment="Top" />
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                        </ItemsControl>
+                                        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                                            <ItemsControl Name="PART_ItemsControl"
+                                                          ItemTemplate="{TemplateBinding ItemTemplate}"
+                                                          ItemsSource="{TemplateBinding Items}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <my:TagBoxPanel VerticalAlignment="Top" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+                                        </ScrollViewer>
                                     </my:TextField>
 
                                     <!-- Clear button -->
@@ -168,7 +176,7 @@
                                             Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Command="{Binding $parent[my:TagBox].Clear}"
-                                            Content="{my:Icon Close}"
+                                            Content="{my:MaterialIcon Close}"
                                             IsVisible="False" />
                                 </Grid>
                             </my:Ripple>
@@ -204,11 +212,13 @@
         </Style>
 
         <Style Selector="^.icon-right:not(.button-right) /template/ Grid#PART_Grid">
-            <Setter Property="Margin" Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.AddLeftToRight}}" />
+            <Setter Property="Margin"
+                    Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.AddLeftToRight}}" />
         </Style>
 
         <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
-            <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Left}}" />
+            <Setter Property="Margin"
+                    Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Left}}" />
         </Style>
 
         <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
@@ -217,7 +227,8 @@
 
         <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
             <Style Selector="^ /template/ my|TextField#PART_TextField">
-                <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
+                <Setter Property="Margin"
+                        Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
                 <Setter Property="Padding" Value="{my:Thickness Sm}" />
@@ -290,7 +301,8 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="MyNet.Theme.TagBox.Underline" TargetType="my:TagBox" BasedOn="{StaticResource {x:Type my:TagBox}}">
+    <ControlTheme x:Key="MyNet.Theme.TagBox.Underline" TargetType="my:TagBox"
+                  BasedOn="{StaticResource {x:Type my:TagBox}}">
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Underline.Md}" />
         <Setter Property="my:InputAssist.InnerPadding" Value="{StaticResource MyNet.Padding.Input.Underline.Inner.Md}" />
@@ -340,8 +352,12 @@
                                                 Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
                                     <ContentControl.IsVisible>
                                         <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                     Path="(my:IconAssist.Icon)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                     Path="(my:IconAssist.IconTemplate)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
                                         </MultiBinding>
                                     </ContentControl.IsVisible>
                                 </ContentControl>
@@ -362,17 +378,17 @@
                                               UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
                                               PlaceholderText="{TemplateBinding PlaceholderText}"
                                               PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
-                                    <ItemsControl Name="PART_ItemsControl"
-                                                  HorizontalAlignment="Stretch"
-                                                  VerticalAlignment="Stretch"
-                                                  ItemTemplate="{TemplateBinding ItemTemplate}"
-                                                  ItemsSource="{TemplateBinding Items}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <my:TagBoxPanel VerticalAlignment="Top" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                    </ItemsControl>
+                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                                        <ItemsControl Name="PART_ItemsControl"
+                                                      ItemTemplate="{TemplateBinding ItemTemplate}"
+                                                      ItemsSource="{TemplateBinding Items}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <my:TagBoxPanel VerticalAlignment="Top" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </ScrollViewer>
                                 </my:TextField>
 
                                 <!-- Clear button -->
@@ -382,7 +398,7 @@
                                         Classes="kind-tool"
                                         my:DisableAssist.IsDisablable="False"
                                         Command="{Binding $parent[my:TagBox].Clear}"
-                                        Content="{my:Icon Close}"
+                                        Content="{my:MaterialIcon Close}"
                                         IsVisible="False" />
                             </Grid>
                         </Border>

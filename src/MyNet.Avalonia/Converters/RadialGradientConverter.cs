@@ -89,7 +89,7 @@ public sealed class RadialGradientConverter : IValueConverter, IMultiValueConver
     private static RadialGradientBrush CreateRadialGradient(Color baseColor, RadialGradientParameters parameters)
     {
         var startColor = AdjustBrightness(baseColor, parameters.StartLighten ?? 0.0);
-        var endColor = AdjustBrightness(baseColor, parameters.EndDarken.HasValue ? -parameters.EndDarken.Value : 0.0);
+        var endColor = AdjustBrightness(baseColor, -parameters.EndDarken ?? 0.0);
 
         var gradient = new RadialGradientBrush
         {
@@ -99,8 +99,8 @@ public sealed class RadialGradientConverter : IValueConverter, IMultiValueConver
             RadiusY = parameters.RadiusY ?? new RelativeScalar(0.5, RelativeUnit.Relative),
             GradientStops =
             [
-                new GradientStop { Color = startColor, Offset = 0.0 },
-                new GradientStop { Color = endColor, Offset = 1.0 }
+                new() { Color = startColor, Offset = 0.0 },
+                new() { Color = endColor, Offset = 1.0 }
             ]
         };
 
@@ -108,9 +108,9 @@ public sealed class RadialGradientConverter : IValueConverter, IMultiValueConver
         {
             var middleColor = parameters.MiddleColor ?? AdjustBrightness(
                 baseColor,
-                parameters.MiddleLighten ?? (parameters.MiddleDarken.HasValue ? -parameters.MiddleDarken.Value : 0.0));
+                parameters.MiddleLighten ?? (-parameters.MiddleDarken ?? 0.0));
 
-            gradient.GradientStops.Insert(1, new GradientStop { Color = middleColor, Offset = parameters.MiddleOffset });
+            gradient.GradientStops.Insert(1, new() { Color = middleColor, Offset = parameters.MiddleOffset });
         }
 
         return gradient;

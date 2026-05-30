@@ -1,0 +1,36 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.NotificationPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"             
+            xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+            x:DataType="vm:NotificationPageViewModel"
+            x:Name="Root" 
+            Theme="{StaticResource {x:Type ContentPage}}" 
+            Header="{my:Translate Title}" 
+            my:IconAssist.Icon="{Binding Icon}"
+            ClipToBounds="False">
+    <ContentPage.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+    </ContentPage.Resources>
+
+    <v:ShowcaseView ShowIcon="False" ShowContent="False" ShowThemes="False" ShowPreviewCode="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <Button Content="{my:Loc ShowNotification}"
+                        behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                        Command="{ReflectionBinding ((vm:NotificationPageViewModel)Data).ShowNotificationCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                        CommandParameter="{Binding SelectedRole}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" />
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+    </v:ShowcaseView>
+</ContentPage>

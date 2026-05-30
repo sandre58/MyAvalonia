@@ -30,7 +30,7 @@ public class BrushConverter : ColorConverter
         };
         var opacity = Opacity ?? (value is SolidColorBrush { Opacity: < 1.0 } brush ? brush.Opacity : 1.0);
 
-        color = color.Apply(new ColorInterpolation(null, Contrast, Darken, Lighten));
+        color = color.Apply(new(null, Contrast, Darken, Lighten));
 
         return new SolidColorBrush(color) { Opacity = opacity };
     }

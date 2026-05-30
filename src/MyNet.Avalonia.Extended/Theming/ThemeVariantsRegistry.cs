@@ -36,7 +36,7 @@ public class ThemeVariantsRegistry : IThemeBaseRegistry
     /// <summary>
     /// Gets the collection of available theme bases registered in the theming system, including the default light, dark, and high contrast theme bases, as well as any additional theme bases that have been registered. This collection is used to provide access to all theme bases that can be applied to the application.
     /// </summary>
-    public IReadOnlyCollection<IThemeBase> Availables => _themeBases.Values;
+    public IReadOnlyCollection<IThemeBase> AvailableBases => _themeBases.Values;
 
     /// <summary>
     /// Gets a theme base by its name from the registry. This method allows retrieving a specific theme base based on its unique name, which is derived from the associated theme variant key. If the theme base with the specified name exists in the registry, it is returned; otherwise, null is returned. This method is used to access specific theme bases for applying them to the application or for other theming operations.

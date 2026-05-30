@@ -1,0 +1,102 @@
+<UserControl x:Class="MyNet.Avalonia.Showcase.Views.Playground.ShowcaseView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:common="clr-namespace:MyNet.Avalonia.Showcase.Views.Common"
+             x:Name="Root"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
+             x:DataType="vm:ShowcaseViewModel"
+             ClipToBounds="False"
+             mc:Ignorable="d">
+
+    <!-- Tabs -->
+    <TabbedPage PageTransition="{my:PageTransition Slide}">
+        <my:TabbedPageAssist.TabControlTheme>
+            <ControlTheme TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
+                <Setter Property="Padding" Value="{my:Thickness Md, Top=20}" />
+                <Setter Property="my:ItemsAssist.Spacing" Value="{my:Spacing Md}" />
+                <Setter Property="my:HeaderAssist.Foreground" Value="{my:Theme Primary.Foreground}" />
+                <Setter Property="my:ItemsAssist.Role" Value="Accent" />
+                <Setter Property="ItemContainerTheme">
+                    <ControlTheme TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                        <Setter Property="IsVisible" Value="{Binding $self.IsEffectivelyEnabled}" />
+                        <Setter Property="my:ItemsAssist.Foreground" Value="{my:Theme Primary.Foreground}" />
+                    </ControlTheme>
+                </Setter>
+                <Setter Property="Template">
+                    <ControlTemplate TargetType="TabControl">
+                        <DockPanel>
+                            <!-- Header -->
+                            <common:PageHeader DockPanel.Dock="{TemplateBinding TabStripPlacement}"
+                                               Header="{Binding Title}"
+                                               Icon="{Binding Icon}">
+                                <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+                            </common:PageHeader>
+
+                            <!-- Content area -->
+                            <Panel ClipToBounds="True" Margin="{TemplateBinding Padding}">
+                                <ContentPresenter Name="PART_SelectedContentHost2"
+                                                  HorizontalContentAlignment="Stretch"
+                                                  VerticalContentAlignment="Stretch"
+                                                  IsVisible="False" />
+                                <ContentPresenter Name="PART_SelectedContentHost"
+                                                  HorizontalContentAlignment="Stretch"
+                                                  VerticalContentAlignment="Stretch" />
+                            </Panel>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter>
+            </ControlTheme>
+        </my:TabbedPageAssist.TabControlTheme>
+
+        <!-- Playground Tab -->
+        <ContentPage Header="{my:Loc Playground}" TabbedPage.IsTabEnabled="{Binding #Root.ShowPlayground}">
+            <ContentPage.Icon>
+                <my:MaterialIcon Kind="Tune" Foreground="{my:Theme Primary.Foreground}" Classes="size-md" />
+            </ContentPage.Icon>
+            <Panel>
+                <v:PlaygroundView ClipToBounds="False"
+                                  ControlTemplate="{Binding #Root.PlaygroundControlTemplate}"
+                                  DataContext="{Binding Playground}"
+                                  ShowAppearance="{Binding #Root.ShowAppearance}"
+                                  ShowBackgroundsSelection="{Binding #Root.ShowBackgroundsSelection}"
+                                  ShowContent="{Binding #Root.ShowContent}"
+                                  ShowIcon="{Binding #Root.ShowIcon}"
+                                  ShowPreviewCode="{Binding #Root.ShowPreviewCode}" />
+            </Panel>
+        </ContentPage>
+
+        <!-- Themes Tab -->
+        <ContentPage Header="{my:Loc Themes}" HorizontalContentAlignment="Stretch" TabbedPage.IsTabEnabled="{Binding #Root.ShowThemes}">
+            <ContentPage.Icon>
+                <my:MaterialIcon Kind="Shape" Foreground="{my:Theme Primary.Foreground}" Classes="size-md" />
+            </ContentPage.Icon>
+            <Panel>
+                <v:ThemesCatalogView ClipToBounds="False"
+                                     ControlTemplate="{Binding #Root.ThemeControlTemplate}"
+                                     DataContext="{Binding Catalog}" />
+            </Panel>
+        </ContentPage>
+
+        <!-- Custom Tab -->
+        <ContentPage Header="{my:Loc CustomControls}" TabbedPage.IsTabEnabled="{Binding #Root.CustomContent, Converter={x:Static my:NullConverter.IsNotNull}}">
+            <ContentPage.Icon>
+                <my:MaterialIcon Kind="StarOutline" Foreground="{my:Theme Primary.Foreground}" Classes="size-md" />
+            </ContentPage.Icon>
+            <Border Classes="kind-card shadow-surface">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                    <ContentControl Margin="{my:Thickness Md}"
+                                    Classes="kind-custom-settings"
+                                    ClipToBounds="False"
+                                    Content="{Binding #Root.CustomContent}" />
+                </ScrollViewer>
+            </Border>
+        </ContentPage>
+    </TabbedPage>
+
+</UserControl>

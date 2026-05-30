@@ -53,7 +53,7 @@
     <Thickness x:Key="MyNet.Padding.Surface.Header.Lg">12,10</Thickness>
 
     <!-- MenuItem Padding -->
-    <Thickness x:Key="MyNet.Padding.MenuItem">20,8</Thickness>
+    <Thickness x:Key="MyNet.Padding.MenuItem">10,8</Thickness>
     <Thickness x:Key="MyNet.Padding.MenuItem.Horizontal">8,4,8,7</Thickness>
 
     <!-- ListBoxItem Padding -->

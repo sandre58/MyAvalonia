@@ -32,6 +32,36 @@ public class OverlayDialogOptions
     public double? VerticalOffset { get; set; }
 
     /// <summary>
+    ///     Gets or sets the desired width of the dialog.
+    /// </summary>
+    public double? Width { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the desired height of the dialog.
+    /// </summary>
+    public double? Height { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the minimum width of the dialog.
+    /// </summary>
+    public double? MinWidth { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the minimum height of the dialog.
+    /// </summary>
+    public double? MinHeight { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the maximum width of the dialog.
+    /// </summary>
+    public double? MaxWidth { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the maximum height of the dialog.
+    /// </summary>
+    public double? MaxHeight { get; set; }
+
+    /// <summary>
     ///     Gets or sets only works for DefaultDialogControl.
     /// </summary>
     public MessageSeverity Severity { get; set; } = MessageSeverity.Custom;
@@ -52,8 +82,6 @@ public class OverlayDialogOptions
     public bool? IsCloseButtonVisible { get; set; } = true;
 
     public bool CanLightDismiss { get; set; }
-
-    public bool CanDragMove { get; set; } = true;
 
     /// <summary>
     ///     Gets or sets the hash code of the top level dialog host. This is used to identify the dialog host if there are multiple dialog

@@ -98,7 +98,7 @@ public static class ClassRegistry
     /// <param name="cls">The name of the class for which to resolve the associated action. Cannot be null.</param>
     /// <returns>An <see cref="Action{Control}"/> that can be executed for the specified class name, or <see langword="null"/> if
     /// no action is associated.</returns>
-    public static Func<StyledElement, IDisposable>? Resolve(string cls) => Registry.TryGetValue(cls, out var action) ? action : null;
+    public static Func<StyledElement, IDisposable>? Resolve(string cls) => Registry.GetValueOrDefault(cls);
 }
 
 /// <summary>

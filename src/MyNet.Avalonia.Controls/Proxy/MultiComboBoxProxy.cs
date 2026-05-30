@@ -40,7 +40,7 @@ public sealed class MultiComboBoxProxy : IControlProxy
         _control.LostFocus += OnLostFocus;
     }
 
-    private void OnGotFocus(object? sender, global::Avalonia.Input.GotFocusEventArgs e) => IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
+    private void OnGotFocus(object? sender, global::Avalonia.Input.FocusChangedEventArgs e) => IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
 
     private void OnLostFocus(object? sender, global::Avalonia.Interactivity.RoutedEventArgs e) => IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
 

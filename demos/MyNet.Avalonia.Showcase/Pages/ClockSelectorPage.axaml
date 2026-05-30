@@ -1,0 +1,51 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.ClockSelectorPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+             x:DataType="vm:ClockSelectorPageViewModel"
+             x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Translate Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             ClipToBounds="False"
+             mc:Ignorable="d"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors">
+
+    <v:ShowcaseView ShowContent="False" ShowIcon="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <StackPanel Classes="gap-md"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                    <my:ClockSelector x:Name="Clock"
+                                      Width="180"
+                                      Height="180"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"
+                                      behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <ListBox HorizontalAlignment="Center"
+                             Classes="kind-toggle"
+                             SelectedValue="{Binding #Clock.IsAm, Mode=TwoWay}"
+                             SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
+                        <ListBoxItem DataContext="{x:True}" Content="{my:Loc Am, Casing=AllCaps}" />
+                        <ListBoxItem DataContext="{x:False}" Content="{my:Loc Pm, Casing=AllCaps}" />
+                    </ListBox>
+                    <TextBlock Text="{Binding #Clock.SelectedValue}" HorizontalAlignment="Center" />
+                </StackPanel>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <my:ClockSelector Width="180" Height="180" behavior:PlaygroundBehavior.AttachStyle="{Binding}" />
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+    </v:ShowcaseView>
+</ContentPage>

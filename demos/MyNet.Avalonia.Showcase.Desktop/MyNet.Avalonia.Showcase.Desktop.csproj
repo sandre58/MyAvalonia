@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Product>My .NET Avalonia</Product>
+        <OutputType>WinExe</OutputType>
+        <TargetFrameworks></TargetFrameworks>
+        <TargetFramework>net10.0-windows</TargetFramework>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Remove="config\NLog.config" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="config\NLog.config">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Condition="$(Configuration) == 'Debug'" />
+        <PackageReference Include="Avalonia.Desktop" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MyNet.Avalonia.Showcase\MyNet.Avalonia.Showcase.csproj" />
+    </ItemGroup>
+</Project>

@@ -9,8 +9,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Avalonia.Data.Converters;
-using MyNet.Humanizer;
-using MyNet.Utilities;
+using MyNet.Collections;
+using MyNet.Text.TextCasing;
 
 namespace MyNet.Avalonia.Converters;
 
@@ -88,7 +88,7 @@ public abstract class LocalizableConverter(LetterCasing casing, CultureInfo? cul
     {
         var value = values.GetByIndex(0);
         var format = values.GetByIndex(1) as string ?? parameter as string ?? Format;
-        var effectiveCulture = values.OfType<CultureInfo>().FirstOrDefault() ?? Culture ?? culture;
+        var effectiveCulture = values.OfType<CultureInfo>().LastOrDefault() ?? Culture ?? culture;
 
         try
         {

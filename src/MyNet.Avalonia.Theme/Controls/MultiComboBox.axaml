@@ -8,8 +8,10 @@
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.HorizontalAlignment)}" />
-        <Setter Property="VerticalAlignment" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.VerticalAlignment)}" />
+        <Setter Property="HorizontalAlignment"
+                Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.HorizontalAlignment)}" />
+        <Setter Property="VerticalAlignment"
+                Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.VerticalAlignment)}" />
         <Setter Property="Margin" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.Margin)}" />
         <Setter Property="Padding" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.Padding)}" />
         <Setter Property="CornerRadius" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.CornerRadius)}" />
@@ -17,15 +19,24 @@
         <Setter Property="Foreground" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.Foreground)}" />
         <Setter Property="BorderBrush" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.BorderBrush)}" />
         <Setter Property="BorderThickness" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.BorderThickness)}" />
-        <Setter Property="my:InteractionAssist.HoverBackground" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.HoverBackground)}" />
-        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.HoverBorderBrush)}" />
-        <Setter Property="my:InteractionAssist.HoverForeground" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.HoverForeground)}" />
-        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.ActiveBackground)}" />
-        <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.ActiveBorderBrush)}" />
-        <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.ActiveForeground)}" />
-        <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.RippleColor)}" />
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.ShadowDepth)}" />
-        <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[my:MultiComboBox].(my:IconAssist.Alignment)}" />
+        <Setter Property="my:InteractionAssist.HoverBackground"
+                Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.HoverBackground)}" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush"
+                Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.HoverBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.HoverForeground"
+                Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.HoverForeground)}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground"
+                Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.ActiveBackground)}" />
+        <Setter Property="my:InteractionAssist.ActiveBorderBrush"
+                Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.ActiveBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.ActiveForeground"
+                Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.ActiveForeground)}" />
+        <Setter Property="my:InteractionAssist.RippleColor"
+                Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.RippleColor)}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth"
+                Value="{Binding $parent[my:MultiComboBox].(my:ItemsAssist.ShadowDepth)}" />
+        <Setter Property="my:IconAssist.Alignment"
+                Value="{Binding $parent[my:MultiComboBox].(my:IconAssist.Alignment)}" />
         <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[my:MultiComboBox].(my:IconAssist.Spacing)}" />
         <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[my:MultiComboBox].(my:IconAssist.Opacity)}" />
         <Setter Property="UseLayoutRounding" Value="False" />
@@ -84,7 +95,8 @@
         <Style Selector="^.use-transitions">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                    <DoubleTransition Easing="LinearEasing" Property="Opacity"
+                                      Duration="{StaticResource MyNet.Animation.Opacity}" />
                 </Transitions>
             </Setter>
         </Style>
@@ -126,7 +138,8 @@
         </Setter>
     </ControlTheme>
 
-    <ControlTheme x:Key="MyNet.Theme.Tag.Embedded.MultiComboBox" TargetType="my:Tag" BasedOn="{StaticResource {x:Type my:Tag}}">
+    <ControlTheme x:Key="MyNet.Theme.Tag.Embedded.MultiComboBox" TargetType="my:Tag"
+                  BasedOn="{StaticResource {x:Type my:Tag}}">
         <Setter Property="Margin" Value="1" />
     </ControlTheme>
 
@@ -202,12 +215,16 @@
         <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
         <Setter Property="my:ItemsAssist.BorderThickness" Value="0" />
         <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
-        <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:PopupAssist.Background), Opacity=Hover, Contrast=True}" />
+        <Setter Property="my:ItemsAssist.HoverBackground"
+                Value="{my:ThemeBrush (my:PopupAssist.Background), Opacity=Hover, Contrast=True}" />
         <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.HoverForeground"
+                Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:ThemeRole Primary, Role='(my:PopupAssist.Role)'}" />
-        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
-        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground"
+                Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.RippleColor"
+                Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="my:MultiComboBox">
@@ -236,8 +253,10 @@
                                 Theme="{StaticResource MyNet.Theme.Border.State}" />
 
                         <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
-                                <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto,Auto,Auto">
+                            <my:Ripple Name="PART_Ripple"
+                                       RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                                <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}"
+                                      ColumnDefinitions="Auto,*,Auto,Auto,Auto">
 
                                     <!-- Icon -->
                                     <ContentControl x:Name="PART_Icon"
@@ -251,8 +270,12 @@
                                                     Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
                                         <ContentControl.IsVisible>
                                             <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                         Path="(my:IconAssist.Icon)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                         Path="(my:IconAssist.IconTemplate)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
                                             </MultiBinding>
                                         </ContentControl.IsVisible>
                                     </ContentControl>
@@ -275,7 +298,8 @@
                                                   PlaceholderText="{TemplateBinding PlaceholderText}"
                                                   PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
 
-                                        <ScrollViewer MaxHeight="{TemplateBinding MaxSelectionBoxHeight}" HorizontalScrollBarVisibility="Disabled">
+                                        <ScrollViewer MaxHeight="{TemplateBinding MaxSelectionBoxHeight}"
+                                                      HorizontalScrollBarVisibility="Disabled">
                                             <my:MultiComboBoxSelectedItemList VerticalAlignment="Center"
                                                                               ItemContainerTheme="{TemplateBinding SelectedItemContainerTheme}"
                                                                               ItemTemplate="{TemplateBinding SelectedItemTemplate}"
@@ -297,7 +321,7 @@
                                             Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Command="{Binding $parent[my:MultiComboBox].UnselectAll}"
-                                            Content="{my:Icon Close}"
+                                            Content="{my:MaterialIcon Close}"
                                             IsVisible="False" />
 
                                     <!-- DropDown Glyph -->
@@ -340,14 +364,17 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                                        Theme="{StaticResource MyNet.Theme.Border.Popup}"
-                                        Background="{TemplateBinding (my:PopupAssist.Background)}">
-                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                        <DockPanel TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
+                                <Border
+                                    MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Theme="{StaticResource MyNet.Theme.Border.Popup}"
+                                    Background="{TemplateBinding (my:PopupAssist.Background)}">
+                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True"
+                                            CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                        <DockPanel
+                                            TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
                                             <Button HorizontalAlignment="Stretch"
                                                     HorizontalContentAlignment="Left"
-                                                    my:IconAssist.Icon="{my:Icon CheckAll}"
+                                                    my:IconAssist.Icon="{my:MaterialIcon CheckAll}"
                                                     Command="{Binding $parent[my:MultiComboBox].SelectAll}"
                                                     Content="{my:Loc SelectAll}"
                                                     Margin="{StaticResource MyNet.Padding.ScrollViewer.Popup}"
@@ -356,7 +383,8 @@
                                                     IsVisible="{TemplateBinding ShowSelectAll}"
                                                     Classes="variant-text"
                                                     my:ThemeAssist.Role="Contrast" />
-                                            <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
+                                            <ScrollViewer
+                                                Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
                                                 <ItemsPresenter Name="PART_ItemsPresenter"
                                                                 Grid.IsSharedSizeScope="True"
                                                                 ItemsPanel="{TemplateBinding ItemsPanel}"
@@ -373,9 +401,14 @@
         </Setter>
 
         <Style Selector="^.use-transitions /template/ PathIcon#PART_ExpanderIcon">
-            <Setter Property="Transitions">
+            <Setter Property="my:TransitionsAssist.Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                    <DoubleTransition Easing="LinearEasing" Property="Opacity"
+                                      Duration="{StaticResource MyNet.Animation.Opacity}" />
+                    <BrushTransition Easing="LinearEasing" Property="Foreground"
+                                     Duration="{StaticResource MyNet.Animation.Opacity}" />
+                    <TransformOperationsTransition Property="RenderTransform"
+                                                   Duration="{StaticResource MyNet.Animation.Glyph}" />
                 </Transitions>
             </Setter>
         </Style>
@@ -392,7 +425,8 @@
         </Style>
 
         <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
-            <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Left}}" />
+            <Setter Property="Margin"
+                    Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Left}}" />
         </Style>
 
         <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
@@ -401,7 +435,8 @@
 
         <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
             <Style Selector="^ /template/ my|TextField#PART_TextField">
-                <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
+                <Setter Property="Margin"
+                        Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
                 <Setter Property="Padding" Value="{my:Thickness Sm}" />
@@ -426,7 +461,7 @@
         </Style>
 
         <!-- Focused -->
-        <Style Selector="^:focus-within, ^:dropdownopen">
+        <Style Selector="^:focus-within, ^:flyout-open">
             <Setter Property="BorderThickness" Value="1" />
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
@@ -434,13 +469,14 @@
             </Style>
 
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
-                <Setter Property="Foreground" Value="{Binding $parent[my:MultiComboBox].(my:InteractionAssist.ActiveBorderBrush)}" />
+                <Setter Property="Foreground"
+                        Value="{Binding $parent[my:MultiComboBox].(my:InteractionAssist.ActiveBorderBrush)}" />
                 <Setter Property="Opacity" Value="1" />
             </Style>
         </Style>
 
         <!-- DropDownOpen -->
-        <Style Selector="^:dropdownopen">
+        <Style Selector="^:flyout-open">
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
                 <Setter Property="RenderTransform" Value="rotate(180deg)" />
             </Style>
@@ -489,7 +525,8 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="MyNet.Theme.MultiComboBox.Underline" TargetType="my:MultiComboBox" BasedOn="{StaticResource {x:Type my:MultiComboBox}}">
+    <ControlTheme x:Key="MyNet.Theme.MultiComboBox.Underline" TargetType="my:MultiComboBox"
+                  BasedOn="{StaticResource {x:Type my:MultiComboBox}}">
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Underline.Md}" />
         <Setter Property="my:InputAssist.InnerPadding" Value="{StaticResource MyNet.Padding.Input.Underline.Inner.Md}" />
@@ -539,8 +576,12 @@
                                                 Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
                                     <ContentControl.IsVisible>
                                         <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                     Path="(my:IconAssist.Icon)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                     Path="(my:IconAssist.IconTemplate)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
                                         </MultiBinding>
                                     </ContentControl.IsVisible>
                                 </ContentControl>
@@ -562,7 +603,8 @@
                                               PlaceholderText="{TemplateBinding PlaceholderText}"
                                               PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
 
-                                    <ScrollViewer MaxHeight="{TemplateBinding MaxSelectionBoxHeight}" HorizontalScrollBarVisibility="Disabled">
+                                    <ScrollViewer MaxHeight="{TemplateBinding MaxSelectionBoxHeight}"
+                                                  HorizontalScrollBarVisibility="Disabled">
                                         <my:MultiComboBoxSelectedItemList VerticalAlignment="Center"
                                                                           ItemContainerTheme="{TemplateBinding SelectedItemContainerTheme}"
                                                                           ItemTemplate="{TemplateBinding SelectedItemTemplate}"
@@ -585,7 +627,7 @@
                                         Classes="kind-tool"
                                         my:DisableAssist.IsDisablable="False"
                                         Command="{Binding $parent[my:MultiComboBox].UnselectAll}"
-                                        Content="{my:Icon Close}"
+                                        Content="{my:MaterialIcon Close}"
                                         IsVisible="False" />
 
                                 <!-- Glyph -->
@@ -640,14 +682,17 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                                        Theme="{StaticResource MyNet.Theme.Border.Popup}"
-                                        Background="{TemplateBinding (my:PopupAssist.Background)}">
-                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                        <DockPanel TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
+                                <Border
+                                    MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Theme="{StaticResource MyNet.Theme.Border.Popup}"
+                                    Background="{TemplateBinding (my:PopupAssist.Background)}">
+                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True"
+                                            CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                        <DockPanel
+                                            TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
                                             <Button HorizontalAlignment="Stretch"
                                                     HorizontalContentAlignment="Left"
-                                                    my:IconAssist.Icon="{my:Icon CheckAll}"
+                                                    my:IconAssist.Icon="{my:MaterialIcon CheckAll}"
                                                     Classes="variant-text"
                                                     my:ThemeAssist.Role="Contrast"
                                                     Command="{Binding $parent[my:MultiComboBox].SelectAll}"
@@ -656,7 +701,8 @@
                                                     DockPanel.Dock="Top"
                                                     FontSize="{Binding $parent[TemplatedControl].FontSize}"
                                                     IsVisible="{TemplateBinding ShowSelectAll}" />
-                                            <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
+                                            <ScrollViewer
+                                                Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
                                                 <ItemsPresenter Name="PART_ItemsPresenter"
                                                                 Grid.IsSharedSizeScope="True"
                                                                 ItemsPanel="{TemplateBinding ItemsPanel}"
@@ -673,7 +719,7 @@
         </Setter>
 
         <!-- Focused -->
-        <Style Selector="^:focus-within, ^:dropdownopen">
+        <Style Selector="^:focus-within, ^:flyout-open">
             <Setter Property="BorderThickness" Value="0 0 0 1" />
 
             <Style Selector="^ /template/ my|Underline#PART_Underline">

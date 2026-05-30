@@ -13,6 +13,7 @@ using Avalonia;
 using Avalonia.Automation;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
+using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Layout;
@@ -26,22 +27,35 @@ namespace MyNet.Avalonia.Controls;
 /// A container for form item content with label support.
 /// </summary>
 [PseudoClasses(PseudoClassName.Left, PseudoClassName.Right, PseudoClassName.Top, PseudoClassName.Bottom, PseudoClassName.Invalid)]
-[TemplatePart(PartLabel, typeof(Label), IsRequired = true)]
+[TemplatePart(PartLabelContainer, typeof(Panel), IsRequired = true)]
 [TemplatePart(PartGrid, typeof(Grid), IsRequired = true)]
+[TemplatePart(PartContentPresenter, typeof(ContentPresenter))]
 public class FormItemContainer : ContentControl
 {
-    public const string PartLabel = "PART_Label";
+    public const string PartLabelContainer = "PART_LabelContainer";
     public const string PartGrid = "PART_Grid";
+    public const string PartContentPresenter = "PART_ContentPresenter";
 
     private static readonly Dictionary<(Type, string), PropertyInfo?> PropertyCache = [];
 
-    private Label? _label;
     private Grid? _grid;
+    private Panel? _labelContainer;
+    private ContentPresenter? _contentPresenter;
+    private IDisposable? _childSubscription;
+    private List<IDisposable>? _propertySubscriptions;
 
     static FormItemContainer()
     {
         LabelPositionProperty.Changed.AddClassHandler<FormItemContainer>((x, _) => x.UpdatePseudoClasses());
         EffectiveLabelWidthProperty.Changed.AddClassHandler<FormItemContainer>((x, _) => x.UpdateGridColumnDefinitions());
+        LabelProperty.Changed.AddClassHandler<FormItemContainer>((x, _) => x.InvalidateLabelWidthMeasure());
+        LabelTemplateProperty.Changed.AddClassHandler<FormItemContainer>((x, _) => x.InvalidateLabelWidthMeasure());
+        ShowLabelProperty.Changed.AddClassHandler<FormItemContainer>((x, _) => x.InvalidateLabelWidthMeasure());
+        LabelWidthProperty.Changed.AddClassHandler<FormItemContainer>((x, _) => x.InvalidateLabelWidthMeasure());
+        LabelMarginProperty.Changed.AddClassHandler<FormItemContainer>((x, _) => x.InvalidateLabelWidthMeasure());
+        IsRequiredProperty.Changed.AddClassHandler<FormItemContainer>((x, _) => x.InvalidateLabelWidthMeasure());
+        RequiredIndicatorTemplateProperty.Changed.AddClassHandler<FormItemContainer>((x, _) => x.InvalidateLabelWidthMeasure());
+        TextWrappingProperty.Changed.AddClassHandler<FormItemContainer>((x, _) => x.InvalidateLabelWidthMeasure());
         AffectsMeasure<FormItemContainer>(PanelComputedWidthProperty);
     }
 
@@ -116,7 +130,7 @@ public class FormItemContainer : ContentControl
     /// <summary>
     /// Defines the <see cref="LabelMargin"/> property.
     /// </summary>
-    public static readonly StyledProperty<Thickness> LabelMarginProperty = AvaloniaProperty.Register<FormItemContainer, Thickness>(nameof(LabelMargin), defaultValue: new Thickness(0, 0, 8, 0));
+    public static readonly StyledProperty<Thickness> LabelMarginProperty = AvaloniaProperty.Register<FormItemContainer, Thickness>(nameof(LabelMargin), defaultValue: new(0, 0, 8, 0));
 
     /// <summary>
     /// Defines the <see cref="IsRequired"/> property.
@@ -124,9 +138,9 @@ public class FormItemContainer : ContentControl
     public static readonly StyledProperty<bool> IsRequiredProperty = AvaloniaProperty.Register<FormItemContainer, bool>(nameof(IsRequired), defaultValue: false);
 
     /// <summary>
-    /// Defines the <see cref="RequiredIndicator"/> property.
+    /// Defines the <see cref="RequiredIndicatorTemplate"/> property.
     /// </summary>
-    public static readonly StyledProperty<string?> RequiredIndicatorProperty = AvaloniaProperty.Register<FormItemContainer, string?>(nameof(RequiredIndicator), defaultValue: "*");
+    public static readonly StyledProperty<IDataTemplate?> RequiredIndicatorTemplateProperty = AvaloniaProperty.Register<FormItemContainer, IDataTemplate?>(nameof(RequiredIndicatorTemplate));
 
     /// <summary>
     /// Defines the <see cref="HelpText"/> property.
@@ -211,12 +225,12 @@ public class FormItemContainer : ContentControl
     }
 
     /// <summary>
-    /// Gets or sets the required indicator text.
+    /// Gets or sets the required indicator template.
     /// </summary>
-    public string? RequiredIndicator
+    public IDataTemplate? RequiredIndicatorTemplate
     {
-        get => GetValue(RequiredIndicatorProperty);
-        set => SetValue(RequiredIndicatorProperty, value);
+        get => GetValue(RequiredIndicatorTemplateProperty);
+        set => SetValue(RequiredIndicatorTemplateProperty, value);
     }
 
     /// <summary>
@@ -242,10 +256,20 @@ public class FormItemContainer : ContentControl
     {
         base.OnApplyTemplate(e);
 
-        _label = e.NameScope.Get<Label>(PartLabel);
+        _labelContainer = e.NameScope.Get<Panel>(PartLabelContainer);
         _grid = e.NameScope.Find<Grid>(PartGrid);
+        _contentPresenter = e.NameScope.Find<ContentPresenter>(PartContentPresenter);
 
         UpdateGridColumnDefinitions();
+
+        _childSubscription?.Dispose();
+        _propertySubscriptions?.ForEach(s => s.Dispose());
+        _propertySubscriptions = null;
+        if (_contentPresenter != null)
+        {
+            _childSubscription = _contentPresenter.GetObservable(ContentPresenter.ChildProperty)
+                .Subscribe(OnContentPresenterChildChanged);
+        }
     }
 
     protected override void OnDataContextChanged(EventArgs e)
@@ -264,12 +288,12 @@ public class FormItemContainer : ContentControl
         HookValidation();
     }
 
-    public Size MeasureLabel()
+    public Size MeasureLabelContainer()
     {
-        if (_label != null && ShowLabel)
+        if (_labelContainer != null && ShowLabel)
         {
-            _label.Measure(Size.Infinity);
-            return _label.DesiredSize;
+            _labelContainer.Measure(Size.Infinity);
+            return _labelContainer.DesiredSize;
         }
 
         return new(0, 0);
@@ -277,7 +301,7 @@ public class FormItemContainer : ContentControl
 
     protected override Size MeasureOverride(Size availableSize)
     {
-        var labelSize = MeasureLabel();
+        var labelSize = MeasureLabelContainer();
 
         EffectiveLabelWidth = !ShowLabel
             ? 0
@@ -307,30 +331,51 @@ public class FormItemContainer : ContentControl
     {
         if (_grid == null) return;
 
-        _grid.ColumnDefinitions.Clear();
-        _grid.RowDefinitions.Clear();
-
-        switch (LabelPosition)
+        global::Avalonia.Threading.Dispatcher.UIThread.Post(() =>
         {
-            case Position.Left:
-                _grid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(EffectiveLabelWidth, GridUnitType.Pixel)));
-                _grid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(1, GridUnitType.Star)));
-                _grid.RowDefinitions.Add(new RowDefinition(new GridLength(1, GridUnitType.Star)));
-                break;
+            if (_grid == null)
+                return;
 
-            case Position.Right:
-                _grid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(1, GridUnitType.Star)));
-                _grid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(EffectiveLabelWidth, GridUnitType.Pixel)));
-                _grid.RowDefinitions.Add(new RowDefinition(new GridLength(1, GridUnitType.Star)));
-                break;
+            // Apply exactly the same structure as before but deferred to avoid
+            // mutating Grid definitions during its MeasureOverride.
+            _grid.ColumnDefinitions.Clear();
+            _grid.RowDefinitions.Clear();
 
-            case Position.Top:
-            case Position.Bottom:
-                _grid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(1, GridUnitType.Star)));
-                _grid.RowDefinitions.Add(new RowDefinition(new GridLength(1, GridUnitType.Auto)));
-                _grid.RowDefinitions.Add(new RowDefinition(new GridLength(1, GridUnitType.Auto)));
-                break;
-        }
+            switch (LabelPosition)
+            {
+                case Position.Left:
+                    _grid.ColumnDefinitions.Add(new(new(EffectiveLabelWidth, GridUnitType.Pixel)));
+                    _grid.ColumnDefinitions.Add(new(new(1, GridUnitType.Star)));
+                    _grid.RowDefinitions.Add(new(new(1, GridUnitType.Star)));
+                    break;
+
+                case Position.Right:
+                    _grid.ColumnDefinitions.Add(new(new(1, GridUnitType.Star)));
+                    _grid.ColumnDefinitions.Add(new(new(EffectiveLabelWidth, GridUnitType.Pixel)));
+                    _grid.RowDefinitions.Add(new(new(1, GridUnitType.Star)));
+                    break;
+
+                case Position.Top:
+                case Position.Bottom:
+                    _grid.ColumnDefinitions.Add(new(new(1, GridUnitType.Star)));
+                    _grid.RowDefinitions.Add(new(new(1, GridUnitType.Auto)));
+                    _grid.RowDefinitions.Add(new(new(1, GridUnitType.Auto)));
+                    break;
+            }
+
+            // Trigger a new layout pass with the updated definitions.
+            _grid.InvalidateMeasure();
+        },
+        global::Avalonia.Threading.DispatcherPriority.Background);
+    }
+
+    private void InvalidateLabelWidthMeasure()
+    {
+        InvalidateMeasure();
+
+        // The shared label width is computed by FormItemsPanel, so bubble a measure invalidation.
+        if (Parent is Layoutable parentLayoutable)
+            parentLayoutable.InvalidateMeasure();
     }
 
     private void HookValidation()
@@ -370,5 +415,49 @@ public class FormItemContainer : ContentControl
         var required = prop.GetCustomAttribute<RequiredAttribute>();
         if (required != null)
             IsRequired = true;
+    }
+
+    private void OnContentPresenterChildChanged(Control? child)
+    {
+        // Only apply when child comes from a DataTemplate (not when Content is already a Control)
+        if (child == null || ReferenceEquals(child, Content)) return;
+
+        _propertySubscriptions?.ForEach(s => s.Dispose());
+        _propertySubscriptions = [];
+
+        ApplyFormItemProperties(child);
+    }
+
+    private void ApplyFormItemProperties(Control c)
+    {
+        Label = FormItem.GetLabel(c);
+        LabelTemplate = FormItem.GetLabelTemplate(c);
+        ShowLabel = !FormItem.GetNoLabel(c) && Label != null;
+
+        _propertySubscriptions!.Add(c.GetObservable(FormItem.LabelPositionProperty)
+            .Subscribe(pos => { if (pos.HasValue) LabelPosition = pos.Value; }));
+
+        _propertySubscriptions!.Add(c.GetObservable(FormItem.LabelWidthProperty)
+            .Subscribe(w => { if (w.HasValue) LabelWidth = w.Value; }));
+
+        _propertySubscriptions!.Add(c.GetObservable(FormItem.LabelAlignmentProperty)
+            .Subscribe(a => { if (a.HasValue) LabelAlignment = a.Value; }));
+
+        _propertySubscriptions!.Add(c.GetObservable(FormItem.LabelMarginProperty)
+            .Subscribe(m => { if (m.HasValue) LabelMargin = m.Value; }));
+
+        IsRequired = FormItem.GetIsRequired(c);
+
+        var requiredIndicatorTemplate = FormItem.GetRequiredIndicatorTemplate(c);
+        if (requiredIndicatorTemplate != null)
+            RequiredIndicatorTemplate = requiredIndicatorTemplate;
+        else
+            ClearValue(RequiredIndicatorTemplateProperty);
+
+        HelpText = FormItem.GetHelpText(c);
+        TextWrapping = FormItem.GetTextWrapping(c);
+
+        // Bind container visibility to content visibility
+        Bind(IsVisibleProperty, c.GetObservable(IsVisibleProperty));
     }
 }

@@ -65,5 +65,5 @@ public enum FontSize
     /// <summary>
     /// Represents the H1 heading level, typically used for the main title or primary heading in a document or user interface.
     /// </summary>
-    H1,
+    H1
 }

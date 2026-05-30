@@ -20,14 +20,14 @@ public class DateTimeScrollPanel : DateTimePickerPanel
         var size = base.MeasureOverride(availableSize);
         var width = Children.Max(a => a.DesiredSize.Width);
         width = Math.Max(width, MinWidth);
-        return new Size(width, size.Height);
+        return new(width, size.Height);
     }
 
     protected override Size ArrangeOverride(Size finalSize)
     {
         var width = Children.Max(a => a.DesiredSize.Width);
         width = Math.Max(width, MinWidth);
-        finalSize = new Size(width, finalSize.Height);
+        finalSize = new(width, finalSize.Height);
         return base.ArrangeOverride(finalSize);
     }
 }

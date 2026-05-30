@@ -7,8 +7,10 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using MyNet.Humanizer;
-using MyNet.Utilities;
+using MyNet.Globalization.Facade;
+using MyNet.Globalization.Localization.Translation;
+using MyNet.Text;
+using MyNet.Text.TextCasing;
 
 namespace MyNet.Avalonia.Localization;
 
@@ -58,7 +60,7 @@ public class LocalizableString : INotifyPropertyChanged
     {
         var value = !string.IsNullOrEmpty(_filename)
             ? _key.Translate(_filename, UIContext.Globalization.Culture)
-            : _key.Translate(UIContext.Globalization.Culture);
+            : _key.Translate(DisplayStyle.Default, UIContext.Globalization.Culture);
 
         if (!string.IsNullOrEmpty(_format))
         {
@@ -82,7 +84,7 @@ public class LocalizableString : INotifyPropertyChanged
     /// <summary>
     /// Raises the PropertyChanged event.
     /// </summary>
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new(propertyName));
 
     /// <summary>
     /// Returns the translated string value.

@@ -137,11 +137,11 @@ For detailed usage examples and API references, explore the documentation in eac
   - **`MyNet.Avalonia.Extended/`** — High-level UI components and composite controls
 
 - **`demos/`** — Example Avalonia applications showcasing library features
-  - **`MyNet.Avalonia.Demo/`** — Comprehensive cross-platform demo application
-  - **`MyNet.Avalonia.Demo.Desktop/`** — Desktop-specific demo implementation
-  - **`MyNet.Avalonia.Demo.Browser/`** — WebAssembly browser demo
-  - **`MyNet.Avalonia.Demo.Android/`** — Android mobile demo
-  - **`MyNet.Avalonia.Demo.iOS/`** — iOS mobile demo
+  - **`MyNet.Avalonia.Showcase/`** — Comprehensive cross-platform demo application
+  - **`MyNet.Avalonia.Showcase.Desktop/`** — Desktop-specific demo implementation
+  - **`MyNet.Avalonia.Showcase.Browser/`** — WebAssembly browser demo
+  - **`MyNet.Avalonia.Showcase.Android/`** — Android mobile demo
+  - **`MyNet.Avalonia.Showcase.iOS/`** — iOS mobile demo
   
 - **`assets/`** — Project logos, icons, and visual assets
 - **`build/`** — MSBuild configuration and shared properties
@@ -172,14 +172,14 @@ Explore the comprehensive demo application to see all Avalonia libraries in acti
 
 ```bash
 # Run the desktop demo
-dotnet run --project demos/MyNet.Avalonia.Demo.Desktop
+dotnet run --project demos/MyNet.Avalonia.Showcase.Desktop
 
 # Run the browser demo (WebAssembly)
-dotnet run --project demos/MyNet.Avalonia.Demo.Browser
+dotnet run --project demos/MyNet.Avalonia.Showcase.Browser
 
 # Build and run mobile demos (requires platform-specific setup)
-dotnet build demos/MyNet.Avalonia.Demo.Android
-dotnet build demos/MyNet.Avalonia.Demo.iOS
+dotnet build demos/MyNet.Avalonia.Showcase.Android
+dotnet build demos/MyNet.Avalonia.Showcase.iOS
 ```
 
 ### Contributing

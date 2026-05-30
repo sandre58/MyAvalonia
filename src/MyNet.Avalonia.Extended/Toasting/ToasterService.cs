@@ -8,7 +8,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using MyNet.Avalonia.Extended.Controls;
@@ -41,11 +40,11 @@ public class ToasterService : IToasterService, IDisposable
     {
         _defaultDuration = settings.Duration;
 
-        Dispatcher.UIThread.Post(() => _windowNotificationManager = new WindowNotificationManager(topLevel())
+        Dispatcher.UIThread.Post(() => _windowNotificationManager = new(topLevel())
         {
             Position = ConvertPosition(settings.Position),
             MaxItems = settings.MaxItems,
-            Margin = new Thickness(settings.OffsetX, settings.OffsetY)
+            Margin = new(settings.OffsetX, settings.OffsetY)
         });
 
         RegisteredDataTemplate.Register<MessageNotification>(x => new MessageNotificationControl
@@ -125,13 +124,13 @@ public class ToasterService : IToasterService, IDisposable
         var onClick = new Action(() =>
         {
             toast.OnClick?.Invoke(toast.Notification);
-            ToastClicked?.Invoke(this, new ToastEventArgs(toast.Notification));
+            ToastClicked?.Invoke(this, new(toast.Notification));
         });
 
         var onClose = new Action(() =>
         {
             if (_activeToasts.TryRemove(toast.GetHashCode(), out _))
-                ToastClosed?.Invoke(this, new ToastEventArgs(toast.Notification));
+                ToastClosed?.Invoke(this, new(toast.Notification));
             toast.OnClose?.Invoke();
         });
 
@@ -140,7 +139,7 @@ public class ToasterService : IToasterService, IDisposable
         Dispatcher.UIThread.Post(() =>
         {
             _windowNotificationManager?.Show(toast.Notification, type, expiration, onClick, onClose, [.. classes]);
-            ToastShown?.Invoke(this, new ToastEventArgs(toast.Notification));
+            ToastShown?.Invoke(this, new(toast.Notification));
         },
         DispatcherPriority.Background);
     }
@@ -150,7 +149,7 @@ public class ToasterService : IToasterService, IDisposable
         if (_activeToasts.TryRemove(toast.GetHashCode(), out _))
         {
             Dispatcher.UIThread.Post(() => _windowNotificationManager?.Close(toast.Notification));
-            ToastClosed?.Invoke(this, new ToastEventArgs(toast.Notification));
+            ToastClosed?.Invoke(this, new(toast.Notification));
         }
     }
 

@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
+using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Enums;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Extended.Controls;
-using MyNet.Avalonia.Extended.Controls.Primitives;
 using MyNet.UI.Dialogs.ContentDialogs;
 
 namespace MyNet.Avalonia.Extended.Dialogs;
@@ -26,7 +27,7 @@ public class OverlayDialogService : ContentDialogServiceBase
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return;
 
-        var dialog = GetOverlayDialog(view, viewModel);
+        var dialog = GetOverlayDialog(view, viewModel, options);
         host.AddDialog(dialog);
     }
 
@@ -37,12 +38,12 @@ public class OverlayDialogService : ContentDialogServiceBase
         return Task.CompletedTask;
     }
 
-    public virtual Task<bool?> ShowDialogCoreAsync(object view, IDialogViewModel viewModel, string? hostId, OverlayDialogOptions? options = null, CancellationToken? token = default)
+    public virtual Task<bool?> ShowDialogCoreAsync(object view, IDialogViewModel viewModel, string? hostId, OverlayDialogOptions? options = null, CancellationToken? token = null)
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return Task.FromResult(default(bool?));
 
-        var dialog = GetOverlayDialog(view, viewModel);
+        var dialog = GetOverlayDialog(view, viewModel, options);
         host.AddModalDialog(dialog);
         return dialog.ShowAsync<bool?>(token);
     }
@@ -50,11 +51,11 @@ public class OverlayDialogService : ContentDialogServiceBase
     /// <inheritdoc />
     protected override Task<bool?> ShowDialogCoreAsync(object view, IDialogViewModel viewModel) => ShowDialogCoreAsync(view, viewModel, null);
 
-    private OverlayDialog GetOverlayDialog(object view, IDialogViewModel viewModel)
+    private OverlayDialog GetOverlayDialog(object view, IDialogViewModel viewModel, OverlayDialogOptions? options)
     {
         var dialog = CreateOverlayDialog();
-        var options = GetOptions(view);
-        PrepareOverlayDialog(dialog, options);
+        var resolvedOptions = MergeOptions(GetOptions(view), options);
+        PrepareOverlayDialog(dialog, resolvedOptions);
 
         dialog.Content = view;
         dialog.DataContext = viewModel;
@@ -91,9 +92,37 @@ public class OverlayDialogService : ContentDialogServiceBase
         [KeyboardNavigation.TabNavigationProperty] = KeyboardNavigationMode.Cycle
     };
 
+    private static OverlayDialogOptions MergeOptions(OverlayDialogOptions baseOptions, OverlayDialogOptions? overrideOptions)
+    {
+        if (overrideOptions is null) return baseOptions;
+
+        return new()
+        {
+            FullScreen = overrideOptions.FullScreen,
+            HorizontalAnchor = overrideOptions.HorizontalAnchor,
+            VerticalAnchor = overrideOptions.VerticalAnchor,
+            HorizontalOffset = overrideOptions.HorizontalOffset ?? baseOptions.HorizontalOffset,
+            VerticalOffset = overrideOptions.VerticalOffset ?? baseOptions.VerticalOffset,
+            Width = overrideOptions.Width ?? baseOptions.Width,
+            Height = overrideOptions.Height ?? baseOptions.Height,
+            MinWidth = overrideOptions.MinWidth ?? baseOptions.MinWidth,
+            MinHeight = overrideOptions.MinHeight ?? baseOptions.MinHeight,
+            MaxWidth = overrideOptions.MaxWidth ?? baseOptions.MaxWidth,
+            MaxHeight = overrideOptions.MaxHeight ?? baseOptions.MaxHeight,
+            Severity = overrideOptions.Severity,
+            Buttons = overrideOptions.Buttons,
+            Title = overrideOptions.Title ?? baseOptions.Title,
+            IsCloseButtonVisible = overrideOptions.IsCloseButtonVisible ?? baseOptions.IsCloseButtonVisible,
+            CanLightDismiss = overrideOptions.CanLightDismiss,
+            TopLevelHashCode = overrideOptions.TopLevelHashCode ?? baseOptions.TopLevelHashCode,
+            CanResize = overrideOptions.CanResize || baseOptions.CanResize,
+            StyleClass = overrideOptions.StyleClass ?? baseOptions.StyleClass
+        };
+    }
+
     private static OverlayDialogOptions GetOptions(object view) => view is not ContentDialog contentDialog
             ? DefaultOptions
-            : new OverlayDialogOptions
+            : new()
             {
                 Title = contentDialog.Header switch
                 {
@@ -102,7 +131,6 @@ public class OverlayDialogService : ContentDialogServiceBase
                     var header => header.ToString()
                 },
                 IsCloseButtonVisible = contentDialog.ShowCloseButton,
-                CanDragMove = contentDialog.CanDragMove,
                 CanResize = contentDialog.CanResize
             };
 
@@ -125,12 +153,18 @@ public class OverlayDialogService : ContentDialogServiceBase
         control.CanLightDismiss = options.CanLightDismiss;
         control.CanResize = options.CanResize;
 
+        // Apply sizing options
+        if (options.Width.HasValue) control.Width = options.Width.Value;
+        if (options.Height.HasValue) control.Height = options.Height.Value;
+        if (options.MinWidth.HasValue) control.MinWidth = options.MinWidth.Value;
+        if (options.MinHeight.HasValue) control.MinHeight = options.MinHeight.Value;
+        if (options.MaxWidth.HasValue) control.MaxWidth = options.MaxWidth.Value;
+        if (options.MaxHeight.HasValue) control.MaxHeight = options.MaxHeight.Value;
+
         if (!string.IsNullOrWhiteSpace(options.StyleClass))
         {
             var styles = options.StyleClass!.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             control.Classes.AddRange(styles);
         }
-
-        OverlayDialogBase.SetCanDragMove(control, options.CanDragMove);
     }
 }

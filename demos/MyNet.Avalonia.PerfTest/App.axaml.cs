@@ -38,7 +38,7 @@ public partial class App : Application
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = new MainWindowViewModel()
                 };
                 desktop.MainWindow.Show();
             });

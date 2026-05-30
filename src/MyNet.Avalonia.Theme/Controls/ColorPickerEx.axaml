@@ -185,7 +185,7 @@
                                             Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Command="{Binding Clear, ElementName=PART_TextBox}"
-                                            Content="{my:Icon Close}"
+                                            Content="{my:MaterialIcon Close}"
                                             IsVisible="False" />
 
                                     <!-- Color button -->
@@ -193,7 +193,7 @@
                                                   Grid.Column="5"
                                                   Classes="kind-tool is-stretch"
                                                   my:DisableAssist.IsDisablable="False"
-                                                  Content="{my:Icon Palette}"
+                                                  Content="{my:MaterialIcon Palette}"
                                                   Cursor="Hand"
                                                   IsChecked="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
@@ -501,7 +501,7 @@
                                         Classes="kind-tool"
                                         my:DisableAssist.IsDisablable="False"
                                         Command="{Binding Clear, ElementName=PART_TextBox}"
-                                        Content="{my:Icon Close}"
+                                        Content="{my:MaterialIcon Close}"
                                         IsVisible="False" />
 
                                 <!-- Color button -->
@@ -510,7 +510,7 @@
                                               Margin="{my:Thickness Xs, Left}"
                                               Classes="kind-tool"
                                               my:DisableAssist.IsDisablable="False"
-                                              Content="{my:Icon Palette}"
+                                              Content="{my:MaterialIcon Palette}"
                                               Cursor="Hand"
                                               IsChecked="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"

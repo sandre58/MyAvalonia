@@ -13,7 +13,7 @@ public class DataGridViewModel : ViewModelBase
         var random = new Random(42);
         for (int i = 0; i < 500; i++)
         {
-            Items.Add(new DataItem
+            Items.Add(new()
             {
                 Id = i + 1,
                 Name = $"Item {i + 1}",

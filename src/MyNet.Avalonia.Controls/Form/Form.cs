@@ -6,6 +6,7 @@
 
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Templates;
 using Avalonia.Layout;
 using MyNet.Avalonia.Controls.Enums;
 
@@ -25,13 +26,13 @@ public class Form : ItemsControl
 
     public static readonly StyledProperty<GridLength> LabelWidthProperty = AvaloniaProperty.Register<Form, GridLength>(nameof(LabelWidth), GridLength.Auto);
 
-    public static readonly StyledProperty<Thickness> LabelMarginProperty = AvaloniaProperty.Register<Form, Thickness>(nameof(LabelMargin), new Thickness(0));
+    public static readonly StyledProperty<Thickness> LabelMarginProperty = AvaloniaProperty.Register<Form, Thickness>(nameof(LabelMargin), new(0));
 
     public static readonly StyledProperty<HorizontalAlignment> LabelAlignmentProperty = AvaloniaProperty.Register<Form, HorizontalAlignment>(nameof(LabelAlignment), HorizontalAlignment.Left);
 
-    public static readonly StyledProperty<string?> RequiredIndicatorProperty = AvaloniaProperty.Register<Form, string?>(nameof(RequiredIndicator), "*");
+    public static readonly StyledProperty<IDataTemplate?> RequiredIndicatorTemplateProperty = AvaloniaProperty.Register<Form, IDataTemplate?>(nameof(RequiredIndicatorTemplate));
 
-    public static readonly StyledProperty<Thickness> GroupMarginProperty = AvaloniaProperty.Register<Form, Thickness>(nameof(GroupMargin), new Thickness(0, 16, 0, 16));
+    public static readonly StyledProperty<Thickness> GroupMarginProperty = AvaloniaProperty.Register<Form, Thickness>(nameof(GroupMargin), new(0, 16, 0, 16));
 
     #endregion
 
@@ -61,10 +62,10 @@ public class Form : ItemsControl
         set => SetValue(LabelWidthProperty, value);
     }
 
-    public string? RequiredIndicator
+    public IDataTemplate? RequiredIndicatorTemplate
     {
-        get => GetValue(RequiredIndicatorProperty);
-        set => SetValue(RequiredIndicatorProperty, value);
+        get => GetValue(RequiredIndicatorTemplateProperty);
+        set => SetValue(RequiredIndicatorTemplateProperty, value);
     }
 
     public Thickness LabelMargin
@@ -106,12 +107,29 @@ public class Form : ItemsControl
                 fic.LabelAlignment = FormItem.GetLabelAlignment(c) ?? LabelAlignment;
                 fic.LabelMargin = FormItem.GetLabelMargin(c) ?? LabelMargin;
                 fic.IsRequired = FormItem.GetIsRequired(c);
-                fic.RequiredIndicator = FormItem.GetRequiredIndicator(c) ?? RequiredIndicator;
+                var requiredIndicatorTemplate = FormItem.GetRequiredIndicatorTemplate(c) ?? RequiredIndicatorTemplate;
+                if (requiredIndicatorTemplate != null)
+                    fic.RequiredIndicatorTemplate = requiredIndicatorTemplate;
+                else
+                    fic.ClearValue(FormItemContainer.RequiredIndicatorTemplateProperty);
                 fic.HelpText = FormItem.GetHelpText(c);
                 fic.TextWrapping = FormItem.GetTextWrapping(c);
 
                 // Bind container visibility to content visibility
                 fic.Bind(IsVisibleProperty, c.GetObservable(IsVisibleProperty));
+                break;
+
+            case FormItemContainer fic:
+                // Item is not a Control (e.g., ViewModel): apply Form-level defaults.
+                // FormItem properties will be applied later when the DataTemplate materializes.
+                fic.LabelPosition = LabelPosition;
+                fic.LabelWidth = LabelWidth;
+                fic.LabelAlignment = LabelAlignment;
+                fic.LabelMargin = LabelMargin;
+                if (RequiredIndicatorTemplate != null)
+                    fic.RequiredIndicatorTemplate = RequiredIndicatorTemplate;
+                else
+                    fic.ClearValue(FormItemContainer.RequiredIndicatorTemplateProperty);
                 break;
 
             case FormGroup group:
@@ -129,8 +147,8 @@ public class Form : ItemsControl
                     if (!group.IsSet(FormGroup.LabelMarginProperty))
                         group.LabelMargin = LabelMargin;
 
-                    if (!group.IsSet(FormGroup.RequiredIndicatorProperty))
-                        group.RequiredIndicator = RequiredIndicator;
+                    if (!group.IsSet(FormGroup.RequiredIndicatorTemplateProperty))
+                        group.RequiredIndicatorTemplate = RequiredIndicatorTemplate;
                     break;
                 }
         }

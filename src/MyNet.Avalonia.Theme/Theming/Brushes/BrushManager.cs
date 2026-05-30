@@ -49,8 +49,8 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
 
         opacities?.ForEach(opacity =>
         {
-            TrackBrush(newBrushSet.GetTransformedBrush(new ColorInterpolation(opacity, false, null, null)), newBrushSet, false);
-            TrackBrush(newBrushSet.GetTransformedBrush(new ColorInterpolation(opacity, true, null, null)), newBrushSet, true);
+            TrackBrush(newBrushSet.GetTransformedBrush(new(opacity)), newBrushSet, false);
+            TrackBrush(newBrushSet.GetTransformedBrush(new(opacity, true)), newBrushSet, true);
         });
 
         return newBrushSet.Brush;
@@ -98,7 +98,7 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
                             colorInterpolation.Darken,
                             colorInterpolation.Lighten);
                         return colorInterpolation.Contrast && registration.IsContrast
-                            ? ComputeUnknownBrush(solidColorBrush, new ColorInterpolation(computedColorInterpolation.Opacity, colorInterpolation.Contrast, computedColorInterpolation.Darken, computedColorInterpolation.Lighten))
+                            ? ComputeUnknownBrush(solidColorBrush, new(computedColorInterpolation.Opacity, colorInterpolation.Contrast, computedColorInterpolation.Darken, computedColorInterpolation.Lighten))
                             : ResolveBrushFromSet(registration.Set, computedColorInterpolation);
                     }
 
@@ -124,7 +124,7 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
     /// <returns>The computed brush with the specified transformations applied.</returns>
     private static ISolidColorBrush ComputeUnknownBrush(ISolidColorBrush brush, ColorInterpolation colorInterpolation)
     {
-        if (colorInterpolation.IsEmpty && !colorInterpolation.Contrast)
+        if (colorInterpolation is { IsEmpty: true, Contrast: false })
             return brush;
 
         var color = brush.Color.Apply(colorInterpolation);
@@ -161,7 +161,7 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
     /// <returns>The tracked <see cref="ISolidColorBrush"/>.</returns>
     private ISolidColorBrush TrackBrush(ISolidColorBrush brush, BrushSet owner, bool isContrast)
     {
-        _reverse.AddOrUpdate(brush, new BrushRegistration(owner, isContrast));
+        _reverse.AddOrUpdate(brush, new(owner, isContrast));
         return brush;
     }
 

@@ -30,7 +30,7 @@ public static class ThemeAssist
     /// <summary>
     /// Provides Context Property for attached ThemeAssist element.
     /// </summary>
-    public static readonly AttachedProperty<ThemeContext> ContextProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Context", ThemeContext.Default, CssPrefix.Context, true);
+    public static readonly AttachedProperty<ThemeContext> ContextProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Context", typeof(ThemeAssist), ThemeContext.Default, CssPrefix.Context, true);
 
     /// <summary>
     /// Accessor for Attached  <see cref="ContextProperty"/>.
@@ -120,7 +120,7 @@ public static class ThemeAssist
     /// <summary>
     /// Defines the Role attached property for assigning a semantic color role to a control.
     /// </summary>
-    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Role", ThemeRole.Default, CssPrefix.Role);
+    public static readonly AttachedProperty<ThemeRole> RoleProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Role", typeof(ThemeAssist), ThemeRole.Default, CssPrefix.Role);
 
     /// <summary>
     /// Gets the theme role for the specified control.
@@ -173,7 +173,7 @@ public static class ThemeAssist
     /// <summary>
     /// Provides Category Property for attached ThemeAssist element.
     /// </summary>
-    public static readonly AttachedProperty<ControlCategory> CategoryProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Category", ControlCategory.Unknown, CssPrefix.Category);
+    public static readonly AttachedProperty<ControlCategory> CategoryProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Category", typeof(ThemeAssist), ControlCategory.Unknown, CssPrefix.Category);
 
     /// <summary>
     /// Accessor for Attached  <see cref="CategoryProperty"/>.
@@ -195,7 +195,7 @@ public static class ThemeAssist
     /// <summary>
     /// Provides Kind Property for attached ThemeAssist element.
     /// </summary>
-    public static readonly AttachedProperty<string> KindProperty = AvaloniaPropertyHelper.RegisterStringProperty("Kind", "default", CssPrefix.Kind);
+    public static readonly AttachedProperty<string> KindProperty = AvaloniaPropertyHelper.RegisterStringProperty("Kind", typeof(ThemeAssist), "default", CssPrefix.Kind);
 
     /// <summary>
     /// Accessor for Attached  <see cref="KindProperty"/>.

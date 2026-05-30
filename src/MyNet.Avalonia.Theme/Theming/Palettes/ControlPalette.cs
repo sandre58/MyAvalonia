@@ -172,7 +172,7 @@ public class ControlPalette
     public static ControlPalette FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary)
     {
         var defaultColor = Colors.Gray;
-        return new ControlPalette
+        return new()
         {
             // Surfaces
             SurfaceLevel0 = (Color)dictionary.GetValueOrDefault("Surface.Level0", defaultColor),

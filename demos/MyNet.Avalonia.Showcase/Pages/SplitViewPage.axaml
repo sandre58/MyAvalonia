@@ -1,0 +1,67 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.SplitViewPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:samples="clr-namespace:MyNet.Avalonia.Showcase.Views.Samples"
+             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+             x:DataType="vm:SplitViewPageViewModel"
+             x:Name="Root"
+             Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Translate Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             ClipToBounds="False">
+
+    <v:ShowcaseView ShowContent="False" ShowIcon="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <SplitView behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                           Height="500"
+                           Width="600"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                    <SplitView.Pane>
+                        <samples:LargeContent1 Width="NaN" />
+                    </SplitView.Pane>
+                    <SplitView.Content>
+                        <ScrollViewer>
+                            <samples:ExtraLargeContent1 />
+                        </ScrollViewer>
+                    </SplitView.Content>
+                </SplitView>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <SplitView behavior:PlaygroundBehavior.AttachStyle="{Binding}"
+                           CompactPaneLength="30"
+                           DisplayMode="Overlay"
+                           IsPaneOpen="True"
+                           OpenPaneLength="200"
+                           PanePlacement="Left"
+                           UseLightDismissOverlayMode="True"
+                           Height="500"
+                           Width="600">
+                    <SplitView.Pane>
+                        <samples:LargeContent1 Width="NaN" />
+                    </SplitView.Pane>
+                    <SplitView.Content>
+                        <ScrollViewer>
+                            <samples:ExtraLargeContent1 />
+                        </ScrollViewer>
+                    </SplitView.Content>
+                </SplitView>
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+    </v:ShowcaseView>
+
+</ContentPage>

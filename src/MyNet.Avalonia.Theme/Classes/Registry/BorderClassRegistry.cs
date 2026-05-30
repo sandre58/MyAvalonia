@@ -31,7 +31,7 @@ public static class BorderClassRegistry
     {
         for (var i = 0; i < 8; i++)
         {
-            ClassRegistry.Register<Control>(CssClass.Border(i), x => setBorderThickness(x, new Thickness(i)));
+            ClassRegistry.Register<Control>(CssClass.Border(i), x => setBorderThickness(x, new(i)));
         }
 
         static IDisposable setBorderThickness(Control control, Thickness thickness) => control switch
@@ -40,7 +40,7 @@ public static class BorderClassRegistry
             Border border => border.SetProperty(Border.BorderThicknessProperty, thickness),
             Ellipse ellipse => ellipse.SetProperty(Shape.StrokeThicknessProperty, thickness.Left),
             Rectangle rectangle => rectangle.SetProperty(Shape.StrokeThicknessProperty, thickness.Left),
-            _ => Disposable.Empty,
+            _ => Disposable.Empty
         };
     }
 
@@ -64,7 +64,7 @@ public static class BorderClassRegistry
                         rectangle.SetProperty(Rectangle.RadiusXProperty, cornerRadius.TopLeft),
                         rectangle.SetProperty(Rectangle.RadiusYProperty, cornerRadius.TopRight)
                     },
-            _ => Disposable.Empty,
+            _ => Disposable.Empty
         };
     }
 }

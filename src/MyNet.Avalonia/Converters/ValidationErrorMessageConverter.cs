@@ -9,9 +9,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Avalonia.Data.Converters;
-using MyNet.Utilities;
-using MyNet.Utilities.Exceptions;
-using MyNet.Utilities.Localization;
+using MyNet.Globalization.Facade;
+using MyNet.Primitives;
+using MyNet.Primitives.Exceptions;
 
 namespace MyNet.Avalonia.Converters;
 
@@ -31,7 +31,7 @@ public class ValidationErrorMessageConverter : IValueConverter
             switch (error)
             {
                 case TranslatableException translatableException:
-                    messages.Add(TranslationService.Current.Translate(translatableException.ResourceKey).FormatWith(translatableException.Parameters ?? []));
+                    messages.Add(translatableException.ResourceKey.Translate().FormatWith(culture, translatableException.Parameters ?? []));
                     break;
                 case Exception exception:
                     messages.Add(exception.Message);

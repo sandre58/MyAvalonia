@@ -55,19 +55,19 @@ public static class SpacingClassRegistry
     /// vertical padding, which can be referenced throughout the application's styling system.</remarks>
     public static void RegisterPaddings()
     {
-        ClassRegistry.RegisterMany<SpacingSize, Control>(CssPrefix.Padding, (x, y) => setPadding(x, new Thickness(ThemeResources.Spacing.Get(y).Value)));
-        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.LeftPadding, (x, y) => setPadding(x, new Thickness(ThemeResources.Spacing.Get(y).Value, x.Padding.Top, x.Padding.Right, x.Padding.Bottom)));
-        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.RightPadding, (x, y) => setPadding(x, new Thickness(x.Padding.Left, x.Padding.Top, ThemeResources.Spacing.Get(y).Value, x.Padding.Bottom)));
-        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.TopPadding, (x, y) => setPadding(x, new Thickness(x.Padding.Left, ThemeResources.Spacing.Get(y).Value, x.Padding.Right, x.Padding.Bottom)));
-        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.BottomPadding, (x, y) => setPadding(x, new Thickness(x.Padding.Left, x.Padding.Top, x.Padding.Right, ThemeResources.Spacing.Get(y).Value)));
-        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.HorizontalPadding, (x, y) => setPadding(x, new Thickness(ThemeResources.Spacing.Get(y).Value, x.Padding.Top, ThemeResources.Spacing.Get(y).Value, x.Padding.Bottom)));
-        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.VerticalPadding, (x, y) => setPadding(x, new Thickness(x.Padding.Left, ThemeResources.Spacing.Get(y).Value, x.Padding.Right, ThemeResources.Spacing.Get(y).Value)));
+        ClassRegistry.RegisterMany<SpacingSize, Control>(CssPrefix.Padding, (x, y) => setPadding(x, new(ThemeResources.Spacing.Get(y).Value)));
+        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.LeftPadding, (x, y) => setPadding(x, new(ThemeResources.Spacing.Get(y).Value, x.Padding.Top, x.Padding.Right, x.Padding.Bottom)));
+        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.RightPadding, (x, y) => setPadding(x, new(x.Padding.Left, x.Padding.Top, ThemeResources.Spacing.Get(y).Value, x.Padding.Bottom)));
+        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.TopPadding, (x, y) => setPadding(x, new(x.Padding.Left, ThemeResources.Spacing.Get(y).Value, x.Padding.Right, x.Padding.Bottom)));
+        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.BottomPadding, (x, y) => setPadding(x, new(x.Padding.Left, x.Padding.Top, x.Padding.Right, ThemeResources.Spacing.Get(y).Value)));
+        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.HorizontalPadding, (x, y) => setPadding(x, new(ThemeResources.Spacing.Get(y).Value, x.Padding.Top, ThemeResources.Spacing.Get(y).Value, x.Padding.Bottom)));
+        ClassRegistry.RegisterMany<SpacingSize, TemplatedControl>(CssPrefix.VerticalPadding, (x, y) => setPadding(x, new(x.Padding.Left, ThemeResources.Spacing.Get(y).Value, x.Padding.Right, ThemeResources.Spacing.Get(y).Value)));
 
         static IDisposable setPadding(Control control, Thickness thickness) => control switch
         {
             TemplatedControl templatedControl => templatedControl.SetProperty(TemplatedControl.PaddingProperty, thickness),
             Decorator decorator => decorator.SetProperty(Decorator.PaddingProperty, thickness),
-            _ => Disposable.Empty,
+            _ => Disposable.Empty
         };
     }
 
@@ -83,7 +83,7 @@ public static class SpacingClassRegistry
 
         static IDisposable setSpacing(Control control, double spacing, bool isHorizontal, bool isVertical) => control switch
         {
-            StackPanel stackPanel => (isHorizontal && isVertical) ? stackPanel.SetProperty(StackPanel.SpacingProperty, spacing) : Disposable.Empty,
+            StackPanel stackPanel => isHorizontal && isVertical ? stackPanel.SetProperty(StackPanel.SpacingProperty, spacing) : Disposable.Empty,
             WrapPanel wrapPanel => new CompositeDisposable
                     {
                         isHorizontal ? wrapPanel.SetProperty(WrapPanel.ItemSpacingProperty, spacing) : Disposable.Empty,
@@ -99,8 +99,8 @@ public static class SpacingClassRegistry
                         isHorizontal ? grid.SetProperty(Grid.ColumnSpacingProperty, spacing) : Disposable.Empty,
                         isVertical ? grid.SetProperty(Grid.RowSpacingProperty, spacing) : Disposable.Empty
                     },
-            ItemsControl itemsControl => (isHorizontal && isVertical) ? itemsControl.SetProperty(ItemsAssist.SpacingProperty, spacing) : Disposable.Empty,
-            _ => Disposable.Empty,
+            ItemsControl itemsControl => isHorizontal && isVertical ? itemsControl.SetProperty(ItemsAssist.SpacingProperty, spacing) : Disposable.Empty,
+            _ => Disposable.Empty
         };
     }
 }

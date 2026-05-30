@@ -37,7 +37,7 @@ public sealed class CountBasedLifetimeSupervisor(MaximumToastsCount maximumToast
 
         _ = _toasts.Add(toast);
         toast.CloseRequest += ToastClosedCallback;
-        RequestShowToast(new ShowToastEventArgs(toast));
+        RequestShowToast(new(toast));
     }
 
     public void CloseToast(Toast toast)
@@ -50,7 +50,7 @@ public sealed class CountBasedLifetimeSupervisor(MaximumToastsCount maximumToast
         removedToast.Toast.CloseRequest -= ToastClosedCallback;
     }
 
-    private void ToastClosedCallback(object? sender, EventArgs e) => RequestCloseToast(new CloseToastEventArgs((Toast)sender!));
+    private void ToastClosedCallback(object? sender, EventArgs e) => RequestCloseToast(new((Toast)sender!));
 
     private void RequestShowToast(ShowToastEventArgs e) => ShowToastRequested?.Invoke(this, e);
 

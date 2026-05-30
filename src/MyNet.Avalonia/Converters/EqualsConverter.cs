@@ -5,16 +5,17 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia.Data.Converters;
 
 namespace MyNet.Avalonia.Converters;
 
-public class EqualsConverter(bool isEquals = true) : IValueConverter
+public class EqualsConverter(bool isEquals = true) : IMultiValueConverter, IValueConverter
 {
-    public static readonly NullConverter IsEquals = new();
-    public static readonly NullConverter IsNotEquals = new(false);
+    public static readonly EqualsConverter IsEquals = new();
+    public static readonly EqualsConverter IsNotEquals = new(false);
 
     /// <summary>
     /// Converts a value.
@@ -27,11 +28,27 @@ public class EqualsConverter(bool isEquals = true) : IValueConverter
     /// A converted value. If the method returns null, the valid null value is used.
     /// </returns>
     [SuppressMessage("Maintainability", "CA1508", Justification = "False positive")]
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
-        var result = parameter != null && value?.ToString() is { } str && str.Equals(parameter.ToString(), StringComparison.OrdinalIgnoreCase);
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value, parameter], targetType, parameter, culture);
 
-        return result ? isEquals : !isEquals;
+    public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (values.Count <= 1)
+        {
+            // Empty or single value: consider all values equal
+            return isEquals;
+        }
+
+        var first = values[0];
+
+        for (var i = 1; i < values.Count; i++)
+        {
+            if (!Equals(first, values[i]))
+            {
+                return !isEquals;
+            }
+        }
+
+        return isEquals;
     }
 
     /// <summary>

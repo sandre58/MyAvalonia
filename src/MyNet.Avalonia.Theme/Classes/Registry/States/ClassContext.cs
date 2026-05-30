@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Reactive.Disposables;
 using Avalonia.Controls;
 
@@ -75,7 +74,8 @@ internal sealed class ClassContext<TControl, TState>(TControl control)
 
     /// <summary>
     /// Takes a snapshot of the current state by creating a dictionary that maps property names to their corresponding values. This allows for
-    /// restoring the state to its previous values if needed.
+    /// restoring the state to its previous values if needed.  Only properties with a public setter are captured;
+    /// get-only properties (such as <see cref="BindingGroup"/> or collection fields) are intentionally skipped.
     /// </summary>
     /// <param name="state">The state object to snapshot.</param>
     /// <returns>A dictionary mapping property names to their current values.</returns>
@@ -84,7 +84,10 @@ internal sealed class ClassContext<TControl, TState>(TControl control)
         var dict = new Dictionary<string, object?>();
 
         foreach (var p in typeof(TState).GetProperties())
-            dict[p.Name] = p.GetValue(state);
+        {
+            if (p.CanWrite)
+                dict[p.Name] = p.GetValue(state);
+        }
 
         return dict;
     }
@@ -92,9 +95,8 @@ internal sealed class ClassContext<TControl, TState>(TControl control)
     /// <summary>
     /// Restores the property values of the specified state object from the provided snapshot.
     /// </summary>
-    /// <remarks>If the snapshot does not contain an entry for a property on the state object, or if a
-    /// property does not exist on the state object for a given key, an exception will be thrown. All properties must be
-    /// settable.</remarks>
+    /// <remarks>Only properties present in the snapshot and that have a public setter are restored.
+    /// Get-only properties are skipped, matching the behavior of <see cref="Snapshot"/>.</remarks>
     /// <param name="state">The object whose properties are to be set. Must be of type TState and have settable properties corresponding to
     /// the keys in the snapshot.</param>
     /// <param name="snapshot">A dictionary containing property names and their corresponding values to assign to the state object. Each key
@@ -102,6 +104,9 @@ internal sealed class ClassContext<TControl, TState>(TControl control)
     private static void Restore(TState state, Dictionary<string, object?> snapshot)
     {
         foreach (var p in typeof(TState).GetProperties())
-            p.SetValue(state, snapshot[p.Name]);
+        {
+            if (p.CanWrite && snapshot.TryGetValue(p.Name, out var value))
+                p.SetValue(state, value);
+        }
     }
 }

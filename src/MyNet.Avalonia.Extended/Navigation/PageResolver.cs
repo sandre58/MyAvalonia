@@ -21,8 +21,6 @@ namespace MyNet.Avalonia.Extended.Navigation;
 /// <param name="viewResolver">The view resolver used to map navigation page types to Avalonia page types.</param>
 public class PageResolver(IViewResolver viewResolver) : IPageResolver
 {
-    private readonly IViewResolver _viewResolver = viewResolver;
-
     /// <summary>
     /// Registers a mapping between a navigation page type and its corresponding Avalonia page type for use in
     /// navigation resolution.
@@ -34,7 +32,7 @@ public class PageResolver(IViewResolver viewResolver) : IPageResolver
     /// <typeparam name="TAvaloniaPage">The Avalonia page type to associate with the specified navigation page. Must derive from Page.</typeparam>
     public void Register<TPage, TAvaloniaPage>()
         where TPage : INavigationPage
-        where TAvaloniaPage : Page => _viewResolver.Register<TPage, TAvaloniaPage>();
+        where TAvaloniaPage : Page => viewResolver.Register<TPage, TAvaloniaPage>();
 
     /// <summary>
     /// Register a mapping between a navigation page type and an Avalonia page type. This method allows you to specify
@@ -42,7 +40,7 @@ public class PageResolver(IViewResolver viewResolver) : IPageResolver
     /// </summary>
     /// <param name="pageType">The type of the navigation page.</param>
     /// <param name="avaloniaPageType">The type of the Avalonia page.</param>
-    public void Register(Type pageType, Type avaloniaPageType) => _viewResolver.Register(pageType, avaloniaPageType);
+    public void Register(Type pageType, Type avaloniaPageType) => viewResolver.Register(pageType, avaloniaPageType);
 
     /// <summary>
     /// Resolve the page to display for the given navigation page. This method uses the view resolver to find the
@@ -53,7 +51,7 @@ public class PageResolver(IViewResolver viewResolver) : IPageResolver
     /// <exception cref="InvalidOperationException">Thrown when the page cannot be resolved.</exception>
     public Page Resolve(INavigationPage page)
     {
-        var avaloniaPageType = _viewResolver.Resolve(page.GetType());
+        var avaloniaPageType = viewResolver.Resolve(page.GetType());
 
         var view = Activator.CreateInstance(avaloniaPageType)
             ?? throw new InvalidOperationException($"Cannot create an instance of '{avaloniaPageType}'.");

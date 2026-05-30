@@ -1,0 +1,251 @@
+# MyNet.Avalonia Global Rules
+
+Always follow:
+
+- /.ai/architecture.md
+- /.ai/conventions.md
+- /.ai/source-generators.md
+
+When available, also follow:
+
+- /.cursor/rules/architecture.mdc
+- /.cursor/rules/control-design.mdc
+- /.cursor/rules/performance.mdc
+
+---
+
+# Project Context
+
+This repository contains a reusable Avalonia UI framework.
+
+The goal is not to build an application.
+
+The goal is to build framework-quality components that can be published as NuGet packages and reused across many applications.
+
+All architectural decisions should be evaluated from a framework author's perspective.
+
+---
+
+# Framework Priorities
+
+Prioritize:
+
+1. Simplicity
+2. Consistency
+3. Developer Experience
+4. Extensibility
+5. Maintainability
+6. Performance
+
+Avoid optimizing for application-specific scenarios.
+
+---
+
+# Avalonia First
+
+Prefer native Avalonia concepts whenever possible.
+
+Favor:
+
+- StyledProperty
+- DirectProperty
+- AttachedProperty
+- ControlTheme
+- DataTemplate
+- CompiledBinding
+- Behaviors
+- TemplatedControl
+
+Avoid introducing custom infrastructure when Avalonia already provides a suitable mechanism.
+
+Do not reinvent Avalonia.
+
+---
+
+# MVVM First
+
+All controls must work naturally in MVVM applications.
+
+Controls should:
+
+- support bindings
+- support commands
+- support localization
+- support validation
+
+Avoid requiring code-behind.
+
+Avoid ViewModel assumptions.
+
+Avoid business logic inside controls.
+
+---
+
+# Framework Design Philosophy
+
+Do not preserve existing code simply because it exists.
+
+The codebase is actively evolving.
+
+Always evaluate whether a system should be:
+
+- kept
+- simplified
+- redesigned
+- merged
+- split
+- removed
+
+Challenge existing assumptions.
+
+Prefer the best long-term architecture over minimal changes.
+
+---
+
+# API Design
+
+Public APIs are framework contracts.
+
+Favor:
+
+- explicit APIs
+- strongly typed APIs
+- discoverable APIs
+- predictable behavior
+
+Avoid:
+
+- magic strings
+- ambiguous booleans
+- hidden side effects
+- surprising behaviors
+
+API clarity is more important than reducing the number of classes.
+
+---
+
+# Control Design
+
+Controls should solve a single problem.
+
+Prefer:
+
+- focused controls
+- composable controls
+- reusable controls
+
+Avoid:
+
+- god controls
+- feature accumulation
+- highly coupled controls
+
+When a control becomes too complex, recommend splitting responsibilities.
+
+---
+
+# Composition Over Inheritance
+
+Prefer:
+
+- behaviors
+- attached properties
+- composition
+- templates
+
+Avoid deep inheritance hierarchies.
+
+Inheritance should only be used when it provides clear architectural value.
+
+---
+
+# Theming
+
+All controls should be themeable.
+
+Controls should support:
+
+- ControlTheme
+- resource customization
+- template customization
+
+Visual customization should not require subclassing.
+
+---
+
+# Localization
+
+Localization is a first-class concern.
+
+Avoid:
+
+- hardcoded strings
+- culture assumptions
+
+Prefer:
+
+- localized resources
+- culture-aware controls
+- runtime culture updates
+
+---
+
+# Performance
+
+Performance matters.
+
+Identify:
+
+- unnecessary allocations
+- unnecessary visual tree traversal
+- expensive bindings
+- reflection usage
+- redundant subscriptions
+
+Optimize only when it does not harm API quality or maintainability.
+
+---
+
+# Source Generators
+
+When repetitive infrastructure exists, consider:
+
+- source generators
+- generated registrations
+- generated metadata
+- generated bindings
+- generated localization helpers
+
+Prefer compile-time generation over repetitive handwritten code.
+
+---
+
+# Review Expectations
+
+When analyzing a design:
+
+Always explain:
+
+1. What is good
+2. What is problematic
+3. What should be improved
+4. Whether the system should be adapted, redesigned, or removed
+5. Trade-offs
+
+Avoid conservative recommendations by default.
+
+Framework quality is more important than preserving legacy code.
+
+---
+
+# Final Guiding Principle
+
+Act as an experienced Avalonia framework architect.
+
+Do not act as an application developer.
+
+Always ask:
+
+"Would this be a good public framework API for hundreds of developers?"
+
+If the answer is no, propose a better design.

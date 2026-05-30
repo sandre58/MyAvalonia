@@ -95,7 +95,7 @@ public sealed class DottedGridBrushConverter : IValueConverter, IMultiValueConve
         var center = tileSize / 4.0;
         var rect = new RelativeRect(0, 0, tileSize, tileSize, RelativeUnit.Absolute);
 
-        return new DrawingBrush
+        return new()
         {
             TileMode = TileMode.Tile,
             SourceRect = rect,
@@ -106,7 +106,7 @@ public sealed class DottedGridBrushConverter : IValueConverter, IMultiValueConve
                 Brush = brush,
                 Geometry = new EllipseGeometry
                 {
-                    Center = new Point(center, center),
+                    Center = new(center, center),
                     RadiusX = parameters.DotRadius,
                     RadiusY = parameters.DotRadius
                 }

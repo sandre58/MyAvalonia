@@ -104,7 +104,7 @@ public class ViewModelWarmUpService(IViewModelLocator viewModelLocator) : IWarmU
                         createdObject,
                         completedCount,
                         types.Count,
-                        (completedCount / (double)types.Count) * 100);
+                        completedCount / (double)types.Count * 100);
                     WarmUpProgress?.Invoke(this, progressArgs);
                 })).ConfigureAwait(false);
 
@@ -167,19 +167,19 @@ public class ViewModelWarmUpService(IViewModelLocator viewModelLocator) : IWarmU
                     },
                     DispatcherPriority.Background);
 
-                    return new WarmUpResult(true, createdObject);
+                    return new(true, createdObject);
                 }
                 catch (Exception ex)
                 {
                     LogManager.Warning($"[ViewModelWarmUpService] Error warming up {objectType.Name}: {ex.Message}");
-                    return new WarmUpResult(false, null);
+                    return new(false, null);
                 }
             }
         }
         catch (Exception ex)
         {
             LogManager.Warning($"[ViewModelWarmUpService] Error in warm-up process for {objectType.Name}: {ex.Message}");
-            return new WarmUpResult(false, null);
+            return new(false, null);
         }
     }
 }

@@ -48,7 +48,7 @@ public class ColorConverter : IValueConverter
         };
         var opacity = Opacity ?? (value is SolidColorBrush { Opacity: < 1.0 } brush ? brush.Opacity : null);
 
-        return color.Apply(new ColorInterpolation(opacity, Contrast, Darken, Lighten));
+        return color.Apply(new(opacity, Contrast, Darken, Lighten));
     }
 
     public virtual object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => AvaloniaProperty.UnsetValue;

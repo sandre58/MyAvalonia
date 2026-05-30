@@ -16,8 +16,8 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="CornerRadius" Value="0" />
-        <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Caption}" />
-        <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Caption}" />
+        <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
 
         <Style Selector="^.variant-close">
             <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Theme Button.Close.Hover}" />
@@ -30,8 +30,8 @@
 
         <!-- Default values -->
         <Setter Property="DefaultTitleBarHeight" Value="30" />
-        <Setter Property="DefaultFrameThickness" Value="1"/>
-        <Setter Property="DefaultShadowThickness" Value="8"/>
+        <Setter Property="DefaultFrameThickness" Value="1" />
+        <Setter Property="DefaultShadowThickness" Value="8" />
 
         <Setter Property="Template">
 
@@ -51,7 +51,7 @@
                                     Background="{my:ThemeRole Background, IgnoreForegroundParent=True}"
                                     BorderBrush="{my:ThemeRole BorderBrush, IgnoreForegroundParent=True}"
                                     BorderThickness="{TemplateBinding FrameThickness}"
-                                    IsHitTestVisible="False"/>
+                                    IsHitTestVisible="False" />
 
                             <!-- Titlebar visual background -->
                             <Border x:Name="PART_TitleBarBackground"
@@ -59,7 +59,7 @@
                                     Height="{TemplateBinding TitleBarHeight}"
                                     Background="{TemplateBinding (my:WindowAssist.TitleBarBackground)}"
                                     IsHitTestVisible="False"
-                                    IsVisible="{TemplateBinding HasTitleBar}"/>
+                                    IsVisible="{TemplateBinding HasTitleBar}" />
 
                             <!-- Drag region -->
                             <Panel x:Name="PART_TitleBar"
@@ -67,7 +67,7 @@
                                    Height="{TemplateBinding TitleBarHeight}"
                                    Background="Transparent"
                                    IsVisible="{TemplateBinding HasTitleBar}"
-                                   WindowDecorationProperties.ElementRole="TitleBar"/>
+                                   WindowDecorationProperties.ElementRole="TitleBar" />
 
                         </Panel>
 
@@ -98,21 +98,21 @@
                                             Theme="{StaticResource MyNet.Theme.Button.Caption}"
                                             IsVisible="{TemplateBinding (my:WindowAssist.ShowFullScreenButton)}"
                                             WindowDecorationProperties.ElementRole="FullScreenButton">
-                                        <PathIcon x:Name="FullScreenButtonIcon" Data="{StaticResource MyNet.Geometry.ArrowExpand}" />
+                                        <my:MaterialIcon x:Name="FullScreenButtonIcon" Kind="ArrowExpand" />
                                     </Button>
 
                                     <Button x:Name="PART_MinimizeButton"
                                             Theme="{StaticResource MyNet.Theme.Button.Caption}"
                                             IsVisible="{TemplateBinding (my:WindowAssist.ShowMinimizeButton)}"
                                             WindowDecorationProperties.ElementRole="MinimizeButton">
-                                        <PathIcon Data="{StaticResource MyNet.Geometry.WindowMinimize}" />
+                                        <my:MaterialIcon Kind="WindowMinimize" />
                                     </Button>
 
                                     <Button x:Name="PART_MaximizeButton"
                                             Theme="{StaticResource MyNet.Theme.Button.Caption}"
                                             IsVisible="{TemplateBinding (my:WindowAssist.ShowMaximizeButton)}"
                                             WindowDecorationProperties.ElementRole="MaximizeButton">
-                                        <PathIcon x:Name="RestoreButtonIcon" Data="{StaticResource MyNet.Geometry.WindowMaximize}" />
+                                        <my:MaterialIcon x:Name="RestoreButtonIcon" Kind="WindowMaximize" />
                                     </Button>
 
                                     <Button x:Name="PART_CloseButton"
@@ -120,25 +120,10 @@
                                             Classes="variant-close"
                                             IsVisible="{TemplateBinding (my:WindowAssist.ShowCloseButton)}"
                                             WindowDecorationProperties.ElementRole="CloseButton">
-                                        <PathIcon Data="{StaticResource MyNet.Geometry.WindowClose}" />
+                                        <my:MaterialIcon Kind="WindowClose" />
                                     </Button>
 
                                 </StackPanel>
-
-
-                                <!-- Right custom content -->
-                                <ContentPresenter DockPanel.Dock="Right"
-                                                  VerticalAlignment="Center"
-                                                  Content="{TemplateBinding (my:WindowAssist.RightTitleBarContent)}"
-                                                  WindowDecorationProperties.ElementRole="DecorationsElement"/>
-
-
-                                <!-- Left custom content -->
-                                <ContentPresenter DockPanel.Dock="Left"
-                                                  VerticalAlignment="Center"
-                                                  Content="{TemplateBinding (my:WindowAssist.LeftTitleBarContent)}"
-                                                  WindowDecorationProperties.ElementRole="DecorationsElement"/>
-
 
                                 <!-- Title -->
                                 <Panel IsHitTestVisible="False" ClipToBounds="True">
@@ -146,7 +131,7 @@
                                                Margin="12,0,0,0"
                                                VerticalAlignment="Center"
                                                FontSize="12"
-                                               IsVisible="{TemplateBinding (my:WindowAssist.IsTitleVisible)}"/>
+                                               IsVisible="{TemplateBinding (my:WindowAssist.IsTitleVisible)}" />
                                 </Panel>
 
                             </DockPanel>
@@ -170,19 +155,19 @@
                             <TextBlock Text="{TemplateBinding Title}"
                                        VerticalAlignment="Center"
                                        Margin="12,0,0,0"
-                                       IsHitTestVisible="False"/>
+                                       IsHitTestVisible="False" />
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 
                                 <Button Theme="{StaticResource MyNet.Theme.Button.Caption}"
                                         WindowDecorationProperties.ElementRole="FullScreenButton">
-                                    <PathIcon Data="{StaticResource MyNet.Geometry.ArrowCollapse}"/>
+                                    <my:MaterialIcon Kind="ArrowCollapse" />
                                 </Button>
 
                                 <Button Theme="{StaticResource MyNet.Theme.Button.Caption}"
                                         Classes="variant-close"
                                         WindowDecorationProperties.ElementRole="CloseButton">
-                                    <PathIcon Data="{StaticResource MyNet.Geometry.WindowClose}"/>
+                                    <my:MaterialIcon Kind="WindowClose" />
                                 </Button>
 
                             </StackPanel>
@@ -202,13 +187,13 @@
         <!-- ===================================================== -->
 
         <!-- Maximized -->
-        <Style Selector="^:maximized /template/ PathIcon#RestoreButtonIcon">
-            <Setter Property="Data" Value="{StaticResource MyNet.Geometry.WindowRestore}" />
+        <Style Selector="^:maximized /template/ my|MaterialIcon#RestoreButtonIcon">
+            <Setter Property="Kind" Value="WindowRestore" />
         </Style>
 
         <!-- Fullscreen -->
-        <Style Selector="^:fullscreen /template/ PathIcon#FullScreenButtonIcon">
-            <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ArrowCollapse}" />
+        <Style Selector="^:fullscreen /template/ my|MaterialIcon#FullScreenButtonIcon">
+            <Setter Property="Kind" Value="ArrowCollapse" />
         </Style>
 
 
@@ -222,21 +207,21 @@
         </Style>
 
         <Style Selector="^:has-shadow /template/ Border#PART_WindowBorder">
-            <Setter Property="BoxShadow" Value="0 2 10 2 #80000000"/>
+            <Setter Property="BoxShadow" Value="0 2 10 2 #80000000" />
         </Style>
 
 
         <!-- Border -->
         <Style Selector="^:has-border /template/ DockPanel#PART_TitleBarContent">
-            <Setter Property="Margin" Value="1,1,1,0"/>
+            <Setter Property="Margin" Value="1,1,1,0" />
         </Style>
 
         <Style Selector="^:has-border /template/ Panel#PART_TitleBar">
-            <Setter Property="Margin" Value="1,1,1,0"/>
+            <Setter Property="Margin" Value="1,1,1,0" />
         </Style>
 
         <Style Selector="^:has-border /template/ Border#PART_TitleBarBackground">
-            <Setter Property="Margin" Value="1,1,1,0"/>
+            <Setter Property="Margin" Value="1,1,1,0" />
         </Style>
 
     </ControlTheme>

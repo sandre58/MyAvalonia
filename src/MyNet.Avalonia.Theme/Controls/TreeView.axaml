@@ -20,12 +20,12 @@
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             Background="Transparent">
-                        <PathIcon Name="PART_ExpandIconPath" Classes="kind-glyph is-dropdown position-right" />
+                        <my:MaterialIcon Name="PART_ExpandIconPath" Classes="kind-glyph is-dropdown position-right" />
                     </Border>
                 </ControlTemplate>
             </Setter>
 
-            <Style Selector="^:checked /template/ PathIcon#PART_ExpandIconPath">
+            <Style Selector="^:checked /template/ my|MaterialIcon#PART_ExpandIconPath">
                 <Setter Property="RenderTransform" Value="rotate(90deg)" />
             </Style>
         </ControlTheme>

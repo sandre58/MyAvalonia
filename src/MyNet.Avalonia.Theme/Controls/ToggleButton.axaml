@@ -53,9 +53,9 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
             <Setter Property="Padding" Value="{my:Thickness Sm, Left}" />
-            <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxMarked}" />
-            <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{StaticResource MyNet.Geometry.MinusBox}" />
-            <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxBlankOutline}" />
+            <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{my:MaterialGeometry CheckboxMarked}" />
+            <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{my:MaterialGeometry MinusBox}" />
+            <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{my:MaterialGeometry CheckboxBlankOutline}" />
             <Setter Property="Focusable" Value="True" />
             <Setter Property="ClipToBounds" Value="False" />
 
@@ -205,15 +205,15 @@
 
             <!-- Styles -->
             <Style Selector="^.shape-circle">
-                <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxMarkedCircle}" />
-                <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{StaticResource MyNet.Geometry.MinusCircle}" />
-                <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxBlankCircleOutline}" />
+                <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{my:MaterialGeometry CheckboxMarkedCircle}" />
+                <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{my:MaterialGeometry MinusCircle}" />
+                <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{my:MaterialGeometry CheckboxBlankCircleOutline}" />
             </Style>
 
             <Style Selector="^.shape-alternate">
-                <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{StaticResource MyNet.Geometry.Check}" />
-                <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{StaticResource MyNet.Geometry.Minus}" />
-                <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{StaticResource MyNet.Geometry.CheckboxBlankCircleOutline}" />
+                <Setter Property="my:ToggleButtonAssist.CheckedPath" Value="{my:MaterialGeometry Check}" />
+                <Setter Property="my:ToggleButtonAssist.IndeterminatePath" Value="{my:MaterialGeometry Minus}" />
+                <Setter Property="my:ToggleButtonAssist.UncheckedPath" Value="{my:MaterialGeometry CheckboxBlankCircleOutline}" />
             </Style>
         </ControlTheme>
 

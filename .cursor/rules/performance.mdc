@@ -1,0 +1,391 @@
+# MyNet.Avalonia Performance Rules
+
+# Core Principle
+
+Performance is a first-class concern in MyNet.Avalonia.
+
+However, performance must never compromise:
+
+- API clarity
+- maintainability
+- correctness
+- developer experience
+
+Optimize only when it is justified and measurable.
+
+---
+
+# Primary Performance Philosophy
+
+Prefer:
+
+- simplicity
+- predictability
+- composability
+
+Avoid premature optimization.
+
+Always design for clarity first, then optimize hot paths when needed.
+
+---
+
+# UI Performance Model (Avalonia Context)
+
+Performance in Avalonia is mainly impacted by:
+
+- visual tree complexity
+- binding evaluation frequency
+- layout recalculations
+- template inflation
+- event subscriptions
+- allocations in rendering paths
+
+Always consider UI lifecycle impact when designing controls.
+
+---
+
+# Visual Tree Rules
+
+## Avoid unnecessary depth
+
+Deep visual trees should be avoided when possible.
+
+Prefer:
+
+- flat structures
+- composition
+- lightweight controls
+
+Deep nesting increases:
+
+- layout cost
+- rendering cost
+- memory usage
+
+---
+
+## Avoid frequent tree traversal
+
+Do NOT repeatedly traverse the visual tree.
+
+Avoid:
+
+- `GetVisualDescendants`
+- repeated `VisualTreeHelper` usage
+- runtime lookups in layout/render loops
+
+Cache results when necessary.
+
+---
+
+# Binding Performance Rules
+
+## Prefer compiled bindings
+
+Always prefer:
+
+- compiled bindings
+- strongly typed bindings
+
+Avoid:
+
+- reflection-based bindings in hot paths
+
+---
+
+## Avoid excessive bindings
+
+Each binding has a cost.
+
+Avoid:
+
+- large numbers of bindings per control
+- unnecessary property bindings
+- nested binding chains
+
+Prefer computed properties when appropriate.
+
+---
+
+## Avoid binding-heavy templates
+
+In high-frequency controls (lists, grids):
+
+- minimize bindings per item
+- reuse templates efficiently
+- avoid deep binding graphs
+
+---
+
+# Collection Controls (Critical Section)
+
+For ItemsControl / List-like controls:
+
+- prefer virtualization when applicable
+- avoid per-item heavy logic
+- avoid allocations in item templates
+- keep item templates lightweight
+
+Never introduce:
+
+- per-item services
+- per-item subscriptions without cleanup
+- heavy converters in item bindings
+
+---
+
+# Allocation Rules
+
+## Avoid allocations in hot paths
+
+Avoid:
+
+- LINQ in UI loops
+- closures in event handlers
+- repeated object creation in layout/render
+
+Prefer:
+
+- cached delegates
+- static methods
+- reusable objects
+- pooling where appropriate
+
+---
+
+## Avoid hidden allocations
+
+Be aware of:
+
+- string concatenation in bindings
+- implicit boxing
+- lambda captures
+
+---
+
+# Event Subscription Rules
+
+## Always unsubscribe
+
+All event subscriptions must be cleaned up.
+
+Failing to unsubscribe causes:
+
+- memory leaks
+- unexpected behavior
+- performance degradation
+
+---
+
+## Avoid excessive subscriptions
+
+Avoid subscribing to:
+
+- frequently fired events unnecessarily
+- global events without filtering
+
+Prefer scoped subscriptions.
+
+---
+
+# Layout Performance Rules
+
+## Avoid unnecessary invalidation
+
+Do not trigger layout invalidation unless necessary.
+
+Avoid:
+
+- frequent property changes causing layout recalculation
+- cascading layout updates
+
+---
+
+## Minimize layout complexity
+
+Layout should be:
+
+- predictable
+- shallow
+- composable
+
+Avoid complex custom panels unless necessary.
+
+---
+
+# Template Performance Rules
+
+## Avoid heavy template initialization
+
+Template creation should be:
+
+- fast
+- lightweight
+- deterministic
+
+Avoid:
+
+- runtime tree scanning in OnApplyTemplate
+- expensive initialization logic in templates
+
+---
+
+## Cache template parts
+
+Template parts should be cached once:
+
+- in `OnApplyTemplate`
+- not re-resolved repeatedly
+
+---
+
+# Rendering Rules
+
+Avoid:
+
+- unnecessary redraw triggers
+- frequent property invalidation
+- excessive visual state changes
+
+Prefer batched updates when possible.
+
+---
+
+# Control Lifecycle Performance
+
+Be mindful of:
+
+- `OnAttachedToVisualTree`
+- `OnDetachedFromVisualTree`
+- `OnApplyTemplate`
+
+Do not perform heavy work repeatedly in lifecycle methods.
+
+---
+
+# Memory Management Rules
+
+## Prevent memory leaks
+
+Always clean up:
+
+- event handlers
+- timers
+- subscriptions
+- reactive streams
+
+---
+
+## Avoid long-lived object retention
+
+Do not accidentally capture:
+
+- controls
+- view models
+- services in closures
+
+---
+
+# Styling Performance
+
+Avoid:
+
+- overly complex style selectors
+- deep style inheritance chains
+- expensive runtime style resolution
+
+Prefer:
+
+- simple styles
+- reusable styles
+- explicit styling rules
+
+---
+
+# Attached Properties Performance
+
+Attached properties must:
+
+- be lightweight
+- avoid side effects in setters
+- avoid triggering heavy logic on change
+
+Never use them for heavy runtime computation.
+
+---
+
+# Converter Performance
+
+Converters should:
+
+- be stateless
+- be lightweight
+- avoid allocations
+- avoid external dependencies
+
+Avoid complex logic in converters.
+
+---
+
+# Source of Inefficiency (Common Pitfalls)
+
+Watch for:
+
+- excessive bindings per control
+- per-item allocations in lists
+- repeated visual tree queries
+- unnecessary control creation/destruction
+- heavy templates
+- uncontrolled event subscriptions
+
+---
+
+# Optimization Strategy
+
+## Step 1: Design First
+
+Always design for clarity first.
+
+---
+
+## Step 2: Measure (if needed)
+
+Optimize only when:
+
+- performance issue is observable
+- bottleneck is identified
+
+---
+
+## Step 3: Targeted Optimization
+
+Optimize:
+
+- hot paths
+- item controls
+- layout loops
+- binding-heavy components
+
+---
+
+# Anti-Patterns
+
+Avoid:
+
+- premature micro-optimizations
+- over-engineered caching layers
+- unnecessary pooling
+- complex state machines for UI performance
+
+---
+
+# Final Principle
+
+A performant MyNet.Avalonia control is:
+
+- simple
+- predictable
+- composable
+- lightweight in bindings
+- efficient in templates
+- free of unnecessary allocations in hot paths

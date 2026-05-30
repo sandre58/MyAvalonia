@@ -39,7 +39,7 @@ public class LinearGradientBrushExtension : ThemeBrushExtensionBase
     /// <summary>
     /// Gets or sets the relative source for the binding. Default is self.
     /// </summary>
-    public RelativeSource RelativeSource { get; set; } = new RelativeSource(RelativeSourceMode.Self);
+    public RelativeSource RelativeSource { get; set; } = new(RelativeSourceMode.Self);
 
     /// <summary>
     /// Gets or sets the orientation of the gradient (horizontal, vertical, diagonal).

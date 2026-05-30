@@ -1,0 +1,48 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="http://mynet.com/avalonia">
+
+    <Style Selector="my|Form.kind-settings">
+        <Setter Property="LabelPosition" Value="Top" />
+        <Setter Property="LabelWidth" Value="*" />
+        <Setter Property="LabelMargin" Value="{my:Thickness Sm, Bottom}" />
+    </Style>
+
+        <Style Selector="my|Form.kind-settings my|FormGroup">
+        <Setter Property="LabelPosition" Value="Top" />
+        <Setter Property="LabelWidth" Value="*" />
+        <Setter Property="LabelMargin" Value="{my:Thickness Sm, Bottom}" />
+    </Style>
+
+    <Style Selector="my|Form.kind-settings my|FormItemContainer, my|Form.kind-settings my|FormGroup">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+    </Style>
+
+    <Style Selector="my|Form.kind-settings :is(TemplatedControl)">
+        <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource MyNet.Theme.DataValidationErrors.Glyph}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="my:InputAssist.ShowClearButton" Value="True" />
+        <Setter Property="my:InputAssist.ShowClipboardButton" Value="True" />
+    </Style>
+
+    <Style Selector="my|Form.kind-settings ToggleSwitch">
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="my:FormItem.LabelPosition" Value="Left" />
+    </Style>
+
+    <Style Selector="my|Form.kind-settings Slider">
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="IsSnapToTickEnabled" Value="True" />
+    </Style>
+
+    <Style Selector="my|Form.kind-settings ListBox:not(.override)">
+        <Setter Property="my:ClassesAssist.Classes" Value="kind-toggle" />
+        <Style Selector="^:not(.no-uniform)">
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" />
+                </ItemsPanelTemplate>
+            </Setter>
+        </Style>
+    </Style>
+</Styles>

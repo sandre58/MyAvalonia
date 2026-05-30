@@ -1,0 +1,73 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.CarouselPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:m="clr-namespace:MyNet.Avalonia.Showcase.MarkupExtensions"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Translate Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             x:DataType="vm:CarouselPageViewModel"
+             ClipToBounds="False"
+             mc:Ignorable="d"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors">
+
+    <v:ShowcaseView ShowContent="False" ShowIcon="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <Carousel Width="600"
+                          Height="400"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          ItemsSource="{m:RandomCountries Max=20}"
+                          behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}">
+                    <Carousel.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="60 10"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Background="{m:RandomBrush}">
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Foreground="{my:ThemeBrush Background, RelativeSource={RelativeSource AncestorType=Border}, Contrast=True}"
+                                           Text="{m:RandomText}"
+                                           TextWrapping="Wrap" />
+                            </Border>
+                        </DataTemplate>
+                    </Carousel.ItemTemplate>
+                </Carousel>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <Carousel Width="600"
+                          Height="400"
+                          behavior:PlaygroundBehavior.AttachStyle="{Binding}"
+                          ItemsSource="{m:RandomCountries Max=20}">
+                    <Carousel.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="60 10"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Background="{m:RandomBrush}">
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Foreground="{my:ThemeBrush Background, RelativeSource={RelativeSource AncestorType=Border}, Contrast=True}"
+                                           Text="{m:RandomText}"
+                                           TextWrapping="Wrap" />
+                            </Border>
+                        </DataTemplate>
+                    </Carousel.ItemTemplate>
+                </Carousel>
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+    </v:ShowcaseView>
+</ContentPage>

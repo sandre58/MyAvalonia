@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="AmPmRangeConverter.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="AmPmRangeConverter.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -13,22 +13,24 @@ namespace MyNet.Avalonia.Theme.Converters.Internals;
 
 internal sealed class AmPmRangeConverter : IValueConverter
 {
-    public static AmPmRangeConverter Minimum { get; } = new() { IsMinimum = true };
+    private readonly bool _isMinimum;
 
-    public static AmPmRangeConverter Maximum { get; } = new() { IsMinimum = false };
+    private AmPmRangeConverter(bool isMinimum) => _isMinimum = isMinimum;
 
-    public bool IsMinimum { get; set; }
+    public static AmPmRangeConverter Minimum { get; } = new(true);
+
+    public static AmPmRangeConverter Maximum { get; } = new(false);
 
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value is TimeFormat format
-            ? (object)(format switch
-            {
-                TimeFormat.TwelveHour when IsMinimum => 1,
-                TimeFormat.TwelveHour when !IsMinimum => 12,
-                TimeFormat.TwentyFourHour when IsMinimum => 0,
-                TimeFormat.TwentyFourHour when !IsMinimum => 23,
-                _ => throw new InvalidOperationException()
-            })
-            : throw new NotSupportedException();
+        ? (object)(format switch
+        {
+            TimeFormat.TwelveHour when _isMinimum => 1,
+            TimeFormat.TwelveHour when !_isMinimum => 12,
+            TimeFormat.TwentyFourHour when _isMinimum => 0,
+            TimeFormat.TwentyFourHour when !_isMinimum => 23,
+            _ => throw new InvalidOperationException()
+        })
+        : throw new NotSupportedException();
 
     /// <inheritdoc />
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotSupportedException();

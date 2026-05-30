@@ -87,27 +87,17 @@ public static class ShadowProvider
     public static BoxShadows ToBoxShadows(this ShadowDepth shadowDepth, Color? overrideColor = null)
         => shadowDepth switch
         {
-            ShadowDepth.Depth0 => new BoxShadows(default),
-            ShadowDepth.Depth1 => new BoxShadows(new BoxShadow
-            { Blur = 5, OffsetX = 1, OffsetY = 1, Color = overrideColor ?? ShadowColor }),
-            ShadowDepth.Depth2 => new BoxShadows(new BoxShadow
-            { Blur = 8, OffsetX = 1.5, OffsetY = 1.5, Color = overrideColor ?? ShadowColor }),
-            ShadowDepth.Depth3 => new BoxShadows(new BoxShadow
-            { Blur = 14, OffsetX = 4.5, OffsetY = 4.5, Color = overrideColor ?? ShadowColor }),
-            ShadowDepth.Depth4 => new BoxShadows(new BoxShadow
-            { Blur = 25, OffsetX = 8, OffsetY = 8, Color = overrideColor ?? ShadowColor }),
-            ShadowDepth.Depth5 => new BoxShadows(new BoxShadow
-            { Blur = 35, OffsetX = 13, OffsetY = 13, Color = overrideColor ?? ShadowColor }),
-            ShadowDepth.CenterDepth1 => new BoxShadows(new BoxShadow
-            { Blur = 5, OffsetY = 1, Color = overrideColor ?? ShadowColor }),
-            ShadowDepth.CenterDepth2 => new BoxShadows(new BoxShadow
-            { Blur = 8, OffsetY = 1.5, Color = overrideColor ?? ShadowColor }),
-            ShadowDepth.CenterDepth3 => new BoxShadows(new BoxShadow
-            { Blur = 14, OffsetY = 4.5, Color = overrideColor ?? ShadowColor }),
-            ShadowDepth.CenterDepth4 => new BoxShadows(new BoxShadow
-            { Blur = 25, OffsetY = 8, Color = overrideColor ?? ShadowColor }),
-            ShadowDepth.CenterDepth5 => new BoxShadows(new BoxShadow
-            { Blur = 35, OffsetY = 13, Color = overrideColor ?? ShadowColor }),
+            ShadowDepth.Depth0 => new(default),
+            ShadowDepth.Depth1 => new(new() { Blur = 5, OffsetX = 1, OffsetY = 1, Color = overrideColor ?? ShadowColor }),
+            ShadowDepth.Depth2 => new(new() { Blur = 8, OffsetX = 1.5, OffsetY = 1.5, Color = overrideColor ?? ShadowColor }),
+            ShadowDepth.Depth3 => new(new() { Blur = 14, OffsetX = 4.5, OffsetY = 4.5, Color = overrideColor ?? ShadowColor }),
+            ShadowDepth.Depth4 => new(new() { Blur = 25, OffsetX = 8, OffsetY = 8, Color = overrideColor ?? ShadowColor }),
+            ShadowDepth.Depth5 => new(new() { Blur = 35, OffsetX = 13, OffsetY = 13, Color = overrideColor ?? ShadowColor }),
+            ShadowDepth.CenterDepth1 => new(new() { Blur = 5, OffsetY = 1, Color = overrideColor ?? ShadowColor }),
+            ShadowDepth.CenterDepth2 => new(new() { Blur = 8, OffsetY = 1.5, Color = overrideColor ?? ShadowColor }),
+            ShadowDepth.CenterDepth3 => new(new() { Blur = 14, OffsetY = 4.5, Color = overrideColor ?? ShadowColor }),
+            ShadowDepth.CenterDepth4 => new(new() { Blur = 25, OffsetY = 8, Color = overrideColor ?? ShadowColor }),
+            ShadowDepth.CenterDepth5 => new(new() { Blur = 35, OffsetY = 13, Color = overrideColor ?? ShadowColor }),
             _ => throw new ArgumentOutOfRangeException(nameof(shadowDepth))
         };
 

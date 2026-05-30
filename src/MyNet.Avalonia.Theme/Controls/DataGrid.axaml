@@ -211,12 +211,12 @@
                                                       Content="{TemplateBinding Content}"
                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
                                                       Opacity="{DynamicResource MyNet.Opacity.High}" />
-                                    <PathIcon Name="SortIcon"
-                                              Grid.Column="1"
-                                              Classes="kind-glyph"
-                                              Data="{StaticResource MyNet.Geometry.ArrowUp}"
-                                              Foreground="{TemplateBinding Foreground}"
-                                              IsVisible="False" />
+                                    <my:MaterialIcon Name="SortIcon"
+                                                     Grid.Column="1"
+                                                     Classes="kind-glyph"
+                                                     Kind="ArrowUp"
+                                                     Foreground="{TemplateBinding Foreground}"
+                                                     IsVisible="False" />
                                 </Grid>
                                 <Rectangle Name="VerticalSeparator"
                                            Grid.Column="1"
@@ -261,11 +261,11 @@
                 </Style>
             </Style>
 
-            <Style Selector="^:sortascending /template/ PathIcon#SortIcon">
+            <Style Selector="^:sortascending /template/ my|MaterialIcon#SortIcon">
                 <Setter Property="IsVisible" Value="True" />
             </Style>
 
-            <Style Selector="^:sortdescending /template/ PathIcon#SortIcon">
+            <Style Selector="^:sortdescending /template/ my|MaterialIcon#SortIcon">
                 <Setter Property="IsVisible" Value="True" />
                 <Setter Property="RenderTransform" Value="rotate(180deg)" />
             </Style>
@@ -497,12 +497,12 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Background="Transparent">
-                    <PathIcon Name="PART_ExpandIconPath" Classes="kind-glyph is-dropdown position-right" />
+                    <my:MaterialIcon Name="PART_ExpandIconPath" Classes="kind-glyph is-dropdown position-right" />
                 </Border>
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:checked /template/ PathIcon#PART_ExpandIconPath">
+        <Style Selector="^:checked /template/ my|MaterialIcon#PART_ExpandIconPath">
             <Setter Property="RenderTransform" Value="rotate(90deg)" />
         </Style>
     </ControlTheme>

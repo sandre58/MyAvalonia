@@ -9,6 +9,10 @@ using MyNet.Avalonia.Controls.Enums;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
+/// <summary>
+/// Provides attached properties for Spinner controls to bind Increase/Decrease actions
+/// to ICommand or ViewModel methods, and enables mouse wheel support.
+/// </summary>
 public static class SpinnerAssist
 {
     #region SwitchButtons
@@ -19,14 +23,14 @@ public static class SpinnerAssist
     public static readonly AttachedProperty<bool> SwitchButtonsProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("SwitchButtons", typeof(SpinnerAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="SwitchButtonsProperty"/>.
+    /// Accessor for Attached <see cref="SwitchButtonsProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="SwitchButtonsProperty"/>.</param>
+    /// <param name="value">The value to set <see cref="SwitchButtonsProperty"/>.</param>
     public static void SetSwitchButtons(StyledElement element, bool value) => element.SetValue(SwitchButtonsProperty, value);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="SwitchButtonsProperty"/>.
+    /// Accessor for Attached <see cref="SwitchButtonsProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
     public static bool GetSwitchButtons(StyledElement element) => element.GetValue(SwitchButtonsProperty);
@@ -41,14 +45,14 @@ public static class SpinnerAssist
     public static readonly AttachedProperty<SpinnerLayout> LayoutProperty = AvaloniaProperty.RegisterAttached<StyledElement, SpinnerLayout>("Layout", typeof(SpinnerAssist), SpinnerLayout.Vertical);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="LayoutProperty"/>.
+    /// Accessor for Attached <see cref="LayoutProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="LayoutProperty"/>.</param>
+    /// <param name="value">The value to set <see cref="LayoutProperty"/>.</param>
     public static void SetLayout(StyledElement element, SpinnerLayout value) => element.SetValue(LayoutProperty, value);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="LayoutProperty"/>.
+    /// Accessor for Attached <see cref="LayoutProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
     public static SpinnerLayout GetLayout(StyledElement element) => element.GetValue(LayoutProperty);
@@ -63,14 +67,14 @@ public static class SpinnerAssist
     public static readonly AttachedProperty<object> DecreaseContentProperty = AvaloniaProperty.RegisterAttached<StyledElement, object>("DecreaseContent", typeof(SpinnerAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="DecreaseContentProperty"/>.
+    /// Accessor for Attached <see cref="DecreaseContentProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="DecreaseContentProperty"/>.</param>
+    /// <param name="value">The value to set <see cref="DecreaseContentProperty"/>.</param>
     public static void SetDecreaseContent(StyledElement element, object value) => element.SetValue(DecreaseContentProperty, value);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="DecreaseContentProperty"/>.
+    /// Accessor for Attached <see cref="DecreaseContentProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
     public static object GetDecreaseContent(StyledElement element) => element.GetValue(DecreaseContentProperty);
@@ -85,14 +89,14 @@ public static class SpinnerAssist
     public static readonly AttachedProperty<object> IncreaseContentProperty = AvaloniaProperty.RegisterAttached<StyledElement, object>("IncreaseContent", typeof(SpinnerAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="IncreaseContentProperty"/>.
+    /// Accessor for Attached <see cref="IncreaseContentProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="IncreaseContentProperty"/>.</param>
+    /// <param name="value">The value to set <see cref="IncreaseContentProperty"/>.</param>
     public static void SetIncreaseContent(StyledElement element, object value) => element.SetValue(IncreaseContentProperty, value);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="IncreaseContentProperty"/>.
+    /// Accessor for Attached <see cref="IncreaseContentProperty"/>.
     /// </summary>
     /// <param name="element">Target element.</param>
     public static object GetIncreaseContent(StyledElement element) => element.GetValue(IncreaseContentProperty);

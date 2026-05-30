@@ -60,9 +60,9 @@ public static class FormItem
     public static readonly AttachedProperty<bool> IsRequiredProperty = AvaloniaProperty.RegisterAttached<Control, bool>("IsRequired", typeof(FormItem), defaultValue: false);
 
     /// <summary>
-    /// Defines the RequiredIndicator attached property.
+    /// Defines the RequiredIndicatorTemplate attached property.
     /// </summary>
-    public static readonly AttachedProperty<string?> RequiredIndicatorProperty = AvaloniaProperty.RegisterAttached<Control, string?>("RequiredIndicator", typeof(FormItem));
+    public static readonly AttachedProperty<IDataTemplate?> RequiredIndicatorTemplateProperty = AvaloniaProperty.RegisterAttached<Control, IDataTemplate?>("RequiredIndicatorTemplate", typeof(FormItem));
 
     /// <summary>
     /// Defines the HelpText attached property.
@@ -117,9 +117,9 @@ public static class FormItem
 
     public static void SetIsRequired(Control control, bool value) => control.SetValue(IsRequiredProperty, value);
 
-    public static string? GetRequiredIndicator(Control control) => control.GetValue(RequiredIndicatorProperty);
+    public static IDataTemplate? GetRequiredIndicatorTemplate(Control control) => control.GetValue(RequiredIndicatorTemplateProperty);
 
-    public static void SetRequiredIndicator(Control control, string? value) => control.SetValue(RequiredIndicatorProperty, value);
+    public static void SetRequiredIndicatorTemplate(Control control, IDataTemplate? value) => control.SetValue(RequiredIndicatorTemplateProperty, value);
 
     public static string? GetHelpText(Control control) => control.GetValue(HelpTextProperty);
 

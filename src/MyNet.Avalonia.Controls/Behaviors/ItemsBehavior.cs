@@ -45,6 +45,9 @@ public static class ItemsBehavior
         if (obj.Sender is not SelectingItemsControl sender) return;
         if (obj.NewValue is not Type type) return;
 
+        // Keep current selected value so we can re-apply it once item value mapping is ready.
+        var currentSelectedValue = sender.SelectedValue;
+
         var excludedValues = GetExcludedValues(sender) ?? [];
 
         IEnumerable? values;
@@ -61,8 +64,9 @@ public static class ItemsBehavior
             return;
         }
 
-        sender.ItemsSource = values;
         sender.SelectedValueBinding = CompiledBinding.Create<EnumTranslatable, Enum?>(x => x.Value);
+        sender.ItemsSource = values;
+        sender.SelectedValue = currentSelectedValue;
 
         if (GetUseDisplayMember(sender))
         {

@@ -41,6 +41,7 @@ public static class ClassesBootstrapper
         SpacingClassRegistry.RegisterMargins();
         SpacingClassRegistry.RegisterSpacings();
         SpacingClassRegistry.RegisterPaddings();
+        SizeClassRegistry.Register();
         StateClassRegistry.Register();
         TypographyClassRegistry.RegisterTexts();
         TypographyClassRegistry.RegisterFonts();

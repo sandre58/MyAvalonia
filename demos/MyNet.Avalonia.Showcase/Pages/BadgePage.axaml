@@ -1,0 +1,45 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.BadgePage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:m="clr-namespace:MyNet.Avalonia.Showcase.MarkupExtensions"
+             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+             x:DataType="vm:BadgePageViewModel"
+             x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Translate Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             ClipToBounds="False"
+             mc:Ignorable="d"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors">
+
+    <v:ShowcaseView>
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <my:Badge behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+                    <my:Badge.Content>
+                        <Button Width="100" Content="{m:RandomContent AllowNull=False}" />
+                    </my:Badge.Content>
+                </my:Badge>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <my:Badge behavior:PlaygroundBehavior.AttachStyle="{Binding}">
+                    <my:Badge.Content>
+                        <Button Width="100" Content="Preview" />
+                    </my:Badge.Content>
+                </my:Badge>
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+    </v:ShowcaseView>
+</ContentPage>

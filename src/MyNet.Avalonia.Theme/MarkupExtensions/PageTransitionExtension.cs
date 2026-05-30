@@ -10,6 +10,7 @@ using Avalonia.Animation.Easings;
 using Avalonia.Markup.Xaml;
 using Avalonia.Metadata;
 using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.Avalonia.Theme.Helpers;
 using static Avalonia.Animation.PageSlide;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
@@ -62,44 +63,5 @@ public class PageTransitionExtension : MarkupExtension
     /// <param name="serviceProvider">The service provider for the markup extension.</param>
     /// <returns>An <see cref="IPageTransition"/> instance configured with the specified values.</returns>
     /// <exception cref="InvalidOperationException">Thrown when an unknown page transition type is specified.</exception>
-    public override object ProvideValue(IServiceProvider serviceProvider)
-    {
-        var duration = TimeSpan.FromMilliseconds(Duration);
-
-        return Type switch
-        {
-            PageTransitionType.None => null!,
-            PageTransitionType.Slide => new PageSlide(duration, Orientation)
-            {
-                FillMode = FillMode,
-                SlideInEasing = Easing,
-                SlideOutEasing = Easing
-            },
-            PageTransitionType.Crossfade => new CrossFade(duration)
-            {
-                FillMode = FillMode,
-                FadeInEasing = Easing,
-                FadeOutEasing = Easing
-            },
-            PageTransitionType.Composite => new CompositePageTransition
-            {
-                PageTransitions =
-                [
-                    new PageSlide(duration, Orientation)
-                    {
-                        FillMode = FillMode,
-                        SlideInEasing = Easing,
-                        SlideOutEasing = Easing
-                    },
-                    new CrossFade(duration)
-                    {
-                        FillMode = FillMode,
-                        FadeOutEasing = Easing,
-                        FadeInEasing = Easing
-                    }
-                ]
-            },
-            _ => throw new InvalidOperationException($"Unknown page transition type: {Type}")
-        };
-    }
+    public override object ProvideValue(IServiceProvider serviceProvider) => TransitionsHelper.CreatePageTransition(Type, TimeSpan.FromMilliseconds(Duration), Orientation,  FillMode, Easing);
 }

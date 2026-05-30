@@ -54,7 +54,7 @@
                                           DockPanel.Dock="Bottom"
                                           HorizontalContentAlignment="Stretch"
                                           Background="{TemplateBinding Background}"
-                                          Content="{Binding CurrentPage?.(NavigationPage.BottomCommandBar), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}" />
+                                          Content="{Binding CurrentPage.(NavigationPage.BottomCommandBar), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}" />
 
                         <!-- Content -->
                         <Grid Name="PART_ContentHost" Background="{TemplateBinding Background}" ClipToBounds="True">
@@ -80,21 +80,16 @@
                             <Button x:Name="PART_BackButton"
                                     Grid.Column="0"
                                     IsVisible="{TemplateBinding IsBackButtonEffectivelyVisible}"
-                                    ToolTip.Tip="{x:Null}"
+                                    ToolTip.Tip="{Binding CurrentPage.(NavigationPage.BackButtonContent), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}"
                                     Margin="{my:Thickness Md, Right}"
-                                    my:IconAssist.Icon="{my:Icon ArrowLeft}"
+                                    Content="{my:MaterialIcon ArrowLeft}"
                                     Classes="variant-outlined"
-                                    Theme="{StaticResource MyNet.Theme.Button.Rounded}">
-                                <ContentPresenter Content="{Binding CurrentPage?.(NavigationPage.BackButtonContent), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}"
-                                                  IsVisible="{Binding CurrentPage?.(NavigationPage.BackButtonContent), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
-                                                  VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center"/>
-                            </Button>
+                                    Theme="{StaticResource MyNet.Theme.Button.Rounded}" />
 
                             <my:IconContentControl Name="IconContent"
                                                    Grid.Column="1"
                                                    Margin="{my:Thickness Md, Right}"
-                                                   Icon="{Binding CurrentPage?.(my:IconAssist.Icon), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}"
+                                                   Icon="{Binding CurrentPage.(my:IconAssist.Icon), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}"
                                                    IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
                                                    IconTemplate="{Binding (my:IconAssist.IconTemplate), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}"
                                                    IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
@@ -111,7 +106,7 @@
                                                    FontWeight="{TemplateBinding my:HeaderAssist.FontWeight}"
                                                    Foreground="{TemplateBinding my:HeaderAssist.Foreground}"
                                                    UseLayoutRounding="False">
-                                <ContentPresenter Name="PART_Header" Content="{Binding CurrentPage?.Header, RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}" />
+                                <ContentPresenter Name="PART_Header" Content="{Binding CurrentPage.Header, RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}" />
                             </my:IconContentControl>
 
                             <ContentPresenter Name="PART_TopCommandBar"
@@ -119,7 +114,7 @@
                                               HorizontalAlignment="Right"
                                               VerticalContentAlignment="Stretch"
                                               Foreground="{TemplateBinding my:HeaderAssist.Foreground}"
-                                              Content="{Binding CurrentPage?.(NavigationPage.TopCommandBar), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}">
+                                              Content="{Binding CurrentPage.(NavigationPage.TopCommandBar), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}">
                                 <ContentPresenter.Styles>
                                     <Style Selector="CommandBar">
                                         <Setter Property="Background" Value="Transparent" />
@@ -127,11 +122,11 @@
                                         <Setter Property="Padding" Value="0" />
                                         <Setter Property="VerticalAlignment" Value="Stretch" />
                                     </Style>
-                                    <Style Selector="AppBarButton">
+                                    <Style Selector="CommandBarButton">
                                         <Setter Property="MinHeight" Value="0" />
                                         <Setter Property="Padding" Value="8,0" />
                                     </Style>
-                                    <Style Selector="AppBarToggleButton">
+                                    <Style Selector="CommandBarToggleButton">
                                         <Setter Property="MinHeight" Value="0" />
                                         <Setter Property="Padding" Value="8,0" />
                                     </Style>

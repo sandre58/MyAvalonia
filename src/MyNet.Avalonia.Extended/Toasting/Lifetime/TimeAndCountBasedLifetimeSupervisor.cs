@@ -34,7 +34,7 @@ public sealed class TimeAndCountBasedLifetimeSupervisor(TimeSpan duration, Maxim
 
         if (_toasts.Count == _maximumNotificationsCount)
         {
-            _toastPending ??= new Queue<Toast>();
+            _toastPending ??= new();
             _toastPending.Enqueue(toast);
             return;
         }
@@ -53,7 +53,7 @@ public sealed class TimeAndCountBasedLifetimeSupervisor(TimeSpan duration, Maxim
         _ = _toasts.Add(toast);
         toast.CloseRequest += ToastClosedCallback;
 
-        RequestShowToast(new ShowToastEventArgs(toast));
+        RequestShowToast(new(toast));
     }
 
     public void CloseToast(Toast toast)
@@ -85,7 +85,7 @@ public sealed class TimeAndCountBasedLifetimeSupervisor(TimeSpan duration, Maxim
         _toastPending?.Clear();
     }
 
-    private void ToastClosedCallback(object? sender, EventArgs e) => RequestCloseToast(new CloseToastEventArgs((Toast)sender!));
+    private void ToastClosedCallback(object? sender, EventArgs e) => RequestCloseToast(new((Toast)sender!));
 
     private void RequestShowToast(ShowToastEventArgs e) => ShowToastRequested?.Invoke(this, e);
 

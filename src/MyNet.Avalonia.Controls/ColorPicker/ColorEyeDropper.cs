@@ -164,8 +164,8 @@ public class ColorEyeDropper : ContentControl
             return;
         _previewPopup?.Open();
 
-        var bitmap = new Bitmap(AssetLoader.Open(new Uri("avares://MyNet.Avalonia.Controls/Cursors/EyeDropper.cur")));
-        Cursor = new Cursor(bitmap, new PixelPoint(16, 16));
+        var bitmap = new Bitmap(AssetLoader.Open(new("avares://MyNet.Avalonia.Controls/Cursors/EyeDropper.cur")));
+        Cursor = new(bitmap, new(16, 16));
 
         SetPreview(e.GetPosition(this));
     }

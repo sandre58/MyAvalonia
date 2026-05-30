@@ -34,20 +34,21 @@ public static class ProxyBehavior
         _ = EnableProperty.Changed.Subscribe(EnableChangedCallback);
 
         // Default builders
-        Builders.Add(new ProxyBuilder(c => c is TextBox, c => new TextBoxProxy((TextBox)c)));
-        Builders.Add(new ProxyBuilder(c => c is ComboBox, c => new ComboBoxProxy((ComboBox)c)));
-        Builders.Add(new ProxyBuilder(c => c is AutoCompleteBox, c => new AutoCompleteBoxProxy((AutoCompleteBox)c)));
-        Builders.Add(new ProxyBuilder(c => c is NumericUpDown, c => new NumericUpDownProxy((NumericUpDown)c)));
-        Builders.Add(new ProxyBuilder(c => c is CalendarDatePicker, c => new CalendarDatePickerProxy((CalendarDatePicker)c)));
-        Builders.Add(new ProxyBuilder(c => c is ITextPicker, c => new PickerProxy((ITextPicker)c)));
-        Builders.Add(new ProxyBuilder(c => c is DatePicker, c => new DatePickerProxy((DatePicker)c)));
-        Builders.Add(new ProxyBuilder(c => c is TimePicker, c => new TimePickerProxy((TimePicker)c)));
-        Builders.Add(new ProxyBuilder(c => c is CodeBlock, c => new CodeBlockProxy((CodeBlock)c)));
-        Builders.Add(new ProxyBuilder(c => c is MultiComboBox, c => new MultiComboBoxProxy((MultiComboBox)c)));
-        Builders.Add(new ProxyBuilder(c => c is TagBox, c => new TagBoxProxy((TagBox)c)));
+        Builders.Add(new(c => c is TextBox, c => new TextBoxProxy((TextBox)c)));
+        Builders.Add(new(c => c is ComboBox, c => new ComboBoxProxy((ComboBox)c)));
+        Builders.Add(new(c => c is AutoCompleteBox, c => new AutoCompleteBoxProxy((AutoCompleteBox)c)));
+        Builders.Add(new(c => c is NumericUpDown, c => new NumericUpDownProxy((NumericUpDown)c)));
+        Builders.Add(new(c => c is CalendarDatePicker, c => new CalendarDatePickerProxy((CalendarDatePicker)c)));
+        Builders.Add(new(c => c is ITextPicker, c => new PickerProxy((ITextPicker)c)));
+        Builders.Add(new(c => c is DatePicker, c => new DatePickerProxy((DatePicker)c)));
+        Builders.Add(new(c => c is TimePicker, c => new TimePickerProxy((TimePicker)c)));
+        Builders.Add(new(c => c is CodeBlock, c => new CodeBlockProxy((CodeBlock)c)));
+        Builders.Add(new(c => c is MultiComboBox, c => new MultiComboBoxProxy((MultiComboBox)c)));
+        Builders.Add(new(c => c is TagBox, c => new TagBoxProxy((TagBox)c)));
+        Builders.Add(new(c => c is ButtonSpinner, c => new ButtonSpinnerProxy((ButtonSpinner)c)));
     }
 
-    public static void RegisterBuilder(Func<Control?, bool> canBuild, Func<Control, IControlProxy> build) => Builders.Add(new ProxyBuilder(canBuild, build));
+    public static void RegisterBuilder(Func<Control?, bool> canBuild, Func<Control, IControlProxy> build) => Builders.Add(new(canBuild, build));
 
     private static IControlProxy? GetOrCreateProxy(Control? control)
     {
@@ -207,3 +208,4 @@ public static class ProxyBehavior
 
     #endregion
 }
+

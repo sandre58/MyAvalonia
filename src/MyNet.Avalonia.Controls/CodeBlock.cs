@@ -6,7 +6,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Avalonia;
 using Avalonia.Controls;
@@ -18,24 +17,11 @@ namespace MyNet.Avalonia.Controls;
 
 /// <summary>
 /// Formats and display a fragment of the source code.
+/// Supports syntax highlighting for C#, XML and XAML.
 /// </summary>
 [ToolboxItem(true)]
-public class CodeBlock : ContentControl
+public partial class CodeBlock : ContentControl
 {
-    private const string EndlinePattern = /* language=regex */ "(\n)";
-
-    private const string TabPattern = /* language=regex */ "(\t)";
-
-    private const string QuotePattern = /* language=regex */ "(\"(?:\\\"|[^\"])*\")|('(?:\\'|[^'])*')";
-
-    private const string CommentPattern = /* language=regex */ @"(\/\/.*?(?:\n|$)|\/\*.*?\*\/)";
-
-    private const string TagPattern = /* language=regex */ @"(<\/?)([a-zA-Z\-:]+)(.*?)(\/?>)";
-
-    private const string BracePattern = /* language=regex */ @"(\{.*?\})";
-
-    private const string EntityPattern = /* language=regex */ "(&[a-zA-Z0-9#]+;)";
-
     private enum CodeType
     {
         Unknown,
@@ -54,8 +40,31 @@ public class CodeBlock : ContentControl
 
         Brace,
 
-        Entity
+        Entity,
+
+        Keyword,
+
+        Number
     }
+
+    [GeneratedRegex(
+        @"(?<comment>//[^\n]*|/\*.*?\*/)"
+        + """|(?<string>@"(?:""|[^"])*"|"(?:\\"|[^"\n])*"|'(?:\\'|[^'\n])*')"""
+        + """|(?<xmltag></?[\w][\w\-:.]*(?:\s+(?:[^>"']|"[^"]*"|'[^']*')*)?\s*/?>)"""
+        + @"|(?<keyword>\b(?:abstract|as|async|await|base|bool|break|byte|case|catch|char|checked|class|const|continue|decimal|default|delegate|do|double|dynamic|else|enum|event|explicit|extern|false|finally|fixed|float|for|foreach|from|get|global|goto|if|implicit|in|init|int|interface|internal|is|lock|long|nameof|namespace|new|not|null|object|operator|out|override|params|partial|private|protected|public|readonly|record|ref|required|return|sbyte|sealed|select|set|short|sizeof|stackalloc|static|string|struct|switch|this|throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|value|var|virtual|void|volatile|when|where|while|with|yield)\b)"
+        + @"|(?<number>\b\d+\.?\d*[fFdDmMlLuU]?\b)"
+        + @"|(?<brace>\{[^}]*\})"
+        + @"|(?<entity>&[a-zA-Z0-9#]+;)",
+        RegexOptions.Singleline | RegexOptions.Compiled)]
+    private static partial Regex SyntaxRegex();
+
+    [GeneratedRegex(
+        @"(?<tagdelim></?)(?<tagname>[\w][\w\-:.]*)"
+        + @"|(?<attrname>[\w][\w\-:.]*)\s*="
+        + """|(?<attrvalue>"[^"]*"|'[^']*')"""
+        + @"|(?<tagclose>/?>)",
+        RegexOptions.Compiled)]
+    private static partial Regex TagPartsRegex();
 
     private SelectableTextBlock? _textBlock;
 
@@ -70,13 +79,13 @@ public class CodeBlock : ContentControl
         Refresh();
     }
 
-    public virtual void Refresh()
+    public void Refresh()
     {
         if (Presenter is null) return;
 
-        _textBlock ??= new SelectableTextBlock { TextWrapping = TextWrapping.Wrap, IsTabStop = false };
+        _textBlock ??= new() { TextWrapping = TextWrapping.Wrap, IsTabStop = false };
 
-        if (Presenter.Content != _textBlock)
+        if (!Equals(Presenter.Content, _textBlock))
             Presenter.Content = _textBlock;
 
         _textBlock.Inlines?.Clear();
@@ -96,110 +105,110 @@ public class CodeBlock : ContentControl
         return code;
     }
 
-    private void PopulateFormattedTextBlock(SelectableTextBlock returnText, string code)
+    private void PopulateFormattedTextBlock(SelectableTextBlock textBlock, string code)
     {
-        var pattern = string.Empty;
-        pattern += EndlinePattern;
-        pattern += "|" + TabPattern;
-        pattern += "|" + QuotePattern;
-        pattern += "|" + CommentPattern;
-        pattern += "|" + EntityPattern;
-        pattern += "|" + BracePattern;
-        pattern += "|" + TagPattern;
+        var lastIndex = 0;
 
-        Regex rgx = new(pattern);
-
-        foreach (var match in rgx.Matches(code).OfType<Match>())
+        foreach (Match match in SyntaxRegex().Matches(code))
         {
-            foreach (var group in match.Groups)
+            if (match.Index > lastIndex)
+                AddTextSegment(textBlock, code[lastIndex..match.Index], CodeType.Unknown);
+
+            if (match.Groups["comment"].Success)
+                AddTextSegment(textBlock, match.Value, CodeType.Comment);
+            else if (match.Groups["string"].Success)
+                AddTextSegment(textBlock, match.Value, CodeType.Quote);
+            else if (match.Groups["xmltag"].Success)
+                AddTagInlines(textBlock, match.Value);
+            else if (match.Groups["keyword"].Success)
+                textBlock.Inlines?.Add(CreateRun(match.Value, CodeType.Keyword));
+            else if (match.Groups["number"].Success)
+                textBlock.Inlines?.Add(CreateRun(match.Value, CodeType.Number));
+            else if (match.Groups["brace"].Success)
+                AddTextSegment(textBlock, match.Value, CodeType.Brace);
+            else if (match.Groups["entity"].Success)
+                textBlock.Inlines?.Add(CreateRun(match.Value, CodeType.Entity));
+
+            lastIndex = match.Index + match.Length;
+        }
+
+        if (lastIndex < code.Length)
+            AddTextSegment(textBlock, code[lastIndex..], CodeType.Unknown);
+
+        if (textBlock.Inlines?.Count == 0)
+            textBlock.Inlines?.Add(CreateRun(code, CodeType.Unknown));
+    }
+
+    private void AddTextSegment(SelectableTextBlock textBlock, string text, CodeType type)
+    {
+        var lines = text.Split('\n');
+        for (var i = 0; i < lines.Length; i++)
+        {
+            var line = lines[i].Replace("\t", "    ", StringComparison.Ordinal);
+            if (line.Length > 0)
+                textBlock.Inlines?.Add(CreateRun(line, type));
+
+            if (i < lines.Length - 1)
+                textBlock.Inlines?.Add(new LineBreak());
+        }
+    }
+
+    private void AddTagInlines(SelectableTextBlock textBlock, string tag)
+    {
+        var lastIndex = 0;
+
+        foreach (Match match in TagPartsRegex().Matches(tag))
+        {
+            if (match.Index > lastIndex)
+                AddTagWhitespace(textBlock, tag[lastIndex..match.Index]);
+
+            if (match.Groups["tagdelim"].Success)
             {
-                // Remove whole matches
-                if (group is Match)
-                    continue;
-
-                // Cast to group
-                var codeMatched = (Group)group;
-
-                // Remove empty groups
-                if (string.IsNullOrEmpty(codeMatched.Value))
-                    continue;
-
-                if (codeMatched.Value.Contains('\t', StringComparison.OrdinalIgnoreCase))
-                {
-                    returnText.Inlines?.Add(Line("  ", CodeType.Space));
-                }
-                else if (codeMatched.Value.Contains("/*", StringComparison.OrdinalIgnoreCase) || codeMatched.Value.Contains("//", StringComparison.OrdinalIgnoreCase))
-                {
-                    returnText.Inlines?.Add(Line(codeMatched.Value, CodeType.Comment));
-                }
-                else if (codeMatched.Value.Contains('<', StringComparison.OrdinalIgnoreCase) || codeMatched.Value.Contains('>', StringComparison.OrdinalIgnoreCase))
-                {
-                    returnText.Inlines?.Add(Line(codeMatched.Value, CodeType.Tag));
-                }
-                else if (codeMatched.Value.Contains('"', StringComparison.OrdinalIgnoreCase))
-                {
-                    var attributeArray = codeMatched.Value.Split('"');
-                    attributeArray = [.. attributeArray.Where(x => !string.IsNullOrEmpty(x.Trim()))];
-
-                    if (attributeArray.Length % 2 == 0)
-                    {
-                        for (var i = 0; i < attributeArray.Length; i += 2)
-                        {
-                            returnText.Inlines?.Add(Line(attributeArray[i], CodeType.AttributeKey));
-                            returnText.Inlines?.Add(Line("\"", CodeType.Quote));
-                            returnText.Inlines?.Add(Line(attributeArray[i + 1], attributeArray[i + 1].Contains('{', StringComparison.OrdinalIgnoreCase) ? CodeType.Brace : CodeType.AttributeValue));
-                            returnText.Inlines?.Add(Line("\"", CodeType.Quote));
-                        }
-                    }
-                    else
-                    {
-                        returnText.Inlines?.Add(Line(codeMatched.Value, CodeType.Unknown));
-                    }
-                }
-                else if (codeMatched.Value.Contains('\'', StringComparison.OrdinalIgnoreCase))
-                {
-                    var attributeArray = codeMatched.Value.Split('\'');
-                    attributeArray = [.. attributeArray.Where(x => !string.IsNullOrEmpty(x.Trim()))];
-
-                    if (attributeArray.Length % 2 == 0)
-                    {
-                        for (var i = 0; i < attributeArray.Length; i += 2)
-                        {
-                            returnText.Inlines?.Add(Line(attributeArray[i], CodeType.AttributeKey));
-                            returnText.Inlines?.Add(Line("'", CodeType.Quote));
-                            returnText.Inlines?.Add(Line(attributeArray[i + 1], CodeType.AttributeValue));
-                            returnText.Inlines?.Add(Line("'", CodeType.Quote));
-                        }
-                    }
-                    else
-                    {
-                        returnText.Inlines?.Add(Line(codeMatched.Value, CodeType.Unknown));
-                    }
-                }
-                else if (codeMatched.Value.Contains('{', StringComparison.OrdinalIgnoreCase) || codeMatched.Value.Contains('}', StringComparison.OrdinalIgnoreCase))
-                {
-                    returnText.Inlines?.Add(Line(codeMatched.Value, CodeType.Brace));
-                }
-                else
-                {
-                    returnText.Inlines?.Add(Line(codeMatched.Value, CodeType.Entity));
-                }
+                textBlock.Inlines?.Add(CreateRun(match.Groups["tagdelim"].Value, CodeType.Tag));
+                textBlock.Inlines?.Add(CreateRun(match.Groups["tagname"].Value, CodeType.Tag));
             }
+            else if (match.Groups["attrname"].Success)
+            {
+                textBlock.Inlines?.Add(CreateRun(match.Groups["attrname"].Value, CodeType.AttributeKey));
+                textBlock.Inlines?.Add(CreateRun("=", CodeType.Unknown));
+            }
+            else if (match.Groups["attrvalue"].Success)
+            {
+                var value = match.Value;
+                var quote = value[..1];
+                var inner = value[1..^1];
+                textBlock.Inlines?.Add(CreateRun(quote, CodeType.Quote));
+                textBlock.Inlines?.Add(CreateRun(inner, inner.Contains('{', StringComparison.Ordinal) ? CodeType.Brace : CodeType.AttributeValue));
+                textBlock.Inlines?.Add(CreateRun(quote, CodeType.Quote));
+            }
+            else if (match.Groups["tagclose"].Success)
+            {
+                textBlock.Inlines?.Add(CreateRun(match.Value, CodeType.Tag));
+            }
+
+            lastIndex = match.Index + match.Length;
         }
 
-        if (returnText.Inlines?.Count == 0)
-        {
-            returnText.Inlines?.Add(Line(code, CodeType.Unknown));
-        }
+        if (lastIndex < tag.Length)
+            AddTagWhitespace(textBlock, tag[lastIndex..]);
     }
 
-    private Run Line(string line, CodeType type)
+    private void AddTagWhitespace(SelectableTextBlock textBlock, string text)
     {
-        var result = new Run(line)
+        var lines = text.Split('\n');
+        for (var i = 0; i < lines.Length; i++)
         {
-            Foreground = ThemeResources.TryGetResource<IBrush>($"MyNet.Brush.CodeBlock.{type}", ActualThemeVariant)
-        };
+            var line = lines[i].Replace("\t", "    ", StringComparison.Ordinal);
+            if (line.Length > 0)
+                textBlock.Inlines?.Add(CreateRun(line, CodeType.Space));
 
-        return result;
+            if (i < lines.Length - 1)
+                textBlock.Inlines?.Add(new LineBreak());
+        }
     }
+
+    private Run CreateRun(string text, CodeType type) => new(text)
+    {
+        Foreground = ThemeResources.TryGetResource<IBrush>($"MyNet.Brush.CodeBlock.{type}", ActualThemeVariant)
+    };
 }

@@ -43,12 +43,12 @@
         <Setter Property="my:SpinnerAssist.Layout" Value="Horizontal" />
         <Setter Property="my:SpinnerAssist.DecreaseContent">
             <Template>
-                <PathIcon Data="{StaticResource MyNet.Geometry.Minus}" />
+                <my:MaterialIcon Kind="Minus" />
             </Template>
         </Setter>
         <Setter Property="my:SpinnerAssist.IncreaseContent">
             <Template>
-                <PathIcon Data="{StaticResource MyNet.Geometry.Plus}" />
+                <my:MaterialIcon Kind="Plus" />
             </Template>
         </Setter>
 
@@ -76,182 +76,112 @@
         <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
         <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
 
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- TEMPLATE                                                  -->
+        <!-- Delegates all visual chrome to the ButtonSpinner theme    -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <Setter Property="Template">
             <ControlTemplate TargetType="NumericUpDown">
-                <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
-                    <Panel Name="PART_RootPanel">
+                <ButtonSpinner Name="PART_Spinner"
+                               Foreground="{TemplateBinding Foreground}"
+                               FontSize="{TemplateBinding FontSize}"
+                               FontWeight="{TemplateBinding FontWeight}"
+                               Padding="{TemplateBinding Padding}"
+                               MinHeight="{TemplateBinding MinHeight}"
+                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"
+                               AllowSpin="{TemplateBinding AllowSpin}"
+                               ShowButtonSpinner="{TemplateBinding ShowButtonSpinner}"
+                               ButtonSpinnerLocation="{TemplateBinding ButtonSpinnerLocation}"
+                               my:SpinnerAssist.Layout="{TemplateBinding (my:SpinnerAssist.Layout)}"
+                               my:SpinnerAssist.SwitchButtons="{TemplateBinding (my:SpinnerAssist.SwitchButtons)}"
+                               my:SpinnerAssist.DecreaseContent="{TemplateBinding (my:SpinnerAssist.DecreaseContent)}"
+                               my:SpinnerAssist.IncreaseContent="{TemplateBinding (my:SpinnerAssist.IncreaseContent)}"
+                               my:IconAssist.Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                               my:IconAssist.IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                               my:IconAssist.Alignment="{TemplateBinding (my:IconAssist.Alignment)}"
+                               my:IconAssist.Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                               my:IconAssist.Opacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                               my:InputAssist.PlaceholderText="{TemplateBinding PlaceholderText}"
+                               my:InputAssist.InnerLeftContent="{TemplateBinding InnerLeftContent}"
+                               my:InputAssist.InnerRightContent="{TemplateBinding InnerRightContent}"
+                               my:InputAssist.InnerPadding="{TemplateBinding (my:InputAssist.InnerPadding)}"
+                               my:InputAssist.InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
+                               my:InputAssist.InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
+                               my:InputAssist.PlaceholderForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
+                               my:InputAssist.PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}"
+                               my:InputAssist.FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
+                               my:InputAssist.FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
+                               my:InputAssist.UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
+                               my:InputAssist.ShowClearButton="{TemplateBinding (my:InputAssist.ShowClearButton)}"
+                               my:InputAssist.UnderText="{TemplateBinding (my:InputAssist.UnderText)}"
+                               my:InputAssist.UnderForeground="{TemplateBinding (my:InputAssist.UnderForeground)}"
+                               my:InputAssist.UnderFontSize="{TemplateBinding (my:InputAssist.UnderFontSize)}"
+                               my:InputAssist.UnderFontStyle="{TemplateBinding (my:InputAssist.UnderFontStyle)}"
+                               my:InputAssist.UnderFontWeight="{TemplateBinding (my:InputAssist.UnderFontWeight)}"
+                               my:ProxyBehavior.Enable="False"
+                               my:ProxyBehavior.Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
+                               my:ValidationAssist.Theme="{TemplateBinding (my:ValidationAssist.Theme)}"
+                               my:ShadowAssist.ShadowDepth="{TemplateBinding (my:ShadowAssist.ShadowDepth)}"
+                               my:TransitionsAssist.UseTransitions="{TemplateBinding (my:TransitionsAssist.UseTransitions)}"
+                               my:DisableAssist.IsDisablable="False"
+                               DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}">
 
-                        <Border Name="PART_MainBorder"
-                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}" />
-
-                        <Border Name="PART_HoverBorder"
-                                Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
-                                BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}"
-                                Theme="{StaticResource MyNet.Theme.Border.State}" />
-
-                        <Border Name="PART_ActiveBorder"
-                                Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
-                                BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}"
-                                Theme="{StaticResource MyNet.Theme.Border.State}" />
-
-                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
-                                <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto">
-
-                                    <!-- Icon -->
-                                    <ContentControl x:Name="PART_Icon"
-                                                    Grid.Column="0"
-                                                    Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
-                                                    VerticalAlignment="Stretch"
-                                                    my:IconAssist.Role="Label"
-                                                    Content="{TemplateBinding (my:IconAssist.Icon)}"
-                                                    ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                    Focusable="False"
-                                                    Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
-                                        <ContentControl.IsVisible>
-                                            <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            </MultiBinding>
-                                        </ContentControl.IsVisible>
-                                    </ContentControl>
-
-                                    <ButtonSpinner Name="PART_Spinner"
-                                                   Grid.Column="1"
-                                                   HorizontalContentAlignment="Stretch"
-                                                   VerticalContentAlignment="Stretch"
-                                                   my:SpinnerAssist.Layout="{TemplateBinding (my:SpinnerAssist.Layout)}"
-                                                   my:SpinnerAssist.SwitchButtons="{TemplateBinding (my:SpinnerAssist.SwitchButtons)}"
-                                                   AllowSpin="{TemplateBinding AllowSpin}"
-                                                   BorderBrush="Transparent"
-                                                   BorderThickness="0"
-                                                   my:DisableAssist.IsDisablable="False"
-                                                   ButtonSpinnerLocation="{TemplateBinding ButtonSpinnerLocation}"
-                                                   Foreground="{TemplateBinding Foreground}"
-                                                   ShowButtonSpinner="{TemplateBinding ShowButtonSpinner}">
-                                        <ButtonSpinner.Styles>
-                                            <Style Selector="RepeatButton.kind-tool">
-                                                <Setter Property="my:ClassesAssist.AddClasses" Value="is-stretch" />
-                                            </Style>
-                                        </ButtonSpinner.Styles>
-                                        <Grid ColumnDefinitions="*,Auto">
-                                            <my:TextField Name="PART_TextField"
-                                                          Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
-                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                          ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
-                                                          FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
-                                                          FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
-                                                          InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
-                                                          InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
-                                                          InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
-                                                          InnerLeftContent="{TemplateBinding InnerLeftContent}"
-                                                          InnerRightContent="{TemplateBinding InnerRightContent}"
-                                                          Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                                          UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
-                                                          PlaceholderText="{TemplateBinding PlaceholderText}"
-                                                          PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
-
-                                                <!-- Text -->
-                                                <TextBox Name="PART_TextBox"
-                                                         HorizontalAlignment="Stretch"
-                                                         VerticalAlignment="Stretch"
-                                                         AcceptsReturn="False"
-                                                         CaretBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                         my:DisableAssist.IsDisablable="False"
-                                                         DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                         IsHitTestVisible="{TemplateBinding (my:InputBehavior.IsTextEditable)}"
-                                                         IsReadOnly="{Binding !(my:InputBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                         SelectionBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
-                                                         SelectionForegroundBrush="{TemplateBinding Foreground}"
-                                                         TextWrapping="NoWrap"
-                                                         Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
-                                            </my:TextField>
-
-                                            <!-- Clear button -->
-                                            <Button Name="PART_ClearButton"
-                                                    Grid.Column="1"
-                                                    Classes="kind-tool is-stretch"
-                                                    my:DisableAssist.IsDisablable="False"
-                                                    Command="{Binding Clear, ElementName=PART_TextBox}"
-                                                    Content="{my:Icon Close}"
-                                                    IsVisible="False" />
-                                        </Grid>
-                                    </ButtonSpinner>
-                                </Grid>
-                            </my:Ripple>
-                        </Border>
-
-                        <!-- UnderText -->
-                        <Border Name="PART_BorderUnderText">
-                            <TextBlock Name="PART_UnderText"
-                                       Margin="0 0 0 -15"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Bottom"
-                                       FontSize="{TemplateBinding (my:InputAssist.UnderFontSize)}"
-                                       FontStyle="{TemplateBinding (my:InputAssist.UnderFontStyle)}"
-                                       FontWeight="{TemplateBinding (my:InputAssist.UnderFontWeight)}"
-                                       Foreground="{TemplateBinding (my:InputAssist.UnderForeground)}"
-                                       IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
-                                       Text="{TemplateBinding (my:InputAssist.UnderText)}" />
-                        </Border>
-                    </Panel>
-                </DataValidationErrors>
+                    <!-- TextBox as content of the ButtonSpinner -->
+                    <TextBox Name="PART_TextBox"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Stretch"
+                             AcceptsReturn="False"
+                             CaretBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                             my:DisableAssist.IsDisablable="False"
+                             DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
+                             IsHitTestVisible="{TemplateBinding (my:InputBehavior.IsTextEditable)}"
+                             IsReadOnly="{Binding !(my:InputBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
+                             SelectionBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
+                             SelectionForegroundBrush="{TemplateBinding Foreground}"
+                             TextWrapping="NoWrap"
+                             Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
+                </ButtonSpinner>
             </ControlTemplate>
         </Setter>
 
-        <!-- Layout -->
-        <Style Selector="^ /template/ ContentControl#PART_Icon">
-            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- FORWARD VARIANT TO BUTTONSPINNER (via styles so that    -->
+        <!-- ButtonSpinner state styles :error/:focus can override)   -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <Style Selector="^ /template/ ButtonSpinner#PART_Spinner">
+            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{Binding (my:VariantAssist.DefaultPrimary), RelativeSource={RelativeSource AncestorType=NumericUpDown}}" />
+            <Setter Property="my:VariantAssist.Background" Value="{Binding (my:VariantAssist.Background), RelativeSource={RelativeSource AncestorType=NumericUpDown}}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{Binding (my:VariantAssist.BorderBrush), RelativeSource={RelativeSource AncestorType=NumericUpDown}}" />
+            <Setter Property="my:VariantAssist.Foreground" Value="{Binding (my:VariantAssist.Foreground), RelativeSource={RelativeSource AncestorType=NumericUpDown}}" />
+            <Setter Property="my:VariantAssist.Primary" Value="{Binding (my:VariantAssist.Primary), RelativeSource={RelativeSource AncestorType=NumericUpDown}}" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="{Binding (my:VariantAssist.BorderThickness), RelativeSource={RelativeSource AncestorType=NumericUpDown}}" />
         </Style>
 
-        <Style Selector="^[ShowButtonSpinner=True][ButtonSpinnerLocation=Left]">
-            <Setter Property="Padding" Value="0" />
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- PROPAGATE CLASSES TO BUTTONSPINNER                       -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <Style Selector="^.size-sm /template/ ButtonSpinner#PART_Spinner">
+            <Setter Property="my:ClassesAssist.AddClasses" Value="size-sm" />
         </Style>
 
-        <Style Selector="^[ShowButtonSpinner=True][(my|SpinnerAssist.Layout)=Opposite]">
-            <Setter Property="Padding" Value="0" />
-        </Style>
-        <Style Selector="^.icon-right, ^.button-right">
-            <Style Selector="^ /template/ ContentControl#PART_Icon">
-                <Setter Property="Grid.Column" Value="2" />
-            </Style>
+        <Style Selector="^.size-lg /template/ ButtonSpinner#PART_Spinner">
+            <Setter Property="my:ClassesAssist.AddClasses" Value="size-lg" />
         </Style>
 
-        <Style Selector="^.icon-right:not(.button-right) /template/ Grid#PART_Grid">
-            <Setter Property="Margin" Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.AddLeftToRight}}" />
+        <Style Selector="^.icon-right /template/ ButtonSpinner#PART_Spinner">
+            <Setter Property="my:ClassesAssist.AddClasses" Value="icon-right" />
         </Style>
 
-        <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
-            <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Left}}" />
+        <Style Selector="^.button-right /template/ ButtonSpinner#PART_Spinner">
+            <Setter Property="my:ClassesAssist.AddClasses" Value="button-right" />
         </Style>
 
-        <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
-            <Setter Property="Margin" Value="0" />
-        </Style>
-
-        <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
-            <Style Selector="^ /template/ my|TextField#PART_TextField">
-                <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
-            </Style>
-            <Style Selector="^ /template/ Button#PART_ClearButton">
-                <Setter Property="Padding" Value="{my:Thickness Sm}" />
-            </Style>
-        </Style>
-
-        <!-- With clear button -->
-        <Style Selector="^[(my|InputAssist.ShowClearButton)=True]">
-            <Style Selector="^[(my|ProxyBehavior.IsEmpty)=False] /template/ Button#PART_ClearButton">
-                <Setter Property="IsVisible" Value="True" />
-            </Style>
-        </Style>
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- NUMERICUPDOWN-SPECIFIC STYLES                             -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <!-- Is Read only -->
         <Style Selector="^[(my|InputBehavior.IsTextEditable)=False]">
@@ -259,61 +189,11 @@
             <Setter Property="my:InputBehavior.UpdateValueOnKeyboard" Value="True" />
             <Setter Property="my:InputBehavior.UpdateValueOnMouseWheel" Value="True" />
         </Style>
-
-        <!-- Hover -->
-        <Style Selector="^:not(:disabled):not(:focus-within):pointerover">
-            <Style Selector="^ /template/ Border#PART_HoverBorder">
-                <Setter Property="Opacity" Value="1" />
-            </Style>
-        </Style>
-
-        <!-- Focused -->
-        <Style Selector="^:focus-within">
-            <Setter Property="BorderThickness" Value="1" />
-
-            <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="Opacity" Value="1" />
-            </Style>
-        </Style>
-
-        <!-- Error -->
-        <Style Selector="^:error">
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{my:Theme Validation.Error}" />
-            <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{my:Theme Validation.Error}" />
-            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:Theme Validation.Error}" />
-            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Validation.Error}" />
-
-            <Style Selector="^ /template/ my|Underline#PART_Underline">
-                <Setter Property="ActiveBrush" Value="{my:Theme Validation.Error}" />
-            </Style>
-
-            <Style Selector="^ /template/ Border#PART_BorderUnderText">
-                <Setter Property="IsVisible" Value="False" />
-            </Style>
-        </Style>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- SIZES                                                     -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-
-        <Style Selector="^.size-sm">
-            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Sm}" />
-
-            <Style Selector="^ /template/ ContentControl#PART_Icon">
-                <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xs}" />
-            </Style>
-        </Style>
-
-        <Style Selector="^.size-lg">
-            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Lg}" />
-
-            <Style Selector="^ /template/ ContentControl#PART_Icon">
-                <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Lg}" />
-            </Style>
-        </Style>
     </ControlTheme>
 
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- UNDERLINE VARIANT                                             -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.NumericUpDown.Underline" TargetType="NumericUpDown" BasedOn="{StaticResource {x:Type NumericUpDown}}">
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Underline.Md}" />
@@ -330,178 +210,9 @@
         <Setter Property="my:InteractionAssist.ActiveBackground" Value="Transparent" />
         <Setter Property="my:InteractionAssist.RippleColor" Value="Transparent" />
 
-        <Setter Property="Template">
-            <ControlTemplate TargetType="NumericUpDown">
-                <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
-                    <Panel Name="PART_RootPanel">
-
-                        <Border Name="PART_MainBorder"
-                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}" />
-
-                        <Border Name="PART_HoverBorder"
-                                Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
-                                BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}"
-                                Theme="{StaticResource MyNet.Theme.Border.State}" />
-
-                        <Border ClipToBounds="False">
-                            <Grid Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto">
-
-                                <!-- Icon -->
-                                <ContentControl x:Name="PART_Icon"
-                                                Grid.Column="0"
-                                                Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
-                                                VerticalAlignment="Center"
-                                                my:IconAssist.Role="Label"
-                                                Content="{TemplateBinding (my:IconAssist.Icon)}"
-                                                ContentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                Focusable="False"
-                                                Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
-                                    <ContentControl.IsVisible>
-                                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                        </MultiBinding>
-                                    </ContentControl.IsVisible>
-                                </ContentControl>
-
-                                <ButtonSpinner Name="PART_Spinner"
-                                               Grid.Column="1"
-                                               HorizontalContentAlignment="Stretch"
-                                               VerticalContentAlignment="Stretch"
-                                               my:SpinnerAssist.Layout="{TemplateBinding (my:SpinnerAssist.Layout)}"
-                                               my:SpinnerAssist.SwitchButtons="{TemplateBinding (my:SpinnerAssist.SwitchButtons)}"
-                                               AllowSpin="{TemplateBinding AllowSpin}"
-                                               BorderBrush="Transparent"
-                                               BorderThickness="0"
-                                               ButtonSpinnerLocation="{TemplateBinding ButtonSpinnerLocation}"
-                                               Foreground="{TemplateBinding Foreground}"
-                                               ShowButtonSpinner="{TemplateBinding ShowButtonSpinner}">
-                                    <ButtonSpinner.Styles>
-                                        <Style Selector="RepeatButton.kind-tool">
-                                            <Setter Property="Padding" Value="2 1" />
-                                            <Setter Property="Height" Value="{StaticResource MyNet.Height.Button.Tool}" />
-                                            <Setter Property="Width" Value="{StaticResource MyNet.Height.Button.Tool}" />
-                                            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
-                                            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
-                                            <Style Selector="^[(my|SpinnerAssist.Layout)=Vertical]">
-                                                <Setter Property="Padding" Value="{my:Thickness Xs, Horizontal}" />
-                                                <Setter Property="Height" Value="NaN" />
-                                                <Setter Property="Width" Value="NaN" />
-                                                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                                <Setter Property="VerticalAlignment" Value="Stretch" />
-                                            </Style>
-                                        </Style>
-                                    </ButtonSpinner.Styles>
-                                    <Grid ColumnDefinitions="*,Auto">
-                                        <my:TextField Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                      ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
-                                                      FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
-                                                      FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
-                                                      InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
-                                                      InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
-                                                      InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
-                                                      InnerLeftContent="{TemplateBinding InnerLeftContent}"
-                                                      InnerRightContent="{TemplateBinding InnerRightContent}"
-                                                      Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                                      UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
-                                                      PlaceholderText="{TemplateBinding PlaceholderText}"
-                                                      PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
-
-                                            <!-- Text -->
-                                            <TextBox Name="PART_TextBox"
-                                                     HorizontalAlignment="Stretch"
-                                                     VerticalAlignment="Stretch"
-                                                     AcceptsReturn="False"
-                                                     CaretBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                     my:DisableAssist.IsDisablable="False"
-                                                     DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                                     IsHitTestVisible="{TemplateBinding (my:InputBehavior.IsTextEditable)}"
-                                                     IsReadOnly="{Binding !(my:InputBehavior.IsTextEditable), RelativeSource={RelativeSource TemplatedParent}}"
-                                                     SelectionBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
-                                                     SelectionForegroundBrush="{TemplateBinding Foreground}"
-                                                     TextWrapping="NoWrap"
-                                                     Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
-
-                                        </my:TextField>
-
-                                        <!-- Clear button -->
-                                        <Button Name="PART_ClearButton"
-                                                Grid.Column="1"
-                                                Margin="{my:Thickness Xs, Left}"
-                                                Classes="kind-tool"
-                                                my:DisableAssist.IsDisablable="False"
-                                                Command="{Binding Clear, ElementName=PART_TextBox}"
-                                                Content="{my:Icon Close}"
-                                                IsVisible="False" />
-                                    </Grid>
-                                </ButtonSpinner>
-                            </Grid>
-                        </Border>
-
-                        <!-- Underline -->
-                        <my:Underline x:Name="PART_Underline"
-                                      HorizontalAlignment="Stretch"
-                                      VerticalAlignment="Bottom"
-                                      ActiveBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                                      ActiveHeight="1.4"
-                                      BorderBrush="{TemplateBinding BorderBrush}"
-                                      CornerRadius="0"
-                                      Focusable="False"
-                                      InactiveHeight="0"
-                                      IsHitTestVisible="False"
-                                      Opacity="1" />
-
-                        <!-- UnderText -->
-                        <Border Name="PART_BorderUnderText">
-                            <TextBlock Name="PART_UnderText"
-                                       Margin="0 0 0 -15"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Bottom"
-                                       FontSize="{TemplateBinding (my:InputAssist.UnderFontSize)}"
-                                       FontStyle="{TemplateBinding (my:InputAssist.UnderFontStyle)}"
-                                       FontWeight="{TemplateBinding (my:InputAssist.UnderFontWeight)}"
-                                       Foreground="{TemplateBinding (my:InputAssist.UnderForeground)}"
-                                       IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
-                                       Text="{TemplateBinding (my:InputAssist.UnderText)}" />
-                        </Border>
-                    </Panel>
-                </DataValidationErrors>
-            </ControlTemplate>
-        </Setter>
-
-        <!-- Layout -->
-        <Style Selector="^[ShowButtonSpinner=True][ButtonSpinnerLocation=Left] /template/ ButtonSpinner#PART_Spinner">
-            <Setter Property="Padding" Value="{my:Thickness Sm, Left}" />
-        </Style>
-
-        <Style Selector="^[ShowButtonSpinner=True][ButtonSpinnerLocation=Right] /template/ ButtonSpinner#PART_Spinner">
-            <Setter Property="Padding" Value="{my:Thickness Sm, Right}" />
-        </Style>
-
-        <Style Selector="^[ShowButtonSpinner=True][(my|SpinnerAssist.Layout)=Opposite] /template/ ButtonSpinner#PART_Spinner">
-            <Setter Property="Padding" Value="{my:Thickness Sm, Horizontal}" />
-        </Style>
-
-        <!-- Focused -->
-        <Style Selector="^:focus-within">
-            <Setter Property="BorderThickness" Value="0 0 0 1" />
-
-            <Style Selector="^ /template/ my|Underline#PART_Underline">
-                <Setter Property="IsActive" Value="True" />
-            </Style>
-        </Style>
-
-        <!-- Error -->
-        <Style Selector="^:error">
-            <Setter Property="BorderThickness" Value="0 0 0 1" />
+        <!-- Use underline theme for the ButtonSpinner -->
+        <Style Selector="^ /template/ ButtonSpinner#PART_Spinner">
+            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ButtonSpinner.Underline}" />
         </Style>
 
     </ControlTheme>

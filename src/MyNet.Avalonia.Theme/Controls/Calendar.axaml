@@ -26,13 +26,20 @@
         <Setter Property="BorderThickness" Value="{Binding $parent[Calendar].(my:ItemsAssist.BorderThickness)}" />
         <Setter Property="Foreground" Value="{Binding $parent[Calendar].(my:ItemsAssist.Foreground)}" />
         <Setter Property="CornerRadius" Value="{Binding $parent[Calendar].(my:ItemsAssist.CornerRadius)}" />
-        <Setter Property="my:InteractionAssist.HoverBackground" Value="{Binding $parent[Calendar].(my:ItemsAssist.HoverBackground)}" />
-        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{Binding $parent[Calendar].(my:ItemsAssist.HoverBorderBrush)}" />
-        <Setter Property="my:InteractionAssist.HoverForeground" Value="{Binding $parent[Calendar].(my:ItemsAssist.HoverForeground)}" />
-        <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $parent[Calendar].(my:ItemsAssist.RippleColor)}" />
-        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $parent[Calendar].(my:ItemsAssist.ActiveBackground)}" />
-        <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $parent[Calendar].(my:ItemsAssist.ActiveBorderBrush)}" />
-        <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $parent[Calendar].(my:ItemsAssist.ActiveForeground)}" />
+        <Setter Property="my:InteractionAssist.HoverBackground"
+                Value="{Binding $parent[Calendar].(my:ItemsAssist.HoverBackground)}" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush"
+                Value="{Binding $parent[Calendar].(my:ItemsAssist.HoverBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.HoverForeground"
+                Value="{Binding $parent[Calendar].(my:ItemsAssist.HoverForeground)}" />
+        <Setter Property="my:InteractionAssist.RippleColor"
+                Value="{Binding $parent[Calendar].(my:ItemsAssist.RippleColor)}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground"
+                Value="{Binding $parent[Calendar].(my:ItemsAssist.ActiveBackground)}" />
+        <Setter Property="my:InteractionAssist.ActiveBorderBrush"
+                Value="{Binding $parent[Calendar].(my:ItemsAssist.ActiveBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.ActiveForeground"
+                Value="{Binding $parent[Calendar].(my:ItemsAssist.ActiveForeground)}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="Button">
@@ -136,11 +143,13 @@
         </Style>
 
         <Style Selector="^:start-date, ^:preview-start-date">
-            <Setter Property="CornerRadius" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusConverter.Left}}" />
+            <Setter Property="CornerRadius"
+                    Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusConverter.Left}}" />
         </Style>
 
         <Style Selector="^:end-date, ^:preview-end-date">
-            <Setter Property="CornerRadius" Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusConverter.Right}}" />
+            <Setter Property="CornerRadius"
+                    Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusConverter.Right}}" />
         </Style>
 
         <Style Selector="^:blackout /template/ Panel#PART_RootPanel">
@@ -148,10 +157,12 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="MyNet.Theme.Button.Embedded.Calendar.Extended" TargetType="Button" BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar}">
+    <ControlTheme x:Key="MyNet.Theme.Button.Embedded.Calendar.Extended" TargetType="Button"
+                  BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar}">
         <Setter Property="Margin" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.Margin)}" />
         <Setter Property="Padding" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.Padding)}" />
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.ShadowDepth)}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth"
+                Value="{Binding $parent[my:Calendar].(my:ItemsAssist.ShadowDepth)}" />
 
         <!-- Default Theme -->
         <Setter Property="Background" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.Background)}" />
@@ -159,26 +170,37 @@
         <Setter Property="BorderThickness" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.BorderThickness)}" />
         <Setter Property="Foreground" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.Foreground)}" />
         <Setter Property="CornerRadius" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.CornerRadius)}" />
-        <Setter Property="my:InteractionAssist.HoverBackground" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.HoverBackground)}" />
-        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.HoverBorderBrush)}" />
-        <Setter Property="my:InteractionAssist.HoverForeground" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.HoverForeground)}" />
-        <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.RippleColor)}" />
-        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.ActiveBackground)}" />
-        <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.ActiveBorderBrush)}" />
-        <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $parent[my:Calendar].(my:ItemsAssist.ActiveForeground)}" />
+        <Setter Property="my:InteractionAssist.HoverBackground"
+                Value="{Binding $parent[my:Calendar].(my:ItemsAssist.HoverBackground)}" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush"
+                Value="{Binding $parent[my:Calendar].(my:ItemsAssist.HoverBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.HoverForeground"
+                Value="{Binding $parent[my:Calendar].(my:ItemsAssist.HoverForeground)}" />
+        <Setter Property="my:InteractionAssist.RippleColor"
+                Value="{Binding $parent[my:Calendar].(my:ItemsAssist.RippleColor)}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground"
+                Value="{Binding $parent[my:Calendar].(my:ItemsAssist.ActiveBackground)}" />
+        <Setter Property="my:InteractionAssist.ActiveBorderBrush"
+                Value="{Binding $parent[my:Calendar].(my:ItemsAssist.ActiveBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.ActiveForeground"
+                Value="{Binding $parent[my:Calendar].(my:ItemsAssist.ActiveForeground)}" />
     </ControlTheme>
 
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT CALENDARDAYBUTTON THEME                           -->
     <!-- ═════════════════════════════════════════════════════════ -->
-    <ControlTheme x:Key="{x:Type CalendarDayButton}" TargetType="CalendarDayButton" BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar}" />
-    <ControlTheme x:Key="{x:Type my:CalendarDayButton}" TargetType="my:CalendarDayButton" BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar.Extended}" />
+    <ControlTheme x:Key="{x:Type CalendarDayButton}" TargetType="CalendarDayButton"
+                  BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar}" />
+    <ControlTheme x:Key="{x:Type my:CalendarDayButton}" TargetType="my:CalendarDayButton"
+                  BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar.Extended}" />
 
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT CALENDARBUTTON THEME                              -->
     <!-- ═════════════════════════════════════════════════════════ -->
-    <ControlTheme x:Key="{x:Type CalendarButton}" TargetType="CalendarButton" BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar}" />
-    <ControlTheme x:Key="{x:Type my:CalendarYearButton}" TargetType="my:CalendarYearButton" BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar.Extended}" />
+    <ControlTheme x:Key="{x:Type CalendarButton}" TargetType="CalendarButton"
+                  BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar}" />
+    <ControlTheme x:Key="{x:Type my:CalendarYearButton}" TargetType="my:CalendarYearButton"
+                  BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar.Extended}" />
 
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT CALENDARITEM THEME                                -->
@@ -222,8 +244,9 @@
                             <Button Name="PART_PreviousButton"
                                     Grid.Column="0"
                                     Classes="variant-text size-sm"
-                                    my:DisableAssist.IsDisablable="False"
-                                    Content="{my:Icon ChevronLeft}" />
+                                    my:DisableAssist.IsDisablable="False">
+                                <PathIcon Data="{StaticResource MyNet.Geometry.ChevronLeft}" Classes="size-xs" />
+                            </Button>
 
                             <Button Name="PART_HeaderButton"
                                     Grid.Column="2"
@@ -240,8 +263,9 @@
                             <Button Name="PART_NextButton"
                                     Grid.Column="4"
                                     Classes="variant-text size-sm"
-                                    my:DisableAssist.IsDisablable="False"
-                                    Content="{my:Icon ChevronRight}" />
+                                    my:DisableAssist.IsDisablable="False">
+                                <PathIcon Data="{StaticResource MyNet.Geometry.ChevronRight}" Classes="size-xs" />
+                            </Button>
                         </Grid>
                         <Grid Name="PART_MonthView"
                               Grid.Row="1"
@@ -265,6 +289,8 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type Calendar}" TargetType="Calendar">
         <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
@@ -306,7 +332,8 @@
         <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
         <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
-        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground"
+                Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
         <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
 
         <Style Selector="^.role-contrast">
@@ -348,6 +375,8 @@
 
     <ControlTheme x:Key="{x:Type my:Calendar}" TargetType="my:Calendar">
         <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
@@ -401,7 +430,8 @@
         <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:Foreground}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
         <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
-        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground"
+                Value="{my:ThemeBrush (my:ItemsAssist.ActiveBackground), Contrast=True}" />
         <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
 
         <Style Selector="^.role-contrast">
@@ -421,19 +451,22 @@
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch"
                           RowDefinitions="Auto, *">
-                        <Grid Grid.Row="0" Margin="{my:Thickness Md, Bottom}" ColumnDefinitions="Auto, Auto,*, Auto, Auto">
+                        <Grid Grid.Row="0" Margin="{my:Thickness Md, Bottom}"
+                              ColumnDefinitions="Auto, Auto,*, Auto, Auto">
                             <Button Name="{x:Static my:Calendar.PartFastPreviousButton}"
                                     Grid.Column="0"
                                     Classes="variant-text size-sm"
                                     my:DisableAssist.IsDisablable="False"
-                                    Content="{my:Icon ChevronDoubleLeft}"
-                                    Focusable="False" />
+                                    Focusable="False">
+                                <PathIcon Data="{StaticResource MyNet.Geometry.DoubleChevronLeft}" Classes="size-xs" />
+                            </Button>
                             <Button Name="{x:Static my:Calendar.PartPreviousButton}"
                                     Grid.Column="1"
                                     Classes="variant-text size-sm"
                                     my:DisableAssist.IsDisablable="False"
-                                    Content="{my:Icon ChevronLeft}"
-                                    Focusable="False" />
+                                    Focusable="False">
+                                <PathIcon Data="{StaticResource MyNet.Geometry.ChevronLeft}" Classes="size-xs" />
+                            </Button>
 
                             <Grid Grid.Column="2" ColumnDefinitions="*, *">
                                 <Button Name="{x:Static my:Calendar.PartMonthButton}"
@@ -465,14 +498,16 @@
                                     Grid.Column="3"
                                     Classes="variant-text size-sm"
                                     my:DisableAssist.IsDisablable="False"
-                                    Content="{my:Icon ChevronRight}"
-                                    Focusable="False" />
+                                    Focusable="False">
+                                <PathIcon Data="{StaticResource MyNet.Geometry.ChevronRight}" Classes="size-xs" />
+                            </Button>
                             <Button Name="{x:Static my:Calendar.PartFastNextButton}"
                                     Grid.Column="4"
                                     Classes="variant-text size-sm"
                                     my:DisableAssist.IsDisablable="False"
-                                    Content="{my:Icon ChevronDoubleRight}"
-                                    Focusable="False" />
+                                    Focusable="False">
+                                <PathIcon Data="{StaticResource MyNet.Geometry.DoubleChevronRight}" Classes="size-xs" />
+                            </Button>
                         </Grid>
                         <Grid Name="{x:Static my:Calendar.PartMonthGrid}"
                               Grid.Row="1"

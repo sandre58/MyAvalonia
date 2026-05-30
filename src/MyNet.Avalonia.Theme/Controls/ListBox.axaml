@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia"
-                    xmlns:t="clr-namespace:MyNet.Observable.Translatables;assembly=MyNet.Observable">
+                    xmlns:t="clr-namespace:MyNet.Observable.Translatables;assembly=MyNet.Observable"
+                    xmlns:u="clr-namespace:MyNet.Utilities;assembly=MyNet.Utilities">
 
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT LISTBOXITEM THEME                                 -->
@@ -290,12 +291,21 @@
 
         <Style Selector="^.kind-gender">
             <Setter Property="my:ClassesAssist.Classes" Value="flex-uniform" />
+            <Setter Property="my:ItemsBehavior.EnumSourceType" Value="{x:Type u:GenderType}" />
+            <Setter Property="my:ItemsBehavior.UseDisplayMember" Value="False" />
+            <Setter Property="SelectedValueBinding" Value="{Binding Value, x:DataType=t:EnumTranslatable}" />
 
-            <Style Selector="^ ListBoxItem, ^ TabStripItem">
-                <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding Value, Converter={x:Static my:GenderTypeConverter.Brush}, x:DataType=t:EnumTranslatable}" />
-                <Setter Property="my:IconAssist.Icon" Value="{Binding Value, Converter={x:Static my:GenderTypeConverter.Icon}, x:DataType=t:EnumTranslatable}" />
-                <Setter Property="Content" Value="{Binding Display, x:DataType=t:EnumTranslatable}" />
-            </Style>
+            <Setter Property="ItemContainerTheme">
+                <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                    <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding Value, Converter={x:Static my:GenderTypeConverter.Brush}, x:DataType=t:EnumTranslatable}" />
+                    <Setter Property="my:IconAssist.Icon">
+                        <Template>
+                            <my:MaterialIcon Kind="{Binding Value, Converter={x:Static my:GenderTypeConverter.Icon}, x:DataType=t:EnumTranslatable}" />
+                        </Template>
+                    </Setter>
+                    <Setter Property="Content" Value="{Binding Display, x:DataType=t:EnumTranslatable}" />
+                </ControlTheme>
+            </Setter>
         </Style>
 
         <!-- ═════════════════════════════════════════════════════════ -->

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Converters;
 
@@ -66,7 +66,7 @@ public sealed class MathComparisonConverter : IValueConverter, IMultiValueConver
 
             return operation switch
             {
-                MathComparisonForConverter.IsEqualsTo => value1.NearlyEqual(value2),
+                MathComparisonForConverter.IsEqualsTo => value1.IsCloseTo(value2),
                 MathComparisonForConverter.IsGreaterThan => value1 > value2,
                 MathComparisonForConverter.IsLessThan => value1 < value2,
                 _ => AvaloniaProperty.UnsetValue

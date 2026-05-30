@@ -1,0 +1,130 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT EXTENDEDICON THEME                                -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type my:ExtendedIcon}" TargetType="my:ExtendedIcon" BasedOn="{StaticResource {x:Type PathIcon}}">
+        <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
+        <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Foreground AncestorType=Control}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:Foreground AncestorType=Control, Opacity=High}" />
+        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:Foreground AncestorType=Control}" />
+
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
+
+        <!-- Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="ActiveForeground" Value="Transparent" />
+        <Setter Property="ActiveBorderBrush" Value="Transparent" />
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:ExtendedIcon">
+                <Border Background="Transparent" Padding="{TemplateBinding Padding}">
+                    <Viewbox Name="PART_Viewbox">
+                        <Path Name="PART_Fill"
+                              Data="{TemplateBinding Data}"
+                              Fill="{TemplateBinding Foreground}"
+                              Stroke="{TemplateBinding BorderBrush}"
+                              StrokeJoin="Round"
+                              StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
+                              Width="24"
+                              Height="24" />
+                    </Viewbox>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ /template/ Viewbox#PART_Viewbox">
+            <Setter Property="Width" Value="{Binding Width, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Setter Property="Height" Value="{Binding Height, RelativeSource={RelativeSource TemplatedParent}}" />
+        </Style>
+        
+        <Style Selector="^:not(^[IconSize=NaN]) /template/ Viewbox#PART_Viewbox">
+            <Setter Property="Width" Value="{Binding IconSize, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Setter Property="Height" Value="{Binding IconSize, RelativeSource={RelativeSource TemplatedParent}}" />
+        </Style>
+        <Style Selector="^[Width=NaN][Height=NaN][IconSize=NaN] /template/ Viewbox#PART_Viewbox">
+            <Setter Property="Width" Value="{Binding FontSize, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Setter Property="Height" Value="{Binding FontSize, RelativeSource={RelativeSource TemplatedParent}}" />
+        </Style>
+
+        <Style Selector="^:active /template/ Path#PART_Fill">
+            <Setter Property="Fill"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActiveForeground}" />
+            <Setter Property="Stroke"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActiveBorderBrush}" />
+        </Style>
+        
+        <Style Selector="^.layout-fill /template/ Viewbox#PART_Viewbox">
+            <Setter Property="Width" Value="{x:Static system:Double.NaN}" />
+            <Setter Property="Height" Value="{x:Static system:Double.NaN}" />
+        </Style>
+
+        <Style Selector="^.is-activable">
+            <Setter Property="Background" Value="{my:Foreground Opacity=Medium}" />
+            <Setter Property="BorderBrush" Value="{my:Foreground Opacity=Medium}" />
+            <Setter Property="ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+            <Setter Property="ActiveBorderBrush" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        </Style>
+        
+        <Style Selector="^[(my|IconAssist.Role)=Label], ^[(my|IconAssist.Role)=Primary]">
+            <Setter Property="IconSize" Value="{Binding $self.(my:IconAssist.Size)}" />
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- SIZES                                                     -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.size-xs">
+            <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+        </Style>
+        <Style Selector="^.size-sm">
+            <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+        </Style>
+        <Style Selector="^.size-xl">
+            <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Xl}" />
+        </Style>
+
+        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- GLYPH VARIANT                                             -->
+        <!-- ═════════════════════════════════════════════════════════ -->
+
+        <Style Selector="^.kind-glyph">
+            <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+
+            <Style Selector="^.size-xs">
+                <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Glyph.Xs}" />
+            </Style>
+            <Style Selector="^.size-sm">
+                <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+            </Style>
+            <Style Selector="^.size-md">
+                <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+            </Style>
+            <Style Selector="^.size-lg">
+                <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+            </Style>
+            <Style Selector="^.size-xl">
+                <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Glyph.Xl}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

@@ -77,8 +77,6 @@ This document summarizes the current state of MyNet.Avalonia project development
 - [x] **ColorPicker**
 - [x] **ColorEyeDropper**
 - [x] **Clock**
-- [x] **DateRangePicker**
-- [x] **TimeRangePicker**
 - [x] **TimePicker**
 - [x] **DateTimePicker**
 - [x] **CalendarDatePicker**
@@ -94,9 +92,17 @@ This document summarizes the current state of MyNet.Avalonia project development
 - [x] **MultiComboBox**
 - [x] **CodeBlock**
 - [x] **Divider**
-- [x] **OutlinedIcon**
+- [x] **ExtendedIcon**
+- [x] **MaterialIcon**
+- [x] **Form**
+- [ ] **DateTimePicker**
+- [ ] **DateRangePicker**
+- [ ] **TimeRangePicker**
+- [x] **Pages (Content, Carousel, Drawer, Navigation, Tabbed)**
+- [x] **SpinnerButton**
+- [ ] **CommandBar**
 - [ ] **Dialogs**
-- [ ] **Drawers**
+- [x] **Drawers**
 - [ ] **MultiAucompleteBox**
 - [ ] **Loader** - Loading animation control
 - [ ] **Rating**
@@ -116,7 +122,7 @@ This document summarizes the current state of MyNet.Avalonia project development
 - [ ] Add IsEditable functionality for MultiComboBox
 - [ ] Add search option for ComboBox and MultiComboBox
 - [ ] Add custom behavior to NumericUpDown for IsTextEditable functionality
-- [ ] Cursor for all controls
+- [x] Cursor for all controls
 
 ---
 

@@ -1,0 +1,59 @@
+<Application x:Class="MyNet.Avalonia.Showcase.App" xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:geo="clr-namespace:MyNet.Utilities.Geography;assembly=MyNet.Utilities"
+             xmlns:c="clr-namespace:MyNet.Avalonia.Showcase.Converters"
+             xmlns:globalization="clr-namespace:System.Globalization;assembly=System.Runtime"
+             RequestedThemeVariant="Light">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://MyNet.Avalonia.Showcase/Views/Common/PageHeader.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <DataTemplate x:Key="MyNet.DataTemplate.Country.Xs" DataType="{x:Type geo:Country}">
+                <DockPanel>
+                    <Image Width="16"
+                           Height="16"
+                           Margin="{my:Thickness Md, Right}"
+                           VerticalAlignment="Center"
+                           DockPanel.Dock="Left"
+                           Source="{Binding Converter={x:Static c:CountryConverter.To16}}" />
+                    <TextBlock Text="{my:Translate}" Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
+                </DockPanel>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="MyNet.DataTemplate.Country.Xl" DataType="{x:Type geo:Country}">
+                <Grid Width="90" Height="90" RowDefinitions="Auto,*">
+                    <Image Width="64" Source="{Binding Converter={x:Static c:CountryConverter.To64}}" />
+                    <TextBlock Grid.Row="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Top"
+                               Text="{my:Translate}"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
+                </Grid>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="MyNet.DataTemplate.CultureInfo.Xs" DataType="globalization:CultureInfo">
+                <DockPanel>
+                    <Image DockPanel.Dock="Left" Width="20" Source="{Binding Converter={x:Static c:CountryConverter.To24}}" Margin="{my:Thickness Md, Right}" />
+                    <TextBlock Text="{my:Translate Casing=Title}" />
+                </DockPanel>
+            </DataTemplate>
+        </ResourceDictionary>
+        
+    </Application.Resources>
+
+    <!-- Styles -->
+    <Application.Styles>
+
+        <!-- My theme and styles -->
+        <my:MyTheme />
+        <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Generic.axaml" />
+
+        <!-- App Styles -->
+        <StyleInclude Source="avares://MyNet.Avalonia.Showcase/Styles/Playground.axaml" />
+    </Application.Styles>
+</Application>

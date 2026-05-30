@@ -181,14 +181,9 @@ public static class NavigationAssist
         var objType = obj?.GetType();
         foreach (var item in items)
         {
-            if (item is Type itemType && itemType == objType)
+            if ((item is Type itemType && itemType == objType) || (item is INavigationPage page && Equals(page, obj)))
             {
                 return item;
-            }
-
-            if (item is INavigationPage page && Equals(page, obj))
-            {
-                    return item;
             }
         }
 

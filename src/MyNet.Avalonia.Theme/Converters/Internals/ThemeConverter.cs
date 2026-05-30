@@ -27,9 +27,6 @@ namespace MyNet.Avalonia.Theme.Converters.Internals;
 /// <param name="resolver">The theme resolver.</param>
 internal sealed class ThemeConverter(IThemeBrushService brushService, IThemeResolver resolver) : IValueConverter, IMultiValueConverter
 {
-    private readonly IThemeBrushService _brushService = brushService;
-    private readonly IThemeResolver _resolver = resolver;
-
     /// <summary>
     /// Gets the default singleton instance of <see cref="ThemeConverter"/>.
     /// </summary>
@@ -96,26 +93,26 @@ internal sealed class ThemeConverter(IThemeBrushService brushService, IThemeReso
             }
         }
 
-        var result = _resolver.Resolve(role, context, resourceKey);
+        var result = resolver.Resolve(role, context, resourceKey);
 
         var contrast = result.UseContrast && brushParameters?.Contrast == true;
 
         switch (result.Kind)
         {
             case ThemeBrushResolutionKind.UseDirectBrush:
-                return _brushService.GetBrush(directBrush, brushParameters?.Opacity, contrast, brushParameters?.Darken, brushParameters?.Lighten);
+                return brushService.GetBrush(directBrush, brushParameters?.Opacity, contrast, brushParameters?.Darken, brushParameters?.Lighten);
 
             case ThemeBrushResolutionKind.UseForeground:
                 if (!string.IsNullOrEmpty(result.OpacityKey))
                 {
-                    var contrastOpacity = _brushService.GetOpacity(result.OpacityKey);
-                    foreground = _brushService.GetBrush(foreground, contrastOpacity?.ToString(CultureInfo.InvariantCulture).OrEmpty());
+                    var contrastOpacity = brushService.GetOpacity(result.OpacityKey);
+                    foreground = brushService.GetBrush(foreground, contrastOpacity?.ToString(CultureInfo.InvariantCulture).OrEmpty());
                 }
 
-                return _brushService.GetBrush(foreground, brushParameters?.Opacity, contrast, brushParameters?.Darken, brushParameters?.Lighten);
+                return brushService.GetBrush(foreground, brushParameters?.Opacity, contrast, brushParameters?.Darken, brushParameters?.Lighten);
 
             case ThemeBrushResolutionKind.UseKey:
-                return _brushService.GetBrush(result.BrushKey, brushParameters?.Opacity, contrast, brushParameters?.Darken, brushParameters?.Lighten);
+                return brushService.GetBrush(result.BrushKey, brushParameters?.Opacity, contrast, brushParameters?.Darken, brushParameters?.Lighten);
         }
 
         return AvaloniaProperty.UnsetValue;

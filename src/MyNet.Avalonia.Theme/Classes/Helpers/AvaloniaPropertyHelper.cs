@@ -51,15 +51,16 @@ public static class AvaloniaPropertyHelper
     /// Note: This method should only be called from static field initializers.
     /// </summary>
     /// <param name="propertyName">The name of the property.</param>
+    /// <param name="ownerType">The owner type.</param>
     /// <param name="defaultValue">The default value of the property.</param>
     /// <param name="prefix">The prefix to use for the CSS class.</param>
     /// <param name="inherits">Indicates whether the property value should be inherited by child elements.</param>
     /// <returns>The registered attached property.</returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("AvaloniaProperty", "AVP1001:The same AvaloniaProperty should not be registered twice", Justification = "Unsafe registration - This method is designed to be called from static initializers")]
-    public static AttachedProperty<TEnum> RegisterEnumProperty<TEnum>(string propertyName, TEnum defaultValue, string prefix = "is", bool inherits = false)
+    public static AttachedProperty<TEnum> RegisterEnumProperty<TEnum>(string propertyName, Type ownerType, TEnum defaultValue, string prefix = "is", bool inherits = false)
         where TEnum : Enum
     {
-        var property = AvaloniaProperty.RegisterAttached<object, StyledElement, TEnum>(propertyName, defaultValue: defaultValue, inherits: inherits);
+        var property = AvaloniaProperty.RegisterAttached<StyledElement, TEnum>(propertyName, ownerType, defaultValue: defaultValue, inherits: inherits);
 
         var isFlags = typeof(TEnum).IsDefined(typeof(FlagsAttribute), false);
 
@@ -122,14 +123,15 @@ public static class AvaloniaPropertyHelper
     /// Note: This method should only be called from static field initializers.
     /// </summary>
     /// <param name="propertyName">The name of the property.</param>
+    /// <param name="ownerType">The owner type.</param>
     /// <param name="defaultValue">The default value of the property.</param>
     /// <param name="prefix">The prefix to use for the CSS class.</param>
     /// <param name="inherits">Indicates whether the property value should be inherited by child elements.</param>
     /// <returns>The registered attached property.</returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("AvaloniaProperty", "AVP1001:The same AvaloniaProperty should not be registered twice", Justification = "Unsafe registration - This method is designed to be called from static initializers")]
-    public static AttachedProperty<string> RegisterStringProperty(string propertyName, string defaultValue, string prefix = "is", bool inherits = false)
+    public static AttachedProperty<string> RegisterStringProperty(string propertyName, Type ownerType, string defaultValue, string prefix = "is", bool inherits = false)
     {
-        var property = AvaloniaProperty.RegisterAttached<object, StyledElement, string>(propertyName, defaultValue: defaultValue, inherits: inherits);
+        var property = AvaloniaProperty.RegisterAttached<StyledElement, string>(propertyName, ownerType, defaultValue: defaultValue, inherits: inherits);
 
         property.Changed.Subscribe(args =>
         {

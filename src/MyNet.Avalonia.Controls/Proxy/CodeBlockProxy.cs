@@ -31,7 +31,7 @@ public sealed class CodeBlockProxy : IControlProxy
         _control.LostFocus += OnLostFocus;
     }
 
-    private void OnGotFocus(object? sender, global::Avalonia.Input.GotFocusEventArgs e)
+    private void OnGotFocus(object? sender, global::Avalonia.Input.FocusChangedEventArgs e)
     {
         IsEmptyChanged?.Invoke(sender, EventArgs.Empty);
         IsFocusedChanged?.Invoke(sender, EventArgs.Empty);

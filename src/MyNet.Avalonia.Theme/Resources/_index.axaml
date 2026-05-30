@@ -8,6 +8,5 @@
     <!-- ══════════════════════════════════════════════════════════ -->
     <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Resources/DataTemplates.axaml" />
-        <ResourceInclude Source="avares://MyNet.Avalonia.Theme/Resources/Icons.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

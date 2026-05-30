@@ -92,26 +92,25 @@
     <!-- ===================================================================== -->
 
     <!-- Glyph Sizes -->
-    <sys:Double x:Key="MyNet.Size.Glyph.Xs">6</sys:Double>
-    <sys:Double x:Key="MyNet.Size.Glyph.Sm">8</sys:Double>
-    <sys:Double x:Key="MyNet.Size.Glyph.Md">10</sys:Double>
-    <sys:Double x:Key="MyNet.Size.Glyph.Lg">12</sys:Double>
-    <sys:Double x:Key="MyNet.Size.Glyph.Xl">15</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Glyph.Xs">8</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Glyph.Sm">10</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Glyph.Md">12</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Glyph.Lg">16</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Glyph.Xl">20</sys:Double>
 
     <!-- Caption Button Sizes -->
-    <sys:Double x:Key="MyNet.Size.Icon.Caption">11</sys:Double>
     <sys:Double x:Key="MyNet.Width.Button.Caption">45</sys:Double>
     <sys:Double x:Key="MyNet.Height.Button.Caption">30</sys:Double>
     <sys:Double x:Key="MyNet.Height.TitleBar">30</sys:Double>
 
     <!-- Icon Sizes -->
-    <sys:Double x:Key="MyNet.Size.Icon.Tool.Sm">7</sys:Double>
-    <sys:Double x:Key="MyNet.Size.Icon.Tool">11</sys:Double>
-    <sys:Double x:Key="MyNet.Size.Icon.Xs">12</sys:Double>
-    <sys:Double x:Key="MyNet.Size.Icon.Sm">15</sys:Double>
-    <sys:Double x:Key="MyNet.Size.Icon.Md">18</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Tool.Sm">10</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Tool">14</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Xs">14</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Sm">16</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Md">20</sys:Double>
     <sys:Double x:Key="MyNet.Size.Icon.Lg">24</sys:Double>
-    <sys:Double x:Key="MyNet.Size.Icon.Xl">30</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Xl">36</sys:Double>
 
     <!-- Circular ProgressBar Sizes -->
     <sys:Double x:Key="MyNet.Size.ProgressBar.Circular.Sm">30</sys:Double>

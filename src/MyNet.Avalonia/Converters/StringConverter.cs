@@ -13,9 +13,13 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Media;
 using MyNet.Avalonia.Extensions;
-using MyNet.Humanizer;
-using MyNet.Utilities;
-using MyNet.Utilities.Units;
+using MyNet.Collections;
+using MyNet.Globalization.Facade;
+using MyNet.Globalization.Localization.Translation;
+using MyNet.Humanizer.Facade;
+using MyNet.Primitives;
+using MyNet.Text;
+using MyNet.Text.TextCasing;
 
 namespace MyNet.Avalonia.Converters;
 
@@ -44,12 +48,12 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
     /// <summary>
     /// Gets a converter that applies upper case to the result.
     /// </summary>
-    public static StringConverter ToUpper { get; } = Converters[LetterCasing.AllCaps];
+    public static StringConverter ToUpper { get; } = Converters[LetterCasing.Upper];
 
     /// <summary>
     /// Gets a converter that applies lower case to the result.
     /// </summary>
-    public static StringConverter ToLower { get; } = Converters[LetterCasing.LowerCase];
+    public static StringConverter ToLower { get; } = Converters[LetterCasing.Lower];
 
     /// <summary>
     /// Gets a converter that applies title case to the result.
@@ -90,7 +94,7 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
 
         // Enum types
         RegisterTypeConverter<Enum>((enumValue, _, _, abbreviate, culture) => ConvertEnum(enumValue, abbreviate, culture));
-        RegisterTypeConverter<IEnumeration>((enumValue, _, _, abbreviate, culture) => ConvertEnumeration(enumValue, abbreviate, culture));
+        RegisterTypeConverter<ISmartEnum>((enumValue, _, _, abbreviate, culture) => ConvertSmartEnum(enumValue, abbreviate, culture));
 
         // Color types
         RegisterTypeConverter<Color>((color, _, _, _, _) => ConvertColor(color));
@@ -110,6 +114,20 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
 
         // Localizable
         RegisterTypeConverter<Localizable>((localizable, format, _, abbreviate, culture) => ConvertString(localizable.Key, localizable.Filename, format, abbreviate, culture));
+
+        RegisterTypeConverter<CultureInfo>((cultureInfo, format, _, abbreviate, culture) =>
+        {
+            var originalUi = CultureInfo.CurrentUICulture;
+            try
+            {
+                CultureInfo.CurrentUICulture = culture;
+                return ConvertString(cultureInfo.DisplayName, null, format, abbreviate, culture);
+            }
+            finally
+            {
+                CultureInfo.CurrentUICulture = originalUi;
+            }
+        });
 
         // Controls
         RegisterTypeConverter<TextBlock>((value, format, _, _, culture) => ConvertString(value.Text.OrEmpty(), null, format, false, culture));
@@ -183,7 +201,7 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
 
         if (string.IsNullOrEmpty(format)) return translation;
 
-        var translatedFormat = abbreviate ? format.TranslateAbbreviated(culture) : format.Translate(culture);
+        var translatedFormat = abbreviate ? format.Translate(x => x.WithStyle(DisplayStyle.Abbreviation), culture) : format.Translate(culture);
         try
         {
             return translatedFormat.FormatWith(culture, translation);
@@ -208,7 +226,7 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
         if (double.IsNaN(value)) return null;
         if (string.IsNullOrEmpty(format)) return value.ToString(culture);
 
-        var translatedFormat = pluralize ? format.TranslateWithCount(value, abbreviate, culture) : abbreviate ? format.TranslateAbbreviated(culture) : format.Translate(culture);
+        var translatedFormat = pluralize ? format.Translate((decimal)value, abbreviate ? DisplayStyle.Abbreviation : DisplayStyle.Default, culture) : abbreviate ? format.Translate(x => x.WithStyle(DisplayStyle.Abbreviation), culture) : format.Translate(culture);
         try
         {
             return value.ToString(translatedFormat, culture);
@@ -222,19 +240,20 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
     /// <summary>
     /// Converts an <see cref="IEnumeration"/> value to a localized string.
     /// </summary>
-    private static string? ConvertEnumeration(IEnumeration value, bool abbreviate, CultureInfo culture) => value.Humanize(abbreviate, culture);
+    private static string ConvertSmartEnum(ISmartEnum value, bool abbreviate, CultureInfo culture)
+        => value.Humanize(new() { Style = abbreviate ? DisplayStyle.Abbreviation : DisplayStyle.Default }, culture);
 
     /// <summary>
     /// Converts an <see cref="Enum"/> value to a localized string.
     /// </summary>
-    private static string? ConvertEnum(Enum value, bool abbreviate, CultureInfo culture) => value.Humanize(abbreviate, culture);
+    private static string ConvertEnum(Enum value, bool abbreviate, CultureInfo culture) => value.Humanize(new() { Style = abbreviate ? DisplayStyle.Abbreviation : DisplayStyle.Default }, culture);
 
     /// <summary>
     /// Converts a <see cref="TimeSpan"/> value to a localized string, optionally extracting a part.
     /// </summary>
     private static string? ConvertTimeSpan(TimeSpan value, string? format, CultureInfo culture)
     {
-        var translatedTimeSpan = value.Humanize(1, TimeUnit.Year, TimeUnit.Day, culture: culture);
+        var translatedTimeSpan = value.Humanize(x => x.UseUnits(TimeUnit.Day, TimeUnit.Year).MaxComponents(1), culture);
 
         return !int.TryParse(format, out var index) ? translatedTimeSpan : translatedTimeSpan.Split(" ").GetByIndex(index - 1);
     }

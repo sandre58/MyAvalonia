@@ -1,0 +1,43 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.RadioButtonPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             x:DataType="vm:RadioButtonPageViewModel"
+             x:Name="Root"
+             Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Translate Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             ClipToBounds="False">
+
+    <v:ShowcaseView>
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <StackPanel Classes="gap-md"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <RadioButton behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" IsChecked="True" />
+                    <RadioButton behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <RadioButton behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                </StackPanel>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <RadioButton behavior:PlaygroundBehavior.AttachStyle="{Binding}"
+                             GroupName="{Binding Converter={x:Static my:StringConverter.Default}}"
+                             IsChecked="True" />
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+    </v:ShowcaseView>
+</ContentPage>

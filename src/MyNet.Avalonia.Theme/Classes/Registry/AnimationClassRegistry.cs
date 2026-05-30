@@ -26,7 +26,7 @@ public static class AnimationClassRegistry
                                                     {
                                                         var doubleTransition = new DoubleTransition
                                                         {
-                                                            Property = Visual.OpacityProperty,
+                                                            Property = Visual.OpacityProperty
                                                         };
 
                                                         doubleTransition.SetValue(TransitionBase.DurationProperty, ThemeResources.Animation.Opacity.Value);

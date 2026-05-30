@@ -44,6 +44,11 @@ public static class TypographyClassRegistry
         /// Gets or sets a value indicating whether the text should have a strikethrough. This property is used to determine if a strikethrough decoration should be applied to the text. When set to true, a strikethrough decoration will be added to the TextBlock; when false, it will not be applied.
         /// </summary>
         public bool IsStrikethrough { get; set; }
+
+        /// <summary>
+        /// Gets tracks all SetProperty bindings for the text decoration section so they can be properly disposed on state change.
+        /// </summary>
+        public BindingGroup Bindings { get; } = new();
     }
 
     /// <summary>
@@ -57,10 +62,12 @@ public static class TypographyClassRegistry
     /// null.</param>
     private static void ApplyState(TextBlock control, ControlState state)
     {
+        state.Bindings.Reset();
+
         var textDecorations = new TextDecorationCollection();
         if (state.IsUnderline)
         {
-            textDecorations.Add(new TextDecoration
+            textDecorations.Add(new()
             {
                 Location = TextDecorationLocation.Underline
             });
@@ -68,13 +75,13 @@ public static class TypographyClassRegistry
 
         if (state.IsStrikethrough)
         {
-            textDecorations.Add(new TextDecoration
+            textDecorations.Add(new()
             {
                 Location = TextDecorationLocation.Strikethrough
             });
         }
 
-        control.TextDecorations = textDecorations;
+        state.Bindings.Add(control.SetProperty(TextBlock.TextDecorationsProperty, textDecorations));
     }
 
     #endregion
@@ -108,7 +115,7 @@ public static class TypographyClassRegistry
             x.SetProperty(Visual.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium)))),
             x.SetProperty(TextElement.FontSizeProperty, new ReflectionBinding("(TextElement.FontSize)")
             {
-                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor)
+                RelativeSource = new(RelativeSourceMode.FindAncestor)
                 {
                     AncestorType = typeof(Control)
                 },
@@ -136,7 +143,7 @@ public static class TypographyClassRegistry
             x.SetProperty(HeaderAssist.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium)))),
             x.SetProperty(HeaderAssist.FontSizeProperty, new ReflectionBinding("(TextElement.FontSize)")
             {
-                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor)
+                RelativeSource = new(RelativeSourceMode.FindAncestor)
                 {
                     AncestorType = typeof(Control)
                 },

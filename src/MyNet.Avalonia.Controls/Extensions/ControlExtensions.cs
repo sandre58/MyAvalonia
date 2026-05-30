@@ -92,6 +92,7 @@ public static class ControlExtensions
     {
         public bool Increment(int value) => tc switch
         {
+            Spinner spinner => spinner.IncrementSpinner(value),
             DatePicker datePicker => datePicker.IncrementDay(value),
             TimePicker timePicker => timePicker.IncrementMinute(value),
             NumericUpDown numericUpDown => numericUpDown.IncrementNumericUpDown(value),
@@ -102,6 +103,7 @@ public static class ControlExtensions
 
         public bool IncrementLarge(int value) => tc switch
         {
+            Spinner spinner => spinner.IncrementLargeSpinner(value),
             DatePicker datePicker => datePicker.IncrementMonth(value),
             TimePicker timePicker => timePicker.IncrementHour(value),
             NumericUpDown numericUpDown => numericUpDown.IncrementLargeNumericUpDown(value),
@@ -109,6 +111,36 @@ public static class ControlExtensions
             IIncrementableControl incrementableControl => incrementableControl.IncrementLarge(value),
             _ => false
         };
+    }
+
+    extension(Spinner spinner)
+    {
+        private bool IncrementLargeSpinner(int value)
+            => spinner.IncrementSpinnerCore(value * 5);
+
+        private bool IncrementSpinner(int value)
+            => spinner.IncrementSpinnerCore(value);
+
+        /// <summary>
+        /// Raises the Spin event programmatically, respecting <see cref="Spinner.ValidSpinDirection"/>.
+        /// </summary>
+        private bool IncrementSpinnerCore(int value)
+        {
+            if (value == 0)
+                return false;
+
+            var direction = value > 0 ? SpinDirection.Increase : SpinDirection.Decrease;
+            var requiredFlag = direction == SpinDirection.Increase
+                ? ValidSpinDirections.Increase
+                : ValidSpinDirections.Decrease;
+
+            if ((spinner.ValidSpinDirection & requiredFlag) == 0)
+                return false;
+
+            var args = new SpinEventArgs(direction) { Source = spinner };
+            spinner.RaiseEvent(args);
+            return true;
+        }
     }
 
     extension(ComboBox comboBox)

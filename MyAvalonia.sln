@@ -55,15 +55,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Theme", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Extended", "src\MyNet.Avalonia.Extended\MyNet.Avalonia.Extended.csproj", "{42D9450F-33AA-A921-9C05-1DF88925535F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Demo", "demos\MyNet.Avalonia.Demo\MyNet.Avalonia.Demo.csproj", "{5771D788-0298-CFC7-B3D2-D20249AA3FCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Showcase", "demos\MyNet.Avalonia.Showcase\MyNet.Avalonia.Showcase.csproj", "{5771D788-0298-CFC7-B3D2-D20249AA3FCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Demo.Desktop", "demos\MyNet.Avalonia.Demo.Desktop\MyNet.Avalonia.Demo.Desktop.csproj", "{7F71A729-E05E-0121-D4D7-15D8676DDDC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Showcase.Desktop", "demos\MyNet.Avalonia.Showcase.Desktop\MyNet.Avalonia.Showcase.Desktop.csproj", "{7F71A729-E05E-0121-D4D7-15D8676DDDC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Demo.Browser", "demos\MyNet.Avalonia.Demo.Browser\MyNet.Avalonia.Demo.Browser.csproj", "{B6246235-FFA4-472E-4888-DDCDCD30A950}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Showcase.Browser", "demos\MyNet.Avalonia.Showcase.Browser\MyNet.Avalonia.Showcase.Browser.csproj", "{B6246235-FFA4-472E-4888-DDCDCD30A950}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Demo.Android", "demos\MyNet.Avalonia.Demo.Android\MyNet.Avalonia.Demo.Android.csproj", "{2DDB3E46-4286-5247-A45B-C593EBB6D3DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Showcase.Android", "demos\MyNet.Avalonia.Showcase.Android\MyNet.Avalonia.Showcase.Android.csproj", "{2DDB3E46-4286-5247-A45B-C593EBB6D3DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Demo.iOS", "demos\MyNet.Avalonia.Demo.iOS\MyNet.Avalonia.Demo.iOS.csproj", "{8C437016-3CF1-8325-CE24-DBEF6ACB1987}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.Showcase.iOS", "demos\MyNet.Avalonia.Showcase.iOS\MyNet.Avalonia.Showcase.iOS.csproj", "{8C437016-3CF1-8325-CE24-DBEF6ACB1987}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Showcase", "Showcase", "{9C3D4168-B9E3-4952-8C98-EBFAD18735BD}"
 EndProject
@@ -72,6 +72,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.PerfTest", "demos\MyNet.Avalonia.PerfTest\MyNet.Avalonia.PerfTest.csproj", "{4290F8B7-1F44-4334-A1C7-59EC595A4652}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNet.Avalonia.PerfTest.Desktop", "demos\MyNet.Avalonia.PerfTest.Desktop\MyNet.Avalonia.PerfTest.Desktop.csproj", "{097FAD21-2A9B-4F32-99A5-5C5647660AAD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IA", "IA", "{87029866-FC81-4C6F-A1A7-B47B146C34CC}"
+	ProjectSection(SolutionItems) = preProject
+		AGENTS.md = AGENTS.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -233,6 +238,7 @@ Global
 		{E273AF75-D3D0-486C-94D6-E95B58C9BA9A} = {2C7D6C1B-A6CA-44B6-B604-FDD86A107640}
 		{4290F8B7-1F44-4334-A1C7-59EC595A4652} = {E273AF75-D3D0-486C-94D6-E95B58C9BA9A}
 		{097FAD21-2A9B-4F32-99A5-5C5647660AAD} = {E273AF75-D3D0-486C-94D6-E95B58C9BA9A}
+		{87029866-FC81-4C6F-A1A7-B47B146C34CC} = {761E88AC-1747-465B-BFFA-B7EFFD3F47B6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {075CDC9E-861B-4CC2-87C4-C6DD6DDB77B6}

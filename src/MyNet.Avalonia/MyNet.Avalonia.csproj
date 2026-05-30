@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="MyNet.Globalization" />
         <PackageReference Include="MyNet.Humanizer" />
         <PackageReference Include="MyNet.Observable" />
         <PackageReference Include="MyNet.Utilities" />

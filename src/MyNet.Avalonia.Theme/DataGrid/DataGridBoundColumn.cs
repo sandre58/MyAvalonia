@@ -11,6 +11,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Documents;
 using Avalonia.Controls.Templates;
+using Avalonia.Data;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Media;
@@ -33,8 +34,8 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
     {
         BindingTarget = bindingTarget;
         BindingValue = bindingValue;
-        _cellEditingControlTheme = new Lazy<ControlTheme?>(() => !OwningGrid.TryFindResource(editingControlThemeKey, out var value2) ? null : (ControlTheme?)value2);
-        _cellValueControlTheme = new Lazy<ControlTheme?>(() => !OwningGrid.TryFindResource(valueControlThemeKey, out var value) ? null : (ControlTheme?)value);
+        _cellEditingControlTheme = new(() => FindTheme(editingControlThemeKey));
+        _cellValueControlTheme = new(() => FindTheme(valueControlThemeKey));
         HorizontalAlignment = HorizontalAlignment.Left;
         VerticalAlignment = VerticalAlignment.Center;
     }
@@ -147,7 +148,7 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
     /// </summary>
     [SuppressMessage("AvaloniaProperty", "AVP1002", Justification = "Generic avalonia property is expected here.")]
     [SuppressMessage("Roslynator", "RCS1158:Static member in generic type should use a type parameter", Justification = "Generic avalonia property is expected here.")]
-    public static readonly AttachedProperty<object?> InnerRightContentProperty = InputAssist.InnerLeftContentProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
+    public static readonly AttachedProperty<object?> InnerRightContentProperty = InputAssist.InnerRightContentProperty.AddOwner<DataGridBoundColumn<TEditingControl, TValueControl>>();
 
     /// <summary>
     /// Gets or sets the InnerRightContent property.
@@ -283,6 +284,7 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
+
         if (change.Property == FontFamilyProperty
             || change.Property == FontSizeProperty
             || change.Property == FontStyleProperty
@@ -304,9 +306,9 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
         var control = CreateEditionControl();
         control.Name = $"Cell{control.GetType().Name}";
 
-        var value = _cellEditingControlTheme.Value;
-        if (value != null)
-            control.Theme = value;
+        var theme = _cellEditingControlTheme.Value;
+        if (theme != null)
+            control.Theme = theme;
 
         SynchronizeEditingControlProperties(control);
 
@@ -315,6 +317,8 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
 
     protected override Control GenerateElement(DataGridCell cell, object dataItem)
     {
+        EnsureSortMemberPath();
+
         var control = CreateControl();
         control.Name = $"Cell{control.GetType().Name}";
 
@@ -403,5 +407,26 @@ public abstract class DataGridBoundColumn<TEditingControl, TValueControl> : Data
         DataGridHelper.SynchronizeColumnProperty(this, control, FontStyleProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, FontWeightProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, ForegroundProperty);
+    }
+
+    private ControlTheme? FindTheme(string key) => OwningGrid is { } grid && grid.TryFindResource(key, out var theme) ? theme as ControlTheme : null;
+
+    private void EnsureSortMemberPath()
+    {
+        if (!string.IsNullOrWhiteSpace(SortMemberPath) || Binding is null)
+            return;
+
+        if (Binding is Binding classicBinding && !string.IsNullOrWhiteSpace(classicBinding.Path))
+        {
+            SortMemberPath = classicBinding.Path;
+            return;
+        }
+
+        var pathProperty = Binding.GetType().GetProperty("Path");
+        var pathValue = pathProperty?.GetValue(Binding);
+        var candidate = pathValue?.ToString();
+
+        if (!string.IsNullOrWhiteSpace(candidate))
+            SortMemberPath = candidate;
     }
 }

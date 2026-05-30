@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia.Media;
 using MyNet.Avalonia.Resources;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Extensions;
 
@@ -39,7 +39,7 @@ public static class ColorExtensions
         /// Gets the localized or resource name of a color, or its hex representation if no name is found.
         /// </summary>
         /// <returns>The localized color name or hex string if no name exists.</returns>
-        public string ToName() => ColorResourcesLocator.GetName(color) is string name ? $"{name}" : color.ToHex();
+        public string ToName() => ColorResourcesLocator.GetName(color) is { } name ? $"{name}" : color.ToHex();
 
         /// <summary>
         /// Determines the contrasting foreground color (black or white) for optimal readability against the given background color.
@@ -146,7 +146,7 @@ public static class ColorExtensions
             var x = (0.4124564 * r) + (0.3575761 * g) + (0.1804375 * b);
             var y = (0.2126729 * r) + (0.7151522 * g) + (0.0721750 * b);
             var z = (0.0193339 * r) + (0.1191920 * g) + (0.9503041 * b);
-            return new Xyz(x, y, z);
+            return new(x, y, z);
 
             static double rgbXyz(double v)
             {
@@ -168,7 +168,7 @@ public static class ColorExtensions
         var l = (116 * fy) - 16;
         var a = 500 * (fx - fy);
         var b = 200 * (fy - fz);
-        return new Lab(l, a, b);
+        return new(l, a, b);
 
         static double xyzLab(double v) => v > LabConstants.E ? Math.Pow(v, 1 / 3.0) : ((v * LabConstants.K) + 16) / 116;
     }
@@ -210,7 +210,7 @@ public static class ColorExtensions
         x = LabConstants.WhitePointX * labXyz(x);
         z = LabConstants.WhitePointZ * labXyz(z);
 
-        return new Xyz(x, y, z);
+        return new(x, y, z);
 
         static double labXyz(double d) => d > LabConstants.ECubedRoot ? d * d * d : ((116 * d) - 16) / LabConstants.K;
     }
@@ -311,7 +311,7 @@ public record ColorInterpolation(double? Opacity = null, bool Contrast = false, 
     /// <summary>
     /// Gets a value indicating whether no interpolation parameters are set (i.e., all are null or false).
     /// </summary>
-    public bool IsEmpty => (!Opacity.HasValue || Opacity.Value.NearlyEqual(1.0)) && !Darken.HasValue && !Lighten.HasValue;
+    public bool IsEmpty => (!Opacity.HasValue || Opacity.Value.IsCloseTo(1.0)) && !Darken.HasValue && !Lighten.HasValue;
 
     /// <summary>
     /// Gets a value indicating whether the opacity has been explicitly set for the element.

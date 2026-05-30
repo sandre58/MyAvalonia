@@ -40,7 +40,7 @@ public sealed class NumericUpDownProxy : IControlProxy
         _control.LostFocus += OnLostFocus;
     }
 
-    private void OnGotFocus(object? sender, GotFocusEventArgs e)
+    private void OnGotFocus(object? sender, FocusChangedEventArgs e)
     {
         IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
         IsActiveChanged?.Invoke(sender, EventArgs.Empty);

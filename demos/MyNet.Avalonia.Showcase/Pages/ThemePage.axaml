@@ -1,0 +1,313 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.ThemePage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:t="using:MyNet.UI.Theming"
+             xmlns:common="clr-namespace:MyNet.Avalonia.Showcase.Views.Common"
+             x:DataType="vm:ThemePageViewModel"
+             x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Translate Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             mc:Ignorable="d">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="BrushDefinitionTemplate" DataType="{x:Type vm:BrushDefinition}">
+            <HeaderedContentControl Height="120"
+                                    Width="250"
+                                    Header="{Binding}"
+                                    my:HeaderAssist.HorizontalAlignment="Stretch"
+                                    VerticalContentAlignment="Bottom"
+                                    Classes="shadow-header shadow-surface header-lg">
+                <HeaderedContentControl.Styles>
+                    <Style Selector="HeaderedContentControl.for-surface">
+                        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+                        <Setter Property="my:VariantAssist.Background" Value="{Binding Brush}" />
+                        <Setter Property="my:VariantAssist.Foreground" Value="{Binding Foreground}" />
+                        <Setter Property="my:VariantAssist.BorderBrush"
+                                Value="{my:ThemeBrush Brush, RelativeSource={x:Null}, Darken=0.2}" />
+                        <Setter Property="my:HeaderAssist.Background"
+                                Value="{my:ThemeBrush Brush, RelativeSource={x:Null}, Darken=0.2}" />
+                        <Setter Property="my:HeaderAssist.Foreground" Value="{Binding Foreground}" />
+                    </Style>
+                    <Style Selector="HeaderedContentControl.for-border">
+                        <Setter Property="my:VariantAssist.BorderThickness" Value="2" />
+                        <Setter Property="my:VariantAssist.BorderBrush" Value="{Binding Brush}" />
+                        <Setter Property="my:HeaderAssist.Background" Value="{Binding Brush}" />
+                        <Setter Property="my:HeaderAssist.Foreground" Value="{Binding Foreground}" />
+                    </Style>
+                    <Style Selector="HeaderedContentControl.for-foreground">
+                        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+                        <Setter Property="my:VariantAssist.Background" Value="{Binding Foreground}" />
+                        <Setter Property="my:VariantAssist.Foreground" Value="{Binding Brush}" />
+                        <Setter Property="my:VariantAssist.BorderBrush"
+                                Value="{my:ThemeBrush Foreground, RelativeSource={x:Null}, Darken=0.2}" />
+                        <Setter Property="my:HeaderAssist.Background"
+                                Value="{my:ThemeBrush Foreground, RelativeSource={x:Null}, Darken=0.2}" />
+                        <Setter Property="my:HeaderAssist.Foreground" Value="{Binding Brush}" />
+                    </Style>
+                </HeaderedContentControl.Styles>
+                <HeaderedContentControl.HeaderTemplate>
+                    <DataTemplate DataType="vm:BrushDefinition">
+                        <DockPanel>
+                            <Button DockPanel.Dock="Right" Margin="{my:Thickness Xs, Left}"
+                                    Classes="variant-text is-clipboard size-sm" CommandParameter="{Binding Key}" />
+
+                            <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Md}">
+                                <Ellipse Fill="{Binding Brush}" StrokeThickness="0" Classes="kind-card shadow-surface"
+                                         Width="18" Height="18" />
+                                <TextBlock Text="{Binding Key}" />
+                            </StackPanel>
+                        </DockPanel>
+                    </DataTemplate>
+                </HeaderedContentControl.HeaderTemplate>
+                <Grid ColumnDefinitions="Auto,Auto,Auto" RowDefinitions="Auto,Auto"
+                      ColumnSpacing="{StaticResource MyNet.Spacing.Lg}" RowSpacing="{StaticResource MyNet.Spacing.Md}">
+
+                    <!-- Brush -->
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{my:Loc Color}" Classes="opacity-high" />
+                    <TextBlock Grid.Column="1" Grid.Row="0"
+                               Text="{Binding Brush.Color, Converter={x:Static my:StringConverter.Default}}" />
+                    <Button Grid.Column="2" Grid.Row="0" Classes="kind-tool is-clipboard"
+                            CommandParameter="{Binding Brush.Color, Converter={x:Static my:StringConverter.Default}}" />
+
+                    <!-- Foreground -->
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{my:Loc Foreground}" Classes="opacity-high" />
+                    <TextBlock Grid.Column="1" Grid.Row="1"
+                               Text="{Binding Foreground.Color, Converter={x:Static my:StringConverter.Default}}" />
+                    <Button Grid.Column="2" Grid.Row="1" Classes="kind-tool is-clipboard"
+                            CommandParameter="{Binding Foreground.Color, Converter={x:Static my:StringConverter.Default}}" />
+                </Grid>
+            </HeaderedContentControl>
+        </DataTemplate>
+
+        <DataTemplate x:Key="OpacityDefinitionTemplate" DataType="{x:Type vm:OpacityDefinition}">
+            <Grid ColumnDefinitions="120,*">
+                <StackPanel Orientation="Horizontal" Classes="gap-sm">
+                    <TextBlock Text="{Binding Key}" />
+                    <StackPanel Orientation="Horizontal" Opacity="{DynamicResource MyNet.Opacity.Medium}">
+                        <TextBlock Text="(" />
+                        <TextBlock Text="{Binding Value, StringFormat={}{0:P0}}" />
+                        <TextBlock Text=")" />
+                    </StackPanel>
+                </StackPanel>
+                <UniformGrid Grid.Column="1" Rows="1" ColumnSpacing="{my:Spacing Sm}" Height="25">
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Primary}" Height="25" Width="25" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Accent}" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level0}" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level1}" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level2}" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level3}" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level4}" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level5}" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Inverse}" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Foreground.Primary}" />
+                </UniformGrid>
+            </Grid>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- Header -->
+        <common:PageHeader Grid.Row="0"
+                           Header="{my:Loc Theme}"
+                           Icon="PaletteSwatchVariant">
+            <WrapPanel Orientation="Horizontal" 
+                       ItemSpacing="{StaticResource MyNet.Spacing.Xl}"
+                       LineSpacing="{StaticResource MyNet.Spacing.Md}"
+                       Margin="{my:Thickness Md, Bottom}">
+
+                <ComboBox my:InputAssist.InnerLeftContent="{my:Loc Theme}"
+                          ItemsSource="{Binding AvailableThemeVariants}"
+                          SelectedItem="{Binding Base}"
+                          Width="170">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="t:IThemeBase">
+                            <TextBlock Text="{my:Translate Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <my:ColorPickerEx my:InputAssist.InnerLeftContent="{my:Loc PrimaryColor}"
+                                  my:FormItem.Label="{my:LocObject PrimaryColor}"
+                                  SelectedValue="{Binding PrimaryColor}"
+                                  my:InputBehavior.IsTextEditable="False"
+                                  my:InputAssist.ShowClipboardButton="True" />
+                <my:ColorPickerEx my:InputAssist.InnerLeftContent="{my:Loc AccentColor}"
+                                  my:FormItem.Label="{my:LocObject AccentColor}"
+                                  SelectedValue="{Binding AccentColor}"
+                                  my:InputBehavior.IsTextEditable="False"
+                                  my:InputAssist.ShowClipboardButton="True" />
+
+            </WrapPanel>
+        </common:PageHeader>
+
+        <!-- Main content -->
+        <ScrollViewer Grid.Row="1" Margin="{my:Thickness Md, Top=20}">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{my:Spacing Md}">
+
+                <!-- Brushes -->
+                <StackPanel Classes="gap-xxl">
+
+                    <!-- Primary -->
+                    <HeaderedContentControl Header="{my:Loc PrimaryColor}" Classes="variant-underline">
+                        <ItemsControl ItemsSource="{Binding Primary}" Classes="flex-wrap"
+                                      my:ItemsAssist.Spacing="{StaticResource MyNet.Spacing.Md}"
+                                      ItemTemplate="{StaticResource BrushDefinitionTemplate}">
+                            <ItemsControl.Styles>
+                                <Style Selector="HeaderedContentControl">
+                                    <Setter Property="my:ClassesAssist.AddClasses" Value="for-surface" />
+                                </Style>
+                            </ItemsControl.Styles>
+                        </ItemsControl>
+                    </HeaderedContentControl>
+
+                    <!-- Accent -->
+                    <HeaderedContentControl Header="{my:Loc AccentColor}" Classes="variant-underline">
+                        <ItemsControl ItemsSource="{Binding Accent}" Classes="flex-wrap"
+                                      my:ItemsAssist.Spacing="{StaticResource MyNet.Spacing.Md}"
+                                      ItemTemplate="{StaticResource BrushDefinitionTemplate}">
+                            <ItemsControl.Styles>
+                                <Style Selector="HeaderedContentControl">
+                                    <Setter Property="my:ClassesAssist.AddClasses" Value="for-surface" />
+                                </Style>
+                            </ItemsControl.Styles>
+                        </ItemsControl>
+                    </HeaderedContentControl>
+
+                    <!-- Surfaces -->
+                    <HeaderedContentControl Header="{my:Loc Surfaces}" Classes="variant-underline">
+                        <ItemsControl ItemsSource="{Binding Surfaces}" Classes="flex-wrap"
+                                      my:ItemsAssist.Spacing="{StaticResource MyNet.Spacing.Md}"
+                                      ItemTemplate="{StaticResource BrushDefinitionTemplate}">
+                            <ItemsControl.Styles>
+                                <Style Selector="HeaderedContentControl">
+                                    <Setter Property="my:ClassesAssist.AddClasses" Value="for-surface" />
+                                </Style>
+                            </ItemsControl.Styles>
+                        </ItemsControl>
+                    </HeaderedContentControl>
+
+                    <!-- Borders -->
+                    <HeaderedContentControl Header="{my:Loc Borders}" Classes="variant-underline">
+                        <ItemsControl ItemsSource="{Binding Borders}" Classes="flex-wrap"
+                                      my:ItemsAssist.Spacing="{StaticResource MyNet.Spacing.Md}"
+                                      ItemTemplate="{StaticResource BrushDefinitionTemplate}">
+                            <ItemsControl.Styles>
+                                <Style Selector="HeaderedContentControl">
+                                    <Setter Property="my:ClassesAssist.AddClasses" Value="for-border" />
+                                </Style>
+                            </ItemsControl.Styles>
+                        </ItemsControl>
+                    </HeaderedContentControl>
+
+                    <!-- Foreground -->
+                    <HeaderedContentControl Header="{my:Loc Foregrounds}" Classes="variant-underline">
+                        <ItemsControl ItemsSource="{Binding Foregrounds}" Classes="flex-wrap"
+                                      my:ItemsAssist.Spacing="{StaticResource MyNet.Spacing.Md}"
+                                      ItemTemplate="{StaticResource BrushDefinitionTemplate}">
+                            <ItemsControl.Styles>
+                                <Style Selector="HeaderedContentControl">
+                                    <Setter Property="my:ClassesAssist.AddClasses" Value="for-foreground" />
+                                </Style>
+                            </ItemsControl.Styles>
+                        </ItemsControl>
+                    </HeaderedContentControl>
+
+                    <!-- Semantic -->
+                    <HeaderedContentControl Header="{my:Loc Semantic}" Classes="variant-underline">
+                        <ItemsControl ItemsSource="{Binding Semantic}" Classes="flex-vertical"
+                                      my:ItemsAssist.Spacing="{StaticResource MyNet.Spacing.Md}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding}" Classes="flex-wrap"
+                                                  my:ItemsAssist.Spacing="{StaticResource MyNet.Spacing.Md}"
+                                                  ItemTemplate="{StaticResource BrushDefinitionTemplate}">
+                                        <ItemsControl.Styles>
+                                            <Style Selector="HeaderedContentControl">
+                                                <Setter Property="my:ClassesAssist.AddClasses" Value="for-surface" />
+                                            </Style>
+                                        </ItemsControl.Styles>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </HeaderedContentControl>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Spacing="{my:Spacing Md}" Width="450">
+
+                    <!-- Opacity Levels -->
+                    <HeaderedContentControl Header="{my:Loc Opacities}" Classes="shadow-surface">
+                        <ItemsControl ItemsSource="{Binding OpacityLevels}"
+                                      Classes="flex-vertical"
+                                      ItemTemplate="{StaticResource OpacityDefinitionTemplate}" />
+                    </HeaderedContentControl>
+
+                    <!-- Control Examples -->
+                    <HeaderedContentControl Header="{my:Loc Examples}" Classes="shadow-surface"
+                                            HorizontalContentAlignment="Stretch">
+                        <UniformGrid Columns="2" ColumnSpacing="{StaticResource MyNet.Spacing.Md}"
+                                     RowSpacing="{StaticResource MyNet.Spacing.Md}">
+
+                            <!-- Buttons Examples -->
+                            <HeaderedContentControl Header="Buttons" Classes="variant-light header-lg"
+                                                    my:ThemeAssist.Role="Inverse" HorizontalContentAlignment="Stretch">
+                                <WrapPanel Classes="gap-sm">
+                                    <Button Content="Primary" Classes="variant-solid" my:ThemeAssist.Role="Primary" />
+                                    <Button Content="Accent" my:ThemeAssist.Role="Accent" />
+                                    <Button Content="Outlined" Classes="variant-outlined" />
+                                    <Button Content="Text" Classes="variant-text" my:ThemeAssist.Role="Success" />
+                                </WrapPanel>
+                            </HeaderedContentControl>
+
+                            <!-- Input Examples -->
+                            <HeaderedContentControl Header="Inputs" Classes="variant-light header-lg"
+                                                    my:ThemeAssist.Role="Inverse" HorizontalContentAlignment="Stretch">
+                                <StackPanel Classes="gap-sm">
+                                    <TextBox Text="Text Input" PlaceholderText="Enter text..."
+                                             HorizontalAlignment="Stretch" />
+                                    <ComboBox SelectedIndex="0" HorizontalAlignment="Stretch">
+                                        <ComboBoxItem Content="Option 1" />
+                                        <ComboBoxItem Content="Option 2" />
+                                    </ComboBox>
+                                    <CheckBox Content="Checkbox" IsChecked="True" />
+                                    <RadioButton Content="Radio Button" IsChecked="True" />
+                                </StackPanel>
+                            </HeaderedContentControl>
+
+                            <!-- Progress Examples -->
+                            <HeaderedContentControl Header="Progress" Classes="variant-light header-lg"
+                                                    my:ThemeAssist.Role="Inverse" HorizontalContentAlignment="Stretch">
+                                <StackPanel Classes="gap-sm">
+                                    <ProgressBar Value="60" Maximum="100" Classes="variant-solid"
+                                                 my:ThemeAssist.Role="Primary" HorizontalAlignment="Stretch" />
+                                    <ProgressBar Value="40" Maximum="100" Classes="variant-outlined"
+                                                 my:ThemeAssist.Role="Error" HorizontalAlignment="Stretch" />
+                                    <Slider Value="75" Maximum="100" HorizontalAlignment="Stretch" />
+                                </StackPanel>
+                            </HeaderedContentControl>
+
+                            <!-- Text Examples -->
+                            <HeaderedContentControl Header="Header" Classes="variant-light header-lg"
+                                                    my:ThemeAssist.Role="Inverse" HorizontalContentAlignment="Stretch">
+                                <StackPanel Classes="gap-sm">
+                                    <TextBlock Text="Primary Text" Foreground="{my:Theme Foreground}" />
+                                    <TextBlock Text="Secondary Text" Foreground="{my:Theme Foreground}"
+                                               Classes="opacity-medium" />
+                                    <TextBlock Text="Disabled Text" Foreground="{my:Theme Foreground}"
+                                               Classes="opacity-disabled" />
+                                    <TextBlock Text="Primary Color" Foreground="{my:Theme Primary}" FontWeight="Medium" />
+                                    <TextBlock Text="Accent Color" Foreground="{my:Theme Accent}" FontWeight="Medium" />
+                                </StackPanel>
+                            </HeaderedContentControl>
+
+                        </UniformGrid>
+                    </HeaderedContentControl>
+
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</ContentPage>

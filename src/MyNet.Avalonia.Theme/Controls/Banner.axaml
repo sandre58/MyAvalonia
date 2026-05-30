@@ -72,7 +72,7 @@
                                     Margin="{my:Thickness Sm}"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
-                                    Content="{my:Icon WindowClose}"
+                                    Content="{my:MaterialIcon WindowClose}"
                                     IsVisible="False"
                                     Classes="kind-tool"
                                     my:DisableAssist.IsDisablable="False"/>
@@ -96,7 +96,7 @@
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
                     <Template>
-                        <PathIcon Data="{StaticResource MyNet.Geometry.CheckCircle}" />
+                        <my:MaterialIcon Kind="CheckCircle" />
                     </Template>
                 </Setter.Value>
             </Setter>
@@ -114,7 +114,7 @@
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
                     <Template>
-                        <PathIcon Data="{StaticResource MyNet.Geometry.AlertCircle}" />
+                        <my:MaterialIcon Kind="AlertCircle" />
                     </Template>
                 </Setter.Value>
             </Setter>
@@ -132,7 +132,7 @@
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
                     <Template>
-                        <PathIcon Data="{StaticResource MyNet.Geometry.CloseCircle}" />
+                        <my:MaterialIcon Kind="CloseCircle" />
                     </Template>
                 </Setter.Value>
             </Setter>
@@ -150,7 +150,7 @@
             <Setter Property="my:IconAssist.Icon">
                 <Setter.Value>
                     <Template>
-                        <PathIcon Data="{StaticResource MyNet.Geometry.InformationVariantCircle}" />
+                        <my:MaterialIcon Kind="InformationVariantCircle" />
                     </Template>
                 </Setter.Value>
             </Setter>

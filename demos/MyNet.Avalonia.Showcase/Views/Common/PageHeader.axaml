@@ -1,0 +1,93 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:common="clr-namespace:MyNet.Avalonia.Showcase.Views.Common">
+
+    <ControlTheme x:Key="{x:Type common:PageHeader}" TargetType="common:PageHeader">
+        <Setter Property="Foreground" Value="{my:Theme Primary.Foreground}" />
+        <Setter Property="my:ThemeAssist.Context" Value="Contrast" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Height" Value="120" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="common:PageHeader">
+                <Border Background="{my:Theme Primary}" my:ShadowAssist.ShadowDepth="CenterDepth3" ClipToBounds="False">
+                    <Panel>
+                        <Panel.Background>
+                            <LinearGradientBrush EndPoint="100%,100%" StartPoint="0%,0%">
+                                <GradientStop Color="{DynamicResource MyNet.Color.Primary.Darkest}" Offset="0" />
+                                <GradientStop Color="{DynamicResource MyNet.Color.Primary}" Offset="0.35" />
+                                <GradientStop Color="{DynamicResource MyNet.Color.Primary.Light}" Offset="0.65" />
+                                <GradientStop Color="{DynamicResource MyNet.Color.Primary.Dark}" Offset="1" />
+                            </LinearGradientBrush>
+                        </Panel.Background>
+
+                        <!--  Decorative glows  -->
+                        <Ellipse Height="100"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,-27,-20,0"
+                                 Opacity="0.15"
+                                 VerticalAlignment="Top"
+                                 Width="100">
+                            <Ellipse.Fill>
+                                <RadialGradientBrush>
+                                    <GradientStop Color="{DynamicResource MyNet.Color.Accent}" Offset="0" />
+                                    <GradientStop Color="Transparent" Offset="1" />
+                                </RadialGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse Height="100"
+                                 HorizontalAlignment="Left"
+                                 Margin="-17,0,0,-13"
+                                 Opacity="0.15"
+                                 VerticalAlignment="Bottom"
+                                 Width="100">
+                            <Ellipse.Fill>
+                                <RadialGradientBrush>
+                                    <GradientStop Color="{DynamicResource MyNet.Color.Primary}" Offset="0" />
+                                    <GradientStop Color="Transparent" Offset="1" />
+                                </RadialGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+
+                        <!-- Header content -->
+                        <DockPanel Margin="{my:Thickness Xl, Top=16, Bottom=0}" LastChildFill="False">
+
+                            <!-- Icon + Title row -->
+                            <StackPanel Orientation="Horizontal"
+                                        DockPanel.Dock="Top"
+                                        Spacing="{StaticResource MyNet.Spacing.Xl}"
+                                        VerticalAlignment="Center">
+
+                                <!-- Icon container with glass effect -->
+                                <Border Width="48"
+                                        Height="48"
+                                        CornerRadius="{StaticResource MyNet.Corners.Lg}"
+                                        Background="{my:Theme Primary.Foreground, Opacity=Overlay}"
+                                        BoxShadow="0 2 8 0 #20000000"
+                                        ClipToBounds="True">
+                                    <my:MaterialIcon Kind="{TemplateBinding Icon}"
+                                                     Classes="size-xl"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center" />
+                                </Border>
+
+                                <!-- Title -->
+                                <TextBlock Text="{TemplateBinding Header}"
+                                           Classes="text-h1"
+                                           VerticalAlignment="Center"
+                                           LetterSpacing="0.3" />
+                            </StackPanel>
+
+                            <!-- Content at bottom -->
+                            <ContentPresenter DockPanel.Dock="Bottom"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch"
+                                              Content="{TemplateBinding Content}" />
+                        </DockPanel>
+                    </Panel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

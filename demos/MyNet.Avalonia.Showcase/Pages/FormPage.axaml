@@ -1,0 +1,38 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.FormPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:samples="clr-namespace:MyNet.Avalonia.Showcase.Views.Samples"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:playground="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             x:DataType="vm:FormPageViewModel"
+             ClipToBounds="False"
+             x:Name="Root"
+             Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Translate Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             mc:Ignorable="d">
+    <ContentPage.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+    </ContentPage.Resources>
+
+    <playground:ShowcaseView ShowAppearance="False" ShowThemes="False" ShowPreviewCode="False" ShowContent="False"
+                             ShowIcon="False">
+
+        <playground:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <Border Width="550"
+                        Padding="{my:Thickness Xl}"
+                        Classes="kind-card">
+                    <ScrollViewer ClipToBounds="False">
+                        <samples:FormContent DataContext="{ReflectionBinding ((vm:FormPageViewModel)Data).Form, FallbackValue={x:Null}, Source={StaticResource PageProxy}}" />
+                    </ScrollViewer>
+                </Border>
+            </DataTemplate>
+        </playground:ShowcaseView.PlaygroundControlTemplate>
+
+    </playground:ShowcaseView>
+</ContentPage>

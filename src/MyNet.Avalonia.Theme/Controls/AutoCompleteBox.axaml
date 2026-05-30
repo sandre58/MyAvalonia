@@ -163,7 +163,7 @@
                                             Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Command="{Binding Clear, ElementName=PART_TextBox}"
-                                            Content="{my:Icon Close}"
+                                            Content="{my:MaterialIcon Close}"
                                             IsVisible="False" />
                                 </Grid>
                             </my:Ripple>
@@ -421,7 +421,7 @@
                                         Classes="kind-tool"
                                         my:DisableAssist.IsDisablable="False"
                                         Command="{Binding Clear, ElementName=PART_TextBox}"
-                                        Content="{my:Icon Close}"
+                                        Content="{my:MaterialIcon Close}"
                                         IsVisible="False" />
                             </Grid>
                         </Border>

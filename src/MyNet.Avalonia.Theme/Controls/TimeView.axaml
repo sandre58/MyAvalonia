@@ -59,6 +59,10 @@
         <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
 
         <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
         <!-- Surface -->

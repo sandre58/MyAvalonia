@@ -1,6 +1,6 @@
-using Avalonia.Data.Converters;
 using System;
 using System.Globalization;
+using Avalonia.Data.Converters;
 
 namespace MyNet.Avalonia.PerfTest.Converters;
 

@@ -9,7 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
-using MyNet.Avalonia.Extended.Controls.Primitives;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Extensions;
 using MyNet.UI.Dialogs.MessageBox;
 
@@ -24,7 +24,7 @@ namespace MyNet.Avalonia.Extended.Controls;
 [TemplatePart(PartOkButton, typeof(Button))]
 [TemplatePart(PartCancelButton, typeof(Button))]
 [TemplatePart(PartYesButton, typeof(Button))]
-public class OverlayMessageBox : OverlayDialogBase
+public class OverlayMessageBox : OverlayDialog
 {
     public const string PartYesButton = "PART_YesButton";
     public const string PartNoButton = "PART_NoButton";
@@ -117,88 +117,8 @@ public class OverlayMessageBox : OverlayDialogBase
     {
         var closeButtonVisible = Buttons != MessageBoxResultOption.YesNo;
         CloseButton?.SetValue(IsVisibleProperty, closeButtonVisible);
-        switch (Buttons)
-        {
-            case MessageBoxResultOption.Ok:
-                if (_okButton != null)
-                {
-                    _okButton.SetValue(IsVisibleProperty, true);
-                    _okButton.SetValue(Button.IsDefaultProperty, true);
-                }
-
-                if (_cancelButton != null)
-                {
-                    _cancelButton.SetValue(IsVisibleProperty, false);
-                    _cancelButton.SetValue(Button.IsDefaultProperty, false);
-                }
-
-                if (_yesButton != null)
-                {
-                    _yesButton.SetValue(IsVisibleProperty, false);
-                    _yesButton.SetValue(Button.IsDefaultProperty, false);
-                }
-
-                if (_noButton != null)
-                {
-                    _noButton.SetValue(IsVisibleProperty, false);
-                    _noButton.SetValue(Button.IsDefaultProperty, false);
-                }
-
-                break;
-
-            case MessageBoxResultOption.OkCancel:
-                if (_okButton != null)
-                {
-                    _okButton.SetValue(IsVisibleProperty, true);
-                    _okButton.SetValue(Button.IsDefaultProperty, true);
-                }
-
-                if (_cancelButton != null)
-                {
-                    _cancelButton.SetValue(IsVisibleProperty, true);
-                    _cancelButton.SetValue(Button.IsDefaultProperty, false);
-                }
-
-                if (_yesButton != null)
-                {
-                    _yesButton.SetValue(IsVisibleProperty, false);
-                    _yesButton.SetValue(Button.IsDefaultProperty, false);
-                }
-
-                if (_noButton != null)
-                {
-                    _noButton.SetValue(IsVisibleProperty, false);
-                    _noButton.SetValue(Button.IsDefaultProperty, false);
-                }
-
-                break;
-            case MessageBoxResultOption.YesNo:
-                _okButton?.SetValue(IsVisibleProperty, false);
-                _cancelButton?.SetValue(IsVisibleProperty, false);
-                _yesButton?.SetValue(IsVisibleProperty, true);
-                _noButton?.SetValue(IsVisibleProperty, true);
-                break;
-            case MessageBoxResultOption.YesNoCancel:
-                _okButton?.SetValue(IsVisibleProperty, false);
-                _cancelButton?.SetValue(IsVisibleProperty, true);
-                _yesButton?.SetValue(IsVisibleProperty, true);
-                _noButton?.SetValue(IsVisibleProperty, true);
-                break;
-            case MessageBoxResultOption.None:
-                break;
-        }
+        DialogButtonHelper.SetButtonVisibility(Buttons, _okButton, _cancelButton, _yesButton, _noButton);
     }
 
-    public override void Close()
-    {
-        var result = Buttons switch
-        {
-            MessageBoxResultOption.Ok => MessageBoxResult.Ok,
-            MessageBoxResultOption.OkCancel => MessageBoxResult.Cancel,
-            MessageBoxResultOption.YesNo => MessageBoxResult.No,
-            MessageBoxResultOption.YesNoCancel => MessageBoxResult.Cancel,
-            _ => MessageBoxResult.None
-        };
-        OnElementClosing(this, result);
-    }
+    public override void Close() => OnElementClosing(this, DialogButtonHelper.GetDefaultCloseResult(Buttons));
 }

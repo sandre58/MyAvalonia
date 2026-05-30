@@ -221,7 +221,7 @@
             <Setter Property="Content">
                 <Setter.Value>
                     <Template>
-                        <PathIcon Data="{StaticResource MyNet.Geometry.ContentCopy}" />
+                        <my:MaterialIcon Kind="ContentCopy" />
                     </Template>
                 </Setter.Value>
             </Setter>

@@ -9,6 +9,7 @@
         <ControlTheme x:Key="{x:Type Window}" TargetType="Window">
             <Setter Property="my:ThemeAssist.Category" Value="Surface" />
             <Setter Property="my:WindowAssist.IsTitleVisible" Value="True" />
+            <Setter Property="my:WindowAssist.TitleBarHeight" Value="30" />
             <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Surface.Level3}" />
             <Setter Property="my:WindowAssist.ExtendContentIntoTitleBar" Value="True" />
             <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="-1" />
@@ -48,14 +49,29 @@
                             IsHitTestVisible="False" />
                     <Panel Margin="{TemplateBinding WindowDecorationMargin}" Background="Transparent" />
                     <VisualLayerManager Padding="{TemplateBinding OffScreenMargin, Mode=OneWay}">
-                            <ContentPresenter
-                                Name="PART_ContentPresenter"
-                                Margin="{TemplateBinding WindowDecorationMargin}"
-                                Padding="{TemplateBinding Padding}"
-                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Content="{TemplateBinding Content}"
-                                ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            <Panel>
+                                <ContentPresenter
+                                    Name="PART_ContentPresenter"
+                                    Margin="{TemplateBinding WindowDecorationMargin}"
+                                    Padding="{TemplateBinding Padding}"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                <DockPanel VerticalAlignment="Top"
+                                           Height="{TemplateBinding (my:WindowAssist.TitleBarHeight)}"
+                                           WindowDecorationProperties.ElementRole="User">
+                                    <Panel DockPanel.Dock="Right"
+                                           IsHitTestVisible="False"
+                                           Width="{TemplateBinding (my:WindowAssist.CaptionButtonsWidth)}" />
+                                    <ContentPresenter DockPanel.Dock="Right"
+                                                      VerticalAlignment="Center"
+                                                      Content="{TemplateBinding (my:WindowAssist.RightTitleBarContent)}" />
+                                    <ContentPresenter DockPanel.Dock="Left"
+                                                      VerticalAlignment="Center"
+                                                      Content="{TemplateBinding (my:WindowAssist.LeftTitleBarContent)}" />
+                                </DockPanel>
+                            </Panel>
                         </VisualLayerManager>
                     </Panel>
                 </ControlTemplate>

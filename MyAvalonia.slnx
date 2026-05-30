@@ -1,0 +1,66 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Demos/" />
+  <Folder Name="/Demos/PerfTest/">
+    <Project Path="demos/MyNet.Avalonia.PerfTest.Desktop/MyNet.Avalonia.PerfTest.Desktop.csproj" />
+    <Project Path="demos/MyNet.Avalonia.PerfTest/MyNet.Avalonia.PerfTest.csproj" />
+  </Folder>
+  <Folder Name="/Demos/Showcase/">
+    <Project Path="demos/MyNet.Avalonia.Showcase.Android/MyNet.Avalonia.Showcase.Android.csproj" />
+    <Project Path="demos/MyNet.Avalonia.Showcase.Browser/MyNet.Avalonia.Showcase.Browser.csproj" />
+    <Project Path="demos/MyNet.Avalonia.Showcase.Desktop/MyNet.Avalonia.Showcase.Desktop.csproj" />
+    <Project Path="demos/MyNet.Avalonia.Showcase.iOS/MyNet.Avalonia.Showcase.iOS.csproj" />
+    <Project Path="demos/MyNet.Avalonia.Showcase/MyNet.Avalonia.Showcase.csproj" />
+  </Folder>
+  <Folder Name="/Github Actions/">
+    <File Path=".github/workflows/ci.yml" />
+  </Folder>
+  <Folder Name="/Solution Files/" />
+  <Folder Name="/Solution Files/AI/">
+    <File Path=".ai/architecture.md" />
+    <File Path=".ai/conventions.md" />
+    <File Path=".ai/source-generators.md" />
+  </Folder>
+  <Folder Name="/Solution Files/AI/.cursor/" />
+  <Folder Name="/Solution Files/AI/.cursor/rules/">
+    <File Path=".cursor/rules/architecture.mdc" />
+    <File Path=".cursor/rules/control-design.mdc" />
+    <File Path=".cursor/rules/my-avalonia.mdc" />
+    <File Path=".cursor/rules/performance.mdc" />
+  </Folder>
+  <Folder Name="/Solution Files/Assets/">
+    <File Path="assets/MyAvalonia.png" />
+  </Folder>
+  <Folder Name="/Solution Files/Build/">
+    <File Path=".runsettings" />
+    <File Path="build/code-analysis.props" />
+    <File Path="build/dependencies.props" />
+    <File Path="build/package.props" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="NuGet.config" />
+    <File Path="Settings.XamlStyler" />
+  </Folder>
+  <Folder Name="/Solution Files/Code analysis/">
+    <File Path=".editorconfig" />
+    <File Path="stylecop.json" />
+  </Folder>
+  <Folder Name="/Solution Files/Docs/">
+    <File Path=".github/PULL_REQUEST_TEMPLATE.md" />
+    <File Path="CODE_OF_CONDUCT.md" />
+    <File Path="CONTRIBUTING.md" />
+    <File Path="docs/DEVELOPMENT.md" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="src/MyNet.Avalonia.Controls/MyNet.Avalonia.Controls.csproj" />
+  <Project Path="src/MyNet.Avalonia.Extended/MyNet.Avalonia.Extended.csproj" />
+  <Project Path="src/MyNet.Avalonia.Theme/MyNet.Avalonia.Theme.csproj" />
+  <Project Path="src/MyNet.Avalonia/MyNet.Avalonia.csproj" />
+</Solution>

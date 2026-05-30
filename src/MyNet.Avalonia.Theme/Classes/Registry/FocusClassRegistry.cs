@@ -8,7 +8,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Controls.Templates;
 using MyNet.Avalonia.Extensions;
-using MyNet.Avalonia.Theme.Extensions;
 
 namespace MyNet.Avalonia.Theme.Classes.Registry;
 

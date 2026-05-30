@@ -17,7 +17,7 @@ public class DataGridCheckBoxColumn : global::Avalonia.Controls.DataGridCheckBox
     /// <summary>
     /// Initializes a new instance of the <see cref="DataGridCheckBoxColumn" /> class.
     /// </summary>
-    public DataGridCheckBoxColumn() => _cellCheckBoxTheme = new Lazy<ControlTheme?>(() => OwningGrid.TryFindResource("MyNet.Theme.CheckBox.Embedded.DataGrid", out var theme) ? (ControlTheme?)theme : null);
+    public DataGridCheckBoxColumn() => _cellCheckBoxTheme = new(() => OwningGrid.TryFindResource("MyNet.Theme.CheckBox.Embedded.DataGrid", out var theme) ? (ControlTheme?)theme : null);
 
     protected override Control GenerateElement(DataGridCell cell, object dataItem)
     {

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia"
-                    xmlns:c="using:Avalonia.Controls.Converters">
+                    xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals">
 
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- SCROLLBAR BUTTON THEMES                                   -->
@@ -24,16 +24,22 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- SCROLLBAR THUMB THEME                                     -->
     <!-- ═════════════════════════════════════════════════════════ -->
-    <ControlTheme x:Key="MyNet.Theme.Thumb.Embedded.ScrollBar" TargetType="{x:Type Thumb}" BasedOn="{StaticResource MyNet.Theme.Thumb.Border}">
+    <ControlTheme x:Key="MyNet.Theme.Thumb.Embedded.ScrollBar" TargetType="{x:Type Thumb}"
+                  BasedOn="{StaticResource MyNet.Theme.Thumb.Border}">
         <Setter Property="CornerRadius" Value="24" />
-        <Setter Property="Background" Value="{my:ThemeBrush BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}}, Opacity=Drag}" />
-        <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:ThemeBrush BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}}, Opacity=Hover}" />
-        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeBrush BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}}, Opacity=Focus}" />
+        <Setter Property="Background"
+                Value="{my:ThemeBrush BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}}, Opacity=Drag}" />
+        <Setter Property="my:InteractionAssist.HoverBackground"
+                Value="{my:ThemeBrush BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}}, Opacity=Hover}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground"
+                Value="{my:ThemeBrush BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}}, Opacity=Focus}" />
 
         <Setter Property="Transitions">
             <Transitions>
-                <DoubleTransition Easing="LinearEasing" Property="Height" Duration="{StaticResource MyNet.Animation.Opacity}" />
-                <DoubleTransition Easing="LinearEasing" Property="Width" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                <DoubleTransition Easing="LinearEasing" Property="Height"
+                                  Duration="{StaticResource MyNet.Animation.Opacity}" />
+                <DoubleTransition Easing="LinearEasing" Property="Width"
+                                  Duration="{StaticResource MyNet.Animation.Opacity}" />
             </Transitions>
         </Setter>
     </ControlTheme>
@@ -61,11 +67,12 @@
                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                           my:VariantAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="variant-text"
-                                          Content="{my:Icon ChevronLeft, Size=8}"
                                           Focusable="False"
                                           IsVisible="{TemplateBinding my:ScrollViewerAssist.ButtonsIsVisible}"
                                           Opacity="0"
-                                          Theme="{StaticResource MyNet.Theme.Button.Rounded}" />
+                                          Theme="{StaticResource MyNet.Theme.Button.Rounded}">
+                                <PathIcon Data="{StaticResource MyNet.Geometry.ChevronLeft}" Height="5" Width="5" />
+                            </RepeatButton>
                             <Track Grid.Column="1"
                                    DeferThumbDrag="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                                    Maximum="{TemplateBinding Maximum}"
@@ -96,24 +103,29 @@
                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                           my:VariantAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="variant-text"
-                                          Content="{my:Icon ChevronRight, Size=8}"
                                           Focusable="False"
                                           IsVisible="{TemplateBinding my:ScrollViewerAssist.ButtonsIsVisible}"
                                           Opacity="0"
-                                          Theme="{StaticResource MyNet.Theme.Button.Rounded}" />
+                                          Theme="{StaticResource MyNet.Theme.Button.Rounded}">
+                                <PathIcon Data="{StaticResource MyNet.Geometry.ChevronRight}" Height="5" Width="5" />
+                            </RepeatButton>
                         </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter>
 
             <Style Selector="^ /template/ Thumb#thumb">
-                <Setter Property="MinWidth" Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.InactiveThumbThickness)}" />
-                <Setter Property="Height" Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.InactiveThumbThickness)}" />
+                <Setter Property="MinWidth"
+                        Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.InactiveThumbThickness)}" />
+                <Setter Property="Height"
+                        Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.InactiveThumbThickness)}" />
             </Style>
 
             <Style Selector="^:pointerover /template/ Thumb#thumb">
-                <Setter Property="MinWidth" Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.ActiveThumbThickness)}" />
-                <Setter Property="Height" Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.ActiveThumbThickness)}" />
+                <Setter Property="MinWidth"
+                        Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.ActiveThumbThickness)}" />
+                <Setter Property="Height"
+                        Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.ActiveThumbThickness)}" />
             </Style>
         </Style>
 
@@ -131,11 +143,12 @@
                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                           my:VariantAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="variant-text"
-                                          Content="{my:Icon ChevronUp, Size=8}"
                                           Focusable="False"
                                           IsVisible="{TemplateBinding my:ScrollViewerAssist.ButtonsIsVisible}"
                                           Opacity="0"
-                                          Theme="{StaticResource MyNet.Theme.Button.Rounded}" />
+                                          Theme="{StaticResource MyNet.Theme.Button.Rounded}">
+                                <PathIcon Data="{StaticResource MyNet.Geometry.ChevronUp}" Height="5" Width="5" />
+                            </RepeatButton>
                             <Track Grid.Row="1"
                                    DeferThumbDrag="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                                    IsDirectionReversed="True"
@@ -167,24 +180,29 @@
                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                           my:VariantAssist.Primary="{Binding $parent[ScrollBar].BorderBrush}"
                                           Classes="variant-text"
-                                          Content="{my:Icon ChevronDown, Size=8}"
                                           Focusable="False"
                                           IsVisible="{TemplateBinding my:ScrollViewerAssist.ButtonsIsVisible}"
                                           Opacity="0"
-                                          Theme="{StaticResource MyNet.Theme.Button.Rounded}" />
+                                          Theme="{StaticResource MyNet.Theme.Button.Rounded}">
+                                <PathIcon Data="{StaticResource MyNet.Geometry.ChevronDown}" Height="5" Width="5" />
+                            </RepeatButton>
                         </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter>
 
             <Style Selector="^ /template/ Thumb#thumb">
-                <Setter Property="MinHeight" Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.InactiveThumbThickness)}" />
-                <Setter Property="Width" Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.InactiveThumbThickness)}" />
+                <Setter Property="MinHeight"
+                        Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.InactiveThumbThickness)}" />
+                <Setter Property="Width"
+                        Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.InactiveThumbThickness)}" />
             </Style>
 
             <Style Selector="^:pointerover /template/ Thumb#thumb">
-                <Setter Property="MinHeight" Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.ActiveThumbThickness)}" />
-                <Setter Property="Width" Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.ActiveThumbThickness)}" />
+                <Setter Property="MinHeight"
+                        Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.ActiveThumbThickness)}" />
+                <Setter Property="Width"
+                        Value="{Binding $parent[ScrollBar].(my:ScrollViewerAssist.ActiveThumbThickness)}" />
             </Style>
         </Style>
 
@@ -228,7 +246,10 @@
                                             VerticalSnapPointsAlignment="{TemplateBinding VerticalSnapPointsAlignment}"
                                             VerticalSnapPointsType="{TemplateBinding VerticalSnapPointsType}">
                         <ScrollContentPresenter.GestureRecognizers>
-                            <ScrollGestureRecognizer CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=PART_ContentPresenter}" CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=PART_ContentPresenter}" IsScrollInertiaEnabled="{Binding (ScrollViewer.IsScrollInertiaEnabled), ElementName=PART_ContentPresenter}" />
+                            <ScrollGestureRecognizer
+                                CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=PART_ContentPresenter}"
+                                CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=PART_ContentPresenter}"
+                                IsScrollInertiaEnabled="{Binding (ScrollViewer.IsScrollInertiaEnabled), ElementName=PART_ContentPresenter}" />
                         </ScrollContentPresenter.GestureRecognizers>
                     </ScrollContentPresenter>
                     <ScrollBar Name="PART_HorizontalScrollBar"
@@ -257,7 +278,8 @@
         <Style Selector="^ /template/ ScrollBar">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                    <DoubleTransition Easing="LinearEasing" Property="Opacity"
+                                      Duration="{StaticResource MyNet.Animation.Opacity}" />
                 </Transitions>
             </Setter>
             <Setter Property="Opacity" Value="0" />
@@ -276,7 +298,8 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- EMBEDDED SCROLLVIEWER REPEATBUTTON THEME                  -->
     <!-- ═════════════════════════════════════════════════════════ -->
-    <ControlTheme x:Key="MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource {x:Type Button}}">
+    <ControlTheme x:Key="MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup" TargetType="{x:Type RepeatButton}"
+                  BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="ContentTemplate" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -294,6 +317,9 @@
         <Setter Property="my:ThemeAssist.Category" Value="Surface" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.ScrollViewer.Popup}" />
+        <Setter Property="IsScrollChainingEnabled" Value="False" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Template">
             <ControlTemplate TargetType="ScrollViewer">
                 <DockPanel>
@@ -301,27 +327,33 @@
                                   DockPanel.Dock="Top"
                                   Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}">
                         <RepeatButton.IsVisible>
-                            <MultiBinding Converter="{x:Static c:MenuScrollingVisibilityConverter.Instance}" ConverterParameter="0">
-                                <Binding Path="VerticalScrollBarVisibility" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <MultiBinding Converter="{x:Static c:MenuScrollingVisibilityConverter.Default}"
+                                          ConverterParameter="0">
+                                <Binding Path="VerticalScrollBarVisibility"
+                                         RelativeSource="{RelativeSource TemplatedParent}" />
                                 <Binding Path="Offset.Y" RelativeSource="{RelativeSource TemplatedParent}" />
                                 <Binding Path="Extent.Height" RelativeSource="{RelativeSource TemplatedParent}" />
                                 <Binding Path="Viewport.Height" RelativeSource="{RelativeSource TemplatedParent}" />
                             </MultiBinding>
                         </RepeatButton.IsVisible>
-                        <PathIcon Classes="size-xs" Data="{StaticResource MyNet.Geometry.ChevronUp}" Foreground="{TemplateBinding Foreground}" />
+                        <PathIcon Classes="size-xs" Data="{StaticResource MyNet.Geometry.ChevronUp}"
+                                  Foreground="{TemplateBinding Foreground}" />
                     </RepeatButton>
                     <RepeatButton Command="{Binding LineDown, RelativeSource={RelativeSource TemplatedParent}}"
                                   DockPanel.Dock="Bottom"
                                   Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}">
                         <RepeatButton.IsVisible>
-                            <MultiBinding Converter="{x:Static c:MenuScrollingVisibilityConverter.Instance}" ConverterParameter="100">
-                                <Binding Path="VerticalScrollBarVisibility" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <MultiBinding Converter="{x:Static c:MenuScrollingVisibilityConverter.Default}"
+                                          ConverterParameter="100">
+                                <Binding Path="VerticalScrollBarVisibility"
+                                         RelativeSource="{RelativeSource TemplatedParent}" />
                                 <Binding Path="Offset.Y" RelativeSource="{RelativeSource TemplatedParent}" />
                                 <Binding Path="Extent.Height" RelativeSource="{RelativeSource TemplatedParent}" />
                                 <Binding Path="Viewport.Height" RelativeSource="{RelativeSource TemplatedParent}" />
                             </MultiBinding>
                         </RepeatButton.IsVisible>
-                        <PathIcon Classes="size-xs" Data="{StaticResource MyNet.Geometry.ChevronDown}" Foreground="{TemplateBinding Foreground}" />
+                        <PathIcon Classes="size-xs" Data="{StaticResource MyNet.Geometry.ChevronDown}"
+                                  Foreground="{TemplateBinding Foreground}" />
                     </RepeatButton>
                     <ScrollContentPresenter Name="PART_ContentPresenter"
                                             Margin="{TemplateBinding Padding}"
@@ -330,7 +362,10 @@
                                             VerticalSnapPointsAlignment="{TemplateBinding VerticalSnapPointsAlignment}"
                                             VerticalSnapPointsType="{TemplateBinding VerticalSnapPointsType}">
                         <ScrollContentPresenter.GestureRecognizers>
-                            <ScrollGestureRecognizer CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=PART_ContentPresenter}" CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=PART_ContentPresenter}" IsScrollInertiaEnabled="{Binding IsScrollInertiaEnabled, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <ScrollGestureRecognizer
+                                CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=PART_ContentPresenter}"
+                                CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=PART_ContentPresenter}"
+                                IsScrollInertiaEnabled="{Binding IsScrollInertiaEnabled, RelativeSource={RelativeSource TemplatedParent}}" />
                         </ScrollContentPresenter.GestureRecognizers>
                     </ScrollContentPresenter>
                 </DockPanel>

@@ -179,7 +179,7 @@
                                             Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Command="{Binding $parent[TextBox].Clear}"
-                                            Content="{my:Icon Close}"
+                                            Content="{my:MaterialIcon Close}"
                                             IsVisible="False" />
 
                                     <!-- Reveal Button -->
@@ -188,7 +188,7 @@
                                                   my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                                   Classes="kind-tool is-stretch"
                                                   my:DisableAssist.IsDisablable="False"
-                                                  Content="{my:Icon Eye}"
+                                                  Content="{my:MaterialIcon Eye}"
                                                   IsChecked="{TemplateBinding RevealPassword, Mode=TwoWay}"
                                                   IsVisible="False" />
                                 </Grid>
@@ -271,7 +271,7 @@
             <Style Selector="^[RevealPassword=True] /template/ ToggleButton#PART_RevealButton">
                 <Setter Property="Content">
                     <Template>
-                        <PathIcon Data="{StaticResource MyNet.Geometry.EyeOff}" />
+                        <my:MaterialIcon Kind="EyeOff" />
                     </Template>
                 </Setter>
             </Style>
@@ -449,7 +449,7 @@
                                         Classes="kind-tool"
                                         my:DisableAssist.IsDisablable="False"
                                         Command="{Binding $parent[TextBox].Clear}"
-                                        Content="{my:Icon Close}"
+                                        Content="{my:MaterialIcon Close}"
                                         IsVisible="False" />
 
                                 <!-- Reveal Button -->
@@ -459,7 +459,7 @@
                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                               Classes="kind-tool"
                                               my:DisableAssist.IsDisablable="False"
-                                              Content="{my:Icon Eye}"
+                                              Content="{my:MaterialIcon Eye}"
                                               IsChecked="{TemplateBinding RevealPassword, Mode=TwoWay}"
                                               IsVisible="False" />
                             </Grid>

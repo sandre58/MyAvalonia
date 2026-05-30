@@ -1,0 +1,132 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.DialogPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+            xmlns:vmPlayground="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+            x:DataType="vm:DialogPageViewModel"
+            x:Name="Root"
+            Theme="{StaticResource {x:Type ContentPage}}"
+            Header="{my:Translate Title}"
+            my:IconAssist.Icon="{Binding Icon}"
+            ClipToBounds="False">
+
+    <ContentPage.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+    </ContentPage.Resources>
+
+    <v:ShowcaseView ShowIcon="False"
+                    ShowContent="False"
+                    ShowThemes="False"
+                    ShowPreviewCode="False"
+                    ShowAppearance="False"
+                    ShowBackgroundsSelection="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmPlayground:PlaygroundViewModel">
+                <Grid ColumnDefinitions="*,*"
+                      Margin="{my:Thickness Md}"
+                      ColumnSpacing="{StaticResource MyNet.Spacing.Lg}">
+
+                    <Border Grid.Column="0" Classes="kind-card shadow-surface">
+                        <Grid RowDefinitions="Auto,*,Auto">
+                            <HeaderedContentControl Grid.Row="0"
+                                                    Header="Window Dialogs"
+                                                    my:IconAssist.Icon="{my:MaterialIcon DockWindow, DefinedSize=Sm}"
+                                                    Classes="variant-header variant-outlined header-h5"
+                                                    HorizontalContentAlignment="Stretch"
+                                                    my:HeaderAssist.HorizontalAlignment="Stretch"
+                                                    Margin="{my:Thickness Md, Bottom}" />
+
+                            <StackPanel Grid.Row="1"
+                                        Spacing="{StaticResource MyNet.Spacing.Md}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Margin="{my:Thickness Md}">
+                                <Button Content="Window Dialog"
+                                        my:IconAssist.Icon="{my:MaterialIcon DockWindow}"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).WindowGroup.ShowWindowDialogCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}" />
+                                <Button Content="Window MessageBox"
+                                        my:IconAssist.Icon="{my:MaterialIcon MessageAlertOutline}"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).WindowGroup.ShowWindowMessageBoxCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                                        CommandParameter="{ReflectionBinding ((vm:DialogPageViewModel)Data).WindowGroup.Playground.SelectedRole, FallbackValue={x:Null}, Source={StaticResource PageProxy}}" />
+                            </StackPanel>
+
+                            <Expander Grid.Row="2"
+                                      my:IconAssist.Icon="{my:MaterialIcon Cogs, DefinedSize=Sm}"
+                                      Header="{my:Loc Settings}"
+                                      Classes="header-h6 variant-transparent"
+                                      HorizontalContentAlignment="Stretch"
+                                      IsExpanded="True"
+                                      Padding="{my:Thickness Lg, Top}"
+                                      my:HeaderAssist.Padding="0"
+                                      Margin="{my:Thickness Md, Top}">
+                                <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                                    <v:ControlPropertiesView DataContext="{ReflectionBinding ((vm:DialogPageViewModel)Data).WindowGroup.Playground, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                                                             x:DataType="vmPlayground:PlaygroundViewModel" />
+                                </ScrollViewer>
+                            </Expander>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="1" Classes="kind-card shadow-surface">
+                        <Grid RowDefinitions="Auto,*,Auto">
+                            <HeaderedContentControl Grid.Row="0"
+                                                    Header="Overlay Dialogs"
+                                                    my:IconAssist.Icon="{my:MaterialIcon CardOutline, DefinedSize=Sm}"
+                                                    Classes="variant-header variant-outlined header-h5"
+                                                    HorizontalContentAlignment="Stretch"
+                                                    my:HeaderAssist.HorizontalAlignment="Stretch"
+                                                    Margin="{my:Thickness Md, Bottom}" />
+
+                            <StackPanel Grid.Row="1"
+                                        Spacing="{StaticResource MyNet.Spacing.Md}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Margin="{my:Thickness Md}">
+                                <Button Content="Overlay Dialog"
+                                        my:IconAssist.Icon="{my:MaterialIcon CardOutline}"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).OverlayGroup.ShowOverlayDialogCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}" />
+                                <Button Content="Overlay MessageBox"
+                                        my:IconAssist.Icon="{my:MaterialIcon MessageAlert}"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).OverlayGroup.ShowOverlayMessageBoxCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                                        CommandParameter="{ReflectionBinding ((vm:DialogPageViewModel)Data).OverlayGroup.Playground.SelectedRole, FallbackValue={x:Null}, Source={StaticResource PageProxy}}" />
+                                <Button Content="Overlay DialogBox"
+                                        my:IconAssist.Icon="{my:MaterialIcon CardBulleted}"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).OverlayGroup.ShowOverlayDialogBoxCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                                        CommandParameter="{ReflectionBinding ((vm:DialogPageViewModel)Data).OverlayGroup.Playground.SelectedRole, FallbackValue={x:Null}, Source={StaticResource PageProxy}}" />
+                            </StackPanel>
+
+                            <Expander Grid.Row="2"
+                                      my:IconAssist.Icon="{my:MaterialIcon Cogs, DefinedSize=Sm}"
+                                      Header="{my:Loc Settings}"
+                                      Classes="header-h6 variant-transparent"
+                                      HorizontalContentAlignment="Stretch"
+                                      IsExpanded="True"
+                                      Padding="{my:Thickness Lg, Top}"
+                                      my:HeaderAssist.Padding="0"
+                                      Margin="{my:Thickness Md, Top}">
+                                <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                                    <v:ControlPropertiesView DataContext="{ReflectionBinding ((vm:DialogPageViewModel)Data).OverlayGroup.Playground, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                                                             x:DataType="vmPlayground:PlaygroundViewModel" />
+                                </ScrollViewer>
+                            </Expander>
+                        </Grid>
+                    </Border>
+
+                </Grid>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+    </v:ShowcaseView>
+
+</ContentPage>

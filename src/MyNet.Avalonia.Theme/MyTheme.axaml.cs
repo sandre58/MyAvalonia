@@ -15,7 +15,6 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Styling;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Helpers;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
@@ -287,11 +286,11 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
 
     #endregion
 
-        #region Resource Injection
+    #region Resource Injection
 
-        /// <summary>
-        /// Injects all accent brand palette resources into the ResourceDictionary, including base color, foreground, and all shades.
-        /// </summary>
+    /// <summary>
+    /// Injects all accent brand palette resources into the ResourceDictionary, including base color, foreground, and all shades.
+    /// </summary>
     private void AddOrUpdatePrimaryShades()
     {
         using (PerformanceMonitor.Measure("AddOrUpdatePrimaryShades", category: PerformanceCategory.Theme))
@@ -331,7 +330,14 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
                     {
                         var contrastedColor = GetContrastedColorForKey(colorKey, activeTheme);
 
-                        if (new List<string> { nameof(ThemeVariantPalette.Success), nameof(ThemeVariantPalette.Error), nameof(ThemeVariantPalette.Warning), nameof(ThemeVariantPalette.Information), nameof(ThemeVariantPalette.Neutral) }.Contains(colorKey))
+                        if (new List<string>
+                            {
+                                nameof(ThemeVariantPalette.Success),
+                                nameof(ThemeVariantPalette.Error),
+                                nameof(ThemeVariantPalette.Warning),
+                                nameof(ThemeVariantPalette.Information),
+                                nameof(ThemeVariantPalette.Neutral)
+                            }.Contains(colorKey))
                         {
                             var shades = new ColorShades(color, contrastedColor);
                             shades.ToResourceDictionary(colorKey).ForEach(x =>
@@ -368,18 +374,14 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
             {
                 Drawing = new DrawingGroup
                 {
-                    Children = [
-                                new GeometryDrawing { Brush = Brushes.Transparent, Geometry = PathGeometry.Parse("M0,0 L2,0 2,2, 0,2Z") },
-                                new GeometryDrawing { Brush = GetBrush("Foreground.Primary", nameof(Opacity.Scrim)), Geometry = PathGeometry.Parse("M0,1 L2,1 2,2, 1,2 1,0 0,0Z") }
+                    Children =
+                    [
+                        new GeometryDrawing { Brush = Brushes.Transparent, Geometry = PathGeometry.Parse("M0,0 L2,0 2,2, 0,2Z") },
+                        new GeometryDrawing { Brush = GetBrush("Foreground.Primary", nameof(Opacity.Scrim)), Geometry = PathGeometry.Parse("M0,1 L2,1 2,2, 1,2 1,0 0,0Z") }
                     ]
                 }
             }
-        })
-        {
-            DestinationRect = new RelativeRect(0, 0, size, size, RelativeUnit.Absolute),
-            Stretch = Stretch.Uniform,
-            TileMode = TileMode.Tile
-        };
+        }) { DestinationRect = new(0, 0, size, size, RelativeUnit.Absolute), Stretch = Stretch.Uniform, TileMode = TileMode.Tile };
     }
 
     /// <summary>
@@ -394,7 +396,9 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
 
         return contrastedColorKey is null
             ? null
-            : themeDictionary.TryGetResource(contrastedColorKey, null, out var obj) && obj is Color color ? color : null;
+            : themeDictionary.TryGetResource(contrastedColorKey, null, out var obj) && obj is Color color
+                ? color
+                : null;
     }
 
     /// <summary>
@@ -410,7 +414,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
 
             foreach (var (key, color) in shades.ToResourceDictionary(name))
             {
-                AddOrUpdateColorAndBrush(key, color, shades.Foreground);
+                AddOrUpdateColorAndBrush(key, color, !key.Contains(nameof(ColorShades.Foreground), StringComparison.OrdinalIgnoreCase) ? shades.Foreground : null);
                 count++;
             }
 
@@ -508,13 +512,13 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     /// </summary>
     /// <returns>A nullable <see cref="ColorShades"/> representing the primary color shade. Returns null if no primary color is
     /// set.</returns>
-    ColorShades? IThemeBrushService.GetPrimary() => Primary;
+    ColorShades IThemeBrushService.GetPrimary() => Primary;
 
     /// <summary>
     /// Gets the current accent color used in the theme.
     /// </summary>
     /// <returns>A nullable <see cref="ColorShades"/> representing the accent color. Returns null if no accent color is set.</returns>
-    ColorShades? IThemeBrushService.GetAccent() => Accent;
+    ColorShades IThemeBrushService.GetAccent() => Accent;
 
     /// <summary>
     /// Sets the current theme for the application.
@@ -530,7 +534,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     /// <param name="color">The base color used to generate the primary color shades. This value must be a valid color.</param>
     /// <param name="foreground">An optional foreground color to be associated with the primary color shades. If <see langword="null"/>, no
     /// foreground color is set.</param>
-    public void SetPrimary(Color color, Color? foreground) => Primary = new ColorShades(color, foreground);
+    public void SetPrimary(Color color, Color? foreground) => Primary = new(color, foreground);
 
     /// <summary>
     /// Sets the application's accent color and an optional foreground color for the theme.
@@ -540,7 +544,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     /// <param name="color">The accent color to apply to the application's theme.</param>
     /// <param name="foreground">An optional foreground color to use with the accent color. If <see langword="null"/>, a default foreground color
     /// is selected.</param>
-    public void SetAccent(Color color, Color? foreground) => Accent = new ColorShades(color, foreground);
+    public void SetAccent(Color color, Color? foreground) => Accent = new(color, foreground);
 
     /// <summary>
     /// Sets the application's theme along with optional primary and accent colors and their respective foreground colors.
@@ -555,8 +559,8 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
         using (_themeChangedDeferrer.Defer())
         {
             Theme = theme;
-            Primary = new ColorShades(primary, primaryForeground);
-            Accent = new ColorShades(accent, accentForeground);
+            Primary = new(primary, primaryForeground);
+            Accent = new(accent, accentForeground);
         }
     }
 
@@ -573,7 +577,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     {
         var opacity = GetOpacity(opacityKey);
 
-        return _brushManager.Get(ThemeResourceKeyFactory.Brush(path), new ColorInterpolation(opacity, contrast, darken, lighten));
+        return _brushManager.Get(ThemeResourceKeyFactory.Brush(path), new(opacity, contrast, darken, lighten));
     }
 
     /// <summary>
@@ -589,7 +593,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     {
         var opacity = GetOpacity(opacityKey);
 
-        return _brushManager.Get(brush, new ColorInterpolation(opacity, contrast, darken, lighten));
+        return _brushManager.Get(brush, new(opacity, contrast, darken, lighten));
     }
 
     /// <summary>
@@ -670,7 +674,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
             _cachedThemeVariant = theme;
         }
 
-        _resourceCache ??= new Dictionary<object, object?>(256);
+        _resourceCache ??= new(256);
         _resourceCache[key] = found ? value : NotFoundSentinel;
 
         return found;
@@ -680,6 +684,20 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     /// Invalidates the resource lookup cache. Must be called whenever theme resources are modified.
     /// </summary>
     private void InvalidateResourceCache() => _resourceCache?.Clear();
+
+    /// <summary>
+    /// Eagerly loads all theme resources, palettes, and brushes. Call this at application startup
+    /// (e.g., behind a splash screen) to avoid a freeze on first resource access.
+    /// This method is idempotent — subsequent calls are no-ops.
+    /// </summary>
+    public void EnsureLoaded()
+    {
+        if (!_isResourcedAccessed)
+        {
+            _isResourcedAccessed = true;
+            OnResourcedAccessed();
+        }
+    }
 
     /// <summary>
     /// Loads theme resources and injects palettes and brushes when accessed for the first time.

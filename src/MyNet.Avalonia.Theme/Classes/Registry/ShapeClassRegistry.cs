@@ -42,7 +42,7 @@ public static class ShapeClassRegistry
             {
                 var border = new Border
                 {
-                    BorderThickness = new Thickness(2)
+                    BorderThickness = new(2)
                 };
 
                 border.SetProperty(TemplatedControl.CornerRadiusProperty, ThemeResources.Corners.Get(CornerSize.Round).Value);

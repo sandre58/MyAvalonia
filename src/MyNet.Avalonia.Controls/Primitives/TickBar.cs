@@ -284,10 +284,10 @@ public class TickBar : Control
 
                 spaceWithText = -3;
                 coefficientTextHeight = -1;
-                size = new Size(size.Width - rSpace, size.Height);
+                size = new(size.Width - rSpace, size.Height);
                 tickLen = -size.Height;
-                startPoint = new Point(halfReservedSpace, size.Height);
-                endPoint = new Point(halfReservedSpace + size.Width, size.Height);
+                startPoint = new(halfReservedSpace, size.Height);
+                endPoint = new(halfReservedSpace + size.Width, size.Height);
                 logicalToPhysical = size.Width / range;
                 break;
 
@@ -296,10 +296,10 @@ public class TickBar : Control
                     return;
 
                 spaceWithText = 3;
-                size = new Size(size.Width - rSpace, size.Height);
+                size = new(size.Width - rSpace, size.Height);
                 tickLen = size.Height;
-                startPoint = new Point(halfReservedSpace, 0d);
-                endPoint = new Point(halfReservedSpace + size.Width, 0d);
+                startPoint = new(halfReservedSpace, 0d);
+                endPoint = new(halfReservedSpace + size.Width, 0d);
                 logicalToPhysical = size.Width / range;
                 break;
 
@@ -309,11 +309,11 @@ public class TickBar : Control
 
                 spaceWithText = -3;
                 coefficientTextWidth = -1;
-                size = new Size(size.Width, size.Height - rSpace);
+                size = new(size.Width, size.Height - rSpace);
 
                 tickLen = -size.Width;
-                startPoint = new Point(size.Width, size.Height + halfReservedSpace);
-                endPoint = new Point(size.Width, halfReservedSpace);
+                startPoint = new(size.Width, size.Height + halfReservedSpace);
+                endPoint = new(size.Width, halfReservedSpace);
                 logicalToPhysical = size.Height / range * -1;
                 break;
 
@@ -322,10 +322,10 @@ public class TickBar : Control
                     return;
 
                 spaceWithText = 3;
-                size = new Size(size.Width, size.Height - rSpace);
+                size = new(size.Width, size.Height - rSpace);
                 tickLen = size.Width;
-                startPoint = new Point(0d, size.Height + halfReservedSpace);
-                endPoint = new Point(0d, halfReservedSpace);
+                startPoint = new(0d, size.Height + halfReservedSpace);
+                endPoint = new(0d, halfReservedSpace);
                 logicalToPhysical = size.Height / range * -1;
                 break;
             default:
@@ -364,16 +364,16 @@ public class TickBar : Control
             // Draw Floor & Ceiling tick
             if (TickMode != TickMode.Values)
             {
-                context.DrawLine(pen, startPoint, new Point(startPoint.X + tickLen, startPoint.Y));
-                context.DrawLine(pen, new Point(startPoint.X, endPoint.Y), new Point(startPoint.X + tickLen, endPoint.Y));
+                context.DrawLine(pen, startPoint, new(startPoint.X + tickLen, startPoint.Y));
+                context.DrawLine(pen, new(startPoint.X, endPoint.Y), new(startPoint.X + tickLen, endPoint.Y));
             }
 
             if (TickMode != TickMode.Tick)
             {
-                var formattedText = new FormattedText($"{Minimum}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface(FontFamily), FontSize, Foreground);
-                context.DrawText(formattedText, new Point(startPoint.X + tickLen + (coefficientTextWidth * formattedText.Width) + spaceWithText, startPoint.Y - (formattedText.Height / 2)));
-                formattedText = new FormattedText($"{Maximum}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface(FontFamily), FontSize, Foreground);
-                context.DrawText(formattedText, new Point(startPoint.X + tickLen + (coefficientTextWidth * formattedText.Width) + spaceWithText, endPoint.Y - (formattedText.Height / 2)));
+                var formattedText = new FormattedText($"{Minimum}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new(FontFamily), FontSize, Foreground);
+                context.DrawText(formattedText, new(startPoint.X + tickLen + (coefficientTextWidth * formattedText.Width) + spaceWithText, startPoint.Y - (formattedText.Height / 2)));
+                formattedText = new($"{Maximum}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new(FontFamily), FontSize, Foreground);
+                context.DrawText(formattedText, new(startPoint.X + tickLen + (coefficientTextWidth * formattedText.Width) + spaceWithText, endPoint.Y - (formattedText.Height / 2)));
             }
 
             // This property is rarely set so let's try to avoid the GetValue
@@ -395,14 +395,14 @@ public class TickBar : Control
                     if (TickMode != TickMode.Values)
                     {
                         context.DrawLine(pen,
-                            new Point(startPoint.X, y),
-                            new Point(startPoint.X + tickLen, y));
+                            new(startPoint.X, y),
+                            new(startPoint.X + tickLen, y));
                     }
 
                     if (TickMode == TickMode.Tick)
                         continue;
-                    var formattedText = new FormattedText($"{t}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface(FontFamily), FontSize, Foreground);
-                    context.DrawText(formattedText, new Point(startPoint.X + tickLen + (coefficientTextWidth * formattedText.Width) + spaceWithText, y - (formattedText.Height / 2)));
+                    var formattedText = new FormattedText($"{t}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new(FontFamily), FontSize, Foreground);
+                    context.DrawText(formattedText, new(startPoint.X + tickLen + (coefficientTextWidth * formattedText.Width) + spaceWithText, y - (formattedText.Height / 2)));
                 }
             }
 
@@ -416,14 +416,14 @@ public class TickBar : Control
                     if (TickMode != TickMode.Values)
                     {
                         context.DrawLine(pen,
-                        new Point(startPoint.X, y),
-                        new Point(startPoint.X + tickLen, y));
+                        new(startPoint.X, y),
+                        new(startPoint.X + tickLen, y));
                     }
 
                     if (TickMode == TickMode.Tick)
                         continue;
-                    var formattedText = new FormattedText($"{Minimum + i}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface(FontFamily), FontSize, Foreground);
-                    context.DrawText(formattedText, new Point(startPoint.X + tickLen + (coefficientTextWidth * formattedText.Width) + spaceWithText, y - (formattedText.Height / 2)));
+                    var formattedText = new FormattedText($"{Minimum + i}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new(FontFamily), FontSize, Foreground);
+                    context.DrawText(formattedText, new(startPoint.X + tickLen + (coefficientTextWidth * formattedText.Width) + spaceWithText, y - (formattedText.Height / 2)));
                 }
             }
         }
@@ -443,16 +443,16 @@ public class TickBar : Control
             // Draw Floor & Ceiling tick
             if (TickMode != TickMode.Values)
             {
-                context.DrawLine(pen, startPoint, new Point(startPoint.X, startPoint.Y + tickLen));
-                context.DrawLine(pen, new Point(endPoint.X, startPoint.Y), new Point(endPoint.X, startPoint.Y + tickLen));
+                context.DrawLine(pen, startPoint, new(startPoint.X, startPoint.Y + tickLen));
+                context.DrawLine(pen, new(endPoint.X, startPoint.Y), new(endPoint.X, startPoint.Y + tickLen));
             }
 
             if (TickMode != TickMode.Tick)
             {
-                var formattedText = new FormattedText($"{Minimum}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface(FontFamily), FontSize, Foreground);
-                context.DrawText(formattedText, new Point(startPoint.X - (formattedText.Width / 2), startPoint.Y + tickLen + (coefficientTextHeight * formattedText.Height) + spaceWithText));
-                formattedText = new FormattedText($"{Maximum}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface(FontFamily), FontSize, Foreground);
-                context.DrawText(formattedText, new Point(endPoint.X - (formattedText.Width / 2), startPoint.Y + tickLen + (coefficientTextHeight * formattedText.Height) + spaceWithText));
+                var formattedText = new FormattedText($"{Minimum}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new(FontFamily), FontSize, Foreground);
+                context.DrawText(formattedText, new(startPoint.X - (formattedText.Width / 2), startPoint.Y + tickLen + (coefficientTextHeight * formattedText.Height) + spaceWithText));
+                formattedText = new($"{Maximum}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new(FontFamily), FontSize, Foreground);
+                context.DrawText(formattedText, new(endPoint.X - (formattedText.Width / 2), startPoint.Y + tickLen + (coefficientTextHeight * formattedText.Height) + spaceWithText));
             }
 
             // This property is rarely set so let's try to avoid the GetValue
@@ -473,14 +473,14 @@ public class TickBar : Control
                     if (TickMode != TickMode.Values)
                     {
                         context.DrawLine(pen,
-                            new Point(x, startPoint.Y),
-                            new Point(x, startPoint.Y + tickLen));
+                            new(x, startPoint.Y),
+                            new(x, startPoint.Y + tickLen));
                     }
 
                     if (TickMode == TickMode.Tick)
                         continue;
-                    var formattedText = new FormattedText($"{t}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface(FontFamily), FontSize, Foreground);
-                    context.DrawText(formattedText, new Point(x - (formattedText.Width / 2), startPoint.Y + tickLen + (coefficientTextHeight * formattedText.Height) + spaceWithText));
+                    var formattedText = new FormattedText($"{t}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new(FontFamily), FontSize, Foreground);
+                    context.DrawText(formattedText, new(x - (formattedText.Width / 2), startPoint.Y + tickLen + (coefficientTextHeight * formattedText.Height) + spaceWithText));
                 }
             }
 
@@ -493,14 +493,14 @@ public class TickBar : Control
                     if (TickMode != TickMode.Values)
                     {
                         context.DrawLine(pen,
-                        new Point(x, startPoint.Y),
-                        new Point(x, startPoint.Y + tickLen));
+                        new(x, startPoint.Y),
+                        new(x, startPoint.Y + tickLen));
                     }
 
                     if (TickMode == TickMode.Tick)
                         continue;
-                    var formattedText = new FormattedText($"{Minimum + i}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface(FontFamily), FontSize, Foreground);
-                    context.DrawText(formattedText, new Point(x - (formattedText.Width / 2), startPoint.Y + tickLen + (coefficientTextHeight * formattedText.Height) + spaceWithText));
+                    var formattedText = new FormattedText($"{Minimum + i}", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new(FontFamily), FontSize, Foreground);
+                    context.DrawText(formattedText, new(x - (formattedText.Width / 2), startPoint.Y + tickLen + (coefficientTextHeight * formattedText.Height) + spaceWithText));
                 }
             }
         }

@@ -1,0 +1,73 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.DrawerPagePage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+            xmlns:samples="clr-namespace:MyNet.Avalonia.Showcase.Views.Samples"
+            xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+            x:DataType="vm:DrawerPagePageViewModel"
+            ClipToBounds="False"
+            x:Name="Root"
+            Theme="{StaticResource {x:Type ContentPage}}"
+            Header="{my:Translate Title}"
+            my:IconAssist.Icon="{Binding Icon}"
+            mc:Ignorable="d">
+
+    <v:ShowcaseView ShowContent="False" ShowIcon="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <DrawerPage behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                            Height="500"
+                            Width="700"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <DrawerPage.Drawer>
+                        <StackPanel Spacing="4" Margin="8">
+                            <TextBlock Text="Navigation" Theme="{StaticResource MyNet.Theme.TextBlock.H6}" Margin="8" />
+                            <Button Content="{my:Loc Home}" my:IconAssist.Icon="{my:MaterialIcon Home}" Classes="variant-text" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" />
+                            <Button Content="{my:Loc Dashboard}" my:IconAssist.Icon="{my:MaterialIcon ViewDashboard}" Classes="variant-text" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" />
+                            <Button Content="{my:Loc Settings}" my:IconAssist.Icon="{my:MaterialIcon Cog}" Classes="variant-text" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" />
+                            <Button Content="{my:Loc Help}" my:IconAssist.Icon="{my:MaterialIcon Help}" Classes="variant-text" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" />
+                        </StackPanel>
+                    </DrawerPage.Drawer>
+                    <DrawerPage.Content>
+                        <ScrollViewer>
+                            <samples:ExtraLargeContent1 />
+                        </ScrollViewer>
+                    </DrawerPage.Content>
+                </DrawerPage>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <DrawerPage behavior:PlaygroundBehavior.AttachStyle="{Binding}"
+                            Height="500"
+                            Width="700">
+                    <DrawerPage.Drawer>
+                        <StackPanel Spacing="4" Margin="8">
+                            <TextBlock Text="Navigation" Theme="{StaticResource MyNet.Theme.TextBlock.H6}" Margin="8" />
+                            <Button Content="{my:Loc Home}" my:IconAssist.Icon="{my:MaterialIcon Home}" Classes="variant-text" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" />
+                            <Button Content="{my:Loc Dashboard}" my:IconAssist.Icon="{my:MaterialIcon ViewDashboard}" Classes="variant-text" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" />
+                            <Button Content="{my:Loc Settings}" my:IconAssist.Icon="{my:MaterialIcon Cog}" Classes="variant-text" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" />
+                        </StackPanel>
+                    </DrawerPage.Drawer>
+                    <DrawerPage.Content>
+                        <ScrollViewer>
+                            <samples:ExtraLargeContent1 />
+                        </ScrollViewer>
+                    </DrawerPage.Content>
+                </DrawerPage>
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+    </v:ShowcaseView>
+
+</ContentPage>
+

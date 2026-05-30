@@ -197,7 +197,7 @@
                                             Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Command="{Binding $parent[ComboBox].Clear}"
-                                            Content="{my:Icon Close}"
+                                            Content="{my:MaterialIcon Close}"
                                             IsVisible="False" />
 
                                     <!-- DropDown Glyph -->
@@ -260,9 +260,11 @@
         </Setter>
 
         <Style Selector="^.use-transitions /template/ PathIcon#PART_ExpanderIcon">
-            <Setter Property="Transitions">
+            <Setter Property="my:TransitionsAssist.Transitions">
                 <Transitions>
                     <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                    <BrushTransition Easing="LinearEasing" Property="Foreground" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                    <TransformOperationsTransition Property="RenderTransform" Duration="{StaticResource MyNet.Animation.Glyph}" />
                 </Transitions>
             </Setter>
         </Style>
@@ -481,7 +483,7 @@
                                         Classes="kind-tool"
                                         my:DisableAssist.IsDisablable="False"
                                         Command="{Binding $parent[ComboBox].Clear}"
-                                        Content="{my:Icon Close}"
+                                        Content="{my:MaterialIcon Close}"
                                         IsVisible="False" />
 
                                 <!-- Glyph -->

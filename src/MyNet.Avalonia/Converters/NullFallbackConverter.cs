@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Linq;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
+using MyNet.Collections;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Converters;

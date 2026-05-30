@@ -66,7 +66,7 @@ public class TagBoxPanel : Panel
             totalHeight += currentLineHeight;
         }
 
-        return new Size(availableSize.Width, totalHeight);
+        return new(availableSize.Width, totalHeight);
     }
 
     protected override Size ArrangeOverride(Size finalSize)
@@ -82,7 +82,7 @@ public class TagBoxPanel : Panel
             // Width is enough to place next child
             if (deltaX.GreaterThan(child.DesiredSize.Width))
             {
-                child.Arrange(new Rect(currentLineX, totalHeight, child.DesiredSize.Width, Math.Max(child.DesiredSize.Height, currentLineHeight)));
+                child.Arrange(new(currentLineX, totalHeight, child.DesiredSize.Width, Math.Max(child.DesiredSize.Height, currentLineHeight)));
                 currentLineX += child.DesiredSize.Width;
                 currentLineHeight = Math.Max(currentLineHeight, child.DesiredSize.Height);
             }
@@ -94,7 +94,7 @@ public class TagBoxPanel : Panel
             else
             {
                 totalHeight += currentLineHeight;
-                child.Arrange(new Rect(0, totalHeight, Math.Min(child.DesiredSize.Width, finalSize.Width), child.DesiredSize.Height));
+                child.Arrange(new(0, totalHeight, Math.Min(child.DesiredSize.Width, finalSize.Width), child.DesiredSize.Height));
                 currentLineX = child.DesiredSize.Width;
                 currentLineHeight = child.DesiredSize.Height;
             }
@@ -107,17 +107,17 @@ public class TagBoxPanel : Panel
         if (lastDeltaX < 10)
         {
             totalHeight += currentLineHeight;
-            last.Arrange(new Rect(0, totalHeight, finalSize.Width, last.DesiredSize.Height));
+            last.Arrange(new(0, totalHeight, finalSize.Width, last.DesiredSize.Height));
             totalHeight += last.DesiredSize.Height;
         }
         else
         {
             currentLineHeight = Children.Count == 1 ? finalSize.Height : currentLineHeight;
-            last.Arrange(new Rect(currentLineX, totalHeight, lastDeltaX, Math.Max(currentLineHeight, last.DesiredSize.Height)));
+            last.Arrange(new(currentLineX, totalHeight, lastDeltaX, Math.Max(currentLineHeight, last.DesiredSize.Height)));
             currentLineHeight = Math.Max(currentLineHeight, last.DesiredSize.Height);
             totalHeight += currentLineHeight;
         }
 
-        return new Size(finalSize.Width, totalHeight);
+        return new(finalSize.Width, totalHeight);
     }
 }

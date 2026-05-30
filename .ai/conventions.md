@@ -1,0 +1,453 @@
+# MyNet.Avalonia Coding Conventions
+
+# General Principles
+
+All components should prioritize:
+
+- clarity
+- consistency
+- reusability
+- MVVM compatibility
+- discoverability
+- maintainability
+
+Controls are public framework components and must be designed as reusable building blocks.
+
+Avoid application-specific assumptions.
+
+---
+
+# Avalonia First
+
+Use native Avalonia concepts whenever possible.
+
+Prefer:
+
+- StyledProperty
+- DirectProperty
+- AttachedProperty
+- ControlTheme
+- DataTemplate
+- CompiledBinding
+
+Avoid introducing abstractions that hide Avalonia behavior.
+
+Consumers should feel they are using Avalonia, not a proprietary framework.
+
+---
+
+# MVVM Compatibility
+
+Controls must remain MVVM-friendly.
+
+Controls should:
+
+- expose bindable properties
+- expose commands when appropriate
+- avoid business logic
+- avoid ViewModel assumptions
+
+Never require code-behind to use a control.
+
+---
+
+# Control Design
+
+Controls should solve a single UI problem.
+
+Prefer:
+
+- focused controls
+- composable controls
+- reusable controls
+
+Avoid:
+
+- god controls
+- multi-purpose controls
+- excessive configuration
+
+---
+
+# Property Design
+
+## StyledProperty
+
+Use StyledProperty by default.
+
+Preferred for:
+
+- bindings
+- styling
+- templates
+- customization
+
+Example:
+
+```csharp
+public static readonly StyledProperty<string?> TitleProperty = AvaloniaProperty.Register<MyControl, string?>(nameof(Title));
+```
+
+---
+
+## DirectProperty
+
+Use DirectProperty only when:
+
+- a backing field is required
+- performance is critical
+- styling is not required
+
+Avoid DirectProperty by default.
+
+---
+
+## Attached Properties
+
+Attached properties should:
+
+- solve cross-cutting concerns
+- remain discoverable
+- avoid hidden side effects
+
+Do not use attached properties as service locators.
+
+---
+
+# Property Naming
+
+Property names should be:
+
+- explicit
+- descriptive
+- UI-oriented
+
+Avoid abbreviations.
+
+Preferred:
+
+```csharp
+SelectedItem
+Watermark
+Header
+DisplayMemberPath
+```
+
+Avoid:
+
+```csharp
+SelItem
+Txt
+Hdr
+```
+
+---
+
+# Control Templates
+
+Controls should support templating.
+
+Avoid hardcoding visual structures.
+
+Use:
+
+- TemplateParts
+- ControlTheme
+- TemplateBindings
+
+Whenever customization is expected.
+
+---
+
+# Template Parts
+
+Required template parts should:
+
+- be documented
+- use TemplatePart attributes
+- have predictable names
+
+Preferred:
+
+```csharp
+PART_ContentPresenter
+PART_SearchBox
+PART_ItemsHost
+```
+
+---
+
+# Styling
+
+Every control should be stylable.
+
+Controls should:
+
+- expose theme resources
+- expose styling hooks
+- support application-level customization
+
+Avoid requiring inheritance for visual customization.
+
+---
+
+# Commands
+
+Prefer ICommand for user actions.
+
+Examples:
+
+```csharp
+SaveCommand
+OpenCommand
+SelectCommand
+```
+
+Avoid event-only APIs when command support is appropriate.
+
+---
+
+# Events
+
+Events should represent UI interactions.
+
+Events should:
+
+- use EventArgs types
+- remain predictable
+- avoid business semantics
+
+Preferred:
+
+```csharp
+SelectionChanged
+ItemClicked
+DialogOpened
+```
+
+Avoid:
+
+```csharp
+CustomerSaved
+InvoiceValidated
+```
+
+---
+
+# Behaviors
+
+Behaviors should:
+
+- solve a single concern
+- remain reusable
+- avoid hidden dependencies
+
+Prefer multiple small behaviors over large behaviors.
+
+---
+
+# Visual Tree Usage
+
+Avoid unnecessary visual tree traversal.
+
+Avoid:
+
+```csharp
+GetVisualDescendants()
+```
+
+inside frequently executed code.
+
+Cache lookups when possible.
+
+---
+
+# Binding Conventions
+
+Prefer compiled bindings whenever possible.
+
+Avoid reflection-based bindings when a compiled alternative exists.
+
+Bindings should be:
+
+- explicit
+- maintainable
+- easy to diagnose
+
+---
+
+# Control Lifecycle
+
+Use Avalonia lifecycle methods appropriately.
+
+Examples:
+
+```csharp
+OnApplyTemplate
+OnAttachedToVisualTree
+OnDetachedFromVisualTree
+```
+
+Avoid initialization in constructors when template access is required.
+
+---
+
+# Memory Management
+
+Controls must clean up subscriptions.
+
+Always unsubscribe from:
+
+- events
+- observables
+- reactive subscriptions
+
+Prefer disposable patterns when appropriate.
+
+Avoid memory leaks.
+
+---
+
+# Localization
+
+Controls should support localization.
+
+Avoid:
+
+- hardcoded strings
+- culture-dependent assumptions
+
+Text displayed by controls should be localizable.
+
+---
+
+# Validation
+
+Validation should integrate naturally with Avalonia.
+
+Support:
+
+- IDataErrorInfo
+- INotifyDataErrorInfo
+
+Avoid custom validation systems unless necessary.
+
+---
+
+# Dependency Injection
+
+Controls should not directly resolve services.
+
+Avoid:
+
+```csharp
+ServiceLocator.Current
+```
+
+Prefer:
+
+- explicit services
+- dialog services
+- injected infrastructure
+
+when appropriate.
+
+---
+
+# Performance
+
+Avoid:
+
+- repeated allocations
+- repeated visual tree scans
+- unnecessary boxing
+- unnecessary reflection
+
+Optimize:
+
+- item controls
+- virtualization scenarios
+- frequently executed paths
+
+---
+
+# Public APIs
+
+Public APIs should be:
+
+- strongly typed
+- discoverable
+- self-documenting
+
+Avoid:
+
+- magic strings
+- ambiguous flags
+- hidden behaviors
+
+Preferred:
+
+```csharp
+SelectionMode.Single
+```
+
+Avoid:
+
+```csharp
+SelectionMode = 1
+```
+
+---
+
+# Documentation
+
+All public controls must provide:
+
+- XML documentation
+- usage examples when appropriate
+
+Document:
+
+- required template parts
+- expected behaviors
+- important limitations
+
+---
+
+# Testing
+
+Controls should have tests for:
+
+- property behavior
+- commands
+- events
+- templates
+- interactions
+
+Public controls are considered framework contracts.
+
+---
+
+# Code Style
+
+Prefer:
+
+- file-scoped namespaces
+- explicit access modifiers
+- sealed controls when inheritance is not intended
+- composition over inheritance
+
+Avoid unnecessary abstraction layers.
+
+---
+
+# Architectural Goal
+
+Every control should feel:
+
+- native to Avalonia
+- easy to understand
+- easy to style
+- easy to bind
+- easy to test
+- production ready

@@ -4,19 +4,20 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
- using System;
- using System.Globalization;
- using Avalonia;
- using Avalonia.Controls;
- using Avalonia.Controls.Templates;
- using Avalonia.Data;
- using MyNet.Avalonia.Controls.Primitives;
- using MyNet.Avalonia.Converters;
- using MyNet.Humanizer;
- using MyNet.Observable.Globalization;
- using TimePickerEx = MyNet.Avalonia.Controls.TimePickerEx;
+using System;
+using System.Globalization;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Templates;
+using Avalonia.Data;
+using Avalonia.Interactivity;
+using MyNet.Avalonia.Controls.Primitives;
+using MyNet.Avalonia.Converters;
+using MyNet.Humanizer;
+using MyNet.Observable.Globalization;
+using TimePickerEx = MyNet.Avalonia.Controls.TimePickerEx;
 
- namespace MyNet.Avalonia.Theme.DataGrid;
+namespace MyNet.Avalonia.Theme.DataGrid;
 
 public class DataGridTimeColumn : DataGridBoundColumn<TimePickerEx, ContentControl>
 {
@@ -57,6 +58,30 @@ public class DataGridTimeColumn : DataGridBoundColumn<TimePickerEx, ContentContr
 
     #endregion
 
+    protected override void PrepareEditingControl(TimePickerEx editingElement, RoutedEventArgs editingEventArgs)
+    {
+        base.PrepareEditingControl(editingElement, editingEventArgs);
+
+        OwningGrid.CellEditEnding += onCellEditEnding;
+        editingElement.DetachedFromVisualTree += cleanup;
+
+        // Open the dropdown directly.
+        editingElement.IsDropDownOpen = true;
+
+        // Guard: prevent DataGrid from ending edit while dropdown is open.
+        void onCellEditEnding(object? sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (editingElement.IsDropDownOpen)
+                e.Cancel = true;
+        }
+
+        void cleanup(object? sender, VisualTreeAttachmentEventArgs e)
+        {
+            OwningGrid.CellEditEnding -= onCellEditEnding;
+            editingElement.DetachedFromVisualTree -= cleanup;
+        }
+    }
+
     protected override Control GenerateElement(DataGridCell cell, object dataItem)
     {
         var element = base.GenerateElement(cell, dataItem);
@@ -89,21 +114,7 @@ public class DataGridTimeColumn : DataGridBoundColumn<TimePickerEx, ContentContr
     {
         if (element is not ContentControl { ContentTemplate: null } contentControl)
             return;
-        contentControl.ContentTemplate = new FuncDataTemplate<TimeSpan?>((_, _) => new TextBlock
-        {
-            [!TextBlock.TextProperty] = new MultiBinding
-            {
-                Converter = new DateTimeConverter(DateTimeConverterKind.Default, LetterCasing.Title),
-                ConverterParameter = DisplayFormat,
-                Mode = BindingMode.OneWay,
-                Bindings =
-                {
-                    CreateObjectBinding(),
-                    CreateCultureBinding(),
-                    CreateTimeZoneBinding()
-                }
-            }
-        });
+        contentControl.ContentTemplate = new FuncDataTemplate<TimeSpan?>((_, _) => new TextBlock { [!TextBlock.TextProperty] = new MultiBinding { Converter = new DateTimeConverter(DateTimeConverterKind.Default, LetterCasing.Title), ConverterParameter = DisplayFormat, Mode = BindingMode.OneWay, Bindings = { CreateObjectBinding(), CreateCultureBinding(), CreateTimeZoneBinding() } } });
     }
 
     private static CompiledBinding CreateCultureBinding()

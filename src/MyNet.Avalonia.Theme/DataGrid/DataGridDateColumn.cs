@@ -66,7 +66,24 @@ public class DataGridDateColumn : DataGridBoundColumn<CalendarDatePickerEx, Cont
     {
         base.PrepareEditingControl(editingElement, editingEventArgs);
 
+        OwningGrid.CellEditEnding += onCellEditEnding;
+        editingElement.DetachedFromVisualTree += cleanup;
+
+        // Open the dropdown directly.
         editingElement.IsDropDownOpen = true;
+
+        // Guard: prevent DataGrid from ending edit while dropdown is open.
+        void onCellEditEnding(object? sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (editingElement.IsDropDownOpen)
+                e.Cancel = true;
+        }
+
+        void cleanup(object? sender, VisualTreeAttachmentEventArgs e)
+        {
+            OwningGrid.CellEditEnding -= onCellEditEnding;
+            editingElement.DetachedFromVisualTree -= cleanup;
+        }
     }
 
     protected override Control GenerateElement(DataGridCell cell, object dataItem)

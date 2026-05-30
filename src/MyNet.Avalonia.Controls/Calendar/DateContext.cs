@@ -100,7 +100,7 @@ public record MonthContext(int Month, int Year) : DateContext
         var totalMonths = (Year * 12) + Month - 1 + value;
         var newYear = totalMonths / 12;
         var newMonth = (totalMonths % 12) + 1;
-        return new MonthContext(newMonth, newYear);
+        return new(newMonth, newYear);
     }
 
     public MonthContext AddYears(int value) => new(Month, Year + value);

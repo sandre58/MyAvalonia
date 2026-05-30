@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Theming;
@@ -15,6 +14,11 @@ namespace MyNet.Avalonia.Theme.Theming;
 /// </summary>
 public static class ThemeResourceKeyFactory
 {
+    /// <summary>
+    /// The prefix used for all XAML namespaces related to the theme.
+    /// </summary>
+    public const string XamlPrefix = "my";
+
     /// <summary>
     /// The prefix used for all resource keys.
     /// </summary>
@@ -28,12 +32,12 @@ public static class ThemeResourceKeyFactory
     /// <summary>
     /// The pattern for icon markup extension usage.
     /// </summary>
-    public const string IconPattern = "{{my:Icon {0}}}";
+    public const string MaterialIconPattern = $"{{{{{XamlPrefix}:MaterialIcon {{0}}}}}}";
 
     /// <summary>
     /// The pattern for icon path markup.
     /// </summary>
-    public const string IconPathPattern = $"<PathIcon Data=\"{{{{StaticResource {ResourcePrefix}.{GeometryKey}.{{0}}}}}}\" />";
+    public const string MaterialIconPathPattern = $"<{XamlPrefix}:MaterialIcon Kind=\"{{0}}\" />";
 
     /// <summary>
     /// The key for color resources.
@@ -59,11 +63,6 @@ public static class ThemeResourceKeyFactory
     /// The key for corners resources.
     /// </summary>
     public const string CornersKey = "Corners";
-
-    /// <summary>
-    /// The key for geometry resources.
-    /// </summary>
-    public const string GeometryKey = "Geometry";
 
     /// <summary>
     /// The key for themes.
@@ -143,13 +142,6 @@ public static class ThemeResourceKeyFactory
     public static string Brush(string name) => BuildResourceKey(BrushKey, name);
 
     /// <summary>
-    /// Gets a geometry resource key for the specified name.
-    /// </summary>
-    /// <param name="name">The geometry name.</param>
-    /// <returns>The formatted geometry resource key.</returns>
-    public static string Geometry(string name) => BuildResourceKey(GeometryKey, name);
-
-    /// <summary>
     /// Gets an opacity resource key for the specified name.
     /// </summary>
     /// <param name="name">The opacity name.</param>
@@ -157,14 +149,14 @@ public static class ThemeResourceKeyFactory
     public static string Opacity(string name) => BuildResourceKey(OpacityKey, name);
 
     /// <summary>
-    /// Gets an shadow resource key for the specified name.
+    /// Gets a shadow resource key for the specified name.
     /// </summary>
     /// <param name="name">The shadow name.</param>
     /// <returns>The formatted shadow resource key.</returns>
     public static string Shadow(string name) => BuildResourceKey(ShadowKey, name);
 
     /// <summary>
-    /// Gets an corners resource key for the specified name.
+    /// Gets a corners resource key for the specified name.
     /// </summary>
     /// <param name="name">The corners name.</param>
     /// <returns>The formatted corners resource key.</returns>

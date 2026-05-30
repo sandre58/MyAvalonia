@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="ThemePalette.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="ThemePalette.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -40,8 +40,8 @@ public class ThemePalette
     /// <returns>A new CompleteTheme instance.</returns>
     public static ThemePalette Create(ThemeVariantPalette themeVariant, Color primaryColor, Color accentColor) => new()
     {
-        Primary = new ColorShades(primaryColor),
-        Accent = new ColorShades(accentColor),
+        Primary = new(primaryColor),
+        Accent = new(accentColor),
         ThemeVariant = themeVariant
     };
 }

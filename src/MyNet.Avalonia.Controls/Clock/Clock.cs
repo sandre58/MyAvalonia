@@ -33,14 +33,14 @@ public sealed class Clock : TemplatedControl, IDisposable
         Duration = TimeSpan.FromSeconds(1),
         Children =
         {
-            new KeyFrame
+            new()
             {
-                Cue = new Cue(0.0),
+                Cue = new(0.0),
                 Setters = { new Setter { Property = SecondAngleProperty } }
             },
-            new KeyFrame
+            new()
             {
-                Cue = new Cue(1.0),
+                Cue = new(1.0),
                 Setters = { new Setter { Property = SecondAngleProperty } }
             }
         }
@@ -250,7 +250,7 @@ public sealed class Clock : TemplatedControl, IDisposable
         {
             _cts.Cancel();
             _cts.Dispose();
-            _cts = new CancellationTokenSource();
+            _cts = new();
             if (_secondsAnimation.Children[0].Setters[0] is Setter start)
                 start.Value = oldSecondAngle;
             if (_secondsAnimation.Children[1].Setters[0] is Setter end)

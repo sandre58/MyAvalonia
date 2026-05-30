@@ -1,14 +1,11 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
-using Avalonia.Threading;
 
 namespace MyNet.Avalonia.PerfTest.ViewModels;
 
@@ -20,7 +17,7 @@ public class StyleProfilingViewModel : ViewModelBase
     public StyleProfilingViewModel()
     {
         ProfileStylesCommand = new RelayCommand(async () => await ProfileStylesAsync());
-        Results = new ObservableCollection<StyleProfileResult>();
+        Results = new();
     }
 
     public ObservableCollection<StyleProfileResult> Results { get; }
@@ -156,7 +153,7 @@ public class StyleProfilingViewModel : ViewModelBase
                     AnalyzeStylesRecursive(child, sb, depth + 1);
             }
         }
-        else if (style is StyleInclude inc && inc.Loaded is IStyle loaded)
+        else if (style is StyleInclude inc && inc.Loaded is { } loaded)
         {
             AnalyzeStylesRecursive(loaded, sb, depth);
         }

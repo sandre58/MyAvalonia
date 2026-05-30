@@ -19,7 +19,7 @@ public class ComplexLayoutViewModel : ViewModelBase
 
             for (int j = 0; j < 15; j++)
             {
-                section.Items.Add(new SectionItem
+                section.Items.Add(new()
                 {
                     Title = $"Item {j + 1}",
                     Content = $"Content for item {j + 1} in section {i + 1}",

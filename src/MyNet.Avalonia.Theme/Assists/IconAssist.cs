@@ -129,7 +129,7 @@ public static class IconAssist
     /// <summary>
     /// Provides Role Property for attached IconAssist element.
     /// </summary>
-    public static readonly AttachedProperty<IconRole> RoleProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Role", IconRole.None, CssPrefix.Icon, inherits: true);
+    public static readonly AttachedProperty<IconRole> RoleProperty = AvaloniaPropertyHelper.RegisterEnumProperty("Role", typeof(IconAssist), IconRole.None, CssPrefix.Icon, inherits: true);
 
     /// <summary>
     /// Accessor for Attached  <see cref="RoleProperty"/>.

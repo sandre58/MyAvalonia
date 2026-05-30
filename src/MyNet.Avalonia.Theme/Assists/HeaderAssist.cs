@@ -160,7 +160,7 @@ public static class HeaderAssist
     /// <summary>
     /// Provides Margin Property for attached HeaderAssist element.
     /// </summary>
-    public static readonly AttachedProperty<Thickness> MarginProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("Margin", typeof(HeaderAssist), new Thickness(0));
+    public static readonly AttachedProperty<Thickness> MarginProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("Margin", typeof(HeaderAssist), new(0));
 
     /// <summary>
     /// Accessor for Attached  <see cref="MarginProperty"/>.

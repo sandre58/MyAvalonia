@@ -46,7 +46,7 @@ public class CachedContentControl : ContentControl
     public CachedContentControl()
     {
         // Initialize cache with optional expiration for memory management
-        _cache = new CacheStorage<object, Control>(
+        _cache = new(
             defaultExpirationPolicyInitCode: CacheExpiration != TimeSpan.Zero ? () => ExpirationPolicy.Duration(CacheExpiration)! : null,
             storeNullValues: false)
         {

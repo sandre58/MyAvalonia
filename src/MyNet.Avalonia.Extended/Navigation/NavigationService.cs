@@ -17,7 +17,6 @@ namespace MyNet.Avalonia.Extended.Navigation;
 /// <param name="pageResolver">The IPageResolver used to resolve navigation pages to Avalonia page instances.</param>
 public class NavigationService(IPageResolver pageResolver) : UI.Navigation.NavigationService
 {
-    private readonly IPageResolver _pageResolver = pageResolver;
     private NavigationPage? _navigationPage;
     private int _programmaticPopCount;
 
@@ -155,5 +154,5 @@ public class NavigationService(IPageResolver pageResolver) : UI.Navigation.Navig
     /// </summary>
     /// <param name="page">The navigation page to create an Avalonia page for.</param>
     /// <returns>The created Avalonia page.</returns>
-    private Page CreatePage(INavigationPage page) => _pageResolver.Resolve(page);
+    private Page CreatePage(INavigationPage page) => pageResolver.Resolve(page);
 }

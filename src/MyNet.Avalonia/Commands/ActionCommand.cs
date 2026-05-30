@@ -33,6 +33,7 @@ public sealed class ActionCommand<T> : ActionCommand, ICommand
 
     public override bool CanExecute(object? parameter) => !Busy;
 
+    // ReSharper disable once AsyncVoidMethod
     public override async void Execute(object? parameter)
     {
         if (Busy)

@@ -17,7 +17,7 @@ public class Interval : IInterval
 
     public void Invoke(TimeSpan frequency, Action action)
     {
-        _timer = new DispatcherTimer
+        _timer = new()
         {
             Interval = frequency,
             IsEnabled = true

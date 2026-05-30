@@ -20,7 +20,7 @@ public class AvaloniaScheduler(DispatcherPriority priority) : LocalScheduler, IS
     /// <summary>
     /// Gets the scheduler that schedules work on the dispatcher for the current thread.
     /// </summary>
-    public static AvaloniaScheduler Current => field ??= new AvaloniaScheduler();
+    public static AvaloniaScheduler Current => field ??= new();
 
     public AvaloniaScheduler()
         : this(DispatcherPriority.Render) { }

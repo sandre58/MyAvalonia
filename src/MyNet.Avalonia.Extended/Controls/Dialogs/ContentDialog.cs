@@ -16,8 +16,8 @@ public class ContentDialog : HeaderedContentControl
 {
     static ContentDialog()
     {
-        PaddingProperty.OverrideDefaultValue<ContentDialog>(new Thickness(10));
-        MarginProperty.OverrideDefaultValue<ContentDialog>(new Thickness(0, 35, 0, 0));
+        PaddingProperty.OverrideDefaultValue<ContentDialog>(new(10));
+        MarginProperty.OverrideDefaultValue<ContentDialog>(new(0, 35, 0, 0));
     }
 
     #region StartupLocation
@@ -88,24 +88,6 @@ public class ContentDialog : HeaderedContentControl
     {
         get => GetValue(ShowInTaskBarProperty);
         set => SetValue(ShowInTaskBarProperty, value);
-    }
-
-    #endregion
-
-    #region CanDragMove
-
-    /// <summary>
-    /// Provides CanDragMove Property.
-    /// </summary>
-    public static readonly StyledProperty<bool> CanDragMoveProperty = AvaloniaProperty.Register<ContentDialog, bool>(nameof(CanDragMove), true);
-
-    /// <summary>
-    /// Gets or sets a value indicating whether gets or sets the CanDragMove property.
-    /// </summary>
-    public bool CanDragMove
-    {
-        get => GetValue(CanDragMoveProperty);
-        set => SetValue(CanDragMoveProperty, value);
     }
 
     #endregion

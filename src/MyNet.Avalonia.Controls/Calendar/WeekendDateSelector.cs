@@ -12,7 +12,7 @@ namespace MyNet.Avalonia.Controls.Primitives;
 
 public class WeekendDateSelector : IDateSelector
 {
-    public static WeekendDateSelector Instance { get; } = new WeekendDateSelector();
+    public static WeekendDateSelector Instance { get; } = new();
 
     public bool Match(DateTime? date) => date?.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
 }

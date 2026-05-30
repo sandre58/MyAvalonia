@@ -10,7 +10,6 @@ using Avalonia.Data;
 using Avalonia.Media;
 using Avalonia.Metadata;
 using MyNet.Avalonia.Converters;
-using MyNet.Avalonia.Theme.Converters.Internals;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -41,7 +40,7 @@ public class RadialGradientBrushExtension : ThemeBrushExtensionBase
     /// <summary>
     /// Gets or sets the relative source for the binding. Default is self.
     /// </summary>
-    public RelativeSource RelativeSource { get; set; } = new RelativeSource(RelativeSourceMode.Self);
+    public RelativeSource RelativeSource { get; set; } = new(RelativeSourceMode.Self);
 
     /// <summary>
     /// Gets or sets the center point for the radial gradient (default is center: 0.5, 0.5).

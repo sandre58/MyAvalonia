@@ -1,389 +1,420 @@
-﻿
-<ResourceDictionary xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia">
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- EMBEDDED SPLITBUTTON BUTTON THEME                         -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="MyNet.Theme.Button.Embedded.SplitButton" TargetType="Button">
-            <Setter Property="my:ThemeAssist.Category" Value="Action" />
-            <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
-            <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
-            <Setter Property="Template">
-                <ControlTemplate TargetType="Button">
-                    <Panel Name="PART_RootPanel">
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- EMBEDDED SPLITBUTTON BUTTON THEME                         -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="MyNet.Theme.Button.Embedded.SplitButton" TargetType="Button">
+        <Setter Property="my:ThemeAssist.Category" Value="Action" />
+        <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True" />
+        <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="Button">
+                <Panel Name="PART_RootPanel">
 
-                        <Border Name="PART_MainBorder"
-                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                    <Border Name="PART_MainBorder"
+                            my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
+
+                    <Border Name="PART_ActiveBorder"
+                            Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                            BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                    <Border Name="PART_HoverBorder"
+                            Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                            BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Theme="{StaticResource MyNet.Theme.Border.State}" />
+
+                    <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
+                        <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                            <my:IconContentControl Name="IconContent"
+                                                   Icon="{TemplateBinding (my:IconAssist.Icon)}"
+                                                   IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                   IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                   IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                                   Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   HorizontalAlignment="Stretch"
+                                                   VerticalAlignment="Stretch"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                                   BorderThickness="{TemplateBinding BorderThickness}"
+                                                   CornerRadius="{TemplateBinding CornerRadius}"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   TextElement.FontSize="{TemplateBinding FontSize}"
+                                                   TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                   UseLayoutRounding="False">
+                                <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            </my:IconContentControl>
+                        </my:Ripple>
+                    </Border>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- Hover -->
+        <Style Selector="^:not(:disabled):pointerover">
+            <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                <Setter Property="Foreground"
+                        Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#PART_HoverBorder">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[(my|ProxyBehavior.IsActive)=True]">
+            <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                <Setter Property="Foreground"
+                        Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT SPLITBUTTON THEME                                 -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type SplitButton}" TargetType="SplitButton">
+        <Setter Property="my:ThemeAssist.Category" Value="Action" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Md}" />
+        <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Md}" />
+        <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Button}" />
+        <Setter Property="FontWeight" Value="{StaticResource MyNet.Font.Weight.Button}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="my:PopupBehavior.Placement" Value="BottomEdgeAlignedRight" />
+        <Setter Property="Focusable" Value="True" />
+
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+
+        <!-- Default Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
+        <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="my:InteractionAssist.ActiveBorderBrush"
+                Value="{my:ThemeBrush $self.(my:VariantAssist.Primary), Opacity=Low}" />
+        <Setter Property="my:InteractionAssist.ActiveForeground"
+                Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), Contrast=True}" />
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="SplitButton">
+                <Border BackgroundSizing="OuterBorderEdge" CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid Name="PART_Grid" ColumnDefinitions="*,Auto,Auto">
+                        <Button Name="PART_PrimaryButton"
+                                Grid.Column="0"
+                                Padding="{TemplateBinding Padding}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                my:IconAssist.Alignment="{TemplateBinding my:IconAssist.Alignment}"
+                                my:IconAssist.Icon="{TemplateBinding my:IconAssist.Icon}"
+                                my:IconAssist.Spacing="{TemplateBinding my:IconAssist.Spacing}"
+                                my:IconAssist.Opacity="{TemplateBinding my:IconAssist.Opacity}"
+                                my:IconAssist.LabelSize="{TemplateBinding my:IconAssist.LabelSize}"
+                                my:IconAssist.PrimarySize="{TemplateBinding my:IconAssist.PrimarySize}"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding (my:ShadowAssist.ShadowDepth)}"
+                                my:InteractionAssist.ActiveBackground="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                                my:InteractionAssist.ActiveBorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                my:InteractionAssist.ActiveForeground="{TemplateBinding my:InteractionAssist.ActiveForeground}"
+                                my:InteractionAssist.HoverBackground="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                my:InteractionAssist.HoverBorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                my:InteractionAssist.HoverForeground="{TemplateBinding my:InteractionAssist.HoverForeground}"
+                                my:InteractionAssist.RippleColor="{TemplateBinding my:InteractionAssist.RippleColor}"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}" />
+                                my:DisableAssist.IsDisablable="False"
+                                ClipToBounds="{TemplateBinding ClipToBounds}"
+                                Command="{TemplateBinding Command}"
+                                CommandParameter="{TemplateBinding CommandParameter}"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Focusable="False"
+                                FontFamily="{TemplateBinding FontFamily}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                Theme="{StaticResource MyNet.Theme.Button.Embedded.SplitButton}" />
+                        <Rectangle Name="PART_Separator"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   StrokeThickness="0" />
+                        <Button Name="PART_SecondaryButton"
+                                Grid.Column="2"
+                                Padding="4"
+                                Cursor="Arrow"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding (my:ShadowAssist.ShadowDepth)}"
+                                my:InteractionAssist.ActiveBackground="{TemplateBinding my:InteractionAssist.ActiveBackground}"
+                                my:InteractionAssist.ActiveBorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
+                                my:InteractionAssist.ActiveForeground="{TemplateBinding my:InteractionAssist.ActiveForeground}"
+                                my:InteractionAssist.HoverBackground="{TemplateBinding my:InteractionAssist.HoverBackground}"
+                                my:InteractionAssist.HoverBorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
+                                my:InteractionAssist.HoverForeground="{TemplateBinding my:InteractionAssist.HoverForeground}"
+                                my:InteractionAssist.RippleColor="{TemplateBinding my:InteractionAssist.RippleColor}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                my:DisableAssist.IsDisablable="False"
+                                ClipToBounds="{TemplateBinding ClipToBounds}"
+                                Focusable="False"
+                                Foreground="{TemplateBinding Foreground}"
+                                Theme="{StaticResource MyNet.Theme.Button.Embedded.SplitButton}">
+                            <PathIcon Name="PART_ExpanderIcon"
+                                      Classes="kind-glyph is-dropdown"
+                                      Focusable="False"
+                                      IsHitTestVisible="False"
+                                      UseLayoutRounding="False" />
+                        </Button>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
 
-                        <Border Name="PART_ActiveBorder"
-                                Background="{TemplateBinding my:InteractionAssist.ActiveBackground}"
-                                BorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}"
-                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+        <Style Selector="^ /template/ Rectangle#PART_Separator">
+            <Setter Property="Fill"
+                    Value="{my:ThemeBrush BorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+        </Style>
 
-                        <Border Name="PART_HoverBorder"
-                                Background="{TemplateBinding my:InteractionAssist.HoverBackground}"
-                                BorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}"
-                                Theme="{StaticResource MyNet.Theme.Border.State}" />
+        <Style Selector="^ /template/ Button#PART_PrimaryButton">
+            <Setter Property="BorderThickness"
+                    Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveRight}}" />
+            <Setter Property="CornerRadius"
+                    Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Left}}" />
+        </Style>
 
-                        <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
-                                <my:IconContentControl Name="IconContent"
-                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
-                                                       Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
-                                                       Padding="{TemplateBinding Padding}"
-                                                       HorizontalAlignment="Stretch"
-                                                       VerticalAlignment="Stretch"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                       BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                                                       BorderThickness="{TemplateBinding BorderThickness}"
-                                                       CornerRadius="{TemplateBinding CornerRadius}"
-                                                       Foreground="{TemplateBinding Foreground}"
-                                                       TextElement.FontSize="{TemplateBinding FontSize}"
-                                                       TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                                       UseLayoutRounding="False">
-                                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                                </my:IconContentControl>
-                            </my:Ripple>
-                        </Border>
-                    </Panel>
-                </ControlTemplate>
-            </Setter>
+        <Style Selector="^ /template/ Button#PART_SecondaryButton">
+            <Setter Property="BorderThickness"
+                    Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveLeft}}" />
+            <Setter Property="CornerRadius"
+                    Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Right}}" />
+        </Style>
 
-            <!-- Hover -->
-            <Style Selector="^:not(:disabled):pointerover">
-                <Style Selector="^ /template/ my|IconContentControl#IconContent">
-                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                </Style>
+        <Style Selector="^ /template/ Rectangle#PART_Separator">
+            <Setter Property="Width" Value="1" />
+        </Style>
 
-                <Style Selector="^ /template/ Border#PART_HoverBorder">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
+        <!-- Placement -->
+        <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+            <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronDown}" />
+        </Style>
+        <Style
+            Selector="^[(my|PopupBehavior.Placement)=Right], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedBottom]">
+            <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronRight}" />
             </Style>
-
-            <Style Selector="^[(my|ProxyBehavior.IsActive)=True]">
-                <Style Selector="^ /template/ my|IconContentControl#IconContent">
-                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                </Style>
-
-                <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
+        </Style>
+        <Style
+            Selector="^[(my|PopupBehavior.Placement)=Left], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedBottom]">
+            <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronLeft}" />
             </Style>
-        </ControlTheme>
+        </Style>
+        <Style
+            Selector="^[(my|PopupBehavior.Placement)=Top], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedLeft], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedRight]">
+            <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronUp}" />
+            </Style>
+        </Style>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DEFAULT SPLITBUTTON THEME                                 -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="{x:Type SplitButton}" TargetType="SplitButton">
-            <Setter Property="my:ThemeAssist.Category" Value="Action" />
-            <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
-            <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
-            <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
-            <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
-            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Md}" />
-            <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Button.Md}" />
-            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Button}" />
-            <Setter Property="FontWeight" Value="{StaticResource MyNet.Font.Weight.Button}" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="my:PopupBehavior.Placement" Value="BottomEdgeAlignedRight" />
-            <Setter Property="Focusable" Value="True" />
-
-            <!-- Default colors -->
-            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
-            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
-            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
-            <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
-
-            <!-- Variant -->
-            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
-            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
-            <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-            <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
-            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
-
-            <!-- Default Theme -->
-            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
-            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
-            <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
-            <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
-            <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
-            <Setter Property="my:InteractionAssist.RippleColor" Value="{my:Foreground}" />
-            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
-            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:ThemeBrush $self.(my:VariantAssist.Primary), Opacity=Low}" />
-            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), Contrast=True}" />
-
-            <Setter Property="Template">
-                <ControlTemplate TargetType="SplitButton">
-                    <Border BackgroundSizing="OuterBorderEdge" CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid Name="PART_Grid" ColumnDefinitions="*,Auto,Auto">
-                            <Button Name="PART_PrimaryButton"
-                                    Grid.Column="0"
-                                    Padding="{TemplateBinding Padding}"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    my:IconAssist.Alignment="{TemplateBinding my:IconAssist.Alignment}"
-                                    my:IconAssist.Icon="{TemplateBinding my:IconAssist.Icon}"
-                                    my:IconAssist.Spacing="{TemplateBinding my:IconAssist.Spacing}"
-                                    my:IconAssist.Opacity="{TemplateBinding my:IconAssist.Opacity}"
-                                    my:IconAssist.LabelSize="{TemplateBinding my:IconAssist.LabelSize}"
-                                    my:IconAssist.PrimarySize="{TemplateBinding my:IconAssist.PrimarySize}"
-                                    my:ShadowAssist.ShadowDepth="{TemplateBinding (my:ShadowAssist.ShadowDepth)}"
-                                    my:InteractionAssist.ActiveBackground="{TemplateBinding my:InteractionAssist.ActiveBackground}"
-                                    my:InteractionAssist.ActiveBorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                                    my:InteractionAssist.ActiveForeground="{TemplateBinding my:InteractionAssist.ActiveForeground}"
-                                    my:InteractionAssist.HoverBackground="{TemplateBinding my:InteractionAssist.HoverBackground}"
-                                    my:InteractionAssist.HoverBorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                                    my:InteractionAssist.HoverForeground="{TemplateBinding my:InteractionAssist.HoverForeground}"
-                                    my:InteractionAssist.RippleColor="{TemplateBinding my:InteractionAssist.RippleColor}"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    my:DisableAssist.IsDisablable="False"
-                                    ClipToBounds="{TemplateBinding ClipToBounds}"
-                                    Command="{TemplateBinding Command}"
-                                    CommandParameter="{TemplateBinding CommandParameter}"
-                                    Content="{TemplateBinding Content}"
-                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                    Focusable="False"
-                                    FontFamily="{TemplateBinding FontFamily}"
-                                    FontSize="{TemplateBinding FontSize}"
-                                    FontWeight="{TemplateBinding FontWeight}"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    Theme="{StaticResource MyNet.Theme.Button.Embedded.SplitButton}" />
-                            <Rectangle Name="PART_Separator"
-                                       Grid.Column="1"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       StrokeThickness="0" />
-                            <Button Name="PART_SecondaryButton"
-                                    Grid.Column="2"
-                                    Padding="4"
-                                    Cursor="Arrow"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    HorizontalContentAlignment="Center"
-                                    VerticalContentAlignment="Center"
-                                    my:ShadowAssist.ShadowDepth="{TemplateBinding (my:ShadowAssist.ShadowDepth)}"
-                                    my:InteractionAssist.ActiveBackground="{TemplateBinding my:InteractionAssist.ActiveBackground}"
-                                    my:InteractionAssist.ActiveBorderBrush="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                                    my:InteractionAssist.ActiveForeground="{TemplateBinding my:InteractionAssist.ActiveForeground}"
-                                    my:InteractionAssist.HoverBackground="{TemplateBinding my:InteractionAssist.HoverBackground}"
-                                    my:InteractionAssist.HoverBorderBrush="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                                    my:InteractionAssist.HoverForeground="{TemplateBinding my:InteractionAssist.HoverForeground}"
-                                    my:InteractionAssist.RippleColor="{TemplateBinding my:InteractionAssist.RippleColor}"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    my:DisableAssist.IsDisablable="False"
-                                    ClipToBounds="{TemplateBinding ClipToBounds}"
-                                    Focusable="False"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    Theme="{StaticResource MyNet.Theme.Button.Embedded.SplitButton}">
-                                <PathIcon Name="PART_ExpanderIcon"
-                                          Classes="kind-glyph is-dropdown"
-                                          Focusable="False"
-                                          IsHitTestVisible="False"
-                                          UseLayoutRounding="False" />
-                            </Button>
-                        </Grid>
-                    </Border>
-                </ControlTemplate>
-            </Setter>
+        <!-- IsOpen -->
+        <Style Selector="^:flyout-open">
+            <Style Selector="^ /template/ Button#PART_SecondaryButton">
+                <Setter Property="Foreground"
+                        Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </Style>
 
             <Style Selector="^ /template/ Rectangle#PART_Separator">
-                <Setter Property="Fill" Value="{my:ThemeBrush BorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-            </Style>
-
-            <Style Selector="^ /template/ Button#PART_PrimaryButton">
-                <Setter Property="BorderThickness" Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveRight}}" />
-                <Setter Property="CornerRadius" Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Left}}" />
+                <Setter Property="Fill"
+                        Value="{my:ThemeBrush (my:InteractionAssist.ActiveBorderBrush), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
             </Style>
 
             <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                <Setter Property="BorderThickness" Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveLeft}}" />
-                <Setter Property="CornerRadius" Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Right}}" />
+                <Setter Property="my:ProxyBehavior.IsActive" Value="True" />
+            </Style>
+            <Style Selector="^ /template/ Button#PART_PrimaryButton">
+                <Setter Property="my:ProxyBehavior.IsActive" Value="True" />
             </Style>
 
+            <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="RenderTransform" Value="rotate(180deg)" />
+            </Style>
+        </Style>
+
+        <!-- Checked (only for ToggleSplitButton) -->
+        <Style Selector="^:checked">
+            <Style Selector="^ /template/ Button#PART_PrimaryButton">
+                <Setter Property="Foreground"
+                        Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                <Setter Property="my:ProxyBehavior.IsActive" Value="True" />
+            </Style>
+        </Style>
+
+        <!-- Disabled -->
+        <Style Selector="^:disabled">
+            <Style Selector="^ /template/ Button#PART_PrimaryButton">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+            <Style Selector="^ /template/ Button#PART_SecondaryButton">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+
+        <!-- Positions -->
+        <Style Selector="^.position-left">
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
+                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="Auto,Auto,*" />
+            </Style>
+            <Style Selector="^ /template/ Button#PART_SecondaryButton">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
+                <Setter Property="BorderThickness"
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveRight}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Left}}" />
+            </Style>
+            <Style Selector="^ /template/ Button#PART_PrimaryButton">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="2" />
+                <Setter Property="BorderThickness"
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveLeft}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Right}}" />
+            </Style>
             <Style Selector="^ /template/ Rectangle#PART_Separator">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="1" />
                 <Setter Property="Width" Value="1" />
             </Style>
-
-            <!-- Placement -->
-            <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
-                <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronDown}" />
+        </Style>
+        <Style Selector="^.position-right">
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
+                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*,Auto,Auto" />
             </Style>
-            <Style Selector="^[(my|PopupBehavior.Placement)=Right], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=RightEdgeAlignedBottom]">
-                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
-                    <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronRight}" />
-                </Style>
+            <Style Selector="^ /template/ Button#PART_SecondaryButton">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="2" />
+                <Setter Property="BorderThickness"
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveLeft}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Right}}" />
             </Style>
-            <Style Selector="^[(my|PopupBehavior.Placement)=Left], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedTop], ^[(my|PopupBehavior.Placement)=LeftEdgeAlignedBottom]">
-                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
-                    <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronLeft}" />
-                </Style>
+            <Style Selector="^ /template/ Button#PART_PrimaryButton">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
+                <Setter Property="BorderThickness"
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveRight}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Left}}" />
             </Style>
-            <Style Selector="^[(my|PopupBehavior.Placement)=Top], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedLeft], ^[(my|PopupBehavior.Placement)=TopEdgeAlignedRight]">
-                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
-                    <Setter Property="Data" Value="{StaticResource MyNet.Geometry.ChevronUp}" />
-                </Style>
+            <Style Selector="^ /template/ Rectangle#PART_Separator">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="1" />
+                <Setter Property="Width" Value="1" />
             </Style>
-
-            <!-- IsOpen -->
-            <Style Selector="^:flyout-open">
-                <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                </Style>
-
-                <Style Selector="^ /template/ Rectangle#PART_Separator">
-                    <Setter Property="Fill" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBorderBrush), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                </Style>
-
-                <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                    <Setter Property="my:ProxyBehavior.IsActive" Value="True" />
-                </Style>
-                <Style Selector="^ /template/ Button#PART_PrimaryButton">
-                    <Setter Property="my:ProxyBehavior.IsActive" Value="True" />
-                </Style>
-
-                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
-                    <Setter Property="RenderTransform" Value="rotate(180deg)" />
-                </Style>
+        </Style>
+        <Style Selector="^.position-top">
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions" Value="Auto,Auto,*" />
+                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
             </Style>
-
-            <!-- Checked (only for ToggleSplitButton) -->
-            <Style Selector="^:checked">
-                <Style Selector="^ /template/ Button#PART_PrimaryButton">
-                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                    <Setter Property="my:ProxyBehavior.IsActive" Value="True" />
-                </Style>
+            <Style Selector="^ /template/ Button#PART_SecondaryButton">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
+                <Setter Property="BorderThickness"
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveBottom}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Top}}" />
             </Style>
-
-            <!-- Disabled -->
-            <Style Selector="^:disabled">
-                <Style Selector="^ /template/ Button#PART_PrimaryButton">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
-                <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
+            <Style Selector="^ /template/ Button#PART_PrimaryButton">
+                <Setter Property="Grid.Row" Value="2" />
+                <Setter Property="Grid.Column" Value="0" />
+                <Setter Property="BorderThickness"
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveTop}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Bottom}}" />
             </Style>
-
-            <!-- Positions -->
-            <Style Selector="^.position-left">
-                <Style Selector="^ /template/ Grid#PART_Grid">
-                    <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
-                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="Auto,Auto,*" />
-                </Style>
-                <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="0" />
-                    <Setter Property="BorderThickness" Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveRight}}" />
-                    <Setter Property="CornerRadius" Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Left}}" />
-                </Style>
-                <Style Selector="^ /template/ Button#PART_PrimaryButton">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="2" />
-                    <Setter Property="BorderThickness" Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveLeft}}" />
-                    <Setter Property="CornerRadius" Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Right}}" />
-                </Style>
-                <Style Selector="^ /template/ Rectangle#PART_Separator">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="1" />
-                    <Setter Property="Width" Value="1" />
-                </Style>
+            <Style Selector="^ /template/ Rectangle#PART_Separator">
+                <Setter Property="Grid.Row" Value="1" />
+                <Setter Property="Grid.Column" Value="0" />
+                <Setter Property="Height" Value="1" />
+                <Setter Property="Width" Value="NaN" />
             </Style>
-            <Style Selector="^.position-right">
-                <Style Selector="^ /template/ Grid#PART_Grid">
-                    <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
-                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*,Auto,Auto" />
-                </Style>
-                <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="2" />
-                    <Setter Property="BorderThickness" Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveLeft}}" />
-                    <Setter Property="CornerRadius" Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Right}}" />
-                </Style>
-                <Style Selector="^ /template/ Button#PART_PrimaryButton">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="0" />
-                    <Setter Property="BorderThickness" Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveRight}}" />
-                    <Setter Property="CornerRadius" Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Left}}" />
-                </Style>
-                <Style Selector="^ /template/ Rectangle#PART_Separator">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="1" />
-                    <Setter Property="Width" Value="1" />
-                </Style>
+        </Style>
+        <Style Selector="^.position-bottom">
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions" Value="*,Auto,Auto" />
+                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
             </Style>
-            <Style Selector="^.position-top">
-                <Style Selector="^ /template/ Grid#PART_Grid">
-                    <Setter Property="my:GridBehavior.RowDefinitions" Value="Auto,Auto,*" />
-                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
-                </Style>
-                <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="0" />
-                    <Setter Property="BorderThickness" Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveBottom}}" />
-                    <Setter Property="CornerRadius" Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Top}}" />
-                </Style>
-                <Style Selector="^ /template/ Button#PART_PrimaryButton">
-                    <Setter Property="Grid.Row" Value="2" />
-                    <Setter Property="Grid.Column" Value="0" />
-                    <Setter Property="BorderThickness" Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveTop}}" />
-                    <Setter Property="CornerRadius" Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Bottom}}" />
-                </Style>
-                <Style Selector="^ /template/ Rectangle#PART_Separator">
-                    <Setter Property="Grid.Row" Value="1" />
-                    <Setter Property="Grid.Column" Value="0" />
-                    <Setter Property="Height" Value="1" />
-                    <Setter Property="Width" Value="NaN" />
-                </Style>
+            <Style Selector="^ /template/ Button#PART_SecondaryButton">
+                <Setter Property="Grid.Row" Value="2" />
+                <Setter Property="Grid.Column" Value="0" />
+                <Setter Property="BorderThickness"
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveTop}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Bottom}}" />
             </Style>
-            <Style Selector="^.position-bottom">
-                <Style Selector="^ /template/ Grid#PART_Grid">
-                    <Setter Property="my:GridBehavior.RowDefinitions" Value="*,Auto,Auto" />
-                    <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
-                </Style>
-                <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                    <Setter Property="Grid.Row" Value="2" />
-                    <Setter Property="Grid.Column" Value="0" />
-                    <Setter Property="BorderThickness" Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveTop}}" />
-                    <Setter Property="CornerRadius" Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Bottom}}" />
-                </Style>
-                <Style Selector="^ /template/ Button#PART_PrimaryButton">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Grid.Column" Value="0" />
-                    <Setter Property="BorderThickness" Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveBottom}}" />
-                    <Setter Property="CornerRadius" Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Top}}" />
-                </Style>
-                <Style Selector="^ /template/ Rectangle#PART_Separator">
-                    <Setter Property="Grid.Row" Value="1" />
-                    <Setter Property="Grid.Column" Value="0" />
-                    <Setter Property="Height" Value="1" />
-                    <Setter Property="Width" Value="NaN" />
-                </Style>
+            <Style Selector="^ /template/ Button#PART_PrimaryButton">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
+                <Setter Property="BorderThickness"
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.RemoveBottom}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Top}}" />
             </Style>
+            <Style Selector="^ /template/ Rectangle#PART_Separator">
+                <Setter Property="Grid.Row" Value="1" />
+                <Setter Property="Grid.Column" Value="0" />
+                <Setter Property="Height" Value="1" />
+                <Setter Property="Width" Value="NaN" />
+            </Style>
+        </Style>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- SIZES                                                     -->
@@ -396,14 +427,14 @@
             <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
             <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
 
-                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
-                    <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
-                    <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
-                </Style>
+            <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
+            </Style>
 
-                <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                    <Setter Property="Padding" Value="{my:Thickness Xs}" />
-                </Style>
+            <Style Selector="^ /template/ Button#PART_SecondaryButton">
+                <Setter Property="Padding" Value="{my:Thickness Xs}" />
+            </Style>
         </Style>
 
         <!-- Size: Medium (default) -->
@@ -412,15 +443,15 @@
             <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Md}" />
             <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
             <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
-            
-                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
-                    <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Md}" />
-                    <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Md}" />
-                </Style>
 
-                <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                    <Setter Property="Padding" Value="{my:Thickness Sm}" />
-                </Style>
+            <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Md}" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_SecondaryButton">
+                <Setter Property="Padding" Value="{my:Thickness Sm}" />
+            </Style>
         </Style>
 
         <!-- Size: Large -->
@@ -429,17 +460,17 @@
             <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Button.Lg}" />
             <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
             <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
-            
-                <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
-                    <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
-                    <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
-                </Style>
 
-                <Style Selector="^ /template/ Button#PART_SecondaryButton">
-                    <Setter Property="Padding" Value="{my:Thickness Sm}" />
-                </Style>
+            <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
+                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_SecondaryButton">
+                <Setter Property="Padding" Value="{my:Thickness Sm}" />
+            </Style>
         </Style>
-        </ControlTheme>
+    </ControlTheme>
 
 
 </ResourceDictionary>

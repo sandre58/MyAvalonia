@@ -42,9 +42,11 @@
     <sys:TimeSpan x:Key="MyNet.Animation.VerySlow">0:0:0.5</sys:TimeSpan>
 
     <!-- Semantic Aliases -->
-    <sys:TimeSpan x:Key="MyNet.Animation.Glyph">0:0:0.1</sys:TimeSpan>
     <sys:TimeSpan x:Key="MyNet.Animation.Opacity">0:0:0.15</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Glyph">0:0:0.15</sys:TimeSpan>
     <sys:TimeSpan x:Key="MyNet.Animation.Switch">0:0:0.2</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Spin">0:0:0.2</sys:TimeSpan>
+    <sys:TimeSpan x:Key="MyNet.Animation.Pulse">0:0:0.2</sys:TimeSpan>
     <sys:TimeSpan x:Key="MyNet.Animation.Fade">0:0:0.3</sys:TimeSpan>
     <sys:TimeSpan x:Key="MyNet.Animation.Slide">0:0:0.3</sys:TimeSpan>
     <sys:TimeSpan x:Key="MyNet.Animation.Slide.Modal">0:0:0.25</sys:TimeSpan>

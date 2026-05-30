@@ -35,7 +35,7 @@
 
         <!-- Default Theme -->
         <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
-        <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
         <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
 
@@ -112,7 +112,7 @@
         </Style>
 
         <Style Selector="^:vertical">
-            <Style Selector="^ /template/ Border#ProgressBarRoot">
+            <Style Selector="^ /template/ Panel#ProgressBarRoot">
                 <Setter Property="Width" Value="{TemplateBinding my:ProgressBarAssist.BarSize}" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -301,6 +301,8 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.ProgressBar.Circular" TargetType="ProgressBar">
         <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
         <Setter Property="FontWeight" Value="Bold" />
@@ -317,7 +319,7 @@
         <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
 
         <!-- Default Theme -->
-        <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
         <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
 
         <Style Selector="^.role-contrast">

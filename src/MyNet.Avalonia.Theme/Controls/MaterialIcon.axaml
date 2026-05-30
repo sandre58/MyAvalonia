@@ -1,0 +1,99 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT MATERIALICON THEME                                -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type my:MaterialIcon}" TargetType="my:MaterialIcon" BasedOn="{StaticResource {x:Type my:ExtendedIcon}}">
+     
+                <!--  Animations  -->
+        <Style Selector="^[Animation=Spin] /template/ Viewbox#PART_Viewbox">
+            <Style.Animations>
+                <Animation IterationCount="INFINITE"
+                           Duration="{StaticResource MyNet.Animation.Spin}">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="RotateTransform.Angle" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="RotateTransform.Angle" Value="360" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+        <Style Selector="^[Animation=SpinCcw] /template/ Viewbox#PART_Viewbox">
+            <Style.Animations>
+                <Animation IterationCount="INFINITE" PlaybackDirection="Reverse" Duration="{StaticResource MyNet.Animation.Spin}">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="RotateTransform.Angle" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="RotateTransform.Angle" Value="360" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+        <Style Selector="^[Animation=Pulse] /template/ Viewbox#PART_Viewbox">
+            <Style.Animations>
+                <Animation IterationCount="INFINITE" Duration="{StaticResource MyNet.Animation.Pulse}">
+                    <Animation.Easing>
+                        <my:PulseEasing />
+                    </Animation.Easing>
+                    <KeyFrame Cue="0%">
+                        <Setter Property="RotateTransform.Angle" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="RotateTransform.Angle" Value="360" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+        <Style Selector="^[Animation=PulseCcw] /template/ Viewbox#PART_Viewbox">
+            <Style.Animations>
+                <Animation IterationCount="INFINITE" PlaybackDirection="Reverse" Duration="{StaticResource MyNet.Animation.Pulse}">
+                    <Animation.Easing>
+                        <my:PulseEasing />
+                    </Animation.Easing>
+                    <KeyFrame Cue="0%">
+                        <Setter Property="RotateTransform.Angle" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="RotateTransform.Angle" Value="360" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+        <Style Selector="^[Animation=FadeOutIn] /template/ Viewbox#PART_Viewbox">
+            <Style.Animations>
+                <Animation IterationCount="INFINITE" Duration="{StaticResource MyNet.Animation.Fade}">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="0.5" />
+                    </KeyFrame>
+                    <KeyFrame Cue="50%">
+                        <Setter Property="Opacity" Value="1" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="0.5" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+        <Style Selector="^[Animation=FadeInOut] /template/ Viewbox#PART_Viewbox">
+            <Style.Animations>
+                <Animation IterationCount="INFINITE" Duration="{StaticResource MyNet.Animation.Fade}">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="1" />
+                    </KeyFrame>
+                    <KeyFrame Cue="50%">
+                        <Setter Property="Opacity" Value="0.5" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="1" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+        
+    </ControlTheme>
+
+</ResourceDictionary>

@@ -236,7 +236,7 @@ public static class InputAssist
     /// <summary>
     /// Provides InnerPadding Property for attached InputBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<Thickness> InnerPaddingProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("InnerPadding", typeof(InputAssist), new Thickness(0));
+    public static readonly AttachedProperty<Thickness> InnerPaddingProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("InnerPadding", typeof(InputAssist), new(0));
 
     /// <summary>
     /// Accessor for Attached  <see cref="InnerPaddingProperty"/>.

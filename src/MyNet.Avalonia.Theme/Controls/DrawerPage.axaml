@@ -39,7 +39,7 @@
         <Setter Property="DrawerBackground" Value="{Binding $self.(my:VariantAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
         <Setter Property="BackdropBrush" Value="{my:Theme Overlay.Background, Opacity=Scrim}" />
-        <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
         <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
         <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
         <Setter Property="my:HeaderAssist.BorderBrush" Value="Transparent" />
@@ -53,6 +53,7 @@
                            my:VariantAssist.Background="{Binding DrawerBackground, RelativeSource={RelativeSource TemplatedParent}}"
                            my:VariantAssist.BorderBrush="{Binding BorderBrush, RelativeSource={RelativeSource TemplatedParent}}"
                            my:VariantAssist.BorderThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}}"
+                           my:VariantAssist.Foreground="{Binding (my:HeaderAssist.Foreground), RelativeSource={RelativeSource TemplatedParent}}"
                            my:ShadowAssist.ShadowDepth="{Binding (my:ShadowAssist.ShadowDepth), RelativeSource={RelativeSource TemplatedParent}}"
                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}"
                            PaneBackground="{Binding DrawerBackground, RelativeSource={RelativeSource TemplatedParent}}"
@@ -70,10 +71,10 @@
                                           AutomationProperties.Name="Toggle navigation drawer"
                                           ToolTip.Tip="{my:Loc ToggleNavigationDrawer}">
                                 <Panel>
-                                    <PathIcon IsVisible="{Binding DrawerIcon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNull}}"
-                                              Data="{StaticResource MyNet.Geometry.Menu}"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
+                                    <my:MaterialIcon IsVisible="{Binding DrawerIcon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNull}}"
+                                                     Kind="Menu"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"/>
                                     <ContentPresenter Name="PART_CompactPaneIconPresenter"
                                                       IsVisible="{Binding DrawerIcon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}"
                                                       HorizontalAlignment="Center"
@@ -123,10 +124,10 @@
                                                   AutomationProperties.Name="Toggle navigation drawer"
                                                   ToolTip.Tip="{my:Loc ToggleNavigationDrawer}">
                                         <Panel>
-                                            <PathIcon IsVisible="{Binding DrawerIcon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNull}}"
-                                                      Data="{StaticResource MyNet.Geometry.Menu}"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"/>
+                                            <my:MaterialIcon IsVisible="{Binding DrawerIcon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNull}}"
+                                                             Kind="Menu"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center"/>
                                             <ContentPresenter Name="PART_PaneIconPresenter"
                                                               IsVisible="{Binding DrawerIcon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}"
                                                               HorizontalAlignment="Center"
@@ -169,10 +170,10 @@
                                                   AutomationProperties.Name="Toggle navigation drawer"
                                                   ToolTip.Tip="{my:Loc ToggleNavigationDrawer}">
                                         <Panel>
-                                            <PathIcon IsVisible="{Binding DrawerIcon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNull}}"
-                                                      Data="{StaticResource MyNet.Geometry.Menu}"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"/>
+                                            <my:MaterialIcon IsVisible="{Binding DrawerIcon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNull}}"
+                                                             Kind="Menu"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center"/>
                                             <ContentPresenter Name="PART_BottomPaneIconPresenter"
                                                               IsVisible="{Binding DrawerIcon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}"
                                                               HorizontalAlignment="Center"

@@ -176,7 +176,7 @@
         </Setter>
 
         <!-- Styles -->
-        <Style Selector="^.variant-line /template/ ListBox#PART_ItemsPresenter2">
+        <Style Selector="^.variant-lines /template/ ListBox#PART_ItemsPresenter2">
             <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.ListBoxItem.Embedded.Carousel.Line}" />
             <Setter Property="ItemsPanel">
                 <ItemsPanelTemplate>

@@ -178,7 +178,7 @@
                                             Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Command="{Binding $parent[my:TimePickerEx].Clear}"
-                                            Content="{my:Icon Close}"
+                                            Content="{my:MaterialIcon Close}"
                                             IsVisible="False" />
 
                                     <!-- Time button -->
@@ -187,7 +187,7 @@
                                             Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Classes.is-selected="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
-                                            Content="{my:Icon Clock}"
+                                            Content="{my:MaterialIcon Clock}"
                                             my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                             my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}" />
                                 </Grid>
@@ -454,7 +454,7 @@
                                         Classes="kind-tool"
                                         my:DisableAssist.IsDisablable="False"
                                         Command="{Binding $parent[my:TimePickerEx].Clear}"
-                                        Content="{my:Icon Close}"
+                                        Content="{my:MaterialIcon Close}"
                                         IsVisible="False" />
 
                                 <!-- Time button -->
@@ -464,7 +464,7 @@
                                         Classes="kind-tool"
                                         my:DisableAssist.IsDisablable="False"
                                         Classes.is-selected="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
-                                        Content="{my:Icon Clock}"
+                                        Content="{my:MaterialIcon Clock}"
                                         my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                         my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}" />
                             </Grid>

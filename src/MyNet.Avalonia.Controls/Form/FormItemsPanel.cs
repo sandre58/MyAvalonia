@@ -21,7 +21,7 @@ public class FormItemsPanel : Panel
     public static readonly StyledProperty<double> SpacingProperty = AvaloniaProperty.Register<FormItemsPanel, double>(nameof(Spacing), 16d);
     public static readonly StyledProperty<Position> LabelPositionProperty = AvaloniaProperty.Register<FormItemsPanel, Position>(nameof(LabelPosition));
     public static readonly StyledProperty<GridLength> LabelWidthProperty = AvaloniaProperty.Register<FormItemsPanel, GridLength>(nameof(LabelWidth), GridLength.Auto);
-    public static readonly StyledProperty<Thickness> GroupMarginProperty = AvaloniaProperty.Register<FormItemsPanel, Thickness>(nameof(GroupMargin), new Thickness(0, 16, 0, 16));
+    public static readonly StyledProperty<Thickness> GroupMarginProperty = AvaloniaProperty.Register<FormItemsPanel, Thickness>(nameof(GroupMargin), new(0, 16, 0, 16));
 
     static FormItemsPanel() => AffectsMeasure<FormItemsPanel>(ColumnsProperty, SpacingProperty, LabelPositionProperty, LabelWidthProperty, GroupMarginProperty);
 
@@ -85,8 +85,18 @@ public class FormItemsPanel : Panel
         {
             var itemsWithPosition = formItemContainers.Where(x => x.LabelPosition == position).ToList();
 
-            // Pass 1: Reset computed width and measure all items to get natural label widths
-            var maxWidth = itemsWithPosition.Select(item => item.MeasureLabel()).Select(labelSize => labelSize.Width).Prepend(0).Max();
+            // Pass 1: reset computed width and force a neutral measure to get natural label widths.
+            foreach (var item in itemsWithPosition)
+            {
+                item.PanelComputedWidth = 0;
+                item.InvalidateMeasure();
+                item.Measure(Size.Infinity);
+            }
+
+            var maxWidth = itemsWithPosition
+                .Select(item => item.MeasureLabelContainer().Width)
+                .Prepend(0)
+                .Max();
 
             // Pass 2: Apply computed width to all items
             // Each item will decide if it uses PanelComputedWidth or its own LabelWidth
@@ -141,7 +151,7 @@ public class FormItemsPanel : Panel
             }
         }
 
-        return new Size(width, height);
+        return new(width, height);
     }
 
     private Size ArrangeVertical(List<Control> items, Size finalSize)
@@ -160,7 +170,7 @@ public class FormItemsPanel : Panel
             }
 
             var h = item.DesiredSize.Height;
-            item.Arrange(new Rect(0, y, finalSize.Width, h));
+            item.Arrange(new(0, y, finalSize.Width, h));
             y += h;
 
             // Add spacing or margins between items
@@ -204,7 +214,7 @@ public class FormItemsPanel : Panel
                 var span = Math.Min(FormItem.GetColumnSpan(item), columns - col);
                 var width = (cellWidth * span) + (spacing * (span - 1));
 
-                item.Measure(new Size(width, availableSize.Height));
+                item.Measure(new(width, availableSize.Height));
                 rowHeight = Math.Max(rowHeight, item.DesiredSize.Height);
                 rowItems.Add(item);
 
@@ -278,7 +288,7 @@ public class FormItemsPanel : Panel
         if (previousRowHadFormGroup && previousBottomMargin > 0)
             totalHeight += previousBottomMargin;
 
-        return new Size(availableSize.Width, totalHeight);
+        return new(availableSize.Width, totalHeight);
     }
 
     private Size ArrangeGrid(List<Control> items, Size finalSize)
@@ -361,7 +371,7 @@ public class FormItemsPanel : Panel
                 var x = col * (cellWidth + spacing);
 
                 var desiredHeight = item.DesiredSize.Height;
-                item.Arrange(new Rect(x, y, width, desiredHeight));
+                item.Arrange(new(x, y, width, desiredHeight));
                 col += span;
             }
 

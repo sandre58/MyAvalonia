@@ -46,7 +46,7 @@ public sealed class NumericUpDownTimeComponent : NumericUpDown, IComponentTimeSe
     {
         var newValue = (int?)e.NewValue;
         var oldValue = (int?)e.OldValue;
-        InternalValueChanged?.Invoke(this, new ValueChangedEventArgs<int>(ValueChangedEvent, oldValue, newValue));
+        InternalValueChanged?.Invoke(this, new(ValueChangedEvent, oldValue, newValue));
     }
 
     #region IsActive

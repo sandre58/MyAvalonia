@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections;
 using Avalonia;
 using Avalonia.Controls;
@@ -13,21 +14,14 @@ using Avalonia.Metadata;
 
 namespace MyNet.Avalonia.Theme.DataGrid;
 
-public class DataGridComboBoxColumn : DataGridBoundColumn<ComboBox, ContentControl>
+public class DataGridComboBoxColumn() : DataGridBoundColumn<ComboBox, ContentControl>(global::Avalonia.Controls.Primitives.SelectingItemsControl.SelectedValueProperty, ContentControl.ContentProperty)
 {
-    public DataGridComboBoxColumn()
-        : base(global::Avalonia.Controls.Primitives.SelectingItemsControl.SelectedItemProperty, ContentControl.ContentProperty) { }
+    private const string FallbackSelectedValuePath = ".";
 
     public virtual BindingBase? SelectedValueBinding
     {
         get;
-        set
-        {
-            if (field == value)
-                return;
-            field = value;
-            BindingTarget = global::Avalonia.Controls.Primitives.SelectingItemsControl.SelectedValueProperty;
-        }
+        set;
     }
 
     #region ItemsSource
@@ -72,7 +66,24 @@ public class DataGridComboBoxColumn : DataGridBoundColumn<ComboBox, ContentContr
     {
         base.PrepareEditingControl(editingElement, editingEventArgs);
 
+        OwningGrid.CellEditEnding += onCellEditEnding;
+        editingElement.DropDownClosed += onDropDownClosed;
+
+        // Open the dropdown directly.
         editingElement.IsDropDownOpen = true;
+
+        // Guard: prevent DataGrid from ending edit while dropdown is open.
+        void onCellEditEnding(object? sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (editingElement.IsDropDownOpen)
+                e.Cancel = true;
+        }
+
+        void onDropDownClosed(object? sender, EventArgs e)
+        {
+            OwningGrid.CellEditEnding -= onCellEditEnding;
+            editingElement.DropDownClosed -= onDropDownClosed;
+        }
     }
 
     protected override void SynchronizeEditingControlProperties(Control control)
@@ -86,21 +97,13 @@ public class DataGridComboBoxColumn : DataGridBoundColumn<ComboBox, ContentContr
         DataGridHelper.SynchronizeColumnProperty(this, control, ItemsSourceProperty);
         DataGridHelper.SynchronizeColumnProperty(this, control, DisplayMemberBindingProperty);
 
-        if (control is ComboBox comboBox && SelectedValueBinding is not null)
-            comboBox.SelectedValueBinding = SelectedValueBinding;
+        if (control is ComboBox comboBox)
+            comboBox.SelectedValueBinding = SelectedValueBinding ?? CreateFallbackSelectedValueBinding();
     }
 
-    protected override void ResetValue(ComboBox control, object uneditedValue)
-    {
-        if (SelectedValueBinding != null)
-        {
-            control.SelectedValue = uneditedValue;
-        }
-        else
-        {
-            control.SelectedItem = uneditedValue;
-        }
-    }
+    protected override void ResetValue(ComboBox control, object uneditedValue) => control.SelectedValue = uneditedValue;
 
-    protected override object? GetValue(ComboBox control) => SelectedValueBinding is not null ? control.SelectedValue : control.SelectedItem;
+    protected override object? GetValue(ComboBox control) => control.SelectedValue;
+
+    private static Binding CreateFallbackSelectedValueBinding() => new(FallbackSelectedValuePath);
 }

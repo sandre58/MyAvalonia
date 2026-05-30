@@ -112,7 +112,7 @@ public class ColorShades
     /// <summary>
     /// Gets the dark color alias (shade 700).
     /// </summary>
-    public Color Dark => Shade600;
+    public Color Dark => Shade700;
 
     /// <summary>
     /// Gets the darker color alias (shade 800).
@@ -174,6 +174,11 @@ public class ColorShades
             { nameof(Dark).WithPrefix(paletteName, "."), Dark },
             { nameof(Light).WithPrefix(paletteName, "."), Light },
             { nameof(Foreground).WithPrefix(paletteName, "."), Foreground },
+            { nameof(Lightest).WithPrefix(paletteName, "."), Lightest },
+            { nameof(Lighter).WithPrefix(paletteName, "."), Lighter },
+            { nameof(Default).WithPrefix(paletteName, "."), Default },
+            { nameof(Darker).WithPrefix(paletteName, "."), Darker },
+            { nameof(Darkest).WithPrefix(paletteName, "."), Darkest }
 
             // The following lines are commented out to reduce redundancy, as the shades can be accessed via GetShade method or aliases.
             // { nameof(Shade50).WithPrefix(paletteName), Shade50 },
@@ -186,11 +191,6 @@ public class ColorShades
             // { nameof(Shade700).WithPrefix(paletteName), Shade700 },
             // { nameof(Shade800).WithPrefix(paletteName), Shade800 },
             // { nameof(Shade900).WithPrefix(paletteName), Shade900 },
-            // { nameof(Lightest).WithPrefix(paletteName), Lightest },
-            // { nameof(Lighter).WithPrefix(paletteName), Lighter },
-            // { nameof(Default).WithPrefix(paletteName), Default },
-            // { nameof(Darker).WithPrefix(paletteName), Darker },
-            // { nameof(Darkest).WithPrefix(paletteName), Darkest }
         };
 
     /// <summary>
@@ -203,6 +203,6 @@ public class ColorShades
     {
         var baseColor = (Color)dictionary.GetValueOrDefault(paletteName, Colors.Gray);
         var foregroundColor = (Color)dictionary.GetValueOrDefault($"{nameof(Foreground)}.{paletteName}", baseColor.ContrastingForegroundColor());
-        return new ColorShades(baseColor, foregroundColor);
+        return new(baseColor, foregroundColor);
     }
 }

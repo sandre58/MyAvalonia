@@ -15,8 +15,8 @@
         <Setter Property="CollapseWidth" Value="50" />
         <Setter Property="ExpandWidth" Value="300" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
-        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
@@ -32,7 +32,8 @@
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <StackPanel Orientation="Vertical" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType={x:Type my:NavigationMenu}}}" />
+                <StackPanel Orientation="Vertical"
+                            Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType={x:Type my:NavigationMenu}}}" />
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="Left" />
@@ -111,7 +112,8 @@
                                         </Style>
                                     </Style>
                                 </ScrollViewer.Styles>
-                                <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" Margin="{TemplateBinding Padding}" />
+                                <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                Margin="{TemplateBinding Padding}" />
                             </ScrollViewer>
                         </DockPanel>
                     </Border>
@@ -123,7 +125,8 @@
         <Style Selector="^:not(:horizontal-collapsed)">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="{StaticResource MyNet.Transition.SineEaseInOut.NavigationMenu}" Property="Width" Duration="{StaticResource MyNet.Animation.Slide}" />
+                    <DoubleTransition Easing="{StaticResource MyNet.Transition.SineEaseInOut.NavigationMenu}"
+                                      Property="Width" Duration="{StaticResource MyNet.Animation.Slide}" />
                 </Transitions>
             </Setter>
             <Setter Property="Width" Value="{Binding $self.ExpandWidth}" />
@@ -132,7 +135,8 @@
         <Style Selector="^:horizontal-collapsed">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="{StaticResource MyNet.Transition.SineEaseInOut.NavigationMenu}" Property="Width" Duration="{StaticResource MyNet.Animation.Slide}" />
+                    <DoubleTransition Easing="{StaticResource MyNet.Transition.SineEaseInOut.NavigationMenu}"
+                                      Property="Width" Duration="{StaticResource MyNet.Animation.Slide}" />
                 </Transitions>
             </Setter>
             <Setter Property="Width" Value="{Binding $self.CollapseWidth}" />
@@ -206,7 +210,7 @@
                                         <MultiBinding Converter="{x:Static c:NavigationMenuIconWidthConverter.Default}">
                                             <Binding Path="$parent[my:NavigationMenu].CollapseWidth" />
                                             <Binding Path="$parent[my:NavigationMenu].Padding" />
-                                            <Binding Path="$self.Margin" />
+                                            <Binding Path="Margin" RelativeSource="{RelativeSource TemplatedParent}" />
                                         </MultiBinding>
                                     </ContentPresenter.Width>
                                 </ContentPresenter>
@@ -233,7 +237,8 @@
                                        IsLightDismissEnabled="True"
                                        Placement="RightEdgeAlignedTop"
                                        PlacementTarget="{Binding #PART_MainBorder}">
-                                    <Border HorizontalAlignment="Stretch" Theme="{StaticResource MyNet.Theme.Border.Popup}">
+                                    <Border HorizontalAlignment="Stretch"
+                                            Theme="{StaticResource MyNet.Theme.Border.Popup}">
                                         <StackPanel Name="PART_OverflowPanel" />
                                     </Border>
                                 </Popup>
@@ -244,21 +249,16 @@
             </Panel>
 
             <!-- Sub Items -->
-            <ItemsPresenter Name="PART_ItemsPresenter"
-                            Grid.Row="1"
-                            Margin="0 4 0 0"
-                            VerticalAlignment="Top"
-                            Grid.IsSharedSizeScope="True"
-                            IsVisible="{Binding Items.Count, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ListConverter.Any}}"
-                            ItemsPanel="{Binding ItemsPanel, RelativeSource={RelativeSource TemplatedParent}}"
-                            RenderTransformOrigin="0.5,0">
-                <ItemsPresenter.Transitions>
-                    <Transitions>
-                        <DoubleTransition Property="Height" Duration="{StaticResource MyNet.Animation.Slide}" />
-                        <TransformOperationsTransition Property="RenderTransform" Duration="{StaticResource MyNet.Animation.Slide}" />
-                    </Transitions>
-                </ItemsPresenter.Transitions>
-            </ItemsPresenter>
+            <my:ExpandControl Name="PART_ExpandControl"
+                              Grid.Row="1"
+                              Margin="0 4 0 0"
+                              VerticalAlignment="Top"
+                              Orientation="Vertical"
+                              IsVisible="{Binding Items.Count, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ListConverter.Any}}">
+                <ItemsPresenter Name="PART_ItemsPresenter"
+                                Grid.IsSharedSizeScope="True"
+                                ItemsPanel="{Binding ItemsPanel, RelativeSource={RelativeSource TemplatedParent}}" />
+            </my:ExpandControl>
         </Grid>
     </ControlTemplate>
 
@@ -266,19 +266,28 @@
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
-        <Setter Property="HorizontalAlignment" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.HorizontalAlignment)}" />
-        <Setter Property="VerticalAlignment" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.VerticalAlignment)}" />
+        <Setter Property="HorizontalAlignment"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.HorizontalAlignment)}" />
+        <Setter Property="VerticalAlignment"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.VerticalAlignment)}" />
         <Setter Property="Margin" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.Margin)}" />
         <Setter Property="Padding" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.Padding)}" />
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.ShadowDepth)}" />
-        <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[my:NavigationMenu].(my:IconAssist.Alignment)}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.ShadowDepth)}" />
+        <Setter Property="my:IconAssist.Alignment"
+                Value="{Binding $parent[my:NavigationMenu].(my:IconAssist.Alignment)}" />
         <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[my:NavigationMenu].(my:IconAssist.Spacing)}" />
         <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[my:NavigationMenu].(my:IconAssist.Opacity)}" />
-        <Setter Property="my:IconAssist.LabelSize" Value="{Binding $parent[my:NavigationMenu].(my:IconAssist.LabelSize)}" />
-        <Setter Property="my:IconAssist.PrimarySize" Value="{Binding $parent[my:NavigationMenu].(my:IconAssist.PrimarySize)}" />
-        <Setter Property="my:ItemsAssist.IndicatorPlacement" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.IndicatorPlacement)}" />
-        <Setter Property="my:ItemsAssist.IndicatorThickness" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.IndicatorThickness)}" />
-        <Setter Property="my:ItemsAssist.IndicatorLength" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.IndicatorLength)}" />
+        <Setter Property="my:IconAssist.LabelSize"
+                Value="{Binding $parent[my:NavigationMenu].(my:IconAssist.LabelSize)}" />
+        <Setter Property="my:IconAssist.PrimarySize"
+                Value="{Binding $parent[my:NavigationMenu].(my:IconAssist.PrimarySize)}" />
+        <Setter Property="my:ItemsAssist.IndicatorPlacement"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.IndicatorPlacement)}" />
+        <Setter Property="my:ItemsAssist.IndicatorThickness"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.IndicatorThickness)}" />
+        <Setter Property="my:ItemsAssist.IndicatorLength"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.IndicatorLength)}" />
         <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -286,17 +295,26 @@
         <!-- Default Theme -->
         <Setter Property="Background" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.BorderBrush)}" />
-        <Setter Property="BorderThickness" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.BorderThickness)}" />
+        <Setter Property="BorderThickness"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.BorderThickness)}" />
         <Setter Property="Foreground" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.Foreground)}" />
         <Setter Property="CornerRadius" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.CornerRadius)}" />
-        <Setter Property="my:InteractionAssist.HoverBackground" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.HoverBackground)}" />
-        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.HoverBorderBrush)}" />
-        <Setter Property="my:InteractionAssist.HoverForeground" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.HoverForeground)}" />
-        <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.RippleColor)}" />
-        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.ActiveBackground)}" />
-        <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.ActiveBorderBrush)}" />
-        <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.ActiveForeground)}" />
-        <Setter Property="my:InteractionAssist.ActiveIndicatorColor" Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.ActiveBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.HoverBackground"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.HoverBackground)}" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.HoverBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.HoverForeground"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.HoverForeground)}" />
+        <Setter Property="my:InteractionAssist.RippleColor"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.RippleColor)}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.ActiveBackground)}" />
+        <Setter Property="my:InteractionAssist.ActiveBorderBrush"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.ActiveBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.ActiveForeground"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.ActiveForeground)}" />
+        <Setter Property="my:InteractionAssist.ActiveIndicatorColor"
+                Value="{Binding $parent[my:NavigationMenu].(my:ItemsAssist.ActiveBorderBrush)}" />
 
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
@@ -316,7 +334,8 @@
             <Style Selector="^.use-transitions">
                 <Setter Property="Transitions">
                     <Transitions>
-                        <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                        <DoubleTransition Easing="LinearEasing" Property="Opacity"
+                                          Duration="{StaticResource MyNet.Animation.Opacity}" />
                     </Transitions>
                 </Setter>
             </Style>
@@ -328,10 +347,12 @@
             <!-- Hover -->
             <Style Selector="^:not(:disabled):pointerover">
                 <Style Selector="^ /template/ ContentPresenter#PART_HeaderPresenter">
-                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                    <Setter Property="Foreground"
+                            Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
                 <Style Selector="^ /template/ ContentPresenter#PART_IconPresenter">
-                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                    <Setter Property="Foreground"
+                            Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
                 <Style Selector="^ /template/ Border#PART_MainBorder">
                     <Setter Property="my:ShadowAssist.Darken" Value="True" />
@@ -344,10 +365,12 @@
             <!-- Selected -->
             <Style Selector="^:selected, ^:active">
                 <Style Selector="^ /template/ ContentPresenter#PART_HeaderPresenter">
-                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                    <Setter Property="Foreground"
+                            Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
                 <Style Selector="^ /template/ ContentPresenter#PART_IconPresenter">
-                    <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                    <Setter Property="Foreground"
+                            Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
                 <Style Selector="^ /template/ Border#PART_MainBorder">
                     <Setter Property="my:ShadowAssist.Darken" Value="True" />
@@ -394,13 +417,25 @@
 
         </Style>
 
-        <!-- Sub Items Collapsed -->
-        <Style Selector="^:vertical-collapsed /template/ ItemsPresenter#PART_ItemsPresenter">
-            <Setter Property="Height" Value="0" />
-            <Setter Property="RenderTransform" Value="scale(1,0)" />
+        <!-- Sub Items Expanded -->
+        <Style Selector="^.use-transitions /template/ my|ExpandControl#PART_ExpandControl">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <DoubleTransition Easing="CircularEaseOut" Property="Multiplier"
+                                      Duration="{StaticResource MyNet.Animation.Slide}" />
+                </Transitions>
+            </Setter>
         </Style>
 
-        <Style Selector="^:vertical-collapsed /template/ PathIcon#PART_ExpanderIcon">
+        <Style Selector="^ /template/ my|ExpandControl#PART_ExpandControl">
+            <Setter Property="Multiplier" Value="1" />
+        </Style>
+
+        <Style Selector="^:vertical-collapsed /template/ my|ExpandControl#PART_ExpandControl">
+            <Setter Property="Multiplier" Value="0" />
+        </Style>
+
+        <Style Selector="^:not(:vertical-collapsed) /template/ PathIcon#PART_ExpanderIcon">
             <Setter Property="RenderTransform" Value="rotate(180deg)" />
         </Style>
 
@@ -409,15 +444,13 @@
             <Style Selector="^ /template/ Border#PART_MainBorder">
                 <Setter Property="ToolTip.Tip">
                     <Template>
-                        <ContentPresenter Content="{TemplateBinding my:NavigationMenuItem.Header}" ContentTemplate="{TemplateBinding my:NavigationMenuItem.HeaderTemplate}" />
+                        <ContentPresenter Content="{TemplateBinding my:NavigationMenuItem.Header}"
+                                          ContentTemplate="{TemplateBinding my:NavigationMenuItem.HeaderTemplate}" />
                     </Template>
                 </Setter>
                 <Setter Property="ToolTip.ShowDelay" Value="0" />
             </Style>
             <Style Selector="^ /template/ PathIcon#PART_ExpanderIcon">
-                <Setter Property="IsVisible" Value="False" />
-            </Style>
-            <Style Selector="^ /template/ ItemsPresenter#PART_ItemsPresenter">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
         </Style>
@@ -454,9 +487,12 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Icon -->
-                            <Grid Width="{Binding $parent[my:NavigationMenu].CollapseWidth}" IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}">
+                            <Grid Width="{Binding $parent[my:NavigationMenu].CollapseWidth}"
+                                  IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}">
                                 <Viewbox Width="14" Height="14" HorizontalAlignment="Center">
-                                    <ContentPresenter Name="PART_IconPresenter" Content="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}" ContentTemplate="{Binding IconTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <ContentPresenter Name="PART_IconPresenter"
+                                                      Content="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
+                                                      ContentTemplate="{Binding IconTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
                                 </Viewbox>
                             </Grid>
 

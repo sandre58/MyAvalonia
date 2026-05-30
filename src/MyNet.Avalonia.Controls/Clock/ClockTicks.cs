@@ -96,13 +96,13 @@ public class ClockTicks : Control
     protected override Size MeasureOverride(Size availableSize)
     {
         var minSize = Math.Min(availableSize.Width, availableSize.Height);
-        return new Size(minSize, minSize);
+        return new(minSize, minSize);
     }
 
     protected override Size ArrangeOverride(Size finalSize)
     {
         var minSize = Math.Min(finalSize.Width, finalSize.Height);
-        return new Size(minSize, minSize);
+        return new(minSize, minSize);
     }
 
     public override void Render(DrawingContext context)

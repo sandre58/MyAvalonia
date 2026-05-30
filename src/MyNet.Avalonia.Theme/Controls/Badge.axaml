@@ -95,7 +95,7 @@
                                           VerticalAlignment="{TemplateBinding VerticalAlignment}"
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}" />
-                        <Panel Name="{x:Static my:Badge.PartBadgeContainer}" Classes="is-disablable" IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}">
+                        <Panel Name="{x:Static my:Badge.PartBadgeContainer}" Classes="is-disablable use-transitions" IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}">
                             <Ellipse Width="{TemplateBinding BadgeWidth}" Height="{TemplateBinding BadgeHeight}" Fill="{TemplateBinding MaskBackground}" />
                             <Border Name="PART_ShadowBorder"
                                     Width="{TemplateBinding BadgeWidth}"

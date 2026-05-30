@@ -27,13 +27,13 @@ public abstract class ContentDialogServiceBase : IContentDialogService
     {
         OpenedDialogs.Add(viewModel);
 
-        DialogOpened?.Invoke(this, new ContentDialogEventArgs(viewModel));
+        DialogOpened?.Invoke(this, new(viewModel));
 
         var result = await ShowDialogCoreAsync(view, viewModel).ConfigureAwait(false);
 
         _ = OpenedDialogs.Remove(viewModel);
 
-        DialogClosed?.Invoke(this, new ContentDialogEventArgs(viewModel));
+        DialogClosed?.Invoke(this, new(viewModel));
 
         return result;
     }

@@ -1,0 +1,110 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.MenuPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:samples="using:MyNet.Avalonia.Showcase.Views.Samples"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:m="clr-namespace:MyNet.Avalonia.Showcase.MarkupExtensions"
+             x:DataType="vm:MenuPageViewModel"
+             ClipToBounds="False"
+             x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Translate Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             mc:Ignorable="d">
+
+    <v:ShowcaseView ShowAppearance="False" ShowThemes="False" ShowPreviewCode="False" ShowContent="False" ShowIcon="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <UniformGrid Rows="2" Columns="2" ColumnSpacing="{StaticResource MyNet.Spacing.Md}" RowSpacing="{StaticResource MyNet.Spacing.Md}">
+                    <UniformGrid.Styles>
+                        <Style Selector="Border.kind-card">
+                            <Setter Property="Height" Value="150" />
+                        </Style>
+                    </UniformGrid.Styles>
+
+                    <!-- Menu Section -->
+                    <HeaderedContentControl HorizontalContentAlignment="Stretch"
+                                            Header="Menu"
+                                            Classes="variant-transparent header-caption"
+                                            my:IconAssist.Icon="{my:MaterialIcon Menu, DefinedSize=Sm}">
+                        <Menu ItemsSource="{m:MainMenuItems}" />
+                    </HeaderedContentControl>
+
+                    <!-- ContextMenu Section -->
+                    <HeaderedContentControl HorizontalContentAlignment="Stretch"
+                                            Header="ContextMenu"
+                                            Classes="variant-transparent header-caption"
+                                            my:IconAssist.Icon="{my:MaterialIcon MouseRightClick, DefinedSize=Sm}">
+                        <Border Classes="kind-card">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="{StaticResource MyNet.Spacing.Md}">
+                                <my:MaterialIcon Kind="MouseRightClick" Classes="size-xl" Foreground="{my:Theme Primary}" />
+                                <TextBlock HorizontalAlignment="Center" Text="{my:Loc RightClickHere}" TextWrapping="Wrap" TextAlignment="Center" />
+                            </StackPanel>
+                            <Border.ContextMenu>
+                                <ContextMenu ItemsSource="{m:RandomMenuItems}" />
+                            </Border.ContextMenu>
+                        </Border>
+                    </HeaderedContentControl>
+
+                    <!-- MenuFlyout Section -->
+                    <HeaderedContentControl HorizontalContentAlignment="Stretch"
+                                            Header="MenuFlyout"
+                                            Classes="variant-transparent header-caption"
+                                            my:IconAssist.Icon="{my:MaterialIcon MenuDown, DefinedSize=Sm}">
+                        <UniformGrid Columns="2" Rows="1" ColumnSpacing="{StaticResource MyNet.Spacing.Lg}">
+                            <Border Classes="kind-card">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="{StaticResource MyNet.Spacing.Md}">
+                                    <my:MaterialIcon Kind="MouseRightClick" Classes="size-xl" Foreground="{my:Theme Primary}" />
+                                    <TextBlock HorizontalAlignment="Center" Text="{my:Loc RightClickHere}" TextWrapping="Wrap" TextAlignment="Center" />
+                                </StackPanel>
+                                <Border.ContextFlyout>
+                                    <MenuFlyout ItemsSource="{m:RandomMenuItems}" />
+                                </Border.ContextFlyout>
+                            </Border>
+
+                            <DropDownButton Content="{my:Loc OpenMenu}" my:IconAssist.Icon="{my:MaterialIcon Menu}">
+                                <DropDownButton.Flyout>
+                                    <MenuFlyout ItemsSource="{m:RandomMenuItems}" />
+                                </DropDownButton.Flyout>
+                            </DropDownButton>
+                        </UniformGrid>
+                    </HeaderedContentControl>
+
+                    <!-- Flyout Section -->
+                    <HeaderedContentControl HorizontalContentAlignment="Stretch"
+                                            Header="Flyout"
+                                            Classes="variant-transparent header-caption"
+                                            my:IconAssist.Icon="{my:MaterialIcon InformationOutline, DefinedSize=Sm}">
+                        <UniformGrid Columns="2" Rows="1" ColumnSpacing="{StaticResource MyNet.Spacing.Lg}">
+                            <Border Classes="kind-card">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="{StaticResource MyNet.Spacing.Md}">
+                                    <my:MaterialIcon Kind="MouseRightClick" Classes="size-xl" Foreground="{my:Theme Primary}" />
+                                    <TextBlock HorizontalAlignment="Center" Text="{my:Loc RightClickHere}" TextWrapping="Wrap" TextAlignment="Center" />
+                                </StackPanel>
+                                <Border.ContextFlyout>
+                                    <Flyout>
+                                        <samples:LargeContent1 />
+                                    </Flyout>
+                                </Border.ContextFlyout>
+                            </Border>
+
+                            <DropDownButton Content="{my:Loc ShowFlyout}" my:IconAssist.Icon="{my:MaterialIcon InformationOutline}">
+                                <DropDownButton.Flyout>
+                                    <Flyout>
+                                        <samples:LargeContent1 />
+                                    </Flyout>
+                                </DropDownButton.Flyout>
+                            </DropDownButton>
+                        </UniformGrid>
+                    </HeaderedContentControl>
+                </UniformGrid>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+    </v:ShowcaseView>
+</ContentPage>

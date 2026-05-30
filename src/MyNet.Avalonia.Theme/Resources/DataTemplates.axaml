@@ -3,10 +3,15 @@
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:o="using:MyNet.Observable.Translatables"
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime"
-                    xmlns:media="using:Avalonia.Media">
+                    xmlns:media="using:Avalonia.Media"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
 
     <DataTemplate x:Key="MyNet.DataTemplate.PathIcon" x:DataType="{x:Type media:Geometry}">
         <PathIcon Data="{Binding}" />
+    </DataTemplate>
+    
+    <DataTemplate x:Key="MyNet.DataTemplate.MaterialIcon" x:DataType="{x:Type icons:MaterialIconKind}">
+        <my:MaterialIcon Kind="{Binding}" />
     </DataTemplate>
 
     <DataTemplate x:Key="MyNet.DataTemplate.Translatable" x:DataType="{x:Type o:StringTranslatable}">

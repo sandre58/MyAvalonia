@@ -10,7 +10,8 @@ using System.Globalization;
 using System.Linq;
 using Avalonia;
 using Avalonia.Data.Converters;
-using MyNet.Utilities;
+using MyNet.Collections;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Converters;
 
@@ -63,10 +64,10 @@ public sealed class MathConverter : IValueConverter, IMultiValueConverter
             return operation switch
             {
                 MathOperation.Add => validValues.Aggregate((x, y) => x + y),
-                MathOperation.Divide => validValues.Aggregate((x, y) => y.NearlyEqual(0) ? 0 : x / y),
+                MathOperation.Divide => validValues.Aggregate((x, y) => y.IsCloseTo(0) ? 0 : x / y),
                 MathOperation.Multiply => validValues.Aggregate((x, y) => x * y),
                 MathOperation.Subtract => validValues.Aggregate((x, y) => x - y),
-                MathOperation.Percent => validValues.Aggregate((x, y) => y.NearlyEqual(0) ? 0 : x / y * 100.00),
+                MathOperation.Percent => validValues.Aggregate((x, y) => y.IsCloseTo(0) ? 0 : x / y * 100.00),
                 MathOperation.PercentToValue => validValues.Aggregate((x, y) => x * y / 100.00),
                 MathOperation.Pow => validValues.Aggregate(Math.Pow),
                 MathOperation.Modulo => validValues.Aggregate((x, y) => x % y),

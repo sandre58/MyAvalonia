@@ -36,7 +36,7 @@ public class BrushSet
     {
         if (colorTransitionDuration > TimeSpan.Zero && colorTransitionEasing != null)
         {
-            _colorTransition = new ColorTransition
+            _colorTransition = new()
             {
                 Duration = colorTransitionDuration.Value,
                 Easing = colorTransitionEasing,
@@ -164,7 +164,7 @@ public class BrushSet
     private static Color CreateColor(Color color, double? darken, double? lighten)
     {
         if (darken.HasValue || lighten.HasValue)
-            color = color.Apply(new ColorInterpolation(null, false, darken, lighten));
+            color = color.Apply(new(null, false, darken, lighten));
         return color;
     }
 }

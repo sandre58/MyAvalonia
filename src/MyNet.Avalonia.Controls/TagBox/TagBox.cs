@@ -39,14 +39,11 @@ public class TagBox : TemplatedControl
 
     private TextPresenter? _presenter;
 
-    public static readonly StyledProperty<IList<string>> TagsProperty =
-        AvaloniaProperty.Register<TagBox, IList<string>>(
-            nameof(Tags));
+    public static readonly StyledProperty<IList<string>> TagsProperty = AvaloniaProperty.Register<TagBox, IList<string>>(nameof(Tags));
 
     public static readonly StyledProperty<string?> PlaceholderTextProperty = TextBox.PlaceholderTextProperty.AddOwner<TagBox>();
 
-    public static readonly StyledProperty<bool> AcceptsReturnProperty =
-        TextBox.AcceptsReturnProperty.AddOwner<TagBox>();
+    public static readonly StyledProperty<bool> AcceptsReturnProperty = TextBox.AcceptsReturnProperty.AddOwner<TagBox>();
 
     public bool AcceptsReturn
     {
@@ -54,23 +51,15 @@ public class TagBox : TemplatedControl
         set => SetValue(AcceptsReturnProperty, value);
     }
 
-    public static readonly StyledProperty<int> MaxCountProperty = AvaloniaProperty.Register<TagBox, int>(
-        nameof(MaxCount), int.MaxValue);
+    public static readonly StyledProperty<int> MaxCountProperty = AvaloniaProperty.Register<TagBox, int>(nameof(MaxCount), int.MaxValue);
 
-    public static readonly DirectProperty<TagBox, IList> ItemsProperty =
-        AvaloniaProperty.RegisterDirect<TagBox, IList>(
-            nameof(Items), o => o.Items);
+    public static readonly DirectProperty<TagBox, IList> ItemsProperty = AvaloniaProperty.RegisterDirect<TagBox, IList>(nameof(Items), o => o.Items);
 
-    public static readonly StyledProperty<ControlTheme> InputThemeProperty =
-        AvaloniaProperty.Register<TagBox, ControlTheme>(
-            nameof(InputTheme));
+    public static readonly StyledProperty<ControlTheme> InputThemeProperty = AvaloniaProperty.Register<TagBox, ControlTheme>(nameof(InputTheme));
 
-    public static readonly StyledProperty<IDataTemplate?> ItemTemplateProperty =
-        AvaloniaProperty.Register<TagBox, IDataTemplate?>(
-            nameof(ItemTemplate));
+    public static readonly StyledProperty<IDataTemplate?> ItemTemplateProperty = AvaloniaProperty.Register<TagBox, IDataTemplate?>(nameof(ItemTemplate));
 
-    public static readonly StyledProperty<string> SeparatorProperty = AvaloniaProperty.Register<TagBox, string>(
-        nameof(Separator));
+    public static readonly StyledProperty<string> SeparatorProperty = AvaloniaProperty.Register<TagBox, string>(nameof(Separator));
 
     public static readonly StyledProperty<LostFocusBehavior> LostFocusBehaviorProperty =
         AvaloniaProperty.Register<TagBox, LostFocusBehavior>(
@@ -113,7 +102,7 @@ public class TagBox : TemplatedControl
 
     public TagBox()
     {
-        _textBox = new TextBox
+        _textBox = new()
         {
             [!AcceptsReturnProperty] = this.GetObservable(AcceptsReturnProperty).ToBinding()
         };
@@ -333,7 +322,7 @@ public class TagBox : TemplatedControl
     }
 
     /// <inheritdoc/>
-    protected override void OnGotFocus(GotFocusEventArgs e)
+    protected override void OnGotFocus(FocusChangedEventArgs e)
     {
         base.OnGotFocus(e);
         if (!IsEnabled)

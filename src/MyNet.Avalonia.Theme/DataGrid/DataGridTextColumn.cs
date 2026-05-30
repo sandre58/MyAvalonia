@@ -12,11 +12,8 @@ using Avalonia.Media;
 
 namespace MyNet.Avalonia.Theme.DataGrid;
 
-public class DataGridTextColumn : DataGridBoundColumn<TextBox, TextBlock>
+public class DataGridTextColumn() : DataGridBoundColumn<TextBox, TextBlock>(TextBox.TextProperty, TextBlock.TextProperty)
 {
-    public DataGridTextColumn()
-        : base(TextBox.TextProperty, TextBlock.TextProperty) { }
-
     #region TextAlignment
 
     /// <summary>

@@ -71,7 +71,7 @@
                                 my:DisableAssist.IsDisablable="False"
                                 Command="{TemplateBinding CloseCommand}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                Content="{my:Icon Close}"
+                                Content="{my:MaterialIcon Close}"
                                 IsVisible="{TemplateBinding CloseCommand, Converter={x:Static my:NullConverter.IsNotNull}}" />
                     </Grid>
                 </Border>

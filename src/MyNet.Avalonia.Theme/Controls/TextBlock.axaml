@@ -6,8 +6,6 @@
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
-        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-        <Setter Property="TextWrapping" Value="NoWrap" />
         <Setter Property="Focusable" Value="False" />
 
         <Style Selector="^.has-role">

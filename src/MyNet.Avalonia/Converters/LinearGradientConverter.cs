@@ -89,30 +89,30 @@ public sealed class LinearGradientConverter : IValueConverter, IMultiValueConver
     private static LinearGradientBrush CreateLinearGradient(Color baseColor, LinearGradientParameters parameters)
     {
         var startColor = AdjustBrightness(baseColor, parameters.StartLighten ?? 0.0);
-        var endColor = AdjustBrightness(baseColor, parameters.EndDarken.HasValue ? -parameters.EndDarken.Value : 0.0);
+        var endColor = AdjustBrightness(baseColor, -parameters.EndDarken ?? 0.0);
 
         var gradient = new LinearGradientBrush
         {
             StartPoint = parameters.Orientation switch
             {
-                GradientOrientation.Horizontal => new RelativePoint(0, 0.5, RelativeUnit.Relative),
-                GradientOrientation.Vertical => new RelativePoint(0.5, 0, RelativeUnit.Relative),
-                GradientOrientation.DiagonalUp => new RelativePoint(0, 1, RelativeUnit.Relative),
-                GradientOrientation.DiagonalDown => new RelativePoint(0, 0, RelativeUnit.Relative),
-                _ => new RelativePoint(0, 0.5, RelativeUnit.Relative)
+                GradientOrientation.Horizontal => new(0, 0.5, RelativeUnit.Relative),
+                GradientOrientation.Vertical => new(0.5, 0, RelativeUnit.Relative),
+                GradientOrientation.DiagonalUp => new(0, 1, RelativeUnit.Relative),
+                GradientOrientation.DiagonalDown => new(0, 0, RelativeUnit.Relative),
+                _ => new(0, 0.5, RelativeUnit.Relative)
             },
             EndPoint = parameters.Orientation switch
             {
-                GradientOrientation.Horizontal => new RelativePoint(1, 0.5, RelativeUnit.Relative),
-                GradientOrientation.Vertical => new RelativePoint(0.5, 1, RelativeUnit.Relative),
-                GradientOrientation.DiagonalUp => new RelativePoint(1, 0, RelativeUnit.Relative),
-                GradientOrientation.DiagonalDown => new RelativePoint(1, 1, RelativeUnit.Relative),
-                _ => new RelativePoint(1, 0.5, RelativeUnit.Relative)
+                GradientOrientation.Horizontal => new(1, 0.5, RelativeUnit.Relative),
+                GradientOrientation.Vertical => new(0.5, 1, RelativeUnit.Relative),
+                GradientOrientation.DiagonalUp => new(1, 0, RelativeUnit.Relative),
+                GradientOrientation.DiagonalDown => new(1, 1, RelativeUnit.Relative),
+                _ => new(1, 0.5, RelativeUnit.Relative)
             },
             GradientStops =
             [
-                new GradientStop { Color = startColor, Offset = 0.0 },
-                new GradientStop { Color = endColor, Offset = 1.0 }
+                new() { Color = startColor, Offset = 0.0 },
+                new() { Color = endColor, Offset = 1.0 }
             ]
         };
 
@@ -120,9 +120,9 @@ public sealed class LinearGradientConverter : IValueConverter, IMultiValueConver
         {
             var middleColor = parameters.MiddleColor ?? AdjustBrightness(
                 baseColor,
-                parameters.MiddleLighten ?? (parameters.MiddleDarken.HasValue ? -parameters.MiddleDarken.Value : 0.0));
+                parameters.MiddleLighten ?? (-parameters.MiddleDarken ?? 0.0));
 
-            gradient.GradientStops.Insert(1, new GradientStop { Color = middleColor, Offset = parameters.MiddleOffset });
+            gradient.GradientStops.Insert(1, new() { Color = middleColor, Offset = parameters.MiddleOffset });
         }
 
         return gradient;

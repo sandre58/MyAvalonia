@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="CodeBlockPalette.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="CodeBlockPalette.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -61,6 +61,16 @@ public class CodeBlockPalette
     public required Color Entity { get; init; }
 
     /// <summary>
+    /// Gets the color used for language keywords in code.
+    /// </summary>
+    public required Color Keyword { get; init; }
+
+    /// <summary>
+    /// Gets the color used for numeric literals in code.
+    /// </summary>
+    public required Color Number { get; init; }
+
+    /// <summary>
     /// Converts the code block palette to a read-only dictionary suitable for use as resource dictionary keys and values.
     /// </summary>
     /// <returns>A dictionary containing all code block colors with their corresponding resource keys.</returns>
@@ -74,7 +84,9 @@ public class CodeBlockPalette
             { nameof(AttributeValue).WithPrefix(prefix, "."), AttributeValue },
             { nameof(AttributeKey).WithPrefix(prefix, "."), AttributeKey },
             { nameof(Brace).WithPrefix(prefix, "."), Brace },
-            { nameof(Entity).WithPrefix(prefix, "."), Entity }
+            { nameof(Entity).WithPrefix(prefix, "."), Entity },
+            { nameof(Keyword).WithPrefix(prefix, "."), Keyword },
+            { nameof(Number).WithPrefix(prefix, "."), Number }
         };
 
     /// <summary>
@@ -86,7 +98,7 @@ public class CodeBlockPalette
     public static CodeBlockPalette FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary, string prefix = nameof(ThemeVariantPalette.CodeBlock))
     {
         var defaultColor = Colors.Gray;
-        return new CodeBlockPalette
+        return new()
         {
             Unknown = (Color)dictionary.GetValueOrDefault(nameof(Unknown).WithPrefix(prefix, "."), defaultColor),
             Space = (Color)dictionary.GetValueOrDefault(nameof(Space).WithPrefix(prefix, "."), defaultColor),
@@ -96,7 +108,9 @@ public class CodeBlockPalette
             AttributeValue = (Color)dictionary.GetValueOrDefault(nameof(AttributeValue).WithPrefix(prefix, "."), defaultColor),
             AttributeKey = (Color)dictionary.GetValueOrDefault(nameof(AttributeKey).WithPrefix(prefix, "."), defaultColor),
             Brace = (Color)dictionary.GetValueOrDefault(nameof(Brace).WithPrefix(prefix, "."), defaultColor),
-            Entity = (Color)dictionary.GetValueOrDefault(nameof(Entity).WithPrefix(prefix, "."), defaultColor)
+            Entity = (Color)dictionary.GetValueOrDefault(nameof(Entity).WithPrefix(prefix, "."), defaultColor),
+            Keyword = (Color)dictionary.GetValueOrDefault(nameof(Keyword).WithPrefix(prefix, "."), defaultColor),
+            Number = (Color)dictionary.GetValueOrDefault(nameof(Number).WithPrefix(prefix, "."), defaultColor)
         };
     }
 }

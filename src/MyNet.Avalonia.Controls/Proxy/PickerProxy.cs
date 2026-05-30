@@ -54,7 +54,7 @@ public sealed class PickerProxy : IControlProxy
         IsActiveChanged?.Invoke(_control, EventArgs.Empty);
     }
 
-    private void OnGotFocus(object? sender, global::Avalonia.Input.GotFocusEventArgs e)
+    private void OnGotFocus(object? sender, global::Avalonia.Input.FocusChangedEventArgs e)
     {
         IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
         IsActiveChanged?.Invoke(sender, EventArgs.Empty);

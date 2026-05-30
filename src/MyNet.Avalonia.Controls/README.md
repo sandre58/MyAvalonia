@@ -47,7 +47,7 @@ dotnet add package MyNet.Avalonia.Controls
 - **Forms** - Form controls and validation helpers
 - **MultiComboBox** - Multi-selection combo box control
 - **NavigationMenu** - Navigation and menu components
-- **OutlinedIcon** - Icon controls with outline styles
+- **ExtendedIcon** - Icon controls with outline styles
 - **OverflowStackPanel** - Stack panel with overflow handling
 - **Pagination** - Page navigation and data pagination controls
 - **TagBox** - Tag input and management control

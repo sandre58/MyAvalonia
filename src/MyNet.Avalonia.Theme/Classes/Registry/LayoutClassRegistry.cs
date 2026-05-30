@@ -10,7 +10,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
-using Avalonia.Data;
 using Avalonia.Layout;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extensions;
@@ -72,6 +71,11 @@ public static class LayoutClassRegistry
         /// <remarks>The default value is Orientation.Horizontal. Changing this property affects the
         /// layout and visual arrangement of child elements within the container.</remarks>
         public Orientation Orientation { get; set; } = Orientation.Horizontal;
+
+        /// <summary>
+        /// Gets tracks all SetProperty bindings for the layout section so they can be properly disposed on layout change.
+        /// </summary>
+        public BindingGroup Bindings { get; } = new();
     }
 
     /// <summary>
@@ -85,11 +89,13 @@ public static class LayoutClassRegistry
     /// <param name="state">An ItemsLayoutState that specifies the layout kind and orientation to apply to the ItemsControl.</param>
     private static void ApplyState(ItemsControl control, ControlState state)
     {
+        state.Bindings.Reset();
+
         switch (state.Layout)
         {
             case ItemsLayoutKind.Stack:
 
-                control.ItemsPanel = new FuncTemplate<Panel?>(() =>
+                state.Bindings.Add(control.SetProperty(ItemsControl.ItemsPanelProperty, new FuncTemplate<Panel?>(() =>
                 {
                     var panel = new StackPanel
                     {
@@ -98,13 +104,13 @@ public static class LayoutClassRegistry
                     panel.Bind(StackPanel.SpacingProperty, control.GetObservable(ItemsAssist.SpacingProperty));
 
                     return panel;
-                });
+                })));
 
                 break;
 
             case ItemsLayoutKind.Uniform:
 
-                control.ItemsPanel = new FuncTemplate<Panel?>(() =>
+                state.Bindings.Add(control.SetProperty(ItemsControl.ItemsPanelProperty, new FuncTemplate<Panel?>(() =>
                 {
                     var panel = new UniformGrid();
 
@@ -122,13 +128,13 @@ public static class LayoutClassRegistry
                     }
 
                     return panel;
-                });
+                })));
 
                 break;
 
             case ItemsLayoutKind.Wrap:
 
-                control.ItemsPanel = new FuncTemplate<Panel?>(() =>
+                state.Bindings.Add(control.SetProperty(ItemsControl.ItemsPanelProperty, new FuncTemplate<Panel?>(() =>
                 {
                     var panel = new ElasticWrapPanel
                     {
@@ -139,7 +145,7 @@ public static class LayoutClassRegistry
                     panel.Bind(WrapPanel.LineSpacingProperty, control.GetObservable(ItemsAssist.SpacingProperty));
 
                     return panel;
-                });
+                })));
 
                 break;
         }
@@ -166,8 +172,7 @@ public static class LayoutClassRegistry
         ClassRegistry.Register<ItemsControl>(CssClass.Wrap, x => new CompositeDisposable
                     {
                         x.SetProperty(ItemsAssist.HorizontalAlignmentProperty, HorizontalAlignment.Stretch),
-                        ClassContext.Create<ItemsControl, ControlState>(x).Update(s => s.Layout = ItemsLayoutKind.Wrap, ApplyState),
-                        Disposable.Create(() => x.ClearValue(ItemsControl.ItemsPanelProperty))
+                        ClassContext.Create<ItemsControl, ControlState>(x).Update(s => s.Layout = ItemsLayoutKind.Wrap, ApplyState)
                     });
 
         ClassRegistry.Register<TemplatedControl>(CssClass.IsStretch, x => new CompositeDisposable
@@ -186,10 +191,9 @@ public static class LayoutClassRegistry
             ItemsControl itemsControl => new CompositeDisposable
                     {
                         itemsControl.SetProperty(ItemsAssist.HorizontalAlignmentProperty, HorizontalAlignment.Stretch),
-                        ClassContext.Create<ItemsControl, ControlState>(itemsControl).Update(s => s.Orientation = orientation, ApplyState),
-                        Disposable.Create(() => itemsControl.ClearValue(ItemsControl.ItemsPanelProperty))
+                        ClassContext.Create<ItemsControl, ControlState>(itemsControl).Update(s => s.Orientation = orientation, ApplyState)
                     },
-            _ => Disposable.Empty,
+            _ => Disposable.Empty
         };
     }
 }

@@ -38,7 +38,7 @@ internal static class ClassState
 
         if (store == null)
         {
-            store = new ClassStateStore();
+            store = new();
             control.SetValue(StateStoreProperty, store);
         }
 

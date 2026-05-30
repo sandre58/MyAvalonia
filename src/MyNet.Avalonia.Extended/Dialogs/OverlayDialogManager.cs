@@ -11,10 +11,10 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Layout;
+using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Enums;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Extended.Controls;
-using MyNet.Avalonia.Extended.Controls.Primitives;
-using MyNet.UI.Dialogs.MessageBox;
 using MyNet.UI.Locators;
 
 namespace MyNet.Avalonia.Extended.Dialogs;
@@ -29,49 +29,6 @@ public static class OverlayDialogManager
     {
         _viewResolver = viewResolver;
         _viewLocator = viewLocator;
-    }
-
-    public static void ShowBox<TView, TViewModel>(TViewModel vm, string? hostId = null, OverlayDialogOptions? options = null)
-        where TView : Control, new()
-    {
-        var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
-        if (host is null) return;
-        var t = new OverlayDialogBox
-        {
-            Content = new TView(),
-            DataContext = vm
-        };
-        ConfigureOverlayDialogBox(t, options);
-        host.AddDialog(t);
-    }
-
-    public static void ShowBox(Control control, object? vm, string? hostId = null, OverlayDialogOptions? options = null)
-    {
-        var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
-        if (host is null) return;
-        var t = new OverlayDialogBox
-        {
-            Content = control,
-            DataContext = vm
-        };
-        ConfigureOverlayDialogBox(t, options);
-        host.AddDialog(t);
-    }
-
-    public static void ShowBox(object? vm, string? hostId = null, OverlayDialogOptions? options = null)
-    {
-        var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
-        if (host is null) return;
-        var view = GetViewFromViewModel(vm?.GetType());
-        view ??= new ContentControl();
-        view.DataContext = vm;
-        var t = new OverlayDialogBox
-        {
-            Content = view,
-            DataContext = vm
-        };
-        ConfigureOverlayDialogBox(t, options);
-        host.AddDialog(t);
     }
 
     public static void Show<TView, TViewModel>(TViewModel vm, string? hostId = null, OverlayDialogOptions? options = null)
@@ -106,7 +63,7 @@ public static class OverlayDialogManager
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return;
         var view = GetViewFromViewModel(vm?.GetType());
-        view ??= new ContentControl { Padding = new Thickness(24) };
+        view ??= new ContentControl { Padding = new(24) };
         view.DataContext = vm;
         var t = new OverlayDialog
         {
@@ -118,38 +75,7 @@ public static class OverlayDialogManager
         host.AddDialog(t);
     }
 
-    public static Task<MessageBoxResult> ShowBoxModal<TView, TViewModel>(TViewModel vm, string? hostId = null, OverlayDialogOptions? options = null, CancellationToken? token = default)
-        where TView : Control, new()
-    {
-        var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
-        if (host is null) return Task.FromResult(MessageBoxResult.None);
-        var t = new OverlayDialogBox
-        {
-            Content = new TView(),
-            DataContext = vm,
-            [KeyboardNavigation.TabNavigationProperty] = KeyboardNavigationMode.Cycle
-        };
-        ConfigureOverlayDialogBox(t, options);
-        host.AddModalDialog(t);
-        return t.ShowAsync<MessageBoxResult>(token);
-    }
-
-    public static Task<MessageBoxResult> ShowBoxModal(Control control, object? vm, string? hostId = null, OverlayDialogOptions? options = null, CancellationToken? token = default)
-    {
-        var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
-        if (host is null) return Task.FromResult(MessageBoxResult.None);
-        var t = new OverlayDialogBox
-        {
-            Content = control,
-            DataContext = vm,
-            [KeyboardNavigation.TabNavigationProperty] = KeyboardNavigationMode.Cycle
-        };
-        ConfigureOverlayDialogBox(t, options);
-        host.AddModalDialog(t);
-        return t.ShowAsync<MessageBoxResult>(token);
-    }
-
-    public static Task<TResult?> ShowModal<TView, TViewModel, TResult>(TViewModel vm, string? hostId = null, OverlayDialogOptions? options = null, CancellationToken? token = default)
+    public static Task<TResult?> ShowModal<TView, TViewModel, TResult>(TViewModel vm, string? hostId = null, OverlayDialogOptions? options = null, CancellationToken? token = null)
         where TView : Control, new()
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
@@ -165,7 +91,7 @@ public static class OverlayDialogManager
         return t.ShowAsync<TResult?>(token);
     }
 
-    public static Task<TResult?> ShowModal<TResult>(Control control, object? vm, string? hostId = null, OverlayDialogOptions? options = null, CancellationToken? token = default)
+    public static Task<TResult?> ShowModal<TResult>(Control control, object? vm, string? hostId = null, OverlayDialogOptions? options = null, CancellationToken? token = null)
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return Task.FromResult(default(TResult));
@@ -180,7 +106,7 @@ public static class OverlayDialogManager
         return t.ShowAsync<TResult?>(token);
     }
 
-    public static Task<TResult?> ShowModal<TResult>(object? vm, string? hostId = null, OverlayDialogOptions? options = null, CancellationToken? token = default)
+    public static Task<TResult?> ShowModal<TResult>(object? vm, string? hostId = null, OverlayDialogOptions? options = null, CancellationToken? token = null)
     {
         var host = OverlayDialogHostManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return Task.FromResult(default(TResult));
@@ -198,9 +124,8 @@ public static class OverlayDialogManager
         return t.ShowAsync<TResult?>(token);
     }
 
-    private static void ConfigureOverlayDialog(OverlayDialog control, OverlayDialogOptions? options)
+    private static void ConfigureOverlayDialog(OverlayDialog control, OverlayDialogOptions options)
     {
-        options ??= OverlayDialogOptions.Default;
         control.IsFullScreen = options.FullScreen;
         if (options.FullScreen)
         {
@@ -216,49 +141,23 @@ public static class OverlayDialogManager
             control.HorizontalAnchor == HorizontalPosition.Center ? null : options.HorizontalOffset;
         control.VerticalOffset =
             options.VerticalAnchor == VerticalPosition.Center ? null : options.VerticalOffset;
-        control.IsCloseButtonVisible = options.IsCloseButtonVisible;
         control.CanLightDismiss = options.CanLightDismiss;
         control.CanResize = options.CanResize;
+        control.IsCloseButtonVisible = options.IsCloseButtonVisible;
+
+        // Apply sizing options
+        if (options.Width.HasValue) control.Width = options.Width.Value;
+        if (options.Height.HasValue) control.Height = options.Height.Value;
+        if (options.MinWidth.HasValue) control.MinWidth = options.MinWidth.Value;
+        if (options.MinHeight.HasValue) control.MinHeight = options.MinHeight.Value;
+        if (options.MaxWidth.HasValue) control.MaxWidth = options.MaxWidth.Value;
+        if (options.MaxHeight.HasValue) control.MaxHeight = options.MaxHeight.Value;
+
         if (!string.IsNullOrWhiteSpace(options.StyleClass))
         {
             var styles = options.StyleClass!.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             control.Classes.AddRange(styles);
         }
-
-        OverlayDialogBase.SetCanDragMove(control, options.CanDragMove);
-    }
-
-    private static void ConfigureOverlayDialogBox(OverlayDialogBox control, OverlayDialogOptions? options)
-    {
-        options ??= new OverlayDialogOptions();
-        control.IsFullScreen = options.FullScreen;
-        if (options.FullScreen)
-        {
-            control.HorizontalAlignment = HorizontalAlignment.Stretch;
-            control.VerticalAlignment = VerticalAlignment.Stretch;
-        }
-
-        control.HorizontalAnchor = options.HorizontalAnchor;
-        control.VerticalAnchor = options.VerticalAnchor;
-        control.ActualHorizontalAnchor = options.HorizontalAnchor;
-        control.ActualVerticalAnchor = options.VerticalAnchor;
-        control.HorizontalOffset =
-            control.HorizontalAnchor == HorizontalPosition.Center ? null : options.HorizontalOffset;
-        control.VerticalOffset =
-            options.VerticalAnchor == VerticalPosition.Center ? null : options.VerticalOffset;
-        control.Severity = options.Severity;
-        control.Buttons = options.Buttons;
-        control.Title = options.Title;
-        control.CanLightDismiss = options.CanLightDismiss;
-        control.IsCloseButtonVisible = options.IsCloseButtonVisible;
-        control.CanResize = options.CanResize;
-        if (!string.IsNullOrWhiteSpace(options.StyleClass))
-        {
-            var styles = options.StyleClass!.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            control.Classes.AddRange(styles);
-        }
-
-        OverlayDialogBase.SetCanDragMove(control, options.CanDragMove);
     }
 
     internal static T? Recall<T>(string? hostId)

@@ -8,7 +8,6 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Theming;
 

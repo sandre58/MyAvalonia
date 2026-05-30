@@ -7,6 +7,7 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type PathIcon}" TargetType="PathIcon">
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Sm}" />
         <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
@@ -59,6 +60,7 @@
         <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^.kind-glyph">
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Low}" />
             <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Md}" />
             <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Md}" />
             <Setter Property="Margin" Value="8 0" />
@@ -92,7 +94,7 @@
                 <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Xl}" />
             </Style>
         </Style>
-
+        
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- DROPDOWN VARIANT                                          -->
         <!-- ═════════════════════════════════════════════════════════ -->

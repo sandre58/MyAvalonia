@@ -8,8 +8,7 @@ using System;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
-using MyNet.Avalonia.Theme.Classes.Enums;
-using MyNet.Avalonia.Theme.Extensions;
+using Material.Icons;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Converters;
@@ -60,7 +59,7 @@ public sealed class GenderTypeConverter : IValueConverter
             : _mode switch
             {
                 Mode.Brush => MyTheme.Current.GetBrush($"Gender.{genderType}"),
-                Mode.Icon => Enum.TryParse<IconData>($"Gender{genderType}", out var iconData) ? iconData.ToIcon() : IconData.GenderMaleFemale.ToIcon(),
+                Mode.Icon => Enum.TryParse<MaterialIconKind>($"Gender{genderType}", out var kind) ? kind : MaterialIconKind.GenderMaleFemale,
                 _ => AvaloniaProperty.UnsetValue
             };
 

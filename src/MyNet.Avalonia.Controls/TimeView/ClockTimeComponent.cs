@@ -76,7 +76,7 @@ public class ClockTimeComponent : TemplatedControl, IComponentTimeSelector
         }
     }
 
-    private void OnValueChanged(int? oldValue, int? newValue) => ValueChanged?.Invoke(this, new ValueChangedEventArgs<int>(ValueChangedEvent,  oldValue, newValue));
+    private void OnValueChanged(int? oldValue, int? newValue) => ValueChanged?.Invoke(this, new(ValueChangedEvent,  oldValue, newValue));
 
     #region Value
 
@@ -373,7 +373,6 @@ public class ClockTimeComponent : TemplatedControl, IComponentTimeSelector
         }
 
         UpdateVisual(Value);
-        return;
 
         float getAngle(int value) => (value - min + cellShift) * (360f / (max + 1 - min));
 

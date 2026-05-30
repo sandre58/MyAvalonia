@@ -121,7 +121,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
             {
                 // Measure the element when it needs to be fixed to the right/bottom
                 child.Measure(childFixConstraint);
-                sz = new UvSize(orientation, child.DesiredSize.Width, child.DesiredSize.Height);
+                sz = new(orientation, child.DesiredSize.Width, child.DesiredSize.Height);
 
                 // Ensure the width/height is within the constraint limits
                 if (sz.U > 0 && itemSetSize.U > 0)
@@ -157,7 +157,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                 // FixToRb forces end of line
                 panelSize.U = Max(curLineSize.U, panelSize.U);
                 panelSize.V += curLineSize.V;
-                curLineSize = new UvSize(orientation);
+                curLineSize = new(orientation);
                 isFirstInLine = true;
             }
             else
@@ -166,7 +166,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                 child.Measure(childConstraint);
 
                 // This is the size of the child in UV space
-                sz = new UvSize(orientation,
+                sz = new(orientation,
                     itemWidthSet ? itemWidth : child.DesiredSize.Width,
                     itemHeightSet ? itemHeight : child.DesiredSize.Height);
 
@@ -192,7 +192,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                         panelSize.U = Max(sz.U, panelSize.U);
                         panelSize.V += sz.V;
                         panelSize.V += spacingSize.V;
-                        curLineSize = new UvSize(orientation);
+                        curLineSize = new(orientation);
                         isFirstInLine = true;
                     }
                 }
@@ -212,7 +212,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
         panelSize.V += curLineSize.V;
 
         // Go from UV space to W/H space
-        return new Size(panelSize.Width, panelSize.Height);
+        return new(panelSize.Width, panelSize.Height);
     }
 
     protected override Size ArrangeOverride(Size finalSize)
@@ -247,7 +247,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
             if (GetIsFixToRb(child))
             {
                 // Measure the element when it needs to be fixed to the right/bottom
-                sz = new UvSize(Orientation, child.DesiredSize.Width, child.DesiredSize.Height);
+                sz = new(Orientation, child.DesiredSize.Width, child.DesiredSize.Height);
                 double lengthCount = 1;
                 if (sz.U > 0 && itemSetSize.U > 0)
                 {
@@ -268,7 +268,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                 }
 
                 // TotalU doesn't include spacing, so we need to add it for existing items
-                var totalSpacingU = curLineUIs.Count > 0 ? (curLineUIs.Count * spacingSize.U) : 0;
+                var totalSpacingU = curLineUIs.Count > 0 ? curLineUIs.Count * spacingSize.U : 0;
                 if ((curLineUIs.TotalU + totalSpacingU + sz.U).GreaterThan(uvFinalSize.U))
                 {
                     if (curLineUIs.Count > 0)
@@ -276,7 +276,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                         lineUvCollection.Add(curLineUIs);
                     }
 
-                    curLineUIs = new UvCollection(Orientation);
+                    curLineUIs = new(Orientation);
                     curLineUIs.Add(child, sz, Convert.ToInt32(lengthCount));
                 }
                 else
@@ -285,16 +285,16 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                 }
 
                 lineUvCollection.Add(curLineUIs);
-                curLineUIs = new UvCollection(Orientation);
+                curLineUIs = new(Orientation);
             }
             else
             {
-                sz = new UvSize(Orientation,
+                sz = new(Orientation,
                     itemWidthSet ? ItemWidth : child.DesiredSize.Width,
                     itemHeightSet ? ItemHeight : child.DesiredSize.Height);
 
                 // TotalU doesn't include spacing, so we need to add it for existing items
-                var totalSpacingU = curLineUIs.Count > 0 ? (curLineUIs.Count * spacingSize.U) : 0;
+                var totalSpacingU = curLineUIs.Count > 0 ? curLineUIs.Count * spacingSize.U : 0;
 
                 // Need to switch to another line
                 if ((curLineUIs.TotalU + totalSpacingU + sz.U).GreaterThan(uvFinalSize.U))
@@ -304,12 +304,12 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                         lineUvCollection.Add(curLineUIs);
                     }
 
-                    curLineUIs = new UvCollection(Orientation);
+                    curLineUIs = new(Orientation);
                     curLineUIs.Add(child, sz);
                     if (!sz.U.GreaterThan(uvFinalSize.U))
                         continue;
                     lineUvCollection.Add(curLineUIs);
-                    curLineUIs = new UvCollection(Orientation);
+                    curLineUIs = new(Orientation);
                 }
                 else
                 {
@@ -386,7 +386,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                     var layoutSlotV = isAdaptV ? linevV : childSize.UvSize.V;
                     if (!GetIsFixToRb(child))
                     {
-                        child.Arrange(new Rect(
+                        child.Arrange(new(
                             isHorizontal ? u : accumulatedV,
                             isHorizontal ? accumulatedV : u,
                             isHorizontal ? layoutSlotU : layoutSlotV,
@@ -402,7 +402,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                             layoutSlotU = Min(leaveULength, layoutSlotU);
                         }
 
-                        child.Arrange(new Rect(
+                        child.Arrange(new(
                             isHorizontal ? Max(0, uvFinalSize.U - layoutSlotU) : accumulatedV,
                             isHorizontal ? accumulatedV : Max(0, uvFinalSize.U - layoutSlotU),
                             isHorizontal ? layoutSlotU : layoutSlotV,
@@ -547,7 +547,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
             if (UiCollection.ContainsKey(element))
                 throw new InvalidOperationException("The element already exists and cannot be added repeatedly.");
 
-            UiCollection[element] = new UvLengthSize(childSize, itemULength);
+            UiCollection[element] = new(childSize, itemULength);
             _lineDesireUvSize.U += childSize.U;
             _lineDesireUvSize.V = Max(_lineDesireUvSize.V, childSize.V);
         }

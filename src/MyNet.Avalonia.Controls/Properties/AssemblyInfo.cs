@@ -8,6 +8,7 @@ using Avalonia.Metadata;
 
 [assembly: XmlnsPrefix("http://mynet.com/avalonia", "my")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Controls")]
+[assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Controls.Animations")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Controls.Behaviors")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Controls.ColorPalettes")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Controls.Converters")]

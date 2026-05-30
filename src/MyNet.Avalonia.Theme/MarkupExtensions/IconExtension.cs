@@ -5,17 +5,16 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Globalization;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Data;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
-using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Media;
 using Avalonia.Metadata;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Extensions;
-using MyNet.Avalonia.Theme.Theming;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -23,31 +22,9 @@ namespace MyNet.Avalonia.Theme.MarkupExtensions;
 /// Markup extension for creating and binding to a themed icon in XAML.
 /// Allows specifying the icon data (geometry key), size category, or explicit size for consistent icon rendering in the UI.
 /// </summary>
-public class IconExtension : MarkupExtension
+public abstract class IconExtension<TIcon> : MarkupExtension
+where TIcon : IconElement
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="IconExtension"/> class with the specified icon data key.
-    /// </summary>
-    /// <param name="data">The geometry resource key for the icon.</param>
-    public IconExtension(IconData data) => Data = data;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="IconExtension"/> class with the specified icon data key and size category.
-    /// </summary>
-    /// <param name="data">The geometry resource key for the icon.</param>
-    /// <param name="size">The predefined icon size category.</param>
-    public IconExtension(IconData data, IconSize size)
-    {
-        Data = data;
-        DefinedSize = size;
-    }
-
-    /// <summary>
-    /// Gets or sets the geometry resource key for the icon.
-    /// </summary>
-    [ConstructorArgument("data")]
-    public IconData Data { get; set; }
-
     /// <summary>
     /// Gets or sets the predefined icon size category.
     /// </summary>
@@ -60,31 +37,84 @@ public class IconExtension : MarkupExtension
     public double? Size { get; set; }
 
     /// <summary>
-    /// Provides the value for the markup extension, returning a themed <see cref="PathIcon"/> with the specified geometry and size.
+    /// Gets or sets the icon background brush.
+    /// </summary>
+    public IBrush? Background { get; set; }
+
+    /// <summary>
+    /// Gets or sets a binding for the icon background. Use this when data binding is required.
+    /// </summary>
+    public BindingBase? BackgroundBinding { get; set; }
+
+    /// <summary>
+    /// Gets or sets the icon border brush.
+    /// </summary>
+    public IBrush? BorderBrush { get; set; }
+
+    /// <summary>
+    /// Gets or sets a binding for the icon border. Use this when data binding is required.
+    /// </summary>
+    public BindingBase? BorderBrushBinding { get; set; }
+
+    /// <summary>
+    /// Gets or sets the vertical alignment of the content.
+    /// </summary>
+    public VerticalAlignment? VerticalAlignment { get; set; }
+
+    /// <summary>
+    /// Gets or sets the horizontal alignment of the content.
+    /// </summary>
+    public HorizontalAlignment? HorizontalAlignment { get; set; }
+
+    /// <summary>
+    /// Gets or sets the class names to apply to the element.
+    /// </summary>
+    public string? Classes { get; set; }
+
+    /// <summary>
+    /// When implemented in a derived class, builds and returns the specific icon element based on the provided properties and bindings.
+    /// </summary>
+    /// <returns>Returns an icon.</returns>
+    protected abstract TIcon BuildIcon();
+
+    /// <summary>
+    /// Provides the value for the markup extension, returning a themed icon with the specified geometry and size.
     /// </summary>
     /// <param name="serviceProvider">The service provider for the markup extension.</param>
-    /// <returns>A <see cref="PathIcon"/> instance configured with the specified icon data and size.</returns>
+    /// <returns>An instance configured with the specified icon data and size.</returns>
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        var result = new PathIcon
-        {
-            HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Center,
-            Focusable = false,
-            Opacity = 1
-        };
+        var result = BuildIcon();
 
-        var data = new StaticResourceExtension(ThemeResourceKeyFactory.Geometry(Data.ToString())).ProvideValue(serviceProvider);
-        _ = result.SetValue(PathIcon.DataProperty, data);
         if (Size.HasValue)
         {
-            result.Width = Size.Value;
             result.Height = Size.Value;
+            result.Width = Size.Value;
         }
         else if (DefinedSize.HasValue)
         {
             result.AddClasses(CssClass.Size(DefinedSize.ToString()));
         }
+
+        // Background: binding takes precedence
+        if (BackgroundBinding is not null)
+            result.Bind(TemplatedControl.BackgroundProperty, BackgroundBinding);
+        else if (Background is not null)
+            result.Background = Background;
+
+        // Background: binding takes precedence
+        if (BorderBrushBinding is not null)
+            result.Bind(TemplatedControl.BorderBrushProperty, BorderBrushBinding);
+        else if (BorderBrush is not null)
+            result.BorderBrush = BorderBrush;
+
+        if (VerticalAlignment is not null)
+            result.VerticalAlignment = VerticalAlignment.Value;
+        if (HorizontalAlignment is not null)
+            result.HorizontalAlignment = HorizontalAlignment.Value;
+
+        if (!string.IsNullOrWhiteSpace(Classes))
+            result.Classes.AddRange(global::Avalonia.Controls.Classes.Parse(Classes!));
 
         return result;
     }

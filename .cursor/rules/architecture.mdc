@@ -1,0 +1,238 @@
+# MyNet.Avalonia Architecture Review Rules
+
+The current codebase is actively evolving.
+
+Do not assume the existing architecture is correct.
+
+Do not preserve existing implementations solely because they already exist.
+
+The goal is framework quality, not backward compatibility.
+
+---
+
+# Analysis Mindset
+
+When reviewing code:
+
+- challenge existing designs
+- challenge existing abstractions
+- identify unnecessary complexity
+- identify duplicated concepts
+- identify obsolete infrastructure
+- identify architectural inconsistencies
+
+Always evaluate whether a system should be:
+
+- kept as-is
+- simplified
+- redesigned
+- split
+- merged
+- removed entirely
+
+Do not automatically prefer incremental changes.
+
+---
+
+# Framework Goals
+
+Always optimize for:
+
+- maintainability
+- consistency
+- developer experience
+- extensibility
+- performance
+- MVVM compatibility
+- Avalonia compatibility
+
+Favor long-term framework quality over short-term convenience.
+
+---
+
+# Avalonia First
+
+Always prefer native Avalonia concepts.
+
+Favor:
+
+- StyledProperty
+- DirectProperty
+- AttachedProperty
+- ControlTheme
+- DataTemplate
+- CompiledBinding
+- Behaviors
+
+Avoid introducing custom infrastructure when Avalonia already provides a suitable solution.
+
+Do not hide Avalonia concepts behind unnecessary abstractions.
+
+---
+
+# Simplicity
+
+Prefer simpler architectures.
+
+Avoid:
+
+- unnecessary inheritance
+- deep control hierarchies
+- unnecessary generic abstractions
+- excessive indirection
+- framework-specific complexity
+
+Question every abstraction.
+
+If an abstraction does not provide significant value, recommend removing it.
+
+---
+
+# Control Design
+
+Controls should solve a single UI problem.
+
+Prefer:
+
+- focused controls
+- composable controls
+- reusable controls
+
+Avoid:
+
+- god controls
+- multi-purpose controls
+- feature accumulation
+
+Recommend splitting oversized controls when appropriate.
+
+---
+
+# Composition Over Inheritance
+
+Prefer:
+
+- composition
+- behaviors
+- attached properties
+- templates
+
+Avoid inheritance unless it provides clear architectural value.
+
+---
+
+# MVVM
+
+Always evaluate MVVM compatibility.
+
+Controls should:
+
+- support binding
+- support commands
+- avoid ViewModel assumptions
+- avoid business logic
+
+Recommend redesigns that improve MVVM friendliness.
+
+---
+
+# Public APIs
+
+Public APIs are long-term contracts.
+
+When reviewing APIs:
+
+- simplify when possible
+- remove ambiguity
+- improve discoverability
+- favor strong typing
+
+Avoid:
+
+- magic strings
+- ambiguous flags
+- hidden behavior
+
+---
+
+# Performance
+
+Consider performance during all reviews.
+
+Identify:
+
+- unnecessary allocations
+- repeated visual tree traversal
+- reflection usage
+- expensive bindings
+- excessive event subscriptions
+
+Optimize without sacrificing API clarity.
+
+---
+
+# Localization
+
+Controls should be localization friendly.
+
+Identify:
+
+- hardcoded strings
+- culture assumptions
+- localization gaps
+
+Prefer localization-ready APIs.
+
+---
+
+# Theming
+
+Controls should be themeable.
+
+Prefer:
+
+- ControlTheme
+- template customization
+- resource-based styling
+
+Avoid requiring inheritance to customize appearance.
+
+---
+
+# Source Generators
+
+When evaluating boilerplate-heavy code:
+
+- consider source generators
+- consider compile-time generation
+- consider generated registrations
+
+Do not preserve repetitive code if generation would improve maintainability.
+
+---
+
+# Architectural Recommendations
+
+When proposing changes:
+
+Always explain:
+
+1. Current issues
+2. Proposed solution
+3. Benefits
+4. Trade-offs
+5. Migration complexity
+
+Do not limit recommendations to minimal changes.
+
+Major redesigns are acceptable when they improve framework quality.
+
+---
+
+# Preferred Question
+
+For every significant system, ask:
+
+"Would this still be designed this way if it were implemented from scratch today?"
+
+If the answer is no, propose a better design.

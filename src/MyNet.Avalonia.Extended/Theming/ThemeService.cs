@@ -67,7 +67,7 @@ public class ThemeService(IThemeBrushService themeBrushService, IThemeBaseRegist
             }
         }
 
-        ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(CurrentTheme));
+        ThemeChanged?.Invoke(this, new(CurrentTheme));
     }
 
     /// <summary>
@@ -107,12 +107,7 @@ public class ThemeService(IThemeBrushService themeBrushService, IThemeBaseRegist
     /// Updates the current myTheme configuration using a provided update action, allowing for flexible modifications to the theme properties. The update action receives the current theme as a parameter, and any changes made to the theme within the action will be applied when the method completes. This allows for complex theme updates that may involve multiple properties or conditional logic while ensuring that the updated theme is applied correctly to the application.
     /// </summary>
     /// <param name="update">The update action to apply to the current theme.</param>
-    public void UpdateTheme(Action<UI.Theming.Theme> update)
-    {
-        var currentTheme = CurrentTheme;
-        update(currentTheme);
-        ApplyTheme(currentTheme);
-    }
+    public void UpdateTheme(Func<UI.Theming.Theme, UI.Theming.Theme> update) => ApplyTheme(update(CurrentTheme));
 
     /// <summary>
     /// Adds a base myTheme extension (not implemented - for future use).

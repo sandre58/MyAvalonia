@@ -14,7 +14,7 @@ public class ListViewModel : ViewModelBase
         // Generate 1000 items for stress testing
         for (int i = 0; i < 1000; i++)
         {
-            Items.Add(new ListItem
+            Items.Add(new()
             {
                 Id = i + 1,
                 Title = $"List Item {i + 1}",

@@ -5,12 +5,33 @@
 // -----------------------------------------------------------------------
 
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Media;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
 public static class WindowAssist
 {
+    private const double CaptionButtonWidth = 45;
+
+    static WindowAssist()
+    {
+        ShowMinimizeButtonProperty.Changed.AddClassHandler<Window>((w, _) => UpdateCaptionButtonsWidth(w));
+        ShowMaximizeButtonProperty.Changed.AddClassHandler<Window>((w, _) => UpdateCaptionButtonsWidth(w));
+        ShowCloseButtonProperty.Changed.AddClassHandler<Window>((w, _) => UpdateCaptionButtonsWidth(w));
+        ShowFullScreenButtonProperty.Changed.AddClassHandler<Window>((w, _) => UpdateCaptionButtonsWidth(w));
+    }
+
+    private static void UpdateCaptionButtonsWidth(StyledElement element)
+    {
+        var width = 0.0;
+        if (GetShowMinimizeButton(element)) width += CaptionButtonWidth;
+        if (GetShowMaximizeButton(element)) width += CaptionButtonWidth;
+        if (GetShowCloseButton(element)) width += CaptionButtonWidth;
+        if (GetShowFullScreenButton(element)) width += CaptionButtonWidth;
+        element.SetCurrentValue(CaptionButtonsWidthProperty, width);
+    }
+
     // ------------------------------------------------------------------
     // Title bar
     // ------------------------------------------------------------------
@@ -109,12 +130,22 @@ public static class WindowAssist
         AvaloniaProperty.RegisterAttached<StyledElement, bool>(
             "ShowFullScreenButton",
             typeof(WindowAssist),
-            false,
             inherits: true);
 
     public static bool GetShowFullScreenButton(StyledElement element) => element.GetValue(ShowFullScreenButtonProperty);
 
     public static void SetShowFullScreenButton(StyledElement element, bool value) => element.SetValue(ShowFullScreenButtonProperty, value);
+
+    public static readonly AttachedProperty<double> CaptionButtonsWidthProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, double>(
+            "CaptionButtonsWidth",
+            typeof(WindowAssist),
+            3 * CaptionButtonWidth,
+            inherits: true);
+
+    public static double GetCaptionButtonsWidth(StyledElement element) => element.GetValue(CaptionButtonsWidthProperty);
+
+    public static void SetCaptionButtonsWidth(StyledElement element, double value) => element.SetValue(CaptionButtonsWidthProperty, value);
 
     // ------------------------------------------------------------------
     // Window appearance
@@ -148,7 +179,6 @@ public static class WindowAssist
         AvaloniaProperty.RegisterAttached<StyledElement, bool>(
             "ExtendContentIntoTitleBar",
             typeof(WindowAssist),
-            false,
             inherits: true);
 
     public static bool GetExtendContentIntoTitleBar(StyledElement element) => element.GetValue(ExtendContentIntoTitleBarProperty);

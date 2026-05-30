@@ -1,0 +1,109 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.FieldsPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:m="clr-namespace:MyNet.Avalonia.Showcase.MarkupExtensions"
+             x:DataType="vm:FieldsPageViewModel"
+             x:Name="Root"
+             Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Translate Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             ClipToBounds="False">
+    <ContentPage.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+    </ContentPage.Resources>
+
+    <v:ShowcaseView ShowThemes="False" ShowPreviewCode="False" ShowContent="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <UniformGrid Columns="2"
+                             ColumnSpacing="{StaticResource MyNet.Spacing.Xl}"
+                             RowSpacing="{StaticResource MyNet.Spacing.Xl}"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center">
+                    <UniformGrid.Styles>
+                        <Style
+                            Selector="AutoCompleteBox, ButtonSpinner, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|ColorPickerEx, my|MultiComboBox, my|TagBox, my|TimePickerEx">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="MaxWidth" Value="250" />
+                        </Style>
+                        <Style Selector="AutoCompleteBox.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.AutoCompleteBox.Underline}" />
+                        </Style>
+                        <Style Selector="ButtonSpinner.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ButtonSpinner.Underline}" />
+                        </Style>
+                        <Style Selector="ComboBox.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ComboBox.Underline}" />
+                        </Style>
+                        <Style Selector="CalendarDatePicker.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.CalendarDatePicker.Underline}" />
+                        </Style>
+                        <Style Selector="DatePicker.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.DatePicker.Underline}" />
+                        </Style>
+                        <Style Selector="NumericUpDown.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.NumericUpDown.Underline}" />
+                        </Style>
+                        <Style Selector="TimePicker.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TimePicker.Underline}" />
+                        </Style>
+                        <Style Selector="TextBox.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TextBox.Underline}" />
+                        </Style>
+                        <Style Selector="my|CalendarDatePickerEx.kind-underline">
+                            <Setter Property="Theme"
+                                    Value="{StaticResource MyNet.Theme.CalendarDatePickerEx.Underline}" />
+                        </Style>
+                        <Style Selector="my|ColorPickerEx.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ColorPickerEx.Underline}" />
+                        </Style>
+                        <Style Selector="my|MultiComboBox.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.MultiComboBox.Underline}" />
+                        </Style>
+                        <Style Selector="my|TagBox.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TagBox.Underline}" />
+                        </Style>
+                        <Style Selector="my|TimePickerEx.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TimePickerEx.Underline}" />
+                        </Style>
+                    </UniformGrid.Styles>
+
+                    <TextBox behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <AutoCompleteBox behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                                     ItemsSource="{m:RandomCountries All=True}"
+                                     ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}" />
+                    <ComboBox behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                              ItemsSource="{m:RandomCountries All=True}"
+                              ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}" />
+                    <my:MultiComboBox behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                                      ItemsSource="{m:RandomCountries All=True}"
+                                      ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}"
+                                      SelectedItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}" />
+                    <my:TagBox behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <ButtonSpinner behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                                   my:SpinnerBehavior.IncreaseCommand="{ReflectionBinding ((vm:FieldsPageViewModel)Data).IncreaseSpinnerCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                                   my:SpinnerBehavior.DecreaseCommand="{ReflectionBinding ((vm:FieldsPageViewModel)Data).DecreaseSpinnerCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                                   my:SpinnerBehavior.IncreaseCommandParameter="{Binding $self}"
+                                   my:SpinnerBehavior.DecreaseCommandParameter="{Binding $self}" />
+                    <NumericUpDown behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <CalendarDatePicker behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <my:CalendarDatePickerEx behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <DatePicker behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <TimePicker behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <my:TimePickerEx behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <my:ColorPickerEx behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                </UniformGrid>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+    </v:ShowcaseView>
+</ContentPage>

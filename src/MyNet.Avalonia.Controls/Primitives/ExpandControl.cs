@@ -68,6 +68,6 @@ public class ExpandControl : ContentControl
                 throw new ArgumentOutOfRangeException(nameof(availableSize));
         }
 
-        return new Size(w, h);
+        return new(w, h);
     }
 }

@@ -1,0 +1,63 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.BannerPage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+            xmlns:m="clr-namespace:MyNet.Avalonia.Showcase.MarkupExtensions"
+            xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+            x:DataType="vm:BannerPageViewModel"
+            x:Name="Root"
+            Theme="{StaticResource {x:Type ContentPage}}"
+            Header="{my:Translate Title}"
+            my:IconAssist.Icon="{Binding Icon}"
+            ClipToBounds="False"
+            mc:Ignorable="d"
+            xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors">
+
+    <v:ShowcaseView>
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <my:Banner behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                           MaxWidth="500"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <my:Banner behavior:PlaygroundBehavior.AttachStyle="{Binding}" MaxWidth="500">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+        <v:ShowcaseView.CustomContent>
+            <StackPanel>
+                <my:Banner MaxWidth="500" Severity="Custom">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+                <my:Banner MaxWidth="500" Severity="Success">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+                <my:Banner MaxWidth="500" Severity="Error">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+                <my:Banner MaxWidth="500" Severity="Warning">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+                <my:Banner MaxWidth="500" Severity="Information">
+                    <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
+                </my:Banner>
+            </StackPanel>
+        </v:ShowcaseView.CustomContent>
+
+    </v:ShowcaseView>
+</ContentPage>

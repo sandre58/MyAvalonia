@@ -5,10 +5,12 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT EXPANDER THEME                                    -->
     <!-- ═════════════════════════════════════════════════════════ -->
-    <ControlTheme x:Key="{x:Type Expander}" TargetType="Expander" BasedOn="{StaticResource {x:Type HeaderedContentControl}}">
+    <ControlTheme x:Key="{x:Type Expander}" TargetType="Expander"
+                  BasedOn="{StaticResource {x:Type HeaderedContentControl}}">
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="my:ExpanderBehavior.EnableShortcutKeys" Value="True"/>
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="my:ExpanderBehavior.EnableShortcutKeys" Value="True" />
+        <Setter Property="ContentTransition" Value="{x:Null}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="Expander">
                 <Border Name="PART_Root"
@@ -59,7 +61,9 @@
                                                                    FontWeight="{TemplateBinding my:HeaderAssist.FontWeight}"
                                                                    Foreground="{TemplateBinding my:HeaderAssist.Foreground}"
                                                                    UseLayoutRounding="False">
-                                                <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
+                                                <ContentPresenter Name="PART_HeaderPresenter"
+                                                                  Content="{TemplateBinding Header}"
+                                                                  ContentTemplate="{TemplateBinding HeaderTemplate}" />
                                             </my:IconContentControl>
 
                                             <PathIcon Name="PART_ExpanderIcon"
@@ -87,7 +91,7 @@
                                               FontSize="{TemplateBinding FontSize}"
                                               FontStyle="{TemplateBinding FontStyle}"
                                               FontWeight="{TemplateBinding FontWeight}"
-                                              IsVisible="{TemplateBinding IsExpanded, Mode=TwoWay}" />
+                                              ClipToBounds="{TemplateBinding ClipToBounds}" />
                         </DockPanel>
                     </Border>
                 </Border>
@@ -97,7 +101,8 @@
         <Style Selector="^.use-transitions /template/ my|ExpandControl#PART_ExpandControl">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="CircularEaseOut" Property="Multiplier" Duration="{StaticResource MyNet.Animation.Slide}" />
+                    <DoubleTransition Easing="CircularEaseOut" Property="Multiplier"
+                                      Duration="{StaticResource MyNet.Animation.Slide}" />
                 </Transitions>
             </Setter>
         </Style>
@@ -256,7 +261,8 @@
                                                        FontStyle="{TemplateBinding my:HeaderAssist.FontStyle}"
                                                        FontWeight="{TemplateBinding my:HeaderAssist.FontWeight}"
                                                        UseLayoutRounding="False">
-                                    <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                                    <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}"
+                                                      ContentTemplate="{TemplateBinding HeaderTemplate}" />
                                 </my:IconContentControl>
 
                                 <PathIcon Name="PART_ExpanderIcon"
@@ -290,7 +296,8 @@
         <Style Selector="^.use-transitions /template/ my|ExpandControl#PART_ExpandControl">
             <Setter Property="Transitions">
                 <Transitions>
-                    <DoubleTransition Easing="CircularEaseOut" Property="Multiplier" Duration="{StaticResource MyNet.Animation.Slide}" />
+                    <DoubleTransition Easing="CircularEaseOut" Property="Multiplier"
+                                      Duration="{StaticResource MyNet.Animation.Slide}" />
                 </Transitions>
             </Setter>
         </Style>

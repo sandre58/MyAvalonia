@@ -45,7 +45,7 @@ public class TimeView : TimeSelectorBase
         component.GotFocus -= Component_GotFocus;
     }
 
-    private void Component_GotFocus(object? sender, global::Avalonia.Input.GotFocusEventArgs e) => SelectedComponent = Components.FirstOrDefault(x => x.Value?.Equals(sender) == true).Key;
+    private void Component_GotFocus(object? sender, global::Avalonia.Input.FocusChangedEventArgs e) => SelectedComponent = Components.FirstOrDefault(x => x.Value?.Equals(sender) == true).Key;
 
     protected override void ShowComponent(IComponentTimeSelector component)
     {

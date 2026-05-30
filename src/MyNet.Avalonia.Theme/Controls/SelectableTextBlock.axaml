@@ -6,12 +6,12 @@
     <MenuFlyout x:Key="MyNet.MenuFlyout.Embedded.SelectableTextBlock" x:DataType="sys:Object" Placement="Bottom">
         <MenuItem Command="{Binding $parent[SelectableTextBlock].Copy}"
                   Header="{my:Loc Copy}"
-                  Icon="{my:Icon ContentCopy}"
+                  Icon="{my:MaterialIcon ContentCopy}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=copy}"
                   IsEnabled="{Binding $parent[SelectableTextBlock].CanCopy}" />
         <MenuItem Command="{Binding $parent[SelectableTextBlock].SelectAll}"
                   Header="{my:Loc SelectAll}"
-                  Icon="{my:Icon SelectAll}"
+                  Icon="{my:MaterialIcon SelectAll}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=selectall}" />
     </MenuFlyout>
 

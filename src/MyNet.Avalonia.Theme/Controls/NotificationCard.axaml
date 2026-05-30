@@ -57,7 +57,7 @@
                                 <Button Name="PART_CloseButton"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
-                                        Content="{my:Icon WindowClose}"
+                                        Content="{my:MaterialIcon WindowClose}"
                                         IsVisible="False"
                                         Classes="kind-tool"
                                         NotificationCard.CloseOnClick="True" />

@@ -37,7 +37,7 @@ public class ThemeBrushExtension : ThemeBrushExtensionBase
     /// <summary>
     /// Gets or sets the relative source for the binding. Default is self.
     /// </summary>
-    public RelativeSource RelativeSource { get; set; } = new RelativeSource(RelativeSourceMode.Self);
+    public RelativeSource RelativeSource { get; set; } = new(RelativeSourceMode.Self);
 
     /// <summary>
     /// Provides the value for the markup extension, returning a binding to the theme brush with the specified options.

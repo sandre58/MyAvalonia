@@ -76,13 +76,15 @@
                                         <RepeatButton Name="PART_DayUpButton"
                                                       DockPanel.Dock="Top"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                      Opacity="0"
-                                                      Content="{my:Icon ChevronUp, DefinedSize=Xs}" />
+                                                      Opacity="0">
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronUp}" Classes="size-xs" />
+                                        </RepeatButton>
                                         <RepeatButton Name="PART_DayDownButton"
                                                       DockPanel.Dock="Bottom"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                      Opacity="0"
-                                                      Content="{my:Icon ChevronDown, DefinedSize=Xs}" />
+                                                      Opacity="0">
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronDown}" Classes="size-xs" />
+                                        </RepeatButton>
                                         <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
                                             <DateTimePickerPanel Name="PART_DaySelector" PanelType="Day" ShouldLoop="True" />
                                         </ScrollViewer>
@@ -94,13 +96,15 @@
                                         <RepeatButton Name="PART_MonthUpButton"
                                                       DockPanel.Dock="Top"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                      Opacity="0"
-                                                      Content="{my:Icon ChevronUp, DefinedSize=Xs}" />
+                                                      Opacity="0">
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronUp}" Classes="size-xs" />
+                                        </RepeatButton>
                                         <RepeatButton Name="PART_MonthDownButton"
                                                       DockPanel.Dock="Bottom"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                      Opacity="0"
-                                                      Content="{my:Icon ChevronDown, DefinedSize=Xs}" />
+                                                      Opacity="0">
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronDown}" Classes="size-xs" />
+                                        </RepeatButton>
                                         <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
                                             <DateTimePickerPanel Name="PART_MonthSelector" PanelType="Month" ShouldLoop="True" />
                                         </ScrollViewer>
@@ -112,13 +116,15 @@
                                         <RepeatButton Name="PART_YearUpButton"
                                                       DockPanel.Dock="Top"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                      Opacity="0"
-                                                      Content="{my:Icon ChevronUp, DefinedSize=Xs}" />
+                                                      Opacity="0">
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronUp}" Classes="size-xs" />
+                                        </RepeatButton>
                                         <RepeatButton Name="PART_YearDownButton"
                                                       DockPanel.Dock="Bottom"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
-                                                      Opacity="0"
-                                                      Content="{my:Icon ChevronDown, DefinedSize=Xs}" />
+                                                      Opacity="0">
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronDown}" Classes="size-xs" />
+                                        </RepeatButton>
                                         <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
                                             <DateTimePickerPanel Name="PART_YearSelector" PanelType="Year" ShouldLoop="False" />
                                         </ScrollViewer>
@@ -147,7 +153,7 @@
                                         my:VariantAssist.DefaultBackground="{my:Theme Primary}"
                                         my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                         ToolTip.Tip="{my:Loc Validate}"
-                                        Content="{my:Icon Check}" />
+                                        Content="{my:MaterialIcon Check}" />
                                 <Button Name="PART_DismissButton"
                                         Grid.Column="2"
                                         IsCancel="True"
@@ -156,7 +162,7 @@
                                         Margin="{my:Thickness Sm}"
                                         Classes="variant-text size-sm"
                                         ToolTip.Tip="{my:Loc Cancel}"
-                                        Content="{my:Icon Close}" />
+                                        Content="{my:MaterialIcon Close}" />
                             </Grid>
                         </Grid>
                     </Border>
@@ -384,7 +390,7 @@
                                             Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Command="{Binding $parent[DatePicker].Clear}"
-                                            Content="{my:Icon Close}"
+                                            Content="{my:MaterialIcon Close}"
                                             IsVisible="False" />
                                 </Grid>
                             </my:Ripple>
@@ -667,7 +673,7 @@
                                         Classes="kind-tool"
                                         my:DisableAssist.IsDisablable="False"
                                         Command="{Binding $parent[DatePicker].Clear}"
-                                        Content="{my:Icon Close}"
+                                        Content="{my:MaterialIcon Close}"
                                         IsVisible="False" />
                             </Grid>
                         </Border>

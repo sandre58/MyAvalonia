@@ -38,7 +38,7 @@ public class DottedGridBrushExtension : ThemeBrushExtensionBase
     /// <summary>
     /// Gets or sets the relative source for the binding. Default is self.
     /// </summary>
-    public RelativeSource RelativeSource { get; set; } = new RelativeSource(RelativeSourceMode.Self);
+    public RelativeSource RelativeSource { get; set; } = new(RelativeSourceMode.Self);
 
     /// <summary>
     /// Gets or sets the width and height of each tile in pixels. Default is 16.

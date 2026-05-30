@@ -166,12 +166,12 @@ public class Ripple : ContentControl
         if (isCentered)
         {
             radius = Math.Max(width / 2, height / 2);
-            center = new Point(width / 2, height / 2);
+            center = new(width / 2, height / 2);
         }
         else
         {
             radius = Math.Sqrt(Math.Pow(width, 2) + Math.Pow(height, 2));
-            center = new Point(x, y);
+            center = new(x, y);
         }
 
         var handler = new RippleHandler(
@@ -190,10 +190,10 @@ public class Ripple : ContentControl
 
     #region Styled properties
 
-    public static readonly StyledProperty<IBrush> RippleFillProperty =
-        AvaloniaProperty.Register<Ripple, IBrush>(nameof(RippleFill), defaultValue: Brushes.White, inherits: true);
+    public static readonly StyledProperty<IBrush?> RippleFillProperty =
+        AvaloniaProperty.Register<Ripple, IBrush?>(nameof(RippleFill), defaultValue: Brushes.White, inherits: true);
 
-    public IBrush RippleFill
+    public IBrush? RippleFill
     {
         get => GetValue(RippleFillProperty);
         set => SetValue(RippleFillProperty, value);

@@ -60,9 +60,8 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <Border ClipToBounds="{TemplateBinding ClipToBounds}" CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid Name="PART_Grid" RowDefinitions="Auto,*">
+                        <Grid Name="PART_Grid">
                             <Border Name="PART_Header"
-                                    Grid.Row="0"
                                     Height="{TemplateBinding my:HeaderAssist.Size}"
                                     Padding="{TemplateBinding my:HeaderAssist.Padding}"
                                     Margin="{TemplateBinding my:HeaderAssist.Margin}"
@@ -95,7 +94,6 @@
                                 </my:IconContentControl>
                             </Border>
                             <ContentPresenter Name="PART_ContentPresenter"
-                                              Grid.Row="1"
                                               Padding="{TemplateBinding Padding}"
                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -113,6 +111,22 @@
             </ControlTemplate>
         </Setter>
 
+        <Style Selector="^">
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions" Value="Auto,*" />
+                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
+            </Style>
+            <Style Selector="^ /template/ Border#PART_Header">
+                <Setter Property="Height" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
+                <Setter Property="Width" Value="{x:Static x:Double.NaN}" />
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Grid.Row" Value="1" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
+        </Style>
 
         <Style Selector="^.kind-label">
             <Style Selector="^ /template/ Grid#PART_Grid">
@@ -131,6 +145,22 @@
             </Style>
         </Style>
 
+        <Style Selector="^.position-top">
+            <Style Selector="^ /template/ Grid#PART_Grid">
+                <Setter Property="my:GridBehavior.RowDefinitions" Value="Auto,*" />
+                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
+            </Style>
+            <Style Selector="^ /template/ Border#PART_Header">
+                <Setter Property="Height" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
+                <Setter Property="Width" Value="{x:Static x:Double.NaN}" />
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Grid.Row" Value="1" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
+        </Style>
         <Style Selector="^.position-left">
             <Style Selector="^ /template/ Grid#PART_Grid">
                 <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
@@ -160,22 +190,6 @@
             </Style>
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Grid.Row" Value="0" />
-                <Setter Property="Grid.Column" Value="0" />
-            </Style>
-        </Style>
-        <Style Selector="^.position-top">
-            <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridBehavior.RowDefinitions" Value="Auto,*" />
-                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="*" />
-            </Style>
-            <Style Selector="^ /template/ Border#PART_Header">
-                <Setter Property="Height" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
-                <Setter Property="Width" Value="{x:Static x:Double.NaN}" />
-                <Setter Property="Grid.Row" Value="0" />
-                <Setter Property="Grid.Column" Value="0" />
-            </Style>
-            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Grid.Row" Value="1" />
                 <Setter Property="Grid.Column" Value="0" />
             </Style>
         </Style>

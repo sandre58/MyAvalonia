@@ -1,0 +1,83 @@
+<Window x:Class="MyNet.Avalonia.Showcase.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="clr-namespace:MyNet.Avalonia.Showcase.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:globalization="using:System.Globalization"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:my="http://mynet.com/avalonia"
+        xmlns:views="clr-namespace:MyNet.Avalonia.Showcase.Views"
+        xmlns:vm="using:MyNet.Avalonia.Showcase.ViewModels"
+        Title="My .NET Avalonia"
+        d:DesignHeight="450"
+        d:DesignWidth="800"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/Demo.ico"
+        my:WindowAssist.ShowFullScreenButton="{OnPlatform True, macOS=False}"
+        my:WindowAssist.IsTitleVisible="False"
+        x:Name="Root"
+        mc:Ignorable="d">
+    <Window.Styles>
+        <Style Selector="WindowDrawnDecorations">
+            <Setter Property="my:ThemeAssist.Context" Value="Contrast" />
+            <Setter Property="TextElement.Foreground" Value="{my:Theme Primary.Foreground}" />
+        </Style>
+    </Window.Styles>
+    <my:WindowAssist.RightTitleBarContent>
+        <StackPanel Margin="{my:Thickness Md, Horizontal}"
+                    VerticalAlignment="Center"
+                    Classes="gap-sm"
+                    Orientation="Horizontal"
+                    TextElement.Foreground="{my:Theme Primary.Foreground}"
+                    my:ThemeAssist.Context="Contrast">
+
+            <!-- Language -->
+            <DropDownButton Content="{Binding SelectedCulture}" Classes="size-sm" Padding="6 2 0 2">
+                <DropDownButton.Flyout>
+                    <MenuFlyout ItemsSource="{Binding Cultures}">
+                        <MenuFlyout.ItemContainerTheme>
+                            <ControlTheme TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                <Setter Property="IsChecked">
+                                    <MultiBinding Converter="{x:Static my:EqualsConverter.IsEquals}">
+                                        <Binding />
+                                        <Binding Path="((vm:MainViewModel)DataContext).SelectedCulture" ElementName="Root" FallbackValue="{x:Null}" />
+                                    </MultiBinding>
+                                </Setter>
+                                <Setter Property="Padding" Value="4 4" />
+                                <Setter Property="Command" Value="{Binding ((vm:MainViewModel)DataContext).ChangeCultureCommand, ElementName=Root, FallbackValue={x:Null}}" />
+                                <Setter Property="CommandParameter" Value="{Binding}" />
+                                <Setter Property="ToggleType" Value="CheckBox" />
+                                <Setter Property="Header" Value="{Binding}" />
+                                <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.CultureInfo.Xs}" />
+                            </ControlTheme>
+                        </MenuFlyout.ItemContainerTheme>
+                    </MenuFlyout>
+                </DropDownButton.Flyout>
+                <DropDownButton.ContentTemplate>
+                    <DataTemplate x:DataType="globalization:CultureInfo">
+                        <Image Width="20" Source="{Binding Converter={x:Static c:CountryConverter.To24}}" ToolTip.Tip="{my:Translate Casing=Title}" />
+                    </DataTemplate>
+                </DropDownButton.ContentTemplate>
+            </DropDownButton>
+
+            <!-- Theme -->
+            <StackPanel Margin="{my:Thickness Sm, Horizontal}"
+                        VerticalAlignment="Center"
+                        Classes="gap-md"
+                        Orientation="Horizontal">
+                <Button Classes="size-sm"
+                        Command="{Binding IsLightCommand}"
+                        Content="{my:MaterialIcon WeatherSunny}"
+                        Theme="{StaticResource MyNet.Theme.Button.Icon}"
+                        ToolTip.Tip="{my:Loc Light}" />
+                <ToggleSwitch Classes="size-sm" my:ThemeAssist.Role="Contrast" IsChecked="{Binding IsDark}" />
+                <Button Classes="size-sm"
+                        Command="{Binding IsDarkCommand}"
+                        Content="{my:MaterialIcon WeatherNight}"
+                        Theme="{StaticResource MyNet.Theme.Button.Icon}"
+                        ToolTip.Tip="{my:Loc Dark}" />
+            </StackPanel>
+        </StackPanel>
+    </my:WindowAssist.RightTitleBarContent>
+    <views:MainView />
+</Window>

@@ -23,7 +23,7 @@ public sealed class BusyService : ObservableObject, IBusyService
 
     TBusy IBusyService.Wait<TBusy>() => Activator.CreateInstance<TBusy>();
 
-    Task IBusyService.WaitAsync<TBusy>(Action<TBusy> action) => Task.Run(() => action(new TBusy()));
+    Task IBusyService.WaitAsync<TBusy>(Action<TBusy> action) => Task.Run(() => action(new()));
 
-    Task IBusyService.WaitAsync<TBusy>(Func<TBusy, Task> action) => action(new TBusy());
+    Task IBusyService.WaitAsync<TBusy>(Func<TBusy, Task> action) => action(new());
 }

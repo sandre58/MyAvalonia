@@ -37,7 +37,7 @@
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
-        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:Theme Primary}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:Theme Primary}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
         <Setter Property="BorderThickness" Value="0" />
@@ -121,14 +121,12 @@
                                        FontSize="{StaticResource MyNet.Font.Size.Sm}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Opacity="{DynamicResource MyNet.Opacity.High}"
-                                       Text="{TemplateBinding InputGesture, Converter={StaticResource KeyGestureConverter}}" />
+                                       Text="{TemplateBinding InputGesture, Converter={StaticResource KeyGestureConverter}}"
+                                       IsVisible="{TemplateBinding InputGesture, Converter={x:Static my:NullConverter.IsNotNull}}" />
                             <PathIcon Name="PART_ExpandIcon"
-                                      Grid.Column="4"
-                                      Width="{StaticResource MyNet.Size.Glyph.Md}"
-                                      Height="{StaticResource MyNet.Size.Glyph.Md}"
-                                      VerticalAlignment="Center"
-                                      Data="{StaticResource MyNet.Geometry.ChevronRight}"
-                                      Foreground="{TemplateBinding Foreground}" />
+                                             Grid.Column="4"
+                                             Classes="kind-glyph is-dropdown position-right"
+                                             Foreground="{TemplateBinding Foreground}" />
                         </Grid>
                     </my:Ripple>
                     <Popup Name="PART_Popup"
@@ -194,7 +192,7 @@
             <Setter Property="IsVisible" Value="True" />
             <Setter Property="Content">
                 <Template>
-                    <PathIcon Classes="size-xs" Data="{StaticResource MyNet.Geometry.Check}" />
+                    <my:MaterialIcon Classes="size-xs" Kind="Check" />
                 </Template>
             </Setter>
         </Style>
@@ -204,7 +202,7 @@
             <Setter Property="IsVisible" Value="True" />
             <Setter Property="Content">
                 <Template>
-                    <PathIcon Classes="size-xs" Data="{StaticResource MyNet.Geometry.CircleSmall}" />
+                    <my:MaterialIcon Classes="size-xs" Kind="CircleSmall" />
                 </Template>
             </Setter>
         </Style>
@@ -512,39 +510,39 @@
         <MenuItem Name="MyNet.MenuItem.Cut"
                   Command="{Binding $parent[TextBox].Cut}"
                   Header="{my:Loc Cut}"
-                  Icon="{my:Icon ContentCut}"
+                  Icon="{my:MaterialIcon ContentCut}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=cut}"
                   IsEnabled="{Binding $parent[TextBox].CanCut}" />
         <MenuItem Name="MenuItemCopy"
                   Command="{Binding $parent[TextBox].Copy}"
                   Header="{my:Loc Copy}"
-                  Icon="{my:Icon ContentCopy}"
+                  Icon="{my:MaterialIcon ContentCopy}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=copy}"
                   IsEnabled="{Binding $parent[TextBox].CanCopy}" />
         <MenuItem Name="MenuItemPaste"
                   Command="{Binding $parent[TextBox].Paste}"
                   Header="{my:Loc Paste}"
-                  Icon="{my:Icon ContentPaste}"
+                  Icon="{my:MaterialIcon ContentPaste}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=paste}"
                   IsEnabled="{Binding $parent[TextBox].CanPaste}" />
         <Separator />
         <MenuItem Name="MenuItemUndo"
                   Command="{Binding $parent[TextBox].Undo}"
                   Header="{my:Loc Undo}"
-                  Icon="{my:Icon Undo}"
+                  Icon="{my:MaterialIcon Undo}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=undo}"
                   IsEnabled="{Binding $parent[TextBox].CanUndo}" />
         <MenuItem Name="MenuItemRedo"
                   Command="{Binding $parent[TextBox].Redo}"
                   Header="{my:Loc Redo}"
-                  Icon="{my:Icon Redo}"
+                  Icon="{my:MaterialIcon Redo}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=redo}"
                   IsEnabled="{Binding $parent[TextBox].CanRedo}" />
         <Separator />
         <MenuItem Name="MenuItemSelectAll"
                   Command="{Binding $parent[TextBox].SelectAll}"
                   Header="{my:Loc SelectAll}"
-                  Icon="{my:Icon SelectAll}"
+                  Icon="{my:MaterialIcon SelectAll}"
                   InputGesture="{Binding Converter={x:Static my:KeyGesturesConverter.Default}, ConverterParameter=selectall}" />
     </MenuFlyout>
 

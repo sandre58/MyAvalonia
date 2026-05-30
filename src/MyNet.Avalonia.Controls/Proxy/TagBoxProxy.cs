@@ -34,7 +34,7 @@ public sealed class TagBoxProxy : IControlProxy
         _control.LostFocus += OnLostFocus;
     }
 
-    private void OnGotFocus(object? sender, global::Avalonia.Input.GotFocusEventArgs e)
+    private void OnGotFocus(object? sender, global::Avalonia.Input.FocusChangedEventArgs e)
     {
         IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
         IsActiveChanged?.Invoke(sender, EventArgs.Empty);

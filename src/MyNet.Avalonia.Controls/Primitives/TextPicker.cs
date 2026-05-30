@@ -129,7 +129,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
                     TextBox.Text = newValue;
             }
 
-            TextChanged?.Invoke(this, new TextChangedEventArgs(TextBox.TextChangedEvent));
+            TextChanged?.Invoke(this, new(TextBox.TextChangedEvent));
         }
 
         base.OnPropertyChanged(change);
@@ -217,7 +217,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
             if (removedValue is not null)
                 removedItems.Add(removedValue);
 
-            handler(this, new SelectionChangedEventArgs(SelectingItemsControl.SelectionChangedEvent, removedItems, addedItems));
+            handler(this, new(SelectingItemsControl.SelectionChangedEvent, removedItems, addedItems));
         }
     }
 
@@ -318,7 +318,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
         base.OnPointerWheelChanged(e);
         if (!e.Handled && SelectedValue is not null && AllowSpin && IsKeyboardFocusWithin)
         {
-            var newValue = IncrementValue(e.Delta.Y > 0 ? -1 : 1);
+            var newValue = IncrementValue(e.Delta.Y > 0 ? 1 : -1);
 
             if (newValue is null) return;
 
@@ -369,7 +369,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
                 if (!IsDropDownOpen)
                 {
                     if (e.KeyModifiers == KeyModifiers.None && SelectedValue is not null)
-                        SetCurrentValue(SelectedValueProperty, IncrementValue(1));
+                        SetCurrentValue(SelectedValueProperty, IncrementValue(-1));
                     return true;
                 }
 
@@ -379,7 +379,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
                 if (!IsDropDownOpen)
                 {
                     if (e.KeyModifiers == KeyModifiers.None && SelectedValue is not null)
-                        SetCurrentValue(SelectedValueProperty, IncrementValue(-1));
+                        SetCurrentValue(SelectedValueProperty, IncrementValue(1));
                     return true;
                 }
 
@@ -389,7 +389,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
                 if (!IsDropDownOpen)
                 {
                     if (e.KeyModifiers == KeyModifiers.None && SelectedValue is not null)
-                        SetCurrentValue(SelectedValueProperty, IncrementLargeValue(1));
+                        SetCurrentValue(SelectedValueProperty, IncrementLargeValue(-1));
                     return true;
                 }
 
@@ -399,7 +399,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
                 if (!IsDropDownOpen)
                 {
                     if (e.KeyModifiers == KeyModifiers.None && SelectedValue is not null)
-                        SetCurrentValue(SelectedValueProperty, IncrementLargeValue(-1));
+                        SetCurrentValue(SelectedValueProperty, IncrementLargeValue(1));
                     return true;
                 }
 
@@ -413,7 +413,7 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
 
     #region Focus
 
-    protected override void OnGotFocus(GotFocusEventArgs e)
+    protected override void OnGotFocus(FocusChangedEventArgs e)
     {
         base.OnGotFocus(e);
 
@@ -432,9 +432,9 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
         }
     }
 
-    protected override void OnLostFocus(RoutedEventArgs e)
+    protected override void OnLostFocus(FocusChangedEventArgs e)
     {
-        if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is Visual v && ReferenceEquals(v.FindAncestorOfType<TPreviewer>(true), Previewer)) return;
+        if (TopLevel.GetTopLevel(this)?.FocusManager.GetFocusedElement() is Visual v && ReferenceEquals(v.FindAncestorOfType<TPreviewer>(true), Previewer)) return;
         if (e.Source is Visual v1 && ReferenceEquals(v1.FindAncestorOfType<TPreviewer>(true), Previewer)) return;
 
         CommitFromTextBox();

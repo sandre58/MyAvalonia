@@ -101,7 +101,7 @@
                             </my:HeaderAssist.IsVisible>
 
                             <!-- Spectrum Tab -->
-                            <TabItem my:DisableAssist.IsDisablable="False" Header="{my:Icon Palette}" IsVisible="{TemplateBinding IsColorSpectrumVisible}">
+                            <TabItem my:DisableAssist.IsDisablable="False" Header="{my:MaterialIcon Palette}" IsVisible="{TemplateBinding IsColorSpectrumVisible}">
                                 <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="*">
                                     <ColorSlider Name="ColorSpectrumThirdComponentSlider"
                                                  Grid.Column="0"
@@ -152,7 +152,7 @@
                             </TabItem>
 
                             <!-- Palette Tab -->
-                            <TabItem my:DisableAssist.IsDisablable="False" Header="{my:Icon PaletteSwatchVariant}" IsVisible="{TemplateBinding IsColorPaletteVisible}">
+                            <TabItem my:DisableAssist.IsDisablable="False" Header="{my:MaterialIcon PaletteSwatchVariant}" IsVisible="{TemplateBinding IsColorPaletteVisible}">
                                 <ListBox my:DisableAssist.IsDisablable="False"
                                          my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                          my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
@@ -163,7 +163,7 @@
                             </TabItem>
 
                             <!-- Components Tab -->
-                            <TabItem my:DisableAssist.IsDisablable="False" Header="{my:Icon TuneVariant}" IsVisible="{TemplateBinding IsColorComponentsVisible}">
+                            <TabItem my:DisableAssist.IsDisablable="False" Header="{my:MaterialIcon TuneVariant}" IsVisible="{TemplateBinding IsColorComponentsVisible}">
                                 <Grid Name="GridComponents" RowDefinitions="Auto,10,Auto" UseLayoutRounding="False">
                                     <Grid.Styles>
                                         <Style Selector="HeaderedContentControl">

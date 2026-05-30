@@ -20,6 +20,8 @@
         <PackageReference Include="Avalonia.Controls.ColorPicker" />
         <PackageReference Include="Avalonia.Controls.DataGrid" />
         <PackageReference Include="Avalonia.Controls.ItemsRepeater" />
+        <PackageReference Include="Avalonia.Xaml.Behaviors" />
+        <PackageReference Include="Material.Icons" />
     </ItemGroup>
     
     <ItemGroup>

@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.VisualTree;
-using MyNet.Utilities;
+using MyNet.Collections;
 
 namespace MyNet.Avalonia.Extensions;
 

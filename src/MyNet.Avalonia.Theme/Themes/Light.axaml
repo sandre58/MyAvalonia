@@ -53,6 +53,8 @@
     <Color x:Key="MyNet.Color.CodeBlock.AttributeValue">#DD5555</Color>
     <Color x:Key="MyNet.Color.CodeBlock.Brace">#AA00AA</Color>
     <Color x:Key="MyNet.Color.CodeBlock.Entity">#DC3545</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Keyword">#0000FF</Color>
+    <Color x:Key="MyNet.Color.CodeBlock.Number">#098658</Color>
 
     <!-- Gender -->
     <Color x:Key="MyNet.Color.Gender.Female">#FF77AA</Color>

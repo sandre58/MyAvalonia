@@ -88,7 +88,7 @@ public static class ItemsAssist
     /// <summary>
     /// Provides BorderThickness Property for attached ItemsBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<Thickness> BorderThicknessProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("BorderThickness", typeof(ItemsAssist), new Thickness(0));
+    public static readonly AttachedProperty<Thickness> BorderThicknessProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("BorderThickness", typeof(ItemsAssist), new(0));
 
     /// <summary>
     /// Accessor for Attached  <see cref="BorderThicknessProperty"/>.
@@ -330,7 +330,7 @@ public static class ItemsAssist
     /// <summary>
     /// Provides CornerRadius Property for attached ItemsBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<CornerRadius> CornerRadiusProperty = AvaloniaProperty.RegisterAttached<StyledElement, CornerRadius>("CornerRadius", typeof(ItemsAssist), new CornerRadius(0));
+    public static readonly AttachedProperty<CornerRadius> CornerRadiusProperty = AvaloniaProperty.RegisterAttached<StyledElement, CornerRadius>("CornerRadius", typeof(ItemsAssist), new(0));
 
     /// <summary>
     /// Accessor for Attached  <see cref="CornerRadiusProperty"/>.
@@ -352,7 +352,7 @@ public static class ItemsAssist
     /// <summary>
     /// Provides Padding Property for attached ItemsBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<Thickness> PaddingProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("Padding", typeof(ItemsAssist), new Thickness(0));
+    public static readonly AttachedProperty<Thickness> PaddingProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("Padding", typeof(ItemsAssist), new(0));
 
     /// <summary>
     /// Accessor for Attached  <see cref="PaddingProperty"/>.
@@ -374,7 +374,7 @@ public static class ItemsAssist
     /// <summary>
     /// Provides Margin Property for attached ItemsBehavior element.
     /// </summary>
-    public static readonly AttachedProperty<Thickness> MarginProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("Margin", typeof(ItemsAssist), new Thickness(0));
+    public static readonly AttachedProperty<Thickness> MarginProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("Margin", typeof(ItemsAssist), new(0));
 
     /// <summary>
     /// Accessor for Attached  <see cref="MarginProperty"/>.

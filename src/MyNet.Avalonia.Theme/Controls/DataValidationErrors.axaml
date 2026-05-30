@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
-                    xmlns:my="http://mynet.com/avalonia">
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
 
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- TEXT DATAVALIDATIONERRORS THEME                           -->
@@ -31,7 +32,8 @@
         </Setter>
         <Setter Property="ErrorTemplate">
             <DataTemplate>
-                <ItemsControl x:DataType="DataValidationErrors" Foreground="{my:Theme Validation.Error}" ItemsSource="{Binding}">
+                <ItemsControl x:DataType="DataValidationErrors" Foreground="{my:Theme Validation.Error}"
+                              ItemsSource="{Binding}">
                     <ItemsControl.Styles>
                         <Style Selector="TextBlock">
                             <Setter Property="TextWrapping" Value="Wrap" />
@@ -46,14 +48,15 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT DATAVALIDATIONERRORS THEME                        -->
     <!-- ═════════════════════════════════════════════════════════ -->
-    <ControlTheme x:Key="{x:Type DataValidationErrors}" TargetType="DataValidationErrors" BasedOn="{StaticResource MyNet.Theme.DataValidationErrors.Text}" />
+    <ControlTheme x:Key="{x:Type DataValidationErrors}" TargetType="DataValidationErrors"
+                  BasedOn="{StaticResource MyNet.Theme.DataValidationErrors.Text}" />
 
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- ICON DATAVALIDATIONERRORS THEME                           -->
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.DataValidationErrors.Icon" TargetType="DataValidationErrors">
         <Setter Property="ClipToBounds" Value="False" />
-        <Setter Property="my:IconAssist.Icon" Value="{StaticResource MyNet.Geometry.AlertCircle}" />
+        <Setter Property="my:IconAssist.Icon" Value="{x:Static icons:MaterialIconKind.AlertCircle}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="DataValidationErrors">
                 <Panel>
@@ -83,7 +86,9 @@
                             <ItemsControl x:DataType="collections:IEnumerable" ItemsSource="{Binding}" />
                         </ToolTip>
                     </ToolTip.Tip>
-                    <PathIcon Classes="size-sm" Data="{Binding (my:IconAssist.Icon), RelativeSource={RelativeSource AncestorType={x:Type DataValidationErrors}}}" Foreground="{my:Theme Validation.Error}" />
+                    <my:MaterialIcon Classes="size-sm"
+                                     Kind="{Binding (my:IconAssist.Icon), RelativeSource={RelativeSource AncestorType={x:Type DataValidationErrors}}}"
+                                     Foreground="{my:Theme Validation.Error}" />
                 </Panel>
             </DataTemplate>
         </Setter>
@@ -118,14 +123,15 @@
         </Setter>
         <Setter Property="ErrorTemplate">
             <DataTemplate>
-                <Panel Name="PART_InlineErrorTemplatePanel" Background="Transparent">
+                <Path Data="M15 0 L15 15 L0 0 Z" Fill="{my:Theme Validation.Error}"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Top">
                     <ToolTip.Tip>
                         <ToolTip Classes="variant-error">
                             <ItemsControl x:DataType="collections:IEnumerable" ItemsSource="{Binding}" />
                         </ToolTip>
                     </ToolTip.Tip>
-                    <Path Data="M15 0 L15 15 L0 0 Z" Fill="{my:Theme Validation.Error}" />
-                </Panel>
+                </Path>
             </DataTemplate>
         </Setter>
     </ControlTheme>

@@ -9,7 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Media;
-using Avalonia.Styling;
 using MyNet.Avalonia.Helpers;
 using MyNet.Utilities;
 using MyNet.Utilities.Localization;

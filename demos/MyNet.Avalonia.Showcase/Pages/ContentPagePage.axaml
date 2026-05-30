@@ -1,0 +1,30 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.ContentPagePage"
+            xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+            xmlns:my="http://mynet.com/avalonia"
+            xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+            xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+            xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+            x:DataType="vm:ContentPagePageViewModel"
+            ClipToBounds="False"
+            x:Name="Root"
+            Theme="{StaticResource {x:Type ContentPage}}"
+            Header="{my:Translate Title}"
+            my:IconAssist.Icon="{Binding Icon}"
+            mc:Ignorable="d">
+
+    <v:ShowcaseView ShowContent="False" ShowIcon="False" ShowAppearance="False" ShowPreviewCode="False" ShowThemes="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <NavigationPage behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+    </v:ShowcaseView>
+
+</ContentPage>
+

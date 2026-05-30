@@ -1,0 +1,307 @@
+<UserControl x:Class="MyNet.Avalonia.Showcase.Views.Samples.FormContent"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:samples="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Samples"
+             d:DesignHeight="1200"
+             d:DesignWidth="1000"
+             x:DataType="samples:FormViewModel"
+             mc:Ignorable="d"
+             ClipToBounds="False">
+    <my:Form LabelPosition="Left" LabelAlignment="Center" LabelWidth="80" HorizontalAlignment="Stretch"
+             ClipToBounds="False">
+        <my:Form.Styles>
+            <Style Selector="my|FormItemContainer, my|FormGroup">
+                <Setter Property="ClipToBounds" Value="False" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+            </Style>
+            
+            <Style Selector=":is(TemplatedControl)">
+                <Setter Property="my:ValidationAssist.Theme"
+                        Value="{StaticResource MyNet.Theme.DataValidationErrors.Icon}" />
+                <Setter Property="my:InputAssist.ShowClearButton" Value="True" />
+                
+                <Style Selector="^[Width=NaN]">
+                     <Setter Property="HorizontalAlignment" Value="Stretch" /> 
+                </Style>
+            </Style>
+        </my:Form.Styles>
+
+        <!-- ============================================ -->
+        <!-- ACCOUNT INFORMATION SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Loc AccountInformation}">
+            <!-- Username with icon -->
+            <TextBox my:FormItem.IsRequired="True"
+                     my:FormItem.Label="{my:MaterialIcon Account}"
+                     Text="{Binding Login}"
+                     PlaceholderText="{my:Loc Username}" />
+
+            <!-- Email with validation icon -->
+            <TextBox my:FormItem.IsRequired="True"
+                     my:FormItem.Label="{my:MaterialIcon Email}"
+                     Text="{Binding Email}"
+                     PlaceholderText="{my:Loc Email}" />
+
+            <!-- Password fields side by side -->
+            <Grid my:FormItem.IsRequired="True" my:FormItem.Label="{my:MaterialIcon Lock}" ColumnDefinitions="*,10,*">
+                <TextBox
+                    PasswordChar="*"
+                    my:InputAssist.ShowRevealButton="True"
+                    Text="{Binding Password}"
+                    PlaceholderText="{my:Loc Password}" />
+                <TextBox Grid.Column="2"
+                         PasswordChar="*"
+                         my:InputAssist.ShowRevealButton="True"
+                         Text="{Binding ConfirmPassword}"
+                         PlaceholderText="{my:Loc ConfirmPassword}" />
+            </Grid>
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- PERSONAL INFORMATION SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Loc PersonalInformation}">
+            <!-- Name fields in horizontal layout -->
+            <Grid my:FormItem.IsRequired="True" my:FormItem.Label="{my:MaterialIcon CardAccountDetails}"
+                  ColumnDefinitions="*,10,*">
+                <TextBox Text="{Binding FirstName}" PlaceholderText="{my:Loc FirstName}" />
+                <TextBox Grid.Column="2"
+                         Text="{Binding LastName}"
+                         PlaceholderText="{my:Loc LastName}" />
+            </Grid>
+
+            <!-- Gender with ComboBox instead -->
+            <ListBox my:FormItem.Label="{my:MaterialIcon GenderMaleFemale}"
+                     Width="205"
+                     HorizontalAlignment="Left"
+                     Classes="kind-toggle kind-gender"
+                     SelectedValue="{Binding Gender}" />
+
+            <!-- Birth Date with Calendar (without InnerLeftContent) -->
+            <my:CalendarDatePickerEx Width="205"
+                                     my:FormItem.Label="{my:MaterialIcon Calendar}"
+                                     SelectedValue="{Binding BirthDate}"
+                                     PlaceholderText="{my:Loc BirthDate}" />
+
+            <!-- Phone Number -->
+            <TextBox Width="205"
+                     my:FormItem.Label="{my:MaterialIcon PhoneClassic}"
+                     Text="{Binding PhoneNumber}"
+                     PlaceholderText="{my:Loc PhoneNumber}">
+            </TextBox>
+
+            <!-- Country -->
+            <ComboBox Width="205"
+                      my:FormItem.Label="{my:MaterialIcon Globe}"
+                      ItemsSource="{my:Countries}"
+                      PlaceholderText="{my:Loc ChooseCountry}"
+                      SelectedItem="{Binding Country}"
+                      ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}" />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- ADDRESS SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Loc Address}">
+            <!-- Full address -->
+            <TextBox my:FormItem.Label="{my:MaterialIcon MapMarker}"
+                     Text="{Binding Address}"
+                     PlaceholderText="{my:Loc Street}" />
+
+            <!-- City, Postal Code, State in a grid -->
+            <Grid my:FormItem.Label="{my:MaterialIcon City}" ColumnDefinitions="2*,80,2*"
+                  ColumnSpacing="{my:Spacing Md}">
+                <TextBox Grid.Column="0"
+                         Text="{Binding City}"
+                         PlaceholderText="{my:Loc City}" />
+                <TextBox Grid.Column="1"
+                         Text="{Binding PostalCode}"
+                         PlaceholderText="{my:Loc PostalCode}" />
+                <TextBox Grid.Column="2"
+                         Text="{Binding State}"
+                         PlaceholderText="{my:Loc State}" />
+            </Grid>
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- PROFESSIONAL INFORMATION SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Loc ProfessionalInformation}">
+            <ComboBox Width="200"
+                      my:FormItem.Label="{my:MaterialIcon AccountCircle}"
+                      ItemsSource="{Binding Roles}"
+                      PlaceholderText="{my:Loc SelectRole}"
+                      SelectedItem="{Binding SelectedRole}" />
+
+            <TextBox my:FormItem.Label="{my:MaterialIcon Domain}"
+                     Text="{Binding Company}"
+                     PlaceholderText="{my:Loc Company}" />
+
+            <TextBox my:FormItem.Label="{my:MaterialIcon Briefcase}"
+                     Text="{Binding JobTitle}"
+                     PlaceholderText="{my:Loc JobTitle}" />
+
+            <!-- Years of Experience with NumericUpDown -->
+            <NumericUpDown Width="150"
+                           my:FormItem.Label="{my:MaterialIcon CalendarAccount}"
+                           InnerRightContent="{my:Loc Years}"
+                           Maximum="50"
+                           Minimum="0"
+                           PlaceholderText="{my:Loc ExperienceYears}"
+                           Value="{Binding YearsOfExperience}" />
+
+            <!-- Salary with currency -->
+            <NumericUpDown Width="150"
+                           my:FormItem.Label="{my:MaterialIcon CurrencyUsd}"
+                           FormatString="{}{0:#,0 €}"
+                           Increment="1000"
+                           Maximum="500000"
+                           Minimum="0"
+                           PlaceholderText="{my:Loc Salary}"
+                           Value="{Binding Salary}" />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- SKILLS & LANGUAGES SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Loc SkillsLanguages}">
+            <!-- Skills with MultiComboBox -->
+            <my:MultiComboBox MaxHeight="100"
+                              my:FormItem.Label="{my:MaterialIcon LanguageCsharp}"
+                              ItemsSource="{Binding AvailableSkills}"
+                              SelectedItems="{Binding SelectedSkills}"
+                              PlaceholderText="{my:Loc Skills}" />
+
+            <!-- Languages -->
+            <my:MultiComboBox MaxHeight="100"
+                              my:FormItem.Label="{my:MaterialIcon Translate}"
+                              ItemsSource="{Binding AvailableLanguages}"
+                              SelectedItems="{Binding SelectedLanguages}"
+                              ItemTemplate="{StaticResource MyNet.DataTemplate.CultureInfo.Xs}"
+                              SelectedItemTemplate="{StaticResource MyNet.DataTemplate.CultureInfo.Xs}"
+                              PlaceholderText="{my:Loc Languages}" />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- AVAILABILITY SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Loc Availability}">
+            <!-- Working hours -->
+            <Grid my:FormItem.Label="{my:MaterialIcon ClipboardClock}" ColumnDefinitions="*,Auto,*" ColumnSpacing="{my:Spacing Md}">
+                <TimePicker SelectedTime="{Binding PreferredStartTime}"
+                                 my:InputAssist.PlaceholderText="{my:Loc StartTime}" />
+                <TextBlock Grid.Column="1" Text="{my:Loc To}" />
+                <TimePicker Grid.Column="2" SelectedTime="{Binding PreferredEndTime}" my:InputAssist.PlaceholderText="{my:Loc EndTime}" />
+            </Grid>
+            
+            <Slider Maximum="100"
+                    Minimum="0"
+                    TickFrequency="1"
+                    my:SliderAssist.ShowValueOnMouseOver="True"
+                    IsSnapToTickEnabled="True"
+                    my:FormItem.Label="{my:MaterialIcon Percent}"
+                    Value="{Binding AvailabilityPercentage}" />
+
+            <!-- Days of week availability -->
+            <StackPanel my:FormItem.Label="{my:MaterialIcon CalendarToday}" Spacing="8">
+                <CheckBox Content="{my:Loc Monday}" IsChecked="{Binding MondayAvailable}" />
+                <CheckBox Content="{my:Loc Tuesday}" IsChecked="{Binding TuesdayAvailable}" />
+                <CheckBox Content="{my:Loc Wednesday}" IsChecked="{Binding WednesdayAvailable}" />
+                <CheckBox Content="{my:Loc Thursday}" IsChecked="{Binding ThursdayAvailable}" />
+                <CheckBox Content="{my:Loc Friday}" IsChecked="{Binding FridayAvailable}" />
+            </StackPanel>
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- ADDITIONAL DETAILS SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Loc AdditionalDetails}">
+            <!-- Bio with multiline TextBox -->
+            <TextBox Height="120"
+                     my:FormItem.Label="{my:MaterialIcon Information}"
+                     AcceptsReturn="True"
+                     VerticalContentAlignment="Top"
+                     Text="{Binding Bio}"
+                     TextWrapping="Wrap"
+                     PlaceholderText="{my:Loc Bio}" />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- PREFERENCES & SETTINGS SECTION -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Loc PreferencesSettings}" LabelWidth="*" LabelAlignment="Left">
+            <!-- Toggle switches for preferences -->
+            <ToggleSwitch my:FormItem.Label="{my:Loc EnableNotifications}"
+                          HorizontalAlignment="Right"
+                          IsChecked="{Binding EnableNotifications}" />
+
+            <ToggleSwitch my:FormItem.Label="{my:Loc EnableTwoFactor}"
+                          HorizontalAlignment="Right"
+                          IsChecked="{Binding EnableTwoFactor}" />
+
+            <ToggleSwitch my:FormItem.Label="{my:Loc PublicProfile}"
+                          HorizontalAlignment="Right"
+                          IsChecked="{Binding MakeProfilePublic}" />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
+        <!-- INFO SECTION -->
+        <!-- ============================================ -->
+        <my:Banner my:FormItem.NoLabel="True"
+                my:ThemeAssist.Role="Information"
+                Header="{my:Loc ImportantInformation}"
+                my:IconAssist.Icon="📌"
+                CanClose="False">
+            <StackPanel Spacing="10">
+                <TextBlock TextWrapping="Wrap">
+                    <Run Text="• Fields marked with" />
+                    <Run FontWeight="Bold" Foreground="{my:Theme Validation.Error}" Text="*" />
+                    <Run Text="are required and must be filled before submission" />
+                </TextBlock>
+                <TextBlock
+                    Text="• Your password must be at least 8 characters long and contain uppercase, lowercase, numbers, and special characters"
+                    TextWrapping="Wrap" />
+                <TextBlock Text="• Email address will be used for account verification and password recovery"
+                           TextWrapping="Wrap" />
+                <TextBlock
+                    Text="• All personal information is encrypted and stored securely according to GDPR regulations"
+                    TextWrapping="Wrap" />
+                <TextBlock Text="• You can update your information at any time from your profile settings"
+                           TextWrapping="Wrap" />
+            </StackPanel>
+        </my:Banner>
+
+        <!-- Checkboxes -->
+        <CheckBox my:FormItem.IsRequired="True"
+                  my:FormItem.Label="{my:Loc TermAndConditions}" 
+                  my:FormItem.LabelWidth="*"
+                  my:FormItem.LabelAlignment="Left"
+                  IsChecked="{Binding AcceptTerms}" />
+
+        <CheckBox my:FormItem.Label="{my:Loc ReceiveNewsletter}"
+                  my:FormItem.LabelWidth="*"
+                  my:FormItem.LabelAlignment="Left"
+                  IsChecked="{Binding ReceiveNewsletter}" />
+        
+        <Separator my:FormItem.NoLabel="True" />
+
+        <!-- ============================================ -->
+        <!-- SUBMIT BUTTON SECTION -->
+        <!-- ============================================ -->
+        <StackPanel HorizontalAlignment="Right"
+                    my:FormItem.NoLabel="True"
+                    Orientation="Horizontal"
+                    Spacing="10">
+            <Button Content="{my:Loc Reset}"
+                    my:IconAssist.Icon="{my:MaterialIcon Restore}"
+                    Classes="variant-outlined" />
+            <Button Content="{my:Loc Validate}"
+                    my:IconAssist.Icon="{my:MaterialIcon Check}"
+                    my:ThemeAssist.Role="Primary" />
+        </StackPanel>
+
+    </my:Form>
+</UserControl>
