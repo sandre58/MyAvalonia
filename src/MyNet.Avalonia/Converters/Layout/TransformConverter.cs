@@ -11,8 +11,18 @@ using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;
+#pragma warning restore IDE0130
 
+/// <summary>
+/// Builds Avalonia <see cref="Transform"/> objects from numeric binding values.
+/// </summary>
+/// <remarks>
+/// Single-value instances create <see cref="ScaleTransform"/> or <see cref="TranslateTransform"/>.
+/// <see cref="Group"/> (multi-binding) combines scale and translate from up to four double values:
+/// scaleX, scaleY, translateX, translateY (missing values are skipped).
+/// </remarks>
 public sealed class TransformConverter : IValueConverter, IMultiValueConverter
 {
     private enum Mode
@@ -30,24 +40,34 @@ public sealed class TransformConverter : IValueConverter, IMultiValueConverter
         TranslateY
     }
 
+    /// <summary>Scales uniformly on X and Y from a single double.</summary>
     public static readonly TransformConverter Scale = new(Mode.Scale);
 
+    /// <summary>Scales on the X axis only.</summary>
     public static readonly TransformConverter ScaleX = new(Mode.ScaleX);
 
+    /// <summary>Scales on the Y axis only.</summary>
     public static readonly TransformConverter ScaleY = new(Mode.ScaleY);
 
+    /// <summary>Translates uniformly on X and Y from a single double.</summary>
     public static readonly TransformConverter Translate = new(Mode.Translate);
 
+    /// <summary>Translates on the X axis only.</summary>
     public static readonly TransformConverter TranslateX = new(Mode.TranslateX);
 
+    /// <summary>Translates on the Y axis only.</summary>
     public static readonly TransformConverter TranslateY = new(Mode.TranslateY);
 
+    /// <summary>
+    /// Gets a multi-value converter that builds a <see cref="TransformGroup"/> from scale and translate components.
+    /// </summary>
     public static readonly TransformConverter Group = new();
 
     private readonly Mode? _mode;
 
     private TransformConverter(Mode? transformType = null) => _mode = transformType;
 
+    /// <inheritdoc/>
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value is double val ? _mode switch
     {
         Mode.Scale => new ScaleTransform { ScaleX = val, ScaleY = val },
@@ -59,6 +79,7 @@ public sealed class TransformConverter : IValueConverter, IMultiValueConverter
         _ => AvaloniaProperty.UnsetValue
     } : AvaloniaProperty.UnsetValue;
 
+    /// <inheritdoc/>
     public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
         var scaleX = getValue(values, 0);
@@ -92,5 +113,6 @@ public sealed class TransformConverter : IValueConverter, IMultiValueConverter
         static double? getValue(IList<object?> values, int index) => values.Count > index && values[index] is double val ? val : null;
     }
 
+    /// <inheritdoc/>
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new InvalidOperationException();
 }

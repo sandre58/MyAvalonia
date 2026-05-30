@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <!-- EMBEDDED COLORSLIDER THUMB THEME                          -->
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <ControlTheme x:Key="MyNet.Theme.Thumb.Embedded.ColorSlider" TargetType="{x:Type Thumb}" BasedOn="{StaticResource MyNet.Theme.Thumb.Embedded.Slider}">
         <Setter Property="BorderBrush" Value="White" />
         <Setter Property="Background" Value="Transparent" />
@@ -13,9 +13,9 @@
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth2" />
     </ControlTheme>
 
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <!-- DEFAULT COLORSLIDER THEME                                 -->
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <ControlTheme x:Key="{x:Type ColorSlider}" TargetType="ColorSlider" BasedOn="{StaticResource {x:Type Slider}}">
         <Setter Property="my:SliderAssist.ThumbTheme" Value="{StaticResource MyNet.Theme.Thumb.Embedded.ColorSlider}" />
         <Setter Property="my:SliderAssist.ShowValueOnMouseOver" Value="False" />
@@ -34,19 +34,19 @@
                             <Rectangle Height="{TemplateBinding my:SliderAssist.BarSize}"
                                        VerticalAlignment="Center"
                                        Fill="{my:Theme Transparency.Small}"
-                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}"
-                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}"
+                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}" />
                             <Rectangle Height="{TemplateBinding my:SliderAssist.BarSize}"
                                        VerticalAlignment="Center"
                                        Fill="{TemplateBinding Background}"
-                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}"
-                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}"
+                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}" />
                             <Rectangle Height="{TemplateBinding my:SliderAssist.BarSize}"
                                        VerticalAlignment="Center"
                                        Stroke="{TemplateBinding BorderBrush}"
-                                       StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
-                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}"
-                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+                                       StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}"
+                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}"
+                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}" />
                             <Track Name="PART_Track"
                                    IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
                                    Maximum="{TemplateBinding Maximum}"
@@ -56,14 +56,14 @@
                                 <Track.DecreaseButton>
                                     <RepeatButton Name="PART_DecreaseButton"
                                                   Background="Transparent"
-                                                  CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Left}}"
+                                                  CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Left}}"
                                                   Focusable="False"
                                                   Theme="{StaticResource MyNet.Theme.Button.Embedded.Slider.Horizontal}" />
                                 </Track.DecreaseButton>
                                 <Track.IncreaseButton>
                                     <RepeatButton Name="PART_IncreaseButton"
                                                   Background="Transparent"
-                                                  CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Right}}"
+                                                  CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Right}}"
                                                   Focusable="False"
                                                   Theme="{StaticResource MyNet.Theme.Button.Embedded.Slider.Horizontal}" />
                                 </Track.IncreaseButton>
@@ -78,10 +78,10 @@
             </Setter>
 
             <Style Selector="^[IsDirectionReversed=True] /template/ RepeatButton#PART_DecreaseButton">
-                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Right}}" />
+                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Right}}" />
             </Style>
             <Style Selector="^[IsDirectionReversed=True] /template/ RepeatButton#PART_IncreaseButton">
-                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Left}}" />
+                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Left}}" />
             </Style>
         </Style>
         <Style Selector="^:vertical">
@@ -92,19 +92,19 @@
                             <Rectangle Width="{TemplateBinding my:SliderAssist.BarSize}"
                                        HorizontalAlignment="Center"
                                        Fill="{my:Theme Transparency.Small}"
-                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}"
-                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}"
+                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}" />
                             <Rectangle Width="{TemplateBinding my:SliderAssist.BarSize}"
                                        HorizontalAlignment="Center"
                                        Fill="{TemplateBinding Background}"
-                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}"
-                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}"
+                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}" />
                             <Rectangle Width="{TemplateBinding my:SliderAssist.BarSize}"
                                        HorizontalAlignment="Center"
                                        Stroke="{TemplateBinding BorderBrush}"
-                                       StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
-                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}"
-                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}" />
+                                       StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}"
+                                       RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}"
+                                       RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}" />
                             <Track Name="PART_Track"
                                    IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
                                    Maximum="{TemplateBinding Maximum}"
@@ -114,14 +114,14 @@
                                 <Track.DecreaseButton>
                                     <RepeatButton Name="PART_DecreaseButton"
                                                   Background="Transparent"
-                                                  CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Bottom}}"
+                                                  CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Bottom}}"
                                                   Focusable="False"
                                                   Theme="{StaticResource MyNet.Theme.Button.Embedded.Slider.Vertical}" />
                                 </Track.DecreaseButton>
                                 <Track.IncreaseButton>
                                     <RepeatButton Name="PART_IncreaseButton"
                                                   Background="Transparent"
-                                                  CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Top}}"
+                                                  CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Top}}"
                                                   Focusable="False"
                                                   Theme="{StaticResource MyNet.Theme.Button.Embedded.Slider.Vertical}" />
                                 </Track.IncreaseButton>
@@ -136,10 +136,10 @@
             </Setter>
 
             <Style Selector="^[IsDirectionReversed=True] /template/ RepeatButton#PART_DecreaseButton">
-                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Top}}" />
+                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Top}}" />
             </Style>
             <Style Selector="^[IsDirectionReversed=True] /template/ RepeatButton#PART_IncreaseButton">
-                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Bottom}}" />
+                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Bottom}}" />
             </Style>
         </Style>
 

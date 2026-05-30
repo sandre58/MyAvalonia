@@ -72,7 +72,7 @@
                                 Command="{TemplateBinding CloseCommand}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                 Content="{my:MaterialIcon Close}"
-                                IsVisible="{TemplateBinding CloseCommand, Converter={x:Static my:NullConverter.IsNotNull}}" />
+                                IsVisible="{TemplateBinding CloseCommand, Converter={x:Static my:NullConverter.IsPresent}}" />
                     </Grid>
                 </Border>
             </ControlTemplate>

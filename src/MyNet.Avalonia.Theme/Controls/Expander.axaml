@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <!-- DEFAULT EXPANDER THEME                                    -->
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <ControlTheme x:Key="{x:Type Expander}" TargetType="Expander"
                   BasedOn="{StaticResource {x:Type HeaderedContentControl}}">
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
@@ -39,7 +39,7 @@
                                             BorderBrush="{TemplateBinding my:HeaderAssist.BorderBrush}"
                                             BorderThickness="{TemplateBinding my:HeaderAssist.BorderThickness}"
                                             CornerRadius="{TemplateBinding my:HeaderAssist.CornerRadius}"
-                                            IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                            IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
                                             Opacity="{TemplateBinding my:HeaderAssist.Opacity}">
 
                                         <Grid ColumnDefinitions="*, Auto">
@@ -208,9 +208,9 @@
         </Style>
     </ControlTheme>
 
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <!-- BUTTON EXPANDER THEME                                     -->
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <ControlTheme x:Key="MyNet.Theme.Expander.Button" TargetType="Expander">
         <Setter Property="my:ThemeAssist.Category" Value="Surface" />
         <Setter Property="my:HeaderAssist.HorizontalAlignment" Value="Left" />
@@ -239,7 +239,7 @@
                                       my:ClassesAssist.Classes="{TemplateBinding}"
                                       my:DisableAssist.IsDisablable="False"
                                       IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}"
-                                      IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                      IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
                                       Theme="{TemplateBinding my:ExpanderAssist.ButtonTheme}"
                                       my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}">
 

@@ -12,7 +12,9 @@ using Avalonia.Data.Converters;
 using MyNet.Collections;
 using MyNet.Text.TextCasing;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;
+#pragma warning restore IDE0130
 
 /// <summary>
 /// Abstract base class for converters that produce localized, formatted, pluralized, and cased strings for UI display.

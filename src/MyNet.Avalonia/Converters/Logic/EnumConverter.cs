@@ -11,17 +11,31 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Data.Converters;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;
+#pragma warning restore IDE0130
 
+/// <summary>
+/// Compares an enum (or numeric) binding value to a <see cref="ConverterParameter"/> and returns a boolean.
+/// </summary>
+/// <remarks>
+/// <see cref="Any"/> returns <c>true</c> when the value matches the parameter (or any value in an enumerable parameter).
+/// <see cref="NotAny"/> inverts the result. Supports <see cref="ConvertBack"/> for two-way enum pickers.
+/// </remarks>
+/// <example>
+/// <code>
+/// &lt;Border IsVisible="{Binding Role, Converter={x:Static my:EnumConverter.NotAny}, ConverterParameter={x:Static palettes:ThemeRole.Default}}" /&gt;
+/// </code>
+/// </example>
 public sealed class EnumConverter : IValueConverter
 {
     /// <summary>
-    /// Return a unique instance of <see cref="EnumConverter"/>.
+    /// Gets a converter that returns <c>true</c> when the value matches the parameter.
     /// </summary>
     public static readonly EnumConverter Any = new(true);
 
     /// <summary>
-    /// Return a unique instance of <see cref="EnumConverter"/>.
+    /// Gets a converter that returns <c>true</c> when the value does not match the parameter.
     /// </summary>
     public static readonly EnumConverter NotAny = new(false);
 
@@ -29,6 +43,7 @@ public sealed class EnumConverter : IValueConverter
 
     private readonly bool _any;
 
+    /// <inheritdoc/>
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (parameter == null || value == null)
@@ -44,6 +59,7 @@ public sealed class EnumConverter : IValueConverter
         return _any ? val : !val;
     }
 
+    /// <inheritdoc/>
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         var val = value != null && (parameter == null || !(bool)value)

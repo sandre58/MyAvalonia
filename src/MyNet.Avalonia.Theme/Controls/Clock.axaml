@@ -3,9 +3,9 @@
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals">
 
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <!-- DEFAULT CLOCK THEME                                       -->
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <ControlTheme x:Key="{x:Type my:Clock}" TargetType="my:Clock">
         <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
@@ -63,7 +63,7 @@
 
                     <Ellipse Fill="{TemplateBinding Background}"
                              Stroke="{TemplateBinding BorderBrush}"
-                             StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
+                             StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}" />
                     <Grid Margin="{TemplateBinding Padding}">
                         <my:ClockTicks Margin="{TemplateBinding Padding}"
                                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"

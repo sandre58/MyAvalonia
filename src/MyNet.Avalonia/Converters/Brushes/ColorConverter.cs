@@ -10,8 +10,18 @@ using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;
+#pragma warning restore IDE0130
 
+/// <summary>
+/// Converts color sources to a <see cref="Color"/> with optional opacity, contrast, lighten, or darken adjustments.
+/// </summary>
+/// <remarks>
+/// Accepts <see cref="SolidColorBrush"/>, <see cref="Color"/>, or color strings (hex, name).
+/// Set <see cref="Opacity"/>, <see cref="Contrast"/>, <see cref="Darken"/>, and <see cref="Lighten"/> on the instance
+/// or use <see cref="BrushConverter"/> when the target property expects an <see cref="IBrush"/>.
+/// </remarks>
 public class ColorConverter : IValueConverter
 {
     /// <summary>
@@ -34,6 +44,7 @@ public class ColorConverter : IValueConverter
     /// </summary>
     public double? Lighten { get; set; }
 
+    /// <inheritdoc/>
     public virtual object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not SolidColorBrush and not Color and not string) return AvaloniaProperty.UnsetValue;
@@ -50,5 +61,6 @@ public class ColorConverter : IValueConverter
         return color.Apply(new(opacity, Contrast, Darken, Lighten));
     }
 
+    /// <inheritdoc/>
     public virtual object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => AvaloniaProperty.UnsetValue;
 }

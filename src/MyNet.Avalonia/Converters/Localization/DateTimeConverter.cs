@@ -14,7 +14,9 @@ using MyNet.Globalization.Facade;
 using MyNet.Primitives;
 using MyNet.Text.TextCasing;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;
+#pragma warning restore IDE0130
 
 /// <summary>
 /// Specifies the kind of date/time conversion to apply.

@@ -11,15 +11,17 @@ using Avalonia;
 using Avalonia.Data.Converters;
 using MyNet.Primitives;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;
+#pragma warning restore IDE0130
 
 /// <summary>
-/// MathConverter provides a value converter which can be used for math operations.
-/// It can be used for normal binding or multi binding as well.
-/// If it is used for normal binding the given parameter will be used as operands with the selected operation.
-/// If it is used for multi binding then the first and second binding will be used as operands with the selected operation.
-/// This class cannot be inherited.
+/// Compares numeric binding values and returns a boolean result.
 /// </summary>
+/// <remarks>
+/// Supports single-value binding with a converter parameter as the second operand,
+/// or multi-binding where the first two values are compared.
+/// </remarks>
 public sealed class MathComparisonConverter : IValueConverter, IMultiValueConverter
 {
     private enum MathComparisonForConverter
@@ -33,16 +35,22 @@ public sealed class MathComparisonConverter : IValueConverter, IMultiValueConver
 
     private MathComparisonConverter(MathComparisonForConverter operation) => Comparison = operation;
 
+    /// <summary>Gets a converter that returns <c>true</c> when operands are numerically equal.</summary>
     public static readonly MathComparisonConverter IsEqualsTo = new(MathComparisonForConverter.IsEqualsTo);
 
+    /// <summary>Gets a converter that returns <c>true</c> when the first operand is greater than the second.</summary>
     public static readonly MathComparisonConverter IsGreaterThan = new(MathComparisonForConverter.IsGreaterThan);
 
+    /// <summary>Gets a converter that returns <c>true</c> when the first operand is less than the second.</summary>
     public static readonly MathComparisonConverter IsLessThan = new(MathComparisonForConverter.IsLessThan);
 
+    /// <inheritdoc/>
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => DoConvert(value, parameter, Comparison);
 
+    /// <inheritdoc/>
     public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture) => values.Count < 2 ? AvaloniaProperty.UnsetValue : DoConvert(values[0], values[1], Comparison);
 
+    /// <inheritdoc/>
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => AvaloniaProperty.UnsetValue;
 
     private static object DoConvert(object? firstValue, object? secondValue, MathComparisonForConverter operation)

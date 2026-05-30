@@ -5,9 +5,9 @@
 
     <sys:Double x:Key="MyNet.Double.Zero">1.0</sys:Double>
 
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <!-- DEFAULT TEXTFIELD THEME                                   -->
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <ControlTheme x:Key="{x:Type my:TextField}" TargetType="my:TextField">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -67,10 +67,10 @@
 
         <!-- Default -->
         <Style Selector="^ /template/ ContentPresenter#PART_InnerRight">
-            <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerRightContent, Converter={x:Static my:NullConverter.IsNotNull}}" />
+            <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerRightContent, Converter={x:Static my:NullConverter.IsPresent}}" />
         </Style>
         <Style Selector="^ /template/ ContentPresenter#PART_InnerLeft">
-            <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerLeftContent, Converter={x:Static my:NullConverter.IsNotNull}}" />
+            <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerLeftContent, Converter={x:Static my:NullConverter.IsPresent}}" />
         </Style>
 
         <!-- Use Floating PlaceholderText -->
@@ -105,11 +105,11 @@
                 <Setter Property="CurrentFloatingOffset" Value="0" />
 
                 <Style Selector="^ /template/ ContentPresenter#PART_InnerRight:not(:empty)">
-                    <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlaceholderText, Converter={x:Static my:NullConverter.IsNull}}" />
+                    <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlaceholderText, Converter={x:Static my:NullConverter.IsEmpty}}" />
                 </Style>
 
                 <Style Selector="^ /template/ ContentPresenter#PART_InnerLeft:not(:empty)">
-                    <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlaceholderText, Converter={x:Static my:NullConverter.IsNull}}" />
+                    <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlaceholderText, Converter={x:Static my:NullConverter.IsEmpty}}" />
                 </Style>
             </Style>
 
@@ -149,11 +149,11 @@
             <!-- Empty -->
             <Style Selector="^:empty">
                 <Style Selector="^ /template/ ContentPresenter#PART_InnerRight:not(:empty)">
-                    <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlaceholderText, Converter={x:Static my:NullConverter.IsNull}}" />
+                    <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlaceholderText, Converter={x:Static my:NullConverter.IsEmpty}}" />
                 </Style>
 
                 <Style Selector="^ /template/ ContentPresenter#PART_InnerLeft:not(:empty)">
-                    <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlaceholderText, Converter={x:Static my:NullConverter.IsNull}}" />
+                    <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlaceholderText, Converter={x:Static my:NullConverter.IsEmpty}}" />
                 </Style>
 
                 <Style Selector="^:active">
@@ -162,18 +162,18 @@
                         <Setter Property="IsVisible">
                             <Setter.Value>
                                 <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                    <Binding Converter="{x:Static my:NullConverter.IsNull}" Path="InnerRightContent" RelativeSource="{RelativeSource TemplatedParent}" />
-                                    <Binding Converter="{x:Static my:NullConverter.IsNull}" Path="InnerLeftContent" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Converter="{x:Static my:NullConverter.IsEmpty}" Path="InnerRightContent" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Converter="{x:Static my:NullConverter.IsEmpty}" Path="InnerLeftContent" RelativeSource="{RelativeSource TemplatedParent}" />
                                 </MultiBinding>
                             </Setter.Value>
                         </Setter>
                     </Style>
 
                     <Style Selector="^ /template/ ContentPresenter#PART_InnerRight">
-                        <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerRightContent, Converter={x:Static my:NullConverter.IsNotNull}}" />
+                        <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerRightContent, Converter={x:Static my:NullConverter.IsPresent}}" />
                     </Style>
                     <Style Selector="^ /template/ ContentPresenter#PART_InnerLeft">
-                        <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerLeftContent, Converter={x:Static my:NullConverter.IsNotNull}}" />
+                        <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerLeftContent, Converter={x:Static my:NullConverter.IsPresent}}" />
                     </Style>
                 </Style>
             </Style>

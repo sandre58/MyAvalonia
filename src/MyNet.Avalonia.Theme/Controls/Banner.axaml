@@ -31,7 +31,7 @@
                                         BorderBrush="{TemplateBinding my:HeaderAssist.BorderBrush}"
                                         BorderThickness="{TemplateBinding my:HeaderAssist.BorderThickness}"
                                         CornerRadius="{TemplateBinding my:HeaderAssist.CornerRadius}"
-                                        IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                        IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
                                         Opacity="{TemplateBinding my:HeaderAssist.Opacity}">
                                     <my:IconContentControl Name="IconContent"
                                                            Icon="{TemplateBinding (my:IconAssist.Icon)}"
@@ -158,9 +158,9 @@
             <Setter Property="ClipToBounds" Value="False" />
         </Style>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <!-- SIZES                                                     -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
 
         <Style Selector="^.size-sm">
             <Setter Property="Padding" Value="{my:Thickness Sm}" />

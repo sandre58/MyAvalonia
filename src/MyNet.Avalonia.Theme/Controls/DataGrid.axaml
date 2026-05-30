@@ -201,7 +201,7 @@
                             Theme="{StaticResource MyNet.Theme.Border.State}" />
 
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                        <my:Ripple Name="PART_Ripple" IsActive="{TemplateBinding Tag, Converter={x:Static my:NotNullableConverter.Default}}">
+                        <my:Ripple Name="PART_Ripple" IsActive="{TemplateBinding Tag, Converter={x:Static my:NullToDefaultConverter.Default}}">
                             <Grid Name="PART_ColumnHeaderRoot" ColumnDefinitions="*,Auto">
                                 <Grid Margin="{TemplateBinding Padding}"
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -240,10 +240,10 @@
         </Style>
 
         <Style Selector="^:nth-child(1)">
-            <Setter Property="CornerRadius" Value="{Binding $parent[DataGrid].(my:HeaderAssist.CornerRadius), Converter={x:Static my:CornerRadiusConverter.Left}}" />
+            <Setter Property="CornerRadius" Value="{Binding $parent[DataGrid].(my:HeaderAssist.CornerRadius), Converter={x:Static my:CornerRadiusConverter.Adjust.Left}}" />
         </Style>
         <Style Selector="^:nth-last-child(1)">
-            <Setter Property="CornerRadius" Value="{Binding $parent[DataGrid].(my:HeaderAssist.CornerRadius), Converter={x:Static my:CornerRadiusConverter.Right}}" />
+            <Setter Property="CornerRadius" Value="{Binding $parent[DataGrid].(my:HeaderAssist.CornerRadius), Converter={x:Static my:CornerRadiusConverter.Adjust.Right}}" />
         </Style>
 
         <!-- Sort -->

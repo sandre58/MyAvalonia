@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia">
 
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <!-- DEFAULT TOGGLESWITCH THEME                                -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <ControlTheme x:Key="{x:Type ToggleSwitch}" TargetType="ToggleSwitch">
             <Setter Property="my:ThemeAssist.Category" Value="Selection" />
             <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
@@ -194,9 +194,9 @@
             </Style>
         </ControlTheme>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <!-- INNER TOGGLESWITCH THEME                                  -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <ControlTheme x:Key="MyNet.Theme.ToggleSwitch.Inner" TargetType="ToggleSwitch" BasedOn="{StaticResource {x:Type ToggleSwitch}}">
             <Setter Property="Template">
                 <ControlTemplate TargetType="ToggleSwitch">
@@ -282,9 +282,9 @@
             </Style>
         </ControlTheme>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <!-- ALTERNATE TOGGLESWITCH THEME                              -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <ControlTheme x:Key="MyNet.Theme.ToggleSwitch.Alternate" TargetType="ToggleSwitch" BasedOn="{StaticResource {x:Type ToggleSwitch}}">
             <Setter Property="ClipToBounds" Value="False" />
 
@@ -412,9 +412,9 @@
             </Style>
         </ControlTheme>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <!-- BUTTON TOGGLESWITCH THEME                                 -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <ControlTheme x:Key="MyNet.Theme.ToggleSwitch.Button" TargetType="ToggleSwitch" BasedOn="{StaticResource {x:Type ToggleButton}}">
             <Setter Property="Template">
                 <ControlTemplate>
@@ -526,9 +526,9 @@
             </Style>
         </ControlTheme>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <!-- BUTTON ROUNDED TOGGLESWITCH THEME                         -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <ControlTheme x:Key="MyNet.Theme.ToggleSwitch.Button.Rounded" TargetType="ToggleSwitch" BasedOn="{StaticResource MyNet.Theme.ToggleButton.Rounded}">
             <Setter Property="Template">
                 <ControlTemplate>
@@ -545,18 +545,18 @@
                         <Ellipse Name="PART_MainEllipse"
                                  Fill="{TemplateBinding Background}"
                                  Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}" />
 
                         <Ellipse Name="PART_ActiveEllipse"
                                  Fill="{TemplateBinding my:InteractionAssist.ActiveBackground}"
                                  Stroke="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}"
                                  Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
 
                         <Ellipse Name="PART_HoverEllipse"
                                  Fill="{TemplateBinding my:InteractionAssist.HoverBackground}"
                                  Stroke="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}"
                                  Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
 
                         <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Round}">
@@ -644,9 +644,9 @@
             </Style>
         </ControlTheme>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <!-- BUTTON ICON TOGGLESWITCH THEME                            -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <ControlTheme x:Key="MyNet.Theme.ToggleSwitch.Button.Icon" TargetType="ToggleSwitch" BasedOn="{StaticResource MyNet.Theme.ToggleButton.Icon}">
             <Setter Property="Template">
                 <ControlTemplate TargetType="ToggleSwitch">

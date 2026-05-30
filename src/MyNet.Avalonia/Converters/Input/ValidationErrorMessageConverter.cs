@@ -13,12 +13,26 @@ using MyNet.Globalization.Facade;
 using MyNet.Primitives;
 using MyNet.Primitives.Exceptions;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;
+#pragma warning restore IDE0130
 
+/// <summary>
+/// Converts a collection of validation errors into localized display messages.
+/// </summary>
+/// <remarks>
+/// Handles <see cref="TranslatableException"/> (resource key + parameters), standard <see cref="Exception"/>,
+/// and falls back to string translation for other error objects.
+/// Returns a <see cref="List{T}"/> of strings suitable for <see cref="Avalonia.Controls.ContentControl.Content"/>.
+/// </remarks>
 public class ValidationErrorMessageConverter : IValueConverter
 {
+    /// <summary>
+    /// Gets the default singleton instance.
+    /// </summary>
     public static readonly ValidationErrorMessageConverter Default = new();
 
+    /// <inheritdoc/>
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not IEnumerable errors)
@@ -45,6 +59,6 @@ public class ValidationErrorMessageConverter : IValueConverter
         return messages;
     }
 
-    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-        => throw new NotSupportedException();
+    /// <inheritdoc/>
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotSupportedException();
 }

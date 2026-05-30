@@ -99,7 +99,7 @@
                                     <!-- Icon -->
                                     <ContentControl x:Name="PART_Icon"
                                                     Grid.Column="0"
-                                                    Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
+                                                    Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:ThicknessConverter.FromDouble.Right}}"
                                                     VerticalAlignment="Stretch"
                                                     my:IconAssist.Role="Label"
                                                     Content="{TemplateBinding (my:IconAssist.Icon)}"
@@ -187,7 +187,7 @@
                                        FontStyle="{TemplateBinding (my:InputAssist.UnderFontStyle)}"
                                        FontWeight="{TemplateBinding (my:InputAssist.UnderFontWeight)}"
                                        Foreground="{TemplateBinding (my:InputAssist.UnderForeground)}"
-                                       IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                       IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
                                        Text="{TemplateBinding (my:InputAssist.UnderText)}" />
                         </Border>
 
@@ -238,7 +238,7 @@
         </Style>
 
         <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
-            <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Horizontal}}" />
+            <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.FromDouble.Horizontal}}" />
         </Style>
 
         <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
@@ -247,7 +247,7 @@
 
         <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
             <Style Selector="^ /template/ my|TextField#PART_TextField">
-                <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:DoubleToThicknessConverter.Top}}" />
+                <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.FromDouble.Top}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
                 <Setter Property="Padding" Value="{my:Thickness Sm}" />
@@ -368,7 +368,7 @@
                                 <!-- Icon -->
                                 <ContentControl x:Name="PART_Icon"
                                                 Grid.Column="0"
-                                                Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:DoubleToThicknessConverter.Right}}"
+                                                Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:ThicknessConverter.FromDouble.Right}}"
                                                 VerticalAlignment="Stretch"
                                                 my:IconAssist.Role="Label"
                                                 Content="{TemplateBinding (my:IconAssist.Icon)}"
@@ -471,7 +471,7 @@
                                        FontStyle="{TemplateBinding (my:InputAssist.UnderFontStyle)}"
                                        FontWeight="{TemplateBinding (my:InputAssist.UnderFontWeight)}"
                                        Foreground="{TemplateBinding (my:InputAssist.UnderForeground)}"
-                                       IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                       IsVisible="{Binding (my:InputAssist.UnderText), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
                                        Text="{TemplateBinding (my:InputAssist.UnderText)}" />
                         </Border>
 

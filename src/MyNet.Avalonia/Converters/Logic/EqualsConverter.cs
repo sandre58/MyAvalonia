@@ -6,30 +6,41 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia.Data.Converters;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;
+#pragma warning restore IDE0130
 
+/// <summary>
+/// Compares two or more bound values for equality and returns a boolean result.
+/// </summary>
+/// <remarks>
+/// Single-value mode compares <paramref name="value"/> to <paramref name="parameter"/>.
+/// Multi-binding mode returns <c>true</c> when all values are equal (or all different for <see cref="IsNotEquals"/>).
+/// </remarks>
+/// <example>
+/// <code>
+/// &lt;Border IsVisible="{Binding Status, Converter={x:Static my:EqualsConverter.IsEquals}, ConverterParameter=Active}" /&gt;
+/// </code>
+/// </example>
 public class EqualsConverter(bool isEquals = true) : IMultiValueConverter, IValueConverter
 {
+    /// <summary>
+    /// Gets a converter that returns <c>true</c> when all compared values are equal.
+    /// </summary>
     public static readonly EqualsConverter IsEquals = new();
-    public static readonly EqualsConverter IsNotEquals = new(false);
 
     /// <summary>
-    /// Converts a value.
+    /// Gets a converter that returns <c>true</c> when compared values differ.
     /// </summary>
-    /// <param name="value">The value produced by the binding source.</param>
-    /// <param name="targetType">The type of the binding target property.</param>
-    /// <param name="parameter">The converter parameter to use.</param>
-    /// <param name="culture">The culture to use in the converter.</param>
-    /// <returns>
-    /// A converted value. If the method returns null, the valid null value is used.
-    /// </returns>
-    [SuppressMessage("Maintainability", "CA1508", Justification = "False positive")]
+    public static readonly EqualsConverter IsNotEquals = new(false);
+
+    /// <inheritdoc/>
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value, parameter], targetType, parameter, culture);
 
+    /// <inheritdoc/>
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
         if (values.Count <= 1)
@@ -51,15 +62,6 @@ public class EqualsConverter(bool isEquals = true) : IMultiValueConverter, IValu
         return isEquals;
     }
 
-    /// <summary>
-    /// Converts a value.
-    /// </summary>
-    /// <param name="value">The value that is produced by the binding target.</param>
-    /// <param name="targetType">The type to convert to.</param>
-    /// <param name="parameter">The converter parameter to use.</param>
-    /// <param name="culture">The culture to use in the converter.</param>
-    /// <returns>
-    /// A converted value. If the method returns null, the valid null value is used.
-    /// </returns>
+    /// <inheritdoc/>
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotSupportedException();
 }

@@ -10,13 +10,19 @@ using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
+using MyNet.Avalonia.Converters.Brushes;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;
+#pragma warning restore IDE0130
 
 /// <summary>
 /// Provides value conversion logic for creating a tiled dotted grid <see cref="DrawingBrush"/> from a base brush or color in Avalonia UI.
 /// Supports customizable tile size, dot radius and opacity.
 /// </summary>
+/// <remarks>
+/// Pass a <see cref="DottedGridParameters"/> instance as the converter parameter to control tile size, dot radius, and opacity.
+/// </remarks>
 public sealed class DottedGridBrushConverter : IValueConverter, IMultiValueConverter
 {
     /// <summary>
@@ -24,63 +30,22 @@ public sealed class DottedGridBrushConverter : IValueConverter, IMultiValueConve
     /// </summary>
     public static readonly DottedGridBrushConverter Default = new();
 
-    /// <summary>
-    /// Converts a value to a dotted grid drawing brush based on the specified parameters.
-    /// </summary>
-    /// <param name="value">The input value, typically an <see cref="IBrush"/> or <see cref="Color"/>.</param>
-    /// <param name="targetType">The target type for the conversion (usually <see cref="IBrush"/>).</param>
-    /// <param name="parameter">A <see cref="DottedGridParameters"/> instance describing the pattern options to apply.</param>
-    /// <param name="culture">The culture for conversion (not used).</param>
-    /// <returns>The resolved <see cref="DrawingBrush"/> or <see cref="AvaloniaProperty.UnsetValue"/> if conversion fails.</returns>
+    /// <inheritdoc/>
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => Convert([value], targetType, parameter, culture);
 
-    /// <summary>
-    /// Converts multiple values to a dotted grid drawing brush based on the specified parameters.
-    /// </summary>
-    /// <param name="values">The list of values to convert, typically including a brush or color.</param>
-    /// <param name="targetType">The target type for the conversion (usually <see cref="IBrush"/>).</param>
-    /// <param name="parameter">A <see cref="DottedGridParameters"/> instance describing the pattern options to apply.</param>
-    /// <param name="culture">The culture for conversion (not used).</param>
-    /// <returns>The resolved <see cref="DrawingBrush"/> or <see cref="AvaloniaProperty.UnsetValue"/> if conversion fails.</returns>
+    /// <inheritdoc/>
     public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (values.Count == 0) return AvaloniaProperty.UnsetValue;
+        if (values.Count == 0)
+            return AvaloniaProperty.UnsetValue;
 
         var parameters = parameter as DottedGridParameters ?? new DottedGridParameters();
-        IBrush? brush = null;
-
-        foreach (var value in values)
-        {
-            switch (value)
-            {
-                case SolidColorBrush scb:
-                    // GetBaseValue bypasses the active ColorTransition animation.
-                    // GetValue(ColorProperty) returns oldColor at t=0 of the animation;
-                    // GetBaseValue returns the target color that was locally set.
-                    var scbBase = scb.GetBaseValue(SolidColorBrush.ColorProperty);
-                    brush = new SolidColorBrush(scbBase.HasValue ? scbBase.Value : scb.Color);
-                    break;
-                case ISolidColorBrush solidColorBrush:
-                    brush = new SolidColorBrush(solidColorBrush.Color);
-                    break;
-                case IBrush b:
-                    brush = b;
-                    break;
-                case Color c:
-                    brush = new SolidColorBrush(c);
-                    break;
-            }
-
-            if (brush is not null)
-                break;
-        }
+        var brush = BrushConversionHelper.TryExtractBrush(values);
 
         return brush is null ? AvaloniaProperty.UnsetValue : CreateDottedGrid(brush, parameters);
     }
 
-    /// <summary>
-    /// Not supported. Always returns <see cref="AvaloniaProperty.UnsetValue"/>.
-    /// </summary>
+    /// <inheritdoc/>
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => AvaloniaProperty.UnsetValue;
 
     /// <summary>
@@ -121,7 +86,4 @@ public sealed class DottedGridBrushConverter : IValueConverter, IMultiValueConve
 /// <param name="TileSize">The width and height of each tile in pixels (default: 16).</param>
 /// <param name="DotRadius">The radius of the dot ellipse in pixels (default: 0.5).</param>
 /// <param name="Opacity">The overall opacity of the drawing brush (default: 1.0).</param>
-public record DottedGridParameters(
-    double TileSize = 16.0,
-    double DotRadius = 0.5,
-    double Opacity = 1.0);
+public record DottedGridParameters(double TileSize = 16.0, double DotRadius = 0.5, double Opacity = 1.0);

@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <!-- DEFAULT PLACEHOLDERCONTENTCONTROL THEME                   -->
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <ControlTheme x:Key="{x:Type my:PlaceholderContentControl}" TargetType="my:PlaceholderContentControl">
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
@@ -24,7 +24,7 @@
                                       BorderThickness="{TemplateBinding BorderThickness}"
                                       Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      IsVisible="{TemplateBinding Content, Converter={x:Static my:NullConverter.IsNotNull}}" />
+                                      IsVisible="{TemplateBinding Content, Converter={x:Static my:NullConverter.IsPresent}}" />
 
                     <ContentPresenter Name="PART_PlaceholderPresenter"
                                       Padding="{TemplateBinding Padding}"
@@ -35,7 +35,7 @@
                                       BorderThickness="{TemplateBinding BorderThickness}"
                                       Content="{TemplateBinding PlaceholderText}"
                                       ContentTemplate="{TemplateBinding PlaceholderTemplate}"
-                                      IsVisible="{TemplateBinding Content, Converter={x:Static my:NullConverter.IsNull}}" />
+                                      IsVisible="{TemplateBinding Content, Converter={x:Static my:NullConverter.IsEmpty}}" />
                 </Grid>
             </ControlTemplate>
         </Setter>

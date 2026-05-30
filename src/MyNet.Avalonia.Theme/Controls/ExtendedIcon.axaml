@@ -3,9 +3,9 @@
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <!-- DEFAULT EXTENDEDICON THEME                                -->
-    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- --------------------------------------------------------- -->
     <ControlTheme x:Key="{x:Type my:ExtendedIcon}" TargetType="my:ExtendedIcon" BasedOn="{StaticResource {x:Type PathIcon}}">
         <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
         <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
@@ -37,7 +37,7 @@
                               Fill="{TemplateBinding Foreground}"
                               Stroke="{TemplateBinding BorderBrush}"
                               StrokeJoin="Round"
-                              StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
+                              StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}"
                               Width="24"
                               Height="24" />
                     </Viewbox>
@@ -82,9 +82,9 @@
             <Setter Property="IconSize" Value="{Binding $self.(my:IconAssist.Size)}" />
         </Style>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <!-- SIZES                                                     -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
 
         <Style Selector="^.size-xs">
             <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
@@ -102,9 +102,9 @@
             <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Xl}" />
         </Style>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
         <!-- GLYPH VARIANT                                             -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- --------------------------------------------------------- -->
 
         <Style Selector="^.kind-glyph">
             <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Glyph.Md}" />

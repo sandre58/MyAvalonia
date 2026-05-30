@@ -20,7 +20,9 @@ using MyNet.Primitives;
 using MyNet.Text;
 using MyNet.Text.TextCasing;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;
+#pragma warning restore IDE0130
 
 /// <summary>
 /// Converts values to localized, formatted, pluralized, and cased strings for UI display.
@@ -115,18 +117,7 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
         RegisterTypeConverter<Localizable>((localizable, format, _, abbreviate, culture) => ConvertString(localizable.Key, localizable.Filename, format, abbreviate, culture));
 
         RegisterTypeConverter<CultureInfo>((cultureInfo, format, _, abbreviate, culture) =>
-        {
-            var originalUi = CultureInfo.CurrentUICulture;
-            try
-            {
-                CultureInfo.CurrentUICulture = culture;
-                return ConvertString(cultureInfo.DisplayName, null, format, abbreviate, culture);
-            }
-            finally
-            {
-                CultureInfo.CurrentUICulture = originalUi;
-            }
-        });
+            ConvertString(GetCultureDisplayName(cultureInfo, culture), null, format, abbreviate, culture));
 
         // Controls
         RegisterTypeConverter<TextBlock>((value, format, _, _, culture) => ConvertString(value.Text.OrEmpty(), null, format, false, culture));
@@ -271,9 +262,19 @@ public class StringConverter(LetterCasing casing, bool pluralize = false, bool a
     /// Converts an array of strings to a single string.
     /// </summary>
     private static string ConvertArray(Array value) => string.Join(" ", value.OfType<string>());
-}
 
-/// <summary>
-/// Represents a localizable resource key and optional filename.
-/// </summary>
-public record Localizable(string Key, string? Filename);
+    /// <summary>
+    /// Gets a culture display name localized for the requested culture without mutating thread state.
+    /// </summary>
+    private static string GetCultureDisplayName(CultureInfo cultureInfo, CultureInfo displayCulture)
+    {
+        if (displayCulture.Equals(CultureInfo.CurrentUICulture))
+            return cultureInfo.DisplayName;
+
+        var translatedName = cultureInfo.Name.Translate(displayCulture);
+        if (!string.Equals(translatedName, cultureInfo.Name, StringComparison.Ordinal))
+            return translatedName;
+
+        return cultureInfo.NativeName;
+    }
+}

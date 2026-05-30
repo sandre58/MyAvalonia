@@ -19,7 +19,7 @@
                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
                                       FontSize="{StaticResource MyNet.Font.Size.Lg}"
                                       FontWeight="{StaticResource MyNet.Font.Weight.Caption}"
-                                      IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}"
+                                      IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
                                       RecognizesAccessKey="True" />
                     <ContentPresenter Name="PART_ContentPresenter"
                                       Grid.Row="1"

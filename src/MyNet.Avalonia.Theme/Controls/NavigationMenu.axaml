@@ -221,7 +221,7 @@
                                                   Margin="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}}"
                                                   Content="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}"
                                                   ContentTemplate="{Binding HeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"
-                                                  IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}" />
+                                                  IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
 
                                 <!-- Glyph -->
                                 <PathIcon Name="PART_ExpanderIcon"
@@ -488,7 +488,7 @@
 
                             <!-- Icon -->
                             <Grid Width="{Binding $parent[my:NavigationMenu].CollapseWidth}"
-                                  IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}">
+                                  IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
                                 <Viewbox Width="14" Height="14" HorizontalAlignment="Center">
                                     <ContentPresenter Name="PART_IconPresenter"
                                                       Content="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
@@ -503,7 +503,7 @@
                                               HorizontalAlignment="Center"
                                               Content="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}"
                                               ContentTemplate="{Binding HeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"
-                                              IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsNotNull}}" />
+                                              IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
