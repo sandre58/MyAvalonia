@@ -15,7 +15,10 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Material.Icons;
 using Microsoft.Extensions.DependencyInjection;
+using MyNet.Avalonia;
 using MyNet.Avalonia.Clipboard;
+using MyNet.Avalonia.Controls;
+using MyNet.Avalonia.Extended;
 using MyNet.Avalonia.Extended.Busy;
 using MyNet.Avalonia.Extended.Clipboard;
 using MyNet.Avalonia.Extended.Commands;
@@ -33,6 +36,8 @@ using MyNet.Avalonia.Showcase.Views;
 using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Themes;
 using MyNet.Avalonia.Theme.Theming.Core;
+using MyNet.Globalization;
+using MyNet.Humanizer;
 using MyNet.UI.Commands;
 using MyNet.UI.Loading;
 using MyNet.UI.Locators;
@@ -43,7 +48,6 @@ using MyNet.UI.Theming;
 using MyNet.UI.Toasting;
 using MyNet.Utilities;
 using MyNet.Utilities.Geography.Extensions;
-using MyNet.Utilities.Localization;
 using MyNet.Utilities.Logging;
 using MyNet.Utilities.Logging.NLog;
 using PropertyChanged;
@@ -118,9 +122,12 @@ public class App : Application
 
         var services = collection.BuildServiceProvider();
 
+        services.UseGlobalization();
+        services.UseLocalization();
+        services.UseDisplayText();
+
         InitializeServices(services);
         InitializeTheme(services);
-        InitializeResources();
 
         var vm = ViewModelManager.Get<MainViewModel>();
         RegisterPages(services, vm, pagesProviders);
@@ -133,7 +140,17 @@ public class App : Application
     /// </summary>
     /// <param name="collection">The service collection to register services with.</param>
     private void RegisterServices(ServiceCollection collection)
-        => collection.AddSingleton<ILogger, Logger>()
+    {
+        collection.AddGlobalization()
+            .AddLocalization()
+            .AddInflection()
+            .AddHumanizer()
+            .AddMyNetAvalonia()
+            .AddMyNetAvaloniaControls()
+            .AddMyNetAvaloniaExtended()
+            .AddMyNetAvaloniaShowcaseResources();
+
+        collection.AddSingleton<ILogger, Logger>()
             .AddSingleton<IViewResolver, ViewResolver>()
             .AddSingleton<IViewModelLocator, ViewModelLocator>()
             .AddSingleton<IPageResolver, PageResolver>()
@@ -148,6 +165,7 @@ public class App : Application
             .AddScoped<IScheduler, AvaloniaScheduler>(_ => AvaloniaScheduler.Current)
             .AddScoped<ICommandFactory, AvaloniaCommandFactory>()
             .AddScoped<IAppCommandsService, AppCommandsService>();
+    }
 
     /// <summary>
     /// Provides a mapping of ViewModel types to their corresponding Page types.
@@ -316,27 +334,6 @@ public class App : Application
         AppBusyManager.Initialize(busyFactory);
         CommandsManager.Initialize(services.GetRequiredService<ICommandFactory>());
         Scheduler.Initialize(services.GetRequiredService<IScheduler>());
-    }
-
-    /// <summary>
-    /// Initializes the application's resources by calling the initialization methods of the Extended and Controls resource bootstrapper, and registering various resource managers with the translation service for localization support. This method ensures that all necessary resources are loaded and available for use throughout the application, enabling proper localization and theming functionality.
-    /// </summary>
-    private static void InitializeResources()
-    {
-        Extended.ResourcesBootstrapper.Initialize();
-        Controls.ResourcesBootstrapper.Initialize();
-        TranslationService.RegisterResources(nameof(CountryResources), CountryResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(CommonResources), CommonResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(MenuResources), MenuResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(SettingsResources), SettingsResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(NotificationPageResources), NotificationPageResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(FormResources), FormResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(DataGridPageResources), DataGridPageResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(MenuPageResources), MenuPageResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(NavigationMenuPageResources), NavigationMenuPageResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(DialogsPageResources), DialogsPageResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(ThemePageResources), ThemePageResources.ResourceManager);
-        TranslationService.RegisterResources(nameof(ControlThemeResources), ControlThemeResources.ResourceManager);
     }
 
     /// <summary>

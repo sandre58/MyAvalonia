@@ -17,6 +17,8 @@
         <PackageReference Include="MyNet.Utilities.Logging.NLog" />
         <PackageReference Include="PropertyChanged.Fody" PrivateAssets="All" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+        <PackageReference Include="MyNet.Globalization" />
+        <PackageReference Include="MyNet.Humanizer" />
     </ItemGroup>
 
     <ItemGroup>

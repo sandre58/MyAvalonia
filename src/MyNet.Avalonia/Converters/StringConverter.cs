@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Media;
+using MyNet.Avalonia.Colors;
 using MyNet.Avalonia.Extensions;
 using MyNet.Collections;
 using MyNet.Globalization.Facade;

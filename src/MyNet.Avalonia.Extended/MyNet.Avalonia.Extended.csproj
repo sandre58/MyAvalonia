@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="MyNet.Globalization" />
       <PackageReference Include="MyNet.UI" />
     </ItemGroup>
 

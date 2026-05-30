@@ -7,6 +7,7 @@
 using System;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using MyNet.Avalonia.Colors;
 using MyNet.Avalonia.Extensions;
 using MyNet.Utilities.Generator;
 

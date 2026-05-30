@@ -7,6 +7,7 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
+using MyNet.Avalonia.Controls.Extensions;
 using MyNet.Avalonia.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.DateTimes;

@@ -25,6 +25,10 @@
     </ItemGroup>
     
     <ItemGroup>
+        <PackageReference Include="MyNet.Globalization" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\MyNet.Avalonia\MyNet.Avalonia.csproj" />
     </ItemGroup>
     

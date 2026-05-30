@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reactive.Disposables;
 using Avalonia;
-using MyNet.Avalonia.Helpers;
+using MyNet.Avalonia.Theme.Diagnostics;
 
 namespace MyNet.Avalonia.Theme.Classes.Registry;
 

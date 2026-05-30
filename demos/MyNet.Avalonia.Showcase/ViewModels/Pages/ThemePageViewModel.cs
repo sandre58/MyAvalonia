@@ -12,6 +12,7 @@ using System.Linq;
 using Avalonia.Media;
 using DynamicData;
 using Material.Icons;
+using MyNet.Avalonia.Colors;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Avalonia.Theme.Theming.Core;

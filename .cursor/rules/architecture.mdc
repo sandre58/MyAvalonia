@@ -12,6 +12,16 @@ The goal is framework quality, not backward compatibility.
 
 # Analysis Mindset
 
+When proposing or implementing changes:
+
+- Evaluate the design **as if the codebase did not exist yet**.
+- Do not recommend a migration path only because it preserves current APIs or minimizes diff.
+- Prefer the **simplest correct long-term design**, even when it requires a larger change now.
+- Say clearly when a pragmatic migration step is a **temporary bridge**, not the target state.
+- Challenge static bootstrapper chains, duplicated registration, and culture-mutable caches when a catalog + translate-on-read model fits better.
+
+Backward compatibility is not a goal during this refonte unless the user explicitly asks for it.
+
 When reviewing code:
 
 - challenge existing designs

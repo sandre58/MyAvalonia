@@ -9,7 +9,8 @@ using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
-using MyNet.Avalonia.Extensions;
+
+using MyNet.Avalonia.Colors;
 
 namespace MyNet.Avalonia.Converters;
 

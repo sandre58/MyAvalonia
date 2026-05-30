@@ -17,17 +17,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Resources\ColorResources.Designer.cs">
-            <DependentUpon>ColorResources.resx</DependentUpon>
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-        </Compile>
+      <EmbeddedResource Update="Colors\ColorResources.resx">
+        <LastGenOutput>ColorResources.Designer.cs</LastGenOutput>
+        <Generator>ResXFileCodeGenerator</Generator>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Update="Resources\ColorResources.resx">
-            <LastGenOutput>ColorResources.Designer.cs</LastGenOutput>
-            <Generator>ResXFileCodeGenerator</Generator>
-        </EmbeddedResource>
+      <Compile Update="Colors\ColorResources.Designer.cs">
+        <DependentUpon>ColorResources.resx</DependentUpon>
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+      </Compile>
     </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 
 using Avalonia.Controls;
 using Avalonia.Media;
+using MyNet.Avalonia.Colors;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Showcase.Views.Samples;
 using MyNet.Utilities.Generator;

@@ -14,6 +14,7 @@ using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
 using Material.Icons;
+using MyNet.Avalonia.Colors;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Showcase.Extensions;
 using MyNet.Avalonia.Showcase.Resources;

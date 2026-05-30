@@ -8,7 +8,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Avalonia;
 
-namespace MyNet.Avalonia.Extensions;
+#pragma warning disable IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia;
+#pragma warning restore IDE0130 // Namespace does not match folder structure
 
 /// <summary>
 /// Provides extension methods for the <see cref="StyledElement"/> class, allowing for convenient manipulation of CSS classes on Avalonia controls.

@@ -9,8 +9,9 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Avalonia.Animation.Easings;
 using Avalonia.Media;
+using MyNet.Avalonia.Colors;
 using MyNet.Avalonia.Extensions;
-using MyNet.Avalonia.Helpers;
+using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Theming.Brushes;

@@ -8,13 +8,13 @@ using System;
 using System.Reactive.Disposables;
 using System.Reactive.Subjects;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Data;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using MyNet.Avalonia.Helpers;
+using MyNet.Avalonia.Markup;
 
-namespace MyNet.Avalonia.Extensions;
+#pragma warning disable IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia;
+#pragma warning restore IDE0130 // Namespace does not match folder structure
 
 public static class AvaloniaObjectExtensions
 {
@@ -79,50 +79,31 @@ public static class AvaloniaObjectExtensions
             return new CompositeDisposable(bindingDisposable, source);
         }
 
+        /// <summary>
+        /// Attempts to bind the specified Avalonia property on the given object to the provided binding. If the binding is null, no binding is applied and a ResultDisposable with a false result is returned. If the binding is not null, it is applied to the property and a ResultDisposable with a true result is returned. Disposing the returned ResultDisposable will clear the binding from the property, restoring its previous state.
+        /// </summary>
+        /// <param name="property">The AvaloniaProperty to bind.</param>
+        /// <param name="binding">The binding to apply. Can be null.</param>
+        /// <returns>A ResultDisposable indicating whether the binding was applied.</returns>
         public ResultDisposable TryBind(AvaloniaProperty property, BindingBase? binding)
             => binding == null
                 ? new(Disposable.Empty, result: false)
                 : new ResultDisposable(obj.Bind(property, binding), result: true);
     }
-
-    public static void OnLoading<T>(this AvaloniaObject? avaloniaObject, Action<T> onLoadAction, Action<T>? onUnloadAction = null)
-        where T : Control
-    {
-        if (avaloniaObject is not T element) return;
-
-        if (element.IsLoaded)
-        {
-            onLoadAction(element);
-            element.Unloaded -= onUnloaded;
-            element.Unloaded += onUnloaded;
-        }
-        else
-        {
-            element.Loaded -= onLoaded;
-            element.Loaded += onLoaded;
-        }
-
-        void onLoaded(object? sender, RoutedEventArgs e)
-        {
-            onLoadAction(element);
-            element.Loaded -= onLoaded;
-            element.Unloaded -= onUnloaded;
-            element.Unloaded += onUnloaded;
-        }
-
-        void onUnloaded(object? sender, RoutedEventArgs e)
-        {
-            onUnloadAction?.Invoke(element);
-            element.Unloaded -= onUnloaded;
-            element.Loaded -= onLoaded;
-            element.Loaded += onLoaded;
-        }
-    }
 }
 
+/// <summary>
+/// Represents a disposable that also indicates whether the operation it represents was successful. When disposed, it will dispose the underlying disposable resource.
+/// </summary>
+/// <param name="disposable">The underlying disposable resource.</param>
+/// <param name="result">Indicates whether the operation was successful.</param>
 public sealed class ResultDisposable(IDisposable? disposable, bool result) : IDisposable
 {
+    /// <summary>
+    /// Gets a value indicating whether the operation represented by this ResultDisposable was successful. This is determined at the time of creation and does not change when the disposable is disposed.
+    /// </summary>
     public bool Result { get; } = result;
 
+    /// <inheritdoc/>
     public void Dispose() => disposable?.Dispose();
 }

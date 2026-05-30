@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Threading;
-using MyNet.Avalonia.Helpers;
+using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.UI.Locators;
 using MyNet.Utilities.Logging;
 

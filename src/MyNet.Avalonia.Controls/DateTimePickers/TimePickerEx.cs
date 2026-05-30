@@ -11,6 +11,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Primitives;
+using MyNet.Avalonia.Controls.Extensions;
 using MyNet.Avalonia.Extensions;
 using MyNet.Utilities;
 using MyNet.Utilities.DateTimes;

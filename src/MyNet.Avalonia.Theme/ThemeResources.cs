@@ -171,7 +171,7 @@ public static class ThemeResources
         {
             Key = key;
             var capturedKey = key; // avoid capturing `this` inside the factory
-            _lazyValue = new(() => Avalonia.ThemeResources.GetResource<T>(capturedKey), LazyThreadSafetyMode.PublicationOnly);
+            _lazyValue = new(() => Resources.ThemeResources.GetResource<T>(capturedKey), LazyThreadSafetyMode.PublicationOnly);
         }
 
         /// <summary>

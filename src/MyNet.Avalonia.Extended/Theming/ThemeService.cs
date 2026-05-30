@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using MyNet.Avalonia.Colors;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.UI.Theming;

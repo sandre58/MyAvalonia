@@ -11,6 +11,8 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using MyNet.Avalonia.Controls.Primitives;
+using MyNet.Avalonia.Colors;
+using MyNet.Avalonia.Controls.Extensions;
 using MyNet.Avalonia.Extensions;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure

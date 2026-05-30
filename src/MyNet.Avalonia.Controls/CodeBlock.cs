@@ -12,6 +12,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Documents;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
+using MyNet.Avalonia.Extensions;
 
 namespace MyNet.Avalonia.Controls;
 
@@ -209,6 +210,6 @@ public partial class CodeBlock : ContentControl
 
     private Run CreateRun(string text, CodeType type) => new(text)
     {
-        Foreground = ThemeResources.TryGetResource<IBrush>($"MyNet.Brush.CodeBlock.{type}", ActualThemeVariant)
+        Foreground = this.TryGetResource<IBrush>($"MyNet.Brush.CodeBlock.{type}", ActualThemeVariant)
     };
 }

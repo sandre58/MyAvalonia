@@ -9,7 +9,6 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using MyNet.Avalonia.Helpers;
 using MyNet.Utilities.Caching;
 using MyNet.Utilities.Caching.Policies;
 
@@ -45,7 +44,6 @@ public class CachedContentControl : ContentControl
 
     public CachedContentControl()
     {
-        // Initialize cache with optional expiration for memory management
         _cache = new(
             defaultExpirationPolicyInitCode: CacheExpiration != TimeSpan.Zero ? () => ExpirationPolicy.Duration(CacheExpiration)! : null,
             storeNullValues: false)
@@ -53,7 +51,6 @@ public class CachedContentControl : ContentControl
             DisposeValuesOnRemoval = DisposeOnRemoval
         };
 
-        // Subscribe to cache events for cleanup and monitoring
         _cache.Expiring += OnCacheExpiring;
         _cache.Expired += OnCacheExpired;
     }
@@ -126,56 +123,28 @@ public class CachedContentControl : ContentControl
         base.OnPropertyChanged(change);
 
         if (change.Property == ContentProperty)
-        {
-            using (PerformanceMonitor.Measure($"[CachedContentControl] Content changed to {change.NewValue?.GetType().Name}", category: PerformanceCategory.Controls))
-            {
-                UpdateView(change.NewValue);
-            }
-        }
+            UpdateView(change.NewValue);
     }
 
     private void UpdateView(object? newContent)
     {
         if (newContent == null)
-        {
-            // Let the base class handle null content
             return;
-        }
 
-        // If caching is disabled, use default behavior
         if (!EnableCaching)
-        {
-            // Base ContentControl will handle content presentation through its template
             return;
-        }
 
-        // Determine cache key based on strategy
         var cacheKey = GetCacheKey(newContent);
 
-        // Measure the ENTIRE view creation process (including cache lookup)
-        using (PerformanceMonitor.Measure($"[CachedContentControl] Total view resolution for {newContent.GetType().Name}", category: PerformanceCategory.Pages))
-        {
-            // Check if already in cache
-            var isInCache = _cache.Contains(cacheKey);
+        var cachedView = _cache.GetFromCacheOrFetch(
+            key: cacheKey,
+            code: () => CreateView(newContent)!,
+            @override: false);
 
-            PerformanceMonitor.Debug(isInCache ? $"[CachedContentControl] Cache HIT for {newContent.GetType().Name}" : $"[CachedContentControl] Cache MISS for {newContent.GetType().Name} - creating new view", PerformanceCategory.Pages);
+        cachedView.DataContext = newContent;
 
-            // Use CacheStorage.GetFromCacheOrFetch for clean cache-or-create pattern
-            var cachedView = _cache.GetFromCacheOrFetch(
-                key: cacheKey,
-                code: () => CreateView(newContent)!,
-                @override: false);
-
-            // Always update DataContext (important for ByType strategy)
-            cachedView.DataContext = newContent;
-
-            // Only update Content if it's different (Avalonia 12 rendering fix)
-            // Direct assignment instead of SetCurrentValue to avoid infinite loops
-            if (!ReferenceEquals(Content, cachedView))
-            {
-                Content = cachedView;
-            }
-        }
+        if (!ReferenceEquals(Content, cachedView))
+            Content = cachedView;
     }
 
     /// <summary>
@@ -189,54 +158,33 @@ public class CachedContentControl : ContentControl
 
     private Control? CreateView(object content)
     {
-        // Resolve via DataTemplate
         var template = this.FindDataTemplate(content) ?? ContentTemplate;
         if (template == null)
             return null;
 
-        using (PerformanceMonitor.Measure($"[CachedContentControl] DataTemplate.Build for {content.GetType().Name}", category: PerformanceCategory.Pages))
-        {
-            var newView = template.Build(content);
-            if (newView != null)
-            {
-                newView.DataContext = content;
-                PerformanceMonitor.Debug($"[CachedContentControl] View type created: {newView.GetType().Name}", PerformanceCategory.Pages);
-                return newView;
-            }
-        }
+        var newView = template.Build(content);
+        if (newView == null)
+            return null;
 
-        return null;
+        newView.DataContext = content;
+        return newView;
     }
 
     private void OnCacheExpiring(object? sender, ExpiringEventArgs<object, Control> e)
     {
-        // Allow cancellation of expiration if needed
-        var keyDescription = e.Key is Type type ? type.Name : e.Key.GetType().Name;
-        PerformanceMonitor.Debug($"[CachedContentControl] View for {keyDescription} is expiring", PerformanceCategory.Controls);
-
-        // Prevent expiration of currently visible view
         var currentKey = Content != null ? GetCacheKey(Content) : null;
         if (currentKey?.Equals(e.Key) == true)
-        {
             e.Cancel = true;
-            PerformanceMonitor.Debug("[CachedContentControl] Prevented expiration of currently visible view", PerformanceCategory.Controls);
-        }
     }
 
     private static void OnCacheExpired(object? sender, ExpiredEventArgs<object, Control> e)
     {
-        var keyDescription = e.Key is Type type ? type.Name : e.Key.GetType().Name;
-        PerformanceMonitor.Debug($"[CachedContentControl] View for {keyDescription} has expired and been removed from cache", PerformanceCategory.Controls);
     }
 
     /// <summary>
     /// Clears all cached views.
     /// </summary>
-    public void ClearCache()
-    {
-        PerformanceMonitor.Debug($"[CachedContentControl] Clearing cache ({CacheSize} views)", PerformanceCategory.Controls);
-        _cache.Clear();
-    }
+    public void ClearCache() => _cache.Clear();
 
     /// <summary>
     /// Gets the current cache size.
@@ -247,9 +195,5 @@ public class CachedContentControl : ContentControl
     /// Removes a specific view from the cache.
     /// </summary>
     /// <param name="key">The view model key to remove.</param>
-    public void RemoveFromCache(object key)
-    {
-        _cache.Remove(key);
-        PerformanceMonitor.Debug($"[CachedContentControl] Removed view for {key.GetType().Name} from cache", PerformanceCategory.Controls);
-    }
+    public void RemoveFromCache(object key) => _cache.Remove(key);
 }

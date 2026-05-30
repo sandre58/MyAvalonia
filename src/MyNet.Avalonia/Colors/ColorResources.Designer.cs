@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyNet.Avalonia.Resources; 
+namespace MyNet.Avalonia.Colors; 
 using System;
 
 
@@ -39,7 +39,7 @@ internal class ColorResources {
     internal static global::System.Resources.ResourceManager ResourceManager {
         get {
             if (object.ReferenceEquals(resourceMan, null)) {
-                global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyNet.Avalonia.Resources.ColorResources", typeof(ColorResources).Assembly);
+                global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyNet.Avalonia.Colors.ColorResources", typeof(ColorResources).Assembly);
                 resourceMan = temp;
             }
             return resourceMan;

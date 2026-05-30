@@ -15,6 +15,7 @@ using Material.Icons;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Behaviors;
 using MyNet.Avalonia.Controls.Enums;
+using MyNet.Avalonia.Colors;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Showcase.Extensions;
 using MyNet.Avalonia.Showcase.Resources;
