@@ -18,6 +18,9 @@ public static class MyNetAvaloniaExtendedServiceCollectionExtensions
     /// <summary>
     /// Contributes extended UI translation resources to the catalog.
     /// </summary>
+    /// <remarks>
+    /// Call <see cref="MyNetAvaloniaExtendedClipboardServiceCollectionExtensions.AddMyNetAvaloniaClipboard"/> to register clipboard services.
+    /// </remarks>
     public static IServiceCollection AddMyNetAvaloniaExtended(this IServiceCollection services)
     {
         services.AddTranslationResource(nameof(UiResources), UiResources.ResourceManager);

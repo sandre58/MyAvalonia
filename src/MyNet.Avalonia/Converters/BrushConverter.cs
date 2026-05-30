@@ -9,8 +9,6 @@ using System.Globalization;
 using Avalonia;
 using Avalonia.Media;
 
-using MyNet.Avalonia.Colors;
-
 namespace MyNet.Avalonia.Converters;
 
 public class BrushConverter : ColorConverter
@@ -27,7 +25,7 @@ public class BrushConverter : ColorConverter
             Color c => c,
             HsvColor hsv => hsv.ToRgb(),
             HslColor hsl => hsl.ToRgb(),
-            _ => value.ToString().ToColor() ?? Colors.White
+            _ => value.ToString().ToColor() ?? global::Avalonia.Media.Colors.White
         };
         var opacity = Opacity ?? (value is SolidColorBrush { Opacity: < 1.0 } brush ? brush.Opacity : 1.0);
 

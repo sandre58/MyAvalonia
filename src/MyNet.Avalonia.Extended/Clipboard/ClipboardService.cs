@@ -8,44 +8,49 @@ using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Input.Platform;
 using MyNet.Avalonia.Clipboard;
-using MyNet.UI.Resources;
-using MyNet.UI.Toasting;
 
 namespace MyNet.Avalonia.Extended.Clipboard;
 
-public class ClipboardService(Func<TopLevel?> topLevel) : IClipboardService
+/// <summary>
+/// Resolves Avalonia <see cref="IClipboard"/> from a <see cref="TopLevel"/> provider.
+/// </summary>
+public class ClipboardService(Func<TopLevel?> topLevelProvider, IClipboardFeedback? feedback = null) : IClipboardService
 {
-    private readonly Lazy<IClipboard?> _clipboard = new(() => topLevel()?.Clipboard);
-
+    /// <inheritdoc />
     public async Task CopyAsync(IAsyncDataTransfer content)
     {
-        if (_clipboard.Value is not { } clipboard) return;
+        if (topLevelProvider()?.Clipboard is not { } clipboard)
+            return;
 
         try
         {
             await clipboard.SetDataAsync(content).ConfigureAwait(false);
-            ToasterManager.ShowInformation(MessageResources.CopyInClipBoardSuccess);
+            feedback?.NotifySuccess();
         }
         catch (Exception)
         {
-            ToasterManager.ShowError(MessageResources.CopyInClipBoardError);
+            feedback?.NotifyError();
         }
     }
 
+    /// <inheritdoc />
     public async Task CopyTextAsync(string text)
     {
-        if (_clipboard.Value is not { } clipboard) return;
+        if (string.IsNullOrEmpty(text))
+            return;
+
+        if (topLevelProvider()?.Clipboard is not { } clipboard)
+            return;
 
         try
         {
             await clipboard.SetTextAsync(text).ConfigureAwait(false);
-            ToasterManager.ShowInformation(MessageResources.CopyInClipBoardSuccess);
+            feedback?.NotifySuccess();
         }
         catch (Exception)
         {
-            ToasterManager.ShowError(MessageResources.CopyInClipBoardError);
+            feedback?.NotifyError();
         }
     }
 }

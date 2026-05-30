@@ -10,8 +10,6 @@ using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 
-using MyNet.Avalonia.Colors;
-
 namespace MyNet.Avalonia.Converters;
 
 public class ColorConverter : IValueConverter
@@ -45,7 +43,7 @@ public class ColorConverter : IValueConverter
             SolidColorBrush b => b.Color,
             Color c => c,
             string s => s.ToColor().GetValueOrDefault(),
-            _ => Colors.White
+            _ => global::Avalonia.Media.Colors.White
         };
         var opacity = Opacity ?? (value is SolidColorBrush { Opacity: < 1.0 } brush ? brush.Opacity : null);
 

@@ -32,7 +32,7 @@ public static class PopupBehavior
                 popup.Closed += OnPopupClosedCallback;
                 popup.PropertyChanged += OnPopupPropertyChanged;
 
-                // Initialize child state if it already exists
+                // Configure child state if it already exists
                 if (popup.Child is { } child)
                 {
                     InitializeControlForSlide(child);
@@ -51,7 +51,7 @@ public static class PopupBehavior
         {
             if ((bool)e.NewValue!)
             {
-                // Initialize state immediately when slide is enabled
+                // Configure state immediately when slide is enabled
                 InitializeControlForSlide(contextMenu);
                 contextMenu.Opened += OnContextMenuOpenedCallback;
                 contextMenu.Closed += OnContextMenuClosedCallback;
@@ -68,7 +68,7 @@ public static class PopupBehavior
         {
             if ((bool)e.NewValue!)
             {
-                // Initialize state immediately when slide is enabled
+                // Configure state immediately when slide is enabled
                 InitializeControlForSlide(flyoutPresenter);
                 flyoutPresenter.AttachedToVisualTree += OnFlyoutPresenterAttachedToVisualTree;
                 flyoutPresenter.DetachedFromVisualTree += OnFlyoutPresenterDetachedFromVisualTree;
@@ -85,7 +85,7 @@ public static class PopupBehavior
         {
             if ((bool)e.NewValue!)
             {
-                // Initialize state immediately when slide is enabled
+                // Configure state immediately when slide is enabled
                 InitializeControlForSlide(flyoutPresenter);
                 flyoutPresenter.AttachedToVisualTree += OnFlyoutPresenterAttachedToVisualTree;
                 flyoutPresenter.DetachedFromVisualTree += OnFlyoutPresenterDetachedFromVisualTree;

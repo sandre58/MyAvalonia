@@ -24,6 +24,8 @@ public static class ServiceCollectionExtensions
     /// The host must also call <c>AddGlobalization()</c>, <c>AddLocalization()</c>, <c>AddInflection()</c>,
     /// <c>AddHumanizer()</c>, then <c>UseGlobalization()</c>, <c>UseLocalization()</c>, and <c>UseDisplayText()</c>
     /// on the built <see cref="IServiceProvider"/>.
+    /// When using MyNet.Avalonia.Extended, also call <c>AddMyNetAvaloniaClipboard()</c> during registration and
+    /// <c>UseClipboard()</c> after building the service provider.
     /// </remarks>
     public static IServiceCollection AddMyNetAvalonia(this IServiceCollection services)
     {

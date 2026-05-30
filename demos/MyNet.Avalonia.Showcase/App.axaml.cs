@@ -20,7 +20,6 @@ using MyNet.Avalonia.Clipboard;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extended;
 using MyNet.Avalonia.Extended.Busy;
-using MyNet.Avalonia.Extended.Clipboard;
 using MyNet.Avalonia.Extended.Commands;
 using MyNet.Avalonia.Extended.Navigation;
 using MyNet.Avalonia.Extended.Schedulers;
@@ -148,6 +147,7 @@ public class App : Application
             .AddMyNetAvalonia()
             .AddMyNetAvaloniaControls()
             .AddMyNetAvaloniaExtended()
+            .AddMyNetAvaloniaClipboard(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow)
             .AddMyNetAvaloniaShowcaseResources();
 
         collection.AddSingleton<ILogger, Logger>()
@@ -160,7 +160,6 @@ public class App : Application
             .AddSingleton<INotificationsManager, NotificationsManager>()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IToasterService>(new ToasterService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
-            .AddSingleton<IClipboardService>(new ClipboardService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
             .AddScoped<IBusyServiceFactory, BusyServiceFactory>()
             .AddScoped<IScheduler, AvaloniaScheduler>(_ => AvaloniaScheduler.Current)
             .AddScoped<ICommandFactory, AvaloniaCommandFactory>()
@@ -329,7 +328,7 @@ public class App : Application
         services.UseThemeManager();
         NavigationManager.Initialize(services.GetRequiredService<INavigationService>(), viewModelLocator);
         ToasterManager.Initialize(services.GetRequiredService<IToasterService>());
-        ClipboardManager.Initialize(services.GetRequiredService<IClipboardService>());
+        services.UseClipboard();
         BusyManager.Initialize(busyFactory);
         AppBusyManager.Initialize(busyFactory);
         CommandsManager.Initialize(services.GetRequiredService<ICommandFactory>());
