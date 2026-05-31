@@ -167,6 +167,8 @@ Pagination and TextPicker helpers:
 - `PaginationHelper`, `PaginationLayoutHelper` — page count, clamp, button layout
 - `TextPickerKeyboardHelper`, `TextPickerCommitHelper`, `TextPickerValidationHelper` — clavier, commit texte, parsing
 
+Other tested modules: `ItemsBehaviorHelper`, `OverlayDialogHostLookupHelper`, `StandardColorPalette`, `PositionToDockConverter`, `DateContext`, `WeekendDateSelector`.
+
 ## License
 
 Copyright © Stéphane ANDRE.

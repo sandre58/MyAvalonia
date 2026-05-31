@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Threading;
+using MyNet.Avalonia.Controls.Internals;
 using MyNet.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
@@ -20,13 +21,13 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
 {
     public void AddRange(DateTime start, DateTime end)
     {
-        foreach (var date in ToDates(start, end))
+        foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
             Add(date);
     }
 
     public void RemoveRange(DateTime start, DateTime end)
     {
-        foreach (var date in ToDates(start, end))
+        foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
             Remove(date);
     }
 
@@ -104,20 +105,6 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         EnsureValidThread();
 
         base.ClearItems();
-    }
-
-    private static IEnumerable<DateTime> ToDates(DateTime start, DateTime end)
-    {
-        if (start < end)
-        {
-            for (var date = start; date <= end; date = date.AddDays(1))
-                yield return date;
-        }
-        else
-        {
-            for (var date = start; date >= end; date = date.AddDays(-1))
-                yield return date;
-        }
     }
 
     private static void EnsureValidThread() => Dispatcher.UIThread.VerifyAccess();

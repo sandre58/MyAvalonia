@@ -11,6 +11,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Layout;
 using Avalonia.VisualTree;
+using MyNet.Avalonia.Controls.Internals;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -18,7 +19,7 @@ namespace MyNet.Avalonia.Controls;
 
 public static class OverlayDialogHostManager
 {
-    private static readonly ConcurrentDictionary<HostKey, OverlayDialogHost> Hosts = new();
+    private static readonly ConcurrentDictionary<OverlayDialogHostKey, OverlayDialogHost> Hosts = new();
 
     public static void Register(OverlayDialogHost host, string? id, int? hash) => Hosts.AddOrUpdate(new(id, hash), host, (_, _) => host);
 
@@ -26,16 +27,13 @@ public static class OverlayDialogHostManager
 
     public static OverlayDialogHost? GetHost(string? id, int? hash)
     {
-        if (hash is not null && Hosts.TryGetValue(new(id, hash), out var exactHost)) return exactHost;
+        if (OverlayDialogHostLookupHelper.TryGetExactMatch(Hosts, id, hash, out var exactHost)) return exactHost;
 
-        var candidates = Hosts.Where(x => (id is null || x.Key.Id == id) && (hash is null || x.Key.Hash == hash))
-                              .Select(x => x.Value)
-                              .Distinct()
-                              .ToList();
+        var candidates = OverlayDialogHostLookupHelper.GetMatchingHosts(Hosts, id, hash);
 
         if (candidates.Count == 1) return candidates[0];
 
-        if (id is null && hash is null)
+        if (OverlayDialogHostLookupHelper.ShouldFallbackToSingleTopLevel(id, hash, candidates.Count))
         {
             var topLevelHosts = Hosts.Values.Where(x => x.IsTopLevel).Distinct().ToList();
             if (topLevelHosts.Count == 1) return topLevelHosts[0];
@@ -105,6 +103,4 @@ public static class OverlayDialogHostManager
 
         return lifetime.MainWindow ?? lifetime.Windows.LastOrDefault();
     }
-
-    internal record struct HostKey(string? Id, int? Hash);
 }

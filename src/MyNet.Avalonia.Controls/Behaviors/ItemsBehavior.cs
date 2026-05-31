@@ -8,13 +8,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
-using MyNet.Avalonia.Controls;
+using MyNet.Avalonia.Controls.Behaviors.Internal;
 using MyNet.Globalization.Culture;
 using MyNet.Globalization.Facade;
 using MyNet.Observable;
@@ -278,7 +277,7 @@ public static class ItemsBehavior
         {
             var values = type.GetLocalizedEnums(excludedValues).Cast<object>().ToList();
             if (GetSortByDisplay(sender))
-                SortByDisplay(values, static item => ((LocalizedEnum)item).Display);
+                ItemsBehaviorHelper.SortByDisplay(values, static item => ((LocalizedEnum)item).Display, GlobalizationServices.Current.CurrentCulture.CompareInfo);
 
             if (GetIncludeNullValue(sender))
                 values.Insert(0, new NullEnumListItem(ResolveNullDisplay(sender)));
@@ -290,7 +289,7 @@ public static class ItemsBehavior
         {
             var values = type.GetLocalizedSmartEnums(excludedValues).Cast<object>().ToList();
             if (GetSortByDisplay(sender))
-                SortByDisplay(values, static item => ((LocalizedSmartEnum)item).Display);
+                ItemsBehaviorHelper.SortByDisplay(values, static item => ((LocalizedSmartEnum)item).Display, GlobalizationServices.Current.CurrentCulture.CompareInfo);
 
             if (GetIncludeNullValue(sender))
                 values.Insert(0, new NullSmartEnumListItem(ResolveNullDisplay(sender)));
@@ -315,29 +314,19 @@ public static class ItemsBehavior
         }
     }
 
-    private static void SortByDisplay<T>(List<T> items, Func<T, string> displaySelector)
-    {
-        var comparer = GlobalizationServices.Current.CurrentCulture.CompareInfo;
-        items.Sort((left, right) => comparer.Compare(displaySelector(left), displaySelector(right), CompareOptions.IgnoreCase));
-    }
+    private static string ResolveNullDisplay(SelectingItemsControl sender) =>
+        ItemsBehaviorHelper.ResolveNullDisplay(
+            GetNullDisplayText(sender),
+            GetNullDisplayResourceKey(sender),
+            GetNullDisplayResourceFilename(sender),
+            key => key.Translate(),
+            (key, filename) => key.Translate(filename));
 
-    private static string ResolveNullDisplay(SelectingItemsControl sender)
-    {
-        var resourceKey = GetNullDisplayResourceKey(sender);
-        if (!string.IsNullOrEmpty(resourceKey))
-        {
-            var filename = GetNullDisplayResourceFilename(sender);
-            return string.IsNullOrEmpty(filename)
-                ? resourceKey.Translate()
-                : resourceKey.Translate(filename);
-        }
-
-        return GetNullDisplayText(sender) ?? string.Empty;
-    }
-
-    private static bool RequiresCultureRefresh(SelectingItemsControl control)
-        => GetSortByDisplay(control)
-           || (GetIncludeNullValue(control) && !string.IsNullOrEmpty(GetNullDisplayResourceKey(control)));
+    private static bool RequiresCultureRefresh(SelectingItemsControl control) =>
+        ItemsBehaviorHelper.RequiresCultureRefresh(
+            GetSortByDisplay(control),
+            GetIncludeNullValue(control),
+            GetNullDisplayResourceKey(control));
 
     private static void UpdateCultureSubscription(SelectingItemsControl control)
     {

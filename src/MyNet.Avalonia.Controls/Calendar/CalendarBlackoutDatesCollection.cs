@@ -8,6 +8,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Threading;
+using MyNet.Avalonia.Controls.Internals;
 using MyNet.Primitives;
 using MyNet.Primitives.Intervals;
 
@@ -23,20 +24,7 @@ public sealed class CalendarBlackoutDatesCollection(Calendar owner) : Observable
 
     public bool Contains(DateTime start, DateTime end)
     {
-        DateTime rangeStart;
-        DateTime rangeEnd;
-
-        if (start.IsBefore(end))
-        {
-            rangeStart = start.DiscardTime();
-            rangeEnd = end.DiscardTime();
-        }
-        else
-        {
-            rangeStart = end.DiscardTime();
-            rangeEnd = start.DiscardTime();
-        }
-
+        var (rangeStart, rangeEnd) = CalendarBlackoutDatesHelper.NormalizeRange(start, end);
         return this.Any(x => x.Contains(new Period(rangeStart, rangeEnd)));
     }
 

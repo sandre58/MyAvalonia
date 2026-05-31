@@ -53,5 +53,11 @@ public class StandardColorPalette : IColorPalette
 
     public int ShadeCount => Colors[0].Length;
 
-    public Color GetColor(int colorIndex, int shadeIndex) => Colors[colorIndex.SafeClamp(0, Colors.Length - 1)][shadeIndex.SafeClamp(0, Colors[colorIndex].Length - 1)];
+    public Color GetColor(int colorIndex, int shadeIndex)
+    {
+        var safeColorIndex = colorIndex.SafeClamp(0, Colors.Length - 1);
+        var shades = Colors[safeColorIndex];
+        var safeShadeIndex = shadeIndex.SafeClamp(0, shades.Length - 1);
+        return shades[safeShadeIndex];
+    }
 }
