@@ -9,6 +9,7 @@ using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MyNet.Avalonia.Extended.Toasting.Settings;
+using MyNet.UI.Toasting.Settings;
 
 #pragma warning disable IDE0130
 namespace MyNet.Avalonia.Extended.Toasting;
@@ -30,6 +31,11 @@ public static class ServiceCollectionExtensions
     /// Requires <see cref="MyNet.UI.Toasting.ServiceCollectionExtensions.AddToasting"/>,
     /// <see cref="MyNet.UI.Notifications.ServiceCollectionExtensions.AddNotifications"/>, and
     /// <see cref="Schedulers.ServiceCollectionExtensions.AddAvaloniaScheduler"/> to be registered first.
+    /// <see cref="AvaloniaToastHostOptions.MaxItems"/> is aligned with
+    /// <see cref="ToastManagerOptions.MaxVisibleToasts"/> when the host is created.
+    /// Register additional <see cref="IAvaloniaToastContentContributor"/> services to customize toast content.
+    /// Include extended control themes in <c>App.axaml</c> via
+    /// <see cref="Theming.AvaloniaExtendedThemes.GenericStyles"/>.
     /// Resolve <see cref="AvaloniaToastHost"/> during startup to attach the visual host.
     /// </remarks>
     public static IServiceCollection AddAvaloniaToasting(
@@ -43,11 +49,23 @@ public static class ServiceCollectionExtensions
         var options = new AvaloniaToastHostOptions();
         configureOptions?.Invoke(options);
 
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IAvaloniaToastContentContributor, MessageNotificationToastContentContributor>());
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IAvaloniaToastContentContributor, FallbackToastContentContributor>());
+        services.TryAddSingleton<IAvaloniaToastContentFactory, CompositeAvaloniaToastContentFactory>();
+
         services.TryAddSingleton(options);
-        services.TryAddSingleton(sp => new AvaloniaToastHost(
-            topLevelProvider,
-            sp.GetRequiredService<MyNet.UI.Toasting.IToastManager>(),
-            sp.GetRequiredService<AvaloniaToastHostOptions>()));
+        services.TryAddSingleton(sp =>
+        {
+            var hostOptions = sp.GetRequiredService<AvaloniaToastHostOptions>();
+            if (sp.GetService<ToastManagerOptions>() is { } managerOptions)
+                hostOptions.SyncMaxVisibleToasts(managerOptions);
+
+            return new AvaloniaToastHost(
+                topLevelProvider,
+                sp.GetRequiredService<MyNet.UI.Toasting.IToastManager>(),
+                sp.GetRequiredService<IAvaloniaToastContentFactory>(),
+                hostOptions);
+        });
 
         return services;
     }

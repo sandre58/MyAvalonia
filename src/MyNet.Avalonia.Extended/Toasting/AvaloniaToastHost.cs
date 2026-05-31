@@ -28,11 +28,14 @@ public sealed class AvaloniaToastHost : IDisposable
 {
     private readonly Func<TopLevel?> _topLevelProvider;
     private readonly IToastManager _toastManager;
+    private readonly IAvaloniaToastContentFactory _contentFactory;
     private readonly AvaloniaToastHostOptions _options;
     private readonly Dictionary<Guid, object> _displayContentByNotificationId = [];
+    private readonly Dictionary<Guid, IToast> _pendingToasts = [];
     private WindowNotificationManager? _notificationManager;
     private readonly INotifyCollectionChanged _toastsCollection;
     private bool _suppressCloseCallback;
+    private bool _topLevelRetryScheduled;
     private bool _isDisposed;
 
     /// <summary>
@@ -40,18 +43,23 @@ public sealed class AvaloniaToastHost : IDisposable
     /// </summary>
     /// <param name="topLevelProvider">Resolves the host top level, typically the main window.</param>
     /// <param name="toastManager">The toast manager whose collection is rendered.</param>
+    /// <param name="contentFactory">Creates visual content for each toast notification.</param>
     /// <param name="options">Optional visual layout options.</param>
     public AvaloniaToastHost(
         Func<TopLevel?> topLevelProvider,
         IToastManager toastManager,
+        IAvaloniaToastContentFactory contentFactory,
         AvaloniaToastHostOptions? options = null)
     {
         _topLevelProvider = topLevelProvider ?? throw new ArgumentNullException(nameof(topLevelProvider));
         _toastManager = toastManager ?? throw new ArgumentNullException(nameof(toastManager));
-        _options = options ?? AvaloniaToastHostOptions.Default;
+        _contentFactory = contentFactory ?? throw new ArgumentNullException(nameof(contentFactory));
+        _options = options ?? new AvaloniaToastHostOptions();
 
-        _toastsCollection = _toastManager.Toasts;
+        _toastsCollection = (INotifyCollectionChanged)_toastManager.Toasts;
         _toastsCollection.CollectionChanged += OnToastsCollectionChanged;
+
+        Post(FlushPendingToasts);
 
         foreach (var toast in _toastManager.Toasts.ToList())
             ShowToast(toast);
@@ -63,13 +71,24 @@ public sealed class AvaloniaToastHost : IDisposable
     public void RefreshLayout() => Post(() =>
     {
         foreach (var content in _displayContentByNotificationId.Values.ToList())
-            _notificationManager?.Close(content);
+        {
+            _suppressCloseCallback = true;
+            try
+            {
+                _notificationManager?.Close(content);
+            }
+            finally
+            {
+                _suppressCloseCallback = false;
+            }
+        }
 
         _displayContentByNotificationId.Clear();
+        _pendingToasts.Clear();
         _notificationManager = null;
 
         foreach (var toast in _toastManager.Toasts.ToList())
-            ShowToast(toast);
+            ShowToastCore(toast);
     });
 
     /// <inheritdoc />
@@ -80,6 +99,7 @@ public sealed class AvaloniaToastHost : IDisposable
 
         _isDisposed = true;
         _toastsCollection.CollectionChanged -= OnToastsCollectionChanged;
+        _pendingToasts.Clear();
         _displayContentByNotificationId.Clear();
         _notificationManager = null;
     }
@@ -98,11 +118,37 @@ public sealed class AvaloniaToastHost : IDisposable
                     HideToast(toast);
                 break;
 
+            case NotifyCollectionChangedAction.Replace:
+                if (e.OldItems is null || e.NewItems is null)
+                    break;
+
+                for (var i = 0; i < e.NewItems.Count; i++)
+                {
+                    HideToast((IToast)e.OldItems[i]!);
+                    ShowToast((IToast)e.NewItems[i]!);
+                }
+
+                break;
+
             case NotifyCollectionChangedAction.Reset:
                 foreach (var content in _displayContentByNotificationId.Values.ToList())
-                    Post(() => _notificationManager?.Close(content));
+                {
+                    Post(() =>
+                    {
+                        _suppressCloseCallback = true;
+                        try
+                        {
+                            _notificationManager?.Close(content);
+                        }
+                        finally
+                        {
+                            _suppressCloseCallback = false;
+                        }
+                    });
+                }
 
                 _displayContentByNotificationId.Clear();
+                _pendingToasts.Clear();
 
                 foreach (var toast in _toastManager.Toasts)
                     ShowToast(toast);
@@ -110,41 +156,63 @@ public sealed class AvaloniaToastHost : IDisposable
         }
     }
 
-    private void ShowToast(IToast toast)
+    private void ShowToast(IToast toast) => Post(() => ShowToastCore(toast));
+
+    private void ShowToastCore(IToast toast)
     {
-        var content = AvaloniaToastContentFactory.Create(toast.Notification, _options.Width);
+        if (_isDisposed)
+            return;
+
+        if (_displayContentByNotificationId.ContainsKey(toast.Notification.Id))
+            return;
+
+        if (!EnsureNotificationManager())
+        {
+            _pendingToasts[toast.Notification.Id] = toast;
+            ScheduleTopLevelRetry();
+            return;
+        }
+
+        DisplayToast(toast);
+    }
+
+    private void DisplayToast(IToast toast)
+    {
+        var content = _contentFactory.CreateContent(toast.Notification, _options.Width);
         _displayContentByNotificationId[toast.Notification.Id] = content;
+        _pendingToasts.Remove(toast.Notification.Id);
 
         var classes = GetClasses(toast.Settings);
         var type = MapSeverity(toast.Notification.Severity);
 
-        Post(() =>
-        {
-            EnsureNotificationManager();
-            _notificationManager?.Show(
-                content,
-                type,
-                TimeSpan.Zero,
-                () => OnToastClicked(toast),
-                () => OnToastClosedByUser(toast),
-                [.. classes]);
-        });
+        _notificationManager!.Show(
+            content,
+            type,
+            TimeSpan.Zero,
+            () => OnToastClicked(toast),
+            () => OnToastClosedByUser(toast),
+            [.. classes]);
     }
 
     private void HideToast(IToast toast)
     {
+        _pendingToasts.Remove(toast.Notification.Id);
+
         if (!_displayContentByNotificationId.Remove(toast.Notification.Id, out var content))
             return;
 
-        _suppressCloseCallback = true;
-        try
+        Post(() =>
         {
-            Post(() => _notificationManager?.Close(content));
-        }
-        finally
-        {
-            _suppressCloseCallback = false;
-        }
+            _suppressCloseCallback = true;
+            try
+            {
+                _notificationManager?.Close(content);
+            }
+            finally
+            {
+                _suppressCloseCallback = false;
+            }
+        });
     }
 
     private static void OnToastClicked(IToast toast)
@@ -164,14 +232,14 @@ public sealed class AvaloniaToastHost : IDisposable
             _toastManager.Remove(toast);
     }
 
-    private void EnsureNotificationManager()
+    private bool EnsureNotificationManager()
     {
         if (_notificationManager is not null)
-            return;
+            return true;
 
         var topLevel = _topLevelProvider();
         if (topLevel is null)
-            return;
+            return false;
 
         _notificationManager = new(topLevel)
         {
@@ -179,6 +247,38 @@ public sealed class AvaloniaToastHost : IDisposable
             MaxItems = _options.MaxItems,
             Margin = new(_options.OffsetX, _options.OffsetY)
         };
+
+        return true;
+    }
+
+    private void ScheduleTopLevelRetry()
+    {
+        if (_topLevelRetryScheduled || _isDisposed)
+            return;
+
+        _topLevelRetryScheduled = true;
+        Post(() =>
+        {
+            _topLevelRetryScheduled = false;
+            FlushPendingToasts();
+
+            if (_pendingToasts.Count > 0)
+                ScheduleTopLevelRetry();
+        });
+    }
+
+    private void FlushPendingToasts()
+    {
+        foreach (var toast in _pendingToasts.Values.ToList())
+        {
+            if (_toastManager.Toasts.All(x => x.Notification.Id != toast.Notification.Id))
+            {
+                _pendingToasts.Remove(toast.Notification.Id);
+                continue;
+            }
+
+            ShowToastCore(toast);
+        }
     }
 
     private static IEnumerable<string> GetClasses(ToastSettings settings)

@@ -12,7 +12,7 @@ using MyNet.UI.Notifications.Models;
 namespace MyNet.Avalonia.Extended.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-public class MessageNotificationControl : HeaderedContentControl
+public sealed class MessageNotificationControl : HeaderedContentControl
 {
     #region Severity
 

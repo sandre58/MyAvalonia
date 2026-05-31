@@ -19,7 +19,9 @@ public static class MyNetAvaloniaExtendedServiceCollectionExtensions
     /// Contributes extended UI translation resources to the catalog.
     /// </summary>
     /// <remarks>
-    /// Call <see cref="MyNetAvaloniaExtendedClipboardServiceCollectionExtensions.AddMyNetAvaloniaClipboard"/> to register clipboard services.
+    /// Contributes extended UI translation resources to the catalog.
+    /// Include extended styles in <c>App.axaml</c> via
+    /// <see cref="Theming.AvaloniaExtendedThemes.GenericStyles"/>.
     /// </remarks>
     public static IServiceCollection AddMyNetAvaloniaExtended(this IServiceCollection services)
     {

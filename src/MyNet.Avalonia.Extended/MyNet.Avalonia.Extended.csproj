@@ -19,6 +19,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <AvaloniaResource Include="Themes/Generic.axaml" />
+      <AvaloniaResource Include="Themes/Controls/MessageNotificationControl.axaml" />
+    </ItemGroup>
+
+    <ItemGroup>
         <AvaloniaResource Remove="Assists\**" />
         <AvaloniaResource Remove="Busy\**" />
         <AvaloniaResource Remove="Dialogs\**" />

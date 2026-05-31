@@ -1,5 +1,10 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--
+      Extended control themes for host applications.
+      Include once in App.axaml:
+        <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Generic.axaml" />
+    -->
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

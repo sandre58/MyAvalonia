@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using MyNet.UI.Toasting.Settings;
 
 namespace MyNet.Avalonia.Extended.Toasting.Settings;
 
@@ -25,8 +26,19 @@ public sealed class AvaloniaToastHostOptions
 
     /// <summary>
     /// Gets or sets the maximum number of toast cards shown at once by the native manager.
+    /// Should stay aligned with <see cref="ToastManagerOptions.MaxVisibleToasts"/>.
     /// </summary>
     public int MaxItems { get; set; } = 3;
+
+    /// <summary>
+    /// Aligns <see cref="MaxItems"/> with the toast manager visible capacity.
+    /// </summary>
+    /// <param name="managerOptions">Toast manager options registered in DI.</param>
+    public void SyncMaxVisibleToasts(ToastManagerOptions managerOptions)
+    {
+        ArgumentNullException.ThrowIfNull(managerOptions);
+        MaxItems = managerOptions.MaxVisibleToasts;
+    }
 
     /// <summary>
     /// Gets or sets the preferred toast content width in device-independent pixels.

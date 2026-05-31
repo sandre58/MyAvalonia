@@ -9,12 +9,12 @@ using System.Windows.Input;
 using Material.Icons;
 using MyNet.Avalonia.Extended.Toasting;
 using MyNet.Avalonia.Extended.Toasting.Settings;
+using MyNet.Avalonia.Showcase.Notifications;
 using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.Services;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
-using MyNet.Avalonia.Showcase.Views.Samples;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Humanizer;
 using MyNet.UI.Commands;
@@ -40,10 +40,6 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
     private static bool _freezeOnMouseEnter;
     private static bool _enableOnClick;
     private static bool _enableOnClose;
-
-    static NotificationPageViewModel()
-        => AvaloniaToastContentFactory.CustomContentFactory = static notification =>
-            notification is CustomNotification ? new LargeContent1() : null;
 
     public NotificationPageViewModel(
         INotificationPublisher notificationPublisher,
@@ -80,7 +76,9 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
                     .AddValueAction(
                         (_, y) =>
                         {
-                            hostOptions.MaxItems = Convert.ToInt32((decimal)(y ?? 30));
+                            var maxItems = Convert.ToInt32((decimal)(y ?? 30));
+                            hostOptions.MaxItems = maxItems;
+                            managerOptions.MaxVisibleToasts = maxItems;
                             toastHost.RefreshLayout();
                         },
                         30.0M,
@@ -197,7 +195,7 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
     private static INotification CreateNotificationFromRole(ThemeRole role)
     {
         if (role == ThemeRole.Inverse)
-            return new CustomNotification();
+            return new ShowcaseCustomNotification();
 
         var severity = role switch
         {
@@ -211,13 +209,5 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
             SentenceGenerator.Paragraph(RandomGenerator.Int(4, 7), RandomGenerator.Int(1, 3)),
             role.ToString(),
             severity);
-    }
-
-    private sealed class CustomNotification : NotificationBase
-    {
-        public CustomNotification()
-            : base(string.Empty, severity: NotificationSeverity.None)
-        {
-        }
     }
 }

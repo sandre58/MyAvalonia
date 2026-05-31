@@ -162,6 +162,7 @@ public class App : Application
             .AddNotifications()
             .AddSingleton<IToastFactory, ShowcaseDemoToastFactory>()
             .AddToasting()
+            .AddSingleton<IAvaloniaToastContentContributor, ShowcaseCustomNotificationToastContentContributor>()
             .AddAvaloniaToasting(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow)
             .AddMyNetAvaloniaShowcaseResources();
 
