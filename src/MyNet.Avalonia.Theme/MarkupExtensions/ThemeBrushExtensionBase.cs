@@ -6,8 +6,10 @@
 
 using System;
 using System.Collections.Concurrent;
+using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.Avalonia.Theme.MarkupExtensions.Helpers;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -64,4 +66,14 @@ public abstract class ThemeBrushExtensionBase : MarkupExtension
         TypeCache.TryAdd(name, resolvedType);
         return resolvedType;
     }
+
+    /// <summary>
+    /// Adds brush source and theme-version bindings used by gradient and pattern brush multi-bindings.
+    /// </summary>
+    protected static void AddBrushSourceAndThemeVersion(
+        MultiBinding multiBinding,
+        string path,
+        RelativeSource relativeSource,
+        IServiceProvider serviceProvider)
+        => ThemeBindingHelper.AddBrushSourceAndThemeVersion(multiBinding, path, relativeSource, serviceProvider);
 }

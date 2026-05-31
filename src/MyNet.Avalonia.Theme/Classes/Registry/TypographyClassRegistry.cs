@@ -11,8 +11,8 @@ using Avalonia.Controls;
 using Avalonia.Controls.Documents;
 using Avalonia.Data;
 using Avalonia.Media;
-using MyNet.Avalonia.Converters;
 using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Theme.MarkupExtensions.Helpers;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Classes.Registry.States;
 using MyNet.Avalonia.Theme.Theming;
@@ -112,16 +112,7 @@ public static class TypographyClassRegistry
         ClassRegistry.Register<Control>(CssClass.TextWatermark, x => new CompositeDisposable
         {
             x.SetProperty(Visual.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium)))),
-            x.SetProperty(TextElement.FontSizeProperty, new ReflectionBinding("(TextElement.FontSize)")
-            {
-                RelativeSource = new(RelativeSourceMode.FindAncestor)
-                {
-                    AncestorType = typeof(Control)
-                },
-                Converter = MathConverter.Multiply,
-                ConverterParameter = 0.75,
-                TypeResolver = ResolveType
-            })
+            x.SetProperty(TextElement.FontSizeProperty, ThemeBindingHelper.CreateScaledAncestorFontSize(0.75))
         });
 
         // Headers
@@ -140,16 +131,7 @@ public static class TypographyClassRegistry
         ClassRegistry.Register<Control>(CssClass.HeaderWatermark, x => new CompositeDisposable
         {
             x.SetProperty(HeaderAssist.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium)))),
-            x.SetProperty(HeaderAssist.FontSizeProperty, new ReflectionBinding("(TextElement.FontSize)")
-            {
-                RelativeSource = new(RelativeSourceMode.FindAncestor)
-                {
-                    AncestorType = typeof(Control)
-                },
-                Converter = MathConverter.Multiply,
-                ConverterParameter = 0.75,
-                TypeResolver = ResolveType
-            })
+            x.SetProperty(HeaderAssist.FontSizeProperty, ThemeBindingHelper.CreateScaledAncestorFontSize(0.75))
         });
     }
 
@@ -181,16 +163,4 @@ public static class TypographyClassRegistry
         ClassRegistry.Register<TextBlock>(CssClass.TextStrikethrough, x => ClassContext.Create<TextBlock, ControlState>(x).Update(s => s.IsStrikethrough = true, ApplyState));
     }
 
-    /// <summary>
-    /// Resolves a type based on the provided type name. This method is used to convert a string representation of a type into an actual Type object, which can be utilized in bindings or other scenarios where type information is required. The method currently supports resolving the "TextElement" type, and will throw an exception if an unsupported type name is provided.
-    /// </summary>
-    /// <param name="namespace">The namespace of the type to resolve.</param>
-    /// <param name="typeName">The name of the type to resolve.</param>
-    /// <returns>The resolved Type object.</returns>
-    /// <exception cref="InvalidOperationException">Thrown when the type name cannot be resolved.</exception>
-    private static Type ResolveType(string? @namespace, string typeName) => typeName switch
-    {
-        nameof(TextElement) => typeof(TextElement),
-        _ => throw new InvalidOperationException($"Cannot resolve type '{typeName}'")
-    };
 }

@@ -71,20 +71,7 @@ public class DottedGridBrushExtension : ThemeBrushExtensionBase
             ConverterParameter = parameters
         };
 
-        multiBinding.Bindings.Add(new ReflectionBinding(Path)
-        {
-            Mode = BindingMode.OneWay,
-            RelativeSource = RelativeSource,
-            TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
-        });
-
-        // ThemeVersion changes after every theme update (after brushes are refreshed),
-        // forcing the converter to re-run and pick up the new brush color.
-        multiBinding.Bindings.Add(new ReflectionBinding(nameof(MyTheme.ThemeVersion))
-        {
-            Mode = BindingMode.OneWay,
-            Source = MyTheme.Current
-        });
+        AddBrushSourceAndThemeVersion(multiBinding, Path, RelativeSource, serviceProvider);
 
         return multiBinding;
     }
