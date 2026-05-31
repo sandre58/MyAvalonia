@@ -8,7 +8,7 @@ using Avalonia;
 using Avalonia.Media;
 using MyNet.Avalonia.Theme.Classes.Enums;
 
-namespace MyNet.Avalonia.Theme.Assists;
+namespace MyNet.Avalonia.Theme.Controls.Assists;
 
 public static class DataGridAssist
 {

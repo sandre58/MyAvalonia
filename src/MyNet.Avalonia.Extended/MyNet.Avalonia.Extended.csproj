@@ -20,6 +20,93 @@
 
     <ItemGroup>
         <AvaloniaResource Include="Themes/**/*.axaml" />
+        <AvaloniaResource Remove="Assists\**" />
+        <AvaloniaResource Remove="Busy\**" />
+        <AvaloniaResource Remove="Clipboard\**" />
+        <AvaloniaResource Remove="Controls\**" />
+        <AvaloniaResource Remove="Dialogs\**" />
+        <AvaloniaResource Remove="Extensions\**" />
+        <AvaloniaResource Remove="Navigation\**" />
+        <AvaloniaResource Remove="Services\**" />
+        <AvaloniaResource Remove="Themes\**" />
+        <AvaloniaResource Remove="Theming\**" />
+        <AvaloniaResource Remove="Toasting\**" />
+        <AvaloniaResource Remove="WarmUp\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AvaloniaXaml Remove="Assists\**" />
+      <AvaloniaXaml Remove="Busy\**" />
+      <AvaloniaXaml Remove="Clipboard\**" />
+      <AvaloniaXaml Remove="Controls\**" />
+      <AvaloniaXaml Remove="Dialogs\**" />
+      <AvaloniaXaml Remove="Extensions\**" />
+      <AvaloniaXaml Remove="Navigation\**" />
+      <AvaloniaXaml Remove="Services\**" />
+      <AvaloniaXaml Remove="Themes\**" />
+      <AvaloniaXaml Remove="Theming\**" />
+      <AvaloniaXaml Remove="Toasting\**" />
+      <AvaloniaXaml Remove="WarmUp\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Assists\**" />
+      <Compile Remove="Busy\**" />
+      <Compile Remove="Clipboard\**" />
+      <Compile Remove="Controls\**" />
+      <Compile Remove="Dialogs\**" />
+      <Compile Remove="Extensions\**" />
+      <Compile Remove="Navigation\**" />
+      <Compile Remove="Services\**" />
+      <Compile Remove="Themes\**" />
+      <Compile Remove="Theming\**" />
+      <Compile Remove="Toasting\**" />
+      <Compile Remove="WarmUp\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Assists\**" />
+      <EmbeddedResource Remove="Busy\**" />
+      <EmbeddedResource Remove="Clipboard\**" />
+      <EmbeddedResource Remove="Controls\**" />
+      <EmbeddedResource Remove="Dialogs\**" />
+      <EmbeddedResource Remove="Extensions\**" />
+      <EmbeddedResource Remove="Navigation\**" />
+      <EmbeddedResource Remove="Services\**" />
+      <EmbeddedResource Remove="Themes\**" />
+      <EmbeddedResource Remove="Theming\**" />
+      <EmbeddedResource Remove="Toasting\**" />
+      <EmbeddedResource Remove="WarmUp\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Remove="Assists\**" />
+      <AdditionalFiles Remove="Busy\**" />
+      <AdditionalFiles Remove="Clipboard\**" />
+      <AdditionalFiles Remove="Controls\**" />
+      <AdditionalFiles Remove="Dialogs\**" />
+      <AdditionalFiles Remove="Extensions\**" />
+      <AdditionalFiles Remove="Navigation\**" />
+      <AdditionalFiles Remove="Services\**" />
+      <AdditionalFiles Remove="Themes\**" />
+      <AdditionalFiles Remove="Theming\**" />
+      <AdditionalFiles Remove="Toasting\**" />
+      <AdditionalFiles Remove="WarmUp\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assists\**" />
+      <None Remove="Busy\**" />
+      <None Remove="Clipboard\**" />
+      <None Remove="Controls\**" />
+      <None Remove="Dialogs\**" />
+      <None Remove="Extensions\**" />
+      <None Remove="Navigation\**" />
+      <None Remove="Services\**" />
+      <None Remove="Themes\**" />
+      <None Remove="Theming\**" />
+      <None Remove="Toasting\**" />
+      <None Remove="WarmUp\**" />
     </ItemGroup>
 
 </Project>

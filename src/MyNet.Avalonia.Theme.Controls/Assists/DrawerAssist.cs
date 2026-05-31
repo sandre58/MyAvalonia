@@ -8,7 +8,7 @@ using System.Windows.Input;
 using Avalonia.Controls;
 using MyNet.Avalonia.Commands;
 
-namespace MyNet.Avalonia.Theme.Assists;
+namespace MyNet.Avalonia.Theme.Controls.Assists;
 
 public static class DrawerAssist
 {

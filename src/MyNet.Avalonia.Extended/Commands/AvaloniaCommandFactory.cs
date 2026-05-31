@@ -5,18 +5,44 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using MyNet.Avalonia.Extended.Schedulers;
 using MyNet.UI.Commands;
+using MyNet.UI.Threading;
 
 namespace MyNet.Avalonia.Extended.Commands;
 
-public class AvaloniaCommandFactory : ICommandFactory
+/// <summary>
+/// Avalonia implementation of <see cref="ICommandFactory"/> that raises <see cref="ICommand.CanExecuteChanged"/>
+/// on the UI dispatcher via <see cref="AvaloniaSchedulerProvider"/>.
+/// </summary>
+/// <param name="schedulerProvider">The scheduler provider used for UI-thread notifications.</param>
+public sealed class AvaloniaCommandFactory(ISchedulerProvider? schedulerProvider = null) : ICommandFactory
 {
-    public ICommand Create(Action execute) => new RelayCommand(execute);
+    private readonly RelayCommandFactory _inner = new(schedulerProvider ?? AvaloniaSchedulerProvider.Default);
 
-    public ICommand Create(Action execute, Func<bool> canExectute) => new RelayCommand(execute, canExectute);
+    /// <inheritdoc />
+    public ICommand Create(Action execute) => _inner.Create(execute);
 
-    public ICommand Create<T>(Action<T?> execute) => new RelayCommand<T>(execute);
+    /// <inheritdoc />
+    public ICommand Create(Action execute, Func<bool> canExecute) => _inner.Create(execute, canExecute);
 
-    public ICommand Create<T>(Action<T?> execute, Func<T?, bool> canExectute) => new RelayCommand<T>(execute, canExectute);
+    /// <inheritdoc />
+    public ICommand Create<T>(Action<T?> execute) => _inner.Create(execute);
+
+    /// <inheritdoc />
+    public ICommand Create<T>(Action<T?> execute, Func<T?, bool> canExecute) => _inner.Create(execute, canExecute);
+
+    /// <inheritdoc />
+    public ICommand Create(Func<Task> execute) => _inner.Create(execute);
+
+    /// <inheritdoc />
+    public ICommand Create(Func<Task> execute, Func<bool> canExecute) => _inner.Create(execute, canExecute);
+
+    /// <inheritdoc />
+    public ICommand Create<T>(Func<T?, Task> execute) => _inner.Create(execute);
+
+    /// <inheritdoc />
+    public ICommand Create<T>(Func<T?, Task> execute, Func<T?, bool> canExecute) => _inner.Create(execute, canExecute);
 }

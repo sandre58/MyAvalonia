@@ -23,6 +23,7 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Theme.Controls.Assists;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Humanizer;

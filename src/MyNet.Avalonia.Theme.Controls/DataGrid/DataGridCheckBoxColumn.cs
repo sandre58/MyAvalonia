@@ -7,8 +7,6 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Styling;
-using MyNet.Avalonia;
-using MyNet.Avalonia.Theme;
 
 namespace MyNet.Avalonia.Theme.Controls.DataGrid;
 

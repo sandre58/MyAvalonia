@@ -15,6 +15,7 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Registry;
 using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Theme.Controls.Assists;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Theming;
 using MyNet.Avalonia.Theme.Theming.Core;

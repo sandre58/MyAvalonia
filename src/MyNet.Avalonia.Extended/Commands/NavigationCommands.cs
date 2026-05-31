@@ -4,26 +4,55 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Windows.Input;
 using MyNet.UI.Commands;
 using MyNet.UI.Navigation;
+using MyNet.UI.Navigation.Models;
 
 namespace MyNet.Avalonia.Extended.Commands;
 
-public static class NavigationCommands
+/// <summary>
+/// Creates navigation commands bound to an <see cref="INavigationService"/> instance.
+/// </summary>
+/// <param name="navigationService">The navigation service to bind commands to.</param>
+/// <param name="commandFactory">The command factory used to create command instances.</param>
+public sealed class NavigationCommands(INavigationService navigationService, ICommandFactory commandFactory)
 {
-    public static ICommand GoBackCommand { get; } = CommandsManager.Create(GoBack, CanGoBack);
+    /// <summary>
+    /// Gets the command that navigates back in the navigation journal.
+    /// </summary>
+    public ICommand GoBackCommand { get; } = commandFactory.Create(
+        () => navigationService.GoBackAsync(),
+        () => navigationService.CanGoBack);
 
-    public static ICommand GoForwardCommand { get; } = CommandsManager.Create(GoForward, CanGoForward);
+    /// <summary>
+    /// Gets the command that navigates forward in the navigation journal.
+    /// </summary>
+    public ICommand GoForwardCommand { get; } = commandFactory.Create(
+        () => navigationService.GoForwardAsync(),
+        () => navigationService.CanGoForward);
 
-    public static ICommand NavigateCommand => CommandsManager.CreateNotNull<Type>(x => NavigationManager.NavigateTo(x));
+    /// <summary>
+    /// Gets the command that navigates to a non-null <see cref="INavigationPage"/>.
+    /// </summary>
+    public ICommand NavigateCommand { get; } = commandFactory.CreateRequired<INavigationPage>(
+        page => navigationService.NavigateToAsync(page));
 
-    private static void GoBack() => NavigationManager.GoBack();
+    /// <summary>
+    /// Subscribes to navigation state changes and refreshes command availability.
+    /// </summary>
+    public void SubscribeToNavigationStateChanges() => navigationService.StateChanged += OnNavigationStateChanged;
 
-    private static bool CanGoBack() => NavigationManager.CanGoBack();
+    /// <summary>
+    /// Unsubscribes from navigation state changes.
+    /// </summary>
+    public void UnsubscribeFromNavigationStateChanges() => navigationService.StateChanged -= OnNavigationStateChanged;
 
-    private static void GoForward() => NavigationManager.GoForward();
+    private void OnNavigationStateChanged(object? sender, NavigationStateChangedEventArgs e) => RaiseCanExecuteChanged();
 
-    private static bool CanGoForward() => NavigationManager.CanGoForward();
+    private void RaiseCanExecuteChanged()
+    {
+        (GoBackCommand as IRaiseCanExecuteChanged)?.RaiseCanExecuteChanged();
+        (GoForwardCommand as IRaiseCanExecuteChanged)?.RaiseCanExecuteChanged();
+    }
 }

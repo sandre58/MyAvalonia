@@ -7,7 +7,7 @@
 using Avalonia;
 using Avalonia.Styling;
 
-namespace MyNet.Avalonia.Theme.Assists;
+namespace MyNet.Avalonia.Theme.Controls.Assists;
 
 public static class TabbedPageAssist
 {

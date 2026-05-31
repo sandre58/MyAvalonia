@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
@@ -12,10 +13,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls;
-using MyNet.UI.Commands;
-using MyNet.UI.Locators;
 using MyNet.UI.Navigation;
 using MyNet.UI.Navigation.Models;
+using NavigationService = MyNet.Avalonia.Extended.Navigation.NavigationService;
 
 namespace MyNet.Avalonia.Extended.Assists;
 
@@ -117,7 +117,7 @@ public static class NavigationAssist
 
             case NavigationPage navigationPage:
                 {
-                    if (navigationService is Navigation.NavigationService avaloniaNavigationService)
+                    if (navigationService is NavigationService avaloniaNavigationService)
                         avaloniaNavigationService.AttachNavigationPage(navigationPage);
                     break;
                 }
@@ -174,7 +174,7 @@ public static class NavigationAssist
     /// <param name="obj">The object to match against items in the collection. Can be null, in which case the method returns null.</param>
     /// <returns>The first item in the collection that matches the specified object, or null if no matching item is found or
     /// if the collection is null.</returns>
-    private static object? FindMatchingItem(System.Collections.IEnumerable? items, object? obj)
+    private static object? FindMatchingItem(IEnumerable? items, object? obj)
     {
         if (items is null) return null;
 

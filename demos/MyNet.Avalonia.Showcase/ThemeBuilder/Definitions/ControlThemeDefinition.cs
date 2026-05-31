@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 using Avalonia.Styling;
-using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Theme.Controls.Assists;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Theming.Core;
 

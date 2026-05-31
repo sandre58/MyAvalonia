@@ -6,7 +6,7 @@
 
 using Avalonia;
 
-namespace MyNet.Avalonia.Theme.Assists;
+namespace MyNet.Avalonia.Theme.Controls.Assists;
 
 public static class ScrollViewerAssist
 {
