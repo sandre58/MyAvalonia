@@ -5,123 +5,151 @@
 // -----------------------------------------------------------------------
 
 using System;
-using MyNet.Avalonia.Colors;
-using MyNet.Avalonia.Extensions;
+using System.Collections.Generic;
+using Avalonia;
+using Avalonia.Controls;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.UI.Theming;
-using MyNet.Utilities;
+using UiTheme = MyNet.UI.Theming.Theme;
 
 namespace MyNet.Avalonia.Extended.Theming;
 
 /// <summary>
-/// Service for managing application myTheme (Dark/Light/HighContrast) and brand colors (Primary/Accent).
-/// Integrates with MyNet.Avalonia.Theme.MyTheme for hot-reload support.
+/// Avalonia implementation of <see cref="IThemeService"/> that applies theme state to <see cref="IThemeBrushService"/>.
 /// </summary>
-public class ThemeService(IThemeBrushService themeBrushService, IThemeBaseRegistry themeBaseRegistry) : IThemeService
+public sealed class ThemeService(IThemeBrushService themeBrushService, IThemeBaseRegistry themeBaseRegistry) : IThemeService
 {
-    /// <summary>
-    /// Event raised when the myTheme changes.
-    /// </summary>
+    private readonly List<IThemeExtension> _baseExtensions = [];
+    private readonly List<IThemeExtension> _primaryExtensions = [];
+    private readonly List<IThemeExtension> _accentExtensions = [];
+
+    /// <inheritdoc />
     public event EventHandler<ThemeChangedEventArgs>? ThemeChanged;
 
-    /// <summary>
-    /// Gets the current myTheme configuration.
-    /// </summary>
-    public UI.Theming.Theme CurrentTheme
+    /// <inheritdoc />
+    public UiTheme CurrentTheme { get; private set; } = CreateThemeFromBrushService(themeBrushService, themeBaseRegistry);
+
+    /// <inheritdoc />
+    public void ApplyTheme(UiTheme theme)
     {
-        get
-        {
-            var primary = themeBrushService.GetPrimary();
-            var accent = themeBrushService.GetAccent();
-            return new(themeBaseRegistry.Get(themeBrushService.GetTheme().OrEmpty()) ?? themeBaseRegistry.Dark, primary?.Base.ToHex(), accent?.Base.ToHex(), primary?.Foreground.ToHex(), accent?.Foreground.ToHex());
-        }
-    }
+        ArgumentNullException.ThrowIfNull(theme);
 
-    /// <summary>
-    /// Applies a myTheme configuration to the application.
-    /// </summary>
-    /// <param name="theme">The myTheme to apply.</param>
-    public void ApplyTheme(UI.Theming.Theme theme)
-    {
-        var primaryColor = theme.PrimaryColor.ToColor();
-        var primaryForegroundColor = theme.PrimaryForegroundColor.ToColor();
-
-        var accentColor = theme.AccentColor.ToColor();
-        var accentForegroundColor = theme.AccentForegroundColor.ToColor();
-
-        if (primaryColor.HasValue && accentColor.HasValue)
-        {
-            themeBrushService.SetTheme(theme.Base.ToString().OrEmpty(), primaryColor.Value, accentColor.Value, primaryForegroundColor, accentForegroundColor);
-        }
-        else
-        {
-            themeBrushService.SetTheme(theme.Base.ToString().OrEmpty());
-
-            if (primaryColor.HasValue)
-            {
-                themeBrushService.SetPrimary(primaryColor.Value, primaryForegroundColor);
-            }
-
-            if (accentColor.HasValue)
-            {
-                themeBrushService.SetAccent(accentColor.Value, accentForegroundColor);
-            }
-        }
-
+        ApplyToBrushService(theme);
+        ApplyExtensions(theme);
+        CurrentTheme = theme;
         ThemeChanged?.Invoke(this, new(CurrentTheme));
     }
 
-    /// <summary>
-    /// Applies a base myTheme (Dark/Light/HighContrast) to the application, keeping existing brand colors. This allows changing the overall theme mode while preserving the current primary and accent colors.
-    /// </summary>
-    /// <param name="baseTheme">The base theme to apply.</param>
+    /// <inheritdoc />
     public void ApplyBaseTheme(IThemeBase baseTheme)
     {
-        var currentTheme = CurrentTheme;
-
-        ApplyTheme(currentTheme with { Base = baseTheme });
+        ArgumentNullException.ThrowIfNull(baseTheme);
+        ApplyTheme(CurrentTheme with { Base = baseTheme });
     }
 
-    /// <summary>
-    /// Applies a primary color to the application, keeping existing base myTheme and accent color. This allows changing the primary brand color while preserving the overall theme mode and accent color.
-    /// </summary>
-    /// <param name="color">The primary color to apply.</param>
-    /// <param name="foreground">The primary foreground color to apply.</param>
+    /// <inheritdoc />
     public void ApplyPrimary(string color, string? foreground = null)
-    {
-        var currentTheme = CurrentTheme;
-        ApplyTheme(currentTheme with { PrimaryColor = color, PrimaryForegroundColor = foreground });
-    }
+        => ApplyTheme(CurrentTheme with { PrimaryColor = color, PrimaryForegroundColor = foreground });
 
-    /// <summary>
-    /// Applies an accent color to the application, keeping existing base myTheme and primary color. This allows changing the accent color while preserving the overall theme mode and primary brand color.
-    /// </summary>
-    /// <param name="color">The accent color to apply.</param>
-    /// <param name="foreground">The accent foreground color to apply.</param>
+    /// <inheritdoc />
     public void ApplyAccent(string color, string? foreground = null)
+        => ApplyTheme(CurrentTheme with { AccentColor = color, AccentForegroundColor = foreground });
+
+    /// <inheritdoc />
+    public void UpdateTheme(Func<UiTheme, UiTheme> update)
     {
-        var currentTheme = CurrentTheme;
-        ApplyTheme(currentTheme with { AccentColor = color, AccentForegroundColor = foreground });
+        ArgumentNullException.ThrowIfNull(update);
+        ApplyTheme(update(CurrentTheme));
     }
 
-    /// <summary>
-    /// Updates the current myTheme configuration using a provided update action, allowing for flexible modifications to the theme properties. The update action receives the current theme as a parameter, and any changes made to the theme within the action will be applied when the method completes. This allows for complex theme updates that may involve multiple properties or conditional logic while ensuring that the updated theme is applied correctly to the application.
-    /// </summary>
-    /// <param name="update">The update action to apply to the current theme.</param>
-    public void UpdateTheme(Func<UI.Theming.Theme, UI.Theming.Theme> update) => ApplyTheme(update(CurrentTheme));
+    /// <inheritdoc />
+    public IThemeService AddBaseExtension(IThemeExtension extension)
+    {
+        ArgumentNullException.ThrowIfNull(extension);
+        _baseExtensions.Add(extension);
+        return this;
+    }
 
-    /// <summary>
-    /// Adds a base myTheme extension (not implemented - for future use).
-    /// </summary>
-    public IThemeService AddBaseExtension(IThemeExtension extension) => this;
+    /// <inheritdoc />
+    public IThemeService AddPrimaryExtension(IThemeExtension extension)
+    {
+        ArgumentNullException.ThrowIfNull(extension);
+        _primaryExtensions.Add(extension);
+        return this;
+    }
 
-    /// <summary>
-    /// Adds a primary color extension (not implemented - for future use).
-    /// </summary>
-    public IThemeService AddPrimaryExtension(IThemeExtension extension) => this;
+    /// <inheritdoc />
+    public IThemeService AddAccentExtension(IThemeExtension extension)
+    {
+        ArgumentNullException.ThrowIfNull(extension);
+        _accentExtensions.Add(extension);
+        return this;
+    }
 
-    /// <summary>
-    /// Adds an accent color extension (not implemented - for future use).
-    /// </summary>
-    public IThemeService AddAccentExtension(IThemeExtension extension) => this;
+    private void ApplyToBrushService(UiTheme theme)
+    {
+        var primaryColor = theme.PrimaryColor.ToColor();
+        var primaryForegroundColor = theme.PrimaryForegroundColor.ToColor();
+        var accentColor = theme.AccentColor.ToColor();
+        var accentForegroundColor = theme.AccentForegroundColor.ToColor();
+        var themeName = theme.Base.Name;
+
+        if (primaryColor.HasValue && accentColor.HasValue)
+        {
+            themeBrushService.SetTheme(
+                themeName,
+                primaryColor.Value,
+                accentColor.Value,
+                primaryForegroundColor,
+                accentForegroundColor);
+            return;
+        }
+
+        themeBrushService.SetTheme(themeName);
+
+        if (primaryColor.HasValue)
+            themeBrushService.SetPrimary(primaryColor.Value, primaryForegroundColor);
+
+        if (accentColor.HasValue)
+            themeBrushService.SetAccent(accentColor.Value, accentForegroundColor);
+    }
+
+    private void ApplyExtensions(UiTheme theme)
+    {
+        var resources = Application.Current?.Resources;
+        if (resources is null)
+            return;
+
+        MergeExtensionResources(resources, _baseExtensions, theme);
+        MergeExtensionResources(resources, _primaryExtensions, theme);
+        MergeExtensionResources(resources, _accentExtensions, theme);
+    }
+
+    private static void MergeExtensionResources(
+        IResourceDictionary target,
+        IReadOnlyList<IThemeExtension> extensions,
+        UiTheme theme)
+    {
+        foreach (var extension in extensions)
+        {
+            foreach (var (key, value) in extension.GetResources(theme))
+                target[key] = value!;
+        }
+    }
+
+    private static UiTheme CreateThemeFromBrushService(IThemeBrushService brushService, IThemeBaseRegistry registry)
+    {
+        var primary = brushService.GetPrimary();
+        var accent = brushService.GetAccent();
+        var baseTheme = ResolveBase(registry, brushService.GetTheme());
+
+        return new(
+            baseTheme,
+            primary?.Base.ToHex() ?? "#2563EB",
+            accent?.Base.ToHex() ?? "#F59E0B",
+            primary?.Foreground.ToHex(),
+            accent?.Foreground.ToHex());
+    }
+
+    private static IThemeBase ResolveBase(IThemeBaseRegistry registry, string? themeName) => !string.IsNullOrWhiteSpace(themeName) && registry.Get(themeName) is { } registered ? registered : registry.Dark;
 }

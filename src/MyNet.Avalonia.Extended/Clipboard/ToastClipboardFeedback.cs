@@ -5,19 +5,27 @@
 // -----------------------------------------------------------------------
 
 using MyNet.Avalonia.Clipboard;
+using MyNet.UI.Notifications;
+using MyNet.UI.Notifications.Models;
 using MyNet.UI.Resources;
-using MyNet.UI.Toasting;
 
 namespace MyNet.Avalonia.Extended.Clipboard;
 
 /// <summary>
-/// Shows toast notifications after clipboard operations.
+/// Publishes clipboard feedback through the notification pipeline.
 /// </summary>
-public sealed class ToastClipboardFeedback : IClipboardFeedback
+/// <param name="notificationPublisher">The notification publisher used to emit feedback messages.</param>
+public sealed class ToastClipboardFeedback(INotificationPublisher notificationPublisher) : IClipboardFeedback
 {
     /// <inheritdoc />
-    public void NotifySuccess() => ToasterManager.ShowInformation(MessageResources.CopyInClipBoardSuccess);
+    public void NotifySuccess()
+        => notificationPublisher.Publish(new MessageNotification(
+            MessageResources.CopyInClipBoardSuccess,
+            severity: NotificationSeverity.Information));
 
     /// <inheritdoc />
-    public void NotifyError() => ToasterManager.ShowError(MessageResources.CopyInClipBoardError);
+    public void NotifyError()
+        => notificationPublisher.Publish(new MessageNotification(
+            MessageResources.CopyInClipBoardError,
+            severity: NotificationSeverity.Error));
 }

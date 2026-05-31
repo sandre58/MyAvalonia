@@ -22,7 +22,6 @@
         <AvaloniaResource Include="Themes/**/*.axaml" />
         <AvaloniaResource Remove="Assists\**" />
         <AvaloniaResource Remove="Busy\**" />
-        <AvaloniaResource Remove="Clipboard\**" />
         <AvaloniaResource Remove="Controls\**" />
         <AvaloniaResource Remove="Dialogs\**" />
         <AvaloniaResource Remove="Extensions\**" />
@@ -36,7 +35,6 @@
     <ItemGroup>
       <AvaloniaXaml Remove="Assists\**" />
       <AvaloniaXaml Remove="Busy\**" />
-      <AvaloniaXaml Remove="Clipboard\**" />
       <AvaloniaXaml Remove="Controls\**" />
       <AvaloniaXaml Remove="Dialogs\**" />
       <AvaloniaXaml Remove="Extensions\**" />
@@ -50,7 +48,6 @@
     <ItemGroup>
       <Compile Remove="Assists\**" />
       <Compile Remove="Busy\**" />
-      <Compile Remove="Clipboard\**" />
       <Compile Remove="Controls\**" />
       <Compile Remove="Dialogs\**" />
       <Compile Remove="Extensions\**" />
@@ -64,7 +61,6 @@
     <ItemGroup>
       <EmbeddedResource Remove="Assists\**" />
       <EmbeddedResource Remove="Busy\**" />
-      <EmbeddedResource Remove="Clipboard\**" />
       <EmbeddedResource Remove="Controls\**" />
       <EmbeddedResource Remove="Dialogs\**" />
       <EmbeddedResource Remove="Extensions\**" />
@@ -78,7 +74,6 @@
     <ItemGroup>
       <AdditionalFiles Remove="Assists\**" />
       <AdditionalFiles Remove="Busy\**" />
-      <AdditionalFiles Remove="Clipboard\**" />
       <AdditionalFiles Remove="Controls\**" />
       <AdditionalFiles Remove="Dialogs\**" />
       <AdditionalFiles Remove="Extensions\**" />
@@ -92,7 +87,6 @@
     <ItemGroup>
       <None Remove="Assists\**" />
       <None Remove="Busy\**" />
-      <None Remove="Clipboard\**" />
       <None Remove="Controls\**" />
       <None Remove="Dialogs\**" />
       <None Remove="Extensions\**" />

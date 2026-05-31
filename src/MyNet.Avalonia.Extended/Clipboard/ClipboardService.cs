@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Input.Platform;
 using MyNet.Avalonia.Clipboard;
 
 namespace MyNet.Avalonia.Extended.Clipboard;
@@ -15,37 +16,26 @@ namespace MyNet.Avalonia.Extended.Clipboard;
 /// <summary>
 /// Resolves Avalonia <see cref="IClipboard"/> from a <see cref="TopLevel"/> provider.
 /// </summary>
-public class ClipboardService(Func<TopLevel?> topLevelProvider, IClipboardFeedback? feedback = null) : IClipboardService
+public sealed class ClipboardService(Func<TopLevel?> topLevelProvider, IClipboardFeedback? feedback = null) : IClipboardService
 {
     /// <inheritdoc />
-    public async Task CopyAsync(IAsyncDataTransfer content)
-    {
-        if (topLevelProvider()?.Clipboard is not { } clipboard)
-            return;
-
-        try
-        {
-            await clipboard.SetDataAsync(content).ConfigureAwait(false);
-            feedback?.NotifySuccess();
-        }
-        catch (Exception)
-        {
-            feedback?.NotifyError();
-        }
-    }
+    public Task CopyAsync(IAsyncDataTransfer content)
+        => CopyInternalAsync(clipboard => clipboard.SetDataAsync(content));
 
     /// <inheritdoc />
-    public async Task CopyTextAsync(string text)
-    {
-        if (string.IsNullOrEmpty(text))
-            return;
+    public Task CopyTextAsync(string text) => string.IsNullOrEmpty(text) ? Task.CompletedTask : CopyInternalAsync(clipboard => clipboard.SetTextAsync(text));
 
+    private async Task CopyInternalAsync(Func<IClipboard, Task> copy)
+    {
         if (topLevelProvider()?.Clipboard is not { } clipboard)
+        {
+            feedback?.NotifyError();
             return;
+        }
 
         try
         {
-            await clipboard.SetTextAsync(text).ConfigureAwait(false);
+            await copy(clipboard).ConfigureAwait(false);
             feedback?.NotifySuccess();
         }
         catch (Exception)

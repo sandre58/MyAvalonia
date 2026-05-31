@@ -154,7 +154,8 @@ public class App : Application
             .AddMyNetAvalonia()
             .AddMyNetAvaloniaControls()
             .AddMyNetAvaloniaExtended()
-            .AddMyNetAvaloniaClipboard(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow)
+            .AddAvaloniaTheming()
+            .AddAvaloniaClipboard(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow)
             .AddMyNetAvaloniaShowcaseResources();
 
         collection.AddSingleton<ILogger, Logger>()
@@ -162,9 +163,7 @@ public class App : Application
             .AddSingleton<IViewModelLocator, ViewModelLocator>()
             .AddSingleton<IPageResolver, PageResolver>()
             .AddSingleton<IThemeBrushService>(MyTheme.Current)
-            .AddSingleton<IThemeBaseRegistry, ThemeVariantsRegistry>()
-            .AddSingleton<IThemeService, ThemeService>()
-            .AddSingleton<INotificationsManager, NotificationsManager>()
+            .AddNotifications()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IToasterService>(new ToasterService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
             .AddScoped<IBusyServiceFactory, BusyServiceFactory>()
@@ -349,9 +348,6 @@ public class App : Application
     private static void InitializeTheme(IServiceProvider services)
     {
         var registry = services.GetRequiredService<IThemeBaseRegistry>();
-        registry.Register(registry.Dark);
-        registry.Register(registry.Light);
-        registry.Register(registry.HighContrast);
         registry.Register(new ThemeBase(ThemeVariantProvider.DarkBlue, true, false));
     }
 

@@ -6,32 +6,27 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using MyNet.Globalization.Culture;
-using MyNet.UI.Commands;
-using MyNet.UI.Threading;
+using MyNet.Avalonia.Theme.Theming.Core;
+using MyNet.UI.Theming;
 
 #pragma warning disable IDE0130
-namespace MyNet.Avalonia.Extended.Commands;
+namespace MyNet.Avalonia.Extended.Theming;
 #pragma warning restore IDE0130
 
-/// <summary>
-/// Registers Avalonia command and scheduler services.
-/// </summary>
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Registers Avalonia schedulers and command factory services.
+    /// Registers Avalonia theme services.
     /// </summary>
     /// <remarks>
-    /// Requires an <see cref="ICultureContext"/> to be registered, typically via <c>AddGlobalization()</c>.
+    /// Requires an <see cref="IThemeBrushService"/> to be registered, typically as <c>MyTheme.Current</c>.
     /// </remarks>
     /// <param name="services">The service collection.</param>
     /// <returns>The same service collection for chaining.</returns>
-    public static IServiceCollection AddAvaloniaCommands(this IServiceCollection services)
+    public static IServiceCollection AddAvaloniaTheming(this IServiceCollection services)
     {
-        services.AddSchedulerProvider();
-
-        services.TryAddSingleton<ICommandFactory, AvaloniaCommandFactory>();
+        services.TryAddSingleton<IThemeBaseRegistry, ThemeVariantsRegistry>();
+        services.TryAddSingleton<IThemeService, ThemeService>();
         return services;
     }
 }
