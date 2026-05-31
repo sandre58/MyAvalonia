@@ -30,8 +30,10 @@ public sealed class AvaloniaToastHost : IDisposable
     private readonly IToastManager _toastManager;
     private readonly IAvaloniaToastContentFactory _contentFactory;
     private readonly AvaloniaToastHostOptions _options;
+    private readonly TimeSpan _defaultDuration;
     private readonly Dictionary<Guid, object> _displayContentByNotificationId = [];
     private readonly Dictionary<Guid, IToast> _pendingToasts = [];
+    private readonly Dictionary<Guid, ToastHoverLifetimeAttachment> _hoverAttachments = [];
     private WindowNotificationManager? _notificationManager;
     private readonly INotifyCollectionChanged _toastsCollection;
     private bool _suppressCloseCallback;
@@ -45,16 +47,19 @@ public sealed class AvaloniaToastHost : IDisposable
     /// <param name="toastManager">The toast manager whose collection is rendered.</param>
     /// <param name="contentFactory">Creates visual content for each toast notification.</param>
     /// <param name="options">Optional visual layout options.</param>
+    /// <param name="defaultDuration">Fallback auto-close duration for hover-managed toasts.</param>
     public AvaloniaToastHost(
         Func<TopLevel?> topLevelProvider,
         IToastManager toastManager,
         IAvaloniaToastContentFactory contentFactory,
-        AvaloniaToastHostOptions? options = null)
+        AvaloniaToastHostOptions? options = null,
+        TimeSpan? defaultDuration = null)
     {
         _topLevelProvider = topLevelProvider ?? throw new ArgumentNullException(nameof(topLevelProvider));
         _toastManager = toastManager ?? throw new ArgumentNullException(nameof(toastManager));
         _contentFactory = contentFactory ?? throw new ArgumentNullException(nameof(contentFactory));
         _options = options ?? new AvaloniaToastHostOptions();
+        _defaultDuration = defaultDuration ?? TimeSpan.FromSeconds(5);
 
         _toastsCollection = _toastManager.Toasts;
         _toastsCollection.CollectionChanged += OnToastsCollectionChanged;
@@ -85,6 +90,7 @@ public sealed class AvaloniaToastHost : IDisposable
 
         _displayContentByNotificationId.Clear();
         _pendingToasts.Clear();
+        DisposeHoverAttachments();
         _notificationManager = null;
 
         foreach (var toast in _toastManager.Toasts.ToList())
@@ -101,6 +107,7 @@ public sealed class AvaloniaToastHost : IDisposable
         _toastsCollection.CollectionChanged -= OnToastsCollectionChanged;
         _pendingToasts.Clear();
         _displayContentByNotificationId.Clear();
+        DisposeHoverAttachments();
         _notificationManager = null;
     }
 
@@ -149,6 +156,7 @@ public sealed class AvaloniaToastHost : IDisposable
 
                 _displayContentByNotificationId.Clear();
                 _pendingToasts.Clear();
+                DisposeHoverAttachments();
 
                 foreach (var toast in _toastManager.Toasts)
                     ShowToast(toast);
@@ -178,9 +186,17 @@ public sealed class AvaloniaToastHost : IDisposable
 
     private void DisplayToast(IToast toast)
     {
-        var content = _contentFactory.CreateContent(toast.Notification, _options.Width);
+        var rawContent = _contentFactory.CreateContent(toast.Notification, _options.Width);
+        var (content, hoverAttachment) = ToastHoverLifetimeAttachment.Prepare(
+            rawContent,
+            toast,
+            _toastManager,
+            _defaultDuration);
         _displayContentByNotificationId[toast.Notification.Id] = content;
         _pendingToasts.Remove(toast.Notification.Id);
+
+        if (hoverAttachment is not null)
+            _hoverAttachments[toast.Notification.Id] = hoverAttachment;
 
         var classes = GetClasses(toast.Settings);
         var type = MapSeverity(toast.Notification.Severity);
@@ -197,6 +213,7 @@ public sealed class AvaloniaToastHost : IDisposable
     private void HideToast(IToast toast)
     {
         _pendingToasts.Remove(toast.Notification.Id);
+        DetachHoverAttachment(toast.Notification.Id);
 
         if (!_displayContentByNotificationId.Remove(toast.Notification.Id, out var content))
             return;
@@ -309,4 +326,20 @@ public sealed class AvaloniaToastHost : IDisposable
 
     private static void Post(Action action)
         => Dispatcher.UIThread.Post(action, DispatcherPriority.Background);
+
+    private void DetachHoverAttachment(Guid notificationId)
+    {
+        if (!_hoverAttachments.Remove(notificationId, out var attachment))
+            return;
+
+        attachment.Dispose();
+    }
+
+    private void DisposeHoverAttachments()
+    {
+        foreach (var attachment in _hoverAttachments.Values)
+            attachment.Dispose();
+
+        _hoverAttachments.Clear();
+    }
 }

@@ -64,7 +64,8 @@ public static class ServiceCollectionExtensions
                 topLevelProvider,
                 sp.GetRequiredService<MyNet.UI.Toasting.IToastManager>(),
                 sp.GetRequiredService<IAvaloniaToastContentFactory>(),
-                hostOptions);
+                hostOptions,
+                sp.GetService<ToastManagerOptions>()?.DefaultDuration);
         });
 
         return services;

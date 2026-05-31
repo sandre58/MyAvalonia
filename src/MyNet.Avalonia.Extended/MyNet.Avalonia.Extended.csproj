@@ -19,41 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AvaloniaResource Include="Themes/Generic.axaml" />
-      <AvaloniaResource Include="Themes/Controls/MessageNotificationControl.axaml" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <AvaloniaResource Remove="Dialogs\**" />
-        <AvaloniaResource Remove="Controls\Dialogs\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <AvaloniaXaml Remove="Dialogs\**" />
-      <AvaloniaXaml Remove="Controls\Dialogs\**" />
-      <AvaloniaXaml Remove="Themes\Controls\OverlayMessageBox.axaml" />
-      <AvaloniaXaml Remove="Themes\Controls\WindowDialog.axaml" />
-      <AvaloniaXaml Remove="Themes\Controls\WindowMessageBox.axaml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Remove="Dialogs\**" />
-      <Compile Remove="Controls\Dialogs\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Remove="Dialogs\**" />
-      <EmbeddedResource Remove="Controls\Dialogs\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <AdditionalFiles Remove="Dialogs\**" />
-      <AdditionalFiles Remove="Controls\Dialogs\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="Dialogs\**" />
-      <None Remove="Controls\Dialogs\**" />
+        <AvaloniaResource Include="**/*.axaml" />
     </ItemGroup>
 
 </Project>
