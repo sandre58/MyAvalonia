@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Reactive.Concurrency;
 using MyNet.UI.Threading;
 
@@ -12,16 +13,12 @@ namespace MyNet.Avalonia.Extended.Schedulers;
 /// <summary>
 /// Provides Avalonia UI and background schedulers for <see cref="MyNet.UI.Commands"/> and related UI services.
 /// </summary>
-public sealed class AvaloniaSchedulerProvider : ISchedulerProvider
+/// <param name="uiScheduler">The Avalonia UI scheduler instance.</param>
+public sealed class AvaloniaSchedulerProvider(AvaloniaScheduler uiScheduler) : ISchedulerProvider
 {
-    /// <summary>
-    /// Gets the default scheduler provider that dispatches UI work on the Avalonia dispatcher.
-    /// </summary>
-    public static AvaloniaSchedulerProvider Default { get; } = new();
-
     /// <inheritdoc />
     public IScheduler Background { get; } = TaskPoolScheduler.Default;
 
     /// <inheritdoc />
-    public IScheduler Ui { get; } = AvaloniaScheduler.Current;
+    public IScheduler Ui { get; } = uiScheduler ?? throw new ArgumentNullException(nameof(uiScheduler));
 }

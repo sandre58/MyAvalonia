@@ -4,15 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Reactive.Concurrency;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using MyNet.Avalonia.Extended.Commands;
 using MyNet.Globalization.Culture;
-using MyNet.UI.Commands;
 using MyNet.UI.Threading;
 
 #pragma warning disable IDE0130
-namespace MyNet.Avalonia.Extended;
+namespace MyNet.Avalonia.Extended.Schedulers;
 #pragma warning restore IDE0130
 
 /// <summary>
@@ -21,18 +20,16 @@ namespace MyNet.Avalonia.Extended;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Registers Avalonia schedulers and command factory services.
+    /// Registers Avalonia schedulers services.
     /// </summary>
-    /// <remarks>
-    /// Requires an <see cref="ICultureContext"/> to be registered, typically via <c>AddGlobalization()</c>.
-    /// </remarks>
     /// <param name="services">The service collection.</param>
     /// <returns>The same service collection for chaining.</returns>
-    public static IServiceCollection AddAvaloniaCommands(this IServiceCollection services)
+    public static IServiceCollection AddAvaloniaScheduler(this IServiceCollection services)
     {
-        services.AddSchedulerProvider();
+        services.TryAddSingleton<AvaloniaScheduler>(static sp => new(sp.GetRequiredService<ICultureContext>()));
 
-        services.TryAddSingleton<ICommandFactory, AvaloniaCommandFactory>();
+        services.TryAddSingleton<IScheduler>(static sp => sp.GetRequiredService<AvaloniaScheduler>());
+        services.TryAddSingleton<ISchedulerProvider, AvaloniaSchedulerProvider>();
         return services;
     }
 }

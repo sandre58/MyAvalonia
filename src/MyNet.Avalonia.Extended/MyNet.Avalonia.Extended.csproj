@@ -29,7 +29,6 @@
         <AvaloniaResource Remove="Navigation\**" />
         <AvaloniaResource Remove="Services\**" />
         <AvaloniaResource Remove="Themes\**" />
-        <AvaloniaResource Remove="Theming\**" />
         <AvaloniaResource Remove="Toasting\**" />
         <AvaloniaResource Remove="WarmUp\**" />
     </ItemGroup>
@@ -44,7 +43,6 @@
       <AvaloniaXaml Remove="Navigation\**" />
       <AvaloniaXaml Remove="Services\**" />
       <AvaloniaXaml Remove="Themes\**" />
-      <AvaloniaXaml Remove="Theming\**" />
       <AvaloniaXaml Remove="Toasting\**" />
       <AvaloniaXaml Remove="WarmUp\**" />
     </ItemGroup>
@@ -59,7 +57,6 @@
       <Compile Remove="Navigation\**" />
       <Compile Remove="Services\**" />
       <Compile Remove="Themes\**" />
-      <Compile Remove="Theming\**" />
       <Compile Remove="Toasting\**" />
       <Compile Remove="WarmUp\**" />
     </ItemGroup>
@@ -74,7 +71,6 @@
       <EmbeddedResource Remove="Navigation\**" />
       <EmbeddedResource Remove="Services\**" />
       <EmbeddedResource Remove="Themes\**" />
-      <EmbeddedResource Remove="Theming\**" />
       <EmbeddedResource Remove="Toasting\**" />
       <EmbeddedResource Remove="WarmUp\**" />
     </ItemGroup>
@@ -89,7 +85,6 @@
       <AdditionalFiles Remove="Navigation\**" />
       <AdditionalFiles Remove="Services\**" />
       <AdditionalFiles Remove="Themes\**" />
-      <AdditionalFiles Remove="Theming\**" />
       <AdditionalFiles Remove="Toasting\**" />
       <AdditionalFiles Remove="WarmUp\**" />
     </ItemGroup>
@@ -104,7 +99,6 @@
       <None Remove="Navigation\**" />
       <None Remove="Services\**" />
       <None Remove="Themes\**" />
-      <None Remove="Theming\**" />
       <None Remove="Toasting\**" />
       <None Remove="WarmUp\**" />
     </ItemGroup>

@@ -9,101 +9,98 @@ using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Threading;
 using Avalonia.Threading;
-using MyNet.Globalization.Facade;
+using MyNet.Globalization.Culture;
 
 namespace MyNet.Avalonia.Extended.Schedulers;
 
 /// <summary>
-/// Represents an object that schedules units of work on a dispatcher.
+/// Represents an object that schedules units of work on the Avalonia UI dispatcher.
 /// </summary>
-public class AvaloniaScheduler(DispatcherPriority priority) : LocalScheduler, ISchedulerPeriodic
+/// <param name="cultureContext">Provides the application culture to apply on the UI thread before executing work.</param>
+/// <param name="priority">The dispatcher priority used when posting work items.</param>
+public sealed class AvaloniaScheduler(ICultureContext cultureContext, DispatcherPriority priority)
+    : LocalScheduler, ISchedulerPeriodic
 {
     /// <summary>
-    /// Gets the scheduler that schedules work on the dispatcher for the current thread.
+    /// Limits reentrant inline schedules on the UI thread to prevent stack overflows.
     /// </summary>
-    public static AvaloniaScheduler Current => field ??= new();
+    private const int MaxReentrantSchedules = 32;
 
-    public AvaloniaScheduler()
-        : this(DispatcherPriority.Render) { }
+    private readonly ICultureContext _cultureContext = cultureContext ?? throw new ArgumentNullException(nameof(cultureContext));
+    private int _reentrancyGuard;
+
+    /// <summary>
+    /// Gets a fallback scheduler for non-DI scenarios such as unit tests.
+    /// Prefer resolving <see cref="AvaloniaScheduler"/> from dependency injection.
+    /// </summary>
+    public static AvaloniaScheduler Current => field ??= new(new ThreadCultureContext(), DispatcherPriority.Render);
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AvaloniaScheduler"/> class with the default dispatcher priority.
+    /// </summary>
+    /// <param name="cultureContext">Provides the application culture to apply on the UI thread before executing work.</param>
+    public AvaloniaScheduler(ICultureContext cultureContext)
+        : this(cultureContext, DispatcherPriority.Render)
+    {
+    }
 
     /// <summary>
     /// Gets the priority at which work items will be dispatched.
     /// </summary>
     public DispatcherPriority Priority { get; } = priority;
 
-    /// <summary>
-    /// Schedules an action to be executed on the dispatcher.
-    /// </summary>
-    /// <typeparam name="TState">The type of the state passed to the scheduled action.</typeparam>
-    /// <param name="state">State passed to the action to be executed.</param>
-    /// <param name="action">Action to be executed.</param>
-    /// <returns>The disposable object used to cancel the scheduled action (best effort).</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="action"/> is null.</exception>
+    /// <inheritdoc />
     public override IDisposable Schedule<TState>(TState state, Func<IScheduler, TState, IDisposable> action)
-    {
-        ArgumentNullException.ThrowIfNull(action);
+        => Schedule(state, TimeSpan.Zero, action);
 
-        var d = new SingleAssignmentDisposable();
-
-        Dispatcher.UIThread.Invoke(() =>
-            {
-                if (d.IsDisposed)
-                    return;
-                Thread.CurrentThread.CurrentCulture = GlobalizationServices.Current.CurrentCulture;
-                Thread.CurrentThread.CurrentUICulture = GlobalizationServices.Current.CurrentCulture;
-
-                d.Disposable = action(this, state);
-            },
-            Priority);
-
-        return d;
-    }
-
-    /// <summary>
-    /// Schedules an action to be executed after dueTime on the dispatcher, using a <see cref="DispatcherTimer"/> object.
-    /// </summary>
-    /// <typeparam name="TState">The type of the state passed to the scheduled action.</typeparam>
-    /// <param name="state">State passed to the action to be executed.</param>
-    /// <param name="dueTime">Relative time after which to execute the action.</param>
-    /// <param name="action">Action to be executed.</param>
-    /// <returns>The disposable object used to cancel the scheduled action (best effort).</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="action"/> is null.</exception>
+    /// <inheritdoc />
     public override IDisposable Schedule<TState>(TState state, TimeSpan dueTime, Func<IScheduler, TState, IDisposable> action)
     {
         ArgumentNullException.ThrowIfNull(action);
 
-        var dt = Scheduler.Normalize(dueTime);
-        if (dt.Ticks == 0)
-            return Schedule(state, action);
+        var normalizedDueTime = Scheduler.Normalize(dueTime);
+        if (normalizedDueTime.Ticks == 0)
+        {
+            if (!Dispatcher.UIThread.CheckAccess() || _reentrancyGuard >= MaxReentrantSchedules)
+                return PostOnDispatcher(state, action);
+
+            try
+            {
+                _reentrancyGuard++;
+                ApplyThreadCulture();
+                return action(this, state);
+            }
+            finally
+            {
+                _reentrancyGuard--;
+            }
+        }
 
         var d = new MultipleAssignmentDisposable();
-
         var timer = new DispatcherTimer(Priority);
 
         timer.Tick += (_, _) =>
         {
-            var t = Interlocked.Exchange(ref timer, null);
+            var currentTimer = Interlocked.Exchange(ref timer, null);
             try
             {
-                Thread.CurrentThread.CurrentCulture = GlobalizationServices.Current.CurrentCulture;
-                Thread.CurrentThread.CurrentUICulture = GlobalizationServices.Current.CurrentCulture;
-
+                ApplyThreadCulture();
                 d.Disposable = action(this, state);
             }
             finally
             {
-                t.Stop();
+                currentTimer.Stop();
                 action = (_, _) => Disposable.Empty;
             }
         };
 
-        timer.Interval = dt;
+        timer.Interval = normalizedDueTime;
         timer.Start();
 
         d.Disposable = Disposable.Create(() =>
         {
-            var t = Interlocked.Exchange(ref timer, null);
-            t.Stop();
+            var currentTimer = Interlocked.Exchange(ref timer, null);
+            currentTimer.Stop();
             action = (_, _) => Disposable.Empty;
         });
 
@@ -126,14 +123,11 @@ public class AvaloniaScheduler(DispatcherPriority priority) : LocalScheduler, IS
         ArgumentNullException.ThrowIfNull(action);
 
         var timer = new DispatcherTimer(Priority);
-
         var state1 = state;
 
         timer.Tick += (_, _) =>
         {
-            Thread.CurrentThread.CurrentCulture = GlobalizationServices.Current.CurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = GlobalizationServices.Current.CurrentCulture;
-
+            ApplyThreadCulture();
             state1 = action(state1);
         };
 
@@ -142,9 +136,33 @@ public class AvaloniaScheduler(DispatcherPriority priority) : LocalScheduler, IS
 
         return Disposable.Create(() =>
         {
-            var t = Interlocked.Exchange(ref timer, null);
-            t.Stop();
+            var currentTimer = Interlocked.Exchange(ref timer, null);
+            currentTimer.Stop();
             action = x => x;
         });
+    }
+
+    private SingleAssignmentDisposable PostOnDispatcher<TState>(TState state, Func<IScheduler, TState, IDisposable> action)
+    {
+        var d = new SingleAssignmentDisposable();
+
+        Dispatcher.UIThread.Post(() =>
+            {
+                if (d.IsDisposed)
+                    return;
+
+                ApplyThreadCulture();
+                d.Disposable = action(this, state);
+            },
+            Priority);
+
+        return d;
+    }
+
+    private void ApplyThreadCulture()
+    {
+        var culture = _cultureContext.CurrentCulture;
+        Thread.CurrentThread.CurrentCulture = culture;
+        Thread.CurrentThread.CurrentUICulture = culture;
     }
 }
