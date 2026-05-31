@@ -65,4 +65,8 @@
       </EmbeddedResource>
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="MyNet.Avalonia.Controls.Tests" />
+    </ItemGroup>
+
 </Project>
