@@ -99,6 +99,12 @@ public static class ClassRegistry
     /// <returns>An <see cref="Action{Control}"/> that can be executed for the specified class name, or <see langword="null"/> if
     /// no action is associated.</returns>
     public static Func<StyledElement, IDisposable>? Resolve(string cls) => Registry.GetValueOrDefault(cls);
+
+    /// <summary>
+    /// Returns whether a registered utility class exists for the given class name.
+    /// </summary>
+    public static bool ContainsRegisteredClass(string className)
+        => Registry.ContainsKey(className.ToLower(CultureInfo.InvariantCulture));
 }
 
 /// <summary>

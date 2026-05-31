@@ -9,6 +9,7 @@ using Avalonia.Data;
 using Avalonia.Metadata;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Converters.Internals;
+using MyNet.Avalonia.Theme.MarkupExtensions.Helpers;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -43,47 +44,22 @@ public class ThemeRoleExtension(VariantBrush variant) : ThemeBrushExtensionBase
     /// </summary>
     public RelativeSource RelativeSource { get; set; } = new(RelativeSourceMode.Self);
 
-    /// <summary>
-    /// Provides the value for the markup extension, returning a binding to the theme brush with the specified options.
-    /// </summary>
-    /// <param name="serviceProvider">The service provider for the markup extension.</param>
-    /// <returns>A binding to the theme brush with the specified opacity and contrast settings.</returns>
+    /// <inheritdoc />
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
         var result = new MultiBinding
         {
             Converter = ThemeConverter.Default,
             ConverterParameter = new ThemeBrushParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten),
-
             Bindings =
             {
-                // Resolve the role using the specified Role path, which defaults to (my:ThemeAssist.Role). This allows the extension to determine the theme role of the control and select the appropriate brush.
-                new ReflectionBinding(Role)
-                {
-                    Mode = BindingMode.OneWay,
-                    RelativeSource = RelativeSource,
-                    TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
-                },
-
-                new ReflectionBinding($"(my:{nameof(VariantAssist)}.Default{VariantBrush})")
-                {
-                    Mode = BindingMode.OneWay,
-                    RelativeSource = RelativeSource,
-                    TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
-                }
+                ThemeBindingHelper.Create(Role, RelativeSource, serviceProvider),
+                ThemeBindingHelper.Create($"(my:{nameof(VariantAssist)}.Default{VariantBrush})", RelativeSource, serviceProvider)
             }
         };
 
         if (!IgnoreForegroundParent)
-        {
-            result.Bindings.Add(new ReflectionBinding("Parent.(TextElement.Foreground)")
-            {
-                Mode = BindingMode.OneWay,
-                FallbackValue = null,
-                RelativeSource = new(RelativeSourceMode.Self),
-                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
-            });
-        }
+            result.Bindings.Add(ThemeBindingHelper.CreateParentForeground(serviceProvider));
 
         return result;
     }

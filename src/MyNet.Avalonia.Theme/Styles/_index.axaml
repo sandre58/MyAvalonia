@@ -6,10 +6,6 @@
     <StyleInclude Source="avares://MyNet.Avalonia.Theme/Styles/Rectangle.axaml" />
     <StyleInclude Source="avares://MyNet.Avalonia.Theme/Styles/Text.axaml" />
 
-    <Style Selector=":is(Control)">
-        <Setter Property="my:ClassesAssist.UseRegisteredClasses" Value="True" />
-    </Style>
-
     <!-- Force the custom ToolTip theme on all tooltips, including those in
          non-client decoration popups that cannot resolve the implicit ControlTheme
          through the resource chain. -->

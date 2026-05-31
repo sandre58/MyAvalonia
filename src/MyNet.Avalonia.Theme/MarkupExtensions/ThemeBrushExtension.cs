@@ -8,6 +8,7 @@ using System;
 using Avalonia.Data;
 using Avalonia.Metadata;
 using MyNet.Avalonia.Theme.Converters.Internals;
+using MyNet.Avalonia.Theme.MarkupExtensions.Helpers;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
@@ -39,17 +40,12 @@ public class ThemeBrushExtension : ThemeBrushExtensionBase
     /// </summary>
     public RelativeSource RelativeSource { get; set; } = new(RelativeSourceMode.Self);
 
-    /// <summary>
-    /// Provides the value for the markup extension, returning a binding to the theme brush with the specified options.
-    /// </summary>
-    /// <param name="serviceProvider">The service provider for the markup extension.</param>
-    /// <returns>A binding to the theme brush with the specified opacity, contrast, darken, and lighten settings.</returns>
-    public override object ProvideValue(IServiceProvider serviceProvider) => new ReflectionBinding(Path)
+    /// <inheritdoc />
+    public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        Mode = BindingMode.OneWay,
-        RelativeSource = RelativeSource,
-        Converter = ThemeConverter.Default,
-        ConverterParameter = new ThemeBrushParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten),
-        TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
-    };
+        var binding = ThemeBindingHelper.Create(Path, RelativeSource, serviceProvider);
+        binding.Converter = ThemeConverter.Default;
+        binding.ConverterParameter = new ThemeBrushParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten);
+        return binding;
+    }
 }

@@ -56,6 +56,9 @@
                     <Button Content="📝 List (1000 items)" 
                             Classes="nav"
                             Command="{Binding NavigateToListCommand}"/>
+                    <Button Content="🎨 Theme List (1000)" 
+                            Classes="nav"
+                            Command="{Binding NavigateToThemeListCommand}"/>
                     <Button Content="📋 Forms" 
                             Classes="nav"
                             Command="{Binding NavigateToFormsCommand}"/>
@@ -156,6 +159,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="vm:ListViewModel">
                         <views:ListView />
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:ThemeListViewModel">
+                        <views:ThemeListView />
                     </DataTemplate>
                     <DataTemplate DataType="vm:FormsViewModel">
                         <views:FormsView />

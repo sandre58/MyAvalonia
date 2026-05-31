@@ -87,18 +87,15 @@ public class StyleProfilingViewModel : ViewModelBase
         sb.AppendLine();
         sb.AppendLine("========== KEY FINDINGS ==========");
         sb.AppendLine();
-        sb.AppendLine("Performance hotspots to investigate:");
-        sb.AppendLine("1. ReflectionBinding in markup extensions (ThemeRole, ThemeBrush, Foreground)");
-        sb.AppendLine("   - Each ThemeRoleExtension creates a MultiBinding with 3+ sub-bindings");
-        sb.AppendLine("   - FindAncestor bindings walk the visual tree for EVERY control");
+        sb.AppendLine("P0 optimizations applied:");
+        sb.AppendLine("1. Theme markup uses Binding (not ReflectionBinding) via ThemeBindingHelper");
+        sb.AppendLine("2. UseRegisteredClasses is lazy (no global :is(Control) style)");
+        sb.AppendLine("3. Compare 'List (1000)' vs 'Theme List (1000)' for theme binding cost");
         sb.AppendLine();
-        sb.AppendLine("2. Broad style selectors in Variants.axaml");
-        sb.AppendLine("   - ':is(Control)[attached-property]' must evaluate against ALL controls");
-        sb.AppendLine("   - Each variant × category = many selectors per control");
-        sb.AppendLine();
-        sb.AppendLine("3. TextBlock ControlTheme with ancestor binding");
-        sb.AppendLine("   - Every TextBlock gets {my:Foreground AncestorType=Control}");
-        sb.AppendLine("   - In a list with 1000 items × ~10 TextBlocks = 10,000 ancestor lookups");
+        sb.AppendLine("Remaining hotspots to watch:");
+        sb.AppendLine("- TextBlock.has-role still uses ThemeRole MultiBinding per control");
+        sb.AppendLine("- Variant styles still apply when variant-* classes are present");
+        sb.AppendLine("- Foreground ancestor binding on has-role TextBlocks in large lists");
         sb.AppendLine();
         sb.AppendLine("==========================================");
 

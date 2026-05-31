@@ -9,12 +9,12 @@ using Avalonia.Data;
 using Avalonia.Metadata;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Converters.Internals;
+using MyNet.Avalonia.Theme.MarkupExtensions.Helpers;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 
 /// <summary>
-/// Markup extension for binding to role-based theme brushes with optional modifiers.
-/// Resolves the brush based on the control's theme role and palette color type, applying optional effects such as opacity, contrast, darken, and lighten.
+/// Markup extension for binding to context-based theme brushes with optional modifiers.
 /// </summary>
 public class ThemeContextExtension(string path) : ThemeBrushExtensionBase
 {
@@ -39,47 +39,22 @@ public class ThemeContextExtension(string path) : ThemeBrushExtensionBase
     /// </summary>
     public RelativeSource RelativeSource { get; set; } = new(RelativeSourceMode.Self);
 
-    /// <summary>
-    /// Provides the value for the markup extension, returning a binding to the theme brush with the specified options.
-    /// </summary>
-    /// <param name="serviceProvider">The service provider for the markup extension.</param>
-    /// <returns>A binding to the theme brush with the specified opacity and contrast settings.</returns>
+    /// <inheritdoc />
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
         var result = new MultiBinding
         {
             Converter = ThemeConverter.Default,
             ConverterParameter = new ThemeBrushParameters(Opacity?.ToString() ?? CustomOpacity, Contrast, Darken, Lighten),
-
             Bindings =
             {
-                // Context binding to provide the theme context for resolving the theme brush, which may influence the palette color type used for resolving the brush.
-                new ReflectionBinding(Context)
-                {
-                    Mode = BindingMode.OneWay,
-                    RelativeSource = RelativeSource,
-                    TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
-                },
-
-                // Resource path binding to provide the key for resolving the theme brush, which may be influenced by the context.
-                new ReflectionBinding
-                {
-                    Mode = BindingMode.OneTime,
-                    Source = Path
-                }
+                ThemeBindingHelper.Create(Context, RelativeSource, serviceProvider),
+                ThemeBindingHelper.CreateConstantSource(Path)
             }
         };
 
         if (!IgnoreForegroundParent)
-        {
-            result.Bindings.Add(new ReflectionBinding("Parent.(TextElement.Foreground)")
-            {
-                Mode = BindingMode.OneWay,
-                FallbackValue = null,
-                RelativeSource = new(RelativeSourceMode.Self),
-                TypeResolver = (x, y) => ResolveType(serviceProvider, x, y)
-            });
-        }
+            result.Bindings.Add(ThemeBindingHelper.CreateParentForeground(serviceProvider));
 
         return result;
     }

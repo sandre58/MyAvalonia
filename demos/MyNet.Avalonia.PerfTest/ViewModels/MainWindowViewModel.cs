@@ -30,6 +30,7 @@ public class MainWindowViewModel : ViewModelBase
         NavigateToListCommand = new RelayCommand(NavigateToList);
         NavigateToFormsCommand = new RelayCommand(NavigateToForms);
         NavigateToStyleProfilingCommand = new RelayCommand(NavigateToStyleProfiling);
+        NavigateToThemeListCommand = new RelayCommand(NavigateToThemeList);
         RunBenchmarkCommand = new RelayCommand(async () => await RunBenchmarkAsync(), () => !_isBenchmarkRunning);
         ClearHistoryCommand = new RelayCommand(ClearHistory);
 
@@ -79,6 +80,7 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand NavigateToListCommand { get; }
     public ICommand NavigateToFormsCommand { get; }
     public ICommand NavigateToStyleProfilingCommand { get; }
+    public ICommand NavigateToThemeListCommand { get; }
     public ICommand RunBenchmarkCommand { get; }
     public ICommand ClearHistoryCommand { get; }
 
@@ -143,6 +145,7 @@ public class MainWindowViewModel : ViewModelBase
             ("DataGrid", () => CurrentPage = new DataGridViewModel()),
             ("Complex Layout", () => CurrentPage = new ComplexLayoutViewModel()),
             ("List", () => CurrentPage = new ListViewModel()),
+            ("Theme List", () => CurrentPage = new ThemeListViewModel()),
             ("Forms", () => CurrentPage = new FormsViewModel())
         };
 
@@ -206,6 +209,7 @@ public class MainWindowViewModel : ViewModelBase
     private void NavigateToList() => NavigateTo(() => new ListViewModel(), "List");
     private void NavigateToForms() => NavigateTo(() => new FormsViewModel(), "Forms");
     private void NavigateToStyleProfiling() => NavigateTo(() => new StyleProfilingViewModel(), "Style Profiling");
+    private void NavigateToThemeList() => NavigateTo(() => new ThemeListViewModel(), "Theme List");
 }
 
 // Simple RelayCommand implementation

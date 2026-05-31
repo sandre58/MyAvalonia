@@ -51,7 +51,7 @@ public abstract class ThemeBrushExtensionBase : MarkupExtension
     /// <param name="namespacePrefix">The namespace prefix (optional).</param>
     /// <param name="type">The type name to resolve.</param>
     /// <returns>The resolved <see cref="Type"/>.</returns>
-    protected static Type ResolveType(IServiceProvider ctx, string? namespacePrefix, string type)
+    internal static Type ResolveType(IServiceProvider ctx, string? namespacePrefix, string type)
     {
         var name = string.IsNullOrEmpty(namespacePrefix) ? type : $"{namespacePrefix}:{type}";
 

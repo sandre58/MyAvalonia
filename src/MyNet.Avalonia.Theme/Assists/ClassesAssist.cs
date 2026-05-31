@@ -11,7 +11,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.VisualTree;
 using MyNet.Avalonia.Theme.Classes.Engine;
+using MyNet.Avalonia.Theme.Classes.Registry;
 
 namespace MyNet.Avalonia.Theme.Assists;
 
@@ -101,6 +104,7 @@ public static class ClassesAssist
         AddClassesProperty.Changed.AddClassHandler<AvaloniaObject>(OnAddClassesChanged);
         RemoveClassesProperty.Changed.AddClassHandler<AvaloniaObject>(OnRemoveClassesChanged);
         UseRegisteredClassesProperty.Changed.AddClassHandler<AvaloniaObject, bool>(OnUseRegisteredClassesChanged);
+        Control.LoadedEvent.AddClassHandler<Control>(OnControlLoaded);
     }
 
     #region Classes (replace layer)
@@ -260,6 +264,11 @@ public static class ClassesAssist
     private static readonly ConditionalWeakTable<Control, IDisposable> Subscriptions = [];
 
     /// <summary>
+    /// Lightweight watchers for controls that may receive a registered utility class later (lazy opt-in).
+    /// </summary>
+    private static readonly ConditionalWeakTable<Control, RegisteredClassWatcher> PendingClassWatchers = [];
+
+    /// <summary>
     /// Identifies an attached property that stores the runtime state of the associated control's classes.
     /// </summary>
     /// <remarks>This property enables tracking and managing the runtime state of control classes within the
@@ -286,19 +295,61 @@ public static class ClassesAssist
     public static bool GetUseRegisteredClasses(StyledElement element) => element.GetValue(UseRegisteredClassesProperty);
 
     /// <summary>
-    /// Handles changes to the enabled state of utility features for a control.
+    /// Attaches a lightweight class watcher when a control loads (lazy <see cref="UseRegisteredClasses"/> opt-in).
     /// </summary>
-    /// <remarks>When utilities are enabled, this method subscribes to the control's class collection changes
-    /// and triggers recompilation to ensure the control's appearance is updated accordingly.</remarks>
-    /// <param name="sender">The object on which the property change occurred. Must be a StyledElement.</param>
-    /// <param name="e">An event argument that provides information about the change in the enabled state, including the control and the
-    /// new value.</param>
+    private static void OnControlLoaded(Control control, RoutedEventArgs e)
+    {
+        if (!GetUseRegisteredClasses(control))
+            EnsureRegisteredClassWatcher(control);
+    }
+
+    private static void EnsureRegisteredClassWatcher(Control control)
+    {
+        if (GetUseRegisteredClasses(control))
+            return;
+
+        if (HasRegisteredUtilityClass(control))
+        {
+            SetUseRegisteredClasses(control, true);
+            return;
+        }
+
+        if (!PendingClassWatchers.TryGetValue(control, out _))
+            PendingClassWatchers.Add(control, new RegisteredClassWatcher(control));
+    }
+
+    private static void TryPromoteRegisteredClasses(Control control)
+    {
+        if (!GetUseRegisteredClasses(control) && HasRegisteredUtilityClass(control))
+            SetUseRegisteredClasses(control, true);
+    }
+
+    private static bool HasRegisteredUtilityClass(Control control)
+    {
+        foreach (var cls in control.Classes)
+        {
+            if (ClassRegistry.ContainsRegisteredClass(cls))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Handles changes to <see cref="UseRegisteredClassesProperty"/> and manages class recompilation subscriptions.
+    /// </summary>
     private static void OnUseRegisteredClassesChanged(AvaloniaObject sender, AvaloniaPropertyChangedEventArgs<bool> e)
     {
         if (e.Sender is Control control)
         {
             if (e.GetNewValue<bool>())
             {
+                if (PendingClassWatchers.TryGetValue(control, out var pending))
+                {
+                    pending.Dispose();
+                    PendingClassWatchers.Remove(control);
+                }
+
                 if (!Subscriptions.TryGetValue(control, out _))
                 {
                     // Subscribe to collection changed events instead of enumerating the
@@ -353,6 +404,36 @@ public static class ClassesAssist
         ClassDiffEngine.ApplyDiff(control, state, classes);
 
         state.Hash = hash;
+    }
+
+    private sealed class RegisteredClassWatcher : IDisposable
+    {
+        private readonly Control _control;
+
+        public RegisteredClassWatcher(Control control)
+        {
+            _control = control;
+            control.Classes.CollectionChanged += OnClassesChanged;
+            control.DetachedFromVisualTree += OnDetached;
+        }
+
+        private void OnClassesChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (HasRegisteredUtilityClass(_control))
+            {
+                SetUseRegisteredClasses(_control, true);
+                Dispose();
+            }
+        }
+
+        private void OnDetached(object? sender, VisualTreeAttachmentEventArgs e) => Dispose();
+
+        public void Dispose()
+        {
+            _control.Classes.CollectionChanged -= OnClassesChanged;
+            _control.DetachedFromVisualTree -= OnDetached;
+            PendingClassWatchers.Remove(_control);
+        }
     }
 
     #endregion
@@ -434,6 +515,9 @@ public static class ClassesAssist
             element.Classes.Add(c);
             managed.Add(c);
         }
+
+        if (element is Control control)
+            TryPromoteRegisteredClasses(control);
     }
 
     /// <summary>
