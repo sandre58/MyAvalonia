@@ -18,5 +18,6 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="MyNet.Avalonia.Theme.Tests" />
+        <InternalsVisibleTo Include="MyNet.Avalonia.Theme.Benchmarks" />
     </ItemGroup>
 </Project>

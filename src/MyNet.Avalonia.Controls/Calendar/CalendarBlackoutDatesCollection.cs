@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Threading;
 using MyNet.Avalonia.Controls.Internals;
-using MyNet.Primitives;
 using MyNet.Primitives.Intervals;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure

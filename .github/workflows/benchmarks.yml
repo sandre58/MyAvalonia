@@ -1,0 +1,47 @@
+name: Theme benchmarks
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/MyNet.Avalonia.Theme/**"
+      - "benchmarks/MyNet.Avalonia.Theme.Benchmarks/**"
+      - ".github/workflows/benchmarks.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    name: BenchmarkDotNet (Theme)
+    runs-on: windows-latest
+    timeout-minutes: 30
+    continue-on-error: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Run benchmarks
+        shell: pwsh
+        run: |
+          $project = "benchmarks/MyNet.Avalonia.Theme.Benchmarks/MyNet.Avalonia.Theme.Benchmarks.csproj"
+          $out = "BenchmarkResults"
+          dotnet run -c Release --project $project -- `
+            --filter "*" `
+            --exporters json markdown `
+            --artifacts "$out"
+
+      - name: Upload benchmark reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: theme-benchmark-results
+          path: BenchmarkResults/**/*
+          retention-days: 30

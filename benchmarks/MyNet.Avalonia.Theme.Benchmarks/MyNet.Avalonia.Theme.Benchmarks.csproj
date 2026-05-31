@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>MyNet.Avalonia.Theme.Benchmarks</RootNamespace>
+        <Description>BenchmarkDotNet micro-benchmarks for MyNet.Avalonia.Theme hot paths.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BenchmarkDotNet" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\MyNet.Avalonia.Theme\MyNet.Avalonia.Theme.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Reactive.Disposables;
 using Avalonia;
 using MyNet.Avalonia.Theme.Diagnostics;
+using MyNet.Text;
 
 namespace MyNet.Avalonia.Theme.Classes.Registry;
 
@@ -104,7 +105,7 @@ public static class ClassRegistry
     /// Returns whether a registered utility class exists for the given class name.
     /// </summary>
     public static bool ContainsRegisteredClass(string className)
-        => Registry.ContainsKey(className.ToLower(CultureInfo.InvariantCulture));
+        => Registry.ContainsKey(className.ToLowerCase());
 }
 
 /// <summary>

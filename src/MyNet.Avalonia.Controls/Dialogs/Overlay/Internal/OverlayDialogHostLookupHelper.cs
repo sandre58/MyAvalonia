@@ -35,10 +35,9 @@ internal static class OverlayDialogHostLookupHelper
         IEnumerable<KeyValuePair<OverlayDialogHostKey, T>> hosts,
         string? id,
         int? hash) =>
-        hosts.Where(x => MatchesFilter(x.Key, id, hash))
+        [.. hosts.Where(x => MatchesFilter(x.Key, id, hash))
             .Select(x => x.Value)
-            .Distinct()
-            .ToList();
+            .Distinct()];
 
     public static bool ShouldFallbackToSingleTopLevel(string? id, int? hash, int candidateCount) =>
         candidateCount != 1 && id is null && hash is null;

@@ -1,10 +1,9 @@
-
-<div id="top"></div>
+﻿<div id="top"></div>
 
 <!-- PROJECT INFO -->
 <br />
 <div align="center">
-  <img src="../../assets/MyAvalonia.png" width="128" alt="MyAvalonia">
+  <img src="MyAvalonia.png" width="128" alt="MyAvalonia">
 </div>
 
 <h1 align="center">My .NET Avalonia Theme</h1>
@@ -107,6 +106,24 @@ Traces are written to the debug output with the `[PERF]` prefix.
 **PerfTest demo**
 
 Compare **List (1000)** vs **Theme List (1000)** to measure theme binding and utility-class cost.
+
+### Transformed brush LRU
+
+Each `BrushSet` keeps at most **48** transformed brushes (opacity / contrast / darken / lighten variants) in an LRU cache. Main and contrast brushes are always retained. Tune globally:
+
+```csharp
+BrushSetOptions.TransformedBrushCapacity = 64;
+```
+
+Evictions are logged as `[BrushSet] Evicted transformed brush` when brush performance tracing is enabled.
+
+### Micro-benchmarks (BenchmarkDotNet)
+
+```bash
+dotnet run -c Release --project benchmarks/MyNet.Avalonia.Theme.Benchmarks/MyNet.Avalonia.Theme.Benchmarks.csproj
+```
+
+CI runs the same job on `main` (non-blocking) and uploads Markdown/JSON reports as artifacts.
 
 ## What not to do
 

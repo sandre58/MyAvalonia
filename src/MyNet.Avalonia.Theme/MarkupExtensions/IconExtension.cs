@@ -14,7 +14,6 @@ using Avalonia.Media;
 using Avalonia.Metadata;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
-using MyNet.Avalonia.Theme.Extensions;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 

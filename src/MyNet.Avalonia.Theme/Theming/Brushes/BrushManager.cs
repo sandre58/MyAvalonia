@@ -44,7 +44,7 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
             return brushSet.Brush;
         }
 
-        var newBrushSet = new BrushSet(color, contrastedColor ?? color.ContrastingForegroundColor(), colorTransitionDuration, colorTransitionEasing);
+        var newBrushSet = CreateBrushSet(color, contrastedColor ?? color.ContrastingForegroundColor());
         _sets[key] = newBrushSet;
         RegisterBrushSet(newBrushSet);
 
@@ -142,6 +142,16 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
         => colorInterpolation.IsEmpty
             ? colorInterpolation.Contrast ? set.Contrast : set.Brush
             : TrackBrush(set.GetTransformedBrush(colorInterpolation), set, colorInterpolation.Contrast);
+
+    private BrushSet CreateBrushSet(Color color, Color contrastedColor)
+        => new(
+            color,
+            contrastedColor,
+            colorTransitionDuration,
+            colorTransitionEasing,
+            onTransformedBrushEvicted: UntrackBrush);
+
+    private void UntrackBrush(ISolidColorBrush brush) => _reverse.Remove(brush);
 
     /// <summary>
     /// Registers the main and contrast brushes of a <see cref="BrushSet"/> in the reverse lookup table.

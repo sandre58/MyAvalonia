@@ -18,6 +18,7 @@
   </Folder>
   <Folder Name="/Github Actions/">
     <File Path=".github/dependabot.yml" />
+    <File Path=".github/workflows/benchmarks.yml" />
     <File Path=".github/workflows/ci.yml" />
     <File Path="GitVersion.yml" />
   </Folder>
@@ -77,6 +78,9 @@
     <File Path=".github/ISSUE_TEMPLATE/config.yml" />
     <File Path=".github/ISSUE_TEMPLATE/feature_request.yml" />
     <File Path=".github/ISSUE_TEMPLATE/question.yml" />
+  </Folder>
+  <Folder Name="/Benchmarks/">
+    <Project Path="benchmarks/MyNet.Avalonia.Theme.Benchmarks/MyNet.Avalonia.Theme.Benchmarks.csproj" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="tests/MyNet.Avalonia.Controls.Headless.Tests/MyNet.Avalonia.Controls.Headless.Tests.csproj" />

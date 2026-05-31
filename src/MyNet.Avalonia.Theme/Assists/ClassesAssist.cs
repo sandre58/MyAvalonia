@@ -12,7 +12,6 @@ using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.VisualTree;
 using MyNet.Avalonia.Theme.Classes.Engine;
 using MyNet.Avalonia.Theme.Classes.Registry;
 
@@ -315,7 +314,7 @@ public static class ClassesAssist
         }
 
         if (!PendingClassWatchers.TryGetValue(control, out _))
-            PendingClassWatchers.Add(control, new RegisteredClassWatcher(control));
+            PendingClassWatchers.Add(control, new(control));
     }
 
     private static void TryPromoteRegisteredClasses(Control control)
@@ -324,16 +323,7 @@ public static class ClassesAssist
             SetUseRegisteredClasses(control, true);
     }
 
-    private static bool HasRegisteredUtilityClass(Control control)
-    {
-        foreach (var cls in control.Classes)
-        {
-            if (ClassRegistry.ContainsRegisteredClass(cls))
-                return true;
-        }
-
-        return false;
-    }
+    private static bool HasRegisteredUtilityClass(Control control) => control.Classes.Any(ClassRegistry.ContainsRegisteredClass);
 
     /// <summary>
     /// Handles changes to <see cref="UseRegisteredClassesProperty"/> and manages class recompilation subscriptions.
