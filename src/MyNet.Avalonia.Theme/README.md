@@ -14,8 +14,6 @@
 
 Comprehensive theming system with custom styles, control templates, and visual resources for consistent UI design in Avalonia applications.
 
-[![.NET 8.0](https://img.shields.io/badge/.NET-8.0-purple)](#)
-[![.NET 9.0](https://img.shields.io/badge/.NET-9.0-purple)](#)
 [![.NET 10.0](https://img.shields.io/badge/.NET-10.0-purple)](#)
 [![C#](https://img.shields.io/badge/language-C%23-blue)](#)
 [![Cross Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)](#)
@@ -24,158 +22,104 @@ Comprehensive theming system with custom styles, control templates, and visual r
 
 ## Installation
 
-Install via NuGet:
-
 ```bash
 dotnet add package MyNet.Avalonia.Theme
 ```
 
-## Features
+## Basic setup
 
-- **Complete Theme System** - Comprehensive theming with consistent visual design
-- **Control Styles** - Custom styles for all standard Avalonia controls
-- **Color Management** - Sophisticated color palette and theming system
-- **Resource Dictionaries** - Organized resource management for themes and styles
-- **Dark/Light Themes** - Support for multiple theme variants
-- **Custom Templates** - Control templates for enhanced visual appearance
-- **Typography** - Consistent font management and text styling
-- **Converters** - Theme-aware value converters for data binding
-- **Extensions** - Helper extensions for theme management
-- **Cross-platform compatibility** - Consistent theming across Windows, macOS, and Linux
-
-
-## Theme Usage & Configuration
-
-MyNet.Avalonia.Theme provides a comprehensive theming system for Avalonia applications with consistent visual design and customization options.
-
-### Basic Theme Setup
-
-Apply the MyNet theme in your application's `App.axaml`:
+Apply `MyTheme` in **`Application.Styles`**, not in `MergedDictionaries`:
 
 ```xml
-<Application.Resources>
-  <ResourceDictionary>
-    <ResourceDictionary.MergedDictionaries>
-      <ResourceDictionary Source="avares://MyNet.Avalonia.Theme/MyTheme.axaml" />
-    </ResourceDictionary.MergedDictionaries>
-  </ResourceDictionary>
-</Application.Resources>
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:my="http://mynet.com/avalonia"
+             RequestedThemeVariant="Default">
+    <Application.Styles>
+        <my:MyTheme />
+    </Application.Styles>
+</Application>
 ```
 
-### Theme Variants
+`MyTheme` embeds theme dictionaries (Dark, Light, HighContrast, …), design tokens, control themes, and utility styles.
 
-The theme system supports multiple variants:
+## Runtime API
 
-```xml
-<!-- Light theme variant -->
-<ResourceDictionary Source="avares://MyNet.Avalonia.Theme/Themes/Light.axaml" />
+Access the active theme from code:
 
-<!-- Dark theme variant -->
-<ResourceDictionary Source="avares://MyNet.Avalonia.Theme/Themes/Dark.axaml" />
-```
-
-### Custom Color Schemes
-
-Override theme colors for custom branding:
-
-```xml
-<Application.Resources>
-  <ResourceDictionary>
-    <ResourceDictionary.MergedDictionaries>
-      <ResourceDictionary Source="avares://MyNet.Avalonia.Theme/MyTheme.axaml" />
-    </ResourceDictionary.MergedDictionaries>
-    
-    <!-- Custom color overrides -->
-    <SolidColorBrush x:Key="ThemePrimaryBrush" Color="#FF6B46C1" />
-    <SolidColorBrush x:Key="ThemeAccentBrush" Color="#FF10B981" />
-  </ResourceDictionary>
-</Application.Resources>
-```
-
-
-## Example Usage
-
-### Theme Management in Code
 ```csharp
-// Access theme resources programmatically
-var themeResource = Application.Current.FindResource("ThemePrimaryBrush");
-var primaryColor = ThemeResources.GetColor("Primary");
+using MyNet.Avalonia.Theme;
+using MyNet.Avalonia.Theme.Theming.Palettes;
 
-// Theme change notifications
-ThemeResources.ThemeChanged += (sender, args) => {
-    // React to theme changes
-    UpdateUI();
-};
+// Preload brushes and palettes (recommended during splash / startup)
+MyTheme.Current.EnsureLoaded();
+
+// Brand palettes (ColorShades with generated tones)
+MyTheme.Current.Primary = new ColorShades(Color.Parse("#1756BD"));
+MyTheme.Current.Accent = new ColorShades(Color.Parse("#10B981"));
+
+// Switch built-in variant (Dark, Light, HighContrast, …)
+MyTheme.Current.Theme = "Dark";
 ```
 
-### Custom Control Styling
-```xml
-<!-- Apply theme-aware styling to custom controls -->
-<Style Selector="Button.Accent">
-  <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush}" />
-  <Setter Property="Foreground" Value="{DynamicResource ThemeAccentForegroundBrush}" />
-  <Setter Property="BorderBrush" Value="{DynamicResource ThemeAccentBrush}" />
-</Style>
+Brushes exposed as `MyNet.Brush.*` are **mutable** `SolidColorBrush` instances: updating `Primary` / `Accent` or the active variant updates colors in place without rebinding the whole UI.
 
-<Style Selector="TextBox.Modern">
-  <Setter Property="Background" Value="{DynamicResource ThemeControlBackgroundBrush}" />
-  <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
-  <Setter Property="CornerRadius" Value="8" />
-</Style>
-```
+### Custom variant registration
 
-### Using Theme Converters
-```xml
-<!-- Theme-aware value converters -->
-<Border Background="{Binding IsActive, 
-                     Converter={StaticResource BooleanToThemeBrushConverter},
-                     ConverterParameter='Success'}" />
-
-<TextBlock Foreground="{Binding Priority,
-                        Converter={StaticResource PriorityToColorConverter}}" />
-```
-
-### Resource Dictionary Structure
-```xml
-<!-- Organize custom themes in resource dictionaries -->
-<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  
-  <!-- Import base theme -->
-  <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="avares://MyNet.Avalonia.Theme/MyTheme.axaml" />
-  </ResourceDictionary.MergedDictionaries>
-  
-  <!-- Custom overrides -->
-  <SolidColorBrush x:Key="CustomAccentBrush" Color="#FF6366F1" />
-  <Thickness x:Key="CustomButtonPadding">12,8</Thickness>
-</ResourceDictionary>
-```
-
-### Runtime Theme Switching
 ```csharp
-// Switch themes at runtime
-public void ApplyLightTheme()
-{
-    var lightTheme = new ResourceDictionary 
-    { 
-        Source = new Uri("avares://MyNet.Avalonia.Theme/Themes/Light.axaml") 
-    };
-    
-    Application.Current.Resources.MergedDictionaries.Clear();
-    Application.Current.Resources.MergedDictionaries.Add(lightTheme);
-}
+MyTheme.Current.RegisterThemeProvider(customPalette);
+MyTheme.Current.ApplyTheme(completeTheme);
+```
 
-public void ApplyDarkTheme()
-{
-    var darkTheme = new ResourceDictionary 
-    { 
-        Source = new Uri("avares://MyNet.Avalonia.Theme/Themes/Dark.axaml") 
-    };
-    
-    Application.Current.Resources.MergedDictionaries.Clear();
-    Application.Current.Resources.MergedDictionaries.Add(darkTheme);
-}
+## Markup extensions
+
+Use the `my` XML namespace (`http://mynet.com/avalonia`):
+
+```xml
+<Button Background="{my:Theme Primary}"
+        Foreground="{my:Theme Primary.Foreground}" />
+
+<TextBlock Foreground="{my:ThemeRole Foreground}" Classes="has-role" />
+
+<Border Background="{my:ThemeContext Surface.Level1}" />
+```
+
+Utility CSS-like classes (`variant-solid`, `size-md`, `gap-sm`, …) are applied on controls; the theme engine activates them lazily when a registered class is present.
+
+## Performance diagnostics
+
+`PerformanceMonitor` is disabled by default. Enable it when profiling:
+
+```csharp
+using MyNet.Avalonia.Theme.Diagnostics;
+
+PerformanceMonitor.Enable(PerformanceCategory.Theme, PerformanceCategory.Brushes);
+// or
+ThemeDiagnostics.EnableDefaultCategories(); // Theme + Brushes
+```
+
+**Showcase demo**
+
+- Open the **Theme** page and check **Performance diagnostics**, or
+- Set environment variable `MYNET_THEME_PERF=1` before launch.
+
+Traces are written to the debug output with the `[PERF]` prefix.
+
+**PerfTest demo**
+
+Compare **List (1000)** vs **Theme List (1000)** to measure theme binding and utility-class cost.
+
+## What not to do
+
+- Do not merge `MyTheme.axaml` as a loose `ResourceDictionary` only — you lose variant switching and brush registration.
+- Do not override `MyNet.Brush.*` keys with static `SolidColorBrush` in XAML; they are created and updated by `MyTheme`.
+- Do not expect `ThemeResources` / `ThemeChanged` from older samples — use `MyTheme.Current` and `IThemeBrushService` / `IThemeService` from `MyNet.Avalonia.Extended` when needed.
+
+## Tests
+
+Unit tests live in `tests/MyNet.Avalonia.Theme.Tests` (brush manager, class diff engine, class hasher, resource key factory).
+
+```bash
+dotnet test tests/MyNet.Avalonia.Theme.Tests/MyNet.Avalonia.Theme.Tests.csproj
 ```
 
 ## License

@@ -140,6 +140,10 @@
                                   my:InputBehavior.IsTextEditable="False"
                                   my:InputAssist.ShowClipboardButton="True" />
 
+                <CheckBox Content="Performance diagnostics"
+                          IsChecked="{Binding EnablePerformanceDiagnostics}"
+                          ToolTip.Tip="Writes [PERF] traces for Theme and Brushes to the debug output. Or set MYNET_THEME_PERF=1 at startup." />
+
             </WrapPanel>
         </common:PageHeader>
 

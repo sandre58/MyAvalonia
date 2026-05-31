@@ -15,4 +15,8 @@
     <ItemGroup>
         <AvaloniaResource Include="**/*.axaml" Exclude="MyTheme.axaml" />
     </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="MyNet.Avalonia.Theme.Tests" />
+    </ItemGroup>
 </Project>

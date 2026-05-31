@@ -15,6 +15,7 @@ using Material.Icons;
 using MyNet.Avalonia.Colors;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
+using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Avalonia.Theme.Theming.Palettes;
 using MyNet.Observable.Attributes;
@@ -96,6 +97,11 @@ internal sealed class ThemePageViewModel : PageViewModel
 
     public ObservableCollection<OpacityDefinition> OpacityLevels { get; } = [];
 
+    /// <summary>
+    /// Enables <see cref="PerformanceMonitor"/> output for theme and brush operations (debug output).
+    /// </summary>
+    public bool EnablePerformanceDiagnostics { get; set; } = ThemeDiagnostics.IsEnvironmentEnabled;
+
     private ObservableCollection<BrushDefinition> GetBrushDefinitions(string prefix, ColorShades shades)
         => shades.ToResourceDictionary(prefix)
             .Where(x => !x.Key.Contains(nameof(ColorShades.Foreground), StringComparison.OrdinalIgnoreCase))
@@ -152,6 +158,10 @@ internal sealed class ThemePageViewModel : PageViewModel
         using (_refreshThemePropertiesSuspender.Suspend())
             _themeService.ApplyAccent(AccentColor.Value.ToHex());
     }
+
+    [SuppressPropertyChangedWarnings]
+    private void OnEnablePerformanceDiagnosticsChanged()
+        => ThemeDiagnostics.ApplyShowcaseSettings(EnablePerformanceDiagnostics);
 
     protected override void Cleanup()
     {

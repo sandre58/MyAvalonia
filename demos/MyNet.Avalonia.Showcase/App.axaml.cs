@@ -33,6 +33,7 @@ using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Avalonia.Showcase.ViewModels.Pages;
 using MyNet.Avalonia.Showcase.Views;
 using MyNet.Avalonia.Theme;
+using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.Avalonia.Theme.Themes;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Globalization;
@@ -113,6 +114,7 @@ public class App : Application
         var pagesProviders = ProvidePages();
         var viewModelTypes = pagesProviders.SelectMany(x => x.GetPageAssociations()).Select(x => x.ViewModelType).ToList();
 
+        ThemeDiagnostics.ConfigureFromEnvironment();
         MyTheme.Current.EnsureLoaded();
 
         var collection = new ServiceCollection();
