@@ -13,6 +13,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\MyNet.Avalonia.Theme\MyNet.Avalonia.Theme.csproj" />
+        <ProjectReference Include="..\..\src\MyNet.Avalonia.Theme.Controls\MyNet.Avalonia.Theme.Controls.csproj" />
     </ItemGroup>
 
 </Project>

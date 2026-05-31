@@ -33,6 +33,7 @@ using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Avalonia.Showcase.ViewModels.Pages;
 using MyNet.Avalonia.Showcase.Views;
 using MyNet.Avalonia.Theme;
+using MyNet.Avalonia.Theme.Controls;
 using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.Avalonia.Theme.Themes;
 using MyNet.Avalonia.Theme.Theming.Core;
@@ -62,7 +63,11 @@ public class App : Application
     /// <summary>
     /// Initializes the application by loading the XAML markup for the App class. This method is called during the application startup process to set up the application's resources and UI components defined in the App.xaml file.
     /// </summary>
-    public override void Initialize() => AvaloniaXamlLoader.Load(this);
+    public override void Initialize()
+    {
+        ThemeControlsHost.Register();
+        AvaloniaXamlLoader.Load(this);
+    }
 
     /// <summary>
     /// Initializes the application framework and configures the main window or view based on the application's

@@ -12,7 +12,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
-using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Classes.Registry.States;
@@ -367,7 +366,10 @@ public static class VariantClassRegistry
     /// border thickness is returned.</param>
     /// <returns>A double value representing the border thickness to apply. Returns 0.4 for outlined controls of type
     /// ExtendedIcon, 1 for other outlined controls, and 0 for controls that are not outlined.</returns>
-    private static double ResolveBorderThickness(Control control, ControlVariant variant) => variant.HasFlag(ControlVariant.Outlined) ? control is ExtendedIcon ? 0.4 : 1 : 0;
+    private static double ResolveBorderThickness(Control control, ControlVariant variant) =>
+        variant.HasFlag(ControlVariant.Outlined)
+            ? control.GetType().FullName == "MyNet.Avalonia.Controls.ExtendedIcon" ? 0.4 : 1
+            : 0;
 
     /// <summary>
     /// Resolves the appropriate foreground role for a control based on its visual variant, role association, and header

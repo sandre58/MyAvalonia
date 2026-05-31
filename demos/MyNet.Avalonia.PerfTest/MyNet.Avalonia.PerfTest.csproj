@@ -16,6 +16,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\MyNet.Avalonia.Controls\MyNet.Avalonia.Controls.csproj" />
         <ProjectReference Include="..\..\src\MyNet.Avalonia.Theme\MyNet.Avalonia.Theme.csproj" />
+        <ProjectReference Include="..\..\src\MyNet.Avalonia.Theme.Controls\MyNet.Avalonia.Theme.Controls.csproj" />
         <ProjectReference Include="..\..\src\MyNet.Avalonia\MyNet.Avalonia.csproj" />
     </ItemGroup>
 

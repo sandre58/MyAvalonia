@@ -21,13 +21,31 @@ Comprehensive theming system with custom styles, control templates, and visual r
 
 ## Installation
 
+Full MyNet look (tokens + control themes + `Ripple` / `TextField` templates):
+
 ```bash
 dotnet add package MyNet.Avalonia.Theme
+dotnet add package MyNet.Avalonia.Theme.Controls
+dotnet add package MyNet.Avalonia.Controls
 ```
+
+`MyNet.Avalonia.Theme` alone provides the theme engine, design tokens, utility classes, and assists. Control themes require **`MyNet.Avalonia.Theme.Controls`** and an explicit startup call (see below).
 
 ## Basic setup
 
-Apply `MyTheme` in **`Application.Styles`**, not in `MergedDictionaries`:
+**1. Register control themes** in `App.axaml.cs` before loading XAML:
+
+```csharp
+using MyNet.Avalonia.Theme.Controls;
+
+public override void Initialize()
+{
+    ThemeControlsHost.Register();
+    AvaloniaXamlLoader.Load(this);
+}
+```
+
+**2. Apply `MyTheme` in `Application.Styles`**, not in `MergedDictionaries`:
 
 ```xml
 <Application xmlns="https://github.com/avaloniaui"
@@ -39,7 +57,7 @@ Apply `MyTheme` in **`Application.Styles`**, not in `MergedDictionaries`:
 </Application>
 ```
 
-`MyTheme` embeds theme dictionaries (Dark, Light, HighContrast, …), design tokens, control themes, and utility styles.
+`MyTheme` embeds theme dictionaries (Dark, Light, HighContrast, …), design tokens, and utility styles. `ThemeControlsHost.Register()` merges the full control catalog from **`MyNet.Avalonia.Theme.Controls`** (Foundation → Standard → Custom).
 
 ## Runtime API
 
@@ -106,17 +124,6 @@ Traces are written to the debug output with the `[PERF]` prefix.
 **PerfTest demo**
 
 Compare **List (1000)** vs **Theme List (1000)** to measure theme binding and utility-class cost.
-
-### Optional module loading
-
-Reduce startup cost when your app does not use certain control families:
-
-```csharp
-MyTheme.Current.LoadOptions = ThemeLoadOptions.CoreOnly; // skips color pickers, DataGrid, extended date/time
-MyTheme.Current.EnsureLoaded();
-```
-
-Defaults to `ThemeLoadOptions.Full` (all modules).
 
 ### Brush opacity prewarm
 

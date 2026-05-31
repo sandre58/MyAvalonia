@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="MyTheme.axaml.cs" company="St?phane ANDRE">
-// Copyright (c) St?phane ANDRE. All rights reserved.
+// <copyright file="MyTheme.axaml.cs" company="Stéphane ANDRE">
+// Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -15,7 +15,6 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Styling;
 using MyNet.Avalonia.Theme.Classes;
-using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.Avalonia.Theme.Runtime;
 using MyNet.Avalonia.Theme.Theming;
 using MyNet.Avalonia.Theme.Theming.Brushes;
@@ -96,12 +95,6 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     /// Raised when the theme or color palette changes. Useful for components that need to react to theme changes.
     /// </summary>
     public event EventHandler? ThemeChanged;
-
-    /// <summary>
-    /// Gets or sets which optional control-theme modules are merged when the theme is first loaded.
-    /// Set before <see cref="EnsureLoaded"/> or first resource access. Default includes all modules.
-    /// </summary>
-    public ThemeLoadOptions LoadOptions { get; set; } = ThemeLoadOptions.Full;
 
     #region Transition Properties
 
@@ -362,7 +355,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     public void EnsureLoaded() => _resourceStore.EnsureLoaded(OnResourcedAccessed);
 
     private void OnResourcedAccessed()
-        => _loadSession.LoadInitialResources(_serviceProvider, this, Primary, Accent, LoadOptions);
+        => _loadSession.LoadInitialResources(_serviceProvider, this, Primary, Accent);
 
     /// <summary>
     /// Loads compiled theme XAML. Called by <see cref="ThemeXamlLoader"/> (satisfies Avalonia XAML source generator).

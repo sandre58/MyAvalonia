@@ -9,7 +9,9 @@ using System.Linq;
 using Avalonia;
 using MyNet.Avalonia.Theme.Classes;
 
-namespace MyNet.Avalonia.Theme.Extensions;
+#pragma warning disable IDE0130
+namespace MyNet.Avalonia.Theme;
+#pragma warning restore IDE0130
 
 /// <summary>
 /// Provides extension methods for the <see cref="StyledElement"/> class, allowing for convenient manipulation of CSS classes on Avalonia controls using the <see cref="CssClass"/> record type.

@@ -22,13 +22,12 @@ internal sealed class ThemeLoadSession(
         IServiceProvider? serviceProvider,
         MyTheme theme,
         ColorShades primary,
-        ColorShades accent,
-        ThemeLoadOptions loadOptions)
+        ColorShades accent)
     {
         using (PerformanceMonitor.Measure(category: PerformanceCategory.Theme))
             xamlLoader.Load(serviceProvider, theme);
 
-        ThemeResourceModuleLoader.MergeOptionalModules((ResourceDictionary)theme.Resources, loadOptions);
+        ThemeComposition.MergeRegisteredCatalogs((ResourceDictionary)theme.Resources);
 
         paletteInjector.AddOrUpdateAccentShades(accent);
         paletteInjector.AddOrUpdatePrimaryShades(primary);

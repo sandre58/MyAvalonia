@@ -111,7 +111,7 @@ public static class ClassRegistry
 
     internal static int RegisteredClassCount => RegisteredClassNames.Count;
 
-    private static string NormalizeClassName(string name) => name.ToLowerInvariant();
+    private static string NormalizeClassName(string name) => name.ToLowerCase();
 }
 
 /// <summary>

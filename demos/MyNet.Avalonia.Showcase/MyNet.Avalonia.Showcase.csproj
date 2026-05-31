@@ -25,6 +25,7 @@
         <ProjectReference Include="..\..\src\MyNet.Avalonia.Geography\MyNet.Avalonia.Geography.csproj" />
         <ProjectReference Include="..\..\src\MyNet.Avalonia.Controls\MyNet.Avalonia.Controls.csproj" />
         <ProjectReference Include="..\..\src\MyNet.Avalonia.Theme\MyNet.Avalonia.Theme.csproj" />
+        <ProjectReference Include="..\..\src\MyNet.Avalonia.Theme.Controls\MyNet.Avalonia.Theme.Controls.csproj" />
         <ProjectReference Include="..\..\src\MyNet.Avalonia.Extended\MyNet.Avalonia.Extended.csproj" />
     </ItemGroup>
 

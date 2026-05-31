@@ -93,5 +93,6 @@
   <Project Path="src/MyNet.Avalonia.Extended/MyNet.Avalonia.Extended.csproj" />
   <Project Path="src/MyNet.Avalonia.Geography/MyNet.Avalonia.Geography.csproj" />
   <Project Path="src/MyNet.Avalonia.Theme/MyNet.Avalonia.Theme.csproj" />
+  <Project Path="src/MyNet.Avalonia.Theme.Controls/MyNet.Avalonia.Theme.Controls.csproj" />
   <Project Path="src/MyNet.Avalonia/MyNet.Avalonia.csproj" />
 </Solution>

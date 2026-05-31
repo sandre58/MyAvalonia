@@ -10,6 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="..\MyNet.Avalonia.Controls\MyNet.Avalonia.Controls.csproj" />
         <ProjectReference Include="..\MyNet.Avalonia.Theme\MyNet.Avalonia.Theme.csproj" />
+        <ProjectReference Include="..\MyNet.Avalonia.Theme.Controls\MyNet.Avalonia.Theme.Controls.csproj" />
     </ItemGroup>
 
     <ItemGroup>

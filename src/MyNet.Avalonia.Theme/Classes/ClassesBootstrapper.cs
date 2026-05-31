@@ -33,8 +33,6 @@ public static class ClassesBootstrapper
         BorderClassRegistry.RegisterBorderThickness();
         BorderClassRegistry.RegisterCornerRadius();
         FocusClassRegistry.Register();
-        IconClassRegistry.Register();
-        LayoutClassRegistry.Register();
         OpacityClassRegistry.Register();
         ShapeClassRegistry.Register();
         ShadowClassRegistry.Register();

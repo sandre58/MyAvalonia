@@ -4,17 +4,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Reactive.Disposables;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Documents;
-using Avalonia.Data;
 using Avalonia.Media;
 using MyNet.Avalonia.Theme.Assists;
-using MyNet.Avalonia.Theme.MarkupExtensions.Helpers;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Classes.Registry.States;
+using MyNet.Avalonia.Theme.MarkupExtensions.Helpers;
 using MyNet.Avalonia.Theme.Theming;
 
 namespace MyNet.Avalonia.Theme.Classes.Registry;
@@ -66,18 +64,12 @@ public static class TypographyClassRegistry
         var textDecorations = new TextDecorationCollection();
         if (state.IsUnderline)
         {
-            textDecorations.Add(new()
-            {
-                Location = TextDecorationLocation.Underline
-            });
+            textDecorations.Add(new() { Location = TextDecorationLocation.Underline });
         }
 
         if (state.IsStrikethrough)
         {
-            textDecorations.Add(new()
-            {
-                Location = TextDecorationLocation.Strikethrough
-            });
+            textDecorations.Add(new() { Location = TextDecorationLocation.Strikethrough });
         }
 
         state.Bindings.Add(control.SetProperty(TextBlock.TextDecorationsProperty, textDecorations));
@@ -96,43 +88,19 @@ public static class TypographyClassRegistry
     {
         // Texts
         ClassRegistry.RegisterMany<TextAlignment, TextBlock>(CssPrefix.Text, (x, y) => x.SetProperty(TextBlock.TextAlignmentProperty, y));
-        ClassRegistry.RegisterMany<FontSize, Control>(CssPrefix.Text, (x, y) => new CompositeDisposable
-        {
-            x.SetProperty(TextElement.FontSizeProperty, ThemeResources.Font.Size.Get(y).Value),
-            y.ToString().StartsWith('H') ? x.SetProperty(TextElement.FontWeightProperty, ThemeResources.Font.Weight.Header.Value) : Disposable.Empty
-        });
+        ClassRegistry.RegisterMany<FontSize, Control>(CssPrefix.Text, (x, y) => new CompositeDisposable { x.SetProperty(TextElement.FontSizeProperty, ThemeResources.Font.Size.Get(y).Value), y.ToString().StartsWith('H') ? x.SetProperty(TextElement.FontWeightProperty, ThemeResources.Font.Weight.Header.Value) : Disposable.Empty });
         ClassRegistry.RegisterMany<TextWrapping, TextBlock>(CssPrefix.Truncate, (x, y) => x.SetProperty(TextBlock.TextWrappingProperty, y));
 
-        ClassRegistry.Register<Control>(CssClass.TextHelper, x => new CompositeDisposable
-        {
-            x.SetProperty(TextElement.FontSizeProperty, ThemeResources.Font.Size.Get(FontSize.Sm).Value),
-            x.SetProperty(Visual.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium))))
-        });
+        ClassRegistry.Register<Control>(CssClass.TextHelper, x => new CompositeDisposable { x.SetProperty(TextElement.FontSizeProperty, ThemeResources.Font.Size.Get(FontSize.Sm).Value), x.SetProperty(Visual.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium)))) });
 
-        ClassRegistry.Register<Control>(CssClass.TextWatermark, x => new CompositeDisposable
-        {
-            x.SetProperty(Visual.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium)))),
-            x.SetProperty(TextElement.FontSizeProperty, ThemeBindingHelper.CreateScaledAncestorFontSize(0.75))
-        });
+        ClassRegistry.Register<Control>(CssClass.TextWatermark, x => new CompositeDisposable { x.SetProperty(Visual.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium)))), x.SetProperty(TextElement.FontSizeProperty, ThemeBindingHelper.CreateScaledAncestorFontSize(0.75)) });
 
         // Headers
-        ClassRegistry.RegisterMany<FontSize, Control>(CssPrefix.Header, (x, y) => new CompositeDisposable
-        {
-            x.SetProperty(HeaderAssist.FontSizeProperty, ThemeResources.Font.Size.Get(y).Value),
-            y.ToString().StartsWith('H') ? x.SetProperty(HeaderAssist.FontWeightProperty, ThemeResources.Font.Weight.Header.Value) : Disposable.Empty
-        });
+        ClassRegistry.RegisterMany<FontSize, Control>(CssPrefix.Header, (x, y) => new CompositeDisposable { x.SetProperty(HeaderAssist.FontSizeProperty, ThemeResources.Font.Size.Get(y).Value), y.ToString().StartsWith('H') ? x.SetProperty(HeaderAssist.FontWeightProperty, ThemeResources.Font.Weight.Header.Value) : Disposable.Empty });
 
-        ClassRegistry.Register<Control>(CssClass.HeaderHelper, x => new CompositeDisposable
-        {
-            x.SetProperty(HeaderAssist.FontSizeProperty, ThemeResources.Font.Size.Get(FontSize.Sm).Value),
-            x.SetProperty(HeaderAssist.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium))))
-        });
+        ClassRegistry.Register<Control>(CssClass.HeaderHelper, x => new CompositeDisposable { x.SetProperty(HeaderAssist.FontSizeProperty, ThemeResources.Font.Size.Get(FontSize.Sm).Value), x.SetProperty(HeaderAssist.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium)))) });
 
-        ClassRegistry.Register<Control>(CssClass.HeaderWatermark, x => new CompositeDisposable
-        {
-            x.SetProperty(HeaderAssist.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium)))),
-            x.SetProperty(HeaderAssist.FontSizeProperty, ThemeBindingHelper.CreateScaledAncestorFontSize(0.75))
-        });
+        ClassRegistry.Register<Control>(CssClass.HeaderWatermark, x => new CompositeDisposable { x.SetProperty(HeaderAssist.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium)))), x.SetProperty(HeaderAssist.FontSizeProperty, ThemeBindingHelper.CreateScaledAncestorFontSize(0.75)) });
     }
 
     /// <summary>
@@ -162,5 +130,4 @@ public static class TypographyClassRegistry
         ClassRegistry.Register<TextBlock>(CssClass.TextUnderline, x => ClassContext.Create<TextBlock, ControlState>(x).Update(s => s.IsUnderline = true, ApplyState));
         ClassRegistry.Register<TextBlock>(CssClass.TextStrikethrough, x => ClassContext.Create<TextBlock, ControlState>(x).Update(s => s.IsStrikethrough = true, ApplyState));
     }
-
 }

@@ -35,7 +35,7 @@ public class ThemeLoadSessionTests
         var primary = new ColorShades(MediaColors.Blue);
         var accent = new ColorShades(MediaColors.Orange);
 
-        session.LoadInitialResources(null, theme, primary, accent, ThemeLoadOptions.CoreOnly);
+        session.LoadInitialResources(null, theme, primary, accent);
 
         loader.LoadCount.Should().Be(1);
         loader.LastTarget.Should().BeSameAs(theme);

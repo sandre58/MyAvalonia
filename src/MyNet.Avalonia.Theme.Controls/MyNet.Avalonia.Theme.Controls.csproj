@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Product>My .NET Avalonia - Theme Controls</Product>
+        <PackageIcon>MyAvalonia.png</PackageIcon>
+        <Description>Control themes and DataGrid columns for MyNet Avalonia (Foundation, Standard, Custom catalogs).</Description>
+        <PackageTags>Avalonia;UI;Theme;Controls;MyNet;CrossPlatform;Desktop</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MyNet.Avalonia.Theme\MyNet.Avalonia.Theme.csproj" />
+        <ProjectReference Include="..\MyNet.Avalonia.Controls\MyNet.Avalonia.Controls.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="**/*.axaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="MyNet.Avalonia.Theme.Tests" />
+    </ItemGroup>
+
+</Project>

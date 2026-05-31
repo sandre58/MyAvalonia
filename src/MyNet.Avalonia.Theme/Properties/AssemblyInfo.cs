@@ -11,5 +11,4 @@ using Avalonia.Metadata;
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.Assists")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.Classes.Enums")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.Converters")]
-[assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.DataGrid")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.MarkupExtensions")]
