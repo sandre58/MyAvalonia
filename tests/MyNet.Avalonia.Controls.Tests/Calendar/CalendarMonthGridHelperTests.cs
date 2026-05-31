@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Primitives.Internals;
@@ -27,5 +28,16 @@ public class CalendarMonthGridHelperTests
     {
         CalendarMonthGridHelper.GetDayTitleColumnIndex(0, DayOfWeek.Monday).Should().Be(1);
         CalendarMonthGridHelper.GetDayTitleColumnIndex(6, DayOfWeek.Monday).Should().Be(0);
+    }
+
+    [Fact]
+    public void EnumerateDayCells_IncludesLeadingAndTrailingDays()
+    {
+        var cells = CalendarMonthGridHelper.EnumerateDayCells(new MonthContext(3, 2026), DayOfWeek.Monday, 42).ToList();
+
+        cells.Should().HaveCount(42);
+        cells[0].Date.Should().Be(new DateTime(2026, 2, 23));
+        cells.Should().Contain(x => x.DateContext == new DayContext(1, 3, 2026));
+        cells.Should().Contain(x => x.IsInactive);
     }
 }

@@ -55,7 +55,7 @@ public class Calendar : TemplatedControl
     public const string PartMonthGrid = "PART_MonthGrid";
     public const string PartYearGrid = "PART_YearGrid";
 
-    private const int NumberOfColumnInYearGrid = 3;
+    private const int NumberOfColumnInYearGrid = CalendarKeyboardNavigationHelper.YearGridColumns;
 
     private readonly Suspender _changeDisplayDate = new();
     private readonly Dictionary<DateTime, CalendarDateButton> _cells = [];
@@ -556,10 +556,11 @@ public class Calendar : TemplatedControl
 
     private void Refresh()
     {
-        PseudoClasses.Set(PseudoClassName.Month, DisplayDateContext is MonthContext);
-        PseudoClasses.Set(PseudoClassName.Year, DisplayDateContext is YearContext);
-        PseudoClasses.Set(PseudoClassName.Decade, DisplayDateContext is DecadeContext);
-        PseudoClasses.Set(PseudoClassName.Century, DisplayDateContext is CenturyContext);
+        var (month, year, decade, century) = CalendarDisplayModeHelper.GetViewPseudoClasses(DisplayDateContext);
+        PseudoClasses.Set(PseudoClassName.Month, month);
+        PseudoClasses.Set(PseudoClassName.Year, year);
+        PseudoClasses.Set(PseudoClassName.Decade, decade);
+        PseudoClasses.Set(PseudoClassName.Century, century);
 
         switch (DisplayDateContext)
         {
@@ -593,23 +594,25 @@ public class Calendar : TemplatedControl
         _cells.Clear();
 
         var children = _monthGrid.Children;
-        var daysBeforeCount = CalendarMonthGridHelper.GetLeadingDayCount(monthContext, FirstDayOfWeek);
-        var date = monthContext.ToDate().AddDays(-daysBeforeCount);
+        var dayCellCount = children.Count - DateTimeHelper.DaysPerWeek;
+        var cellIndex = DateTimeHelper.DaysPerWeek;
 
-        for (var i = DateTimeHelper.DaysPerWeek; i < children.Count; i++)
+        foreach (var state in CalendarMonthGridHelper.EnumerateDayCells(monthContext, FirstDayOfWeek, dayCellCount))
         {
-            if (children[i] is not CalendarDayButton cell) continue;
+            if (children[cellIndex] is not CalendarDayButton cell)
+            {
+                cellIndex++;
+                continue;
+            }
 
-            var dateContext = new DayContext(date.Day, date.Month, date.Year);
-            cell.Index = i;
-            cell.SetContext(dateContext);
-            cell.IsInactive = monthContext.Month != dateContext.Month;
-            cell.IsSelected = SelectedDates.Contains(date);
-            cell.IsBlackout = BlackoutDates.Contains(date);
+            cell.Index = cellIndex;
+            cell.SetContext(state.DateContext);
+            cell.IsInactive = state.IsInactive;
+            cell.IsSelected = SelectedDates.Contains(state.Date);
+            cell.IsBlackout = BlackoutDates.Contains(state.Date);
 
-            _cells.Add(date, cell);
-
-            date = date.AddDays(1);
+            _cells.Add(state.Date, cell);
+            cellIndex++;
         }
 
         SetDayTitles();
@@ -621,59 +624,16 @@ public class Calendar : TemplatedControl
 
         _cells.Clear();
 
-        switch (DisplayDateContext)
+        foreach (var state in CalendarYearGridHelper.BuildCells(DisplayDateContext, CurrentMonthContext))
         {
-            case YearContext yearContext:
-                {
-                    for (var i = 0; i < 12; i++)
-                    {
-                        if (_yearGrid.Children[i] is not CalendarYearButton cell) continue;
+            if (_yearGrid.Children[state.Index] is not CalendarYearButton cell) continue;
 
-                        var dateContext = new MonthContext(i + 1, yearContext.Year);
-                        cell.Index = i;
-                        cell.SetContext(dateContext);
-                        cell.IsInactive = yearContext.Year != dateContext.Year;
-                        cell.IsSelected = dateContext.IsSimilar(CurrentMonthContext.ToDate());
+            cell.Index = state.Index;
+            cell.SetContext(state.DateContext);
+            cell.IsInactive = state.IsInactive;
+            cell.IsSelected = state.IsSelected;
 
-                        _cells.Add(dateContext.ToDate(), cell);
-                    }
-
-                    break;
-                }
-
-            case DecadeContext decadeContext:
-                {
-                    for (var i = 0; i < 12; i++)
-                    {
-                        if (_yearGrid.Children[i] is not CalendarYearButton cell) continue;
-
-                        var dateContext = new YearContext(decadeContext.StartYear - 1 + i);
-                        cell.SetContext(dateContext);
-                        cell.IsInactive = decadeContext.StartYear != dateContext.Year.DecadeStart();
-                        cell.IsSelected = dateContext.IsSimilar(CurrentMonthContext.ToDate());
-
-                        _cells.Add(dateContext.ToDate(), cell);
-                    }
-
-                    break;
-                }
-
-            case CenturyContext centuryContext:
-                {
-                    for (var i = 0; i < 12; i++)
-                    {
-                        if (_yearGrid.Children[i] is not CalendarYearButton cell) continue;
-
-                        var dateContext = new DecadeContext(centuryContext.StartYear - 10 + (i * 10));
-                        cell.SetContext(dateContext);
-                        cell.IsInactive = centuryContext.StartYear != dateContext.StartYear.Century().Start.GetValueOrDefault().Value;
-                        cell.IsSelected = dateContext.IsSimilar(CurrentMonthContext.ToDate());
-
-                        _cells.Add(dateContext.ToDate(), cell);
-                    }
-
-                    break;
-                }
+            _cells.Add(state.CellDate, cell);
         }
     }
 
@@ -695,7 +655,7 @@ public class Calendar : TemplatedControl
     {
         _lastSelectedDate = date;
 
-        DisplayDateContext = new MonthContext(date.Month, date.Year);
+        DisplayDateContext = CalendarDisplayModeHelper.ToMonthContext(date);
         SetCurrentValue(DisplayDateProperty, date);
 
         UpdateFocus(date);
@@ -705,13 +665,13 @@ public class Calendar : TemplatedControl
 
     #region Move Display Mode
 
-    private void ShowMonthMode() => DisplayDateContext = new MonthContext(DisplayDate.Month, DisplayDate.Year);
+    private void ShowMonthMode() => DisplayDateContext = CalendarDisplayModeHelper.ToMonthContext(DisplayDate);
 
-    private void ShowYearMode() => DisplayDateContext = new YearContext(DisplayDate.Year);
+    private void ShowYearMode() => DisplayDateContext = CalendarDisplayModeHelper.ToYearContext(DisplayDate);
 
-    private void ShowDecadeMode() => DisplayDateContext = new DecadeContext(DisplayDate.Year.DecadeStart());
+    private void ShowDecadeMode() => DisplayDateContext = CalendarDisplayModeHelper.ToDecadeContext(DisplayDate);
 
-    private void ShowCenturyMode() => DisplayDateContext = new CenturyContext(DisplayDate.Year.Century().Start.GetValueOrDefault().Value);
+    private void ShowCenturyMode() => DisplayDateContext = CalendarDisplayModeHelper.ToCenturyContext(DisplayDate);
 
     #endregion
 
@@ -767,15 +727,8 @@ public class Calendar : TemplatedControl
 
     private void OnHeaderButtonClick(object? sender, RoutedEventArgs e)
     {
-        switch (DisplayDateContext)
-        {
-            case YearContext:
-                ShowDecadeMode();
-                break;
-            case DecadeContext:
-                ShowCenturyMode();
-                break;
-        }
+        if (CalendarDisplayModeHelper.GetHeaderDrillDownAction(DisplayDateContext) is { } action)
+            ApplyNavigation(new(action), ctrl: false, shift: false);
     }
 
     private void OnHeaderMonthButtonClick(object? sender, RoutedEventArgs e) => ShowYearMode();
@@ -800,10 +753,7 @@ public class Calendar : TemplatedControl
         {
             var ctrl = (e.KeyModifiers & KeyModifiers.Control) == KeyModifiers.Control;
 
-            if (e.Delta.Y > 0)
-                ProcessPageUpKey(ctrl, false);
-            else
-                ProcessPageDownKey(ctrl, false);
+            ApplyNavigation(e.Delta.Y > 0 ? CalendarKeyboardNavigationHelper.Resolve(Key.PageUp, DisplayDateContext, GetFocusedDate(), CurrentMonthContext, ctrl, shift: false) : CalendarKeyboardNavigationHelper.Resolve(Key.PageDown, DisplayDateContext, GetFocusedDate(), CurrentMonthContext, ctrl, shift: false), ctrl, shift: false);
 
             e.Handled = true;
         }
@@ -872,247 +822,49 @@ public class Calendar : TemplatedControl
 
         var ctrl = (e.KeyModifiers & KeyModifiers.Control) == KeyModifiers.Control;
         var shift = (e.KeyModifiers & KeyModifiers.Shift) == KeyModifiers.Shift;
+        var result = CalendarKeyboardNavigationHelper.Resolve(e.Key, DisplayDateContext, GetFocusedDate(), CurrentMonthContext, ctrl, shift);
 
-        switch (e.Key)
-        {
-            case Key.Up:
-                ProcessUpKey(ctrl, shift);
-                e.Handled = true;
-                break;
-
-            case Key.Down:
-                ProcessDownKey(ctrl, shift);
-                e.Handled = true;
-                break;
-
-            case Key.Left:
-                ProcessLeftKey(ctrl, shift);
-                e.Handled = true;
-                break;
-
-            case Key.Right:
-                ProcessRightKey(ctrl, shift);
-                e.Handled = true;
-                break;
-
-            case Key.PageDown:
-                ProcessPageDownKey(ctrl, shift);
-                e.Handled = true;
-                break;
-
-            case Key.PageUp:
-                ProcessPageUpKey(ctrl, shift);
-                e.Handled = true;
-                break;
-
-            case Key.Home:
-                ProcessHomeKey(ctrl, shift);
-                e.Handled = true;
-                break;
-
-            case Key.End:
-                ProcessEndKey(ctrl, shift);
-                e.Handled = true;
-                break;
-        }
-    }
-
-    private void ProcessUpKey(bool ctrl, bool shift)
-    {
-        switch (DisplayDateContext)
-        {
-            case MonthContext:
-                ProcessDateSelection(GetFocusedDate().AddDays(-DateTimeHelper.DaysPerWeek), shift, ctrl);
-                break;
-
-            case YearContext:
-                ProcessContextSelection(CurrentMonthContext.Add(-NumberOfColumnInYearGrid));
-                break;
-
-            case DecadeContext:
-                ProcessContextSelection(CurrentMonthContext.AddYears(-NumberOfColumnInYearGrid));
-                break;
-
-            case CenturyContext:
-                ProcessContextSelection(CurrentMonthContext.AddDecades(-NumberOfColumnInYearGrid));
-                break;
-        }
-    }
-
-    private void ProcessDownKey(bool ctrl, bool shift)
-    {
-        switch (DisplayDateContext)
-        {
-            case MonthContext:
-                ProcessDateSelection(GetFocusedDate().AddDays(DateTimeHelper.DaysPerWeek), shift, ctrl);
-                break;
-
-            case YearContext:
-                ProcessContextSelection(CurrentMonthContext.Add(NumberOfColumnInYearGrid));
-                break;
-
-            case DecadeContext:
-                ProcessContextSelection(CurrentMonthContext.AddYears(NumberOfColumnInYearGrid));
-                break;
-
-            case CenturyContext:
-                ProcessContextSelection(CurrentMonthContext.AddDecades(NumberOfColumnInYearGrid));
-                break;
-        }
-    }
-
-    private void ProcessLeftKey(bool ctrl, bool shift)
-    {
-        switch (DisplayDateContext)
-        {
-            case MonthContext:
-                ProcessDateSelection(GetFocusedDate().AddDays(-1), shift, ctrl);
-                break;
-
-            case YearContext:
-                ProcessContextSelection(CurrentMonthContext.Add(-1));
-                break;
-
-            case DecadeContext:
-                ProcessContextSelection(CurrentMonthContext.AddYears(-1));
-                break;
-
-            case CenturyContext:
-                ProcessContextSelection(CurrentMonthContext.AddDecades(-1));
-                break;
-        }
-    }
-
-    private void ProcessRightKey(bool ctrl, bool shift)
-    {
-        switch (DisplayDateContext)
-        {
-            case MonthContext:
-                ProcessDateSelection(GetFocusedDate().AddDays(1), shift, ctrl);
-                break;
-
-            case YearContext:
-                ProcessContextSelection(CurrentMonthContext.Add(1));
-                break;
-
-            case DecadeContext:
-                ProcessContextSelection(CurrentMonthContext.AddYears(1));
-                break;
-
-            case CenturyContext:
-                ProcessContextSelection(CurrentMonthContext.AddDecades(1));
-                break;
-        }
-    }
-
-    private void ProcessHomeKey(bool ctrl, bool shift)
-    {
-        switch (DisplayDateContext)
-        {
-            case MonthContext:
-                ProcessDateSelection(GetFocusedDate().BeginningOfMonth(), shift, ctrl);
-                break;
-
-            case YearContext:
-                ProcessContextSelection(CurrentMonthContext.BeginningOfYear());
-                break;
-
-            case DecadeContext:
-                ProcessContextSelection(CurrentMonthContext.BeginningOfDecade());
-                break;
-
-            case CenturyContext:
-                ProcessContextSelection(CurrentMonthContext.BeginningOfCentury());
-                break;
-        }
-    }
-
-    private void ProcessEndKey(bool ctrl, bool shift)
-    {
-        switch (DisplayDateContext)
-        {
-            case MonthContext:
-                ProcessDateSelection(GetFocusedDate().EndOfMonth(), shift, ctrl);
-                break;
-
-            case YearContext:
-                ProcessContextSelection(CurrentMonthContext.EndOfYear());
-                break;
-
-            case DecadeContext:
-                ProcessContextSelection(CurrentMonthContext.EndOfDecade());
-                break;
-
-            case CenturyContext:
-                ProcessContextSelection(CurrentMonthContext.EndOfCentury());
-                break;
-        }
-    }
-
-    private void ProcessPageDownKey(bool ctrl, bool shift)
-    {
-        if (!ctrl && !shift)
-        {
-            Next();
+        if (result.Kind == CalendarNavigationKind.None)
             return;
-        }
 
-        switch (DisplayDateContext)
-        {
-            case MonthContext:
-                if (ctrl)
-                    ShowYearMode();
-                else if (shift)
-                    ProcessDateSelection(GetFocusedDate().AddMonths(1), shift, ctrl);
-
-                break;
-
-            case YearContext:
-                if (ctrl)
-                    ShowDecadeMode();
-
-                break;
-
-            case DecadeContext:
-                if (ctrl)
-                    ShowCenturyMode();
-
-                break;
-        }
+        ApplyNavigation(result, ctrl, shift);
+        e.Handled = true;
     }
 
-    private void ProcessPageUpKey(bool ctrl, bool shift)
+    private void ApplyNavigation(CalendarNavigationResult result, bool ctrl, bool shift)
     {
-        if (!ctrl && !shift)
+        switch (result.Kind)
         {
-            Previous();
-            return;
-        }
-
-        switch (DisplayDateContext)
-        {
-            case MonthContext:
-                if (shift)
-                    ProcessDateSelection(GetFocusedDate().AddMonths(-1), shift, ctrl);
-
+            case CalendarNavigationKind.SelectDate when result.Date is { } date:
+                ProcessDateSelection(date, shift, ctrl);
                 break;
 
-            case YearContext:
-                if (ctrl)
-                    ShowMonthMode();
-
+            case CalendarNavigationKind.SelectMonthContext when result.MonthContext is { } context:
+                ProcessContextSelection(context);
                 break;
 
-            case DecadeContext:
-                if (ctrl)
-                    ShowYearMode();
-
+            case CalendarNavigationKind.Next:
+                Next();
                 break;
 
-            case CenturyContext:
-                if (ctrl)
-                    ShowDecadeMode();
+            case CalendarNavigationKind.Previous:
+                Previous();
+                break;
 
+            case CalendarNavigationKind.ShowMonthView:
+                ShowMonthMode();
+                break;
+
+            case CalendarNavigationKind.ShowYearView:
+                ShowYearMode();
+                break;
+
+            case CalendarNavigationKind.ShowDecadeView:
+                ShowDecadeMode();
+                break;
+
+            case CalendarNavigationKind.ShowCenturyView:
+                ShowCenturyMode();
                 break;
         }
     }

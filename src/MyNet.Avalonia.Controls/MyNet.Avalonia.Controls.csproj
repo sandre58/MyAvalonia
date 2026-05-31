@@ -33,17 +33,12 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Compile Update="Resources\ColorPickerResources.Designer.cs">
+      <Compile Update="Localization\ColorPickerResources.Designer.cs">
         <DependentUpon>ColorPickerResources.resx</DependentUpon>
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
       </Compile>
-      <Compile Update="Resources\ControlResources.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>ControlResources.resx</DependentUpon>
-      </Compile>
-      <Compile Update="Resources\MessagesResources.Designer.cs">
+      <Compile Update="Localization\MessagesResources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>MessagesResources.resx</DependentUpon>
@@ -51,15 +46,11 @@
     </ItemGroup>
     
     <ItemGroup>
-      <EmbeddedResource Update="Resources\ColorPickerResources.resx">
+      <EmbeddedResource Update="Localization\ColorPickerResources.resx">
         <LastGenOutput>ColorPickerResources.Designer.cs</LastGenOutput>
         <Generator>ResXFileCodeGenerator</Generator>
       </EmbeddedResource>
-      <EmbeddedResource Update="Resources\ControlResources.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>ControlResources.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\MessagesResources.resx">
+      <EmbeddedResource Update="Localization\MessagesResources.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>MessagesResources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
