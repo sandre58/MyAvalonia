@@ -18,8 +18,8 @@
 
         <!-- Menu -->
         <my:NavigationMenu x:Name="Menu"
-                           my:NavigationAssist.AttachService="{Binding NavigationService}"
                            ItemsSource="{Binding MenuItems}"
+                           SelectedItem="{Binding SelectedMenuItem, Mode=TwoWay}"
                            Classes="shadow-surface"
                            Padding="{my:Thickness Sm}">
             <my:NavigationMenu.Header>
@@ -87,7 +87,7 @@
         </my:NavigationMenu>
 
         <!-- Main content -->
-        <NavigationPage Grid.Column="1" my:NavigationAssist.AttachService="{Binding NavigationService}"
+        <NavigationPage Grid.Column="1" my:NavigationPageHostAssist.IsHost="True"
                         IsBackButtonVisible="False" BarHeight="0"
                         PageTransition="{my:PageTransition Crossfade, FillMode=Both}" />
     </Grid>

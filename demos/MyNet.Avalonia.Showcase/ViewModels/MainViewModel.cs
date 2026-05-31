@@ -6,11 +6,13 @@
 
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Input;
 using MyNet.Avalonia.Extended.Commands;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.UI.Commands;
 using MyNet.UI.Navigation;
+using MyNet.UI.Navigation.Models;
 using MyNet.UI.Notifications;
 using MyNet.UI.Loading;
 using MyNet.UI.Services;
@@ -24,6 +26,7 @@ internal sealed class MainViewModel : MainWindowViewModelBase
 {
     private readonly ThreadSafeObservableCollection<IMenuItemViewModel> _menuItems = [];
     private readonly NavigationCommands _navigationCommands;
+    private IMenuItemViewModel? _selectedMenuItem;
 
     public MainViewModel(INotificationsManager notificationsManager,
                          IAppCommandsService appCommandsService,
@@ -42,6 +45,7 @@ internal sealed class MainViewModel : MainWindowViewModelBase
         GoForwardCommand = _navigationCommands.GoForwardCommand;
         NavigateCommand = _navigationCommands.NavigateCommand;
         _navigationCommands.SubscribeToNavigationStateChanges();
+        navigationService.StateChanged += OnNavigationStateChanged;
 
         ChangeCultureCommand = commandFactory.Create<CultureInfo>(cultureInfo => SelectedCulture = cultureInfo);
     }
@@ -60,5 +64,41 @@ internal sealed class MainViewModel : MainWindowViewModelBase
 
     public ReadOnlyObservableCollection<IMenuItemViewModel> MenuItems { get; }
 
+    public IMenuItemViewModel? SelectedMenuItem
+    {
+        get => _selectedMenuItem;
+        private set => RaiseAndSetIfChanged(ref _selectedMenuItem, value);
+    }
+
     public void AddMenuItem(params IMenuItemViewModel[] item) => _menuItems.AddRange(item);
+
+    private void OnNavigationStateChanged(object? sender, NavigationStateChangedEventArgs e)
+    {
+        var matchingItem = FindMatchingMenuItem(e.CurrentContext?.To);
+
+        if (matchingItem is not null && !ReferenceEquals(SelectedMenuItem, matchingItem))
+            SelectedMenuItem = matchingItem;
+    }
+
+    private IMenuItemViewModel? FindMatchingMenuItem(object? page)
+    {
+        if (page is not INavigationPage navigationPage)
+            return null;
+
+        foreach (var item in MenuItems)
+        {
+            if (item is PageViewModel pageViewModel && ReferenceEquals(pageViewModel, navigationPage))
+                return pageViewModel;
+
+            if (item is PagesGroupViewModel group)
+            {
+                var match = group.Pages.FirstOrDefault(x => ReferenceEquals(x, navigationPage));
+
+                if (match is not null)
+                    return match;
+            }
+        }
+
+        return null;
+    }
 }

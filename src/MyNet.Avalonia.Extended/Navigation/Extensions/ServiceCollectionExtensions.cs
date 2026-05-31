@@ -7,7 +7,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using MyNet.Avalonia.Extended.Assists;
+using MyNet.UI.Navigation;
 
 #pragma warning disable IDE0130
 namespace MyNet.Avalonia.Extended.Navigation;
@@ -19,22 +19,25 @@ namespace MyNet.Avalonia.Extended.Navigation;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Registers the Avalonia navigation host and page factory.
+    /// Registers the Avalonia navigation page host, middleware, and gesture bridge.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <returns>The same service collection for chaining.</returns>
     /// <remarks>
     /// Requires <see cref="MyNet.UI.Navigation.ServiceCollectionExtensions.AddNavigation"/> and
     /// <see cref="MyNet.UI.Locators.ServiceCollectionExtensions.AddViewLocators"/> to be registered first.
-    /// Call <see cref="AvaloniaNavigationContext.Configure"/> during startup after building the service provider.
-    /// Attach <see cref="Assists.NavigationAssist"/> to menu and <see cref="NavigationPage"/> controls in XAML.
+    /// Call <see cref="UseAvaloniaNavigation"/> during startup after building the service provider.
+    /// Set <see cref="Assists.NavigationPageHostAssist.IsHostProperty"/> on the shell <see cref="Avalonia.Controls.NavigationPage"/>.
     /// </remarks>
     public static IServiceCollection AddAvaloniaNavigation(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
 
         services.TryAddSingleton<IAvaloniaPageFactory, AvaloniaPageFactory>();
-        services.TryAddSingleton<AvaloniaNavigationHost>();
+        services.TryAddSingleton<IAvaloniaNavigationPageHost, AvaloniaNavigationPageHost>();
+        services.TryAddSingleton<AvaloniaNavigationGestureBridge>();
+        services.TryAddSingleton<AvaloniaNavigationResetBridge>();
+        services.AddNavigationMiddleware<AvaloniaNavigationPageMiddleware>();
 
         return services;
     }
@@ -46,6 +49,6 @@ public static class ServiceCollectionExtensions
     public static void UseAvaloniaNavigation(this IServiceProvider services)
     {
         ArgumentNullException.ThrowIfNull(services);
-        AvaloniaNavigationContext.Configure(services);
+        AvaloniaNavigationBootstrap.Configure(services);
     }
 }
