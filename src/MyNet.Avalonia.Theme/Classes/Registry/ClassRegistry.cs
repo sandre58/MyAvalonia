@@ -20,6 +20,7 @@ namespace MyNet.Avalonia.Theme.Classes.Registry;
 public static class ClassRegistry
 {
     private static readonly Dictionary<string, Func<StyledElement, IDisposable>> Registry = [];
+    private static readonly HashSet<string> RegisteredClassNames = new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
     /// Registers a utility action with the specified name.
@@ -29,8 +30,9 @@ public static class ClassRegistry
     public static void Register<TControl>(string name, Func<TControl, IDisposable> action)
         where TControl : StyledElement
     {
-        var @class = name.ToLower(CultureInfo.CurrentCulture);
+        var @class = NormalizeClassName(name);
         Registry[@class] = control => control is TControl typed ? action(typed) : Disposable.Empty;
+        RegisteredClassNames.Add(@class);
 
         PerformanceMonitor.Debug($"Registered utility action for class '{@class}'", PerformanceCategory.Utilities);
     }
@@ -105,7 +107,11 @@ public static class ClassRegistry
     /// Returns whether a registered utility class exists for the given class name.
     /// </summary>
     public static bool ContainsRegisteredClass(string className)
-        => Registry.ContainsKey(className.ToLowerCase());
+        => RegisteredClassNames.Contains(NormalizeClassName(className));
+
+    internal static int RegisteredClassCount => RegisteredClassNames.Count;
+
+    private static string NormalizeClassName(string name) => name.ToLowerInvariant();
 }
 
 /// <summary>

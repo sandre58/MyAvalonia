@@ -48,6 +48,10 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
         _sets[key] = newBrushSet;
         RegisterBrushSet(newBrushSet);
 
+        opacities ??= BrushManagerOptions.PrewarmThemeOpacityLevels
+            ? BrushManagerOptions.ThemeOpacityLevels
+            : null;
+
         opacities?.ForEach(opacity =>
         {
             TrackBrush(newBrushSet.GetTransformedBrush(new(opacity)), newBrushSet, false);

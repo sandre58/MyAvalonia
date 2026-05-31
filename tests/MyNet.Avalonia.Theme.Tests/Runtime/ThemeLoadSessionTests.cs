@@ -31,14 +31,14 @@ public class ThemeLoadSessionTests
             (_, _, _, _, _) => new SolidColorBrush(MediaColors.Black));
 
         var session = new ThemeLoadSession(loader, injector);
-        var themeRoot = new object();
+        var theme = new MyTheme(null, loader);
         var primary = new ColorShades(MediaColors.Blue);
         var accent = new ColorShades(MediaColors.Orange);
 
-        session.LoadInitialResources(null, themeRoot, primary, accent);
+        session.LoadInitialResources(null, theme, primary, accent, ThemeLoadOptions.CoreOnly);
 
         loader.LoadCount.Should().Be(1);
-        loader.LastTarget.Should().BeSameAs(themeRoot);
+        loader.LastTarget.Should().BeSameAs(theme);
         resources.Should().ContainKey(MyNet.Avalonia.Theme.Theming.ThemeResourceKeyFactory.Brush("Primary"));
         resources.Should().ContainKey(MyNet.Avalonia.Theme.Theming.ThemeResourceKeyFactory.Brush("Accent"));
     }

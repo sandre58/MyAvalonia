@@ -97,6 +97,12 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     /// </summary>
     public event EventHandler? ThemeChanged;
 
+    /// <summary>
+    /// Gets or sets which optional control-theme modules are merged when the theme is first loaded.
+    /// Set before <see cref="EnsureLoaded"/> or first resource access. Default includes all modules.
+    /// </summary>
+    public ThemeLoadOptions LoadOptions { get; set; } = ThemeLoadOptions.Full;
+
     #region Transition Properties
 
     /// <summary>
@@ -356,7 +362,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     public void EnsureLoaded() => _resourceStore.EnsureLoaded(OnResourcedAccessed);
 
     private void OnResourcedAccessed()
-        => _loadSession.LoadInitialResources(_serviceProvider, this, Primary, Accent);
+        => _loadSession.LoadInitialResources(_serviceProvider, this, Primary, Accent, LoadOptions);
 
     /// <summary>
     /// Loads compiled theme XAML. Called by <see cref="ThemeXamlLoader"/> (satisfies Avalonia XAML source generator).

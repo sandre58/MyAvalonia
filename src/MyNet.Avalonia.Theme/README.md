@@ -107,6 +107,21 @@ Traces are written to the debug output with the `[PERF]` prefix.
 
 Compare **List (1000)** vs **Theme List (1000)** to measure theme binding and utility-class cost.
 
+### Optional module loading
+
+Reduce startup cost when your app does not use certain control families:
+
+```csharp
+MyTheme.Current.LoadOptions = ThemeLoadOptions.CoreOnly; // skips color pickers, DataGrid, extended date/time
+MyTheme.Current.EnsureLoaded();
+```
+
+Defaults to `ThemeLoadOptions.Full` (all modules).
+
+### Brush opacity prewarm
+
+New brush registrations pre-create transforms for standard theme opacity levels (`BrushManagerOptions.PrewarmThemeOpacityLevels`, default `true`).
+
 ### Transformed brush LRU
 
 Each `BrushSet` keeps at most **48** transformed brushes (opacity / contrast / darken / lighten variants) in an LRU cache. Main and contrast brushes are always retained. Tune globally:
