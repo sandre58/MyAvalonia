@@ -11,7 +11,7 @@ using Avalonia;
 using Avalonia.Controls;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Proxy;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Controls.Behaviors;
 
@@ -208,4 +208,3 @@ public static class ProxyBehavior
 
     #endregion
 }
-

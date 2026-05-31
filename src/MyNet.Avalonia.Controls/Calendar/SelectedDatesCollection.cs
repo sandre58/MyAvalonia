@@ -10,8 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Threading;
-using MyNet.Utilities;
-using MyNet.Utilities.Helpers;
+using MyNet.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;

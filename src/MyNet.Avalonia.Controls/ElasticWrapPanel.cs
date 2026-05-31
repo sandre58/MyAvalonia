@@ -11,7 +11,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Layout;
-using MyNet.Utilities;
+using MyNet.Primitives;
 using static System.Math;
 
 namespace MyNet.Avalonia.Controls;
@@ -135,7 +135,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                 }
 
                 var spaceU = isFirstInLine ? 0 : spacingSize.U;
-                if ((curLineSize.U + sz.U + spaceU).GreaterThan(uvConstraint.U))
+                if ((curLineSize.U + sz.U + spaceU).IsGreaterThan(uvConstraint.U))
                 {
                     // Finish current line
                     panelSize.U = Max(curLineSize.U, panelSize.U);
@@ -173,7 +173,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                 var spaceU = isFirstInLine ? 0 : spacingSize.U;
 
                 // Need to switch to another line
-                if ((curLineSize.U + sz.U + spaceU).GreaterThan(uvConstraint.U))
+                if ((curLineSize.U + sz.U + spaceU).IsGreaterThan(uvConstraint.U))
                 {
                     // Finish current line
                     panelSize.U = Max(curLineSize.U, panelSize.U);
@@ -187,7 +187,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                     isFirstInLine = false;
 
                     // The element is wider than the constraint - give it a separate line
-                    if (sz.U.GreaterThan(uvConstraint.U))
+                    if (sz.U.IsGreaterThan(uvConstraint.U))
                     {
                         panelSize.U = Max(sz.U, panelSize.U);
                         panelSize.V += sz.V;
@@ -269,7 +269,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
 
                 // TotalU doesn't include spacing, so we need to add it for existing items
                 var totalSpacingU = curLineUIs.Count > 0 ? curLineUIs.Count * spacingSize.U : 0;
-                if ((curLineUIs.TotalU + totalSpacingU + sz.U).GreaterThan(uvFinalSize.U))
+                if ((curLineUIs.TotalU + totalSpacingU + sz.U).IsGreaterThan(uvFinalSize.U))
                 {
                     if (curLineUIs.Count > 0)
                     {
@@ -297,7 +297,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
                 var totalSpacingU = curLineUIs.Count > 0 ? curLineUIs.Count * spacingSize.U : 0;
 
                 // Need to switch to another line
-                if ((curLineUIs.TotalU + totalSpacingU + sz.U).GreaterThan(uvFinalSize.U))
+                if ((curLineUIs.TotalU + totalSpacingU + sz.U).IsGreaterThan(uvFinalSize.U))
                 {
                     if (curLineUIs.Count > 0)
                     {
@@ -306,7 +306,7 @@ public sealed class ElasticWrapPanel : WrapPanel, INavigableContainer
 
                     curLineUIs = new(Orientation);
                     curLineUIs.Add(child, sz);
-                    if (!sz.U.GreaterThan(uvFinalSize.U))
+                    if (!sz.U.IsGreaterThan(uvFinalSize.U))
                         continue;
                     lineUvCollection.Add(curLineUIs);
                     curLineUIs = new(Orientation);

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using Avalonia;
@@ -18,11 +19,11 @@ using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Avalonia.Extensions;
-using MyNet.Utilities;
-using MyNet.Utilities.DateTimes;
-using MyNet.Utilities.Helpers;
+using MyNet.Collections;
 using MyNet.Globalization.Facade;
+using MyNet.Primitives;
+using MyNet.Primitives.Intervals;
+using MyNet.Primitives.Temporal;
 using MyNet.Utilities.Suspending;
 using CalendarBlackoutDatesCollection = MyNet.Avalonia.Controls.Primitives.CalendarBlackoutDatesCollection;
 using CalendarDateChangedEventArgs = MyNet.Avalonia.Controls.Primitives.CalendarDateChangedEventArgs;
@@ -113,8 +114,8 @@ public class Calendar : TemplatedControl
         set => SetValue(IsTodayHighlightedProperty, value);
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Roslynator", "RCS1163:Unused parameter", Justification = "Used by handler")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Used by handler")]
+    [SuppressMessage("Roslynator", "RCS1163:Unused parameter", Justification = "Used by handler")]
+    [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Used by handler")]
     private void OnIsTodayHighlightedChanged(AvaloniaPropertyChangedEventArgs e)
     {
         if (_cells.GetValueOrDefault(DateTime.Today) is not CalendarDayButton cell) return;
@@ -337,7 +338,7 @@ public class Calendar : TemplatedControl
 
     private void ChangeBlackoutState(Period period, bool value)
     {
-        foreach (var date in period.ToDates())
+        foreach (var date in period.EnumerateDays())
         {
             if (_cells.GetOrDefault(date) is CalendarDayButton cell && cell.IsBlackout != value)
                 cell.IsBlackout = value;
@@ -358,8 +359,8 @@ public class Calendar : TemplatedControl
 
     private static DateContext CoerceDisplayDateContext(AvaloniaObject sender, DateContext value) => value switch
     {
-        DecadeContext decadeContext => decadeContext.StartYear % 10 == 0 ? decadeContext : new(DateTimeHelper.GetDecade(decadeContext.StartYear).Start),
-        CenturyContext centuryContaxt => centuryContaxt.StartYear % 100 == 0 ? centuryContaxt : new(DateTimeHelper.GetCentury(centuryContaxt.StartYear).Start),
+        DecadeContext decadeContext => decadeContext.StartYear % 10 == 0 ? decadeContext : new(decadeContext.StartYear.Decade().Start.GetValueOrDefault().Value),
+        CenturyContext centuryContext => centuryContext.StartYear % 100 == 0 ? centuryContext : new(centuryContext.StartYear.Century().Start.GetValueOrDefault().Value),
         _ => value
     };
 
@@ -558,9 +559,9 @@ public class Calendar : TemplatedControl
     private void InitializeGridButtons()
     {
         // Generate Day titles (Sun, Mon, Tue, Wed, Thu, Fri, Sat) based on FirstDayOfWeek and culture.
-        var count = DateTimeHelper.NumberOfDaysInWeek() + (DateTimeHelper.NumberOfDaysInWeek() * DateTimeHelper.NumberOfDaysInWeek());
+        var count = DateTimeHelper.DaysPerWeek + (DateTimeHelper.DaysPerWeek * DateTimeHelper.DaysPerWeek);
         var children = new List<Control>(count);
-        for (var i = 0; i < DateTimeHelper.NumberOfDaysInWeek(); i++)
+        for (var i = 0; i < DateTimeHelper.DaysPerWeek; i++)
         {
             if (DayTitleTemplate?.Build() is { } cell)
             {
@@ -572,9 +573,9 @@ public class Calendar : TemplatedControl
         }
 
         // Generate date buttons.
-        for (var i = 2; i < DateTimeHelper.MaxNumberOfWeeksPerMonth() + 2; i++)
+        for (var i = 2; i < DateTimeHelper.DaysPerMonth + 2; i++)
         {
-            for (var j = 0; j < DateTimeHelper.NumberOfDaysInWeek(); j++)
+            for (var j = 0; j < DateTimeHelper.DaysPerWeek; j++)
             {
                 var cell = new CalendarDayButton
                 {
@@ -631,10 +632,10 @@ public class Calendar : TemplatedControl
     {
         if (_monthGrid is null) return;
 
-        for (var childIndex = 0; childIndex < DateTimeHelper.NumberOfDaysInWeek(); childIndex++)
+        for (var childIndex = 0; childIndex < DateTimeHelper.DaysPerWeek; childIndex++)
         {
             var daytitle = _monthGrid.Children[childIndex];
-            daytitle.DataContext = DateTimeHelper.GetCurrentDateTimeFormatInfo().ShortestDayNames[(childIndex + (int)FirstDayOfWeek) % DateTimeHelper.NumberOfDaysInWeek()];
+            daytitle.DataContext = DateTimeHelper.GetCurrentDateTimeFormatInfo().ShortestDayNames[(childIndex + (int)FirstDayOfWeek) % DateTimeHelper.DaysPerWeek];
         }
     }
 
@@ -648,7 +649,7 @@ public class Calendar : TemplatedControl
         var daysBeforeCount = PreviousMonthDays(monthContext);
         var date = monthContext.ToDate().AddDays(-daysBeforeCount);
 
-        for (var i = DateTimeHelper.NumberOfDaysInWeek(); i < children.Count; i++)
+        for (var i = DateTimeHelper.DaysPerWeek; i < children.Count; i++)
         {
             if (children[i] is not CalendarDayButton cell) continue;
 
@@ -701,7 +702,7 @@ public class Calendar : TemplatedControl
 
                         var dateContext = new YearContext(decadeContext.StartYear - 1 + i);
                         cell.SetContext(dateContext);
-                        cell.IsInactive = decadeContext.StartYear != DateTimeHelper.GetDecade(dateContext.Year).Start;
+                        cell.IsInactive = decadeContext.StartYear != dateContext.Year.Decade().Start.GetValueOrDefault().Value;
                         cell.IsSelected = dateContext.IsSimilar(CurrentMonthContext.ToDate());
 
                         _cells.Add(dateContext.ToDate(), cell);
@@ -718,7 +719,7 @@ public class Calendar : TemplatedControl
 
                         var dateContext = new DecadeContext(centuryContext.StartYear - 10 + (i * 10));
                         cell.SetContext(dateContext);
-                        cell.IsInactive = centuryContext.StartYear != DateTimeHelper.GetCentury(dateContext.StartYear).Start;
+                        cell.IsInactive = centuryContext.StartYear != dateContext.StartYear.Century().Start.GetValueOrDefault().Value;
                         cell.IsSelected = dateContext.IsSimilar(CurrentMonthContext.ToDate());
 
                         _cells.Add(dateContext.ToDate(), cell);
@@ -734,8 +735,8 @@ public class Calendar : TemplatedControl
         var firstDay = context.ToDate();
         var dayOfWeek = _calendar.GetDayOfWeek(firstDay);
         var firstDayOfWeek = FirstDayOfWeek;
-        var i = (dayOfWeek - firstDayOfWeek + DateTimeHelper.NumberOfDaysInWeek()) % DateTimeHelper.NumberOfDaysInWeek();
-        return i == 0 ? DateTimeHelper.NumberOfDaysInWeek() : i;
+        var i = (dayOfWeek - firstDayOfWeek + DateTimeHelper.DaysPerWeek) % DateTimeHelper.DaysPerWeek;
+        return i == 0 ? DateTimeHelper.DaysPerWeek : i;
     }
 
     internal CalendarDayButton? GetFocusedDayButton() => (CalendarDayButton?)_cells.Values.FirstOrDefault(x => x.IsFocused);
@@ -770,9 +771,9 @@ public class Calendar : TemplatedControl
 
     private void ShowYearMode() => DisplayDateContext = new YearContext(DisplayDate.Year);
 
-    private void ShowDecadeMode() => DisplayDateContext = new DecadeContext(DateTimeHelper.GetDecade(DisplayDate.Year).Start);
+    private void ShowDecadeMode() => DisplayDateContext = new DecadeContext(DisplayDate.Year.Decade().Start.GetValueOrDefault().Value);
 
-    private void ShowCenturyMode() => DisplayDateContext = new CenturyContext(DateTimeHelper.GetCentury(DisplayDate.Year).Start);
+    private void ShowCenturyMode() => DisplayDateContext = new CenturyContext(DisplayDate.Year.Century().Start.GetValueOrDefault().Value);
 
     #endregion
 
@@ -1093,7 +1094,7 @@ public class Calendar : TemplatedControl
         switch (DisplayDateContext)
         {
             case MonthContext:
-                ProcessDateSelection(GetFocusedDate().AddDays(-DateTimeHelper.NumberOfDaysInWeek()), shift, ctrl);
+                ProcessDateSelection(GetFocusedDate().AddDays(-DateTimeHelper.DaysPerWeek), shift, ctrl);
                 break;
 
             case YearContext:
@@ -1115,7 +1116,7 @@ public class Calendar : TemplatedControl
         switch (DisplayDateContext)
         {
             case MonthContext:
-                ProcessDateSelection(GetFocusedDate().AddDays(DateTimeHelper.NumberOfDaysInWeek()), shift, ctrl);
+                ProcessDateSelection(GetFocusedDate().AddDays(DateTimeHelper.DaysPerWeek), shift, ctrl);
                 break;
 
             case YearContext:

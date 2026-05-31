@@ -5,13 +5,14 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using MyNet.Globalization.Facade;
-using MyNet.Utilities.DateTimes;
+using MyNet.Primitives.Intervals;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;
@@ -49,7 +50,7 @@ public class DatePickerBase : TemplatedControl
         set => SetValue(PlaceholderTextProperty, value);
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Used for binding")]
+    [SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Used for binding")]
     public AvaloniaList<Period> BlackoutDates
     {
         get => GetValue(BlackoutDatesProperty);

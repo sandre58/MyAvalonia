@@ -8,10 +8,9 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using MyNet.Avalonia.Controls.Extensions;
-using MyNet.Avalonia.Extensions;
 using MyNet.Globalization.Facade;
-using MyNet.Utilities;
-using MyNet.Utilities.DateTimes;
+using MyNet.Primitives;
+using MyNet.Primitives.Temporal;
 
 namespace MyNet.Avalonia.Controls.Behaviors;
 

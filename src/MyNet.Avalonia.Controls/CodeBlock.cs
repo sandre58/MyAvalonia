@@ -12,7 +12,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.Documents;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
-using MyNet.Avalonia.Extensions;
 
 namespace MyNet.Avalonia.Controls;
 

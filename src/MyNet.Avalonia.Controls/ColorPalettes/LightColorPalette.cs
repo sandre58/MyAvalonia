@@ -6,7 +6,7 @@
 
 using Avalonia.Controls;
 using Avalonia.Media;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Controls.ColorPalettes;
 

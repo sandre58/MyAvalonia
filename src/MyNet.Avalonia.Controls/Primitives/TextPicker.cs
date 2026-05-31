@@ -18,7 +18,6 @@ using Avalonia.Interactivity;
 using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Behaviors;
 using MyNet.Avalonia.Controls.Resources;
-using MyNet.Avalonia.Extensions;
 using MyNet.Utilities.Suspending;
 
 namespace MyNet.Avalonia.Controls.Primitives;

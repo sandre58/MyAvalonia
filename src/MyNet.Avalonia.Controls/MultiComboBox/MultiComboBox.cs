@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
@@ -20,8 +21,7 @@ using Avalonia.Metadata;
 using Avalonia.Styling;
 using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Avalonia.Extensions;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -45,10 +45,10 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
 
     public static readonly StyledProperty<double> MaxSelectionBoxHeightProperty = AvaloniaProperty.Register<MultiComboBox, double>(nameof(MaxSelectionBoxHeight));
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("AvaloniaProperty", "AVP1010", Justification = "This property is owned by SelectingItemsControl, but protected there. ListBox changes its visibility.")]
+    [SuppressMessage("AvaloniaProperty", "AVP1010", Justification = "This property is owned by SelectingItemsControl, but protected there. ListBox changes its visibility.")]
     public static new readonly DirectProperty<SelectingItemsControl, IList?> SelectedItemsProperty = SelectingItemsControl.SelectedItemsProperty;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("AvaloniaProperty", "AVP1010", Justification = "This property is owned by SelectingItemsControl, but protected there. ListBox changes its visibility.")]
+    [SuppressMessage("AvaloniaProperty", "AVP1010", Justification = "This property is owned by SelectingItemsControl, but protected there. ListBox changes its visibility.")]
     public static new readonly DirectProperty<SelectingItemsControl, ISelectionModel> SelectionProperty = SelectingItemsControl.SelectionProperty;
 
     public static readonly StyledProperty<IDataTemplate?> SelectedItemTemplateProperty = AvaloniaProperty.Register<MultiComboBox, IDataTemplate?>(nameof(SelectedItemTemplate));
@@ -121,7 +121,7 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
         set => SetValue(MaxSelectionBoxHeightProperty, value);
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Used for binding")]
+    [SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Used for binding")]
     public new IList? SelectedItems
     {
         get => base.SelectedItems;

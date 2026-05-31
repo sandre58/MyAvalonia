@@ -5,15 +5,14 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
-using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Avalonia.Colors;
 using MyNet.Avalonia.Controls.Extensions;
-using MyNet.Avalonia.Extensions;
+using MyNet.Avalonia.Controls.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -27,7 +26,7 @@ namespace MyNet.Avalonia.Controls;
 [TemplatePart(PartPopup, typeof(Popup))]
 [TemplatePart(PartTextBox, typeof(TextBox))]
 [PseudoClasses(PseudoClassName.FlyoutOpen, PseudoClassName.Pressed)]
-[System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
+[SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
 public class ColorPickerEx : TextPicker<Color?, ColorView>
 {
     static ColorPickerEx() => CloseOnCommitProperty.OverrideDefaultValue<ColorPickerEx>(false);

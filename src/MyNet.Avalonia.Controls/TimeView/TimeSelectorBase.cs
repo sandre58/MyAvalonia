@@ -13,8 +13,8 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
-using MyNet.Utilities;
-using MyNet.Utilities.DateTimes;
+using MyNet.Primitives;
+using MyNet.Primitives.Temporal;
 using MyNet.Utilities.Suspending;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure

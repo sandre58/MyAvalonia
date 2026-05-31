@@ -7,11 +7,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
-using MyNet.Avalonia.MarkupExtensions;
 using MyNet.Observable;
 using MyNet.Primitives;
 

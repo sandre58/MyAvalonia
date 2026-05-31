@@ -7,7 +7,7 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -32,7 +32,7 @@ public class TagBoxPanel : Panel
             var deltaX = availableSize.Width - currentLineX;
 
             // Width is enough to place next child
-            if (deltaX.GreaterThan(child.DesiredSize.Width))
+            if (deltaX.IsGreaterThan(child.DesiredSize.Width))
             {
                 currentLineX += child.DesiredSize.Width;
                 currentLineHeight = Math.Max(currentLineHeight, child.DesiredSize.Height);
@@ -80,7 +80,7 @@ public class TagBoxPanel : Panel
             var deltaX = finalSize.Width - currentLineX;
 
             // Width is enough to place next child
-            if (deltaX.GreaterThan(child.DesiredSize.Width))
+            if (deltaX.IsGreaterThan(child.DesiredSize.Width))
             {
                 child.Arrange(new(currentLineX, totalHeight, child.DesiredSize.Width, Math.Max(child.DesiredSize.Height, currentLineHeight)));
                 currentLineX += child.DesiredSize.Width;

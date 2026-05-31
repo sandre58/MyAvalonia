@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
-using MyNet.Utilities;
+using MyNet.Primitives;
 using MyNet.Utilities.Suspending;
 
 namespace MyNet.Avalonia.Controls.Behaviors;

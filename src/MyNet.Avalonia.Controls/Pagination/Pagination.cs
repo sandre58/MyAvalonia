@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Collections;
@@ -14,9 +15,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Styling;
-using MyNet.Avalonia.Commands;
-using MyNet.Avalonia.Extensions;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -141,7 +140,7 @@ public class Pagination : TemplatedControl
         private set => SetAndRaise(PageCountProperty, ref field, value);
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "It's for binding")]
+    [SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "It's for binding")]
     public AvaloniaList<int> PageSizeOptions
     {
         get => GetValue(PageSizeOptionsProperty);

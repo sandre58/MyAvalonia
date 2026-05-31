@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Collections;
@@ -13,7 +14,7 @@ using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
 using MyNet.Avalonia.Controls.Enums;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Controls.Primitives;
 
@@ -184,7 +185,7 @@ public class TickBar : Control
     /// are the logical positions use to draw the ticks.
     /// The property value is a <see cref="AvaloniaList{T}" />.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Could be binded")]
+    [SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Could be binded")]
     public AvaloniaList<double>? Ticks
     {
         get => GetValue(TicksProperty);
@@ -279,7 +280,7 @@ public class TickBar : Control
         switch (Placement)
         {
             case TickBarPlacement.Top:
-                if (rSpace.GreaterThanOrClose(size.Width))
+                if (rSpace.IsGreaterThanOrClose(size.Width))
                     return;
 
                 spaceWithText = -3;
@@ -292,7 +293,7 @@ public class TickBar : Control
                 break;
 
             case TickBarPlacement.Bottom:
-                if (rSpace.GreaterThanOrClose(size.Width))
+                if (rSpace.IsGreaterThanOrClose(size.Width))
                     return;
 
                 spaceWithText = 3;
@@ -304,7 +305,7 @@ public class TickBar : Control
                 break;
 
             case TickBarPlacement.Left:
-                if (rSpace.GreaterThanOrClose(size.Height))
+                if (rSpace.IsGreaterThanOrClose(size.Height))
                     return;
 
                 spaceWithText = -3;
@@ -318,7 +319,7 @@ public class TickBar : Control
                 break;
 
             case TickBarPlacement.Right:
-                if (rSpace.GreaterThanOrClose(size.Height))
+                if (rSpace.IsGreaterThanOrClose(size.Height))
                     return;
 
                 spaceWithText = 3;
@@ -385,7 +386,7 @@ public class TickBar : Control
             {
                 foreach (var t in ticks)
                 {
-                    if (t.LessThanOrClose(Minimum) || t.GreaterThanOrClose(Maximum))
+                    if (t.IsLessThanOrClose(Minimum) || t.IsGreaterThanOrClose(Maximum))
                         continue;
 
                     var adjustedTick = t - Minimum;
@@ -464,7 +465,7 @@ public class TickBar : Control
             {
                 foreach (var t in ticks)
                 {
-                    if (t.LessThanOrClose(Minimum) || t.GreaterThanOrClose(Maximum))
+                    if (t.IsLessThanOrClose(Minimum) || t.IsGreaterThanOrClose(Maximum))
                         continue;
 
                     var adjustedTick = t - Minimum;

@@ -8,8 +8,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Threading;
-using MyNet.Utilities;
-using MyNet.Utilities.DateTimes;
+using MyNet.Primitives;
+using MyNet.Primitives.Intervals;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;
@@ -40,7 +40,7 @@ public sealed class CalendarBlackoutDatesCollection(Calendar owner) : Observable
         return this.Any(x => x.Contains(new Period(rangeStart, rangeEnd)));
     }
 
-    public bool ContainsAny(Period range) => this.Any(r => RangeContainsAny(r, range));
+    public bool ContainsAny(Period range) => this.Any(r => r.Contains(range));
 
     protected override void ClearItems()
     {
@@ -82,17 +82,5 @@ public sealed class CalendarBlackoutDatesCollection(Calendar owner) : Observable
 
     private static void EnsureValidThread() => Dispatcher.UIThread.VerifyAccess();
 
-    private static bool RangeContainsAny(Period source, Period range)
-    {
-        _ = range ?? throw new ArgumentNullException(nameof(range));
-
-        var start = DateTime.Compare(source.Start, range.Start);
-
-        // Check if any part of the supplied range is contained by this
-        // range or if the supplied range completely covers this range.
-        return (start <= 0 && DateTime.Compare(source.End, range.Start) >= 0) ||
-            (start >= 0 && DateTime.Compare(source.Start, range.End) <= 0);
-    }
-
-    private bool IsValid(Period item) => _owner.SelectedDates.All(day => !day.InRange(item.Start, item.End));
+    private bool IsValid(Period item) => _owner.SelectedDates.All(day => !item.Contains(day));
 }

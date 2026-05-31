@@ -6,8 +6,10 @@
 
 using System.Linq;
 using Avalonia;
+using Avalonia.Input;
 using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Utilities;
+using MyNet.Collections;
+using MyNet.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -45,7 +47,7 @@ public class TimeView : TimeSelectorBase
         component.GotFocus -= Component_GotFocus;
     }
 
-    private void Component_GotFocus(object? sender, global::Avalonia.Input.FocusChangedEventArgs e) => SelectedComponent = Components.FirstOrDefault(x => x.Value?.Equals(sender) == true).Key;
+    private void Component_GotFocus(object? sender, FocusChangedEventArgs e) => SelectedComponent = Components.FirstOrDefault(x => x.Value?.Equals(sender) == true).Key;
 
     protected override void ShowComponent(IComponentTimeSelector component)
     {

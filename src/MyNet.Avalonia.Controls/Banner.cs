@@ -10,7 +10,6 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Controls.Enums;
-using MyNet.Avalonia.Extensions;
 
 namespace MyNet.Avalonia.Controls;
 

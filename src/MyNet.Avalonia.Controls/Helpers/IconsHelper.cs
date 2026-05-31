@@ -8,7 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Material.Icons;
-using MyNet.Humanizer;
+using MyNet.Humanizer.Facade;
+using MyNet.Text;
 
 namespace MyNet.Avalonia.Controls.Helpers;
 
@@ -25,5 +26,5 @@ public sealed record MaterialIconKindGroup(string[] Aliases)
 
     public MaterialIconKind Kind { get; } = Enum.Parse<MaterialIconKind>(Aliases[0]);
 
-    public string DisplayName { get; } = Aliases[0].Humanize().ToTitle();
+    public string DisplayName { get; } = Aliases[0].Humanize().ToTitleCase();
 }

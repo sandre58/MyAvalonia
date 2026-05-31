@@ -5,16 +5,16 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
-using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Extensions;
-using MyNet.Avalonia.Extensions;
-using MyNet.Utilities;
-using MyNet.Utilities.DateTimes;
+using MyNet.Avalonia.Controls.Primitives;
+using MyNet.Primitives;
+using MyNet.Primitives.Temporal;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -25,7 +25,7 @@ namespace MyNet.Avalonia.Controls;
 [TemplatePart(PartTextBox, typeof(TextBox))]
 [TemplatePart(PartPreviewer, typeof(Control))]
 [PseudoClasses(PseudoClassName.FlyoutOpen, PseudoClassName.Pressed)]
-[System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
+[SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
 public class TimePickerEx : TextPicker<TimeSpan?, TimeView>
 {
     static TimePickerEx()

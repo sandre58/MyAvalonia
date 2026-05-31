@@ -15,7 +15,8 @@ using Avalonia.Data;
 using Avalonia.Media;
 using Avalonia.Styling;
 using Avalonia.Threading;
-using MyNet.Utilities;
+using MyNet.Primitives;
+using Timer = System.Timers.Timer;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -26,7 +27,7 @@ public sealed class Clock : TemplatedControl, IDisposable
 {
     public const string PartClockTicks = "PART_ClockTicks";
 
-    private readonly System.Timers.Timer _timer = new(1.Seconds());
+    private readonly Timer _timer = new(1.Seconds());
     private readonly Animation _secondsAnimation = new()
     {
         FillMode = FillMode.Forward,

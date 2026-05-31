@@ -17,8 +17,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Avalonia.Extensions;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Controls;
 

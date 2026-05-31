@@ -6,8 +6,8 @@
 
 using System;
 using System.Globalization;
-using MyNet.Utilities;
-using MyNet.Utilities.Helpers;
+using MyNet.Primitives;
+using MyNet.Primitives.Temporal;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;

@@ -12,7 +12,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media.Transformation;
 using MyNet.Avalonia.Controls.Extensions;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Controls.Behaviors;
 

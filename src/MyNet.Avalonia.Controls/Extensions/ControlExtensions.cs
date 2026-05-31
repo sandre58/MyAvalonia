@@ -12,7 +12,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Controls.Extensions;
 
