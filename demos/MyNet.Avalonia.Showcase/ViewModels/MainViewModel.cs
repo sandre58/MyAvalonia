@@ -7,11 +7,12 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Input;
+using MyNet.Avalonia.Extended.Commands;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.UI.Commands;
 using MyNet.UI.Navigation;
-using MyNet.UI.Navigation.Models;
 using MyNet.UI.Notifications;
+using MyNet.UI.Loading;
 using MyNet.UI.Services;
 using MyNet.Globalization.Culture;
 using MyNet.UI.ViewModels.Shell;
@@ -22,24 +23,30 @@ namespace MyNet.Avalonia.Showcase.ViewModels;
 internal sealed class MainViewModel : MainWindowViewModelBase
 {
     private readonly ThreadSafeObservableCollection<IMenuItemViewModel> _menuItems = [];
+    private readonly NavigationCommands _navigationCommands;
 
     public MainViewModel(INotificationsManager notificationsManager,
                          IAppCommandsService appCommandsService,
+                         IBusyService applicationBusy,
                          INavigationService navigationService,
+                         ICommandFactory commandFactory,
                          ICultureService cultureService)
-        : base(notificationsManager, appCommandsService, AppBusyManager.MainBusyService, cultureService)
+        : base(notificationsManager, appCommandsService, applicationBusy, cultureService)
     {
+        ApplicationBusy = applicationBusy;
         NavigationService = navigationService;
         MenuItems = new(_menuItems);
 
-        GoBackCommand = CommandsManager.Create(() => NavigationService.GoBack(), () => NavigationService.CanGoBack());
-        GoForwardCommand = CommandsManager.Create(() => NavigationService.GoForward(), () => NavigationService.CanGoForward());
-        NavigateCommand = CommandsManager.CreateNotNull<INavigationPage>(x => NavigationService.NavigateTo(x));
-        ChangeCultureCommand = CommandsManager.CreateNotNull<CultureInfo>(x => SelectedCulture = x);
+        _navigationCommands = new NavigationCommands(navigationService, commandFactory);
+        GoBackCommand = _navigationCommands.GoBackCommand;
+        GoForwardCommand = _navigationCommands.GoForwardCommand;
+        NavigateCommand = _navigationCommands.NavigateCommand;
+        _navigationCommands.SubscribeToNavigationStateChanges();
 
-        NavigationService.Navigated += (_, _) => RefreshNavigationCommands();
-        NavigationService.HistoryCleared += (_, _) => RefreshNavigationCommands();
+        ChangeCultureCommand = commandFactory.Create<CultureInfo>(cultureInfo => SelectedCulture = cultureInfo);
     }
+
+    public IBusyService ApplicationBusy { get; }
 
     public INavigationService NavigationService { get; }
 
@@ -52,12 +59,6 @@ internal sealed class MainViewModel : MainWindowViewModelBase
     public ICommand ChangeCultureCommand { get; }
 
     public ReadOnlyObservableCollection<IMenuItemViewModel> MenuItems { get; }
-
-    private void RefreshNavigationCommands()
-    {
-        (GoBackCommand as RelayCommand)?.OnCanExecuteChanged();
-        (GoForwardCommand as RelayCommand)?.OnCanExecuteChanged();
-    }
 
     public void AddMenuItem(params IMenuItemViewModel[] item) => _menuItems.AddRange(item);
 }

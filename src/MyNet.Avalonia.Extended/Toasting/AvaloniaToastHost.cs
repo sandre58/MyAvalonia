@@ -56,7 +56,7 @@ public sealed class AvaloniaToastHost : IDisposable
         _contentFactory = contentFactory ?? throw new ArgumentNullException(nameof(contentFactory));
         _options = options ?? new AvaloniaToastHostOptions();
 
-        _toastsCollection = (INotifyCollectionChanged)_toastManager.Toasts;
+        _toastsCollection = _toastManager.Toasts;
         _toastsCollection.CollectionChanged += OnToastsCollectionChanged;
 
         Post(FlushPendingToasts);

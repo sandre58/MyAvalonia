@@ -6,6 +6,7 @@
         xmlns:globalization="using:System.Globalization"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:my="http://mynet.com/avalonia"
+        xmlns:ext="using:MyNet.Avalonia.Extended.Controls"
         xmlns:views="clr-namespace:MyNet.Avalonia.Showcase.Views"
         xmlns:vm="using:MyNet.Avalonia.Showcase.ViewModels"
         Title="My .NET Avalonia"
@@ -79,5 +80,8 @@
             </StackPanel>
         </StackPanel>
     </my:WindowAssist.RightTitleBarContent>
-    <views:MainView />
+    <Grid>
+        <views:MainView />
+        <ext:ApplicationBusyOverlay BusyService="{Binding ApplicationBusy}" />
+    </Grid>
 </Window>

@@ -13,12 +13,15 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls;
+using MyNet.Avalonia.Extended.Navigation;
 using MyNet.UI.Navigation;
 using MyNet.UI.Navigation.Models;
-using NavigationService = MyNet.Avalonia.Extended.Navigation.NavigationService;
 
 namespace MyNet.Avalonia.Extended.Assists;
 
+/// <summary>
+/// Attached properties that bind Avalonia navigation controls to <see cref="INavigationService"/>.
+/// </summary>
 public static class NavigationAssist
 {
     static NavigationAssist()
@@ -30,161 +33,113 @@ public static class NavigationAssist
     #region AttachService
 
     /// <summary>
-    /// Provides AttachService Property for attached NavigationAssist element.
+    /// Identifies the <see cref="AttachService"/> attached property.
     /// </summary>
-    public static readonly AttachedProperty<INavigationService> AttachServiceProperty = AvaloniaProperty.RegisterAttached<StyledElement, INavigationService>("AttachService", typeof(NavigationAssist));
+    public static readonly AttachedProperty<INavigationService?> AttachServiceProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, INavigationService?>("AttachService", typeof(NavigationAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="AttachServiceProperty"/>.
+    /// Sets the navigation service attached to the target element.
     /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="AttachServiceProperty"/>.</param>
-    public static void SetAttachService(StyledElement element, INavigationService value) => element.SetValue(AttachServiceProperty, value);
+    /// <param name="element">The target element.</param>
+    /// <param name="value">The navigation service.</param>
+    public static void SetAttachService(StyledElement element, INavigationService? value) =>
+        element.SetValue(AttachServiceProperty, value);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="AttachServiceProperty"/>.
+    /// Gets the navigation service attached to the target element.
     /// </summary>
-    /// <param name="element">Target element.</param>
-    public static INavigationService GetAttachService(StyledElement element) => element.GetValue(AttachServiceProperty);
+    /// <param name="element">The target element.</param>
+    /// <returns>The attached navigation service, if any.</returns>
+    public static INavigationService? GetAttachService(StyledElement element) =>
+        element.GetValue(AttachServiceProperty);
 
-    /// <summary>
-    /// Attaches the navigation service to the element and sets up the necessary event handlers to synchronize navigation with UI elements like SelectingItemsControl, NavigationMenu, ContentControl, and NavigationPage.
-    /// </summary>
-    /// <param name="args">The event arguments containing information about the property change.</param>
     private static void AttachServiceChangedCallback(AvaloniaPropertyChangedEventArgs args)
     {
         if (args.NewValue is not INavigationService navigationService)
             return;
 
-        var defaultCommand = CommandsManager.Create<object>(x => NavigateTo(navigationService, x));
+        var defaultCommand = AvaloniaNavigationContext.CommandFactory.Create<object?>(
+            parameter => NavigateTo(navigationService, parameter));
+
         switch (args.Sender)
         {
             case SelectingItemsControl selectingItemsControl:
+                selectingItemsControl.SelectionChanged += (_, e) =>
                 {
-                    // Synchronise la sélection avec la navigation
-                    selectingItemsControl.SelectionChanged += (_, e) =>
-                    {
-                        if (e.AddedItems.Count > 0)
-                        {
-                            var selectedItem = e.AddedItems[0];
-                            NavigateTo(navigationService, selectedItem);
-                        }
-                    };
+                    if (e.AddedItems.Count > 0)
+                        NavigateTo(navigationService, e.AddedItems[0]);
+                };
 
-                    // Synchronise la navigation avec la sélection
-                    navigationService.Navigated += (_, e) =>
-                    {
-                        var matchingItem = FindMatchingItem(selectingItemsControl.ItemsSource, e.NewPage);
+                navigationService.StateChanged += (_, e) =>
+                {
+                    var matchingItem = FindMatchingItem(selectingItemsControl.ItemsSource, e.CurrentContext?.To);
 
-                        if (matchingItem != null && !Equals(selectingItemsControl.SelectedItem, matchingItem))
-                        {
-                            selectingItemsControl.SelectedItem = matchingItem;
-                        }
-                    };
+                    if (matchingItem != null && !Equals(selectingItemsControl.SelectedItem, matchingItem))
+                        selectingItemsControl.SelectedItem = matchingItem;
+                };
 
-                    break;
-                }
+                break;
 
             case NavigationMenu menu:
+                RegisterCommand(menu.Items.OfType<NavigationMenuItem>(), defaultCommand, false);
+                menu.Items.CollectionChanged += (_, e) =>
                 {
-                    RegisterCommand(menu.Items.OfType<NavigationMenuItem>(), defaultCommand, false);
-                    menu.Items.CollectionChanged += (_, e) =>
-                    {
-                        if (e.NewItems != null)
-                        {
-                            RegisterCommand(e.NewItems.OfType<NavigationMenuItem>(), defaultCommand, false);
-                        }
-                    };
+                    if (e.NewItems != null)
+                        RegisterCommand(e.NewItems.OfType<NavigationMenuItem>(), defaultCommand, false);
+                };
 
-                    navigationService.Navigated += (_, e) =>
-                    {
-                        var matchingItem = FindMatchingItem(menu.ItemsSource, e.NewPage);
+                navigationService.StateChanged += (_, e) =>
+                {
+                    var matchingItem = FindMatchingItem(menu.ItemsSource, e.CurrentContext?.To);
 
-                        if (matchingItem != null && !Equals(menu.SelectedItem, matchingItem))
-                        {
-                            menu.SelectedItem = matchingItem;
-                        }
-                    };
+                    if (matchingItem != null && !Equals(menu.SelectedItem, matchingItem))
+                        menu.SelectedItem = matchingItem;
+                };
 
-                    break;
-                }
+                break;
 
             case ContentControl contentControl:
-                {
-                    navigationService.Navigated += (_, e) => contentControl.Content = e.NewPage;
-                    break;
-                }
+                navigationService.StateChanged += (_, e) => contentControl.Content = e.CurrentContext?.To;
+                break;
 
             case NavigationPage navigationPage:
-                {
-                    if (navigationService is NavigationService avaloniaNavigationService)
-                        avaloniaNavigationService.AttachNavigationPage(navigationPage);
-                    break;
-                }
+                AvaloniaNavigationContext.NavigationHost.Attach(navigationPage);
+                break;
         }
     }
 
-    /// <summary>
-    /// Navigates to the specified page or view model using the provided navigation service.
-    /// </summary>
-    /// <remarks>If the provided object is a type, the method attempts to retrieve the corresponding view or
-    /// view model. If a valid navigation page is found, navigation is performed. This method does not return a
-    /// value.</remarks>
-    /// <param name="navigationService">The navigation service used to perform the navigation operation.</param>
-    /// <param name="obj">An object that can be either a navigation page or a type representing a view or view model to navigate to.</param>
     private static void NavigateTo(INavigationService navigationService, object? obj)
     {
         switch (obj)
         {
             case INavigationPage page:
-                _ = navigationService.NavigateTo(page);
+                _ = navigationService.NavigateToAsync(page);
                 break;
 
             case Type type:
                 {
-                    var view = ViewManager.Get(type);
+                    var viewModel = AvaloniaNavigationContext.ViewModelLocator.Get(type);
 
-                    if (view is INavigationPage pageView)
-                    {
-                        _ = navigationService.NavigateTo(pageView);
-                    }
-                    else
-                    {
-                        var viewModel = ViewModelManager.Get(type);
-
-                        if (viewModel is INavigationPage pageViewModel)
-                        {
-                            _ = navigationService.NavigateTo(pageViewModel);
-                        }
-                    }
+                    if (viewModel is INavigationPage navigationPage)
+                        _ = navigationService.NavigateToAsync(navigationPage);
 
                     break;
                 }
         }
     }
 
-    /// <summary>
-    /// Searches the specified collection and returns the first item that matches the given page type.
-    /// </summary>
-    /// <remarks>An item is considered a match if it is directly of the specified type, implements
-    /// INavigationPage with the matching type, has a 'PageType' property equal to the specified type, or is associated
-    /// with the specified type via a View or ViewModel. The method does not throw exceptions for null collections and
-    /// returns null in such cases.</remarks>
-    /// <param name="items">An enumerable collection of items to search. Can be null, in which case the method returns null.</param>
-    /// <param name="obj">The object to match against items in the collection. Can be null, in which case the method returns null.</param>
-    /// <returns>The first item in the collection that matches the specified object, or null if no matching item is found or
-    /// if the collection is null.</returns>
     private static object? FindMatchingItem(IEnumerable? items, object? obj)
     {
-        if (items is null) return null;
+        if (items is null)
+            return null;
 
         var objType = obj?.GetType();
+
         foreach (var item in items)
         {
             if ((item is Type itemType && itemType == objType) || (item is INavigationPage page && Equals(page, obj)))
-            {
                 return item;
-            }
         }
 
         return null;
@@ -195,22 +150,24 @@ public static class NavigationAssist
     #region Command
 
     /// <summary>
-    /// Provides Command Property for attached NavigationAssist element.
+    /// Identifies the <see cref="Command"/> attached property.
     /// </summary>
-    public static readonly AttachedProperty<ICommand> CommandProperty = AvaloniaProperty.RegisterAttached<StyledElement, ICommand>("Command", typeof(NavigationAssist));
+    public static readonly AttachedProperty<ICommand?> CommandProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, ICommand?>("Command", typeof(NavigationAssist));
 
     /// <summary>
-    /// Accessor for Attached  <see cref="CommandProperty"/>.
+    /// Sets the navigation command attached to the target element.
     /// </summary>
-    /// <param name="element">Target element.</param>
-    /// <param name="value">The value to set  <see cref="CommandProperty"/>.</param>
-    public static void SetCommand(StyledElement element, ICommand value) => element.SetValue(CommandProperty, value);
+    /// <param name="element">The target element.</param>
+    /// <param name="value">The command.</param>
+    public static void SetCommand(StyledElement element, ICommand? value) => element.SetValue(CommandProperty, value);
 
     /// <summary>
-    /// Accessor for Attached  <see cref="CommandProperty"/>.
+    /// Gets the navigation command attached to the target element.
     /// </summary>
-    /// <param name="element">Target element.</param>
-    public static ICommand GetCommand(StyledElement element) => element.GetValue(CommandProperty);
+    /// <param name="element">The target element.</param>
+    /// <returns>The attached command, if any.</returns>
+    public static ICommand? GetCommand(StyledElement element) => element.GetValue(CommandProperty);
 
     private static void CommandChangedCallback(AvaloniaPropertyChangedEventArgs args)
     {
@@ -221,9 +178,7 @@ public static class NavigationAssist
         menu.Items.CollectionChanged += (_, e) =>
         {
             if (e.NewItems != null)
-            {
                 RegisterCommand(e.NewItems.OfType<NavigationMenuItem>(), command, true);
-            }
         };
     }
 
@@ -231,12 +186,12 @@ public static class NavigationAssist
     {
         foreach (var menuItem in menuItems.Where(x => !x.IsSeparator))
         {
-            if (menuItem.Command is not null && !overrideCommand) return;
+            if (menuItem.Command is not null && !overrideCommand)
+                return;
 
             menuItem.Command = command;
         }
     }
 
     #endregion
-
 }

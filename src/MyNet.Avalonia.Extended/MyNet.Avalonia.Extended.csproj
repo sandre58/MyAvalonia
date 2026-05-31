@@ -24,20 +24,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <AvaloniaResource Remove="Assists\**" />
-        <AvaloniaResource Remove="Busy\**" />
         <AvaloniaResource Remove="Dialogs\**" />
-        <AvaloniaResource Remove="Extensions\**" />
-        <AvaloniaResource Remove="Navigation\**" />
         <AvaloniaResource Remove="Controls\Dialogs\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <AvaloniaXaml Remove="Assists\**" />
-      <AvaloniaXaml Remove="Busy\**" />
       <AvaloniaXaml Remove="Dialogs\**" />
-      <AvaloniaXaml Remove="Extensions\**" />
-      <AvaloniaXaml Remove="Navigation\**" />
       <AvaloniaXaml Remove="Controls\Dialogs\**" />
       <AvaloniaXaml Remove="Themes\Controls\OverlayMessageBox.axaml" />
       <AvaloniaXaml Remove="Themes\Controls\WindowDialog.axaml" />
@@ -45,38 +37,22 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="Assists\**" />
-      <Compile Remove="Busy\**" />
       <Compile Remove="Dialogs\**" />
-      <Compile Remove="Extensions\**" />
-      <Compile Remove="Navigation\**" />
       <Compile Remove="Controls\Dialogs\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Remove="Assists\**" />
-      <EmbeddedResource Remove="Busy\**" />
       <EmbeddedResource Remove="Dialogs\**" />
-      <EmbeddedResource Remove="Extensions\**" />
-      <EmbeddedResource Remove="Navigation\**" />
       <EmbeddedResource Remove="Controls\Dialogs\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Remove="Assists\**" />
-      <AdditionalFiles Remove="Busy\**" />
       <AdditionalFiles Remove="Dialogs\**" />
-      <AdditionalFiles Remove="Extensions\**" />
-      <AdditionalFiles Remove="Navigation\**" />
       <AdditionalFiles Remove="Controls\Dialogs\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Assists\**" />
-      <None Remove="Busy\**" />
       <None Remove="Dialogs\**" />
-      <None Remove="Extensions\**" />
-      <None Remove="Navigation\**" />
       <None Remove="Controls\Dialogs\**" />
     </ItemGroup>
 

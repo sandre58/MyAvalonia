@@ -43,6 +43,7 @@ using MyNet.Humanizer;
 using MyNet.UI.Commands;
 using MyNet.UI.Loading;
 using MyNet.UI.Locators;
+using MyNet.UI.Locators.Conventions;
 using MyNet.UI.Navigation;
 using MyNet.UI.Notifications;
 using MyNet.UI.Services;
@@ -53,7 +54,6 @@ using MyNet.Utilities.Geography.Extensions;
 using MyNet.Utilities.Logging;
 using MyNet.Utilities.Logging.NLog;
 using PropertyChanged;
-using NavigationService = MyNet.Avalonia.Extended.Navigation.NavigationService;
 using Scheduler = MyNet.UI.Threading.Scheduler;
 
 namespace MyNet.Avalonia.Showcase;
@@ -107,8 +107,6 @@ public class App : Application
                 singleView.MainView = new MainView { DataContext = vm };
         }
 
-        NavigationManager.NavigateTo<HomePageViewModel>();
-
         base.OnFrameworkInitializationCompleted();
     }
 
@@ -136,8 +134,9 @@ public class App : Application
         InitializeServices(services);
         InitializeTheme(services);
 
-        var vm = ViewModelManager.Get<MainViewModel>();
+        var vm = services.GetRequiredService<MainViewModel>();
         RegisterPages(services, vm, pagesProviders);
+        _ = services.GetRequiredService<INavigationClient>().NavigateToAsync<HomePageViewModel>();
         return vm;
     }
 
@@ -164,15 +163,14 @@ public class App : Application
             .AddToasting()
             .AddSingleton<IAvaloniaToastContentContributor, ShowcaseCustomNotificationToastContentContributor>()
             .AddAvaloniaToasting(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow)
+            .AddAvaloniaBusy(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow)
+            .AddNavigation()
+            .AddViewLocators()
+            .AddAvaloniaNavigation()
             .AddMyNetAvaloniaShowcaseResources();
 
         collection.AddSingleton<ILogger, Logger>()
-            .AddSingleton<IViewResolver, ViewResolver>()
-            .AddSingleton<IViewModelLocator, ViewModelLocator>()
-            .AddSingleton<IPageResolver, PageResolver>()
             .AddSingleton<IThemeBrushService>(MyTheme.Current)
-            .AddSingleton<INavigationService, NavigationService>()
-            .AddScoped<IBusyServiceFactory, BusyServiceFactory>()
             .AddScoped<IScheduler, AvaloniaScheduler>(_ => AvaloniaScheduler.Current)
             .AddScoped<ICommandFactory, AvaloniaCommandFactory>();
     }
@@ -291,8 +289,8 @@ public class App : Application
     /// <param name="pagesProvider">A dictionary mapping view model types to their corresponding page types.</param>
     private static void RegisterPages(IServiceProvider services, MainViewModel mainViewModel, List<IPagesProvider> pagesProvider)
     {
-        var viewResolver = services.GetRequiredService<IViewResolver>();
-        pagesProvider.SelectMany(x => x.GetPageAssociations()).ForEach(x => viewResolver.Register(x.ViewModelType, x.ViewType));
+        var typeResolver = services.GetRequiredService<ITypeResolver>();
+        pagesProvider.SelectMany(x => x.GetPageAssociations()).ForEach(x => typeResolver.Register(x.ViewModelType, x.ViewType));
         mainViewModel.AddMenuItem([.. pagesProvider.Select(x => CreateMenuItemViewModel(x, services))]);
     }
 
@@ -332,16 +330,12 @@ public class App : Application
         // Logging
         Logger.LoadConfiguration($"{Directory.GetCurrentDirectory()}/config/NLog.config");
 
-        var viewModelLocator = services.GetRequiredService<IViewModelLocator>();
-        var busyFactory = services.GetRequiredService<IBusyServiceFactory>();
         LogManager.Initialize(services.GetRequiredService<ILogger>());
-        ViewModelManager.Initialize(null!, viewModelLocator);
         services.UseThemeManager();
-        NavigationManager.Initialize(services.GetRequiredService<INavigationService>(), viewModelLocator);
+        services.UseAvaloniaNavigation();
         _ = services.GetRequiredService<AvaloniaToastHost>();
+        _ = services.GetRequiredService<AvaloniaTaskbarProgressBridge>();
         services.UseClipboard();
-        BusyManager.Initialize(busyFactory);
-        AppBusyManager.Initialize(busyFactory);
         CommandsManager.Initialize(services.GetRequiredService<ICommandFactory>());
         Scheduler.Initialize(services.GetRequiredService<IScheduler>());
     }

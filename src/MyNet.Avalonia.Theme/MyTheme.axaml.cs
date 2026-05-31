@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------
-// <copyright file="MyTheme.axaml.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="MyTheme.axaml.cs" company="Stï¿½phane ANDRE">
+// Copyright (c) Stï¿½phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
