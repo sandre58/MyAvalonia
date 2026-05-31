@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Collections;
@@ -13,8 +14,8 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Utilities.DateTimes;
-using MyNet.Utilities.Helpers;
+using MyNet.Primitives.Intervals;
+using MyNet.Primitives.Temporal;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -25,7 +26,7 @@ namespace MyNet.Avalonia.Controls;
 [TemplatePart(PartTextBox, typeof(TextBox))]
 [TemplatePart(PartPreviewer, typeof(Calendar))]
 [PseudoClasses(PseudoClassName.FlyoutOpen)]
-[System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
+[SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
 public class CalendarDatePickerEx : TextPicker<DateTime?, Calendar>
 {
     public CalendarDatePickerEx()
@@ -38,7 +39,7 @@ public class CalendarDatePickerEx : TextPicker<DateTime?, Calendar>
 
     public static readonly StyledProperty<AvaloniaList<Period>> BlackoutDatesProperty = AvaloniaProperty.Register<CalendarDatePickerEx, AvaloniaList<Period>>(nameof(BlackoutDates));
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Used for binding")]
+    [SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Used for binding")]
     public AvaloniaList<Period> BlackoutDates
     {
         get => GetValue(BlackoutDatesProperty);
@@ -121,13 +122,7 @@ public class CalendarDatePickerEx : TextPicker<DateTime?, Calendar>
 
     #region Calendar
 
-    protected override void RemovePreviewerHandlers()
-    {
-        if (Previewer != null)
-        {
-            Previewer.DayButtonClick -= OnCalendarDayButtonClick;
-        }
-    }
+    protected override void RemovePreviewerHandlers() => Previewer?.DayButtonClick -= OnCalendarDayButtonClick;
 
     protected override void AddPreviewerHandlers()
     {

@@ -20,8 +20,7 @@ public static class OverlayDialogHostManager
 {
     private static readonly ConcurrentDictionary<HostKey, OverlayDialogHost> Hosts = new();
 
-    public static void Register(OverlayDialogHost host, string? id, int? hash) =>
-        Hosts.AddOrUpdate(new(id, hash), host, (_, _) => host);
+    public static void Register(OverlayDialogHost host, string? id, int? hash) => Hosts.AddOrUpdate(new(id, hash), host, (_, _) => host);
 
     public static void Unregister(string? id, int? hash) => Hosts.TryRemove(new(id, hash), out _);
 

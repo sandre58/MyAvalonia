@@ -8,7 +8,9 @@ using System.Diagnostics.CodeAnalysis;
 using Avalonia.Media;
 using Material.Icons;
 
-namespace MyNet.Avalonia.Controls.Extensions;
+#pragma warning disable IDE0130
+namespace MyNet.Avalonia.Controls;
+#pragma warning restore IDE0130
 
 /// <summary>
 /// Provides extension methods for converting <see cref="MaterialIconKind"/> and <see cref="Geometry"/> instances into visual representations such as <see cref="StreamGeometry"/> and <see cref="ExtendedIcon"/> controls. These extensions facilitate the use of icons in Avalonia applications by allowing developers to easily create icon controls from their data representations. The methods include options for specifying icon sizes, ensuring that the resulting controls can be customized to fit various design requirements.

@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\MyNet.Avalonia\MyNet.Avalonia.csproj" />
         <ProjectReference Include="..\MyNet.Avalonia.Controls\MyNet.Avalonia.Controls.csproj" />
     </ItemGroup>
 

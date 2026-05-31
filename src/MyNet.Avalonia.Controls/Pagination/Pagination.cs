@@ -15,6 +15,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Styling;
+using MyNet.Avalonia.Commands;
 using MyNet.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
@@ -96,7 +97,7 @@ public class Pagination : TemplatedControl
             pagination.UpdateButtonsByCurrentPage(pagination.CurrentPage));
     }
 
-    public Pagination() => SetPageSizeCommand = new ActionCommand<int>(x => PageSize = x);
+    public Pagination() => SetPageSizeCommand = ActionCommand.Create<int>(pageSize => PageSize = pageSize, pageSize => pageSize > 0);
 
     public int? CurrentPage
     {

@@ -111,15 +111,15 @@ public record MonthContext(int Month, int Year) : DateContext
 
     public MonthContext BeginningOfYear() => new(1, Year);
 
-    public MonthContext BeginningOfDecade() => new(1, DateTimeHelper.GetDecade(Year).Start);
+    public MonthContext BeginningOfDecade() => new(1, Year.DecadeStart());
 
-    public MonthContext BeginningOfCentury() => new(1, DateTimeHelper.GetCentury(Year).Start);
+    public MonthContext BeginningOfCentury() => new(1, Year.CenturyStart());
 
     public MonthContext EndOfYear() => new(12, Year);
 
-    public MonthContext EndOfDecade() => new(12, DateTimeHelper.GetDecade(Year).End);
+    public MonthContext EndOfDecade() => new(12, Year.DecadeEnd());
 
-    public MonthContext EndOfCentury() => new(12, DateTimeHelper.GetCentury(Year).End);
+    public MonthContext EndOfCentury() => new(12, Year.CenturyEnd());
 
     public override string ToString() => CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[Month - 1];
 }

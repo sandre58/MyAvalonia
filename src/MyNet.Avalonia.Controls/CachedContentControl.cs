@@ -159,10 +159,8 @@ public class CachedContentControl : ContentControl
     private Control? CreateView(object content)
     {
         var template = this.FindDataTemplate(content) ?? ContentTemplate;
-        if (template == null)
-            return null;
 
-        var newView = template.Build(content);
+        var newView = template?.Build(content);
         if (newView == null)
             return null;
 

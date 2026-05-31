@@ -359,8 +359,8 @@ public class Calendar : TemplatedControl
 
     private static DateContext CoerceDisplayDateContext(AvaloniaObject sender, DateContext value) => value switch
     {
-        DecadeContext decadeContext => decadeContext.StartYear % 10 == 0 ? decadeContext : new(decadeContext.StartYear.Decade().Start.GetValueOrDefault().Value),
-        CenturyContext centuryContext => centuryContext.StartYear % 100 == 0 ? centuryContext : new(centuryContext.StartYear.Century().Start.GetValueOrDefault().Value),
+        DecadeContext decadeContext => decadeContext.StartYear % 10 == 0 ? decadeContext : new(decadeContext.StartYear.DecadeStart()),
+        CenturyContext centuryContext => centuryContext.StartYear % 100 == 0 ? centuryContext : new(centuryContext.StartYear.CenturyStart()),
         _ => value
     };
 
@@ -469,7 +469,6 @@ public class Calendar : TemplatedControl
         if (SelectedDates.Count > 0)
         {
             selectedDateMin = SelectedDates[0];
-            Debug.Assert(SelectedDate!.Value == selectedDateMin, "The SelectedDate should be the minimum selected date!");
         }
         else
         {
@@ -536,7 +535,6 @@ public class Calendar : TemplatedControl
         if (SelectedDates.Count > 0)
         {
             selectedDateMax = SelectedDates[0];
-            Debug.Assert(SelectedDate!.Value == selectedDateMax, "The SelectedDate should be the maximum SelectedDate!");
         }
         else
         {
@@ -559,7 +557,7 @@ public class Calendar : TemplatedControl
     private void InitializeGridButtons()
     {
         // Generate Day titles (Sun, Mon, Tue, Wed, Thu, Fri, Sat) based on FirstDayOfWeek and culture.
-        var count = DateTimeHelper.DaysPerWeek + (DateTimeHelper.DaysPerWeek * DateTimeHelper.DaysPerWeek);
+        const int count = DateTimeHelper.DaysPerWeek + (DateTimeHelper.DaysPerWeek * DateTimeHelper.DaysPerWeek);
         var children = new List<Control>(count);
         for (var i = 0; i < DateTimeHelper.DaysPerWeek; i++)
         {
@@ -702,7 +700,7 @@ public class Calendar : TemplatedControl
 
                         var dateContext = new YearContext(decadeContext.StartYear - 1 + i);
                         cell.SetContext(dateContext);
-                        cell.IsInactive = decadeContext.StartYear != dateContext.Year.Decade().Start.GetValueOrDefault().Value;
+                        cell.IsInactive = decadeContext.StartYear != dateContext.Year.DecadeStart();
                         cell.IsSelected = dateContext.IsSimilar(CurrentMonthContext.ToDate());
 
                         _cells.Add(dateContext.ToDate(), cell);
@@ -771,7 +769,7 @@ public class Calendar : TemplatedControl
 
     private void ShowYearMode() => DisplayDateContext = new YearContext(DisplayDate.Year);
 
-    private void ShowDecadeMode() => DisplayDateContext = new DecadeContext(DisplayDate.Year.Decade().Start.GetValueOrDefault().Value);
+    private void ShowDecadeMode() => DisplayDateContext = new DecadeContext(DisplayDate.Year.DecadeStart());
 
     private void ShowCenturyMode() => DisplayDateContext = new CenturyContext(DisplayDate.Year.Century().Start.GetValueOrDefault().Value);
 

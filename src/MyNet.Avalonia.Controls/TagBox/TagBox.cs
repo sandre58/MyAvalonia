@@ -219,7 +219,7 @@ public class TagBox : TemplatedControl
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
-        _presenter = _textBox.GetTemplateChildren().OfType<TextPresenter>().FirstOrDefault();
+        _presenter = _textBox.GetTemplateDescendants().OfType<TextPresenter>().FirstOrDefault();
         _ = _presenter?.GetObservable(TextPresenter.PreeditTextProperty).Subscribe(_ => OnTextChanged());
         _ = _textBox.GetObservable(TextBox.TextProperty).Subscribe(_ => OnTextChanged());
     }

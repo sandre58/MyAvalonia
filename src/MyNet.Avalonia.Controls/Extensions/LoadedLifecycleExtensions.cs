@@ -9,7 +9,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
-namespace MyNet.Avalonia.Controls.Extensions;
+#pragma warning disable IDE0130
+namespace MyNet.Avalonia.Controls;
+#pragma warning restore IDE0130
 
 public static class LoadedLifecycleExtensions
 {

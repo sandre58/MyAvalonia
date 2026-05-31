@@ -8,7 +8,8 @@ using System;
 using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
-using MyNet.Avalonia.Controls.Extensions;
+using MyNet.Avalonia.Controls;
+using MyNet.Globalization.Culture;
 using MyNet.Globalization.Facade;
 using MyNet.Primitives;
 using MyNet.Primitives.Temporal;
@@ -19,7 +20,7 @@ public static class GlobalizationBehavior
 {
     private sealed class State
     {
-        public EventHandler? CultureChangedHandler { get; set; }
+        public EventHandler<CultureChangedEventArgs>? CultureChangedHandler { get; set; }
     }
 
     private static readonly ConditionalWeakTable<Control, State> States = [];

@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="MyNetAvaloniaControlsServiceCollectionExtensions.cs" company="Stéphane ANDRE">
+// <copyright file="ServiceCollectionExtensions.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -12,12 +12,14 @@ using MyNet.Avalonia.Converters;
 using MyNet.Globalization;
 using MyNet.Globalization.Facade;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Controls;
+#pragma warning restore IDE0130
 
 /// <summary>
 /// Registers MyNet.Avalonia.Controls translation resources and converter hooks.
 /// </summary>
-public static class MyNetAvaloniaControlsServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
     private static int _convertersRegistered;
 

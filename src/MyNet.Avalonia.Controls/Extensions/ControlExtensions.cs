@@ -14,7 +14,9 @@ using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives;
 
-namespace MyNet.Avalonia.Controls.Extensions;
+#pragma warning disable IDE0130
+namespace MyNet.Avalonia.Controls;
+#pragma warning restore IDE0130
 
 [SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "Extensions methods must be in a static class, and extension methods cannot be in a nested class.")]
 [SuppressMessage("Naming", "CA1708:Identifiers should differ by more than case", Justification = "Extension methods must be in a static class, and extension methods cannot be in a nested class.")]

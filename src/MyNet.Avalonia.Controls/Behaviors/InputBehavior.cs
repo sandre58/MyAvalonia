@@ -9,7 +9,7 @@ using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using MyNet.Avalonia.Controls.Extensions;
+using MyNet.Avalonia.Controls;
 
 namespace MyNet.Avalonia.Controls.Behaviors;
 

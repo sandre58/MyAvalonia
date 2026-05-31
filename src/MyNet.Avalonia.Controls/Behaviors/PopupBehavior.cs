@@ -11,7 +11,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media.Transformation;
-using MyNet.Avalonia.Controls.Extensions;
+using MyNet.Avalonia.Controls;
 using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Controls.Behaviors;
@@ -312,14 +312,11 @@ public static class PopupBehavior
             return;
 
         var popup = e.NameScope.Find<Popup>("PART_Popup");
-        if (popup != null)
-        {
-            popup.Opened += (_, _) =>
+        popup?.Opened += (_, _) =>
             {
                 var focusable = popup.Child?.GetFirstFocusableControl();
                 focusable?.Focus();
             };
-        }
     }
 
     #endregion
