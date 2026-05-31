@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
 using MyNet.Avalonia.Controls.Extensions;
@@ -16,6 +17,13 @@ namespace MyNet.Avalonia.Controls.Behaviors;
 
 public static class GlobalizationBehavior
 {
+    private sealed class State
+    {
+        public EventHandler? CultureChangedHandler { get; set; }
+    }
+
+    private static readonly ConditionalWeakTable<Control, State> States = [];
+
     static GlobalizationBehavior() => UpdateOnCultureChangedProperty.Changed.Subscribe(OnUpdateOnCultureChangedCallback);
 
     #region UpdateOnCultureChanged
@@ -42,21 +50,38 @@ public static class GlobalizationBehavior
     {
         if (args.Sender is not Control element) return;
 
+        var state = States.GetOrCreateValue(element);
+
         if (((bool?)args.NewValue).IsTrue())
         {
-            args.Sender.OnLoading<Control>(x =>
+            element.OnLoading<Control>(
+                x =>
                 {
+                    Subscribe(element, state);
                     UpdateControl(x);
-                    GlobalizationServices.Current.CultureChanged += onCultureChanged;
                 },
-                _ => GlobalizationServices.Current.CultureChanged -= onCultureChanged);
+                _ => Unsubscribe(state));
         }
         else
         {
-            GlobalizationServices.Current.CultureChanged -= onCultureChanged;
+            Unsubscribe(state);
         }
+    }
 
-        void onCultureChanged(object? sender, EventArgs e) => UpdateControl(element);
+    private static void Subscribe(Control element, State state)
+    {
+        if (state.CultureChangedHandler is not null) return;
+
+        state.CultureChangedHandler = (_, _) => UpdateControl(element);
+        GlobalizationServices.Current.CultureChanged += state.CultureChangedHandler;
+    }
+
+    private static void Unsubscribe(State state)
+    {
+        if (state.CultureChangedHandler is null) return;
+
+        GlobalizationServices.Current.CultureChanged -= state.CultureChangedHandler;
+        state.CultureChangedHandler = null;
     }
 
     private static void UpdateControl(Control? element)

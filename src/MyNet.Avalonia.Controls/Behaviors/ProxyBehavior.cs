@@ -122,9 +122,9 @@ public static class ProxyBehavior
             proxy.IsFocusedChanged += isFocusedChanged;
 
             SetProxy(control, proxy);
-            SetIsFocused(control, proxy.IsEmpty());
+            SetIsFocused(control, proxy.IsFocused());
             SetIsEmpty(control, proxy.IsEmpty());
-            SetIsActive(control, proxy.IsEmpty());
+            SetIsActive(control, proxy.IsActive());
         }
         else
         {
@@ -133,11 +133,11 @@ public static class ProxyBehavior
             proxy.IsFocusedChanged -= isFocusedChanged;
         }
 
-        void isFocusedChanged(object? sender, EventArgs e) => SetIsFocused(control, proxy.IsEmpty());
+        void isFocusedChanged(object? sender, EventArgs e) => SetIsFocused(control, proxy.IsFocused());
 
         void isEmptyChanged(object? sender, EventArgs e) => SetIsEmpty(control, proxy.IsEmpty());
 
-        void isActiveChanged(object? sender, EventArgs e) => SetIsActive(control, proxy.IsEmpty());
+        void isActiveChanged(object? sender, EventArgs e) => SetIsActive(control, proxy.IsActive());
     }
 
     #endregion
