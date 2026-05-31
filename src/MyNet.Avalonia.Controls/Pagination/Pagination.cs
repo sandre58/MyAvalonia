@@ -16,7 +16,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Styling;
 using MyNet.Avalonia.Commands;
-using MyNet.Primitives;
+using MyNet.Avalonia.Controls.Internals;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -175,12 +175,10 @@ public class Pagination : TemplatedControl
         set => SetValue(DisplayCurrentPageInQuickJumperProperty, value);
     }
 
-    private static int? CoerceCurrentPage(AvaloniaObject arg1, int? arg2)
-    {
-        if (arg2 is null) return null;
-        if (arg1 is Pagination p) arg2 = arg2.Value.SafeClamp(1, p.PageCount);
-        return arg2;
-    }
+    private static int? CoerceCurrentPage(AvaloniaObject arg1, int? arg2) =>
+        arg1 is Pagination pagination
+            ? PaginationHelper.CoerceCurrentPage(arg2, pagination.PageCount)
+            : arg2;
 
     private void OnCurrentPageChanged(AvaloniaPropertyChangedEventArgs<int?> args)
     {
@@ -203,10 +201,7 @@ public class Pagination : TemplatedControl
 
     private void OnPageSizeChanged(AvaloniaPropertyChangedEventArgs<int> args)
     {
-        var pageCount = TotalCount / args.NewValue.Value;
-        var residue = TotalCount % args.NewValue.Value;
-        if (residue > 0) pageCount++;
-        PageCount = pageCount;
+        PageCount = PaginationHelper.CalculatePageCount(TotalCount, args.NewValue.Value);
         if (CurrentPage > PageCount) CurrentPage = null;
         UpdateButtonsByCurrentPage(CurrentPage);
     }
@@ -242,7 +237,7 @@ public class Pagination : TemplatedControl
     {
         var value = _quickJumpInput?.Value;
         if (value is null) return;
-        value = value.Value.SafeClamp(1, PageCount);
+        value = PaginationHelper.ClampQuickJump(value.Value, PageCount);
         SetCurrentValue(CurrentPageProperty, (int)value);
         if (!DisplayCurrentPageInQuickJumper)
             _quickJumpInput?.SetCurrentValue(NumericUpDown.ValueProperty, null);
@@ -291,15 +286,15 @@ public class Pagination : TemplatedControl
 
     private void AddCurrentPage(int pageChange)
     {
-        var newValue = (CurrentPage ?? 0) + pageChange;
-        newValue = newValue.SafeClamp(1, PageCount);
+        var newValue = PaginationHelper.AddPageOffset(CurrentPage ?? 0, pageChange, PageCount);
         SetCurrentValue(CurrentPageProperty, newValue);
     }
 
     private void UpdateButtonsByCurrentPage(int? page)
     {
         if (PageSize == 0) return;
-        var pageCount = TotalCount / PageSize;
+
+        var pageCount = PaginationHelper.CalculatePageCount(TotalCount, PageSize);
         if (_buttonPanel is null)
         {
             SetCurrentValue(PageCountProperty, pageCount);
@@ -307,53 +302,32 @@ public class Pagination : TemplatedControl
             return;
         }
 
-        var residue = TotalCount % PageSize;
-        if (residue > 0) pageCount++;
-
-        if (pageCount <= 7)
-        {
-            for (var i = 0; i < 7; i++)
-            {
-                if (i < pageCount)
-                {
-                    _buttons[i].IsVisible = true;
-                    _buttons[i].SetStatus(i + 1, i + 1 == page, false, false);
-                }
-                else
-                {
-                    _buttons[i].IsVisible = false;
-                }
-            }
-        }
-        else
-        {
-            for (var i = 0; i < 7; i++) _buttons[i].IsVisible = true;
-            var mid = page ?? 0;
-            mid = mid.SafeClamp(4, pageCount - 3);
-            _buttons[3].Page = mid;
-            _buttons[2].Page = mid - 1;
-            _buttons[4].Page = mid + 1;
-            _buttons[0].Page = 1;
-            _buttons[6].Page = pageCount;
-            if (mid > 4)
-                _buttons[1].SetStatus(-1, false, true, false);
-            else
-                _buttons[1].SetStatus(mid - 2, false, false, false);
-            if (mid < pageCount - 3)
-                _buttons[5].SetStatus(-1, false, false, true);
-            else
-                _buttons[5].SetStatus(mid + 2, false, false, false);
-
-            foreach (var button in _buttons)
-            {
-                button.SetSelected(button.Page == page);
-            }
-        }
+        ApplyButtonStates(PaginationLayoutHelper.BuildButtonStates(page, pageCount));
 
         SetCurrentValue(PageCountProperty, pageCount);
         SetCurrentValue(CurrentPageProperty, page);
-        _previousButton?.IsEnabled = (CurrentPage ?? int.MaxValue) > 1;
-        _nextButton?.IsEnabled = (CurrentPage ?? 0) < PageCount;
+
+        var (previousEnabled, nextEnabled) = PaginationHelper.GetNavigationState(CurrentPage, pageCount);
+        _previousButton?.IsEnabled = previousEnabled;
+        _nextButton?.IsEnabled = nextEnabled;
+    }
+
+    private void ApplyButtonStates(PaginationButtonState[] states)
+    {
+        for (var i = 0; i < PaginationLayoutHelper.ButtonSlotCount; i++)
+        {
+            var state = states[i];
+            var button = _buttons[i];
+
+            if (!state.IsVisible)
+            {
+                button.IsVisible = false;
+                continue;
+            }
+
+            button.IsVisible = true;
+            button.SetStatus(state.Page, state.IsSelected, state.IsLeftEllipsis, state.IsRightEllipsis);
+        }
     }
 
     private void InvokeCommand()

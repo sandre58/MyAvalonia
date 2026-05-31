@@ -155,12 +155,17 @@ Unit tests live in [`tests/MyNet.Avalonia.Controls.Tests`](../../tests/MyNet.Ava
 dotnet test tests/MyNet.Avalonia.Controls.Tests
 ```
 
-Calendar helpers are in `Calendar/Internal/` (`MyNet.Avalonia.Controls.Primitives.Internals`) and are consumed by the `Calendar` control:
+Calendar helpers are in `Calendar/Internal/` (`MyNet.Avalonia.Controls.Internals`) and are consumed by the `Calendar` control:
 
 - `CalendarDateRangeHelper`, `CalendarSelectionCoordinator` — plages et sélection
 - `CalendarMonthGridHelper`, `CalendarYearGridHelper` — construction des grilles
 - `CalendarKeyboardNavigationHelper`, `CalendarDisplayModeHelper` — navigation clavier et modes d’affichage
 - `CalendarValidationHelper`, `CalendarDisplayContextHelper` — validation et contexte
+
+Pagination and TextPicker helpers:
+
+- `PaginationHelper`, `PaginationLayoutHelper` — page count, clamp, button layout
+- `TextPickerKeyboardHelper`, `TextPickerCommitHelper`, `TextPickerValidationHelper` — clavier, commit texte, parsing
 
 ## License
 

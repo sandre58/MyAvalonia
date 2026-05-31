@@ -6,18 +6,12 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Text;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
-using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.VisualTree;
-using MyNet.Avalonia.Controls.Behaviors;
-using MyNet.Avalonia.Controls.Localization;
 using MyNet.Utilities.Suspending;
 
 namespace MyNet.Avalonia.Controls.Primitives;
@@ -26,13 +20,11 @@ namespace MyNet.Avalonia.Controls.Primitives;
 #pragma warning disable AVP1002 // AvaloniaProperty objects should not be owned by a generic type
 [TemplatePart(PartTextBox, typeof(TextBox))]
 [TemplatePart(PartPreviewer, typeof(Control))]
-public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, IValueSelector<T>, IIncrementableControl
+public abstract partial class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, IValueSelector<T>, IIncrementableControl
     where TPreviewer : Control
 {
     public const string PartTextBox = "PART_TextBox";
     public const string PartPreviewer = "PART_Previewer";
-
-    private static readonly CompositeFormat InvalidFormat = CompositeFormat.Parse(MessagesResources.InvalidFormatError);
 
     private readonly Suspender _previewValueChangedSuspender = new();
     private readonly Suspender _textBoxTextChangedSuspender = new();
@@ -86,7 +78,6 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
-        // IsDropDownOpen
         if (change.Property == IsDropDownOpenProperty)
         {
             if (change.GetNewValue<bool>())
@@ -97,14 +88,10 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
                 UpdatePreviewer(SelectedValue);
             }
         }
-
-        // DisplayFormat
         else if (change.Property == DisplayFormatProperty)
         {
             OnDisplayFormat();
         }
-
-        // Value
         else if (change.Property == SelectedValueProperty)
         {
             var (removedValue, addedValue) = change.GetOldAndNewValue<T?>();
@@ -116,8 +103,6 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
 
             OnValueSelected(addedValue, removedValue);
         }
-
-        // Text
         else if (change.Property == TextProperty)
         {
             var (_, newValue) = change.GetOldAndNewValue<string?>();
@@ -136,14 +121,8 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
 
     #region PlaceholderText
 
-    /// <summary>
-    /// Provides PlaceholderText Property.
-    /// </summary>
     public static readonly StyledProperty<string?> PlaceholderTextProperty = AvaloniaProperty.Register<TextPicker<T, TPreviewer>, string?>(nameof(PlaceholderText));
 
-    /// <summary>
-    /// Gets or sets the PlaceholderText property.
-    /// </summary>
     public string? PlaceholderText
     {
         get => GetValue(PlaceholderTextProperty);
@@ -154,14 +133,8 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
 
     #region DisplayFormat
 
-    /// <summary>
-    /// Provides DisplayFormat Property.
-    /// </summary>
     public static readonly StyledProperty<string?> DisplayFormatProperty = AvaloniaProperty.Register<TextPicker<T, TPreviewer>, string?>(nameof(DisplayFormat));
 
-    /// <summary>
-    /// Gets or sets the DisplayFormat property.
-    /// </summary>
     public string? DisplayFormat
     {
         get => GetValue(DisplayFormatProperty);
@@ -174,14 +147,8 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
 
     #region AllowSpin
 
-    /// <summary>
-    /// Provides AllowSpin Property.
-    /// </summary>
     public static readonly StyledProperty<bool> AllowSpinProperty = AvaloniaProperty.Register<TextPicker<T, TPreviewer>, bool>(nameof(AllowSpin), true);
 
-    /// <summary>
-    /// Gets or sets a value indicating whether gets or sets the AllowSpin property.
-    /// </summary>
     public bool AllowSpin
     {
         get => GetValue(AllowSpinProperty);
@@ -238,14 +205,8 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
 
     #region AutoCommit
 
-    /// <summary>
-    /// Provides AutoCommit Property.
-    /// </summary>
     public static readonly StyledProperty<bool> AutoCommitProperty = AvaloniaProperty.Register<TextPicker<T, TPreviewer>, bool>(nameof(AutoCommit), true);
 
-    /// <summary>
-    /// Gets or sets a value indicating whether gets or sets the AutoCommit property.
-    /// </summary>
     public bool AutoCommit
     {
         get => GetValue(AutoCommitProperty);
@@ -256,14 +217,8 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
 
     #region CloseOnCommit
 
-    /// <summary>
-    /// Provides CloseOnCommit Property.
-    /// </summary>
     public static readonly StyledProperty<bool> CloseOnCommitProperty = AvaloniaProperty.Register<TextPicker<T, TPreviewer>, bool>(nameof(CloseOnCommit), true);
 
-    /// <summary>
-    /// Gets or sets a value indicating whether gets or sets the CloseOnCommit property.
-    /// </summary>
     public bool CloseOnCommit
     {
         get => GetValue(CloseOnCommitProperty);
@@ -288,243 +243,6 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
 
     #endregion
 
-    #region Mouse Handlers
-
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
-    {
-        base.OnPointerPressed(e);
-
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            e.Handled = true;
-    }
-
-    /// <inheritdoc/>
-    protected override void OnPointerReleased(PointerReleasedEventArgs e)
-    {
-        base.OnPointerReleased(e);
-
-        if (e.InitialPressMouseButton == MouseButton.Left)
-        {
-            e.Handled = true;
-
-            if (!InputBehavior.GetIsTextEditable(this))
-                TogglePopup();
-        }
-    }
-
-    protected override void OnPointerWheelChanged(PointerWheelEventArgs e)
-    {
-        base.OnPointerWheelChanged(e);
-        if (!e.Handled && SelectedValue is not null && AllowSpin && IsKeyboardFocusWithin)
-        {
-            var newValue = IncrementValue(e.Delta.Y > 0 ? 1 : -1);
-
-            if (newValue is null) return;
-
-            SetCurrentValue(SelectedValueProperty, newValue);
-
-            e.Handled = true;
-        }
-    }
-
-    #endregion
-
-    #region Keyboard handlers
-
-    protected override void OnKeyDown(KeyEventArgs e)
-    {
-        if (e.Handled) return;
-
-        var handled = ProcessKey(e);
-
-        base.OnKeyDown(e);
-
-        e.Handled = handled;
-    }
-
-    private bool ProcessKey(KeyEventArgs e)
-    {
-        switch (e.Key)
-        {
-            case Key.Enter:
-                if (IsDropDownOpen)
-                {
-                    CommitFromPreview();
-                    return true;
-                }
-
-                break;
-
-            case Key.Escape:
-                if (IsDropDownOpen)
-                {
-                    Rollback();
-                    return true;
-                }
-
-                break;
-
-            case Key.Down:
-                if (!IsDropDownOpen)
-                {
-                    if (e.KeyModifiers == KeyModifiers.None && SelectedValue is not null)
-                        SetCurrentValue(SelectedValueProperty, IncrementValue(-1));
-                    return true;
-                }
-
-                break;
-
-            case Key.Up:
-                if (!IsDropDownOpen)
-                {
-                    if (e.KeyModifiers == KeyModifiers.None && SelectedValue is not null)
-                        SetCurrentValue(SelectedValueProperty, IncrementValue(1));
-                    return true;
-                }
-
-                break;
-
-            case Key.PageDown:
-                if (!IsDropDownOpen)
-                {
-                    if (e.KeyModifiers == KeyModifiers.None && SelectedValue is not null)
-                        SetCurrentValue(SelectedValueProperty, IncrementLargeValue(-1));
-                    return true;
-                }
-
-                break;
-
-            case Key.PageUp:
-                if (!IsDropDownOpen)
-                {
-                    if (e.KeyModifiers == KeyModifiers.None && SelectedValue is not null)
-                        SetCurrentValue(SelectedValueProperty, IncrementLargeValue(1));
-                    return true;
-                }
-
-                break;
-        }
-
-        return false;
-    }
-
-    #endregion
-
-    #region Focus
-
-    protected override void OnGotFocus(FocusChangedEventArgs e)
-    {
-        base.OnGotFocus(e);
-
-        if (IsDropDownOpen)
-            return;
-
-        if (IsEnabled && InputBehavior.GetIsTextEditable(this) && TextBox is not null && e.NavigationMethod == NavigationMethod.Tab)
-        {
-            TextBox.Focus();
-            var text = TextBox.Text;
-            if (!string.IsNullOrEmpty(text))
-            {
-                TextBox.SelectionStart = 0;
-                TextBox.SelectionEnd = text.Length;
-            }
-        }
-    }
-
-    protected override void OnLostFocus(FocusChangedEventArgs e)
-    {
-        if (TopLevel.GetTopLevel(this)?.FocusManager.GetFocusedElement() is Visual v && ReferenceEquals(v.FindAncestorOfType<TPreviewer>(true), Previewer)) return;
-        if (e.Source is Visual v1 && ReferenceEquals(v1.FindAncestorOfType<TPreviewer>(true), Previewer)) return;
-
-        CommitFromTextBox();
-
-        base.OnLostFocus(e);
-    }
-
-    #endregion
-
-    #region TextBox
-
-    private void OnTextBoxKeyDown(object? sender, KeyEventArgs e) => OnKeyDown(e);
-
-    private void OnTextBoxTextChanged()
-    {
-        if (_textBoxTextChangedSuspender.IsSuspended) return;
-
-        using (_textBoxTextChangedSuspender.Suspend())
-            SetCurrentValue(TextProperty, TextBox?.Text);
-    }
-
-    #endregion
-
-    private T? TryParseText(string? text)
-    {
-        if (string.IsNullOrWhiteSpace(text))
-        {
-            return default;
-        }
-
-        try
-        {
-            var newSelectedValue = ConvertValueFromString(text);
-
-            if (IsValidValue(newSelectedValue))
-            {
-                return newSelectedValue;
-            }
-
-            var errorMessage = MessagesResources.InvalidValueError;
-            var valueValidationError = new PickerValueValidationErrorEventArgs(new ArgumentOutOfRangeException(nameof(text), errorMessage), text);
-            OnValueValidationError(valueValidationError);
-
-            DataValidationErrors.SetError(this, valueValidationError.Exception);
-
-            if (valueValidationError.ThrowException)
-                throw valueValidationError.Exception;
-        }
-        catch (FormatException e)
-        {
-            var ex = new FormatException(string.Format(CultureInfo.CurrentCulture, InvalidFormat, text), e);
-            var textParseError = new PickerValueValidationErrorEventArgs(ex, text);
-            OnValueValidationError(textParseError);
-
-            DataValidationErrors.SetError(this, textParseError.Exception);
-
-            if (textParseError.ThrowException)
-                throw textParseError.Exception;
-        }
-
-        return default;
-    }
-
-    private void CommitFromTextBox()
-    {
-        DataValidationErrors.ClearErrors(this);
-
-        if (TextBox == null) return;
-
-        var text = TextBox.Text;
-
-        if (string.IsNullOrWhiteSpace(text))
-        {
-            if (SelectedValue is not null)
-                SetCurrentValue(SelectedValueProperty, null);
-
-            return;
-        }
-
-        if (SelectedValue is not null)
-        {
-            var selectedValueText = ConvertValueToString(SelectedValue);
-            if (selectedValueText == text)
-                return;
-        }
-
-        var parsedValue = TryParseText(text);
-        if (parsedValue?.Equals(SelectedValue) == false)
-            SetCurrentValue(SelectedValueProperty, parsedValue);
-    }
-
     public virtual void CommitFromPreview()
     {
         SetCurrentValue(SelectedValueProperty, GetPreviewValue());
@@ -539,14 +257,6 @@ public abstract class TextPicker<T, TPreviewer> : DropDownControl, ITextPicker, 
     public virtual void Rollback() => SetCurrentValue(SelectedValueProperty, _oldSelectedValue);
 
     private void UpdatePreviewer(T? value) => SetPreviewValue(value);
-
-    protected virtual void OnPreviewValueChanged()
-    {
-        if (_previewValueChangedSuspender.IsSuspended) return;
-
-        if (AutoCommit)
-            CommitFromPreview();
-    }
 
     public virtual void Clear()
     {

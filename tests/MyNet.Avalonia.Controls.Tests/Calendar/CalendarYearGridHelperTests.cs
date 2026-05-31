@@ -7,7 +7,7 @@
 using System;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Avalonia.Controls.Primitives.Internals;
+using MyNet.Avalonia.Controls.Internals;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Calendar;

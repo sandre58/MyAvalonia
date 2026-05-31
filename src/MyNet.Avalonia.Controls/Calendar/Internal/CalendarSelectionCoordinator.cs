@@ -8,7 +8,7 @@ using System;
 using Avalonia.Controls;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls.Primitives.Internals;
+namespace MyNet.Avalonia.Controls.Internals;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
 internal sealed class CalendarSelectionCoordinator(

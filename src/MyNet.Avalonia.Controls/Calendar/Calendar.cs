@@ -17,7 +17,7 @@ using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Avalonia.Controls.Primitives.Internals;
+using MyNet.Avalonia.Controls.Internals;
 using MyNet.Collections;
 using MyNet.Globalization.Facade;
 using MyNet.Primitives;
