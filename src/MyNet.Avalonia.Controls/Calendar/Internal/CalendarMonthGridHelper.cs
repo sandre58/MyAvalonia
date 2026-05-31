@@ -11,7 +11,7 @@ using MyNet.Primitives.Temporal;
 namespace MyNet.Avalonia.Controls.Primitives.Internals;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-public static class CalendarMonthGridHelper
+internal static class CalendarMonthGridHelper
 {
     public static int GetLeadingDayCount(MonthContext monthContext, DayOfWeek firstDayOfWeek)
     {

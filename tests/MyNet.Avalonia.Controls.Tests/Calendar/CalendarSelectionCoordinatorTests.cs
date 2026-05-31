@@ -16,6 +16,59 @@ namespace MyNet.Avalonia.Controls.Tests.Calendar;
 public class CalendarSelectionCoordinatorTests
 {
     [Fact]
+    public void ProcessDateSelection_SingleDate_SelectsDate()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = new CalendarSelectionCoordinator(
+            () => CalendarSelectionMode.SingleDate,
+            () => false,
+            () => new DateTime(2026, 5, 1),
+            _ => true,
+            commands);
+
+        coordinator.ProcessDateSelection(new DateTime(2026, 5, 10), shift: false, ctrl: false);
+
+        commands.Singles.Should().ContainSingle().Which.Should().Be(new DateTime(2026, 5, 10));
+        commands.Moves.Should().ContainSingle().Which.Should().Be(new DateTime(2026, 5, 10));
+        coordinator.HoverStart.Should().Be(new DateTime(2026, 5, 10));
+    }
+
+    [Fact]
+    public void ProcessDateSelection_SingleRangeWithShift_UsesHoverStart()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = new CalendarSelectionCoordinator(
+            () => CalendarSelectionMode.SingleRange,
+            () => false,
+            () => new DateTime(2026, 5, 1),
+            _ => true,
+            commands);
+
+        coordinator.ProcessDateSelection(new DateTime(2026, 5, 5), shift: false, ctrl: false);
+        coordinator.ProcessDateSelection(new DateTime(2026, 5, 15), shift: true, ctrl: false);
+
+        commands.Ranges.Should().ContainSingle()
+            .Which.Should().Be((new DateTime(2026, 5, 5), new DateTime(2026, 5, 15)));
+    }
+
+    [Fact]
+    public void ResetHover_ClearsHoverStart()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = new CalendarSelectionCoordinator(
+            () => CalendarSelectionMode.SingleDate,
+            () => false,
+            () => new DateTime(2026, 5, 1),
+            _ => true,
+            commands);
+
+        coordinator.ProcessDateSelection(new DateTime(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.ResetHover();
+
+        coordinator.HoverStart.Should().BeNull();
+    }
+
+    [Fact]
     public void ProcessTapRangeSelection_SingleRange_CompletesOnSecondTap()
     {
         var commands = new RecordingSelectionCommands();

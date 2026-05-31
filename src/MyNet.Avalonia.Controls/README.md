@@ -35,6 +35,7 @@ dotnet add package MyNet.Avalonia.Controls
 - **Avatar** - User profile picture display with fallback options
 - **Badge** - Notification badges and status indicators
 - **Banner** - Informational banners and alerts
+- **Calendar** - Multi-view calendar with range selection and blackout dates
 - **Clock** - Digital and analog clock components
 - **CodeBlock** - Syntax highlighted code display
 - **ColorPicker** - Advanced color selection and palette controls
@@ -145,6 +146,16 @@ var accentColor = primaryPalette.Color500;
                  NewTagCommand="{Binding AddTagCommand}"
                  RemoveTagCommand="{Binding RemoveTagCommand}" />
 ```
+
+## Testing
+
+Unit tests live in [`tests/MyNet.Avalonia.Controls.Tests`](../../tests/MyNet.Avalonia.Controls.Tests/). They cover pure logic extracted from controls (calendar date ranges, selection, grid layout, validation, `DateContext`, converters) without requiring a UI host.
+
+```bash
+dotnet test tests/MyNet.Avalonia.Controls.Tests
+```
+
+Calendar helpers are in `Calendar/Internal/` (`MyNet.Avalonia.Controls.Primitives.Internals`) and are consumed by the `Calendar` control.
 
 ## License
 

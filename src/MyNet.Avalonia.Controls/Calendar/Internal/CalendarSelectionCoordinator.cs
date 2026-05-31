@@ -11,7 +11,7 @@ using Avalonia.Controls;
 namespace MyNet.Avalonia.Controls.Primitives.Internals;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-public sealed class CalendarSelectionCoordinator(
+internal sealed class CalendarSelectionCoordinator(
     Func<CalendarSelectionMode> selectionMode,
     Func<bool> allowTapRangeSelection,
     Func<DateTime> displayDate,

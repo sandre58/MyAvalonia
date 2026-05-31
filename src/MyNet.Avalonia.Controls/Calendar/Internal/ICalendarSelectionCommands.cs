@@ -10,7 +10,7 @@ using System;
 namespace MyNet.Avalonia.Controls.Primitives.Internals;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-public interface ICalendarSelectionCommands
+internal interface ICalendarSelectionCommands
 {
     void SetSelection(DateTime date);
 

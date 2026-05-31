@@ -7,7 +7,7 @@
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Avalonia.Controls.Resources;
+using MyNet.Avalonia.Controls.Localization;
 using MyNet.Avalonia.Converters;
 using MyNet.Globalization;
 using MyNet.Globalization.Facade;

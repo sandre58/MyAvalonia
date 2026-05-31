@@ -33,6 +33,34 @@ public class CalendarDateRangeHelperTests
     }
 
     [Fact]
+    public void GetSelectedMax_ReturnsLatestDate()
+    {
+        var dates = new[] { new DateTime(2026, 3, 10), new DateTime(2026, 1, 5), new DateTime(2026, 6, 1) };
+
+        CalendarDateRangeHelper.GetSelectedMax(dates).Should().Be(new DateTime(2026, 6, 1));
+    }
+
+    [Fact]
+    public void GetRangeStartAndEnd_UseMinMaxWhenUnset()
+    {
+        CalendarDateRangeHelper.GetRangeStart(null).Should().Be(DateTime.MinValue);
+        CalendarDateRangeHelper.GetRangeEnd(null).Should().Be(DateTime.MaxValue);
+    }
+
+    [Fact]
+    public void ResolveDisplayDateEndChange_ExpandsEndWhenSelectionExceedsRange()
+    {
+        var adjustment = CalendarDateRangeHelper.ResolveDisplayDateEndChange(
+            new DateTime(2026, 3, 31),
+            new DateTime(2026, 1, 1),
+            new DateTime(2026, 5, 1),
+            new DateTime(2026, 6, 15));
+
+        adjustment.Should().NotBeNull();
+        adjustment!.Value.DisplayDateEnd.Should().Be(new DateTime(2026, 6, 15));
+    }
+
+    [Fact]
     public void ResolveDisplayDateStartChange_ExpandsEndWhenStartAfterEnd()
     {
         var adjustment = CalendarDateRangeHelper.ResolveDisplayDateStartChange(

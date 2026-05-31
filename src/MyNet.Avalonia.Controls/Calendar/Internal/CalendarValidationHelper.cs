@@ -12,7 +12,7 @@ using MyNet.Primitives;
 namespace MyNet.Avalonia.Controls.Primitives.Internals;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-public static class CalendarValidationHelper
+internal static class CalendarValidationHelper
 {
     public static bool IsValidFirstDayOfWeek(DayOfWeek day) =>
         day is DayOfWeek.Sunday or DayOfWeek.Monday or DayOfWeek.Tuesday or DayOfWeek.Wednesday or DayOfWeek.Thursday or DayOfWeek.Friday or DayOfWeek.Saturday;
