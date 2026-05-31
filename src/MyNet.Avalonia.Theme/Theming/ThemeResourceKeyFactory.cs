@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Theme.Theming;
 
@@ -125,7 +125,7 @@ public static class ThemeResourceKeyFactory
     /// <param name="type">The resource type (e.g., Type, Brush).</param>
     /// <param name="name">The resource name.</param>
     /// <returns>The formatted resource key.</returns>
-    private static string BuildResourceKey(string type, string name) => ResourcePattern.FormatWith(type, name);
+    private static string BuildResourceKey(string type, string name) => ResourcePattern.FormatWithInvariant(type, name);
 
     /// <summary>
     /// Gets a color resource key for the specified name.

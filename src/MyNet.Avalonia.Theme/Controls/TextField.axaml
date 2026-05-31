@@ -5,9 +5,9 @@
 
     <sys:Double x:Key="MyNet.Double.Zero">1.0</sys:Double>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT TEXTFIELD THEME                                   -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type my:TextField}" TargetType="my:TextField">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="ClipToBounds" Value="False" />

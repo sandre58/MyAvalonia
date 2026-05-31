@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using MyNet.Avalonia.Extensions;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Theme.Theming.Palettes;
 

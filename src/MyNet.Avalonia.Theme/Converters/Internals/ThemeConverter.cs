@@ -11,7 +11,7 @@ using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 using MyNet.Avalonia.Theme.Theming.Core;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Theme.Converters.Internals;
 

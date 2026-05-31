@@ -1,8 +1,8 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals"
-                    xmlns:u="clr-namespace:MyNet.Utilities.DateTimes;assembly=MyNet.Utilities"
-                    xmlns:my="http://mynet.com/avalonia">
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:temporal="clr-namespace:MyNet.Primitives.Temporal;assembly=MyNet.Primitives">
 
     <!--  ==============================================  -->
     <!--  NUMERICUPDOWNTIMECOMPONENT THEME  -->
@@ -127,12 +127,12 @@
                                                            IsEnabled="{TemplateBinding ShowSeconds}"
                                                            IsVisible="{TemplateBinding ShowSeconds}"
                                                            my:DisableAssist.IsDisablable="False" />
-                            <Separator Grid.Column="5" Margin="{my:Thickness Sm, Horizontal}" IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static u:TimeFormat.TwelveHour}}" />
+                            <Separator Grid.Column="5" Margin="{my:Thickness Sm, Horizontal}" IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static temporal:TimeFormat.TwelveHour}}" />
                             <StackPanel Grid.Column="6"
                                         Classes="gap-xs"
                                         VerticalAlignment="Center"
-                                        IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static u:TimeFormat.TwelveHour}}">
-                                <RadioButton Content="{my:Loc Am, Casing=AllCaps}"
+                                        IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static temporal:TimeFormat.TwelveHour}}">
+                                <RadioButton Content="{my:Loc Am, Casing=Upper}"
                                              my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                              my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                              Theme="{StaticResource {x:Type ToggleButton}}"
@@ -140,7 +140,7 @@
                                              Classes="variant-text size-sm"
                                              my:DisableAssist.IsDisablable="False"
                                              IsChecked="{Binding IsAm, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
-                                <RadioButton Content="{my:Loc Pm, Casing=AllCaps}"
+                                <RadioButton Content="{my:Loc Pm, Casing=Upper}"
                                              my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                              my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
                                              Theme="{StaticResource {x:Type ToggleButton}}"

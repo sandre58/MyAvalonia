@@ -9,7 +9,7 @@ using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Material.Icons;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Theme.Converters;
 

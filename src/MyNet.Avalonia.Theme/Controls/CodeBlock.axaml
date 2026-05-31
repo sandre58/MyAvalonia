@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
@@ -92,7 +92,7 @@
                                     <!-- Icon -->
                                     <ContentControl x:Name="PART_Icon"
                                                     Grid.Column="0"
-                                                    Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:ThicknessConverter.FromDouble.Right}}"
+                                                    Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:ThicknessFromDoubleConverter.Right}}"
                                                     VerticalAlignment="Stretch"
                                                     my:IconAssist.Role="Label"
                                                     Content="{TemplateBinding (my:IconAssist.Icon)}"
@@ -183,11 +183,11 @@
         </Style>
 
         <Style Selector="^.icon-right:not(.button-right) /template/ Grid#PART_Grid">
-            <Setter Property="Margin" Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.Adjust.AddLeftToRight}}" />
+            <Setter Property="Margin" Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessAdjustConverter.AddLeftToRight}}" />
         </Style>
 
         <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
-            <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.FromDouble.Left}}" />
+            <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Left}}" />
         </Style>
 
         <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
@@ -196,7 +196,7 @@
 
         <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
             <Style Selector="^ /template/ my|TextField#PART_TextField">
-                <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.FromDouble.Top}}" />
+                <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Top}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
                 <Setter Property="Padding" Value="{my:Thickness Sm}" />
@@ -243,9 +243,9 @@
             </Style>
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- VARIANTS                                                  -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^.variant-clean">
             <Setter Property="Background" Value="Transparent" />
@@ -258,9 +258,9 @@
             <Setter Property="my:InteractionAssist.RippleColor" Value="Transparent" />
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- SIZES                                                     -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^.size-sm">
             <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Sm}" />

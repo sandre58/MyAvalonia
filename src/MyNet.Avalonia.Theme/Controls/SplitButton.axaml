@@ -1,10 +1,10 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- EMBEDDED SPLITBUTTON BUTTON THEME                         -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.Button.Embedded.SplitButton" TargetType="Button">
         <Setter Property="my:ThemeAssist.Category" Value="Action" />
         <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True" />
@@ -89,9 +89,9 @@
         </Style>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT SPLITBUTTON THEME                                 -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type SplitButton}" TargetType="SplitButton">
         <Setter Property="my:ThemeAssist.Category" Value="Action" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
@@ -222,16 +222,16 @@
 
         <Style Selector="^ /template/ Button#PART_PrimaryButton">
             <Setter Property="BorderThickness"
-                    Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.Adjust.RemoveRight}}" />
+                    Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessAdjustConverter.RemoveRight}}" />
             <Setter Property="CornerRadius"
-                    Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Left}}" />
+                    Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
         </Style>
 
         <Style Selector="^ /template/ Button#PART_SecondaryButton">
             <Setter Property="BorderThickness"
-                    Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.Adjust.RemoveLeft}}" />
+                    Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessAdjustConverter.RemoveLeft}}" />
             <Setter Property="CornerRadius"
-                    Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Right}}" />
+                    Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
         </Style>
 
         <Style Selector="^ /template/ Rectangle#PART_Separator">
@@ -314,17 +314,17 @@
                 <Setter Property="Grid.Row" Value="0" />
                 <Setter Property="Grid.Column" Value="0" />
                 <Setter Property="BorderThickness"
-                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.Adjust.RemoveRight}}" />
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessAdjustConverter.RemoveRight}}" />
                 <Setter Property="CornerRadius"
-                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Left}}" />
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_PrimaryButton">
                 <Setter Property="Grid.Row" Value="0" />
                 <Setter Property="Grid.Column" Value="2" />
                 <Setter Property="BorderThickness"
-                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.Adjust.RemoveLeft}}" />
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessAdjustConverter.RemoveLeft}}" />
                 <Setter Property="CornerRadius"
-                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Right}}" />
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
             </Style>
             <Style Selector="^ /template/ Rectangle#PART_Separator">
                 <Setter Property="Grid.Row" Value="0" />
@@ -341,17 +341,17 @@
                 <Setter Property="Grid.Row" Value="0" />
                 <Setter Property="Grid.Column" Value="2" />
                 <Setter Property="BorderThickness"
-                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.Adjust.RemoveLeft}}" />
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessAdjustConverter.RemoveLeft}}" />
                 <Setter Property="CornerRadius"
-                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Right}}" />
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_PrimaryButton">
                 <Setter Property="Grid.Row" Value="0" />
                 <Setter Property="Grid.Column" Value="0" />
                 <Setter Property="BorderThickness"
-                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.Adjust.RemoveRight}}" />
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessAdjustConverter.RemoveRight}}" />
                 <Setter Property="CornerRadius"
-                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Left}}" />
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
             </Style>
             <Style Selector="^ /template/ Rectangle#PART_Separator">
                 <Setter Property="Grid.Row" Value="0" />
@@ -368,17 +368,17 @@
                 <Setter Property="Grid.Row" Value="0" />
                 <Setter Property="Grid.Column" Value="0" />
                 <Setter Property="BorderThickness"
-                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.Adjust.RemoveBottom}}" />
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessAdjustConverter.RemoveBottom}}" />
                 <Setter Property="CornerRadius"
-                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Top}}" />
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Top}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_PrimaryButton">
                 <Setter Property="Grid.Row" Value="2" />
                 <Setter Property="Grid.Column" Value="0" />
                 <Setter Property="BorderThickness"
-                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.Adjust.RemoveTop}}" />
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessAdjustConverter.RemoveTop}}" />
                 <Setter Property="CornerRadius"
-                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Bottom}}" />
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Bottom}}" />
             </Style>
             <Style Selector="^ /template/ Rectangle#PART_Separator">
                 <Setter Property="Grid.Row" Value="1" />
@@ -396,17 +396,17 @@
                 <Setter Property="Grid.Row" Value="2" />
                 <Setter Property="Grid.Column" Value="0" />
                 <Setter Property="BorderThickness"
-                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.Adjust.RemoveTop}}" />
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessAdjustConverter.RemoveTop}}" />
                 <Setter Property="CornerRadius"
-                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Bottom}}" />
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Bottom}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_PrimaryButton">
                 <Setter Property="Grid.Row" Value="0" />
                 <Setter Property="Grid.Column" Value="0" />
                 <Setter Property="BorderThickness"
-                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessConverter.Adjust.RemoveBottom}}" />
+                        Value="{Binding $parent[TemplatedControl].BorderThickness, Converter={x:Static my:ThicknessAdjustConverter.RemoveBottom}}" />
                 <Setter Property="CornerRadius"
-                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Top}}" />
+                        Value="{Binding $parent[TemplatedControl].CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Top}}" />
             </Style>
             <Style Selector="^ /template/ Rectangle#PART_Separator">
                 <Setter Property="Grid.Row" Value="1" />
@@ -416,9 +416,9 @@
             </Style>
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- SIZES                                                     -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <!-- Size: Small -->
         <Style Selector="^.size-sm">

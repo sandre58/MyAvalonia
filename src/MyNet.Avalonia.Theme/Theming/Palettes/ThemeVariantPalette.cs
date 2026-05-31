@@ -7,8 +7,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Styling;
+using MyNet.Collections;
 using MyNet.Observable;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Theme.Theming.Palettes;
 

@@ -18,77 +18,20 @@ namespace MyNet.Avalonia.Converters;
 /// Unified corner radius conversions: double to <see cref="CornerRadius"/>, corner adjustments, and corner radius to double.
 /// </summary>
 /// <remarks>
-/// Prefer this API over the obsolete <see cref="DoubleToCornerRadiusConverter"/>, <see cref="CornerRadiusConverter"/>,
-/// and <see cref="CornerRadiusToDoubleConverter"/> shims.
+/// Use the static members on <see cref="CornerRadiusFromDoubleConverter"/>, <see cref="CornerRadiusAdjustConverter"/>,
+/// and <see cref="CornerRadiusToDoubleConverter"/> from XAML (<c>x:Static</c> does not support nested types).
 /// </remarks>
 /// <example>
 /// <code>
-/// &lt;!-- Keep only left corners rounded --&gt;
-/// CornerRadius="{Binding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Left}}"
-///
-/// &lt;!-- Feed ellipse radius from top-left corner --&gt;
-/// RadiusX="{Binding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}"
+/// CornerRadius="{Binding CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}"
+/// RadiusX="{Binding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}"
 /// </code>
 /// </example>
-[SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "Provides a clear API for different conversion types while keeping implementation details hidden.")]
 public sealed class CornerRadiusConverter : IValueConverter
 {
+    internal CornerRadiusConverter(CornerRadiusOperation operation) => _operation = operation;
+
     private readonly CornerRadiusOperation _operation;
-
-    private CornerRadiusConverter(CornerRadiusOperation operation) => _operation = operation;
-
-    /// <summary>
-    /// Converts a numeric value to a <see cref="CornerRadius"/>.
-    /// </summary>
-    public static class FromDouble
-    {
-        /// <summary>Applies the value uniformly to all four corners.</summary>
-        public static readonly IValueConverter All = new CornerRadiusConverter(CornerRadiusOperation.FromDoubleAll);
-
-        /// <summary>Sets top-left and top-right radius.</summary>
-        public static readonly IValueConverter Top = new CornerRadiusConverter(CornerRadiusOperation.FromDoubleTop);
-
-        /// <summary>Sets top-left and bottom-left radius.</summary>
-        public static readonly IValueConverter Left = new CornerRadiusConverter(CornerRadiusOperation.FromDoubleLeft);
-
-        /// <summary>Sets top-right and bottom-right radius.</summary>
-        public static readonly IValueConverter Right = new CornerRadiusConverter(CornerRadiusOperation.FromDoubleRight);
-
-        /// <summary>Sets bottom-left and bottom-right radius.</summary>
-        public static readonly IValueConverter Bottom = new CornerRadiusConverter(CornerRadiusOperation.FromDoubleBottom);
-    }
-
-    /// <summary>
-    /// Adjusts an existing <see cref="CornerRadius"/> by zeroing corners on one side.
-    /// </summary>
-    /// <remarks>
-    /// <see cref="Left"/> clears top-right and bottom-right; <see cref="Top"/> clears bottom corners; etc.
-    /// </remarks>
-    public static class Adjust
-    {
-        /// <summary>Clears the right corners, keeping top-left and bottom-left.</summary>
-        public static readonly IValueConverter Left = new CornerRadiusConverter(CornerRadiusOperation.AdjustLeft);
-
-        /// <summary>Clears the bottom corners, keeping top-left and top-right.</summary>
-        public static readonly IValueConverter Top = new CornerRadiusConverter(CornerRadiusOperation.AdjustTop);
-
-        /// <summary>Clears the left corners, keeping top-right and bottom-right.</summary>
-        public static readonly IValueConverter Right = new CornerRadiusConverter(CornerRadiusOperation.AdjustRight);
-
-        /// <summary>Clears the top corners, keeping bottom-left and bottom-right.</summary>
-        public static readonly IValueConverter Bottom = new CornerRadiusConverter(CornerRadiusOperation.AdjustBottom);
-    }
-
-    /// <summary>
-    /// Extracts a single corner component from a <see cref="CornerRadius"/> as a <see cref="double"/>.
-    /// </summary>
-    public static class ToDouble
-    {
-        public static readonly IValueConverter TopLeft = new CornerRadiusConverter(CornerRadiusOperation.ToDoubleTopLeft);
-        public static readonly IValueConverter TopRight = new CornerRadiusConverter(CornerRadiusOperation.ToDoubleTopRight);
-        public static readonly IValueConverter BottomLeft = new CornerRadiusConverter(CornerRadiusOperation.ToDoubleBottomLeft);
-        public static readonly IValueConverter BottomRight = new CornerRadiusConverter(CornerRadiusOperation.ToDoubleBottomRight);
-    }
 
     /// <inheritdoc />
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
@@ -147,7 +90,7 @@ public sealed class CornerRadiusConverter : IValueConverter
             _ => default
         };
 
-    private enum CornerRadiusOperation
+    internal enum CornerRadiusOperation
     {
         FromDoubleAll,
         FromDoubleLeft,
@@ -163,4 +106,57 @@ public sealed class CornerRadiusConverter : IValueConverter
         ToDoubleBottomLeft,
         ToDoubleBottomRight
     }
+}
+
+/// <summary>
+/// Converts a numeric value to a <see cref="CornerRadius"/>.
+/// </summary>
+public static class CornerRadiusFromDoubleConverter
+{
+    /// <summary>Applies the value uniformly to all four corners.</summary>
+    public static readonly IValueConverter All = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.FromDoubleAll);
+
+    /// <summary>Sets top-left and top-right radius.</summary>
+    public static readonly IValueConverter Top = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.FromDoubleTop);
+
+    /// <summary>Sets top-left and bottom-left radius.</summary>
+    public static readonly IValueConverter Left = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.FromDoubleLeft);
+
+    /// <summary>Sets top-right and bottom-right radius.</summary>
+    public static readonly IValueConverter Right = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.FromDoubleRight);
+
+    /// <summary>Sets bottom-left and bottom-right radius.</summary>
+    public static readonly IValueConverter Bottom = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.FromDoubleBottom);
+}
+
+/// <summary>
+/// Adjusts an existing <see cref="CornerRadius"/> by zeroing corners on one side.
+/// </summary>
+public static class CornerRadiusAdjustConverter
+{
+    /// <summary>Clears the right corners, keeping top-left and bottom-left.</summary>
+    public static readonly IValueConverter Left = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.AdjustLeft);
+
+    /// <summary>Clears the bottom corners, keeping top-left and top-right.</summary>
+    public static readonly IValueConverter Top = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.AdjustTop);
+
+    /// <summary>Clears the left corners, keeping top-right and bottom-right.</summary>
+    public static readonly IValueConverter Right = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.AdjustRight);
+
+    /// <summary>Clears the top corners, keeping bottom-left and bottom-right.</summary>
+    public static readonly IValueConverter Bottom = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.AdjustBottom);
+}
+
+/// <summary>
+/// Extracts a single corner component from a <see cref="CornerRadius"/> as a <see cref="double"/>.
+/// </summary>
+public static class CornerRadiusToDoubleConverter
+{
+    public static readonly IValueConverter TopLeft = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.ToDoubleTopLeft);
+
+    public static readonly IValueConverter TopRight = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.ToDoubleTopRight);
+
+    public static readonly IValueConverter BottomLeft = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.ToDoubleBottomLeft);
+
+    public static readonly IValueConverter BottomRight = new CornerRadiusConverter(CornerRadiusConverter.CornerRadiusOperation.ToDoubleBottomRight);
 }

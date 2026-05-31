@@ -240,10 +240,10 @@
         </Style>
 
         <Style Selector="^:nth-child(1)">
-            <Setter Property="CornerRadius" Value="{Binding $parent[DataGrid].(my:HeaderAssist.CornerRadius), Converter={x:Static my:CornerRadiusConverter.Adjust.Left}}" />
+            <Setter Property="CornerRadius" Value="{Binding $parent[DataGrid].(my:HeaderAssist.CornerRadius), Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
         </Style>
         <Style Selector="^:nth-last-child(1)">
-            <Setter Property="CornerRadius" Value="{Binding $parent[DataGrid].(my:HeaderAssist.CornerRadius), Converter={x:Static my:CornerRadiusConverter.Adjust.Right}}" />
+            <Setter Property="CornerRadius" Value="{Binding $parent[DataGrid].(my:HeaderAssist.CornerRadius), Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
         </Style>
 
         <!-- Sort -->

@@ -171,7 +171,7 @@ public class ControlPalette
     /// <returns>A new ThemePalette instance.</returns>
     public static ControlPalette FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary)
     {
-        var defaultColor = Colors.Gray;
+        var defaultColor = global::Avalonia.Media.Colors.Gray;
         return new()
         {
             // Surfaces

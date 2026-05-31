@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 using Avalonia.Media;
-using MyNet.Avalonia.Extensions;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Theme.Theming.Palettes;
 
@@ -201,7 +201,7 @@ public class ColorShades
     /// <returns>A new ColorShades instance.</returns>
     public static ColorShades FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary, string paletteName)
     {
-        var baseColor = (Color)dictionary.GetValueOrDefault(paletteName, Colors.Gray);
+        var baseColor = (Color)dictionary.GetValueOrDefault(paletteName, global::Avalonia.Media.Colors.Gray);
         var foregroundColor = (Color)dictionary.GetValueOrDefault($"{nameof(Foreground)}.{paletteName}", baseColor.ContrastingForegroundColor());
         return new(baseColor, foregroundColor);
     }

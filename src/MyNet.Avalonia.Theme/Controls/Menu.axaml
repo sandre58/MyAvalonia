@@ -6,9 +6,9 @@
 
     <c:PlatformKeyGestureConverter x:Key="KeyGestureConverter" />
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT SEPARATOR THEME                                   -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type Separator}" TargetType="Separator">
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="Background" Value="{my:ThemeContext Surface.Border}" />
@@ -30,9 +30,9 @@
         </Setter>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT MENUITEM THEME                                    -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type MenuItem}" TargetType="MenuItem">
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
@@ -208,9 +208,9 @@
         </Style>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- TOPLEVEL MENUITEM THEME                                   -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.MenuItem.TopLevel" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
         <Setter Property="Template">
             <ControlTemplate>
@@ -266,17 +266,17 @@
         </Setter>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- HORIZONTAL MENUITEM THEME                                 -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.MenuItem.Horizontal" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.MenuItem.Horizontal}" />
         <Setter Property="Margin" Value="2 0 2 0" />
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT MENU THEME                                        -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type Menu}" TargetType="Menu">
         <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
@@ -319,9 +319,9 @@
         </Setter>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT CONTEXTMENU THEME                                 -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type ContextMenu}" TargetType="ContextMenu">
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
@@ -377,9 +377,9 @@
         </Style>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT FLYOUTPRESENTER THEME                             -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type FlyoutPresenter}" TargetType="FlyoutPresenter">
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
@@ -437,9 +437,9 @@
         </Style>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT MENUFLYOUTPRESENTER THEME                         -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type MenuFlyoutPresenter}" TargetType="MenuFlyoutPresenter">
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
@@ -493,9 +493,9 @@
         </Style>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- HORIZONTAL MENUFLYOUTPRESENTER THEME                      -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.MenuFlyoutPresenter.Horizontal" TargetType="MenuFlyoutPresenter" BasedOn="{StaticResource {x:Type MenuFlyoutPresenter}}">
         <Setter Property="MinWidth" Value="32" />
         <Setter Property="Padding" Value="8 0" />

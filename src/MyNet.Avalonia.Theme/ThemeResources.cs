@@ -10,9 +10,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Avalonia;
 using Avalonia.Media;
+using MyNet.Avalonia.Resources;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Theming;
-using MyNet.Utilities;
+using MyNet.Collections;
 
 namespace MyNet.Avalonia.Theme;
 
@@ -90,7 +91,7 @@ public static class ThemeResources
         /// <param name="size">The size of the corner for which to retrieve the token. This value determines the corner radius that will be
         /// encapsulated by the returned token.</param>
         /// <returns>A token containing the corner radius corresponding to the specified corner size.</returns>
-        public static Token<CornerRadius> Get(CornerSize size) => Tokens.GetOrAdd(size, new(ThemeResourceKeyFactory.Corners(size.ToString())));
+        public static Token<CornerRadius> Get(CornerSize size) => Tokens.GetOrCreate(size, () => new(ThemeResourceKeyFactory.Corners(size.ToString())));
     }
 
     /// <summary>
@@ -110,7 +111,7 @@ public static class ThemeResources
         /// <param name="size">The size of the spacing for which to retrieve the token. This value determines the spacing that will be
         /// encapsulated by the returned token.</param>
         /// <returns>A token containing the spacing corresponding to the specified spacing size.</returns>
-        public static Token<double> Get(SpacingSize size) => Tokens.GetOrAdd(size, new(ThemeResourceKeyFactory.Spacing(size.ToString())));
+        public static Token<double> Get(SpacingSize size) => Tokens.GetOrCreate(size, () => new(ThemeResourceKeyFactory.Spacing(size.ToString())));
     }
 
     /// <summary>
@@ -136,7 +137,7 @@ public static class ThemeResources
             /// <param name="size">The size of the font for which to retrieve the token. This value determines the font size that will be
             /// encapsulated by the returned token.</param>
             /// <returns>A token containing the font size corresponding to the specified font size.</returns>
-            public static Token<double> Get(FontSize size) => Tokens.GetOrAdd(size, new(ThemeResourceKeyFactory.FontSize(size.ToString())));
+            public static Token<double> Get(FontSize size) => Tokens.GetOrCreate(size, () => new(ThemeResourceKeyFactory.FontSize(size.ToString())));
         }
 
         /// <summary>
@@ -171,7 +172,7 @@ public static class ThemeResources
         {
             Key = key;
             var capturedKey = key; // avoid capturing `this` inside the factory
-            _lazyValue = new(() => Resources.ThemeResources.GetResource<T>(capturedKey), LazyThreadSafetyMode.PublicationOnly);
+            _lazyValue = new(() => ApplicationResources.GetResource<T>(capturedKey), LazyThreadSafetyMode.PublicationOnly);
         }
 
         /// <summary>

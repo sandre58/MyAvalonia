@@ -1,10 +1,10 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="http://mynet.com/avalonia">
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- THUMB BORDER THEME                                        -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.Thumb.Border" TargetType="{x:Type Thumb}">
             <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
@@ -68,9 +68,9 @@
             </Style>
         </ControlTheme>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- THUMB ELLIPSE THEME                                       -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.Thumb.Ellipse" TargetType="Thumb" BasedOn="{StaticResource MyNet.Theme.Thumb.Border}">
             <Setter Property="Template">
                 <ControlTemplate TargetType="Thumb">
@@ -87,18 +87,18 @@
                         <Ellipse Name="PART_MainEllipse"
                                  Fill="{TemplateBinding Background}"
                                  Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}" />
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
 
                         <Ellipse Name="PART_HoverEllipse"
                                  Fill="{TemplateBinding my:InteractionAssist.HoverBackground}"
                                  Stroke="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}"
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
                                  Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
 
                         <Ellipse Name="PART_ActiveEllipse"
                                  Fill="{TemplateBinding my:InteractionAssist.ActiveBackground}"
                                  Stroke="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}"
+                                 StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
                                  Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
                     </Panel>
                 </ControlTemplate>

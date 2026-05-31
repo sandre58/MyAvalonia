@@ -14,7 +14,7 @@ using Avalonia.Interactivity;
 using MyNet.Avalonia.Bindings;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Converters;
-using MyNet.Humanizer;
+using MyNet.Text.TextCasing;
 using TimePickerEx = MyNet.Avalonia.Controls.TimePickerEx;
 
 namespace MyNet.Avalonia.Theme.DataGrid;

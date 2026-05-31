@@ -104,7 +104,7 @@
                                     <!-- Icon -->
                                     <ContentControl x:Name="PART_Icon"
                                                     Grid.Column="0"
-                                                    Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:ThicknessConverter.FromDouble.Right}}"
+                                                    Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:ThicknessFromDoubleConverter.Right}}"
                                                     VerticalAlignment="Stretch"
                                                     my:IconAssist.Role="Label"
                                                     Content="{TemplateBinding (my:IconAssist.Icon)}"
@@ -289,7 +289,7 @@
         </Style>
 
         <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
-            <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.FromDouble.Horizontal}}" />
+            <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Horizontal}}" />
         </Style>
 
         <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
@@ -298,7 +298,7 @@
 
         <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
             <Style Selector="^ /template/ my|TextField#PART_TextField">
-                <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.FromDouble.Top}}" />
+                <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Top}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
                 <Setter Property="Padding" Value="{my:Thickness Sm}" />
@@ -419,7 +419,7 @@
                                 <!-- Icon -->
                                 <ContentControl x:Name="PART_Icon"
                                                 Grid.Column="0"
-                                                Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:ThicknessConverter.FromDouble.Right}}"
+                                                Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:ThicknessFromDoubleConverter.Right}}"
                                                 VerticalAlignment="Stretch"
                                                     my:IconAssist.Role="Label"
                                                 Content="{TemplateBinding (my:IconAssist.Icon)}"

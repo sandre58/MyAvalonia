@@ -14,9 +14,9 @@ using Avalonia.Interactivity;
 using MyNet.Avalonia.Bindings;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Converters;
-using MyNet.Humanizer;
-using MyNet.Utilities;
-using MyNet.Utilities.Helpers;
+using MyNet.Globalization.Facade;
+using MyNet.Primitives;
+using MyNet.Text.TextCasing;
 using CalendarDatePickerEx = MyNet.Avalonia.Controls.CalendarDatePickerEx;
 
 namespace MyNet.Avalonia.Theme.DataGrid;
@@ -109,7 +109,7 @@ public class DataGridDateColumn : DataGridBoundColumn<CalendarDatePickerEx, Cont
         DataGridHelper.SynchronizeColumnProperty(this, control, DatePickerBase.PlaceholderTextProperty, PlaceholderTextProperty);
 
         DataGridHelper.SynchronizeColumnProperty(this, control, FirstDayOfWeekProperty);
-        ((CalendarDatePickerEx)control).DisplayFormat = DateTimeHelper.TranslateDatePattern(Format.OrEmpty(), CultureInfo.CurrentCulture);
+        ((CalendarDatePickerEx)control).DisplayFormat = Format.OrEmpty().TranslateDatePattern(CultureInfo.CurrentCulture);
     }
 
     protected override void ResetValue(CalendarDatePickerEx control, object uneditedValue) => control.SelectedValue = (DateTime?)uneditedValue;

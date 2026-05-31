@@ -6,7 +6,6 @@
 
 using Avalonia;
 using MyNet.Avalonia.Controls.Enums;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Assists;
 
 namespace MyNet.Avalonia.Theme.Classes.Registry;

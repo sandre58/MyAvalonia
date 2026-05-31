@@ -403,7 +403,7 @@
                         <!-- Previewer -->
                         <ColorPreviewer Grid.Row="1"
                                         Height="32"
-                                        Margin="{TemplateBinding Padding, Converter={x:Static my:ThicknessConverter.Adjust.RemoveTop}}"
+                                        Margin="{TemplateBinding Padding, Converter={x:Static my:ThicknessAdjustConverter.RemoveTop}}"
                                         my:DisableAssist.IsDisablable="False"
                                         HsvColor="{Binding HsvColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                         IsAccentColorsVisible="{TemplateBinding IsAccentColorsVisible}"

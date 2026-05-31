@@ -1,12 +1,12 @@
 // -----------------------------------------------------------------------
-// <copyright file="GenderPalette.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="GenderPalette.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
 using Avalonia.Media;
-using MyNet.Avalonia.Extensions;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Theme.Theming.Palettes;
 
@@ -43,7 +43,7 @@ public class GenderPalette
     /// <returns>A new GenderPalette instance.</returns>
     public static GenderPalette FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary, string prefix = nameof(ThemeVariantPalette.Gender)) => new()
     {
-        Male = (Color)dictionary.GetValueOrDefault(nameof(Male).WithPrefix(prefix, "."), Colors.Blue),
-        Female = (Color)dictionary.GetValueOrDefault(nameof(Female).WithPrefix(prefix, "."), Colors.Pink)
+        Male = (Color)dictionary.GetValueOrDefault(nameof(Male).WithPrefix(prefix, "."), global::Avalonia.Media.Colors.Blue),
+        Female = (Color)dictionary.GetValueOrDefault(nameof(Female).WithPrefix(prefix, "."), global::Avalonia.Media.Colors.Pink)
     };
 }

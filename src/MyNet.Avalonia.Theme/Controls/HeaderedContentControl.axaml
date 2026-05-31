@@ -1,10 +1,10 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT HEADEREDCONTENTCONTROL THEME                      -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type HeaderedContentControl}" TargetType="HeaderedContentControl">
         <Setter Property="my:ThemeAssist.Category" Value="Surface" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
@@ -210,9 +210,9 @@
             </Style>
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- KINDS                                                     -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^.kind-label">
             <Setter Property="BorderThickness" Value="0" />
@@ -249,9 +249,9 @@
             </Style>
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- VARIANTS                                                  -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^.variant-underline">
             <Setter Property="Background" Value="Transparent" />
@@ -278,25 +278,25 @@
 
         <Style Selector="^.variant-light.variant-header, ^.variant-outlined.variant-headered">
             <Style Selector="^ /template/ Border#PART_Header">
-                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Adjust.Top}}" />
+                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Top}}" />
             </Style>
 
             <Style Selector="^.position-left /template/ Border#PART_Header">
-                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Adjust.Left}}" />
+                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
             </Style>
 
             <Style Selector="^.position-right /template/ Border#PART_Header">
-                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Adjust.Right}}" />
+                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
             </Style>
 
             <Style Selector="^.position-bottom /template/ Border#PART_Header">
-                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusConverter.Adjust.Bottom}}" />
+                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Bottom}}" />
             </Style>
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- HEADEREDCONTENTCONTROL                                    -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^.size-sm">
             <Setter Property="Padding" Value="{my:Thickness Sm}" />

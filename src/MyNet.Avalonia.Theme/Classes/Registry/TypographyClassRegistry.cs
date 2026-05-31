@@ -12,7 +12,6 @@ using Avalonia.Controls.Documents;
 using Avalonia.Data;
 using Avalonia.Media;
 using MyNet.Avalonia.Converters;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Classes.Registry.States;

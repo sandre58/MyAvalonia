@@ -1,11 +1,11 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:c="using:MyNet.Avalonia.Theme.Converters.Internals">
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT CLOCKTIMECOMPONENTCELL THEME                      -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type my:ClockTimeComponentCell}" TargetType="my:ClockTimeComponentCell">
         <Setter Property="Background" Value="{Binding $parent[my:ClockTimeComponent].(my:ItemsAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $parent[my:ClockTimeComponent].(my:ItemsAssist.BorderBrush)}" />
@@ -38,18 +38,18 @@
                     <Ellipse Name="PART_MainEllipse"
                              Fill="{TemplateBinding Background}"
                              Stroke="{TemplateBinding BorderBrush}"
-                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}" />
+                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
 
                     <Ellipse Name="PART_ActiveEllipse"
                              Fill="{TemplateBinding my:InteractionAssist.ActiveBackground}"
                              Stroke="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}"
+                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
                              Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
 
                     <Ellipse Name="PART_HoverEllipse"
                              Fill="{TemplateBinding my:InteractionAssist.HoverBackground}"
                              Stroke="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}"
+                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
                              Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
 
                     <ContentPresenter Name="PART_ContentPresenter"
@@ -106,9 +106,9 @@
         </Style>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT CLOCKTIMECOMPONENT THEME                          -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type my:ClockTimeComponent}" TargetType="my:ClockTimeComponent">
         <Setter Property="my:ItemsAssist.Background" Value="{Binding $parent[my:ClockSelector].(my:ItemsAssist.Background)}" />
         <Setter Property="my:ItemsAssist.BorderBrush" Value="{Binding $parent[my:ClockSelector].(my:ItemsAssist.BorderBrush)}" />
@@ -144,9 +144,9 @@
         </Setter>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT CLOCKSELECTOR THEME                               -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type my:ClockSelector}" TargetType="my:ClockSelector">
         <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />

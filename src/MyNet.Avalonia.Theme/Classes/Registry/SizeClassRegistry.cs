@@ -9,7 +9,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Layout;
 using MyNet.Avalonia.Converters;
-using MyNet.Avalonia.Extensions;
 
 namespace MyNet.Avalonia.Theme.Classes.Registry;
 

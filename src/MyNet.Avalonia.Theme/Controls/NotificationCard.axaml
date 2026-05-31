@@ -49,11 +49,7 @@
                                 ClipToBounds="True"
                                 CornerRadius="{TemplateBinding CornerRadius}">
                             <Panel>
-                                <ContentControl Name="PART_Content" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}">
-                                    <ContentControl.DataTemplates>
-                                        <my:RegisteredDataTemplate Key="INotification" />
-                                    </ContentControl.DataTemplates>
-                                </ContentControl>
+                                <ContentControl Name="PART_Content" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" />
                                 <Button Name="PART_CloseButton"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Top"

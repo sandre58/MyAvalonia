@@ -6,7 +6,6 @@
 
 using Avalonia;
 using Avalonia.Animation;
-using MyNet.Avalonia.Extensions;
 
 namespace MyNet.Avalonia.Theme.Classes.Registry;
 

@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT TABITEM THEME                                     -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type TabItem}" TargetType="TabItem">
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
@@ -124,9 +124,9 @@
         </Style>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT TABCONTROL THEME                                  -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type TabControl}" TargetType="TabControl">
         <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -242,9 +242,9 @@
             <Setter Property="Orientation" Value="Vertical" />
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- TAB STRIP PLACEMENT STYLES                                -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^[TabStripPlacement=Left]">
             <Setter Property="my:VariantAssist.BorderThickness" Value="0 0 3 0" />
@@ -299,9 +299,9 @@
             <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- TABCONTROL                                                   -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^.size-sm">
             <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Sm}" />
@@ -348,9 +348,9 @@
 
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- INDICATOR TABITEM THEME                                   -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.TabItem.Indicator" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
         <Setter Property="HeaderTemplate" Value="{x:Null}" />
         <Setter Property="my:InteractionAssist.ActiveIndicatorColor" Value="{Binding $parent[TabControl].(my:ItemsAssist.ActiveBorderBrush)}" />
@@ -514,9 +514,9 @@
     </ControlTheme>
 
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- INDICATOR TABCONTROL THEME                                -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.TabControl.Indicator" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
         <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.TabItem.Indicator}" />
 

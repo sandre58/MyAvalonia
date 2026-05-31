@@ -12,7 +12,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Layout;
 using MyNet.Avalonia.Controls;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Classes.Registry.States;

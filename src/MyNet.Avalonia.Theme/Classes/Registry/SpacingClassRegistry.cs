@@ -10,7 +10,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Classes.Enums;
 

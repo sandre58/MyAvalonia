@@ -8,7 +8,6 @@ using System;
 using System.Reactive.Disposables;
 using Avalonia.Controls;
 using Avalonia.Layout;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Assists;
 
 namespace MyNet.Avalonia.Theme.Classes.Registry;

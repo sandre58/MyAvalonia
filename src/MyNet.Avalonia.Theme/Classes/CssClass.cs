@@ -6,8 +6,8 @@
 
 using System;
 using System.Globalization;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Theme.Classes;
 
@@ -22,7 +22,7 @@ public record CssClass(string Name, string? Prefix = "")
     /// Provides a string representation of the CSS class name with the prefix applied, if a prefix is specified.
     /// </summary>
     /// <returns>The full CSS class name with the prefix applied, if any.</returns>
-    public override string ToString() => Name.WithPrefix(Prefix).ToLower(CultureInfo.CurrentCulture);
+    public override string? ToString() => Name.WithPrefix(Prefix)?.ToLower(CultureInfo.CurrentCulture);
 
     /// <summary>
     /// Attempts to convert the string representation of the current instance's name to an enumeration value of the
@@ -39,7 +39,7 @@ public record CssClass(string Name, string? Prefix = "")
     /// Implicit conversion from <see cref="CssClass"/> to <see cref="string"/>.
     /// Returns the result of <see cref="ToString"/> or <c>null</c> when the instance is <c>null</c>.
     /// </summary>
-    public static implicit operator string(CssClass value) => value.ToString();
+    public static implicit operator string?(CssClass value) => value.ToString();
 
     // Theme
     public static readonly CssClass HasRole = new("role", CssPrefix.Has);

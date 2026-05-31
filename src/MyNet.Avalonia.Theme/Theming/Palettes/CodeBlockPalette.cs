@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 using Avalonia.Media;
-using MyNet.Avalonia.Extensions;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Theme.Theming.Palettes;
 
@@ -97,7 +97,7 @@ public class CodeBlockPalette
     /// <returns>A new CodeBlockPalette instance.</returns>
     public static CodeBlockPalette FromResourceDictionary(IReadOnlyDictionary<string, object> dictionary, string prefix = nameof(ThemeVariantPalette.CodeBlock))
     {
-        var defaultColor = Colors.Gray;
+        var defaultColor = global::Avalonia.Media.Colors.Gray;
         return new()
         {
             Unknown = (Color)dictionary.GetValueOrDefault(nameof(Unknown).WithPrefix(prefix, "."), defaultColor),

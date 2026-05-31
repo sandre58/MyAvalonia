@@ -1,13 +1,13 @@
 // -----------------------------------------------------------------------
-// <copyright file="TimeFormatToCellShiftConverter.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="TimeFormatToCellShiftConverter.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
 using System.Globalization;
 using Avalonia.Data.Converters;
-using MyNet.Utilities.DateTimes;
+using MyNet.Primitives.Temporal;
 
 namespace MyNet.Avalonia.Theme.Converters.Internals;
 

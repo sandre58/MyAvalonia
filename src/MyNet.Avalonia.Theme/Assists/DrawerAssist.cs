@@ -12,7 +12,7 @@ namespace MyNet.Avalonia.Theme.Assists;
 
 public static class DrawerAssist
 {
-    public static ICommand? ToggleCommand { get; } = ActionCommand.Create<DrawerPage>(Toggle);
+    public static ICommand? ToggleCommand { get; } = ActionCommand.Create<DrawerPage>(x => Toggle(x!));
 
     public static void Toggle(DrawerPage element) => element.IsOpen = !element.IsOpen;
 }

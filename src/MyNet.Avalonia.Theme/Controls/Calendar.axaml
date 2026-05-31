@@ -1,10 +1,10 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- EMBEDDED CALENDAR BUTTON THEME                            -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.Button.Embedded.Calendar" TargetType="Button">
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
@@ -144,12 +144,12 @@
 
         <Style Selector="^:start-date, ^:preview-start-date">
             <Setter Property="CornerRadius"
-                    Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusConverter.Adjust.Left}}" />
+                    Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
         </Style>
 
         <Style Selector="^:end-date, ^:preview-end-date">
             <Setter Property="CornerRadius"
-                    Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusConverter.Adjust.Right}}" />
+                    Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
         </Style>
 
         <Style Selector="^:blackout /template/ Panel#PART_RootPanel">
@@ -186,25 +186,25 @@
                 Value="{Binding $parent[my:Calendar].(my:ItemsAssist.ActiveForeground)}" />
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT CALENDARDAYBUTTON THEME                           -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type CalendarDayButton}" TargetType="CalendarDayButton"
                   BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar}" />
     <ControlTheme x:Key="{x:Type my:CalendarDayButton}" TargetType="my:CalendarDayButton"
                   BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar.Extended}" />
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT CALENDARBUTTON THEME                              -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type CalendarButton}" TargetType="CalendarButton"
                   BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar}" />
     <ControlTheme x:Key="{x:Type my:CalendarYearButton}" TargetType="my:CalendarYearButton"
                   BasedOn="{StaticResource MyNet.Theme.Button.Embedded.Calendar.Extended}" />
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT CALENDARITEM THEME                                -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type CalendarItem}" TargetType="CalendarItem">
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
@@ -284,9 +284,9 @@
         </Setter>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT CALENDAR THEME                                    -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type Calendar}" TargetType="Calendar">
         <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
@@ -356,9 +356,9 @@
             </ControlTemplate>
         </Setter>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- SIZES                                                     -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^.size-sm">
             <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Sm}" />
@@ -551,9 +551,9 @@
             </Style>
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- SIZES                                                     -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^.size-sm">
             <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Sm}" />

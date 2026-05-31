@@ -6,9 +6,10 @@
 
 using System;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using Avalonia.Metadata;
 using Material.Icons;
-using MyNet.Avalonia.Controls.Extensions;
+using MyNet.Avalonia.Controls;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 

@@ -1,10 +1,10 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT BUTTON THEME                                      -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type Button}" TargetType="Button">
         <Setter Property="my:ThemeAssist.Category" Value="Action" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
@@ -140,9 +140,9 @@
             </Style>
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- SIZES                                                     -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <!-- Size: Small -->
         <Style Selector="^.size-sm">
@@ -168,9 +168,9 @@
             <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Xl}" />
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- KINDS                                                     -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <Style Selector="^.kind-tool">
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Background" Value="Transparent" />
@@ -206,9 +206,9 @@
             </Style>
         </Style>
 
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
         <!-- SPECIFIC BEHAVIOR STYLES                                  -->
-        <!-- --------------------------------------------------------- -->
+        <!-- ═════════════════════════════════════════════════════════ -->
 
         <!-- Clipboard: Pre-configured button to copy to clipboard -->
         <Style Selector="^.is-clipboard">
@@ -228,9 +228,9 @@
         </Style>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- ROUNDED BUTTON THEME                                      -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.Button.Rounded" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Padding" Value="1" />
         <Setter Property="MinHeight" Value="0" />
@@ -257,18 +257,18 @@
                     <Ellipse Name="PART_MainEllipse"
                              Fill="{TemplateBinding Background}"
                              Stroke="{TemplateBinding BorderBrush}"
-                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}" />
+                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
 
                     <Ellipse Name="PART_ActiveEllipse"
                              Fill="{TemplateBinding my:InteractionAssist.ActiveBackground}"
                              Stroke="{TemplateBinding my:InteractionAssist.ActiveBorderBrush}"
-                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}"
+                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
                              Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
 
                     <Ellipse Name="PART_HoverEllipse"
                              Fill="{TemplateBinding my:InteractionAssist.HoverBackground}"
                              Stroke="{TemplateBinding my:InteractionAssist.HoverBorderBrush}"
-                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}"
+                             StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessToDoubleConverter.Left}}"
                              Theme="{StaticResource MyNet.Theme.Ellipse.State}" />
 
                     <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Round}">
@@ -341,9 +341,9 @@
         </Style>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- ICON BUTTON THEME                                         -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.Button.Icon" TargetType="Button" BasedOn="{StaticResource MyNet.Theme.Button.Rounded}">
         <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
         <Setter Property="MinHeight" Value="0" />
@@ -422,9 +422,9 @@
         </Style>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- CLEAN BUTTON THEME (no visual feedback)                   -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.Button.Clean" TargetType="Button">
         <Setter Property="FocusAdorner" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
@@ -445,9 +445,9 @@
         </Setter>
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- REPEAT BUTTON (based on Icon button)                      -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type RepeatButton}" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource {x:Type Button}}" />
 
 </ResourceDictionary>

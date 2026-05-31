@@ -17,90 +17,21 @@ namespace MyNet.Avalonia.Converters;
 /// <summary>
 /// Unified thickness conversions: double to <see cref="Thickness"/>, thickness adjustments, and thickness to double.
 /// </summary>
+/// <remarks>
+/// Use the static members on <see cref="ThicknessFromDoubleConverter"/>, <see cref="ThicknessAdjustConverter"/>,
+/// and <see cref="ThicknessToDoubleConverter"/> from XAML (<c>x:Static</c> does not support nested types).
+/// </remarks>
 /// <example>
 /// <code>
-/// &lt;!-- Spacing on the right only --&gt;
-/// Margin="{Binding IconSpacing, Converter={x:Static my:ThicknessConverter.FromDouble.Right}}"
-///
-/// &lt;!-- Remove inner border between split buttons --&gt;
-/// BorderThickness="{Binding BorderThickness, Converter={x:Static my:ThicknessConverter.Adjust.RemoveRight}}"
+/// Margin="{Binding IconSpacing, Converter={x:Static my:ThicknessFromDoubleConverter.Right}}"
+/// BorderThickness="{Binding BorderThickness, Converter={x:Static my:ThicknessAdjustConverter.RemoveRight}}"
 /// </code>
 /// </example>
-[SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "Provides a clear API for different conversion types (from double, adjustments, to double) while keeping the implementation details hidden.")]
 public sealed class ThicknessConverter : IValueConverter
 {
+    internal ThicknessConverter(ThicknessOperation operation) => _operation = operation;
+
     private readonly ThicknessOperation _operation;
-
-    private ThicknessConverter(ThicknessOperation operation) => _operation = operation;
-
-    /// <summary>
-    /// Converts a numeric value to a <see cref="Thickness"/>.
-    /// </summary>
-    public static class FromDouble
-    {
-        /// <summary>Applies the value uniformly to all four sides.</summary>
-        public static readonly IValueConverter All = new ThicknessConverter(ThicknessOperation.FromDoubleAll);
-
-        /// <summary>Sets left thickness only.</summary>
-        public static readonly IValueConverter Left = new ThicknessConverter(ThicknessOperation.FromDoubleLeft);
-
-        /// <summary>Sets top thickness only.</summary>
-        public static readonly IValueConverter Top = new ThicknessConverter(ThicknessOperation.FromDoubleTop);
-
-        /// <summary>Sets right thickness only.</summary>
-        public static readonly IValueConverter Right = new ThicknessConverter(ThicknessOperation.FromDoubleRight);
-
-        /// <summary>Sets bottom thickness only.</summary>
-        public static readonly IValueConverter Bottom = new ThicknessConverter(ThicknessOperation.FromDoubleBottom);
-
-        /// <summary>Sets left and right thickness.</summary>
-        public static readonly IValueConverter Horizontal = new ThicknessConverter(ThicknessOperation.FromDoubleHorizontal);
-
-        /// <summary>Sets top and bottom thickness.</summary>
-        public static readonly IValueConverter Vertical = new ThicknessConverter(ThicknessOperation.FromDoubleVertical);
-    }
-
-    /// <summary>
-    /// Adjusts an existing <see cref="Thickness"/> value.
-    /// </summary>
-    /// <remarks>
-    /// <c>Remove*</c> zeroes one side; <c>Add*To*</c> transfers thickness from one side to another
-    /// (for example, <see cref="AddLeftToRight"/> adds left padding to the right margin).
-    /// </remarks>
-    public static class Adjust
-    {
-        public static readonly IValueConverter Left = new ThicknessConverter(ThicknessOperation.ExtractLeft);
-        public static readonly IValueConverter Top = new ThicknessConverter(ThicknessOperation.ExtractTop);
-        public static readonly IValueConverter Right = new ThicknessConverter(ThicknessOperation.ExtractRight);
-        public static readonly IValueConverter Bottom = new ThicknessConverter(ThicknessOperation.ExtractBottom);
-        public static readonly IValueConverter RemoveLeft = new ThicknessConverter(ThicknessOperation.RemoveLeft);
-        public static readonly IValueConverter RemoveTop = new ThicknessConverter(ThicknessOperation.RemoveTop);
-        public static readonly IValueConverter RemoveRight = new ThicknessConverter(ThicknessOperation.RemoveRight);
-        public static readonly IValueConverter RemoveBottom = new ThicknessConverter(ThicknessOperation.RemoveBottom);
-        public static readonly IValueConverter AddLeftToRight = new ThicknessConverter(ThicknessOperation.AddLeftToRight);
-        public static readonly IValueConverter AddLeftToTop = new ThicknessConverter(ThicknessOperation.AddLeftToTop);
-        public static readonly IValueConverter AddLeftToBottom = new ThicknessConverter(ThicknessOperation.AddLeftToBottom);
-        public static readonly IValueConverter AddRightToLeft = new ThicknessConverter(ThicknessOperation.AddRightToLeft);
-        public static readonly IValueConverter AddRightToTop = new ThicknessConverter(ThicknessOperation.AddRightToTop);
-        public static readonly IValueConverter AddRightToBottom = new ThicknessConverter(ThicknessOperation.AddRightToBottom);
-        public static readonly IValueConverter AddBottomToTop = new ThicknessConverter(ThicknessOperation.AddBottomToTop);
-        public static readonly IValueConverter AddBottomToLeft = new ThicknessConverter(ThicknessOperation.AddBottomToLeft);
-        public static readonly IValueConverter AddBottomToRight = new ThicknessConverter(ThicknessOperation.AddBottomToRight);
-        public static readonly IValueConverter AddTopToBottom = new ThicknessConverter(ThicknessOperation.AddTopToBottom);
-        public static readonly IValueConverter AddTopToLeft = new ThicknessConverter(ThicknessOperation.AddTopToLeft);
-        public static readonly IValueConverter AddTopToRight = new ThicknessConverter(ThicknessOperation.AddTopToRight);
-    }
-
-    /// <summary>
-    /// Extracts a single side from a <see cref="Thickness"/> as a double.
-    /// </summary>
-    public static class ToDouble
-    {
-        public static readonly IValueConverter Left = new ThicknessConverter(ThicknessOperation.ToDoubleLeft);
-        public static readonly IValueConverter Top = new ThicknessConverter(ThicknessOperation.ToDoubleTop);
-        public static readonly IValueConverter Right = new ThicknessConverter(ThicknessOperation.ToDoubleRight);
-        public static readonly IValueConverter Bottom = new ThicknessConverter(ThicknessOperation.ToDoubleBottom);
-    }
 
     /// <inheritdoc />
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
@@ -179,7 +110,7 @@ public sealed class ThicknessConverter : IValueConverter
             _ => default
         };
 
-    private enum ThicknessOperation
+    internal enum ThicknessOperation
     {
         FromDoubleAll,
         FromDoubleLeft,
@@ -213,4 +144,94 @@ public sealed class ThicknessConverter : IValueConverter
         ToDoubleRight,
         ToDoubleBottom
     }
+}
+
+/// <summary>
+/// Converts a numeric value to a <see cref="Thickness"/>.
+/// </summary>
+public static class ThicknessFromDoubleConverter
+{
+    /// <summary>Applies the value uniformly to all four sides.</summary>
+    public static readonly IValueConverter All = new ThicknessConverter(ThicknessConverter.ThicknessOperation.FromDoubleAll);
+
+    /// <summary>Sets left thickness only.</summary>
+    public static readonly IValueConverter Left = new ThicknessConverter(ThicknessConverter.ThicknessOperation.FromDoubleLeft);
+
+    /// <summary>Sets top thickness only.</summary>
+    public static readonly IValueConverter Top = new ThicknessConverter(ThicknessConverter.ThicknessOperation.FromDoubleTop);
+
+    /// <summary>Sets right thickness only.</summary>
+    public static readonly IValueConverter Right = new ThicknessConverter(ThicknessConverter.ThicknessOperation.FromDoubleRight);
+
+    /// <summary>Sets bottom thickness only.</summary>
+    public static readonly IValueConverter Bottom = new ThicknessConverter(ThicknessConverter.ThicknessOperation.FromDoubleBottom);
+
+    /// <summary>Sets left and right thickness.</summary>
+    public static readonly IValueConverter Horizontal = new ThicknessConverter(ThicknessConverter.ThicknessOperation.FromDoubleHorizontal);
+
+    /// <summary>Sets top and bottom thickness.</summary>
+    public static readonly IValueConverter Vertical = new ThicknessConverter(ThicknessConverter.ThicknessOperation.FromDoubleVertical);
+}
+
+/// <summary>
+/// Adjusts an existing <see cref="Thickness"/> value.
+/// </summary>
+/// <remarks>
+/// <c>Remove*</c> zeroes one side; <c>Add*To*</c> transfers thickness from one side to another.
+/// </remarks>
+public static class ThicknessAdjustConverter
+{
+    public static readonly IValueConverter Left = new ThicknessConverter(ThicknessConverter.ThicknessOperation.ExtractLeft);
+
+    public static readonly IValueConverter Top = new ThicknessConverter(ThicknessConverter.ThicknessOperation.ExtractTop);
+
+    public static readonly IValueConverter Right = new ThicknessConverter(ThicknessConverter.ThicknessOperation.ExtractRight);
+
+    public static readonly IValueConverter Bottom = new ThicknessConverter(ThicknessConverter.ThicknessOperation.ExtractBottom);
+
+    public static readonly IValueConverter RemoveLeft = new ThicknessConverter(ThicknessConverter.ThicknessOperation.RemoveLeft);
+
+    public static readonly IValueConverter RemoveTop = new ThicknessConverter(ThicknessConverter.ThicknessOperation.RemoveTop);
+
+    public static readonly IValueConverter RemoveRight = new ThicknessConverter(ThicknessConverter.ThicknessOperation.RemoveRight);
+
+    public static readonly IValueConverter RemoveBottom = new ThicknessConverter(ThicknessConverter.ThicknessOperation.RemoveBottom);
+
+    public static readonly IValueConverter AddLeftToRight = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddLeftToRight);
+
+    public static readonly IValueConverter AddLeftToTop = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddLeftToTop);
+
+    public static readonly IValueConverter AddLeftToBottom = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddLeftToBottom);
+
+    public static readonly IValueConverter AddRightToLeft = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddRightToLeft);
+
+    public static readonly IValueConverter AddRightToTop = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddRightToTop);
+
+    public static readonly IValueConverter AddRightToBottom = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddRightToBottom);
+
+    public static readonly IValueConverter AddBottomToTop = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddBottomToTop);
+
+    public static readonly IValueConverter AddBottomToLeft = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddBottomToLeft);
+
+    public static readonly IValueConverter AddBottomToRight = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddBottomToRight);
+
+    public static readonly IValueConverter AddTopToBottom = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddTopToBottom);
+
+    public static readonly IValueConverter AddTopToLeft = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddTopToLeft);
+
+    public static readonly IValueConverter AddTopToRight = new ThicknessConverter(ThicknessConverter.ThicknessOperation.AddTopToRight);
+}
+
+/// <summary>
+/// Extracts a single side from a <see cref="Thickness"/> as a double.
+/// </summary>
+public static class ThicknessToDoubleConverter
+{
+    public static readonly IValueConverter Left = new ThicknessConverter(ThicknessConverter.ThicknessOperation.ToDoubleLeft);
+
+    public static readonly IValueConverter Top = new ThicknessConverter(ThicknessConverter.ThicknessOperation.ToDoubleTop);
+
+    public static readonly IValueConverter Right = new ThicknessConverter(ThicknessConverter.ThicknessOperation.ToDoubleRight);
+
+    public static readonly IValueConverter Bottom = new ThicknessConverter(ThicknessConverter.ThicknessOperation.ToDoubleBottom);
 }

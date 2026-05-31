@@ -6,7 +6,6 @@
 
 using System.Reactive.Disposables;
 using Avalonia;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Classes.Enums;
 

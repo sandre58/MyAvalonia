@@ -17,7 +17,7 @@ public class CornerRadiusConverterTests
     [Fact]
     public void FromDoubleAll_AppliesUniformRadius()
     {
-        var result = CornerRadiusConverter.FromDouble.All.Convert(6.0, typeof(CornerRadius), null, CultureInfo.InvariantCulture);
+        var result = CornerRadiusFromDoubleConverter.All.Convert(6.0, typeof(CornerRadius), null, CultureInfo.InvariantCulture);
 
         result.Should().Be(new CornerRadius(6));
     }
@@ -27,7 +27,7 @@ public class CornerRadiusConverterTests
     {
         var input = new CornerRadius(4, 8, 12, 16);
 
-        var result = CornerRadiusConverter.Adjust.Left.Convert(input, typeof(CornerRadius), null, CultureInfo.InvariantCulture);
+        var result = CornerRadiusAdjustConverter.Left.Convert(input, typeof(CornerRadius), null, CultureInfo.InvariantCulture);
 
         ((CornerRadius)result!).Should().Be(new CornerRadius(4, 0, 0, 16));
     }

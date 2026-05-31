@@ -15,15 +15,16 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Styling;
-using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.Avalonia.Theme.Theming;
 using MyNet.Avalonia.Theme.Theming.Brushes;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Avalonia.Theme.Theming.Palettes;
 using MyNet.Avalonia.Theme.TypeConverters;
-using MyNet.Utilities;
+using MyNet.Collections;
+using MyNet.Primitives;
 using MyNet.Utilities.Deferring;
 
 namespace MyNet.Avalonia.Theme;
@@ -39,7 +40,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
 
     private readonly IServiceProvider? _serviceProvider;
     private readonly BrushManager _brushManager;
-    private readonly Deferrer _themeChangedDeferrer;
+    private readonly DeferredAction _themeChangedDeferrer;
 
     /// <summary>
     /// Gets the current theme instance from the application, providing color palettes, theme management, and resource injection.
@@ -260,7 +261,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
         ArgumentNullException.ThrowIfNull(theme);
         var rd = new ResourceDictionary();
         theme.ToResourceDictionary().ForEach(kv => rd.Add(kv.Key, kv.Value));
-        Resources.ThemeDictionaries.AddOrUpdate(theme.Variant, rd);
+        Resources.ThemeDictionaries[theme.Variant] = rd;
     }
 
     /// <summary>
@@ -325,7 +326,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
             {
                 if (obj is Color color)
                 {
-                    var colorKey = key.ToString()?.Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase);
+                    var colorKey = key.ToString()?.Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWithInvariant(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase);
                     if (!string.IsNullOrEmpty(colorKey))
                     {
                         var contrastedColor = GetContrastedColorForKey(colorKey, activeTheme);
@@ -443,7 +444,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     private void AddOrUpdateColor(string key, Color color)
     {
         var fullColorKey = ThemeResourceKeyFactory.Color(key);
-        Resources.AddOrUpdate(fullColorKey, color);
+        Resources[fullColorKey] = color;
     }
 
     /// <summary>
@@ -456,7 +457,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     {
         var fullBrushKey = ThemeResourceKeyFactory.Brush(key);
         var brush = _brushManager.Register(fullBrushKey, color, contrastedColor);
-        Resources.AddOrUpdate(fullBrushKey, brush);
+        Resources[fullBrushKey] = brush;
     }
 
     /// <summary>
@@ -497,7 +498,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     {
         var currentVariant = Application.Current?.ActualThemeVariant ?? ThemeVariant.Default;
         return Resources.ThemeDictionaries.TryGetValue(currentVariant, out var rd) && rd is ResourceDictionary resourceDict
-            ? ThemeVariantPalette.FromResourceDictionary(currentVariant, resourceDict.ToDictionary(x => x.Key.ToString().OrEmpty().Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWith(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase), x => x.Value!))
+            ? ThemeVariantPalette.FromResourceDictionary(currentVariant, resourceDict.ToDictionary(x => x.Key.ToString().OrEmpty().Replace(ThemeResourceKeyFactory.Pattern(ThemeResourceKeyFactory.ColorKey).FormatWithInvariant(string.Empty), string.Empty, StringComparison.OrdinalIgnoreCase), x => x.Value!))
             : null;
     }
 

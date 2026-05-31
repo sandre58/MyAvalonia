@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:t="clr-namespace:MyNet.Observable;assembly=MyNet.Observable"
-                    xmlns:u="clr-namespace:MyNet.Utilities;assembly=MyNet.Utilities">
+                    xmlns:primitives="clr-namespace:MyNet.Primitives;assembly=MyNet.Primitives">
 
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT LISTBOXITEM THEME                                 -->
@@ -291,7 +291,7 @@
 
         <Style Selector="^.kind-gender">
             <Setter Property="my:ClassesAssist.Classes" Value="flex-uniform" />
-            <Setter Property="my:ItemsBehavior.EnumSourceType" Value="{x:Type u:GenderType}" />
+            <Setter Property="my:ItemsBehavior.EnumSourceType" Value="{x:Type primitives:GenderType}" />
             <Setter Property="my:ItemsBehavior.UseDisplayMember" Value="False" />
             <Setter Property="SelectedValueBinding" Value="{Binding Value, x:DataType=t:LocalizedEnum}" />
 

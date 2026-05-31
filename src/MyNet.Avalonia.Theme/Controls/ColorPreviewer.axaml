@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
@@ -7,9 +7,9 @@
     <my:BrushConverter x:Key="MyNet.Converter.Brush.Darken.High" Darken="0.6" />
     <my:BrushConverter x:Key="MyNet.Converter.Brush.Darken.Low" Darken="0.3" />
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT COLORPREVIEWER THEME                              -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type ColorPreviewer}" TargetType="ColorPreviewer">
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
@@ -35,7 +35,7 @@
                             <Border Name="PART_AccentDecrement2Border"
                                     Grid.Column="0"
                                     Background="{TemplateBinding HsvColor, Converter={StaticResource MyNet.Converter.Brush.Lighten.High}}"
-                                    CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Left}}"
+                                    CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}"
                                     Tag="2" />
                             <Border Name="PART_AccentDecrement1Border"
                                     Grid.Column="1"
@@ -60,7 +60,7 @@
                             <Border Name="PART_AccentIncrement2Border"
                                     Grid.Column="1"
                                     Background="{TemplateBinding HsvColor, Converter={StaticResource MyNet.Converter.Brush.Darken.High}}"
-                                    CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.Adjust.Right}}"
+                                    CornerRadius="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}"
                                     Tag="-2" />
                         </Grid>
                         <!-- Preview color: Must be last for drop shadow Z-index -->

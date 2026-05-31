@@ -10,9 +10,9 @@ using System.Runtime.CompilerServices;
 using Avalonia.Animation.Easings;
 using Avalonia.Media;
 using MyNet.Avalonia.Colors;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Diagnostics;
-using MyNet.Utilities;
+using MyNet.Collections;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Theme.Theming.Brushes;
 
@@ -45,7 +45,7 @@ public class BrushManager(TimeSpan? colorTransitionDuration, Easing? colorTransi
         }
 
         var newBrushSet = new BrushSet(color, contrastedColor ?? color.ContrastingForegroundColor(), colorTransitionDuration, colorTransitionEasing);
-        _sets.AddOrUpdate(key, newBrushSet);
+        _sets[key] = newBrushSet;
         RegisterBrushSet(newBrushSet);
 
         opacities?.ForEach(opacity =>

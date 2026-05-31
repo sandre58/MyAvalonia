@@ -1,10 +1,10 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- EMBEDDED COLORSPECTRUM THUMB THEME                        -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="MyNet.Theme.Thumb.Embedded.ColorSpectrum" TargetType="{x:Type Thumb}" BasedOn="{StaticResource MyNet.Theme.Thumb.Ellipse}">
         <Setter Property="Height" Value="{Binding $parent[ColorSpectrum].(my:SliderAssist.ThumbSize)}" />
         <Setter Property="Width" Value="{Binding $parent[ColorSpectrum].(my:SliderAssist.ThumbSize)}" />
@@ -18,9 +18,9 @@
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth2" />
     </ControlTheme>
 
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT COLORSPECTRUM THEME                               -->
-    <!-- --------------------------------------------------------- -->
+    <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type ColorSpectrum}" TargetType="ColorSpectrum">
         <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
@@ -57,24 +57,24 @@
                                            VerticalAlignment="Stretch"
                                            IsHitTestVisible="False"
                                            IsVisible="{TemplateBinding Shape, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static ColorSpectrumShape.Box}}"
-                                           RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}"
-                                           RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.BottomRight}}"
+                                           RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}"
+                                           RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.BottomRight}}"
                                            Stroke="{TemplateBinding BorderBrush}"
-                                           StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}" />
+                                           StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
                                 <Rectangle Name="PART_SpectrumOverlayRectangle"
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="Stretch"
                                            IsHitTestVisible="False"
                                            IsVisible="{TemplateBinding Shape, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static ColorSpectrumShape.Box}}"
-                                           RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}"
-                                           RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.BottomRight}}" />
+                                           RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}"
+                                           RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.BottomRight}}" />
                                 <Ellipse Name="PART_SpectrumEllipse"
                                          HorizontalAlignment="Stretch"
                                          VerticalAlignment="Stretch"
                                          IsHitTestVisible="False"
                                          IsVisible="{TemplateBinding Shape, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static ColorSpectrumShape.Ring}}"
                                          Stroke="{TemplateBinding BorderBrush}"
-                                         StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessConverter.ToDouble.Left}}" />
+                                         StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
                                 <Ellipse Name="PART_SpectrumOverlayEllipse"
                                          HorizontalAlignment="Stretch"
                                          VerticalAlignment="Stretch"
@@ -98,8 +98,8 @@
                                            VerticalAlignment="Stretch"
                                            IsHitTestVisible="False"
                                            IsVisible="{TemplateBinding Shape, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static ColorSpectrumShape.Box}}"
-                                           RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.TopLeft}}"
-                                           RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusConverter.ToDouble.BottomRight}}" />
+                                           RadiusX="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.TopLeft}}"
+                                           RadiusY="{TemplateBinding CornerRadius, Converter={x:Static my:CornerRadiusToDoubleConverter.BottomRight}}" />
                                 <Ellipse Name="BorderEllipse"
                                          HorizontalAlignment="Stretch"
                                          VerticalAlignment="Stretch"

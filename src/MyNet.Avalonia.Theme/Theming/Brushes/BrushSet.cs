@@ -10,9 +10,8 @@ using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Media;
 using MyNet.Avalonia.Colors;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Theme.Diagnostics;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Theme.Theming.Brushes;
 
@@ -75,7 +74,7 @@ public class BrushSet
         {
             // Create new brush with color transition animation
             var newBrush = CreateBrush(value.Contrast ? Contrast.Color : Brush.Color, value.Opacity ?? 1.0, value.Darken, value.Lighten);
-            _brushes.AddOrUpdate(value, newBrush);
+            _brushes[value] = newBrush;
 
             return newBrush;
         }

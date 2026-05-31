@@ -6,10 +6,11 @@
 
 using System;
 using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using Avalonia;
-using MyNet.Utilities;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Theme.Classes.Helpers;
 
@@ -27,7 +28,7 @@ public static class AvaloniaPropertyHelper
     /// <param name="defaultValue">The default value of the property.</param>
     /// <param name="inherits">Indicates whether the property value should be inherited by child elements.</param>
     /// <returns>The registered attached property.</returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("AvaloniaProperty", "AVP1001:The same AvaloniaProperty should not be registered twice", Justification = "Unsafe registration - This method is designed to be called from static initializers")]
+    [SuppressMessage("AvaloniaProperty", "AVP1001:The same AvaloniaProperty should not be registered twice", Justification = "Unsafe registration - This method is designed to be called from static initializers")]
     public static AttachedProperty<bool> RegisterBoolProperty(string propertyName, CssClass @class, bool defaultValue = false, bool inherits = false)
     {
         var property = AvaloniaProperty.RegisterAttached<object, StyledElement, bool>(propertyName, defaultValue: defaultValue, inherits: inherits);
@@ -56,7 +57,7 @@ public static class AvaloniaPropertyHelper
     /// <param name="prefix">The prefix to use for the CSS class.</param>
     /// <param name="inherits">Indicates whether the property value should be inherited by child elements.</param>
     /// <returns>The registered attached property.</returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("AvaloniaProperty", "AVP1001:The same AvaloniaProperty should not be registered twice", Justification = "Unsafe registration - This method is designed to be called from static initializers")]
+    [SuppressMessage("AvaloniaProperty", "AVP1001:The same AvaloniaProperty should not be registered twice", Justification = "Unsafe registration - This method is designed to be called from static initializers")]
     public static AttachedProperty<TEnum> RegisterEnumProperty<TEnum>(string propertyName, Type ownerType, TEnum defaultValue, string prefix = "is", bool inherits = false)
         where TEnum : Enum
     {
@@ -128,7 +129,7 @@ public static class AvaloniaPropertyHelper
     /// <param name="prefix">The prefix to use for the CSS class.</param>
     /// <param name="inherits">Indicates whether the property value should be inherited by child elements.</param>
     /// <returns>The registered attached property.</returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("AvaloniaProperty", "AVP1001:The same AvaloniaProperty should not be registered twice", Justification = "Unsafe registration - This method is designed to be called from static initializers")]
+    [SuppressMessage("AvaloniaProperty", "AVP1001:The same AvaloniaProperty should not be registered twice", Justification = "Unsafe registration - This method is designed to be called from static initializers")]
     public static AttachedProperty<string> RegisterStringProperty(string propertyName, Type ownerType, string defaultValue, string prefix = "is", bool inherits = false)
     {
         var property = AvaloniaProperty.RegisterAttached<StyledElement, string>(propertyName, ownerType, defaultValue: defaultValue, inherits: inherits);

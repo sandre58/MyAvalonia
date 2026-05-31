@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
     <ControlTheme x:Key="{x:Type my:IconContentControl}" TargetType="my:IconContentControl">
@@ -41,16 +41,16 @@
 
         <!-- Layout -->
         <Style Selector="^[IconPosition=Left] /template/ ContentPresenter#PART_Icon">
-            <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.FromDouble.Right}}"/>
+            <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Right}}"/>
         </Style>
         <Style Selector="^[IconPosition=Right] /template/ ContentPresenter#PART_Icon">
-            <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.FromDouble.Left}}"/>
+            <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Left}}"/>
         </Style>
         <Style Selector="^[IconPosition=Bottom] /template/ ContentPresenter#PART_Icon">
-            <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.FromDouble.Top}}"/>
+            <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Top}}"/>
         </Style>
         <Style Selector="^[IconPosition=Top] /template/ ContentPresenter#PART_Icon">
-            <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessConverter.FromDouble.Bottom}}"/>
+            <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Bottom}}"/>
         </Style>
     </ControlTheme>
 </ResourceDictionary>

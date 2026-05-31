@@ -7,7 +7,7 @@
 using System;
 using System.Globalization;
 using Avalonia.Data.Converters;
-using MyNet.Utilities.DateTimes;
+using MyNet.Primitives.Temporal;
 
 namespace MyNet.Avalonia.Theme.Converters.Internals;
 
