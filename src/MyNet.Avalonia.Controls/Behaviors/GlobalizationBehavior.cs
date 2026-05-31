@@ -8,7 +8,6 @@ using System;
 using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
-using MyNet.Avalonia.Controls;
 using MyNet.Globalization.Culture;
 using MyNet.Globalization.Facade;
 using MyNet.Primitives;

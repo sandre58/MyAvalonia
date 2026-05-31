@@ -21,7 +21,7 @@ internal enum CalendarNavigationKind
     ShowMonthView,
     ShowYearView,
     ShowDecadeView,
-    ShowCenturyView,
+    ShowCenturyView
 }
 
 internal readonly record struct CalendarNavigationResult(

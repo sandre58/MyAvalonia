@@ -10,21 +10,14 @@ internal enum TextPickerTextCommitKind
 {
     NoOp,
     ClearValue,
-    ParseAndApply,
+    ParseAndApply
 }
 
 internal static class TextPickerCommitHelper
 {
-    public static TextPickerTextCommitKind ResolveCommitAction(string? text, string? selectedValueText, bool hasSelectedValue)
-    {
-        if (string.IsNullOrWhiteSpace(text))
-            return hasSelectedValue ? TextPickerTextCommitKind.ClearValue : TextPickerTextCommitKind.NoOp;
-
-        if (hasSelectedValue && selectedValueText == text)
-            return TextPickerTextCommitKind.NoOp;
-
-        return TextPickerTextCommitKind.ParseAndApply;
-    }
+    public static TextPickerTextCommitKind ResolveCommitAction(string? text, string? selectedValueText, bool hasSelectedValue) => string.IsNullOrWhiteSpace(text)
+        ? hasSelectedValue ? TextPickerTextCommitKind.ClearValue : TextPickerTextCommitKind.NoOp
+        : hasSelectedValue && selectedValueText == text ? TextPickerTextCommitKind.NoOp : TextPickerTextCommitKind.ParseAndApply;
 
     public static bool ShouldApplyParsedValue<T>(T? parsedValue, T? currentValue) =>
         parsedValue?.Equals(currentValue) == false;

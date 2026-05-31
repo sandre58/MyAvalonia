@@ -17,7 +17,9 @@
     <Project Path="demos/MyNet.Avalonia.Showcase/MyNet.Avalonia.Showcase.csproj" />
   </Folder>
   <Folder Name="/Github Actions/">
+    <File Path=".github/dependabot.yml" />
     <File Path=".github/workflows/ci.yml" />
+    <File Path="GitVersion.yml" />
   </Folder>
   <Folder Name="/Solution Files/" />
   <Folder Name="/Solution Files/AI/">
@@ -51,15 +53,33 @@
     <File Path=".editorconfig" />
     <File Path="stylecop.json" />
   </Folder>
+  <Folder Name="/Solution Files/Coverage/">
+    <File Path="build/coverage/assembly-thresholds.json" />
+    <File Path="build/coverage/Merge-SolutionCoverageReports.ps1" />
+    <File Path="build/coverage/MyAvalonia.Coverage.props" />
+    <File Path="build/coverage/Run-SolutionCoverage.ps1" />
+    <File Path="build/coverage/Verify-CriticalCoverage.ps1" />
+  </Folder>
   <Folder Name="/Solution Files/Docs/">
-    <File Path=".github/PULL_REQUEST_TEMPLATE.md" />
-    <File Path="CODE_OF_CONDUCT.md" />
-    <File Path="CONTRIBUTING.md" />
-    <File Path="docs/DEVELOPMENT.md" />
     <File Path="LICENSE" />
     <File Path="README.md" />
   </Folder>
+  <Folder Name="/Solution Files/Docs/Github/">
+    <File Path=".github/PULL_REQUEST_TEMPLATE.md" />
+    <File Path="CODEOWNERS" />
+    <File Path="CODE_OF_CONDUCT.md" />
+    <File Path="CONTRIBUTING.md" />
+    <File Path="docs/TODO.md" />
+    <File Path="SECURITY.md" />
+  </Folder>
+  <Folder Name="/Solution Files/Docs/Github/Issue_template/">
+    <File Path=".github/ISSUE_TEMPLATE/bug_report.yml" />
+    <File Path=".github/ISSUE_TEMPLATE/config.yml" />
+    <File Path=".github/ISSUE_TEMPLATE/feature_request.yml" />
+    <File Path=".github/ISSUE_TEMPLATE/question.yml" />
+  </Folder>
   <Folder Name="/Tests/">
+    <Project Path="tests/MyNet.Avalonia.Controls.Headless.Tests/MyNet.Avalonia.Controls.Headless.Tests.csproj" />
     <Project Path="tests/MyNet.Avalonia.Controls.Tests/MyNet.Avalonia.Controls.Tests.csproj" />
     <Project Path="tests/MyNet.Avalonia.Geography.Tests/MyNet.Avalonia.Geography.Tests.csproj" />
     <Project Path="tests/MyNet.Avalonia.Tests/MyNet.Avalonia.Tests.csproj" />

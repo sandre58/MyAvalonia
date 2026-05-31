@@ -13,7 +13,7 @@ internal enum TextPickerParseStatus
     Empty,
     Success,
     InvalidValue,
-    FormatError,
+    FormatError
 }
 
 internal readonly record struct TextPickerParseResult<T>(TextPickerParseStatus Status, T? Value = default, Exception? Error = null);

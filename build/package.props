@@ -7,28 +7,42 @@
         <PackageTags>utilities;dotnet;tools</PackageTags>
     </PropertyGroup>
 
+    <!-- NuGet readme: icon at package root; repo readme uses ../../assets/ for GitHub -->
+    <PropertyGroup Condition="Exists('$(MSBuildProjectDirectory)\README.md')">
+        <PackageReadmePackPath>$(IntermediateOutputPath)README.md</PackageReadmePackPath>
+    </PropertyGroup>
+
     <PropertyGroup>
 
         <!-- NuGet information -->
         <PackageVersion Condition="'$(VersionSuffix)' != ''">$(Version)-$(VersionSuffix)</PackageVersion>
         <PackageVersion Condition="'$(VersionSuffix)' == ''">$(Version)</PackageVersion>
-        <RepositoryUrl>https://github.com/sandre58/MyAvalonia</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <RepositoryBranch>main</RepositoryBranch>
         <PackageOutputPath>$(MSBuildThisFileDirectory)..\packages</PackageOutputPath>
         <PackageProjectUrl>https://github.com/sandre58/MyAvalonia</PackageProjectUrl>
         <PackageReleaseNotes>https://github.com/sandre58/MyAvalonia/releases</PackageReleaseNotes>
         <PackageIconUrl>$(PackageIcon)</PackageIconUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <PackageReadmeFile Condition="Exists('$(MSBuildProjectDirectory)\README.md')">README.md</PackageReadmeFile>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <RepositoryUrl>https://github.com/sandre58/MyAvalonia</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryBranch>main</RepositoryBranch>
 
-        <!-- Build configuration -->
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <!-- Debug symbols configuration for better debugging experience -->
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <DebugType>portable</DebugType>
+
+        <!-- Symbols -->
         <IncludeSymbols>true</IncludeSymbols>
-        <IncludeSource>true</IncludeSource>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+        <!-- SourceLink -->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+        <!-- Reproducible builds (CI only — avoids polluting local debug PDBs) -->
+        <ContinuousIntegrationBuild Condition="'$(CI)' == 'true' Or '$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+        <Deterministic>true</Deterministic>
 
     </PropertyGroup>
 
@@ -37,12 +51,26 @@
         <None Include="$(MSBuildThisFileDirectory)..\LICENSE" Pack="true" PackagePath="">
             <Link>_package/LICENSE</Link>
         </None>
-        <None Include="$(MSBuildThisFileDirectory)..\assets\$(PackageIcon)" Pack="true" PackagePath="">
+        <None Include="$(MSBuildThisFileDirectory)..\assets\$(PackageIcon)" Pack="true" PackagePath="" Condition="Exists('$(MSBuildThisFileDirectory)..\assets\$(PackageIcon)')">
             <Link>_package/$(PackageIcon)</Link>
         </None>
-        <None Include="$(MSBuildProjectDirectory)\README.md" Pack="true" PackagePath="">
+        <None Include="$(PackageReadmePackPath)" Pack="true" PackagePath="" Condition="Exists('$(PackageReadmePackPath)')">
             <Link>_package/README.md</Link>
         </None>
     </ItemGroup>
+
+    <!-- For Nuget.org -->
+    <Target Name="_PreparePackageReadmeForPack"
+            BeforeTargets="_GetPackageFiles"
+            Condition="'$(IsPackable)' == 'true' And Exists('$(MSBuildProjectDirectory)\README.md')">
+        <PropertyGroup>
+            <_ReadmeSource>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)\README.md'))</_ReadmeSource>
+            <_ReadmeForPack>$(_ReadmeSource.Replace('../../assets/', ''))</_ReadmeForPack>
+        </PropertyGroup>
+        <WriteLinesToFile File="$(PackageReadmePackPath)"
+                          Lines="$(_ReadmeForPack)"
+                          Overwrite="true"
+                          Encoding="UTF-8" />
+    </Target>
 
 </Project>

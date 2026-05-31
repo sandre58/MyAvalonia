@@ -16,8 +16,8 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Collections;
 using MyNet.Globalization.Facade;
 using MyNet.Primitives;
@@ -98,7 +98,7 @@ public class Calendar : TemplatedControl
         GlobalizationServices.Current.CultureChanged += (_, _) => Refresh();
         SelectedDates.CollectionChanged += OnSelectedDatesCollectionChanged;
         BlackoutDates.CollectionChanged += OnBlackoutDatesCollectionChanged;
-        _selectionCoordinator = new CalendarSelectionCoordinator(
+        _selectionCoordinator = new(
             () => SelectionMode,
             () => AllowTapRangeSelection,
             () => DisplayDate,

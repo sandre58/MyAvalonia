@@ -16,10 +16,6 @@ namespace MyNet.Avalonia.Converters;
 /// <summary>
 /// Compares two or more bound values for equality and returns a boolean result.
 /// </summary>
-/// <remarks>
-/// Single-value mode compares <paramref name="value"/> to <paramref name="parameter"/>.
-/// Multi-binding mode returns <c>true</c> when all values are equal (or all different for <see cref="IsNotEquals"/>).
-/// </remarks>
 /// <example>
 /// <code>
 /// &lt;Border IsVisible="{Binding Status, Converter={x:Static my:EqualsConverter.IsEquals}, ConverterParameter=Active}" /&gt;

@@ -11,7 +11,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media.Transformation;
-using MyNet.Avalonia.Controls;
 using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Controls.Behaviors;

@@ -21,6 +21,7 @@
         <PackageVersion Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
         <PackageVersion Include="Avalonia.iOS" Version="$(AvaloniaVersion)"/>
         <PackageVersion Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)"/>
+        <PackageVersion Include="Avalonia.Headless.XUnit" Version="$(AvaloniaVersion)"/>
         <PackageVersion Include="Avalonia.Skia" Version="$(AvaloniaVersion)"/>
         <PackageVersion Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
         <PackageVersion Include="Fody" Version="6.9.3"/>
@@ -48,6 +49,7 @@
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.6.0"/>
         <PackageVersion Include="xunit" Version="2.9.3"/>
         <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.0-pre.4"/>
+        <PackageVersion Include="xunit.v3" Version="3.2.2"/>
         <PackageVersion Include="FluentAssertions" Version="8.10.0"/>
         <PackageVersion Include="Moq" Version="4.20.72"/>
         <PackageVersion Include="AutoFixture" Version="5.0.0-preview0012"/>

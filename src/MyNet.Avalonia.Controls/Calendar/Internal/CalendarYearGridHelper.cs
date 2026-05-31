@@ -25,7 +25,7 @@ internal static class CalendarYearGridHelper
             YearContext yearContext => BuildYearCells(yearContext, selectedDate),
             DecadeContext decadeContext => BuildDecadeCells(decadeContext, selectedDate),
             CenturyContext centuryContext => BuildCenturyCells(centuryContext, selectedDate),
-            _ => [],
+            _ => []
         };
     }
 

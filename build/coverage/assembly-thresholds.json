@@ -1,0 +1,10 @@
+{
+  "defaultMinLineRate": 0.50,
+  "assemblies": {
+    "MyNet.Avalonia.Theme": 0.50,
+    "MyNet.Avalonia.Controls": 0.60,
+    "MyNet.Avalonia.Extended": 0.70,
+    "MyNet.Avalonia.Geopgraphy": 0.70,
+    "MyNet.Avalonia": 0.70
+  }
+}

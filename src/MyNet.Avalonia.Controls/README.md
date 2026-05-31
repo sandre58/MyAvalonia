@@ -169,6 +169,16 @@ Pagination and TextPicker helpers:
 
 Other tested modules: `ItemsBehaviorHelper`, `OverlayDialogHostLookupHelper`, `StandardColorPalette`, `PositionToDockConverter`, `DateContext`, `WeekendDateSelector`.
 
+### Headless UI tests
+
+Headless tests live in [`tests/MyNet.Avalonia.Controls.Headless.Tests`](../../tests/MyNet.Avalonia.Controls.Headless.Tests/). They use [Avalonia Headless](https://docs.avaloniaui.net/docs/testing/headless-xunit) with `[AvaloniaFact]` to exercise control templates, layout, and interactions without a visible window.
+
+```bash
+dotnet run --project tests/MyNet.Avalonia.Controls.Headless.Tests
+```
+
+Covered controls: `Pagination`, `Calendar`, `Badge`, `Divider`.
+
 ## License
 
 Copyright © Stéphane ANDRE.

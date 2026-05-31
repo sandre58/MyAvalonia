@@ -20,12 +20,6 @@ namespace MyNet.Avalonia.Converters;
 /// <summary>
 /// Performs arithmetic operations on numeric binding values.
 /// </summary>
-/// <remarks>
-/// Single-value mode uses <paramref name="parameter"/> as the second operand.
-/// Multi-binding mode aggregates all values with the selected operation.
-/// <see cref="ConvertBack"/> applies the inverse operation where defined (not for <see cref="Pow"/> or <see cref="Modulo"/>).
-/// Returns <see cref="AvaloniaProperty.UnsetValue"/> on invalid input.
-/// </remarks>
 /// <example>
 /// <code>
 /// &lt;Slider Maximum="{Binding Total, Converter={x:Static my:MathConverter.Subtract}, ConverterParameter={Binding Used}}" /&gt;

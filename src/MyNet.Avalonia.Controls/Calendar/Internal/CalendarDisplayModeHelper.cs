@@ -30,7 +30,7 @@ internal static class CalendarDisplayModeHelper
             YearContext => (false, true, false, false),
             DecadeContext => (false, false, true, false),
             CenturyContext => (false, false, false, true),
-            _ => (false, false, false, false),
+            _ => (false, false, false, false)
         };
 
     public static CalendarNavigationKind? GetHeaderDrillDownAction(DateContext context) =>
@@ -38,6 +38,6 @@ internal static class CalendarDisplayModeHelper
         {
             YearContext => CalendarNavigationKind.ShowDecadeView,
             DecadeContext => CalendarNavigationKind.ShowCenturyView,
-            _ => null,
+            _ => null
         };
 }

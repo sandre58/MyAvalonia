@@ -35,7 +35,7 @@ internal static class CalendarKeyboardNavigationHelper
             Key.End => ResolveEnd(displayContext, focusedDate, currentMonth),
             Key.PageDown => ResolvePageDown(displayContext, focusedDate, ctrl, shift),
             Key.PageUp => ResolvePageUp(displayContext, focusedDate, ctrl, shift),
-            _ => default,
+            _ => default
         };
 
     private static CalendarNavigationResult ResolveUp(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
@@ -45,7 +45,7 @@ internal static class CalendarKeyboardNavigationHelper
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.Add(-YearGridColumns)),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddYears(-YearGridColumns)),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddDecades(-YearGridColumns)),
-            _ => default,
+            _ => default
         };
 
     private static CalendarNavigationResult ResolveDown(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
@@ -55,7 +55,7 @@ internal static class CalendarKeyboardNavigationHelper
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.Add(YearGridColumns)),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddYears(YearGridColumns)),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddDecades(YearGridColumns)),
-            _ => default,
+            _ => default
         };
 
     private static CalendarNavigationResult ResolveLeft(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
@@ -65,7 +65,7 @@ internal static class CalendarKeyboardNavigationHelper
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.Add(-1)),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddYears(-1)),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddDecades(-1)),
-            _ => default,
+            _ => default
         };
 
     private static CalendarNavigationResult ResolveRight(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
@@ -75,7 +75,7 @@ internal static class CalendarKeyboardNavigationHelper
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.Add(1)),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddYears(1)),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddDecades(1)),
-            _ => default,
+            _ => default
         };
 
     private static CalendarNavigationResult ResolveHome(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
@@ -85,7 +85,7 @@ internal static class CalendarKeyboardNavigationHelper
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.BeginningOfYear()),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.BeginningOfDecade()),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.BeginningOfCentury()),
-            _ => default,
+            _ => default
         };
 
     private static CalendarNavigationResult ResolveEnd(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
@@ -95,7 +95,7 @@ internal static class CalendarKeyboardNavigationHelper
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.EndOfYear()),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.EndOfDecade()),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.EndOfCentury()),
-            _ => default,
+            _ => default
         };
 
     private static CalendarNavigationResult ResolvePageDown(
@@ -111,7 +111,7 @@ internal static class CalendarKeyboardNavigationHelper
                 MonthContext when shift => new(CalendarNavigationKind.SelectDate, focusedDate.AddMonths(1)),
                 YearContext when ctrl => new(CalendarNavigationKind.ShowDecadeView),
                 DecadeContext when ctrl => new(CalendarNavigationKind.ShowCenturyView),
-                _ => default,
+                _ => default
             };
 
     private static CalendarNavigationResult ResolvePageUp(
@@ -127,6 +127,6 @@ internal static class CalendarKeyboardNavigationHelper
                 YearContext when ctrl => new(CalendarNavigationKind.ShowMonthView),
                 DecadeContext when ctrl => new(CalendarNavigationKind.ShowYearView),
                 CenturyContext when ctrl => new(CalendarNavigationKind.ShowDecadeView),
-                _ => default,
+                _ => default
             };
 }

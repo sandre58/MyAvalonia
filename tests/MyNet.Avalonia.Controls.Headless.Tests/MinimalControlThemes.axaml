@@ -1,0 +1,92 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls">
+
+    <ControlTheme x:Key="{x:Type controls:PaginationButton}" TargetType="controls:PaginationButton">
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:PaginationButton">
+                <ContentPresenter Content="{TemplateBinding Content}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:Pagination}" TargetType="controls:Pagination">
+        <Setter Property="PageButtonTheme" Value="{StaticResource {x:Type controls:PaginationButton}}" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:Pagination">
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <controls:PaginationButton Name="{x:Static controls:Pagination.PartPreviousButton}"
+                                               Content="Prev"
+                                               Theme="{TemplateBinding PageButtonTheme}" />
+                    <StackPanel Name="{x:Static controls:Pagination.PartButtonPanel}" Orientation="Horizontal" Spacing="2" />
+                    <controls:PaginationButton Name="{x:Static controls:Pagination.PartNextButton}"
+                                               Content="Next"
+                                               Theme="{TemplateBinding PageButtonTheme}" />
+                    <NumericUpDown Name="{x:Static controls:Pagination.PartQuickJumpInput}"
+                                   IsVisible="False"
+                                   Minimum="1" />
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:Calendar}" TargetType="controls:Calendar">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:Calendar">
+                <Grid RowDefinitions="Auto,*">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="4">
+                        <Button Name="{x:Static controls:Calendar.PartFastPreviousButton}" Content="&lt;&lt;" />
+                        <Button Name="{x:Static controls:Calendar.PartPreviousButton}" Content="&lt;" />
+                        <Button Name="{x:Static controls:Calendar.PartMonthButton}" />
+                        <Button Name="{x:Static controls:Calendar.PartYearButton}" />
+                        <Button Name="{x:Static controls:Calendar.PartHeaderButton}" IsVisible="False" />
+                        <Button Name="{x:Static controls:Calendar.PartNextButton}" Content="&gt;" />
+                        <Button Name="{x:Static controls:Calendar.PartFastNextButton}" Content="&gt;&gt;" />
+                    </StackPanel>
+                    <Grid Name="{x:Static controls:Calendar.PartMonthGrid}" Grid.Row="1" />
+                    <Grid Name="{x:Static controls:Calendar.PartYearGrid}" Grid.Row="1" IsVisible="False" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:Badge}" TargetType="controls:Badge">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:Badge">
+                <Grid ClipToBounds="False">
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    <Panel Name="{x:Static controls:Badge.PartBadgeContainer}"
+                           IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}">
+                        <ContentPresenter Content="{TemplateBinding Header}" />
+                    </Panel>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:Divider}" TargetType="controls:Divider">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:Divider">
+                <Grid ColumnDefinitions="*,Auto,*">
+                    <Border Height="1" VerticalAlignment="Center" Background="{TemplateBinding Background}" />
+                    <ContentPresenter Grid.Column="1"
+                                      Margin="8,0"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    <Border Grid.Column="2"
+                            Height="1"
+                            VerticalAlignment="Center"
+                            Background="{TemplateBinding Background}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

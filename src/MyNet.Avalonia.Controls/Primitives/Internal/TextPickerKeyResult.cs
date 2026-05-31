@@ -12,7 +12,7 @@ internal enum TextPickerKeyAction
     CommitPreview,
     Rollback,
     IncrementByOffset,
-    IncrementLargeByOffset,
+    IncrementLargeByOffset
 }
 
 internal readonly record struct TextPickerKeyResult(TextPickerKeyAction Action, int Offset = 0);
