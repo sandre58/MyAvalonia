@@ -28,6 +28,7 @@ using MyNet.Avalonia.Extended.Theming;
 using MyNet.Avalonia.Extended.Toasting;
 using MyNet.Avalonia.Showcase.Pages;
 using MyNet.Avalonia.Showcase.Resources;
+using MyNet.Avalonia.Showcase.Services;
 using MyNet.Avalonia.Showcase.ViewModels;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Avalonia.Showcase.ViewModels.Pages;
@@ -156,6 +157,12 @@ public class App : Application
             .AddMyNetAvaloniaExtended()
             .AddAvaloniaTheming()
             .AddAvaloniaClipboard(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow)
+            .AddAvaloniaAppCommands()
+            .AddAvaloniaScheduler()
+            .AddNotifications()
+            .AddSingleton<IToastFactory, ShowcaseDemoToastFactory>()
+            .AddToasting()
+            .AddAvaloniaToasting(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow)
             .AddMyNetAvaloniaShowcaseResources();
 
         collection.AddSingleton<ILogger, Logger>()
@@ -163,13 +170,10 @@ public class App : Application
             .AddSingleton<IViewModelLocator, ViewModelLocator>()
             .AddSingleton<IPageResolver, PageResolver>()
             .AddSingleton<IThemeBrushService>(MyTheme.Current)
-            .AddNotifications()
             .AddSingleton<INavigationService, NavigationService>()
-            .AddSingleton<IToasterService>(new ToasterService(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow))
             .AddScoped<IBusyServiceFactory, BusyServiceFactory>()
             .AddScoped<IScheduler, AvaloniaScheduler>(_ => AvaloniaScheduler.Current)
-            .AddScoped<ICommandFactory, AvaloniaCommandFactory>()
-            .AddScoped<IAppCommandsService, AppCommandsService>();
+            .AddScoped<ICommandFactory, AvaloniaCommandFactory>();
     }
 
     /// <summary>
@@ -333,7 +337,7 @@ public class App : Application
         ViewModelManager.Initialize(null!, viewModelLocator);
         services.UseThemeManager();
         NavigationManager.Initialize(services.GetRequiredService<INavigationService>(), viewModelLocator);
-        ToasterManager.Initialize(services.GetRequiredService<IToasterService>());
+        _ = services.GetRequiredService<AvaloniaToastHost>();
         services.UseClipboard();
         BusyManager.Initialize(busyFactory);
         AppBusyManager.Initialize(busyFactory);

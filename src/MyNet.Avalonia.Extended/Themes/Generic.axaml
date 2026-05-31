@@ -4,9 +4,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/MessageNotificationControl.axaml" />
-                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/OverlayMessageBox.axaml" />
-                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowDialog.axaml" />
-                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowMessageBox.axaml" />
+                <!-- <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/OverlayMessageBox.axaml" /> -->
+                <!-- <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowDialog.axaml" /> -->
+                <!-- <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowMessageBox.axaml" /> -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>

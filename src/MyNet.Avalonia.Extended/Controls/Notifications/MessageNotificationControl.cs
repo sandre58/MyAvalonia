@@ -6,7 +6,7 @@
 
 using Avalonia;
 using Avalonia.Controls.Primitives;
-using MyNet.UI.Notifications;
+using MyNet.UI.Notifications.Models;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Extended.Controls;

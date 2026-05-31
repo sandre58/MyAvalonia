@@ -4,11 +4,21 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using MyNet.UI.Services;
 
 namespace MyNet.Avalonia.Extended.Services;
 
-public class AppCommandsService : IAppCommandsService
+/// <summary>
+/// Avalonia implementation of <see cref="IAppCommandsService"/>.
+/// </summary>
+public sealed class AppCommandsService : IAppCommandsService
 {
-    public void Exit() => System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
+    /// <inheritdoc />
+    public void Exit()
+    {
+        if (Application.Current?.ApplicationLifetime is IControlledApplicationLifetime controlled)
+            controlled.Shutdown();
+    }
 }

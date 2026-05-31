@@ -18,7 +18,8 @@ using MyNet.Humanizer;
 using MyNet.Observable;
 using MyNet.UI.Commands;
 using MyNet.UI.Dialogs.MessageBox;
-using MyNet.UI.Toasting;
+using MyNet.UI.Notifications;
+using MyNet.UI.Notifications.Models;
 using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
@@ -31,6 +32,7 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
 {
     private static readonly WindowDialogService WindowDialogService = new();
     private static readonly WindowMessageBoxService WindowMessageBoxService = new();
+    private readonly INotificationPublisher _notificationPublisher;
 
     private bool _isModal = true;
     private MessageBoxResultOption _buttons = MessageBoxResultOption.OkCancel;
@@ -53,8 +55,10 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
     /// <summary>
     /// Initializes a new instance of the <see cref="WindowDialogGroupViewModel"/> class.
     /// </summary>
-    public WindowDialogGroupViewModel()
+    /// <param name="notificationPublisher">Publishes toast notifications after dialog actions.</param>
+    public WindowDialogGroupViewModel(INotificationPublisher notificationPublisher)
     {
+        _notificationPublisher = notificationPublisher;
         var builder = new ControlThemeBuilder()
             .AddRoles(ThemeRole.Information, ThemeRole.Success, ThemeRole.Warning, ThemeRole.Error)
             .AddValueAction(
@@ -110,7 +114,7 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
             severity.Humanize(),
             _buttons,
             severity).ConfigureAwait(false);
-        ToasterManager.ShowInformation($"Result: {result}");
+        _notificationPublisher.Publish(new MessageNotification($"Result: {result}", severity: NotificationSeverity.Information));
     }
 
     private static MessageSeverity ToSeverity(ThemeRole role) => role switch
@@ -130,16 +134,18 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
         _ => "This is a dialog message."
     };
 
-    private static void ShowToasterResult(bool? result, LoginDialogViewModel viewModel)
+    private void ShowToasterResult(bool? result, LoginDialogViewModel viewModel)
     {
         if (!result.HasValue)
-            ToasterManager.ShowWarning("No result.");
+            _notificationPublisher.Publish(new MessageNotification("No result.", severity: NotificationSeverity.Warning));
         else if (result.Value)
-            ToasterManager.ShowSuccess("Dialog has been validated.");
+            _notificationPublisher.Publish(new MessageNotification("Dialog has been validated.", severity: NotificationSeverity.Success));
         else
-            ToasterManager.ShowError("Dialog has been cancelled.");
+            _notificationPublisher.Publish(new MessageNotification("Dialog has been cancelled.", severity: NotificationSeverity.Error));
 
-        ToasterManager.ShowInformation($"Login: {viewModel.Form.Login} ; Password: {viewModel.Form.Password}");
+        _notificationPublisher.Publish(new MessageNotification(
+            $"Login: {viewModel.Form.Login} ; Password: {viewModel.Form.Password}",
+            severity: NotificationSeverity.Information));
     }
 }
 

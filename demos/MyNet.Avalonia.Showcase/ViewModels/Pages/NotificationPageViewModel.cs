@@ -6,23 +6,22 @@
 
 using System;
 using System.Windows.Input;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
 using Material.Icons;
 using MyNet.Avalonia.Extended.Toasting;
+using MyNet.Avalonia.Extended.Toasting.Settings;
 using MyNet.Avalonia.Showcase.Resources;
+using MyNet.Avalonia.Showcase.Services;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Showcase.Views.Samples;
-using MyNet.Avalonia.Templates;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Humanizer;
-using MyNet.Observable;
 using MyNet.UI.Commands;
 using MyNet.UI.Notifications;
+using MyNet.UI.Notifications.Models;
 using MyNet.UI.Resources;
+using MyNet.UI.Toasting;
 using MyNet.UI.Toasting.Settings;
 using MyNet.Utilities;
 using MyNet.Utilities.Generator;
@@ -31,75 +30,82 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
 internal sealed class NotificationPageViewModel : ShowcaseViewModel
 {
-    private static ToasterService? _toasterService;
-    private static readonly ToasterSettings ToasterSettings = new();
+    private readonly INotificationPublisher _notificationPublisher;
+    private readonly IToastManager _toastManager;
+    private readonly AvaloniaToastHost _toastHost;
+    private readonly AvaloniaToastHostOptions _hostOptions;
+    private readonly ToastManagerOptions _managerOptions;
 
     private static ToastClosingStrategy _closingStrategy = ToastClosingStrategy.Both;
     private static bool _freezeOnMouseEnter;
     private static bool _enableOnClick;
     private static bool _enableOnClose;
 
-    static NotificationPageViewModel() => RegisteredDataTemplate.Register<CustomNotification>(_ => new LargeContent1(), nameof(INotification));
+    static NotificationPageViewModel()
+        => AvaloniaToastContentFactory.CustomContentFactory = static notification =>
+            notification is CustomNotification ? new LargeContent1() : null;
 
-    public NotificationPageViewModel()
+    public NotificationPageViewModel(
+        INotificationPublisher notificationPublisher,
+        IToastManager toastManager,
+        AvaloniaToastHost toastHost,
+        AvaloniaToastHostOptions hostOptions,
+        ToastManagerOptions managerOptions,
+        ICommandFactory commandFactory)
         : base("Notifications",
             [
                 new ControlThemeBuilder()
                     .AddRoles(ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information, ThemeRole.Inverse)
-                    .AddAction<Button>(_ => _toasterService?.Clear(), x => x.DisplayName(nameof(UiResources.Clear))
+                    .AddAction<Button>(_ => toastManager.Clear(), x => x.DisplayName(nameof(UiResources.Clear))
                                                                                                       .WithIcon(MaterialIconKind.CloseCircle)
                                                                                                       .Of<ButtonEditor>(editor => editor.WithRole(ThemeRole.Error)))
                     .AddValueAction(
                         (_, y) =>
-                            {
-                                ToasterSettings.Position = (ToasterPosition?)y ?? default;
-                                ResetToasterService();
-                            },
-                        ToasterPosition.BottomRight,
+                        {
+                            hostOptions.Position = (AvaloniaToastPosition?)y ?? AvaloniaToastPosition.BottomRight;
+                            toastHost.RefreshLayout();
+                        },
+                        AvaloniaToastPosition.BottomRight,
                         x => x.DisplayName(nameof(SettingsResources.PopupPlacement))
-                                                        .Of<ListBoxEditor>(editor => editor.AddChoice(ToasterPosition.BottomRight, builder => builder.DisplayName(() => ToasterPosition.BottomRight.Humanize()).WithIcon(MaterialIconKind.PanBottomRight))
-                                                                                           .AddChoice(ToasterPosition.BottomCenter, builder => builder.DisplayName(() => ToasterPosition.BottomCenter.Humanize()).WithIcon(MaterialIconKind.PanDown))
-                                                                                           .AddChoice(ToasterPosition.BottomLeft, builder => builder.DisplayName(() => ToasterPosition.BottomLeft.Humanize()).WithIcon(MaterialIconKind.PanBottomLeft))
-                                                                                           .AddChoice(ToasterPosition.TopLeft, builder => builder.DisplayName(() => ToasterPosition.TopLeft.Humanize()).WithIcon(MaterialIconKind.PanTopLeft))
-                                                                                           .AddChoice(ToasterPosition.TopCenter, builder => builder.DisplayName(() => ToasterPosition.TopCenter.Humanize()).WithIcon(MaterialIconKind.PanUp))
-                                                                                           .AddChoice(ToasterPosition.TopRight, builder => builder.DisplayName(() => ToasterPosition.TopRight.Humanize()).WithIcon(MaterialIconKind.PanTopRight))))
+                            .Of<ListBoxEditor>(editor => editor.AddChoice(AvaloniaToastPosition.BottomRight, builder => builder.DisplayName(() => AvaloniaToastPosition.BottomRight.Humanize()).WithIcon(MaterialIconKind.PanBottomRight))
+                                .AddChoice(AvaloniaToastPosition.BottomCenter, builder => builder.DisplayName(() => AvaloniaToastPosition.BottomCenter.Humanize()).WithIcon(MaterialIconKind.PanDown))
+                                .AddChoice(AvaloniaToastPosition.BottomLeft, builder => builder.DisplayName(() => AvaloniaToastPosition.BottomLeft.Humanize()).WithIcon(MaterialIconKind.PanBottomLeft))
+                                .AddChoice(AvaloniaToastPosition.TopLeft, builder => builder.DisplayName(() => AvaloniaToastPosition.TopLeft.Humanize()).WithIcon(MaterialIconKind.PanTopLeft))
+                                .AddChoice(AvaloniaToastPosition.TopCenter, builder => builder.DisplayName(() => AvaloniaToastPosition.TopCenter.Humanize()).WithIcon(MaterialIconKind.PanUp))
+                                .AddChoice(AvaloniaToastPosition.TopRight, builder => builder.DisplayName(() => AvaloniaToastPosition.TopRight.Humanize()).WithIcon(MaterialIconKind.PanTopRight))))
                     .AddValueAction(
-                        (_, y) =>
-                            {
-                                ToasterSettings.Duration = TimeSpan.FromSeconds((double)(y ?? 3.5));
-                                ResetToasterService();
-                            },
+                        (_, y) => managerOptions.DefaultDuration = TimeSpan.FromSeconds((double)(y ?? 3.5)),
                         3.5d,
                         x => x.DisplayName(nameof(SettingsResources.DisplayDuration)).Of<SliderEditor>(editor => editor.WithRange(0, 60).WithIncrement(0.1M)))
                     .AddValueAction(
                         (_, y) =>
                         {
-                            ToasterSettings.MaxItems = Convert.ToInt32((decimal)(y ?? 30));
-                            ResetToasterService();
+                            hostOptions.MaxItems = Convert.ToInt32((decimal)(y ?? 30));
+                            toastHost.RefreshLayout();
                         },
                         30.0M,
                         x => x.DisplayName(nameof(SettingsResources.MaxItems)).Of<NumericUpDownEditor>(editor => editor.WithRange(0.0M, 30.0M)))
                     .AddValueAction(
                         (_, y) =>
                         {
-                            ToasterSettings.Width = (double)(y ?? 300);
-                            ResetToasterService();
+                            hostOptions.Width = (double)(y ?? 300);
+                            toastHost.RefreshLayout();
                         },
                         300,
                         x => x.DisplayName(nameof(SettingsResources.ToastWidth)).Of<IntSliderEditor>(editor => editor.WithRange(0, 800)))
                     .AddValueAction(
                         (_, y) =>
                         {
-                            ToasterSettings.OffsetX = (double)(y ?? 10);
-                            ResetToasterService();
+                            hostOptions.OffsetX = (double)(y ?? 10);
+                            toastHost.RefreshLayout();
                         },
                         10,
                         x => x.DisplayName(nameof(SettingsResources.OffsetX)).Of<IntSliderEditor>(editor => editor.WithRange(0, 300)))
                     .AddValueAction(
                         (_, y) =>
                         {
-                            ToasterSettings.OffsetY = (double)(y ?? 10);
-                            ResetToasterService();
+                            hostOptions.OffsetY = (double)(y ?? 10);
+                            toastHost.RefreshLayout();
                         },
                         10,
                         x => x.DisplayName(nameof(SettingsResources.OffsetY)).Of<IntSliderEditor>(editor => editor.WithRange(0, 300)))
@@ -108,9 +114,9 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
                         ToastClosingStrategy.Both,
                         x => x.DisplayName(nameof(SettingsResources.ClosingStrategy))
                             .Of<ListBoxEditor>(editor => editor.AddChoice(ToastClosingStrategy.None, builder => builder.DisplayName(() => ToastClosingStrategy.None.Humanize()).WithIcon(MaterialIconKind.CircleOffOutline))
-                                                               .AddChoice(ToastClosingStrategy.AutoClose, builder => builder.DisplayName(() => ToastClosingStrategy.AutoClose.Humanize()).WithIcon(MaterialIconKind.ProgressClose))
-                                                               .AddChoice(ToastClosingStrategy.CloseButton, builder => builder.DisplayName(() => ToastClosingStrategy.CloseButton.Humanize()).WithIcon(MaterialIconKind.CloseBox))
-                                                               .AddChoice(ToastClosingStrategy.Both, builder => builder.DisplayName(() => ToastClosingStrategy.CloseButton.Humanize()).WithIcon(MaterialIconKind.CloseBoxMultiple))))
+                                .AddChoice(ToastClosingStrategy.AutoClose, builder => builder.DisplayName(() => ToastClosingStrategy.AutoClose.Humanize()).WithIcon(MaterialIconKind.ProgressClose))
+                                .AddChoice(ToastClosingStrategy.CloseButton, builder => builder.DisplayName(() => ToastClosingStrategy.CloseButton.Humanize()).WithIcon(MaterialIconKind.CloseBox))
+                                .AddChoice(ToastClosingStrategy.Both, builder => builder.DisplayName(() => ToastClosingStrategy.CloseButton.Humanize()).WithIcon(MaterialIconKind.CloseBoxMultiple))))
                     .AddValueAction(
                         (_, y) => _freezeOnMouseEnter = (bool?)y ?? false,
                         false,
@@ -125,8 +131,13 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
                         x => x.DisplayName(nameof(SettingsResources.ActivateOnClose)).Of<ToggleSwitchEditor>())
             ])
     {
-        ResetToasterService();
-        ShowNotificationCommand = CommandsManager.CreateNotNull<ThemeRole>(ShowNotification);
+        _notificationPublisher = notificationPublisher;
+        _toastManager = toastManager;
+        _toastHost = toastHost;
+        _hostOptions = hostOptions;
+        _managerOptions = managerOptions;
+
+        ShowNotificationCommand = commandFactory.CreateRequired<ThemeRole>(ShowNotification);
     }
 
     /// <inheritdoc/>
@@ -134,24 +145,59 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
 
     public ICommand ShowNotificationCommand { get; }
 
-    public static void ShowNotification(ThemeRole role) => ShowNotification(CreateNotificationFromRole(role));
+    private void ShowNotification(ThemeRole role) => PublishNotification(CreateNotificationFromRole(role));
 
-    public static void ShowNotification(INotification notification)
+    private void PublishNotification(INotification notification)
     {
-        var settings = new ToastSettings
+        ApplyDemoSettings();
+
+        if (notification is MessageNotification message)
+        {
+            if (_enableOnClick)
+            {
+                _notificationPublisher.Publish(new ActionNotification(
+                    message.Message,
+                    message.Title,
+                    message.Severity,
+                    action: x => _notificationPublisher.Publish(new MessageNotification(
+                        NotificationPageResources.NotificationClickMessage.FormatWith(x),
+                        severity: NotificationSeverity.Information))));
+                return;
+            }
+
+            if (_enableOnClose)
+            {
+                var closable = new ClosableNotification(message.Message, message.Title, message.Severity);
+                closable.CloseRequested += OnDemoCloseRequested;
+                _notificationPublisher.Publish(closable);
+                return;
+            }
+        }
+
+        _notificationPublisher.Publish(notification);
+    }
+
+    private void OnDemoCloseRequested(object? sender, CloseRequestedEventArgs e)
+    {
+        if (sender is ClosableNotification closable)
+            closable.CloseRequested -= OnDemoCloseRequested;
+
+        _notificationPublisher.Publish(new MessageNotification(
+            NotificationPageResources.NotificationClosedMessage,
+            severity: NotificationSeverity.Success));
+    }
+
+    private static void ApplyDemoSettings()
+        => ShowcaseDemoToastFactory.CurrentSettings = new ToastSettings
         {
             ClosingStrategy = _closingStrategy,
             FreezeOnMouseEnter = _freezeOnMouseEnter
         };
 
-        var onClick = new Action<INotification>(x => _toasterService?.Show(new MessageNotification(NotificationPageResources.NotificationClickMessage.FormatWith(x), severity: NotificationSeverity.Information), ToastSettings.Default));
-        var onClose = new Action(() => _toasterService?.Show(new MessageNotification(NotificationPageResources.NotificationClosedMessage, severity: NotificationSeverity.Success), ToastSettings.Default));
-        _toasterService?.Show(notification, settings, onClick: _enableOnClick ? onClick : null, onClose: _enableOnClose ? onClose : null);
-    }
-
     private static INotification CreateNotificationFromRole(ThemeRole role)
     {
-        if (role == ThemeRole.Inverse) return new CustomNotification();
+        if (role == ThemeRole.Inverse)
+            return new CustomNotification();
 
         var severity = role switch
         {
@@ -161,34 +207,17 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
             _ => NotificationSeverity.Information
         };
 
-        return new MessageNotification(SentenceGenerator.Paragraph(RandomGenerator.Int(4, 7), RandomGenerator.Int(1, 3)), role.ToString(), severity);
+        return new MessageNotification(
+            SentenceGenerator.Paragraph(RandomGenerator.Int(4, 7), RandomGenerator.Int(1, 3)),
+            role.ToString(),
+            severity);
     }
 
-    private static void ResetToasterService()
+    private sealed class CustomNotification : NotificationBase
     {
-        _toasterService?.Dispose();
-        _toasterService = new(() => (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow, ToasterSettings);
-    }
-
-    protected override void OnPropertyIsModified(string propertyName, object before, object after)
-    {
-        base.OnPropertyIsModified(propertyName, before, after);
-
-        ResetToasterService();
-    }
-
-    protected override void Cleanup()
-    {
-        base.Cleanup();
-        _toasterService?.Dispose();
-    }
-
-    private sealed class CustomNotification : ObservableObject, INotification
-    {
-        public NotificationSeverity Severity => NotificationSeverity.None;
-
-        public Guid Id { get; } = Guid.NewGuid();
-
-        public bool IsSimilar(object? obj) => true;
+        public CustomNotification()
+            : base(string.Empty, severity: NotificationSeverity.None)
+        {
+        }
     }
 }
