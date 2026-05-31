@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Product>My .NET Avalonia - Geography</Product>
+        <PackageIcon>MyAvalonia.png</PackageIcon>
+        <Description>Avalonia markup and helpers for MyNet.Geography (country lists, bindings).</Description>
+        <PackageTags>Avalonia;UI;Geography;Countries;MyNet;Extensions;CrossPlatform;Desktop</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MyNet.Geography" />
+    </ItemGroup>
+
+</Project>
+
