@@ -10,7 +10,6 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Registry;
 using MyNet.Observable;
-using MyNet.Observable.Translatables;
 
 namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 
@@ -43,7 +42,7 @@ internal sealed class OptionMetadataBuilder
     /// <returns>Returns the current instance of the OptionMetadataBuilder to allow for method chaining.</returns>
     public OptionMetadataBuilder DisplayName(string resourceKey)
     {
-        _displayNameFunc = new StringTranslatable(resourceKey);
+        _displayNameFunc = new LocalizedString(resourceKey);
         return this;
     }
 

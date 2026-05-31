@@ -19,7 +19,7 @@
                            VerticalAlignment="Center"
                            DockPanel.Dock="Left"
                            Source="{Binding Converter={x:Static c:CountryConverter.To16}}" />
-                    <TextBlock Text="{my:Translate}" Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
+                    <TextBlock Text="{my:Display}" Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
                 </DockPanel>
             </DataTemplate>
             
@@ -29,7 +29,7 @@
                     <TextBlock Grid.Row="1"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Top"
-                               Text="{my:Translate}"
+                               Text="{my:Display}"
                                TextWrapping="Wrap"
                                TextAlignment="Center"
                                Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
@@ -39,7 +39,7 @@
             <DataTemplate x:Key="MyNet.DataTemplate.CultureInfo.Xs" DataType="globalization:CultureInfo">
                 <DockPanel>
                     <Image DockPanel.Dock="Left" Width="20" Source="{Binding Converter={x:Static c:CountryConverter.To24}}" Margin="{my:Thickness Md, Right}" />
-                    <TextBlock Text="{my:Translate Casing=Title}" />
+                    <TextBlock Text="{my:Display Casing=Title}" />
                 </DockPanel>
             </DataTemplate>
         </ResourceDictionary>

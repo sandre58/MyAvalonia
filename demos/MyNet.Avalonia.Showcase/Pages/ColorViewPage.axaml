@@ -10,7 +10,7 @@
              xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
              x:DataType="vm:ColorViewPageViewModel"
              x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}"
-             Header="{my:Translate Title}"
+             Header="{my:Display Title}"
              my:IconAssist.Icon="{Binding Icon}"
              mc:Ignorable="d"
              xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors">

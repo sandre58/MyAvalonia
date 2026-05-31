@@ -9,7 +9,6 @@ using MyNet.Avalonia.Showcase.ViewModels.Playground.Choices;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Humanizer;
-using MyNet.Observable.Translatables;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 
@@ -30,7 +29,7 @@ internal sealed class ChoiceViewModelFactory(ChoiceMetadataRegistry metadataRegi
     {
         var metadata = metadataRegistry.Get(@class);
 
-        return new(@class, metadata?.DisplayName ?? new StringTranslatable(@class), metadata?.Icon);
+        return new(@class, metadata?.DisplayName ?? new LocalizedString(@class), metadata?.Icon);
     }
 
     /// <summary>

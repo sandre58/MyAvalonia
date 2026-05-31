@@ -23,7 +23,7 @@
                             Classes="kind-card">
                         <Border Background="{Binding Converter={x:Static my:BrushConverter.Default}}" />
                     </Border>
-                    <TextBlock Text="{my:Translate}" />
+                    <TextBlock Text="{my:Display}" />
                 </StackPanel>
             </DataTemplate>
         </Setter>
@@ -99,7 +99,7 @@
                             Background="{my:Theme Transparency.Small}"
                             ClipToBounds="True"
                             Classes="kind-card"
-                            ToolTip.Tip="{my:TranslateTextBlock}">
+                            ToolTip.Tip="{my:DisplayTextBlock}">
                         <Border Background="{Binding Converter={x:Static my:BrushConverter.Default}}" />
                     </Border>
                 </DataTemplate>

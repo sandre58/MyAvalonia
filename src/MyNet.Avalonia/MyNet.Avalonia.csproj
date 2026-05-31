@@ -4,12 +4,13 @@
         <NeutralLanguage>fr</NeutralLanguage>
         <Product>My .NET Avalonia</Product>
         <PackageIcon>MyAvalonia.png</PackageIcon>
-        <Description>Extensions and helpers for Avalonia UI development: controls, theming, reactive programming, and integration with MyNet libraries.</Description>
-        <PackageTags>Avalonia;UI;Controls;Theming;Reactive;MyNet;Extensions;CrossPlatform;Desktop</PackageTags>
+        <Description>Theme-agnostic Avalonia core: globalization markup, converters, bindings, and MyNet integration.</Description>
+        <PackageTags>Avalonia;UI;Converters;Localization;Markup;MyNet;Extensions;CrossPlatform;Desktop</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="MyNet.Globalization" />
+        <PackageReference Include="MyNet.Primitives" />
         <PackageReference Include="MyNet.Humanizer" />
         <PackageReference Include="MyNet.Observable" />
         <PackageReference Include="MyNet.Utilities" />

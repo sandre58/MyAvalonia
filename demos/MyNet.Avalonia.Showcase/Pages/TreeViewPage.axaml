@@ -14,7 +14,7 @@
             x:DataType="vm:TreeViewPageViewModel"
             x:Name="Root" 
             Theme="{StaticResource {x:Type ContentPage}}" 
-            Header="{my:Translate Title}" 
+            Header="{my:Display Title}" 
             my:IconAssist.Icon="{Binding Icon}"
             ClipToBounds="False"
             mc:Ignorable="d"             
@@ -31,7 +31,7 @@
                           VerticalAlignment="Center">
                     <TreeView.ItemTemplate>
                         <TreeDataTemplate DataType="{x:Type m:CountriesWrapper}" ItemsSource="{Binding Item}">
-                            <TextBlock Text="{Binding DisplayName.Value}" />
+                            <TextBlock Text="{Binding DisplayText}" />
                         </TreeDataTemplate>
                     </TreeView.ItemTemplate>
                     <TreeView.DataTemplates>
@@ -57,7 +57,7 @@
                           ItemsSource="{m:RandomCountries Min=20, Max=50, ByAlpha=True}">
                     <TreeView.ItemTemplate>
                         <TreeDataTemplate DataType="{x:Type m:CountriesWrapper}" ItemsSource="{Binding Item}">
-                            <TextBlock Text="{Binding DisplayName.Value}" />
+                            <TextBlock Text="{Binding DisplayText}" />
                         </TreeDataTemplate>
                     </TreeView.ItemTemplate>
                     <TreeView.DataTemplates>

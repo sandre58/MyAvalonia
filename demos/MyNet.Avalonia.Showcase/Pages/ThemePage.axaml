@@ -9,7 +9,7 @@
              xmlns:common="clr-namespace:MyNet.Avalonia.Showcase.Views.Common"
              x:DataType="vm:ThemePageViewModel"
              x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}"
-             Header="{my:Translate Title}"
+             Header="{my:Display Title}"
              my:IconAssist.Icon="{Binding Icon}"
              mc:Ignorable="d">
     <ContentPage.Resources>
@@ -125,7 +125,7 @@
                           Width="170">
                     <ComboBox.ItemTemplate>
                         <DataTemplate DataType="t:IThemeBase">
-                            <TextBlock Text="{my:Translate Name}" />
+                            <TextBlock Text="{my:Display Name}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>

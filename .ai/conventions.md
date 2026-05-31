@@ -441,6 +441,29 @@ Avoid unnecessary abstraction layers.
 
 ---
 
+# XAML Markup Extensions (MyNet.Avalonia)
+
+Use the `my` XML namespace for globalization-aware UI text and enum lists.
+
+| Need | Use | Avoid |
+|------|-----|-------|
+| Static `.resx` key | `{my:Loc Key, Style=Abbreviation, Filename=…, Format=…}` | Hard-coded strings |
+| Bound value (date, enum, number, object) | `{my:Display Path, Style=…, Format=…, Quantity=True}` | `{Binding}` + converter without culture refresh |
+| Label on non-bindable property | `{my:LocObject Key}` | Duplicate `LocalizableString` types |
+| Content = pre-bound `TextBlock` | `{my:DisplayTextBlock Path}` | Manual `TextBlock` + binding |
+| Combo/list enum items | `my:ItemsBehavior.EnumSourceType` | Inline enum markup lists |
+| Country pick lists | `{geo:Countries}` via `MyNet.Avalonia.Geography` | Custom country enumeration |
+
+Requirements:
+
+- Call `services.UseGlobalization()` in the host before markup extensions resolve culture.
+- Enum items use `LocalizedEnum` / `LocalizedSmartEnum` from MyNet.Observable (culture updates via item wrappers, not snapshot lists).
+- Resx and format keys resolve through `TranslationOptions` (`Style`, `Quantity`, …) from MyNet.Globalization.
+- `LetterCasing` remains an Avalonia post-processing step on the final string.
+- `Quantity=True` on `{my:Display}` passes the bound numeric value as pluralization quantity for the `Format` key.
+
+---
+
 # Architectural Goal
 
 Every control should feel:

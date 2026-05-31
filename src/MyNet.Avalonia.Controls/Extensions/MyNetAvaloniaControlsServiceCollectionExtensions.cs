@@ -30,7 +30,7 @@ public static class MyNetAvaloniaControlsServiceCollectionExtensions
 
         if (Interlocked.Exchange(ref _convertersRegistered, 1) == 0)
         {
-            StringConverter.RegisterTypeConverter<DateContext>((dateContext, format, _, _, culture) => !string.IsNullOrEmpty(format)
+            StringConverter.RegisterTypeConverter<DateContext>((dateContext, format, _, culture) => !string.IsNullOrEmpty(format)
                 ? DateTimeConverter.ToCurrent.Convert(dateContext.ToDate(), format, culture, GlobalizationServices.Current.CurrentTimeZone)?.ToString()
                 : dateContext.ToString());
         }

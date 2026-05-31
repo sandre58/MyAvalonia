@@ -19,7 +19,7 @@ using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Theming;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Humanizer;
-using MyNet.Observable.Translatables;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 
@@ -440,7 +440,7 @@ internal sealed class ControlThemeBuilder(string? themeKey = null)
     /// applied.</param>
     /// <returns>A ChoiceMetadata instance containing the metadata for the specified control, with theming applied as
     /// appropriate.</returns>
-    public ChoiceMetadata GetMetadata(string controlName) => new(new StringTranslatable(!string.IsNullOrEmpty(themeKey) || _kind is not null ? $"Theme{controlName}{themeKey?.Replace(".", string.Empty, StringComparison.OrdinalIgnoreCase)}{_kind?.Name.ToTitle()}" : nameof(ControlThemeResources.ThemeDefault)));
+    public ChoiceMetadata GetMetadata(string controlName) => new(new LocalizedString(!string.IsNullOrEmpty(themeKey) || _kind is not null ? $"Theme{controlName}{themeKey?.Replace(".", string.Empty, StringComparison.OrdinalIgnoreCase)}{_kind?.Name.ToTitle()}" : nameof(ControlThemeResources.ThemeDefault)));
 
     #endregion
 

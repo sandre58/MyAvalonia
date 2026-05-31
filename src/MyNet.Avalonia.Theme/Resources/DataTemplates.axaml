@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia"
-                    xmlns:o="using:MyNet.Observable.Translatables"
+                    xmlns:o="using:MyNet.Observable"
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime"
                     xmlns:media="using:Avalonia.Media"
                     xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
@@ -14,7 +14,7 @@
         <my:MaterialIcon Kind="{Binding}" />
     </DataTemplate>
 
-    <DataTemplate x:Key="MyNet.DataTemplate.Translatable" x:DataType="{x:Type o:StringTranslatable}">
+    <DataTemplate x:Key="MyNet.DataTemplate.Translatable" x:DataType="{x:Type o:LocalizedString}">
         <TextBlock Text="{Binding Value}" />
     </DataTemplate>
 

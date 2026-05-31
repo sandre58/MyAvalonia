@@ -70,7 +70,7 @@
                             <my:MaterialIcon Kind="{Binding Icon}" />
                         </Template>
                     </Setter>
-                    <Setter Property="Header" Value="{my:Translate Title}" />
+                    <Setter Property="Header" Value="{my:Display Title}" />
                     <Setter Property="Classes.isGroup" Value="{Binding IsGroup}" />
                     <Setter Property="IsVerticalCollapsed" Value="True" />
 

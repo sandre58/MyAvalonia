@@ -8,7 +8,7 @@
             xmlns:common="clr-namespace:MyNet.Avalonia.Showcase.Views.Common"
             x:DataType="vm:HomePageViewModel"
             ClipToBounds="False"
-            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Display Title}" my:IconAssist.Icon="{Binding Icon}"
             mc:Ignorable="d">
     <common:PageHeader Header="{my:Loc Home}"
                        Icon="{Binding Icon}">

@@ -11,8 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Avalonia.Media;
-using MyNet.Avalonia;
-using MyNet.Avalonia.Resources;
 using MyNet.Globalization.Facade;
 
 namespace MyNet.Avalonia.Colors;

@@ -10,7 +10,6 @@ using System.Globalization;
 using System.Linq;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
-using MyNet.Collections;
 
 #pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;
@@ -44,5 +43,6 @@ public class NullFallbackConverter : IValueConverter, IMultiValueConverter
     /// <inheritdoc/>
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => GetValueOrFallback([value, parameter]);
 
-    private static object GetValueOrFallback(IEnumerable<object?> values) => values.NotNull().FirstOrDefault() ?? BindingOperations.DoNothing;
+    private static object GetValueOrFallback(IEnumerable<object?> values) =>
+        values.FirstOrDefault(x => x is not null) ?? BindingOperations.DoNothing;
 }

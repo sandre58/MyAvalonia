@@ -10,7 +10,7 @@
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
             x:DataType="vm:BorderPageViewModel"
-            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Translate Title}" my:IconAssist.Icon="{Binding Icon}"
+            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Display Title}" my:IconAssist.Icon="{Binding Icon}"
             ClipToBounds="False">
 
     <v:ShowcaseView ShowContent="False" ShowIcon="False">

@@ -13,7 +13,7 @@
              x:DataType="vm:ProgressBarPageViewModel"
              x:Name="Root"
              Theme="{StaticResource {x:Type ContentPage}}"
-             Header="{my:Translate Title}"
+             Header="{my:Display Title}"
              my:IconAssist.Icon="{Binding Icon}"
              ClipToBounds="False">
 

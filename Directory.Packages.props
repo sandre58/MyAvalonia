@@ -34,6 +34,7 @@
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0-preview.4.26230.115"/>
         <PackageVersion Include="MyNet.Humanizer" Version="19.0.0"/>
         <PackageVersion Include="MyNet.Observable" Version="19.0.0"/>
+        <PackageVersion Include="MyNet.Primitives" Version="19.0.0"/>
         <PackageVersion Include="MyNet.UI" Version="19.0.0"/>
         <PackageVersion Include="MyNet.Utilities" Version="19.0.0"/>
         <PackageVersion Include="MyNet.Generator" Version="19.0.0"/>

@@ -8,11 +8,9 @@ using System.Diagnostics.CodeAnalysis;
 using Avalonia.Media;
 using MyNet.Avalonia.Colors;
 
-
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
-
 
 /// <summary>
 /// Parses color names and hex strings into <see cref="Color"/> values.
@@ -55,10 +53,9 @@ public static class ColorParsingExtensions
                     return namedColor;
             }
 
-            if (Color.TryParse(colorName, out var color))
-                return color;
-
-            return !colorName.StartsWith('#') && Color.TryParse($"#{colorName}", out color) ? color : null;
+            return Color.TryParse(colorName, out var color)
+                ? color
+                : !colorName.StartsWith('#') && Color.TryParse($"#{colorName}", out color) ? color : null;
         }
     }
 }

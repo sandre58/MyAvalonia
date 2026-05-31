@@ -62,7 +62,7 @@
                                             <Setter Property="ContentTemplate">
                                                 <Setter.Value>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{my:Translate Casing=Title}" />
+                                                        <TextBlock Text="{my:Display Casing=Title}" />
                                                     </DataTemplate>
                                                 </Setter.Value>
                                             </Setter>

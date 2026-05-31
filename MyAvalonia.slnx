@@ -59,8 +59,13 @@
     <File Path="LICENSE" />
     <File Path="README.md" />
   </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/MyNet.Avalonia.Geography.Tests/MyNet.Avalonia.Geography.Tests.csproj" />
+    <Project Path="tests/MyNet.Avalonia.Tests/MyNet.Avalonia.Tests.csproj" />
+  </Folder>
   <Project Path="src/MyNet.Avalonia.Controls/MyNet.Avalonia.Controls.csproj" />
   <Project Path="src/MyNet.Avalonia.Extended/MyNet.Avalonia.Extended.csproj" />
+  <Project Path="src/MyNet.Avalonia.Geography/MyNet.Avalonia.Geography.csproj" />
   <Project Path="src/MyNet.Avalonia.Theme/MyNet.Avalonia.Theme.csproj" />
   <Project Path="src/MyNet.Avalonia/MyNet.Avalonia.csproj" />
 </Solution>

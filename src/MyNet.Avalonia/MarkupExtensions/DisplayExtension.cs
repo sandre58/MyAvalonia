@@ -7,6 +7,7 @@
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using MyNet.Avalonia.Converters;
+using MyNet.Globalization.Localization.Translation;
 using MyNet.Text.TextCasing;
 
 namespace MyNet.Avalonia.MarkupExtensions;
@@ -18,65 +19,57 @@ namespace MyNet.Avalonia.MarkupExtensions;
 /// <example>
 /// <code>
 /// &lt;Setter Property="my:ClipboardAssist.Content" Value="{my:Display Content, RelativeSource={RelativeSource Self}}" /&gt;
-/// &lt;TextBlock Text="{my:Display Date, Format=LongDatePattern, Casing=Title, RelativeSource={RelativeSource AncestorType=Page}}" /&gt;
+/// &lt;TextBlock Text="{my:Display Count, Format=ItemsCount, Style=Abbreviation, Quantity=True}" /&gt;
+/// &lt;TextBlock Text="{my:Display Date, Format=LongDatePattern, Casing=Title}" /&gt;
 /// </code>
 /// </example>
-public class DisplayExtension : GlobalizationExtensionBase
+public class DisplayExtension() : GlobalizationExtensionBase(updateOnCultureChanged: true, updateOnTimeZoneChanged: true)
 {
-    /// <summary>
-    /// Initializes a new instance with culture and time zone change tracking enabled.
-    /// </summary>
-    public DisplayExtension()
-        : base(updateOnCultureChanged: true, updateOnTimeZoneChanged: true) { }
-
-    /// <summary>
-    /// Initializes a new instance for the given binding path.
-    /// </summary>
-    /// <param name="path">The property path to bind.</param>
     public DisplayExtension(string path)
         : this() => Path = path;
 
     /// <summary>
-    /// Gets or sets the binding path.
+    /// Gets or sets the property path to bind for the value to display. If empty, binds to the current data context.
     /// </summary>
     public string Path { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the letter casing to apply.
+    /// Gets or sets the letter casing to apply to the displayed value (e.g., normal, upper, lower, title).
     /// </summary>
     public LetterCasing Casing { get; set; } = LetterCasing.Normal;
 
     /// <summary>
-    /// Gets or sets the format string (converter parameter).
+    /// Gets or sets the format resource key passed to <see cref="StringConverter"/>.
     /// </summary>
     public string? Format { get; set; }
 
     /// <summary>
-    /// Gets or sets whether pluralization rules apply to the format string.
+    /// Gets or sets the translation display style for resource keys and humanized values.
     /// </summary>
-    public bool Pluralize { get; set; }
+    public DisplayStyle Style { get; set; } = DisplayStyle.Default;
 
     /// <summary>
-    /// Gets or sets whether abbreviated translations are used for enums.
+    /// Gets or sets a value indicating whether the bound value is used as <see cref="TranslationOptions.Quantity"/>
+    /// when translating the <see cref="Format"/> resource key (for pluralization).
     /// </summary>
-    public bool Abbreviate { get; set; }
+    public bool Quantity { get; set; }
 
     /// <summary>
-    /// Gets or sets the element name for the binding source.
+    /// Gets or sets the name of the element to bind to as the source of the value. If set, <see cref="Source"/> and <see cref="RelativeSource"/> are ignored.
     /// </summary>
     public string? ElementName { get; set; }
 
     /// <summary>
-    /// Gets or sets the relative source for the binding.
+    /// Gets or sets the relative source to bind to as the source of the value. Ignored if <see cref="ElementName"/> is set.
     /// </summary>
     public RelativeSource? RelativeSource { get; set; }
 
     /// <summary>
-    /// Gets or sets the binding source object.
+    /// Gets or sets the explicit source object to bind to as the source of the value. Ignored if <see cref="ElementName"/> is set.
     /// </summary>
     public object? Source { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override BindingBase CreateBinding()
     {
         var binding = new ReflectionBinding(string.IsNullOrEmpty(Path) ? "." : Path)
@@ -96,9 +89,9 @@ public class DisplayExtension : GlobalizationExtensionBase
         return binding;
     }
 
-    /// <inheritdoc />
-    protected override IMultiValueConverter CreateConverter() => new StringConverter(Casing, Pluralize, Abbreviate);
+    /// <inheritdoc/>
+    protected override IMultiValueConverter CreateConverter() => LocalizationMarkupConverterFactory.Create(Casing, Style, Quantity);
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override object? CreateConverterParameter() => Format;
 }

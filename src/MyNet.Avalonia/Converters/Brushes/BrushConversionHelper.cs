@@ -88,7 +88,7 @@ internal static class BrushConversionHelper
             baseColor,
             middleLighten ?? (-middleDarken ?? 0.0));
 
-        stops.Insert(1, new GradientStop { Color = computedMiddle, Offset = middleOffset });
+        stops.Insert(1, new() { Color = computedMiddle, Offset = middleOffset });
     }
 
     /// <summary>

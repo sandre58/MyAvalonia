@@ -7,7 +7,7 @@
 using System;
 using Avalonia.Data;
 using Avalonia.Metadata;
-using MyNet.Avalonia.Converters;
+using MyNet.Avalonia.Theme.Converters;
 
 namespace MyNet.Avalonia.Theme.MarkupExtensions;
 

@@ -161,8 +161,7 @@ public sealed class DateTimeConverter(DateTimeConverterKind dateTimeConverterKin
         DateTimeOffset dateTimeOffset => dateTimeOffset,
         DateTime date => date.Kind switch
         {
-            DateTimeKind.Utc => new DateTimeOffset(date),
-            DateTimeKind.Local => new DateTimeOffset(date),
+            DateTimeKind.Utc or DateTimeKind.Local => new DateTimeOffset(date),
             _ => new DateTimeOffset(DateTime.SpecifyKind(date, DateTimeKind.Utc))
         },
         DateOnly date => new DateTimeOffset(date.BeginningOfDay()),

@@ -11,7 +11,7 @@
              x:DataType="vm:PaginationPageViewModel"
              x:Name="Root"
              Theme="{StaticResource {x:Type ContentPage}}"
-             Header="{my:Translate Title}"
+             Header="{my:Display Title}"
              my:IconAssist.Icon="{Binding Icon}"
              mc:Ignorable="d"
              xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors">

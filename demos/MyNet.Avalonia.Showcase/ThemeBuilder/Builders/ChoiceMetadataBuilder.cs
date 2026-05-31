@@ -8,7 +8,6 @@ using System;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
 using MyNet.Observable;
-using MyNet.Observable.Translatables;
 
 namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 
@@ -57,7 +56,7 @@ internal sealed class ChoiceMetadataBuilder
     /// <returns>The current instance of the ChoiceMetadataBuilder, allowing for method chaining.</returns>
     public ChoiceMetadataBuilder DisplayName(string resourceKey)
     {
-        _displayNameFunc = new StringTranslatable(resourceKey);
+        _displayNameFunc = new LocalizedString(resourceKey);
         return this;
     }
 

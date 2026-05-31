@@ -255,7 +255,7 @@
                                     my:DisableAssist.IsDisablable="False">
                                 <Button.ContentTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{my:Translate Casing=Title}" />
+                                        <TextBlock Text="{my:Display Casing=Title}" />
                                     </DataTemplate>
                                 </Button.ContentTemplate>
                             </Button>
@@ -474,14 +474,14 @@
                                         HorizontalAlignment="Stretch"
                                         Classes="variant-text size-sm"
                                         my:DisableAssist.IsDisablable="False"
-                                        Content="{my:TranslateTextBlock DisplayDateContext, Format='MMM', Casing=Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Content="{my:DisplayTextBlock DisplayDateContext, Format='MMM', Casing=Title, RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False" />
                                 <Button Name="{x:Static my:Calendar.PartYearButton}"
                                         Grid.Column="1"
                                         HorizontalAlignment="Stretch"
                                         Classes="variant-text size-sm"
                                         my:DisableAssist.IsDisablable="False"
-                                        Content="{my:TranslateTextBlock DisplayDateContext, Format='yyyy', FallbackValue='', RelativeSource={RelativeSource TemplatedParent}}"
+                                        Content="{my:DisplayTextBlock DisplayDateContext, Format='yyyy', FallbackValue='', RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False" />
                                 <Button Name="{x:Static my:Calendar.PartHeaderButton}"
                                         Grid.Column="0"
@@ -489,7 +489,7 @@
                                         HorizontalAlignment="Stretch"
                                         Classes="variant-text size-sm"
                                         my:DisableAssist.IsDisablable="False"
-                                        Content="{my:TranslateTextBlock DisplayDateContext, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Content="{my:DisplayTextBlock DisplayDateContext, RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False"
                                         IsVisible="False" />
                             </Grid>

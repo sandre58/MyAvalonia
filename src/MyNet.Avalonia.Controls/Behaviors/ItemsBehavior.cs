@@ -11,8 +11,9 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
-using MyNet.Observable.Translatables;
-using MyNet.Utilities;
+using MyNet.Avalonia.MarkupExtensions;
+using MyNet.Observable;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Controls.Behaviors;
 
@@ -53,25 +54,28 @@ public static class ItemsBehavior
         IEnumerable? values;
         if (type.IsEnum)
         {
-            values = Enum.GetValues(type).Cast<Enum>().Where(x => !excludedValues.Contains(x)).Select(x => new EnumTranslatable(x));
+            values = LocalizedEnumSource.CreateSystemEnumList(type, excludedValues);
+            sender.SelectedValueBinding = CompiledBinding.Create<LocalizedEnum, Enum?>(x => x.Value);
         }
-        else if (type.IsAssignableTo(typeof(IEnumeration)))
+        else if (type.IsAssignableTo(typeof(ISmartEnum)))
         {
-            values = EnumClass.GetAll(type).Cast<IEnumeration>().Where(x => !excludedValues.Contains(x)).Select(x => new EnumClassTranslatable(x));
+            values = LocalizedEnumSource.CreateSmartEnumList(type, excludedValues);
+            sender.SelectedValueBinding = CompiledBinding.Create<LocalizedSmartEnum, ISmartEnum?>(x => x.Value);
         }
         else
         {
             return;
         }
 
-        sender.SelectedValueBinding = CompiledBinding.Create<EnumTranslatable, Enum?>(x => x.Value);
         sender.ItemsSource = values;
         sender.SelectedValue = currentSelectedValue;
 
         if (GetUseDisplayMember(sender))
         {
             sender.ItemTemplate = null;
-            sender.DisplayMemberBinding = CompiledBinding.Create<EnumTranslatable, string>(x => x.Display);
+            sender.DisplayMemberBinding = type.IsEnum
+                ? CompiledBinding.Create<LocalizedEnum, string>(x => x.Display)
+                : CompiledBinding.Create<LocalizedSmartEnum, string>(x => x.Display);
         }
     }
 

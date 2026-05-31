@@ -10,7 +10,6 @@ using DynamicData;
 using Material.Icons;
 using MyNet.Observable;
 using MyNet.Observable.Attributes;
-using MyNet.Observable.Translatables;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Base;
 
@@ -20,7 +19,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Base;
 internal sealed class PagesGroupViewModel : LocalizableObject, IMenuItemViewModel
 {
     [SuppressMessage("Usage", "CA2213:disposable fields should be disposed", Justification = "The field is properly cleaned up in the Cleanup method.")]
-    private readonly StringTranslatable _title;
+    private readonly LocalizedString _title;
     private readonly ObservableCollection<PageViewModel> _pages = [];
 
     /// <summary>
@@ -36,7 +35,7 @@ internal sealed class PagesGroupViewModel : LocalizableObject, IMenuItemViewMode
     }
 
     /// <summary>
-    /// Gets the title of the group, which is a localized string based on the provided resource key. The title is generated using the <see cref="StringTranslatable"/> class, allowing for dynamic localization support. Ensure that the resource key provided in the constructor corresponds to a valid entry in the localization resources to avoid null values.
+    /// Gets the title of the group, which is a localized string based on the provided resource key.
     /// </summary>
     [UpdateOnCultureChanged]
     public string? Title => _title.Value;
@@ -67,10 +66,5 @@ internal sealed class PagesGroupViewModel : LocalizableObject, IMenuItemViewMode
     /// <summary>
     /// Performs cleanup of resources used by the view model, including disposing of the title translatable object. This method is called when the view model is being disposed, allowing for proper resource management and preventing memory leaks. Ensure that any additional disposable resources are also cleaned up in this method as needed.
     /// </summary>
-    protected override void Cleanup()
-    {
-        base.Cleanup();
-
-        _title.Dispose();
-    }
+    protected override void Cleanup() => base.Cleanup();
 }

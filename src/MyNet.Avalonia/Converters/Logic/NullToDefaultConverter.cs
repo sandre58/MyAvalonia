@@ -8,7 +8,6 @@ using System;
 using System.Globalization;
 using Avalonia.Data.Converters;
 using MyNet.Reflection;
-using MyNet.Utilities;
 
 #pragma warning disable IDE0130
 namespace MyNet.Avalonia.Converters;

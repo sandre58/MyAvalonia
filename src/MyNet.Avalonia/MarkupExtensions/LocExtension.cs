@@ -8,36 +8,32 @@ using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Metadata;
 using MyNet.Avalonia.Converters;
-using MyNet.Humanizer;
-using MyNet.Observable.Translatables;
+using MyNet.Globalization.Localization.Translation;
+using MyNet.Text.TextCasing;
 
 namespace MyNet.Avalonia.MarkupExtensions;
 
 /// <summary>
 /// Markup extension that provides automatic translation of resource keys for Avalonia UI elements.
 /// </summary>
-/// <remarks>
-/// This extension uses a static cache to share <see cref="StringTranslatable"/> instances across multiple bindings,
-/// improving memory efficiency and performance. The translated strings automatically update when the culture changes.
-/// </remarks>
 /// <example>
 /// <code>
 /// &lt;TextBlock Text="{my:Loc MyResourceKey}" /&gt;
-/// &lt;TextBlock Text="{my:Loc MyResourceKey, MyResourceFile}" /&gt;
-/// &lt;TextBlock Text="{my:Loc MyResourceKey, Casing=Title}" /&gt;
+/// &lt;TextBlock Text="{my:Loc MyResourceKey, Filename=MyResourceFile}" /&gt;
+/// &lt;TextBlock Text="{my:Loc MyResourceKey, Style=Abbreviation, Casing=Title}" /&gt;
 /// </code>
 /// </example>
 public class LocExtension : GlobalizationExtensionBase
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="LocExtension"/> class.
+    /// Initializes a new instance of the <see cref="LocExtension"/> class for the given resource key.
     /// </summary>
     /// <param name="key">The resource key to translate.</param>
     public LocExtension(string key)
         : base(true, false) => Key = key;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="LocExtension"/> class with a specific format string.
+    /// Initializes a new instance of the <see cref="LocExtension"/> class for the given resource key and format.
     /// </summary>
     /// <param name="key">The resource key to translate.</param>
     /// <param name="format">The format string to apply to the translated value.</param>
@@ -49,46 +45,43 @@ public class LocExtension : GlobalizationExtensionBase
     }
 
     /// <summary>
-    /// Gets or sets the resource key to translate.
+    /// Gets or sets the resource key to translate. This is the key used to look up the localized string in the resource files.
     /// </summary>
     [ConstructorArgument("key")]
     public string Key { get; set; }
 
     /// <summary>
-    /// Gets or sets the name of the resource file containing the translation (optional).
+    /// Gets or sets the name of the resource file to use for translation. If not set, the default resource file is used.
     /// </summary>
     public string? Filename { get; set; }
 
     /// <summary>
-    /// Gets or sets the format string to apply to the translated value (optional).
+    /// Gets or sets the format string to apply to the translated value.
     /// </summary>
     [ConstructorArgument("format")]
     public string? Format { get; set; }
 
     /// <summary>
-    /// Gets or sets the letter casing to apply to the translated string.
+    /// Gets or sets the letter casing to apply to the translated value.
     /// </summary>
     public LetterCasing Casing { get; set; } = LetterCasing.Normal;
 
     /// <summary>
-    /// Creates the main binding for the translation.
+    /// Gets or sets the translation display style (default, abbreviation, symbol, …).
     /// </summary>
-    /// <returns>A binding to a <see cref="Localizable"/> instance.</returns>
+    public DisplayStyle Style { get; set; } = DisplayStyle.Default;
+
+    /// <inheritdoc/>
     protected override BindingBase CreateBinding() => new ReflectionBinding
     {
         Source = new Localizable(Key, Filename),
         Mode = BindingMode.OneTime
     };
 
-    /// <summary>
-    /// Creates the multi-value converter for the translation.
-    /// </summary>
-    /// <returns>The <see cref="IMultiValueConverter"/> for string localization.</returns>
-    protected override IMultiValueConverter CreateConverter() => StringConverter.Converters[Casing];
+    /// <inheritdoc/>
+    protected override IMultiValueConverter CreateConverter() =>
+        LocalizationMarkupConverterFactory.Create(Casing, Style, quantityFromValue: false);
 
-    /// <summary>
-    /// Creates the converter parameter (format string) for the translation.
-    /// </summary>
-    /// <returns>The format string, or null if not set.</returns>
+    /// <inheritdoc/>
     protected override object? CreateConverterParameter() => Format;
 }

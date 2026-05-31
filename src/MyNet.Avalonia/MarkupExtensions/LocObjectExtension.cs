@@ -1,21 +1,20 @@
 // -----------------------------------------------------------------------
-// <copyright file="LocObjectExtension.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="LocObjectExtension.cs" company="StÃ©phane ANDRE">
+// Copyright (c) StÃ©phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
-using MyNet.Avalonia.Localization;
-using MyNet.Observable.Translatables;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.MarkupExtensions;
 
 /// <summary>
-/// Markup extension that provides automatic translation of resource keys and returns a <see cref="LocalizableString"/> object.
+/// Markup extension that provides automatic translation of resource keys and returns a <see cref="LocalizedString"/> object.
 /// </summary>
 /// <remarks>
 /// This extension is designed for properties that expect an object value rather than a binding,
-/// such as attached properties. The returned <see cref="LocalizableString"/> object automatically
+/// such as attached properties. The returned <see cref="LocalizedString"/> object automatically
 /// updates when the culture changes.
 /// </remarks>
 /// <example>
@@ -45,7 +44,7 @@ public class LocObjectExtension : LocExtension
     /// Provides the value for the markup extension.
     /// </summary>
     /// <param name="serviceProvider">The service provider for the markup extension.</param>
-    /// <returns>A <see cref="LocalizableString"/> instance that updates automatically.</returns>
+    /// <returns>A <see cref="LocalizedString"/> instance that updates automatically.</returns>
     public override object ProvideValue(IServiceProvider serviceProvider)
-        => new StringTranslatable(Key, Casing, Filename);
+        => new LocalizedString(Key, Casing, Filename);
 }

@@ -11,7 +11,6 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Registry;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
-using MyNet.Observable.Translatables;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 
@@ -38,7 +37,7 @@ internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder)
         var choiceMetadata = builder.GetMetadata(controlName);
         var allOptions = definition.CustomSettings.Select(optionFactory.Create).ToList();
         var availableOptions = allOptions.Where(x => string.IsNullOrEmpty(x.Group)).Select(x => x.Option);
-        var availableGroups = allOptions.Where(x => !string.IsNullOrEmpty(x.Group)).GroupBy(x => x.Group).Select(x => new GroupOptionViewModel([.. x.Select(y => y.Option)], new StringTranslatable(x.Key)));
+        var availableGroups = allOptions.Where(x => !string.IsNullOrEmpty(x.Group)).GroupBy(x => x.Group).Select(x => new GroupOptionViewModel([.. x.Select(y => y.Option)], new LocalizedString(x.Key)));
 
         return new(definition, choiceMetadata.DisplayName)
         {

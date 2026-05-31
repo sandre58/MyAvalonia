@@ -8,12 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Markup.Xaml;
-using MyNet.Humanizer;
-using MyNet.Observable.Translatables;
-using MyNet.Utilities;
+using MyNet.Avalonia.Geography;
+using MyNet.Geography;
+using MyNet.Humanizer.Facade;
 using MyNet.Utilities.Generator;
-using MyNet.Utilities.Geography;
-using MyNet.Utilities.Geography.Extensions;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 
@@ -29,12 +27,23 @@ internal sealed class RandomCountriesExtension : MarkupExtension
 
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        var countries = All ? EnumClass.GetAll<Country>().OrderBy(x => x.Name) : RandomGenerator.ListItems(EnumClass.GetAll<Country>(), RandomGenerator.Int(Min, Max)).OrderBy(x => x.Name);
+        var allCountries = CountrySource.GetAllOrderedByDisplay().ToList();
+        var countries = All
+            ? allCountries.OrderBy(x => x.Name)
+            : RandomGenerator.ListItems(allCountries, RandomGenerator.Int(Min, Max)).OrderBy(x => x.Name);
 
         return ByAlpha
-            ? countries.GroupBy(x => x.Humanize()![..1]).Select(x => new CountriesWrapper(x.OrderBy(y => y.GetDisplayName()), x.Key)).OrderBy(x => x.DisplayName.Value).ToList()
+            ? countries.GroupBy(x => x.Humanize()![..1]).Select(x => new CountriesWrapper(x.OrderBy(y => y.Humanize()), x.Key)).OrderBy(x => x.DisplayText).ToList()
             : countries.ToList();
     }
 }
 
-public class CountriesWrapper(IEnumerable<Country> item, string key) : DisplayWrapper<IEnumerable<Country>>(item, key);
+/// <summary>
+/// Groups countries under an alphabetical header for tree views.
+/// </summary>
+public sealed class CountriesWrapper(IEnumerable<Country> item, string displayText)
+{
+    public IEnumerable<Country> Item { get; } = item;
+
+    public string DisplayText { get; } = displayText;
+}

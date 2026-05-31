@@ -15,7 +15,7 @@ using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Humanizer;
-using MyNet.Observable.Translatables;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.Extensions;
 

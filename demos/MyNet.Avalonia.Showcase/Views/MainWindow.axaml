@@ -55,7 +55,7 @@
                 </DropDownButton.Flyout>
                 <DropDownButton.ContentTemplate>
                     <DataTemplate x:DataType="globalization:CultureInfo">
-                        <Image Width="20" Source="{Binding Converter={x:Static c:CountryConverter.To24}}" ToolTip.Tip="{my:Translate Casing=Title}" />
+                        <Image Width="20" Source="{Binding Converter={x:Static c:CountryConverter.To24}}" ToolTip.Tip="{my:Display Casing=Title}" />
                     </DataTemplate>
                 </DropDownButton.ContentTemplate>
             </DropDownButton>
