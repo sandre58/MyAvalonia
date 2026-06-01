@@ -25,6 +25,14 @@ using MyNet.Primitives;
 namespace MyNet.Avalonia.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
+/// <summary>
+/// Canvas overlay that stacks modal and non-modal <see cref="Primitives.OverlayDialog"/> instances above its parent surface.
+/// </summary>
+/// <remarks>
+/// Hosts register with <see cref="OverlayDialogHostManager"/> when attached to the visual tree.
+/// Prefer declaring a host in XAML with <see cref="HostId"/> rather than relying on automatic window injection.
+/// See <c>Dialogs/Overlay/README.md</c>.
+/// </remarks>
 public class OverlayDialogHost : Canvas
 {
     private static readonly Animation MaskAppearAnimation = CreateOpacityAnimation(true);
@@ -66,6 +74,9 @@ public class OverlayDialogHost : Canvas
 
     public bool IsAnimationDisabled { get; set; }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether this host covers the entire window client area and may drag the window from its mask when no modal mask is shown.
+    /// </summary>
     public bool IsTopLevel { get; set; }
 
     private static Animation CreateOpacityAnimation(bool appear)
@@ -84,6 +95,9 @@ public class OverlayDialogHost : Canvas
         return animation;
     }
 
+    /// <summary>
+    /// Gets or sets the logical host identifier used with <see cref="OverlayDialogHostManager.GetHost"/>.
+    /// </summary>
     public string? HostId { get; set; }
 
     public static readonly StyledProperty<IBrush?> OverlayMaskBrushProperty =

@@ -17,14 +17,36 @@ using MyNet.Avalonia.Controls.Internals;
 namespace MyNet.Avalonia.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
+/// <summary>
+/// Global registry for <see cref="OverlayDialogHost"/> instances and host resolution used when presenting overlay dialogs.
+/// </summary>
+/// <remarks>
+/// See <c>Dialogs/Overlay/README.md</c> for lookup rules, <see cref="HostId"/>, <c>TopLevelHashCode</c>, and automatic host creation.
+/// </remarks>
 public static class OverlayDialogHostManager
 {
     private static readonly ConcurrentDictionary<OverlayDialogHostKey, OverlayDialogHost> Hosts = new();
 
+    /// <summary>
+    /// Registers a host for the given <paramref name="id"/> and top-level <paramref name="hash"/>.
+    /// </summary>
     public static void Register(OverlayDialogHost host, string? id, int? hash) => Hosts.AddOrUpdate(new(id, hash), host, (_, _) => host);
 
+    /// <summary>
+    /// Removes a host from the registry.
+    /// </summary>
     public static void Unregister(string? id, int? hash) => Hosts.TryRemove(new(id, hash), out _);
 
+    /// <summary>
+    /// Resolves a registered host, or creates a top-level host on the target window when <paramref name="id"/> is <see langword="null"/>.
+    /// </summary>
+    /// <param name="id">
+    /// Host identifier from <see cref="OverlayDialogHost.HostId"/>. When not <see langword="null"/>, only registered hosts are returned (no auto-creation).
+    /// </param>
+    /// <param name="hash">
+    /// Hash of the owning <see cref="Avalonia.Controls.TopLevel"/> (typically <c>GetHashCode()</c>). Used for exact lookup and window selection.
+    /// </param>
+    /// <returns>The resolved host, or <see langword="null"/> when no host matches and none can be created.</returns>
     public static OverlayDialogHost? GetHost(string? id, int? hash)
     {
         if (OverlayDialogHostLookupHelper.TryGetExactMatch(Hosts, id, hash, out var exactHost)) return exactHost;

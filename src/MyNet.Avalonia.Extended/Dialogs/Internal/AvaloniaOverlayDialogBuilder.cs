@@ -82,7 +82,7 @@ internal static class AvaloniaOverlayDialogBuilder
         control.ActualVerticalAnchor = options.VerticalAnchor;
         control.HorizontalOffset = control.HorizontalAnchor == HorizontalPosition.Center ? null : options.HorizontalOffset;
         control.VerticalOffset = options.VerticalAnchor == VerticalPosition.Center ? null : options.VerticalOffset;
-        control.IsCloseButtonVisible = options.IsCloseButtonVisible;
+        control.IsCloseButtonVisible = options.IsCloseButtonVisible ?? true;
         control.CanLightDismiss = options.CanLightDismiss || dialogOptions.CloseOnOverlayClick;
         control.CanResize = options.CanResize;
 

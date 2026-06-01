@@ -20,6 +20,12 @@ using MyNet.Primitives;
 namespace MyNet.Avalonia.Controls.Primitives;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
+/// <summary>
+/// Overlay dialog chrome with title area, optional close button, positioning anchors, and layer management.
+/// </summary>
+/// <remarks>
+/// Call <see cref="Close"/> to dismiss; override in derived types to supply a typed <see cref="ResultEventArgs.Result"/>.
+/// </remarks>
 [TemplatePart(PartCloseButton, typeof(Button))]
 [TemplatePart(PartTitleArea, typeof(Panel))]
 [PseudoClasses(PseudoClassName.Modal, PseudoClassName.FullScreen)]
@@ -72,7 +78,20 @@ public class OverlayDialog : OverlayFeedbackElement
 
     public bool CanLightDismiss { get; set; }
 
-    public bool? IsCloseButtonVisible { get; set; }
+    /// <summary>
+    /// Defines the <see cref="IsCloseButtonVisible"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsCloseButtonVisibleProperty =
+        AvaloniaProperty.Register<OverlayDialog, bool>(nameof(IsCloseButtonVisible), true);
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the chrome close button is shown. Defaults to <see langword="true"/>.
+    /// </summary>
+    public bool IsCloseButtonVisible
+    {
+        get => GetValue(IsCloseButtonVisibleProperty);
+        set => SetValue(IsCloseButtonVisibleProperty, value);
+    }
 
     public bool IsFullScreen
     {
@@ -231,7 +250,8 @@ public class OverlayDialog : OverlayFeedbackElement
 
     #endregion
 
-    public override void Close() { }
+    /// <inheritdoc />
+    public override void Close() => OnElementClosing(this, null);
 
     protected internal override void AnchorAndUpdatePositionInfo()
     {

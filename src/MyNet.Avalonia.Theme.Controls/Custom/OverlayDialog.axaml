@@ -68,6 +68,10 @@
             </ControlTemplate>
         </Setter>
 
+        <Style Selector="^[IsCloseButtonVisible=False] /template/ Button#PART_CloseButton">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+
         <!-- Full Screen state -->
         <Style Selector="^:full-screen">
             <Setter Property="CornerRadius" Value="0" />

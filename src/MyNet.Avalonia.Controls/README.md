@@ -169,6 +169,10 @@ Pagination and TextPicker helpers:
 
 Other tested modules: `ItemsBehaviorHelper`, `OverlayDialogHostLookupHelper`, `StandardColorPalette`, `PositionToDockConverter`, `DateContext`, `WeekendDateSelector`.
 
+### Overlay dialogs
+
+`OverlayDialogHost`, `OverlayDialog`, and `OverlayDialogHostManager` provide modal/non-modal overlay presentation without `MyNet.UI`. See [`Dialogs/Overlay/README.md`](Dialogs/Overlay/README.md) for host registration, `HostId`, `TopLevelHashCode`, and automatic top-level host creation.
+
 ### Headless UI tests
 
 Headless tests live in [`tests/MyNet.Avalonia.Controls.Headless.Tests`](../../tests/MyNet.Avalonia.Controls.Headless.Tests/). They use [Avalonia Headless](https://docs.avaloniaui.net/docs/testing/headless-xunit) with `[AvaloniaFact]` to exercise control templates, layout, and interactions without a visible window.
