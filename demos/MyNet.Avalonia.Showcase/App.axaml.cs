@@ -21,6 +21,7 @@ using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extended;
 using MyNet.Avalonia.Extended.Busy;
 using MyNet.Avalonia.Extended.Commands;
+using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.Avalonia.Extended.Navigation;
 using MyNet.Avalonia.Extended.Schedulers;
 using MyNet.Avalonia.Extended.Services;
@@ -31,8 +32,10 @@ using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.Services;
 using MyNet.Avalonia.Showcase.ViewModels;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
+using MyNet.Avalonia.Showcase.ViewModels.Dialogs;
 using MyNet.Avalonia.Showcase.ViewModels.Pages;
 using MyNet.Avalonia.Showcase.Views;
+using MyNet.Avalonia.Showcase.Views.Dialogs;
 using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Controls;
 using MyNet.Avalonia.Theme.Diagnostics;
@@ -166,6 +169,7 @@ public class App : Application
             .AddAvaloniaBusy(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow)
             .AddNavigation()
             .AddViewLocators()
+            .AddAvaloniaDialogs(() => (ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow)
             .AddAvaloniaNavigation()
             .AddMyNetAvaloniaShowcaseResources();
 
@@ -291,6 +295,7 @@ public class App : Application
     {
         var typeResolver = services.GetRequiredService<ITypeResolver>();
         pagesProvider.SelectMany(x => x.GetPageAssociations()).ForEach(x => typeResolver.Register(x.ViewModelType, x.ViewType));
+        typeResolver.Register(typeof(LoginDialogViewModel), typeof(LoginDialogView));
         mainViewModel.AddMenuItem([.. pagesProvider.Select(x => CreateMenuItemViewModel(x, services))]);
     }
 

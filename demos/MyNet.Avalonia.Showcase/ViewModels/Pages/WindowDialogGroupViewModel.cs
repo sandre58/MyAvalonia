@@ -12,12 +12,13 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Dialogs;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
-using MyNet.Avalonia.Showcase.Views.Dialogs;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Humanizer;
 using MyNet.Observable;
 using MyNet.UI.Commands;
+using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
+using MyNet.UI.Locators.Factories;
 using MyNet.UI.Notifications;
 using MyNet.UI.Notifications.Models;
 using MyNet.Utilities;
@@ -30,9 +31,11 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 /// </summary>
 internal sealed class WindowDialogGroupViewModel : ObservableObject
 {
-    private static readonly WindowDialogService WindowDialogService = new();
-    private static readonly WindowMessageBoxService WindowMessageBoxService = new();
     private readonly INotificationPublisher _notificationPublisher;
+    private readonly IContentDialogService _contentDialogService;
+    private readonly IMessageBoxFactory _messageBoxFactory;
+    private readonly IViewFactory _viewFactory;
+    private readonly AvaloniaDialogHostOptions _hostOptions;
 
     private bool _isModal = true;
     private MessageBoxResultOption _buttons = MessageBoxResultOption.OkCancel;
@@ -55,10 +58,19 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
     /// <summary>
     /// Initializes a new instance of the <see cref="WindowDialogGroupViewModel"/> class.
     /// </summary>
-    /// <param name="notificationPublisher">Publishes toast notifications after dialog actions.</param>
-    public WindowDialogGroupViewModel(INotificationPublisher notificationPublisher)
+    public WindowDialogGroupViewModel(
+        INotificationPublisher notificationPublisher,
+        IContentDialogService contentDialogService,
+        IMessageBoxFactory messageBoxFactory,
+        IViewFactory viewFactory,
+        AvaloniaDialogHostOptions hostOptions)
     {
         _notificationPublisher = notificationPublisher;
+        _contentDialogService = contentDialogService;
+        _messageBoxFactory = messageBoxFactory;
+        _viewFactory = viewFactory;
+        _hostOptions = hostOptions;
+
         var builder = new ControlThemeBuilder()
             .AddRoles(ThemeRole.Information, ThemeRole.Success, ThemeRole.Warning, ThemeRole.Error)
             .AddValueAction(
@@ -94,27 +106,36 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
     private async Task ShowWindowDialogAsync()
     {
         var vm = new LoginDialogViewModel();
-        var view = new LoginDialogView { DataContext = vm };
 
         if (_isModal)
         {
-            var result = await WindowDialogService.ShowModalAsync(view, vm).ConfigureAwait(false);
+            var result = await _contentDialogService
+                .ShowAsync(vm, AvaloniaDialogOptions.ForWindow(vm, true))
+                .ConfigureAwait(false);
             ShowToasterResult(result, vm);
         }
         else
         {
-            await WindowDialogService.ShowAsync(view, vm).ConfigureAwait(false);
+            AvaloniaNonModalWindowDialogs.Show(vm, _viewFactory, _hostOptions.TopLevelProvider);
         }
     }
 
     private async Task ShowWindowMessageBoxAsync(MessageSeverity severity)
     {
-        var result = await WindowMessageBoxService.ShowAsync(
-            GetSampleMessage(severity),
-            severity.Humanize(),
-            _buttons,
-            severity).ConfigureAwait(false);
-        _notificationPublisher.Publish(new MessageNotification($"Result: {result}", severity: NotificationSeverity.Information));
+        var messageBox = _messageBoxFactory.Create(new MessageBoxOptions
+        {
+            Message = GetSampleMessage(severity),
+            Title = severity.Humanize(),
+            Severity = severity,
+            Buttons = _buttons
+        });
+
+        var result = await _contentDialogService
+            .ShowAsync<MessageBoxResult>(messageBox, AvaloniaDialogOptions.ForWindow(messageBox, true))
+            .ConfigureAwait(false);
+
+        var mapped = result.IsSuccess ? result.Value : MessageBoxResult.Cancel;
+        _notificationPublisher.Publish(new MessageNotification($"Result: {mapped}", severity: NotificationSeverity.Information));
     }
 
     private static MessageSeverity ToSeverity(ThemeRole role) => role switch
@@ -134,11 +155,11 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
         _ => "This is a dialog message."
     };
 
-    private void ShowToasterResult(bool? result, LoginDialogViewModel viewModel)
+    private void ShowToasterResult(DialogResult<bool> result, LoginDialogViewModel viewModel)
     {
-        if (!result.HasValue)
+        if (result.IsDismissed)
             _notificationPublisher.Publish(new MessageNotification("No result.", severity: NotificationSeverity.Warning));
-        else if (result.Value)
+        else if (result.IsSuccess)
             _notificationPublisher.Publish(new MessageNotification("Dialog has been validated.", severity: NotificationSeverity.Success));
         else
             _notificationPublisher.Publish(new MessageNotification("Dialog has been cancelled.", severity: NotificationSeverity.Error));
@@ -148,4 +169,3 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
             severity: NotificationSeverity.Information));
     }
 }
-

@@ -5,20 +5,40 @@
 // -----------------------------------------------------------------------
 
 using Material.Icons;
+using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
+using MyNet.UI.Dialogs.ContentDialogs;
+using MyNet.UI.Dialogs.MessageBox;
+using MyNet.UI.Locators.Factories;
 using MyNet.UI.Notifications;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
 internal sealed class DialogPageViewModel : ShowcaseViewModel
 {
-    public DialogPageViewModel(INotificationPublisher notificationPublisher)
+    public DialogPageViewModel(
+        INotificationPublisher notificationPublisher,
+        IContentDialogService contentDialogService,
+        IMessageBoxService messageBoxService,
+        IMessageBoxFactory messageBoxFactory,
+        IViewFactory viewFactory,
+        AvaloniaDialogHostOptions hostOptions)
         : base("Dialogs", [new ControlThemeBuilder()])
     {
-        WindowGroup = new WindowDialogGroupViewModel(notificationPublisher);
-        OverlayGroup = new OverlayDialogGroupViewModel(notificationPublisher);
+        WindowGroup = new WindowDialogGroupViewModel(
+            notificationPublisher,
+            contentDialogService,
+            messageBoxFactory,
+            viewFactory,
+            hostOptions);
+        OverlayGroup = new OverlayDialogGroupViewModel(
+            notificationPublisher,
+            contentDialogService,
+            messageBoxService,
+            viewFactory,
+            hostOptions);
     }
 
     /// <inheritdoc/>

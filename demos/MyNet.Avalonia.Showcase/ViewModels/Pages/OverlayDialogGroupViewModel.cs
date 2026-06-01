@@ -15,12 +15,13 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Dialogs;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
-using MyNet.Avalonia.Showcase.Views.Dialogs;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Humanizer;
 using MyNet.Observable;
 using MyNet.UI.Commands;
+using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
+using MyNet.UI.Locators.Factories;
 using MyNet.UI.Notifications;
 using MyNet.UI.Notifications.Models;
 using MyNet.Utilities;
@@ -33,9 +34,11 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 /// </summary>
 internal sealed class OverlayDialogGroupViewModel : ObservableObject
 {
-    private static readonly OverlayDialogService OverlayDialogService = new();
-    private static readonly OverlayMessageBoxService OverlayMessageBoxService = new();
     private readonly INotificationPublisher _notificationPublisher;
+    private readonly IContentDialogService _contentDialogService;
+    private readonly IMessageBoxService _messageBoxService;
+    private readonly IViewFactory _viewFactory;
+    private readonly AvaloniaDialogHostOptions _hostOptions;
 
     private bool _isModal = true;
     private bool _showCloseButton = true;
@@ -69,10 +72,19 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
     /// <summary>
     /// Initializes a new instance of the <see cref="OverlayDialogGroupViewModel"/> class.
     /// </summary>
-    /// <param name="notificationPublisher">Publishes toast notifications after dialog actions.</param>
-    public OverlayDialogGroupViewModel(INotificationPublisher notificationPublisher)
+    public OverlayDialogGroupViewModel(
+        INotificationPublisher notificationPublisher,
+        IContentDialogService contentDialogService,
+        IMessageBoxService messageBoxService,
+        IViewFactory viewFactory,
+        AvaloniaDialogHostOptions hostOptions)
     {
         _notificationPublisher = notificationPublisher;
+        _contentDialogService = contentDialogService;
+        _messageBoxService = messageBoxService;
+        _viewFactory = viewFactory;
+        _hostOptions = hostOptions;
+
         var builder = new ControlThemeBuilder()
             .AddRoles(ThemeRole.Information, ThemeRole.Success, ThemeRole.Warning, ThemeRole.Error)
             .AddValueAction(
@@ -141,37 +153,38 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
     private async Task ShowOverlayDialogAsync()
     {
         var vm = new LoginDialogViewModel();
-        var view = new LoginDialogView { DataContext = vm };
         var options = CreateOverlayOptions();
 
         if (_isModal)
         {
-            var result = await OverlayDialogService.ShowDialogCoreAsync(view, vm, null, options).ConfigureAwait(false);
+            var result = await _contentDialogService
+                .ShowAsync(vm, AvaloniaDialogOptions.ForOverlay(vm, true, options))
+                .ConfigureAwait(false);
             ShowToasterResult(result, vm);
         }
         else
         {
-            OverlayDialogService.Show(view, vm, null, options);
+            AvaloniaNonModalOverlayDialogs.Show(vm, _viewFactory, _hostOptions.TopLevelProvider, options);
         }
     }
 
     private async Task ShowOverlayMessageBoxAsync(MessageSeverity severity)
     {
-        var result = await OverlayMessageBoxService.ShowAsync(
+        var result = await _messageBoxService.ShowAsync(
             GetSampleMessage(severity),
             severity.Humanize(),
-            _buttons,
-            severity).ConfigureAwait(false);
+            severity,
+            _buttons).ConfigureAwait(false);
         _notificationPublisher.Publish(new MessageNotification($"Result: {result}", severity: NotificationSeverity.Information));
     }
 
     private async Task ShowOverlayDialogBoxAsync(MessageSeverity severity)
     {
-        var result = await OverlayMessageBoxService.ShowAsync(
+        var result = await _messageBoxService.ShowAsync(
             GetSampleMessage(severity),
             severity.Humanize(),
-            _buttons,
-            severity).ConfigureAwait(false);
+            severity,
+            _buttons).ConfigureAwait(false);
         _notificationPublisher.Publish(new MessageNotification($"Result: {result}", severity: NotificationSeverity.Information));
     }
 
@@ -201,11 +214,11 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
         _ => "This is a dialog message."
     };
 
-    private void ShowToasterResult(bool? result, LoginDialogViewModel viewModel)
+    private void ShowToasterResult(DialogResult<bool> result, LoginDialogViewModel viewModel)
     {
-        if (!result.HasValue)
+        if (result.IsDismissed)
             _notificationPublisher.Publish(new MessageNotification("No result.", severity: NotificationSeverity.Warning));
-        else if (result.Value)
+        else if (result.IsSuccess)
             _notificationPublisher.Publish(new MessageNotification("Dialog has been validated.", severity: NotificationSeverity.Success));
         else
             _notificationPublisher.Publish(new MessageNotification("Dialog has been cancelled.", severity: NotificationSeverity.Error));
@@ -215,4 +228,3 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
             severity: NotificationSeverity.Information));
     }
 }
-

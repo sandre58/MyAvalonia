@@ -7,7 +7,7 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
-using MyNet.UI.Dialogs.ContentDialogs;
+using MyNet.UI;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Extended.Controls;
@@ -21,10 +21,12 @@ public class WindowDialog : Window
 
     private void OnDataContextChanged(AvaloniaPropertyChangedEventArgs<object?> args)
     {
-        if (args.OldValue.Value is IDialogViewModel oldContext) oldContext.CloseRequest -= OnContextRequestClose;
+        if (args.OldValue.Value is IClosable oldContext)
+            oldContext.CloseRequested -= OnContextRequestClose;
 
-        if (args.NewValue.Value is IDialogViewModel newContext) newContext.CloseRequest += OnContextRequestClose;
+        if (args.NewValue.Value is IClosable newContext)
+            newContext.CloseRequested += OnContextRequestClose;
     }
 
-    private void OnContextRequestClose(object? sender, object? args) => Close(args);
+    private void OnContextRequestClose(object? sender, CloseRequestedEventArgs args) => Close(args.Force ? true : null);
 }

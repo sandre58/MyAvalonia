@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using MyNet.Avalonia.Showcase.ViewModels.Samples;
-using MyNet.UI.ViewModels.Dialogs;
+using MyNet.UI.ViewModels.Dialog;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Dialogs;
 
