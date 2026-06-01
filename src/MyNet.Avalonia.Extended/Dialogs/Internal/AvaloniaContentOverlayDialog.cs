@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using MyNet.Avalonia.Controls.Primitives;
+using MyNet.Avalonia.Controls;
 
 namespace MyNet.Avalonia.Extended.Dialogs.Internal;
 

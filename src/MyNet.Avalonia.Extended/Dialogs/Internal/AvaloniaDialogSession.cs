@@ -5,8 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia.Controls;
-using MyNet.Avalonia.Controls.Primitives;
+using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extended.Controls;
 
 namespace MyNet.Avalonia.Extended.Dialogs.Internal;

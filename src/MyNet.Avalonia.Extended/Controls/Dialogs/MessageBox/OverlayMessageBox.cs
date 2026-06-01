@@ -9,7 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
-using MyNet.Avalonia.Controls.Primitives;
+using MyNet.Avalonia.Controls;
 using MyNet.UI.Dialogs.MessageBox;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
