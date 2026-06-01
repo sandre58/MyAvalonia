@@ -13,6 +13,7 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
         <PackageReference Include="MyNet.Globalization" />
         <PackageReference Include="MyNet.Humanizer" />
+        <PackageReference Include="MyNet.Fakers" />
     </ItemGroup>
 
     <ItemGroup>

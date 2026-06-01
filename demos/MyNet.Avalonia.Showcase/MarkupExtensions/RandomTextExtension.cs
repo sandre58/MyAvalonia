@@ -6,7 +6,8 @@
 
 using System;
 using Avalonia.Markup.Xaml;
-using MyNet.Utilities.Generator;
+using MyNet.Fakers.Static;
+using MyNet.Generator.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 
@@ -21,5 +22,5 @@ internal sealed class RandomTextExtension : MarkupExtension
     public int MaxSentences { get; set; } = 2;
 
     public override object ProvideValue(IServiceProvider serviceProvider)
-        => SentenceGenerator.Paragraph(RandomGenerator.Int(MinWords, MaxWords), RandomGenerator.Int(MinSentences, MaxSentences));
+        => Faker.Texts.Paragraph(RandomGenerator.Current.Int(MinWords, MaxWords), RandomGenerator.Current.Int(MinSentences, MaxSentences));
 }

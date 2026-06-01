@@ -10,8 +10,8 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Material.Icons;
-using MyNet.Avalonia.Controls.Extensions;
-using MyNet.Utilities.Generator;
+using MyNet.Avalonia.Controls;
+using MyNet.Generator.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 
@@ -38,15 +38,15 @@ internal sealed class RandomContentExtension : MarkupExtension
         if (AllowIcon) type.Add(ContentType.Icon);
         if (AllowNull) type.Add(ContentType.Null);
 
-        var value = RandomGenerator.ListItem(type);
+        var value = RandomGenerator.Current.Item(type);
 
         return value switch
         {
-            ContentType.Image => new Bitmap(AssetLoader.Open(new($"avares://MyNet.Avalonia.Showcase/Assets/Images/avatar_{RandomGenerator.Int(1, 7)}.png"))),
-            ContentType.Icon => RandomGenerator.Enum<MaterialIconKind>().ToIcon(),
-            ContentType.Number => RandomGenerator.Int(0, 200),
-            ContentType.Text => RandomGenerator.String(RandomGenerator.Int(1, 2)),
-            ContentType.Char => RandomGenerator.Char(),
+            ContentType.Image => new Bitmap(AssetLoader.Open(new($"avares://MyNet.Avalonia.Showcase/Assets/Images/avatar_{RandomGenerator.Current.Int(1, 7)}.png"))),
+            ContentType.Icon => RandomGenerator.Current.Enum<MaterialIconKind>().ToIcon(),
+            ContentType.Number => RandomGenerator.Current.Int(0, 200),
+            ContentType.Text => RandomGenerator.Current.String(RandomGenerator.Current.Int(1, 2)),
+            ContentType.Char => RandomGenerator.Current.Char(),
             _ => null!
         };
     }

@@ -7,14 +7,12 @@
 using System;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using MyNet.Avalonia.Colors;
-using MyNet.Avalonia.Extensions;
-using MyNet.Utilities.Generator;
+using MyNet.Fakers.Static;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 
 internal sealed class RandomBrushExtension : MarkupExtension
 {
     public override object ProvideValue(IServiceProvider serviceProvider)
-        => new SolidColorBrush(RandomGenerator.Color().ToColor() ?? default);
+        => new SolidColorBrush(Faker.Colors.Hex().ToColor() ?? default);
 }

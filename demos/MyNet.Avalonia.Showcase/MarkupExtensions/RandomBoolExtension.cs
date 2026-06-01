@@ -6,12 +6,12 @@
 
 using System;
 using Avalonia.Markup.Xaml;
-using MyNet.Utilities.Generator;
+using MyNet.Generator.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 
 internal sealed class RandomBoolExtension : MarkupExtension
 {
     public override object ProvideValue(IServiceProvider serviceProvider)
-        => RandomGenerator.Bool();
+        => RandomGenerator.Current.Bool();
 }

@@ -12,19 +12,24 @@ using Avalonia.Media.Imaging;
 using Material.Icons;
 using MyNet.Avalonia.Controls;
 using MyNet.Collections;
+using MyNet.Fakers.Static;
 using MyNet.Generator.Facade;
 using MyNet.Geography;
+using MyNet.Geography.Resources;
 using MyNet.Humanizer.Facade;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Showcase.Helpers;
 
 internal static class MenuHelper
 {
+    private static readonly EmbeddedCountryFlagProvider FlagProvider = new();
+    
     public static MenuItem RandomizeMenuItem(string? header = null, bool hasSubItems = false)
     {
         var item = new MenuItem
         {
-            Header = header ?? RandomGenerator.String2(5, 10),
+            Header = header ?? Faker.Texts.Words(1, 4),
             IsChecked = !hasSubItems && RandomGenerator.Current.Bool(),
             ToggleType = !hasSubItems ? RandomGenerator.Current.Enum<MenuItemToggleType>() : MenuItemToggleType.None
         };
@@ -38,7 +43,7 @@ internal static class MenuHelper
     }
 
     public static MenuItem[] RandomizeMenuItems(int currentDepth, int min = 0, int max = 10, int maxDepth = 5)
-        => [.. EnumerableHelper.Range(1, RandomGenerator.Current.Int(min, max)).Select(x =>
+        => [.. 1.Range(1, RandomGenerator.Current.Int(min, max)).Select(x =>
         {
             var addSubItems = currentDepth < maxDepth && RandomGenerator.Current.Bool();
             var item = RandomizeMenuItem($"Sub menu {currentDepth}.{x}", addSubItems);

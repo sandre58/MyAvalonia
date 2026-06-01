@@ -6,8 +6,8 @@
 
 using Material.Icons;
 using MyNet.Avalonia.Theme.Classes.Enums;
-using MyNet.Avalonia.Theme.MarkupExtensions;
-using MyNet.Utilities.Generator;
+using MyNet.Avalonia.Theme.Controls.MarkupExtensions;
+using MyNet.Generator.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 
@@ -26,5 +26,5 @@ internal sealed class RandomIconExtension : MaterialIconExtension
     /// <summary>
     /// Initializes a new instance of the <see cref="RandomIconExtension"/> class with the specified icon data key and size category.
     /// </summary>
-    public RandomIconExtension() => Kind = RandomGenerator.Enum<MaterialIconKind>();
+    public RandomIconExtension() => Kind = RandomGenerator.Current.Enum<MaterialIconKind>();
 }

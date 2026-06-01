@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Markup.Xaml;
 using MyNet.Avalonia.Geography;
+using MyNet.Generator.Facade;
 using MyNet.Geography;
 using MyNet.Humanizer.Facade;
-using MyNet.Utilities.Generator;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 
@@ -30,10 +30,10 @@ internal sealed class RandomCountriesExtension : MarkupExtension
         var allCountries = CountrySource.GetAllOrderedByDisplay().ToList();
         var countries = All
             ? allCountries.OrderBy(x => x.Name)
-            : RandomGenerator.ListItems(allCountries, RandomGenerator.Int(Min, Max)).OrderBy(x => x.Name);
+            : RandomGenerator.Current.Subset(allCountries, RandomGenerator.Current.Int(Min, Max)).OrderBy(x => x.Name);
 
         return ByAlpha
-            ? countries.GroupBy(x => x.Humanize()![..1]).Select(x => new CountriesWrapper(x.OrderBy(y => y.Humanize()), x.Key)).OrderBy(x => x.DisplayText).ToList()
+            ? countries.GroupBy(x => x.Humanize()[..1]).Select(x => new CountriesWrapper(x.OrderBy(y => y.Humanize()), x.Key)).OrderBy(x => x.DisplayText).ToList()
             : countries.ToList();
     }
 }

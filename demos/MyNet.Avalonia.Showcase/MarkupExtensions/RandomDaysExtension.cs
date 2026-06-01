@@ -6,7 +6,7 @@
 
 using System;
 using Avalonia.Markup.Xaml;
-using MyNet.Utilities.Generator;
+using MyNet.Generator.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 
@@ -17,5 +17,5 @@ internal sealed class RandomDaysExtension : MarkupExtension
     public int Max { get; set; } = 5;
 
     public override object ProvideValue(IServiceProvider serviceProvider)
-        => RandomGenerator.ListItems(Enum.GetValues<DayOfWeek>(), RandomGenerator.Int(Min, Max));
+        => RandomGenerator.Current.Subset(Enum.GetValues<DayOfWeek>(), RandomGenerator.Current.Int(Min, Max));
 }

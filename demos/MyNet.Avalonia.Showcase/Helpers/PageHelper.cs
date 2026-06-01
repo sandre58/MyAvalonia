@@ -6,11 +6,8 @@
 
 using Avalonia.Controls;
 using Avalonia.Media;
-using MyNet.Avalonia.Colors;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Showcase.Views.Samples;
-using MyNet.Generator.Facade;
-using MyNet.Utilities.Generator;
+using MyNet.Fakers.Static;
 
 namespace MyNet.Avalonia.Showcase.Helpers;
 
@@ -26,7 +23,7 @@ internal static class PageHelper
         new()
         {
             Header = header,
-            Background = new SolidColorBrush(RandomGenerator.Color().ToColor().GetValueOrDefault(), 0.3),
+            Background = new SolidColorBrush(Faker.Colors.Hex().ToColor().GetValueOrDefault(), 0.3),
             Content = new NavigationContent
             {
                 Header = header,

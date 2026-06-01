@@ -5,12 +5,12 @@
 // -----------------------------------------------------------------------
 
 using Material.Icons;
-using MyNet.Avalonia.Theme.MarkupExtensions;
-using MyNet.Utilities.Generator;
+using MyNet.Avalonia.Theme.Controls.MarkupExtensions;
+using MyNet.Generator.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 
 internal sealed class RandomGeometryExtension : MaterialGeometryExtension
 {
-    public RandomGeometryExtension() => Kind = RandomGenerator.Enum<MaterialIconKind>();
+    public RandomGeometryExtension() => Kind = RandomGenerator.Current.Enum<MaterialIconKind>();
 }

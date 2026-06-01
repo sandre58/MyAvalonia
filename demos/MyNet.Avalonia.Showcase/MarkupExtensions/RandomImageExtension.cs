@@ -8,7 +8,7 @@ using System;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using MyNet.Utilities.Generator;
+using MyNet.Generator.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 
@@ -21,5 +21,5 @@ internal sealed class RandomImageExtension : MarkupExtension
     public bool AllowNull { get; set; } = true;
 
     public override object ProvideValue(IServiceProvider serviceProvider)
-        => !AllowNull || RandomGenerator.Bool() ? new Bitmap(AssetLoader.Open(new($"avares://MyNet.Avalonia.Showcase/Assets/Images/avatar_{RandomGenerator.Int(1, 7)}.png"))) : null!;
+        => !AllowNull || RandomGenerator.Current.Bool() ? new Bitmap(AssetLoader.Open(new($"avares://MyNet.Avalonia.Showcase/Assets/Images/avatar_{RandomGenerator.Current.Int(1, 7)}.png"))) : null!;
 }
