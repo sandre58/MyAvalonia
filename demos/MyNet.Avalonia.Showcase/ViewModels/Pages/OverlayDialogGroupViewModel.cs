@@ -35,6 +35,7 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
     private readonly IContentDialogService _contentDialogService;
     private readonly IMessageBoxFactory _messageBoxFactory;
     private readonly DialogHostOptions _hostOptions;
+    private readonly ICommandFactory _commands;
 
     private bool _isModal = true;
     private bool _showCloseButton = true;
@@ -78,6 +79,7 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
         _contentDialogService = contentDialogService;
         _messageBoxFactory = messageBoxFactory;
         _hostOptions = hostOptions;
+        _commands = commands;
 
         var builder = new ControlThemeBuilder()
             .AddRoles(ThemeRole.Information, ThemeRole.Success, ThemeRole.Warning, ThemeRole.Error)
@@ -148,7 +150,7 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
 
     private async Task ShowOverlayDialogAsync()
     {
-        var vm = new LoginDialogViewModel();
+        var vm = new LoginDialogViewModel(_commands);
         var options = CreateOverlayOptions();
 
         var result = await _contentDialogService

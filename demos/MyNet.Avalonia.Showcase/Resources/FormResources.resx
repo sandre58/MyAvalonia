@@ -238,4 +238,19 @@
   <data name="ImportantInformation" xml:space="preserve">
       <value>Informations importantes</value>
   </data>
+  <data name="FormValidationSample" xml:space="preserve">
+      <value>Formulaire avec validation FluentValidation</value>
+  </data>
+  <data name="SubmitSuccess" xml:space="preserve">
+      <value>Le formulaire est valide. Enregistrement simulé réussi.</value>
+  </data>
+  <data name="ValidationFailed" xml:space="preserve">
+      <value>Corrigez les champs signalés avant de valider.</value>
+  </data>
+  <data name="PasswordsMustMatch" xml:space="preserve">
+      <value>La confirmation doit correspondre au mot de passe.</value>
+  </data>
+  <data name="TermsMustBeAccepted" xml:space="preserve">
+      <value>Vous devez accepter les termes et conditions.</value>
+  </data>
 </root>

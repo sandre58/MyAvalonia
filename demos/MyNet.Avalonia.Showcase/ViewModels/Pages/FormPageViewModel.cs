@@ -18,5 +18,5 @@ internal sealed class FormPageViewModel(ICommandFactory commands) : ShowcaseView
     /// <inheritdoc/>
     public override MaterialIconKind Icon => MaterialIconKind.FormatLineStyle;
 
-    public FormViewModel Form { get; } = new();
+    public FormViewModel Form { get; } = new(commands);
 }

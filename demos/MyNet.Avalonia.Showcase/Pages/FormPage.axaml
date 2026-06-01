@@ -6,8 +6,7 @@
              xmlns:my="http://mynet.com/avalonia"
              xmlns:samples="clr-namespace:MyNet.Avalonia.Showcase.Views.Samples"
              xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
-             xmlns:playground="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
-             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:common="clr-namespace:MyNet.Avalonia.Showcase.Views.Common"
              x:DataType="vm:FormPageViewModel"
              ClipToBounds="False"
              x:Name="Root"
@@ -15,24 +14,18 @@
              Header="{my:Display Title}"
              my:IconAssist.Icon="{Binding Icon}"
              mc:Ignorable="d">
-    <ContentPage.Resources>
-        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
-    </ContentPage.Resources>
-
-    <playground:ShowcaseView ShowAppearance="False" ShowThemes="False" ShowPreviewCode="False" ShowContent="False"
-                             ShowIcon="False">
-
-        <playground:ShowcaseView.PlaygroundControlTemplate>
-            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
-                <Border Width="550"
-                        Padding="{my:Thickness Xl}"
-                        Classes="kind-card">
-                    <ScrollViewer ClipToBounds="False">
-                        <samples:FormContent DataContext="{ReflectionBinding ((vm:FormPageViewModel)Data).Form, FallbackValue={x:Null}, Source={StaticResource PageProxy}}" />
-                    </ScrollViewer>
-                </Border>
-            </DataTemplate>
-        </playground:ShowcaseView.PlaygroundControlTemplate>
-
-    </playground:ShowcaseView>
+    <Grid RowDefinitions="Auto, *">
+        <common:PageHeader Grid.Row="0"
+                           Header="{my:Loc FormValidationSample}"
+                           Icon="{Binding Icon}" />
+        <ScrollViewer Grid.Row="1" ClipToBounds="False">
+            <Border MaxWidth="720"
+                    Margin="{my:Thickness Xl}"
+                    Padding="{my:Thickness Xl}"
+                    HorizontalAlignment="Center"
+                    Classes="kind-card shadow-surface">
+                <samples:FormContent DataContext="{Binding Form}" />
+            </Border>
+        </ScrollViewer>
+    </Grid>
 </ContentPage>

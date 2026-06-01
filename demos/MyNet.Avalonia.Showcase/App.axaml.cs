@@ -45,6 +45,7 @@ using MyNet.UI.Notifications;
 using MyNet.UI.Services;
 using MyNet.UI.Theming;
 using MyNet.UI.Toasting;
+using MyNet.Observable.Validation;
 using MyNet.UI.ViewModels;
 
 namespace MyNet.Avalonia.Showcase;
@@ -104,6 +105,7 @@ public class App : Application
 
         services.UseGlobalization();
         services.UseLocalization();
+        ValidationLocalization.Configure();
         services.UseDisplayText();
         services.UseFakers();
 

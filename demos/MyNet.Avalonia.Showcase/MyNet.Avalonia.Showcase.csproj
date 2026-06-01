@@ -92,6 +92,11 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>FormResources.resx</DependentUpon>
       </Compile>
+      <Compile Update="Resources\HomePageResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>HomePageResources.resx</DependentUpon>
+      </Compile>
       <Compile Update="Resources\NotificationPageResources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
@@ -106,10 +111,6 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>SplashScreenResources.resx</DependentUpon>
-      </Compile>
-      <Compile Update="Views\Samples\NavigationContent.axaml.cs">
-        <DependentUpon>NavigationContent.axaml</DependentUpon>
-        <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
 
@@ -149,6 +150,10 @@
         <EmbeddedResource Update="Resources\FormResources.resx">
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>FormResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\HomePageResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>HomePageResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\NotificationPageResources.resx">
           <Generator>ResXFileCodeGenerator</Generator>

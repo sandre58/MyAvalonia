@@ -1,16 +1,134 @@
 <ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.HomePage"
-            xmlns="https://github.com/avaloniaui"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:my="http://mynet.com/avalonia"
-            xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
-            xmlns:common="clr-namespace:MyNet.Avalonia.Showcase.Views.Common"
-            x:DataType="vm:HomePageViewModel"
-            ClipToBounds="False"
-            x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}" Header="{my:Display Title}" my:IconAssist.Icon="{Binding Icon}"
-            mc:Ignorable="d">
-    <common:PageHeader Header="{my:Loc Home}"
-                       Icon="{Binding Icon}">
-    </common:PageHeader>
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:home="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Home"
+             xmlns:common="clr-namespace:MyNet.Avalonia.Showcase.Views.Common"
+             x:DataType="vm:HomePageViewModel"
+             ClipToBounds="False"
+             x:Name="Root"
+             Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Display Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             mc:Ignorable="d">
+    <ContentPage.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto, *">
+        <common:PageHeader Grid.Row="0"
+                           Header="{my:Loc Home}"
+                           Icon="{Binding Icon}" />
+
+        <ScrollViewer Grid.Row="1" ClipToBounds="False">
+            <StackPanel Margin="{my:Thickness Xl}"
+                        Spacing="{my:Spacing Xl}"
+                        MaxWidth="1100"
+                        HorizontalAlignment="Center">
+
+                <!-- Welcome -->
+                <StackPanel Spacing="{my:Spacing Sm}">
+                    <TextBlock Classes="text-h3" Text="{my:Loc WelcomeTitle}" />
+                    <TextBlock Classes="font-md opacity-high"
+                               Text="{my:Loc WelcomeSubtitle}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+
+                <!-- Featured -->
+                <StackPanel Spacing="{my:Spacing Md}">
+                    <TextBlock Classes="text-h5" Text="{my:Loc FeaturedSection}" />
+                    <ItemsControl ItemsSource="{Binding FeaturedLinks}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="home:HomeLinkViewModel">
+                                <Button Margin="{my:Thickness Sm}"
+                                        Padding="{my:Thickness Lg}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        Command="{Binding ((vm:HomePageViewModel)Data).OpenLinkCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}"
+                                        CommandParameter="{Binding}"
+                                        Classes="kind-card variant-solid align-left">
+                                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="{my:Spacing Md}">
+                                        <Border Grid.Column="0"
+                                                Width="44"
+                                                Height="44"
+                                                CornerRadius="{StaticResource MyNet.Corners.Md}"
+                                                Background="{my:Theme Primary, Opacity=Overlay}">
+                                            <my:MaterialIcon Kind="{Binding Icon}"
+                                                             Classes="size-lg"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center" />
+                                        </Border>
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{my:Spacing Xs}">
+                                            <TextBlock Classes="text-h6" Text="{Binding Title}" />
+                                            <TextBlock Classes="font-sm opacity-high"
+                                                       Text="{Binding Description}"
+                                                       TextWrapping="Wrap" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="2"
+                                                   Classes="font-sm"
+                                                   VerticalAlignment="Center"
+                                                   Text="{my:Loc OpenPage}" />
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!-- Categories -->
+                <StackPanel Spacing="{my:Spacing Md}">
+                    <TextBlock Classes="text-h5" Text="{my:Loc CategoriesSection}" />
+                    <ItemsControl ItemsSource="{Binding CategoryLinks}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="4" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="home:HomeLinkViewModel">
+                                <Button Margin="{my:Thickness Sm}"
+                                        Padding="{my:Thickness Md}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        Command="{Binding ((vm:HomePageViewModel)Data).OpenLinkCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}"
+                                        CommandParameter="{Binding}"
+                                        Classes="kind-card variant-outlined align-left">
+                                    <StackPanel Spacing="{my:Spacing Xs}">
+                                        <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Sm}">
+                                            <my:MaterialIcon Kind="{Binding Icon}" Classes="size-sm" />
+                                            <TextBlock Classes="text-subtitle-1" Text="{Binding Title}" />
+                                        </StackPanel>
+                                        <TextBlock Classes="font-sm opacity-high"
+                                                   Text="{Binding Description}"
+                                                   TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!-- Getting started -->
+                <Border Classes="kind-card variant-solid shadow-surface" Padding="{my:Thickness Lg}">
+                    <StackPanel Spacing="{my:Spacing Md}">
+                        <TextBlock Classes="text-h5" Text="{my:Loc GettingStartedSection}" />
+                        <StackPanel Spacing="{my:Spacing Sm}">
+                            <TextBlock Text="{my:Loc GettingStartedStep1}" TextWrapping="Wrap" />
+                            <TextBlock Text="{my:Loc GettingStartedStep2}" TextWrapping="Wrap" />
+                            <TextBlock Text="{my:Loc GettingStartedStep3}" TextWrapping="Wrap" />
+                            <TextBlock Text="{my:Loc GettingStartedStep4}" TextWrapping="Wrap" />
+                            <TextBlock Text="{my:Loc GettingStartedStep5}" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </ContentPage>

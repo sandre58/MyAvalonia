@@ -33,6 +33,7 @@ internal static class ServiceCollectionExtensions
         services.AddTranslationResource(nameof(DialogsPageResources), DialogsPageResources.ResourceManager);
         services.AddTranslationResource(nameof(ThemePageResources), ThemePageResources.ResourceManager);
         services.AddTranslationResource(nameof(ControlThemeResources), ControlThemeResources.ResourceManager);
+        services.AddTranslationResource(nameof(HomePageResources), HomePageResources.ResourceManager);
         return services;
     }
 }

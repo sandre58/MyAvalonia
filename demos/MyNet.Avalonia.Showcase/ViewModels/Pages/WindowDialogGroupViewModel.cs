@@ -29,6 +29,7 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
     private readonly INotificationPublisher _notificationPublisher;
     private readonly IContentDialogService _contentDialogService;
     private readonly IMessageBoxFactory _messageBoxFactory;
+    private readonly ICommandFactory _commands;
     private bool _isModal = true;
     private MessageBoxResultOption _buttons = MessageBoxResultOption.OkCancel;
 
@@ -59,6 +60,7 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
         _notificationPublisher = notificationPublisher;
         _contentDialogService = contentDialogService;
         _messageBoxFactory = messageBoxFactory;
+        _commands = commands;
 
         var builder = new ControlThemeBuilder()
             .AddRoles(ThemeRole.Information, ThemeRole.Success, ThemeRole.Warning, ThemeRole.Error)
@@ -94,7 +96,7 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
 
     private async Task ShowWindowDialogAsync()
     {
-        var vm = new LoginDialogViewModel();
+        var vm = new LoginDialogViewModel(_commands);
 
         var result = await _contentDialogService
             .ShowAsync(vm, DialogOptions.ForWindow(vm, _isModal))

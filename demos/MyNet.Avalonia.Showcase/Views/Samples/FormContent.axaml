@@ -289,6 +289,20 @@
         
         <Separator my:FormItem.NoLabel="True" />
 
+        <!-- Status -->
+        <my:Banner my:FormItem.NoLabel="True"
+                   Classes.success="{Binding IsSubmitSuccessful}"
+                   IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                   my:ThemeAssist.Role="Error"
+                   Header="{Binding StatusMessage}"
+                   CanClose="False">
+            <my:Banner.Styles>
+                <Style Selector="my|Banner.success">
+                    <Setter Property="my:ThemeAssist.Role" Value="Success" />
+                </Style>
+            </my:Banner.Styles>
+        </my:Banner>
+
         <!-- ============================================ -->
         <!-- SUBMIT BUTTON SECTION -->
         <!-- ============================================ -->
@@ -297,9 +311,11 @@
                     Orientation="Horizontal"
                     Spacing="10">
             <Button Content="{my:Loc Reset}"
+                    Command="{Binding ResetCommand}"
                     my:IconAssist.Icon="{my:MaterialIcon Restore}"
                     Classes="variant-outlined" />
             <Button Content="{my:Loc Validate}"
+                    Command="{Binding SubmitCommand}"
                     my:IconAssist.Icon="{my:MaterialIcon Check}"
                     my:ThemeAssist.Role="Primary" />
         </StackPanel>

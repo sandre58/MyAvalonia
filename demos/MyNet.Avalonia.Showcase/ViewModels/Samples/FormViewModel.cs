@@ -7,27 +7,129 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Input;
+using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Geography;
+using MyNet.Globalization.Facade;
+using MyNet.Observable;
+using MyNet.Observable.Behaviors;
+using MyNet.Observable.Behaviors.Metadata.Attributes;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Samples;
 
-internal sealed class FormViewModel : ObservableObject
+/// <summary>
+/// Sample registration form demonstrating <see cref="ValidationBehavior{T}"/> with FluentValidation and MyNet form controls.
+/// </summary>
+internal sealed class FormViewModel : ObservableObject, IValidationAware
 {
-    // Account Information
-    public string? Login { get; set; }
+    private readonly ValidationBehavior<FormViewModel> _validation;
 
-    public string? Password { get; set; }
+    public FormViewModel(ICommandFactory commands)
+    {
+        _validation = this.UseValidation(new FormViewModelValidator());
+        _validation.ErrorsChanged += (_, e) => ErrorsChanged?.Invoke(this, e);
 
-    public string? ConfirmPassword { get; set; }
+        SubmitCommand = commands.Create(Submit);
+        ResetCommand = commands.Create(Reset);
+    }
 
-    public string? Email { get; set; }
+    #region IValidationAware / INotifyDataErrorInfo
 
-    // Personal Information
-    public string? FirstName { get; set; }
+    /// <inheritdoc/>
+    public IReadOnlyCollection<string> Errors => _validation.Errors;
 
-    public string? LastName { get; set; }
+    /// <inheritdoc/>
+    public bool HasErrors => _validation.HasErrors;
+
+    /// <inheritdoc/>
+    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+    /// <inheritdoc/>
+    System.Collections.IEnumerable INotifyDataErrorInfo.GetErrors(string? propertyName) => _validation.GetErrors(propertyName);
+
+    /// <inheritdoc/>
+    public bool Validate() => _validation.Validate();
+
+    /// <inheritdoc/>
+    public void ValidateProperty(string propertyName) => _validation.ValidateProperty(propertyName);
+
+    /// <inheritdoc/>
+    public void ResetValidation() => _validation.ResetValidation();
+
+    #endregion
+
+    #region Commands & status
+
+    public ICommand SubmitCommand { get; }
+
+    public ICommand ResetCommand { get; }
+
+    public string? StatusMessage
+    {
+        get;
+        private set => SetProperty(ref field, value);
+    }
+
+    public bool IsSubmitSuccessful
+    {
+        get;
+        private set => SetProperty(ref field, value);
+    }
+
+    #endregion
+
+    #region Validated properties
+
+    public string Login
+    {
+        get;
+        set => SetProperty(ref field, value);
+    } = string.Empty;
+
+    [AlsoValidate(nameof(ConfirmPassword))]
+    public string Password
+    {
+        get;
+        set => SetProperty(ref field, value);
+    } = string.Empty;
+
+    public string ConfirmPassword
+    {
+        get;
+        set => SetProperty(ref field, value);
+    } = string.Empty;
+
+    public string Email
+    {
+        get;
+        set => SetProperty(ref field, value);
+    } = string.Empty;
+
+    public string FirstName
+    {
+        get;
+        set => SetProperty(ref field, value);
+    } = string.Empty;
+
+    public string LastName
+    {
+        get;
+        set => SetProperty(ref field, value);
+    } = string.Empty;
+
+    public bool AcceptTerms
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
+
+    #endregion
+
+    #region Other fields (demo data, optional validation)
 
     public GenderType Gender { get; set; } = GenderType.Male;
 
@@ -37,7 +139,6 @@ internal sealed class FormViewModel : ObservableObject
 
     public Country? Country { get; set; }
 
-    // Address Information
     public string? Address { get; set; }
 
     public string? City { get; set; }
@@ -46,7 +147,6 @@ internal sealed class FormViewModel : ObservableObject
 
     public string? State { get; set; }
 
-    // Professional Information
     public string? SelectedRole { get; set; }
 
     public ObservableCollection<string> Roles { get; } = new(["User", "Administrator", "Moderator", "Developer", "Designer", "Manager", "Guest"]);
@@ -59,7 +159,6 @@ internal sealed class FormViewModel : ObservableObject
 
     public decimal? Salary { get; set; }
 
-    // Skills & Languages
     public ObservableCollection<string> SelectedSkills { get; set; } = [];
 
     public ObservableCollection<string> AvailableSkills { get; } = new(["C#", "JavaScript", "Python", "Java", "TypeScript", "SQL", "React", "Angular", "Vue.js", "Node.js", "Docker", "Kubernetes"]);
@@ -67,9 +166,6 @@ internal sealed class FormViewModel : ObservableObject
     public ObservableCollection<CultureInfo> SelectedLanguages { get; set; } = [];
 
     public ObservableCollection<CultureInfo> AvailableLanguages { get; } = new List<Country>([Country.RussianFederation, Country.France, Country.Germany, Country.Spain, Country.Italy]).Select(x => new CultureInfo(x.Alpha2)).ToObservableCollection();
-
-    // Preferences & Settings
-    public bool AcceptTerms { get; set; }
 
     public bool ReceiveNewsletter { get; set; }
 
@@ -79,10 +175,8 @@ internal sealed class FormViewModel : ObservableObject
 
     public bool MakeProfilePublic { get; set; }
 
-    // Additional Details
     public string? Bio { get; set; }
 
-    // Availability
     public TimeSpan? PreferredStartTime { get; set; }
 
     public TimeSpan? PreferredEndTime { get; set; }
@@ -98,4 +192,64 @@ internal sealed class FormViewModel : ObservableObject
     public bool ThursdayAvailable { get; set; }
 
     public bool FridayAvailable { get; set; }
+
+    #endregion
+
+    private void Submit()
+    {
+        StatusMessage = null;
+        IsSubmitSuccessful = false;
+
+        if (!Validate())
+        {
+            StatusMessage = "ValidationFailed".Translate();
+            return;
+        }
+
+        IsSubmitSuccessful = true;
+        StatusMessage = "SubmitSuccess".Translate();
+    }
+
+    private void Reset()
+    {
+        Login = string.Empty;
+        Password = string.Empty;
+        ConfirmPassword = string.Empty;
+        Email = string.Empty;
+        FirstName = string.Empty;
+        LastName = string.Empty;
+        AcceptTerms = false;
+        ReceiveNewsletter = false;
+        EnableNotifications = false;
+        EnableTwoFactor = false;
+        MakeProfilePublic = false;
+        PhoneNumber = null;
+        BirthDate = null;
+        Country = null;
+        Address = null;
+        City = null;
+        PostalCode = null;
+        State = null;
+        SelectedRole = null;
+        Company = null;
+        JobTitle = null;
+        YearsOfExperience = null;
+        Salary = null;
+        Bio = null;
+        SelectedSkills.Clear();
+        SelectedLanguages.Clear();
+        PreferredStartTime = null;
+        PreferredEndTime = null;
+        AvailabilityPercentage = 50;
+        MondayAvailable = false;
+        TuesdayAvailable = false;
+        WednesdayAvailable = false;
+        ThursdayAvailable = false;
+        FridayAvailable = false;
+        Gender = GenderType.Male;
+
+        StatusMessage = null;
+        IsSubmitSuccessful = false;
+        ResetValidation();
+    }
 }

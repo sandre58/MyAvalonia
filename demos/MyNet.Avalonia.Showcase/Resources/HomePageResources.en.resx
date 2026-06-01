@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Welcome to MyNet Avalonia Showcase</value>
+  </data>
+  <data name="WelcomeSubtitle" xml:space="preserve">
+    <value>Reference app to explore controls, the MyNet theme, and UI services (navigation, validation, dialogs).</value>
+  </data>
+  <data name="FeaturedSection" xml:space="preserve">
+    <value>Quick start</value>
+  </data>
+  <data name="test" xml:space="preserve">
+    <value>Catalog by category</value>
+  </data>
+  <data name="GettingStartedSection" xml:space="preserve">
+    <value>Wire MyNet in your app</value>
+  </data>
+  <data name="GettingStartedStep1" xml:space="preserve">
+    <value>Reference MyNet.Observable, MyNet.UI, MyNet.Globalization and MyNet.Avalonia.* packages</value>
+  </data>
+  <data name="GettingStartedStep2" xml:space="preserve">
+    <value>Call ThemeControlsHost.Register() then add &lt;my:MyTheme /&gt; under Application.Styles</value>
+  </data>
+  <data name="GettingStartedStep3" xml:space="preserve">
+    <value>Register DI: globalization → controls → extended → navigation → shell (see showcase README)</value>
+  </data>
+  <data name="GettingStartedStep4" xml:space="preserve">
+    <value>Use INavigationClient for pages and ICommandFactory for commands</value>
+  </data>
+  <data name="GettingStartedStep5" xml:space="preserve">
+    <value>On form view models: this.UseValidation(validator) + ValidationLocalization.Configure()</value>
+  </data>
+  <data name="FeaturedThemeDescription" xml:space="preserve">
+    <value>Palette, brushes and theme roles</value>
+  </data>
+  <data name="FeaturedIconsDescription" xml:space="preserve">
+    <value>Material Icons catalog with search and paging</value>
+  </data>
+  <data name="FeaturedFormDescription" xml:space="preserve">
+    <value>MyNet.Form with FluentValidation</value>
+  </data>
+  <data name="FeaturedDialogsDescription" xml:space="preserve">
+    <value>Window and overlay dialogs, toasts, busy indicator</value>
+  </data>
+  <data name="FeaturedFormTitle" xml:space="preserve">
+    <value>Form</value>
+  </data>
+  <data name="CategoryTextsDescription" xml:space="preserve">
+    <value>Label, TextBlock, selectable text</value>
+  </data>
+  <data name="CategoryButtonsDescription" xml:space="preserve">
+    <value>Buttons, checkboxes, toggles</value>
+  </data>
+  <data name="CategoryInputsDescription" xml:space="preserve">
+    <value>Fields, sliders, calendar, clock</value>
+  </data>
+  <data name="CategoryContainersDescription" xml:space="preserve">
+    <value>Cards, tabs, forms, banners</value>
+  </data>
+  <data name="CategoryDataDescription" xml:space="preserve">
+    <value>DataGrid, lists, tree view</value>
+  </data>
+  <data name="CategoryNavigationDescription" xml:space="preserve">
+    <value>NavigationPage, menus, pagination</value>
+  </data>
+  <data name="CategoryDialogsDescription" xml:space="preserve">
+    <value>Dialogs, notifications, progress bars</value>
+  </data>
+  <data name="CategoryShapesDescription" xml:space="preserve">
+    <value>Borders, ellipses, extended icons</value>
+  </data>
+  <data name="OpenPage" xml:space="preserve">
+    <value>Open</value>
+  </data>
+</root>
