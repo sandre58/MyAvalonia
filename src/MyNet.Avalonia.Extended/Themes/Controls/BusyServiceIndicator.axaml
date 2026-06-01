@@ -2,11 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:loading="using:MyNet.UI.Loading.Models"
                     xmlns:my="http://mynet.com/avalonia">
-    <ControlTheme x:Key="{x:Type my:BusyOverlay}" TargetType="{x:Type my:BusyOverlay}">
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
+    <ControlTheme x:Key="{x:Type my:BusyServiceIndicator}"
+                  TargetType="{x:Type my:BusyServiceIndicator}"
+                  BasedOn="{StaticResource {x:Type my:BusyIndicator}}">
         <Setter Property="Template">
-            <ControlTemplate TargetType="my:BusyOverlay">
+            <ControlTemplate TargetType="my:BusyServiceIndicator">
                 <Panel>
                     <Border Background="{my:Theme Overlay.Background, Opacity=Scrim}" />
                     <Border HorizontalAlignment="Center"
@@ -16,7 +16,8 @@
                             Background="{my:Theme Surface.Level1}"
                             CornerRadius="{StaticResource MyNet.Corners.Lg}"
                             BoxShadow="0 8 24 0 #40000000">
-                        <ContentControl Content="{TemplateBinding ActiveBusy}">
+                        <ContentControl x:Name="PART_BusyContent"
+                                        Content="{TemplateBinding BusyContent}">
                             <ContentControl.DataTemplates>
                                 <DataTemplate DataType="{x:Type loading:IndeterminateBusy}">
                                     <StackPanel Spacing="{StaticResource MyNet.Spacing.Md}" MinWidth="280">

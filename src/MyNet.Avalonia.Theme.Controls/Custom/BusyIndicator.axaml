@@ -1,0 +1,34 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
+
+    <ControlTheme x:Key="{x:Type my:BusyIndicator}" TargetType="{x:Type my:BusyIndicator}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:BusyIndicator">
+                <Panel>
+                    <Border Background="{my:Theme Overlay.Background, Opacity=Scrim}" />
+                    <Border HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="{my:Thickness Xl}"
+                            Padding="{my:Thickness Xl}"
+                            Background="{my:Theme Surface.Level1}"
+                            CornerRadius="{StaticResource MyNet.Corners.Lg}"
+                            BoxShadow="0 8 24 0 #40000000">
+                        <ContentControl x:Name="PART_BusyContent"
+                                        Content="{TemplateBinding BusyContent}">
+                            <ContentControl.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Spacing="{StaticResource MyNet.Spacing.Md}" MinWidth="280">
+                                        <ProgressBar Height="4" IsIndeterminate="True" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ContentControl.ContentTemplate>
+                        </ContentControl>
+                    </Border>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

@@ -1,24 +1,22 @@
 // -----------------------------------------------------------------------
-// <copyright file="BusyOverlay.cs" company="Stéphane ANDRE">
+// <copyright file="BusyServiceIndicator.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System.ComponentModel;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
+using MyNet.Avalonia.Controls;
 using MyNet.UI.Loading;
-using MyNet.UI.Loading.Models;
 
 #pragma warning disable IDE0130
 namespace MyNet.Avalonia.Extended.Controls;
 #pragma warning restore IDE0130
 
 /// <summary>
-/// Full-surface overlay bound to an application-wide <see cref="IBusyService"/>.
+/// <see cref="BusyIndicator"/> that mirrors state from an application-wide <see cref="IBusyService"/>.
 /// </summary>
-public sealed class BusyOverlay : TemplatedControl
+public sealed class BusyServiceIndicator : BusyIndicator
 {
     private IBusyService? _subscribedService;
 
@@ -26,31 +24,7 @@ public sealed class BusyOverlay : TemplatedControl
     /// Defines the <see cref="BusyService"/> property.
     /// </summary>
     public static readonly StyledProperty<IBusyService?> BusyServiceProperty =
-        AvaloniaProperty.Register<BusyOverlay, IBusyService?>(nameof(BusyService));
-
-    /// <summary>
-    /// Defines the <see cref="IsOpen"/> property.
-    /// </summary>
-    public static readonly DirectProperty<BusyOverlay, bool> IsOpenProperty =
-        AvaloniaProperty.RegisterDirect<BusyOverlay, bool>(
-            nameof(IsOpen),
-            o => o.IsOpen,
-            (o, v) => o.IsOpen = v);
-
-    /// <summary>
-    /// Defines the <see cref="ActiveBusy"/> property.
-    /// </summary>
-    public static readonly DirectProperty<BusyOverlay, IBusy?> ActiveBusyProperty =
-        AvaloniaProperty.RegisterDirect<BusyOverlay, IBusy?>(
-            nameof(ActiveBusy),
-            o => o.ActiveBusy,
-            (o, v) => o.ActiveBusy = v);
-
-    static BusyOverlay()
-    {
-        IsHitTestVisibleProperty.OverrideDefaultValue<BusyOverlay>(false);
-        IsVisibleProperty.OverrideDefaultValue<BusyOverlay>(false);
-    }
+        AvaloniaProperty.Register<BusyServiceIndicator, IBusyService?>(nameof(BusyService));
 
     /// <summary>
     /// Gets or sets the application-wide busy service to observe.
@@ -59,32 +33,6 @@ public sealed class BusyOverlay : TemplatedControl
     {
         get => GetValue(BusyServiceProperty);
         set => SetValue(BusyServiceProperty, value);
-    }
-
-    /// <summary>
-    /// Gets a value indicating whether the overlay is visible.
-    /// </summary>
-    public bool IsOpen
-    {
-        get;
-        private set
-        {
-            if (SetAndRaise(IsOpenProperty, ref field, value))
-            {
-                IsVisible = value;
-                IsHitTestVisible = value;
-                PseudoClasses.Set(":open", value);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Gets the top-most busy indicator currently displayed.
-    /// </summary>
-    public IBusy? ActiveBusy
-    {
-        get;
-        private set => SetAndRaise(ActiveBusyProperty, ref field, value);
     }
 
     /// <inheritdoc />
@@ -137,6 +85,6 @@ public sealed class BusyOverlay : TemplatedControl
     {
         var isBusy = service?.IsBusy ?? false;
         IsOpen = isBusy;
-        ActiveBusy = isBusy ? service?.CurrentBusy : null;
+        BusyContent = isBusy ? service?.CurrentBusy : null;
     }
 }
