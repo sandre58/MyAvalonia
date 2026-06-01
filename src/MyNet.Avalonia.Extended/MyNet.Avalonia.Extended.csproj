@@ -22,4 +22,9 @@
         <AvaloniaResource Include="**/*.axaml" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="MyNet.Avalonia.Extended.Tests" />
+        <InternalsVisibleTo Include="MyNet.Avalonia.Extended.Headless.Tests" />
+    </ItemGroup>
+
 </Project>

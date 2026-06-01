@@ -10,23 +10,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia.Headless.XUnit" />
-        <PackageReference Include="Avalonia.Themes.Fluent" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-        <PackageReference Include="xunit.v3" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Remove="xunit" />
-        <PackageReference Remove="xunit.runner.visualstudio" />
-        <PackageReference Remove="AutoFixture.Xunit2" />
-        <PackageReference Remove="AutoFixture" />
-        <PackageReference Remove="AutoFixture.AutoMoq" />
-        <PackageReference Remove="Moq" />
-        <PackageReference Remove="GitHubActionsTestLogger" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ApplicationDefinition Include="App.axaml" />
         <AvaloniaResource Include="MinimalControlThemes.axaml" />
     </ItemGroup>

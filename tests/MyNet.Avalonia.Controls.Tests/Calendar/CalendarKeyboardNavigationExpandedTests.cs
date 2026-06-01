@@ -10,7 +10,6 @@ using FluentAssertions;
 using MyNet.Avalonia.Controls.Internals;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives;
-using MyNet.Primitives.Temporal;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Calendar;
@@ -71,10 +70,7 @@ public class CalendarKeyboardNavigationExpandedTests
     }
 
     [Fact]
-    public void Resolve_UnknownKey_ReturnsNone()
-    {
-        CalendarKeyboardNavigationHelper.Resolve(
-                Key.Space, new MonthContext(5, 2026), FocusedDate, CurrentMonth, ctrl: false, shift: false)
-            .Kind.Should().Be(CalendarNavigationKind.None);
-    }
+    public void Resolve_UnknownKey_ReturnsNone() => CalendarKeyboardNavigationHelper.Resolve(
+            Key.Space, new MonthContext(5, 2026), FocusedDate, CurrentMonth, ctrl: false, shift: false)
+        .Kind.Should().Be(CalendarNavigationKind.None);
 }

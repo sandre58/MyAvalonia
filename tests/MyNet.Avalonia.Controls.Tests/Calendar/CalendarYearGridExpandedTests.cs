@@ -16,7 +16,7 @@ public class CalendarYearGridExpandedTests
     [Fact]
     public void BuildCells_ForCenturyContext_ReturnsTwelveDecades()
     {
-        var cells = CalendarYearGridHelper.BuildCells(new CenturyContext(2000), new MonthContext(5, 2026));
+        var cells = CalendarYearGridHelper.BuildCells(new CenturyContext(2000), new(5, 2026));
 
         cells.Should().HaveCount(12);
         cells[1].DateContext.Should().BeOfType<DecadeContext>().Which.StartYear.Should().Be(2000);
@@ -26,15 +26,12 @@ public class CalendarYearGridExpandedTests
     [Fact]
     public void BuildCells_ForYearContext_MarksSelectedMonth()
     {
-        var cells = CalendarYearGridHelper.BuildCells(new YearContext(2026), new MonthContext(1, 2026));
+        var cells = CalendarYearGridHelper.BuildCells(new YearContext(2026), new(1, 2026));
 
         cells[0].IsSelected.Should().BeTrue();
         cells[1].IsSelected.Should().BeFalse();
     }
 
     [Fact]
-    public void CellCount_IsTwelve()
-    {
-        CalendarYearGridHelper.CellCount.Should().Be(12);
-    }
+    public void CellCount_IsTwelve() => CalendarYearGridHelper.CellCount.Should().Be(12);
 }

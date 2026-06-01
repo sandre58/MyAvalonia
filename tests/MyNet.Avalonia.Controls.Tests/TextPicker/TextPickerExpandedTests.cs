@@ -30,18 +30,12 @@ public class TextPickerExpandedTests
     }
 
     [Fact]
-    public void Resolve_WhenClosedWithoutValue_ReturnsNone()
-    {
-        TextPickerKeyboardHelper.Resolve(Key.Up, false, false, KeyModifiers.None)
-            .Action.Should().Be(TextPickerKeyAction.None);
-    }
+    public void Resolve_WhenClosedWithoutValue_ReturnsNone() => TextPickerKeyboardHelper.Resolve(Key.Up, false, false, KeyModifiers.None)
+        .Action.Should().Be(TextPickerKeyAction.None);
 
     [Fact]
-    public void ResolveCommitAction_EmptyWithoutValue_IsNoOp()
-    {
-        TextPickerCommitHelper.ResolveCommitAction(string.Empty, null, false)
-            .Should().Be(TextPickerTextCommitKind.NoOp);
-    }
+    public void ResolveCommitAction_EmptyWithoutValue_IsNoOp() => TextPickerCommitHelper.ResolveCommitAction(string.Empty, null, false)
+        .Should().Be(TextPickerTextCommitKind.NoOp);
 
     [Fact]
     public void Parse_WithNullConverterResult_ReturnsInvalidWhenNotValid()

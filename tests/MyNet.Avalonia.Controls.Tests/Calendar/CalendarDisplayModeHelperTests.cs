@@ -4,10 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Primitives;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Calendar;
@@ -23,23 +22,14 @@ public class CalendarDisplayModeHelperTests
     }
 
     [Fact]
-    public void ToDecadeContext_AlignsToDecadeStart()
-    {
-        CalendarDisplayModeHelper.ToDecadeContext(new DateTime(2026, 5, 15))
-            .StartYear.Should().Be(2020);
-    }
+    public void ToDecadeContext_AlignsToDecadeStart() => CalendarDisplayModeHelper.ToDecadeContext(new(2026, 5, 15))
+        .StartYear.Should().Be(2020);
 
     [Fact]
-    public void GetHeaderDrillDownAction_FromYearContext_ShowsDecadeView()
-    {
-        CalendarDisplayModeHelper.GetHeaderDrillDownAction(new YearContext(2026))
-            .Should().Be(CalendarNavigationKind.ShowDecadeView);
-    }
+    public void GetHeaderDrillDownAction_FromYearContext_ShowsDecadeView() => CalendarDisplayModeHelper.GetHeaderDrillDownAction(new YearContext(2026))
+        .Should().Be(CalendarNavigationKind.ShowDecadeView);
 
     [Fact]
-    public void GetHeaderDrillDownAction_FromMonthContext_ReturnsNull()
-    {
-        CalendarDisplayModeHelper.GetHeaderDrillDownAction(new MonthContext(5, 2026))
-            .Should().BeNull();
-    }
+    public void GetHeaderDrillDownAction_FromMonthContext_ReturnsNull() => CalendarDisplayModeHelper.GetHeaderDrillDownAction(new MonthContext(5, 2026))
+        .Should().BeNull();
 }

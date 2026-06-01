@@ -13,25 +13,16 @@ namespace MyNet.Avalonia.Controls.Tests.TextPicker;
 public class TextPickerCommitHelperTests
 {
     [Fact]
-    public void ResolveCommitAction_EmptyTextWithValue_ClearsValue()
-    {
-        TextPickerCommitHelper.ResolveCommitAction("   ", "2026-05-15", hasSelectedValue: true)
-            .Should().Be(TextPickerTextCommitKind.ClearValue);
-    }
+    public void ResolveCommitAction_EmptyTextWithValue_ClearsValue() => TextPickerCommitHelper.ResolveCommitAction("   ", "2026-05-15", hasSelectedValue: true)
+        .Should().Be(TextPickerTextCommitKind.ClearValue);
 
     [Fact]
-    public void ResolveCommitAction_UnchangedText_IsNoOp()
-    {
-        TextPickerCommitHelper.ResolveCommitAction("2026-05-15", "2026-05-15", hasSelectedValue: true)
-            .Should().Be(TextPickerTextCommitKind.NoOp);
-    }
+    public void ResolveCommitAction_UnchangedText_IsNoOp() => TextPickerCommitHelper.ResolveCommitAction("2026-05-15", "2026-05-15", hasSelectedValue: true)
+        .Should().Be(TextPickerTextCommitKind.NoOp);
 
     [Fact]
-    public void ResolveCommitAction_ChangedText_ParsesAndApplies()
-    {
-        TextPickerCommitHelper.ResolveCommitAction("2026-06-01", "2026-05-15", hasSelectedValue: true)
-            .Should().Be(TextPickerTextCommitKind.ParseAndApply);
-    }
+    public void ResolveCommitAction_ChangedText_ParsesAndApplies() => TextPickerCommitHelper.ResolveCommitAction("2026-06-01", "2026-05-15", hasSelectedValue: true)
+        .Should().Be(TextPickerTextCommitKind.ParseAndApply);
 
     [Fact]
     public void ShouldApplyParsedValue_WhenDifferent_ReturnsTrue()

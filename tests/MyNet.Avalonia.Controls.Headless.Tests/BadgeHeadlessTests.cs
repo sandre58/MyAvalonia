@@ -19,7 +19,7 @@ public class BadgeHeadlessTests
         var badge = new Badge
         {
             Header = "3",
-            Content = new TextBlock { Text = "Messages" },
+            Content = new TextBlock { Text = "Messages" }
         };
 
         HeadlessControlHost.Show(badge, new(240, 120));
@@ -34,14 +34,14 @@ public class BadgeHeadlessTests
         {
             Header = "1",
             CornerPosition = CornerPosition.BottomLeft,
-            Content = new TextBlock { Text = "Item" },
+            Content = new TextBlock { Text = "Item" }
         };
 
         HeadlessControlHost.Show(badge, new(240, 120));
 
         var container = HeadlessControlHost.FindByName<Panel>(badge, Badge.PartBadgeContainer);
         container.Should().NotBeNull();
-        container!.HorizontalAlignment.Should().Be(global::Avalonia.Layout.HorizontalAlignment.Left);
+        container.HorizontalAlignment.Should().Be(global::Avalonia.Layout.HorizontalAlignment.Left);
         container.VerticalAlignment.Should().Be(global::Avalonia.Layout.VerticalAlignment.Bottom);
     }
 }

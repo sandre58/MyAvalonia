@@ -18,7 +18,6 @@ using MyNet.Observable;
 using MyNet.UI.Commands;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
-using MyNet.UI.Locators.Factories;
 using MyNet.UI.Notifications;
 using MyNet.UI.Notifications.Models;
 using MyNet.Utilities;
@@ -34,9 +33,6 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
     private readonly INotificationPublisher _notificationPublisher;
     private readonly IContentDialogService _contentDialogService;
     private readonly IMessageBoxFactory _messageBoxFactory;
-    private readonly IViewFactory _viewFactory;
-    private readonly AvaloniaDialogHostOptions _hostOptions;
-
     private bool _isModal = true;
     private MessageBoxResultOption _buttons = MessageBoxResultOption.OkCancel;
 
@@ -61,15 +57,11 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
     public WindowDialogGroupViewModel(
         INotificationPublisher notificationPublisher,
         IContentDialogService contentDialogService,
-        IMessageBoxFactory messageBoxFactory,
-        IViewFactory viewFactory,
-        AvaloniaDialogHostOptions hostOptions)
+        IMessageBoxFactory messageBoxFactory)
     {
         _notificationPublisher = notificationPublisher;
         _contentDialogService = contentDialogService;
         _messageBoxFactory = messageBoxFactory;
-        _viewFactory = viewFactory;
-        _hostOptions = hostOptions;
 
         var builder = new ControlThemeBuilder()
             .AddRoles(ThemeRole.Information, ThemeRole.Success, ThemeRole.Warning, ThemeRole.Error)
@@ -107,17 +99,10 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
     {
         var vm = new LoginDialogViewModel();
 
-        if (_isModal)
-        {
-            var result = await _contentDialogService
-                .ShowAsync(vm, AvaloniaDialogOptions.ForWindow(vm, true))
-                .ConfigureAwait(false);
-            ShowToasterResult(result, vm);
-        }
-        else
-        {
-            AvaloniaNonModalWindowDialogs.Show(vm, _viewFactory, _hostOptions.TopLevelProvider);
-        }
+        var result = await _contentDialogService
+            .ShowAsync(vm, DialogOptions.ForWindow(vm, _isModal))
+            .ConfigureAwait(false);
+        ShowToasterResult(result, vm);
     }
 
     private async Task ShowWindowMessageBoxAsync(MessageSeverity severity)
@@ -131,7 +116,7 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
         });
 
         var result = await _contentDialogService
-            .ShowAsync<MessageBoxResult>(messageBox, AvaloniaDialogOptions.ForWindow(messageBox, true))
+            .ShowAsync<MessageBoxResult>(messageBox, DialogOptions.ForWindow(messageBox, _isModal))
             .ConfigureAwait(false);
 
         var mapped = result.IsSuccess ? result.Value : MessageBoxResult.Cancel;

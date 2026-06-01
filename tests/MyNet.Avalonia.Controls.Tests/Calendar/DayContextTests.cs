@@ -24,16 +24,10 @@ public class DayContextTests
     }
 
     [Fact]
-    public void Next_AdvancesOneDay()
-    {
-        new DayContext(31, 5, 2026).Next().Should().Be(new DayContext(1, 6, 2026));
-    }
+    public void Next_AdvancesOneDay() => new DayContext(31, 5, 2026).Next().Should().Be(new DayContext(1, 6, 2026));
 
     [Fact]
-    public void FastNext_AdvancesOneMonth()
-    {
-        new DayContext(15, 5, 2026).FastNext().Should().Be(new DayContext(15, 6, 2026));
-    }
+    public void FastNext_AdvancesOneMonth() => new DayContext(15, 5, 2026).FastNext().Should().Be(new DayContext(15, 6, 2026));
 
     [Fact]
     public void Previous_And_FastPrevious_MoveBackward()

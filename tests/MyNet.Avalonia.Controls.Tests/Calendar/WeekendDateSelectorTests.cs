@@ -27,8 +27,5 @@ public class WeekendDateSelectorTests
     }
 
     [Fact]
-    public void Match_ReturnsFalseForNullDate()
-    {
-        WeekendDateSelector.Instance.Match(null).Should().BeFalse();
-    }
+    public void Match_ReturnsFalseForNullDate() => WeekendDateSelector.Instance.Match(null).Should().BeFalse();
 }

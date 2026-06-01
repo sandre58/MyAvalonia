@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Threading;
 using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Extended.Dialogs.Internal;
 using MyNet.UI.Dialogs.ContentDialogs;
@@ -19,19 +20,18 @@ using MyNet.UI.Locators.Factories;
 namespace MyNet.Avalonia.Extended.Dialogs.Presentation;
 
 /// <summary>
-/// Presents dialogs inside a modal <see cref="WindowDialog"/>.
+/// Presents dialogs inside a <see cref="WindowDialog"/>.
 /// </summary>
 public sealed class WindowDialogPresenter(
     DialogHostOptions hostOptions,
     IViewFactory viewFactory,
-    AvaloniaDialogSessionRegistry sessions) : IDialogPresenter
+    DialogSessionRegistry sessions) : IDialogPresenter
 {
     /// <inheritdoc />
     public int Priority => 110;
 
     /// <inheritdoc />
-    public bool CanPresent(IDialog dialog, UI.Dialogs.ContentDialogs.DialogOptions? options)
-        => DialogOptions.Resolve(options).Mode == DialogPresentationMode.Window;
+    public bool CanPresent(IDialog dialog, UI.Dialogs.ContentDialogs.DialogOptions? options) => DialogOptions.Resolve(options).Mode == DialogPresentationMode.Window;
 
     /// <inheritdoc />
     public async Task<DialogResult<bool>> PresentAsync(
@@ -50,21 +50,28 @@ public sealed class WindowDialogPresenter(
             : viewFactory.CreateView(dialog.GetType());
 
         Window window = dialog is MessageBoxViewModel messageBoxVm
-            ? AvaloniaWindowDialogBuilder.CreateMessageBox(messageBoxVm, options)
-            : AvaloniaWindowDialogBuilder.Create(dialog, view, options);
+            ? WindowDialogBuilder.CreateMessageBox(messageBoxVm, options)
+            : WindowDialogBuilder.Create(dialog, view, options);
 
+        var windowDialog = window as WindowDialog;
         var session = sessions.Register(
             dialog,
-            new AvaloniaDialogSession(() => sessions.Remove(dialog)) { Window = window as WindowDialog });
+            new(() => sessions.Remove(dialog)) { Window = windowDialog });
 
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            if (owner is null)
+            if (owner is null || !options.IsModal)
             {
-                window.Show();
-                return DialogResult.Dismiss();
+                return await PresentWindowAwaitingCloseAsync(
+                        window,
+                        windowDialog,
+                        dialog,
+                        owner,
+                        session,
+                        cancellationToken)
+                    .ConfigureAwait(true);
             }
 
             if (owner.Icon is not null)
@@ -74,13 +81,13 @@ public sealed class WindowDialogPresenter(
             {
                 var messageBoxResult = await window.ShowDialog<MessageBoxResult>(owner).ConfigureAwait(true);
                 if (dialog is MessageBoxViewModel messageBox)
-                    messageBox.ApplyResult(messageBoxResult);
+                    DialogResultMapper.ApplyMessageBoxResult(messageBox, messageBoxResult);
 
-                return DialogResult.Ok();
+                return DialogResultMapper.Map(messageBoxResult);
             }
 
             var result = await window.ShowDialog<bool?>(owner).ConfigureAwait(true);
-            return AvaloniaDialogResultMapper.MapBool(result);
+            return DialogResultMapper.Map(result);
         }
         finally
         {
@@ -95,6 +102,55 @@ public sealed class WindowDialogPresenter(
             session.CloseVisual();
 
         return Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Shows a window without <see cref="Window.ShowDialog"/> and completes when it closes.
+    /// Used for non-modal presentation and when no owner window is available.
+    /// </summary>
+    private static async Task<DialogResult<bool>> PresentWindowAwaitingCloseAsync(
+        Window window,
+        WindowDialog? windowDialog,
+        IDialog dialog,
+        Window? owner,
+        DialogSession session,
+        CancellationToken cancellationToken)
+    {
+        var completion = new TaskCompletionSource<DialogResult<bool>>(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var registration = cancellationToken.Register(() => Dispatcher.UIThread.Post(() =>
+        {
+            if (completion.Task.IsCompleted)
+                return;
+
+            session.CloseVisual();
+            completion.TrySetResult(DialogResult.Dismiss());
+        })).ConfigureAwait(false);
+
+        window.Closed += onClosed;
+
+        if (owner is not null)
+        {
+            if (owner.Icon is not null)
+                window.Icon = owner.Icon;
+
+            window.Show(owner);
+        }
+        else
+        {
+            window.Show();
+        }
+
+        return await completion.Task.ConfigureAwait(true);
+
+        void onClosed(object? sender, EventArgs e)
+        {
+            window.Closed -= onClosed;
+            var result = windowDialog?.LastCloseResult;
+            if (dialog is MessageBoxViewModel messageBox)
+                DialogResultMapper.ApplyMessageBoxResult(messageBox, result);
+
+            completion.TrySetResult(DialogResultMapper.Map(result));
+        }
     }
 
     private Window? ResolveOwnerWindow()

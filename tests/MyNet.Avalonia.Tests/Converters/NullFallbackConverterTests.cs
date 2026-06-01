@@ -5,9 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Globalization;
-using Avalonia;
 using Avalonia.Data;
-using Avalonia.Data.Converters;
 using FluentAssertions;
 using MyNet.Avalonia.Converters;
 using Xunit;
@@ -16,7 +14,7 @@ namespace MyNet.Avalonia.Tests.Converters;
 
 public class NullFallbackConverterTests
 {
-    private static readonly IValueConverter Converter = NullFallbackConverter.Default;
+    private static readonly NullFallbackConverter Converter = NullFallbackConverter.Default;
 
     [Fact]
     public void Convert_UsesPrimaryWhenPresent()
@@ -29,7 +27,7 @@ public class NullFallbackConverterTests
     [Fact]
     public void Convert_UsesFallbackWhenPrimaryNull()
     {
-        var result = Converter.Convert((object?)null, typeof(string), "fallback", CultureInfo.InvariantCulture);
+        var result = Converter.Convert(null!, typeof(string), "fallback", CultureInfo.InvariantCulture);
 
         result.Should().Be("fallback");
     }
@@ -37,7 +35,7 @@ public class NullFallbackConverterTests
     [Fact]
     public void Convert_AllNull_ReturnsDoNothing()
     {
-        var result = Converter.Convert((object?)null, typeof(string), null, CultureInfo.InvariantCulture);
+        var result = Converter.Convert(null!, typeof(string), null, CultureInfo.InvariantCulture);
 
         result.Should().BeSameAs(BindingOperations.DoNothing);
     }

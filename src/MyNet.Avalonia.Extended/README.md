@@ -50,25 +50,26 @@ dotnet add package MyNet.Avalonia.Extended
 
 MyNet.Avalonia.Extended provides high-level UI components and services for building rich Avalonia applications with enhanced user experience.
 
-### Dialog Services
+### Dialogs (MyNet.UI + Extended presenters)
 
-Easy-to-use dialog system for user interactions:
+Register presenters with the host top level (typically the main window), then use `IContentDialogService` with overlay or window options:
 
 ```csharp
-// Show message dialogs
-await DialogService.ShowMessageAsync("Information", "Operation completed successfully");
-await DialogService.ShowErrorAsync("Error", "An error occurred during the operation");
+// App startup (after AddDialogs / AddViewLocators)
+services.AddAvaloniaDialogs(() => mainWindow);
 
-// Show confirmation dialogs
-var result = await DialogService.ShowConfirmationAsync("Confirm", "Are you sure you want to delete this item?");
-if (result == DialogResult.Yes)
-{
-    // Perform deletion
-}
+// Overlay content dialog on the main host
+var result = await contentDialogService.ShowAsync(
+    loginViewModel,
+    DialogOptions.ForOverlay(loginViewModel, isModal: true, hostId: OverlayDialogHostManager.MainHostId));
 
-// Show custom dialogs
-var customResult = await DialogService.ShowDialogAsync<ContentDialogViewModel>();
+// Modal window
+await contentDialogService.ShowAsync(
+    loginViewModel,
+    DialogOptions.ForWindow(loginViewModel, isModal: true));
 ```
+
+Declare an `OverlayDialogHost` in XAML (see showcase `MainWindow`) with `HostId="{x:Static controls:OverlayDialogHostManager.MainHostId}"`. Include `Themes/Generic.axaml` from **MyNet.Avalonia.Extended** for `ContentDialog`, `WindowDialog`, and message box styles.
 
 ### Toast Notifications
 

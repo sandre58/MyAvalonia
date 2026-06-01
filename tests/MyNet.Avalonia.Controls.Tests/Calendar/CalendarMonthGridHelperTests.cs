@@ -7,8 +7,8 @@
 using System;
 using System.Linq;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Primitives;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Calendar;
@@ -33,10 +33,10 @@ public class CalendarMonthGridHelperTests
     [Fact]
     public void EnumerateDayCells_IncludesLeadingAndTrailingDays()
     {
-        var cells = CalendarMonthGridHelper.EnumerateDayCells(new MonthContext(3, 2026), DayOfWeek.Monday, 42).ToList();
+        var cells = CalendarMonthGridHelper.EnumerateDayCells(new(3, 2026), DayOfWeek.Monday, 42).ToList();
 
         cells.Should().HaveCount(42);
-        cells[0].Date.Should().Be(new DateTime(2026, 2, 23));
+        cells[0].Date.Should().Be(new(2026, 2, 23));
         cells.Should().Contain(x => x.DateContext == new DayContext(1, 3, 2026));
         cells.Should().Contain(x => x.IsInactive);
     }

@@ -96,12 +96,13 @@ public class WindowMessageBox : WindowDialog
     private void OnDefaultButtonClick(object? sender, RoutedEventArgs e)
     {
         if (Equals(sender, _okButton))
-            Close(MessageBoxResult.Ok);
+            CloseWithResult(MessageBoxResult.Ok);
         else if (Equals(sender, _cancelButton))
-            Close(MessageBoxResult.Cancel);
+            CloseWithResult(MessageBoxResult.Cancel);
         else if (Equals(sender, _yesButton))
-            Close(MessageBoxResult.Yes);
-        else if (Equals(sender, _noButton)) Close(MessageBoxResult.No);
+            CloseWithResult(MessageBoxResult.Yes);
+        else if (Equals(sender, _noButton))
+            CloseWithResult(MessageBoxResult.No);
     }
 
     protected override void OnKeyUp(KeyEventArgs e)
@@ -109,7 +110,7 @@ public class WindowMessageBox : WindowDialog
         base.OnKeyUp(e);
         if (e.Key is not Key.Escape) return;
 
-        Close(DialogButtonHelper.GetDefaultCloseResult(Buttons));
+        CloseWithResult(DialogButtonHelper.GetDefaultCloseResult(Buttons));
     }
 
     protected override void OnLoaded(RoutedEventArgs e)

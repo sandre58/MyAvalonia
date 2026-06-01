@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="AvaloniaDialogResultMapper.cs" company="Stéphane ANDRE">
+// <copyright file="DialogResultMapper.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -9,11 +9,13 @@ using MyNet.UI.Dialogs.MessageBox;
 
 namespace MyNet.Avalonia.Extended.Dialogs.Internal;
 
-internal static class AvaloniaDialogResultMapper
+internal static class DialogResultMapper
 {
-    public static DialogResult<bool> MapBool(object? result)
+    public static DialogResult<bool> Map(object? result)
         => result switch
         {
+            MessageBoxResult.Ok or MessageBoxResult.Yes => DialogResult.Ok(),
+            MessageBoxResult.Cancel or MessageBoxResult.No => DialogResult.Cancel(),
             true => DialogResult.Ok(),
             false => DialogResult.Cancel(),
             _ => DialogResult.Dismiss()

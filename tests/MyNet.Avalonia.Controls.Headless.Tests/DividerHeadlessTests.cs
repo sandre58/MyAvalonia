@@ -20,7 +20,7 @@ public class DividerHeadlessTests
     {
         var divider = new Divider
         {
-            Content = new TextBlock { Text = "Section" },
+            Content = new TextBlock { Text = "Section" }
         };
 
         HeadlessControlHost.Show(divider, new(320, 48));

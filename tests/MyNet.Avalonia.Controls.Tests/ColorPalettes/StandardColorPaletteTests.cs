@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Avalonia.Media;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.ColorPalettes;
 using Xunit;

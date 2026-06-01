@@ -5,28 +5,30 @@
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia;
 using Avalonia.Controls;
-using MyNet.UI;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Extended.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
+/// <summary>
+/// Window shell for content dialogs. Close requests are handled via <see cref="MyNet.UI.Dialogs.ContentDialogs.IDialog.CloseRequested"/> in <see cref="MyNet.Avalonia.Extended.Dialogs.Internal.WindowDialogBuilder"/>.
+/// </summary>
 public class WindowDialog : Window
 {
-    static WindowDialog() => DataContextProperty.Changed.AddClassHandler<WindowDialog, object?>((window, e) => window.OnDataContextChanged(e));
-
     protected override Type StyleKeyOverride { get; } = typeof(WindowDialog);
 
-    private void OnDataContextChanged(AvaloniaPropertyChangedEventArgs<object?> args)
+    /// <summary>
+    /// Gets the result passed to the last <see cref="CloseWithResult"/> call.
+    /// </summary>
+    internal object? LastCloseResult { get; private set; }
+
+    /// <summary>
+    /// Closes the window and records <paramref name="result"/> for non-modal presentation.
+    /// </summary>
+    internal void CloseWithResult(object? result)
     {
-        if (args.OldValue.Value is IClosable oldContext)
-            oldContext.CloseRequested -= OnContextRequestClose;
-
-        if (args.NewValue.Value is IClosable newContext)
-            newContext.CloseRequested += OnContextRequestClose;
+        LastCloseResult = result;
+        Close(result);
     }
-
-    private void OnContextRequestClose(object? sender, CloseRequestedEventArgs args) => Close(args.Force ? true : null);
 }

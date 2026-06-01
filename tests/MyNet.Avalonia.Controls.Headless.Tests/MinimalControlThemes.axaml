@@ -1,7 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls"
-                    xmlns:primitives="clr-namespace:MyNet.Avalonia.Controls.Primitives;assembly=MyNet.Avalonia.Controls">
+                    xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls">
 
     <ControlTheme x:Key="{x:Type controls:PaginationButton}" TargetType="controls:PaginationButton">
         <Setter Property="MinWidth" Value="32" />
@@ -72,9 +71,9 @@
         </Setter>
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type primitives:OverlayDialog}" TargetType="primitives:OverlayDialog">
+    <ControlTheme x:Key="{x:Type controls:OverlayDialog}" TargetType="controls:OverlayDialog">
         <Setter Property="Template">
-            <ControlTemplate TargetType="primitives:OverlayDialog">
+            <ControlTemplate TargetType="controls:OverlayDialog">
                 <Border>
                     <Grid RowDefinitions="Auto,*">
                         <Grid Name="PART_TitleArea" Grid.Row="0" ColumnDefinitions="*,Auto">

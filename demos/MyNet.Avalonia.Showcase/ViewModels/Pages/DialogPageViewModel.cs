@@ -11,7 +11,6 @@ using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
-using MyNet.UI.Locators.Factories;
 using MyNet.UI.Notifications;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
@@ -22,21 +21,17 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
         INotificationPublisher notificationPublisher,
         IContentDialogService contentDialogService,
         IMessageBoxFactory messageBoxFactory,
-        IViewFactory viewFactory,
-        AvaloniaDialogHostOptions hostOptions)
+        DialogHostOptions hostOptions)
         : base("Dialogs", [new ControlThemeBuilder()])
     {
         WindowGroup = new WindowDialogGroupViewModel(
             notificationPublisher,
             contentDialogService,
-            messageBoxFactory,
-            viewFactory,
-            hostOptions);
+            messageBoxFactory);
         OverlayGroup = new OverlayDialogGroupViewModel(
             notificationPublisher,
             contentDialogService,
             messageBoxFactory,
-            viewFactory,
             hostOptions);
     }
 

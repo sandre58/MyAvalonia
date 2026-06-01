@@ -7,7 +7,6 @@
 using System.Globalization;
 using Avalonia.Media;
 using FluentAssertions;
-using MyNet.Avalonia;
 using MyNet.Avalonia.Converters;
 using Xunit;
 

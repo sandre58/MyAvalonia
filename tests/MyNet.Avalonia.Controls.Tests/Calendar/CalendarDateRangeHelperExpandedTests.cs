@@ -24,28 +24,28 @@ public class CalendarDateRangeHelperExpandedTests
     public void ResolveDisplayDateStartChange_WhenSelectedBeforeNewStart_AdjustsStart()
     {
         var adjustment = CalendarDateRangeHelper.ResolveDisplayDateStartChange(
-            new DateTime(2026, 6, 1),
-            new DateTime(2026, 12, 31),
-            new DateTime(2026, 5, 1),
+            new(2026, 6, 1),
+            new(2026, 12, 31),
+            new(2026, 5, 1),
             new DateTime(2026, 5, 15),
             null);
 
         adjustment.Should().NotBeNull();
-        adjustment!.Value.DisplayDateStart.Should().Be(new DateTime(2026, 5, 15));
+        adjustment.Value.DisplayDateStart.Should().Be(new(2026, 5, 15));
     }
 
     [Fact]
     public void ResolveDisplayDateStartChange_WhenStartAfterDisplayDate_UpdatesDisplayDate()
     {
         var adjustment = CalendarDateRangeHelper.ResolveDisplayDateStartChange(
-            new DateTime(2026, 8, 1),
-            new DateTime(2026, 12, 31),
-            new DateTime(2026, 5, 1),
+            new(2026, 8, 1),
+            new(2026, 12, 31),
+            new(2026, 5, 1),
             null,
             null);
 
         adjustment.Should().NotBeNull();
-        adjustment!.Value.DisplayDate.Should().Be(new DateTime(2026, 8, 1));
+        adjustment.Value.DisplayDate.Should().Be(new(2026, 8, 1));
         adjustment.Value.RequiresRefresh.Should().BeTrue();
     }
 
@@ -53,25 +53,25 @@ public class CalendarDateRangeHelperExpandedTests
     public void ResolveDisplayDateEndChange_WhenEndBeforeDisplayDate_UpdatesDisplayDate()
     {
         var adjustment = CalendarDateRangeHelper.ResolveDisplayDateEndChange(
-            new DateTime(2026, 2, 28),
-            new DateTime(2026, 1, 1),
-            new DateTime(2026, 5, 1),
+            new(2026, 2, 28),
+            new(2026, 1, 1),
+            new(2026, 5, 1),
             null);
 
         adjustment.Should().NotBeNull();
-        adjustment!.Value.DisplayDate.Should().Be(new DateTime(2026, 2, 28));
+        adjustment.Value.DisplayDate.Should().Be(new(2026, 2, 28));
     }
 
     [Fact]
     public void ResolveDisplayDateEndChange_WhenEndBeforeRangeStart_ClampsEndToStart()
     {
         var adjustment = CalendarDateRangeHelper.ResolveDisplayDateEndChange(
-            new DateTime(2025, 12, 31),
-            new DateTime(2026, 1, 1),
-            new DateTime(2026, 5, 1),
+            new(2025, 12, 31),
+            new(2026, 1, 1),
+            new(2026, 5, 1),
             null);
 
         adjustment.Should().NotBeNull();
-        adjustment!.Value.DisplayDateEnd.Should().Be(new DateTime(2026, 1, 1));
+        adjustment.Value.DisplayDateEnd.Should().Be(new(2026, 1, 1));
     }
 }

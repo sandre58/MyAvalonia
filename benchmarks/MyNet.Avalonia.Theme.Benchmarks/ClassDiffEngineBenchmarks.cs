@@ -29,8 +29,8 @@ internal class ClassDiffEngineBenchmarks
             return new BenchmarkRegistration(() => border.Tag = null);
         });
 
-        _border = new Border();
-        _state = new ClassesRuntimeState();
+        _border = new();
+        _state = new();
         ClassDiffEngine.ApplyDiff(_border, _state, [BenchmarkClass]);
     }
 

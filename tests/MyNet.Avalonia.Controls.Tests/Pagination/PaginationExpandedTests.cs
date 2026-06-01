@@ -13,16 +13,10 @@ namespace MyNet.Avalonia.Controls.Tests.Pagination;
 public class PaginationExpandedTests
 {
     [Fact]
-    public void CoerceCurrentPage_WithNull_ReturnsNull()
-    {
-        PaginationHelper.CoerceCurrentPage(null, 10).Should().BeNull();
-    }
+    public void CoerceCurrentPage_WithNull_ReturnsNull() => PaginationHelper.CoerceCurrentPage(null, 10).Should().BeNull();
 
     [Fact]
-    public void CoerceCurrentPage_WithZeroPageCount_ClampsToOne()
-    {
-        PaginationHelper.CoerceCurrentPage(5, 0).Should().Be(1);
-    }
+    public void CoerceCurrentPage_WithZeroPageCount_ClampsToOne() => PaginationHelper.CoerceCurrentPage(5, 0).Should().Be(1);
 
     [Fact]
     public void ClampQuickJump_ClampsDecimalValue()
@@ -33,10 +27,7 @@ public class PaginationExpandedTests
     }
 
     [Fact]
-    public void BuildButtonStates_WithZeroPageCount_HidesAllButtons()
-    {
-        PaginationLayoutHelper.BuildButtonStates(1, 0).Should().OnlyContain(x => !x.IsVisible);
-    }
+    public void BuildButtonStates_WithZeroPageCount_HidesAllButtons() => PaginationLayoutHelper.BuildButtonStates(1, 0).Should().OnlyContain(x => !x.IsVisible);
 
     [Fact]
     public void BuildButtonStates_WithSevenPages_ShowsAllWithoutEllipsis()

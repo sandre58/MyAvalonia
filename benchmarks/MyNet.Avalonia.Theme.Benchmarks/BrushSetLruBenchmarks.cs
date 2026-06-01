@@ -25,7 +25,7 @@ internal class BrushSetLruBenchmarks
     [GlobalSetup]
     public void Setup()
     {
-        _set = new BrushSet(MediaColors.DodgerBlue, MediaColors.White, transformedBrushCapacity: Capacity);
+        _set = new(MediaColors.DodgerBlue, MediaColors.White, transformedBrushCapacity: Capacity);
         _hot = new(0.5);
         _set.GetTransformedBrush(_hot);
     }

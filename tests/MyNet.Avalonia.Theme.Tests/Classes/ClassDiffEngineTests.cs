@@ -17,14 +17,11 @@ public class ClassDiffEngineTests
 {
     private const string TestClassName = "p1-test-utility-class";
 
-    static ClassDiffEngineTests()
+    static ClassDiffEngineTests() => ClassRegistry.Register<Border>(TestClassName, border =>
     {
-        ClassRegistry.Register<Border>(TestClassName, border =>
-        {
-            border.Tag = "applied";
-            return new TestRegistration(() => border.Tag = null);
-        });
-    }
+        border.Tag = "applied";
+        return new TestRegistration(() => border.Tag = null);
+    });
 
     [Fact]
     public void ApplyDiff_AddsRegisteredClass_InvokesRegistryAction()

@@ -7,6 +7,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Threading;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Extended.Dialogs.Internal;
@@ -22,7 +23,7 @@ namespace MyNet.Avalonia.Extended.Dialogs.Presentation;
 public sealed class OverlayDialogPresenter(
     DialogHostOptions hostOptions,
     IViewFactory viewFactory,
-    AvaloniaDialogSessionRegistry sessions) : IDialogPresenter
+    DialogSessionRegistry sessions) : IDialogPresenter
 {
     /// <inheritdoc />
     public int Priority => 100;
@@ -34,7 +35,7 @@ public sealed class OverlayDialogPresenter(
         if (request.Mode != DialogPresentationMode.Overlay)
             return false;
 
-        var topLevelKey = request.OverlayOptions?.TopLevelHashCode
+        var topLevelKey = request.OverlayOptions?.TopLevelKey
                           ?? OverlayDialogHostManager.GetTopLevelKey(hostOptions.TopLevelProvider());
         return OverlayDialogHostManager.GetHost(request.OverlayHostId, topLevelKey) is not null;
     }
@@ -49,7 +50,7 @@ public sealed class OverlayDialogPresenter(
         ArgumentNullException.ThrowIfNull(options);
 
         var request = DialogOptions.Resolve(options);
-        var topLevelKey = request.OverlayOptions?.TopLevelHashCode
+        var topLevelKey = request.OverlayOptions?.TopLevelKey
                           ?? OverlayDialogHostManager.GetTopLevelKey(hostOptions.TopLevelProvider());
         var host = OverlayDialogHostManager.GetHost(request.OverlayHostId, topLevelKey)
                    ?? throw new InvalidOperationException("No overlay dialog host is registered.");
@@ -58,7 +59,7 @@ public sealed class OverlayDialogPresenter(
             ? dialog
             : viewFactory.CreateView(dialog.GetType());
 
-        var overlay = AvaloniaOverlayDialogBuilder.Create(dialog, view, options, request);
+        var overlay = OverlayDialogBuilder.Create(dialog, view, options, request);
         var session = sessions.Register(
             dialog,
             new(() => sessions.Remove(dialog)) { Overlay = overlay });
@@ -71,14 +72,21 @@ public sealed class OverlayDialogPresenter(
                 var result = await overlay.ShowAsync<object?>(cancellationToken).ConfigureAwait(true);
 
                 if (dialog is MessageBoxViewModel messageBox)
-                    AvaloniaDialogResultMapper.ApplyMessageBoxResult(messageBox, result);
+                    DialogResultMapper.ApplyMessageBoxResult(messageBox, result);
 
-                return AvaloniaDialogResultMapper.MapBool(result);
+                return DialogResultMapper.Map(result);
             }
 
             host.AddDialog(overlay);
             var completion = new TaskCompletionSource<DialogResult<bool>>(TaskCreationOptions.RunContinuationsAsynchronously);
-            cancellationToken.Register(() => completion.TrySetResult(DialogResult.Dismiss()));
+            await using var registration = cancellationToken.Register(() => Dispatcher.UIThread.Post(() =>
+                {
+                    if (completion.Task.IsCompleted)
+                        return;
+
+                    session.CloseVisual();
+                    completion.TrySetResult(DialogResult.Dismiss());
+                })).ConfigureAwait(false);
 
             overlay.Closed += onClosed;
             return await completion.Task.ConfigureAwait(true);
@@ -87,9 +95,9 @@ public sealed class OverlayDialogPresenter(
             {
                 overlay.Closed -= onClosed;
                 if (dialog is MessageBoxViewModel messageBox)
-                    AvaloniaDialogResultMapper.ApplyMessageBoxResult(messageBox, args.Result);
+                    DialogResultMapper.ApplyMessageBoxResult(messageBox, args.Result);
 
-                completion.TrySetResult(AvaloniaDialogResultMapper.MapBool(args.Result));
+                completion.TrySetResult(DialogResultMapper.Map(args.Result));
             }
         }
         finally

@@ -9,18 +9,30 @@
         <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
     </ItemGroup>
 
-    <!-- UnitTests -->
+    <!-- UnitTests (All) -->
     <ItemGroup Condition="'$(IsTestProject)' == 'True'">
-        <PackageReference Include="GitHubActionsTestLogger" PrivateAssets="All" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="FluentAssertions" />
+        <PackageReference Include="coverlet.collector" PrivateAssets="All" />
+        <PackageReference Include="coverlet.msbuild" PrivateAssets="All" />
+    </ItemGroup>
+
+    <!-- UnitTests (No Headless) -->
+    <ItemGroup Condition="'$(IsHeadlessTestProject)' == 'False' And '$(IsTestProject)' == 'True'">
+        <PackageReference Include="GitHubActionsTestLogger" PrivateAssets="All" />
         <PackageReference Include="xunit" />
         <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="All" />
-        <PackageReference Include="FluentAssertions" />
         <PackageReference Include="Moq" />
         <PackageReference Include="AutoFixture" />
         <PackageReference Include="AutoFixture.AutoMoq" />
         <PackageReference Include="AutoFixture.Xunit2" />
-        <PackageReference Include="coverlet.collector" PrivateAssets="All" />
-        <PackageReference Include="coverlet.msbuild" PrivateAssets="All" />
+    </ItemGroup>
+
+    <!-- UnitTests (Headless) -->
+    <ItemGroup Condition="'$(IsHeadlessTestProject)' == 'True'">
+        <PackageReference Include="Avalonia.Headless.XUnit" />
+        <PackageReference Include="Avalonia.Themes.Fluent" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+        <PackageReference Include="xunit.v3" />
     </ItemGroup>
 </Project>

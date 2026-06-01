@@ -22,15 +22,15 @@ public class CalendarSelectionCoordinatorTests
         var coordinator = new CalendarSelectionCoordinator(
             () => CalendarSelectionMode.SingleDate,
             () => false,
-            () => new DateTime(2026, 5, 1),
+            () => new(2026, 5, 1),
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new DateTime(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
 
-        commands.Singles.Should().ContainSingle().Which.Should().Be(new DateTime(2026, 5, 10));
-        commands.Moves.Should().ContainSingle().Which.Should().Be(new DateTime(2026, 5, 10));
-        coordinator.HoverStart.Should().Be(new DateTime(2026, 5, 10));
+        commands.Singles.Should().ContainSingle().Which.Should().Be(new(2026, 5, 10));
+        commands.Moves.Should().ContainSingle().Which.Should().Be(new(2026, 5, 10));
+        coordinator.HoverStart.Should().Be(new(2026, 5, 10));
     }
 
     [Fact]
@@ -40,15 +40,15 @@ public class CalendarSelectionCoordinatorTests
         var coordinator = new CalendarSelectionCoordinator(
             () => CalendarSelectionMode.SingleRange,
             () => false,
-            () => new DateTime(2026, 5, 1),
+            () => new(2026, 5, 1),
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new DateTime(2026, 5, 5), shift: false, ctrl: false);
-        coordinator.ProcessDateSelection(new DateTime(2026, 5, 15), shift: true, ctrl: false);
+        coordinator.ProcessDateSelection(new(2026, 5, 5), shift: false, ctrl: false);
+        coordinator.ProcessDateSelection(new(2026, 5, 15), shift: true, ctrl: false);
 
         commands.Ranges.Should().ContainSingle()
-            .Which.Should().Be((new DateTime(2026, 5, 5), new DateTime(2026, 5, 15)));
+            .Which.Should().Be((new(2026, 5, 5), new(2026, 5, 15)));
     }
 
     [Fact]
@@ -58,11 +58,11 @@ public class CalendarSelectionCoordinatorTests
         var coordinator = new CalendarSelectionCoordinator(
             () => CalendarSelectionMode.SingleDate,
             () => false,
-            () => new DateTime(2026, 5, 1),
+            () => new(2026, 5, 1),
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new DateTime(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
         coordinator.ResetHover();
 
         coordinator.HoverStart.Should().BeNull();
@@ -75,15 +75,15 @@ public class CalendarSelectionCoordinatorTests
         var coordinator = new CalendarSelectionCoordinator(
             () => CalendarSelectionMode.SingleRange,
             () => true,
-            () => new DateTime(2026, 5, 1),
+            () => new(2026, 5, 1),
             _ => true,
             commands);
 
-        coordinator.ProcessTapRangeSelection(new DateTime(2026, 5, 10), ctrl: false);
-        coordinator.ProcessTapRangeSelection(new DateTime(2026, 5, 20), ctrl: false);
+        coordinator.ProcessTapRangeSelection(new(2026, 5, 10), ctrl: false);
+        coordinator.ProcessTapRangeSelection(new(2026, 5, 20), ctrl: false);
 
         commands.Ranges.Should().ContainSingle()
-            .Which.Should().Be((new DateTime(2026, 5, 10), new DateTime(2026, 5, 20)));
+            .Which.Should().Be((new(2026, 5, 10), new(2026, 5, 20)));
         coordinator.HoverStart.Should().BeNull();
     }
 
@@ -94,11 +94,11 @@ public class CalendarSelectionCoordinatorTests
         var coordinator = new CalendarSelectionCoordinator(
             () => CalendarSelectionMode.SingleDate,
             () => false,
-            () => new DateTime(2026, 5, 1),
+            () => new(2026, 5, 1),
             _ => false,
             commands);
 
-        coordinator.ProcessDateSelection(new DateTime(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
 
         commands.Singles.Should().BeEmpty();
         commands.Moves.Should().BeEmpty();

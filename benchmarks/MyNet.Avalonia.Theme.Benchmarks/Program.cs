@@ -5,6 +5,5 @@
 // -----------------------------------------------------------------------
 
 using BenchmarkDotNet.Running;
-using MyNet.Avalonia.Theme.Benchmarks;
 
 BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);

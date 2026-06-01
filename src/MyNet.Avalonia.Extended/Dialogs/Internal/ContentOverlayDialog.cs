@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="AvaloniaContentOverlayDialog.cs" company="Stéphane ANDRE">
+// <copyright file="ContentOverlayDialog.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -11,7 +11,7 @@ namespace MyNet.Avalonia.Extended.Dialogs.Internal;
 /// <summary>
 /// Overlay shell that raises a typed close result for content dialogs.
 /// </summary>
-internal sealed class AvaloniaContentOverlayDialog : OverlayDialog
+internal sealed class ContentOverlayDialog : OverlayDialog
 {
     public override void Close() => CloseWithResult(null);
 

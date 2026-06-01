@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System.Globalization;
-using Avalonia.Controls;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Converters;
 using MyNet.Avalonia.Controls.Enums;
@@ -32,8 +31,5 @@ public class PositionToDockConverterExpandedTests
     }
 
     [Fact]
-    public void Default_IsSingleton()
-    {
-        PositionToDockConverter.Default.Should().BeSameAs(PositionToDockConverter.Default);
-    }
+    public void Default_IsSingleton() => PositionToDockConverter.Default.Should().BeSameAs(PositionToDockConverter.Default);
 }

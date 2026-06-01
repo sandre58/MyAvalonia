@@ -9,8 +9,6 @@ using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
 using Avalonia.VisualTree;
 using FluentAssertions;
-using MyNet.Avalonia.Controls;
-using MyNet.Avalonia.Controls.Primitives;
 
 namespace MyNet.Avalonia.Controls.Headless.Tests;
 
@@ -51,7 +49,7 @@ public class OverlayDialogHeadlessTests
         var dialog = new OverlayDialog
         {
             Title = "Settings",
-            Content = new TextBlock { Text = "Body" },
+            Content = new TextBlock { Text = "Body" }
         };
 
         HeadlessControlHost.Show(dialog, new(320, 200));
@@ -68,14 +66,14 @@ public class OverlayDialogHeadlessTests
         {
             Title = "Hidden close",
             IsCloseButtonVisible = false,
-            Content = new TextBlock { Text = "Body" },
+            Content = new TextBlock { Text = "Body" }
         };
 
         HeadlessControlHost.Show(dialog, new(320, 200));
 
         var closeButton = HeadlessControlHost.FindByName<Button>(dialog, OverlayDialog.PartCloseButton);
         closeButton.Should().NotBeNull();
-        closeButton!.IsVisible.Should().BeFalse();
+        closeButton.IsVisible.Should().BeFalse();
     }
 
     [AvaloniaFact]
@@ -85,7 +83,7 @@ public class OverlayDialogHeadlessTests
         {
             Width = 400,
             Height = 300,
-            HostId = "headless",
+            HostId = "headless"
         };
         var surface = new Grid { Children = { host } };
         HeadlessControlHost.Show(surface, new(400, 300));
@@ -93,7 +91,7 @@ public class OverlayDialogHeadlessTests
         var dialog = new OverlayDialog
         {
             Title = "Modal",
-            Content = new TextBlock { Text = "Content" },
+            Content = new TextBlock { Text = "Content" }
         };
 
         host.AddModalDialog(dialog);
@@ -111,7 +109,7 @@ public class OverlayDialogHeadlessTests
         {
             Width = 400,
             Height = 300,
-            HostId = "registered",
+            HostId = "registered"
         };
         var window = HeadlessControlHost.Show(host, new(400, 300));
         var topLevelKey = OverlayDialogHostManager.GetTopLevelKey(window);
@@ -127,7 +125,7 @@ public class OverlayDialogHeadlessTests
         var host = new OverlayDialogHost
         {
             Width = 400,
-            Height = 300,
+            Height = 300
         };
         var surface = new Grid { Children = { host } };
         HeadlessControlHost.Show(surface, new(400, 300));
@@ -135,7 +133,7 @@ public class OverlayDialogHeadlessTests
         var dialog = new OverlayDialog
         {
             CanLightDismiss = true,
-            Content = new TextBlock { Text = "Dismiss me" },
+            Content = new TextBlock { Text = "Dismiss me" }
         };
 
         host.AddDialog(dialog);

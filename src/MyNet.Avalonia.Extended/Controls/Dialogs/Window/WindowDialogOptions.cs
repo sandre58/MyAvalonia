@@ -73,5 +73,3 @@ public class WindowDialogOptions
     /// </summary>
     public string? Title { get; set; }
 }
-
-

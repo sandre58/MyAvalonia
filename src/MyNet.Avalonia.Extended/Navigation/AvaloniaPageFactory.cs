@@ -33,7 +33,7 @@ public sealed class AvaloniaPageFactory(IViewFactory viewFactory) : IAvaloniaPag
         return new ContentPage
         {
             Content = view,
-            DataContext = page,
+            DataContext = page
         };
     }
 }

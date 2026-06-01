@@ -84,6 +84,8 @@
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="tests/MyNet.Avalonia.Controls.Headless.Tests/MyNet.Avalonia.Controls.Headless.Tests.csproj" />
+    <Project Path="tests/MyNet.Avalonia.Extended.Tests/MyNet.Avalonia.Extended.Tests.csproj" />
+    <Project Path="tests/MyNet.Avalonia.Extended.Headless.Tests/MyNet.Avalonia.Extended.Headless.Tests.csproj" />
     <Project Path="tests/MyNet.Avalonia.Controls.Tests/MyNet.Avalonia.Controls.Tests.csproj" />
     <Project Path="tests/MyNet.Avalonia.Geography.Tests/MyNet.Avalonia.Geography.Tests.csproj" />
     <Project Path="tests/MyNet.Avalonia.Tests/MyNet.Avalonia.Tests.csproj" />

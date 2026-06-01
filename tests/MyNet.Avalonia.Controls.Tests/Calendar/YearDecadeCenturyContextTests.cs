@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Primitives;
 using Xunit;
@@ -21,7 +20,7 @@ public class YearDecadeCenturyContextTests
         year.Previous().Should().Be(new YearContext(2025));
         year.FastNext().Should().Be(new YearContext(2036));
         year.FastPrevious().Should().Be(new YearContext(2016));
-        year.ToDate().Should().Be(new DateTime(2026, 1, 1));
+        year.ToDate().Should().Be(new(2026, 1, 1));
     }
 
     [Fact]
@@ -29,8 +28,8 @@ public class YearDecadeCenturyContextTests
     {
         var decade = new DecadeContext(2020);
         decade.EndYear.Should().Be(2030);
-        decade.IsSimilar(new DateTime(2029, 12, 31)).Should().BeTrue();
-        decade.IsSimilar(new DateTime(2031, 1, 1)).Should().BeFalse();
+        decade.IsSimilar(new(2029, 12, 31)).Should().BeTrue();
+        decade.IsSimilar(new(2031, 1, 1)).Should().BeFalse();
         decade.FastNext().Should().Be(new DecadeContext(2120));
     }
 
@@ -39,7 +38,7 @@ public class YearDecadeCenturyContextTests
     {
         var century = new CenturyContext(2000);
         century.EndYear.Should().Be(2100);
-        century.IsSimilar(new DateTime(2099, 12, 31)).Should().BeTrue();
+        century.IsSimilar(new(2099, 12, 31)).Should().BeTrue();
         century.FastNext().Should().Be(new CenturyContext(3000));
         century.FastPrevious().Should().Be(new CenturyContext(1000));
     }
@@ -47,7 +46,7 @@ public class YearDecadeCenturyContextTests
     [Fact]
     public void FromDate_AlignsToContextStart()
     {
-        new DecadeContext(2020).FromDate(new DateTime(2026, 5, 15)).Should().Be(new DecadeContext(2026));
-        new CenturyContext(2000).FromDate(new DateTime(2026, 5, 15)).Should().Be(new CenturyContext(2026));
+        new DecadeContext(2020).FromDate(new(2026, 5, 15)).Should().Be(new DecadeContext(2026));
+        new CenturyContext(2000).FromDate(new(2026, 5, 15)).Should().Be(new CenturyContext(2026));
     }
 }

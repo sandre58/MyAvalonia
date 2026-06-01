@@ -6,7 +6,6 @@
 
 using System.Globalization;
 using Avalonia;
-using Avalonia.Data.Converters;
 using FluentAssertions;
 using MyNet.Avalonia.Converters;
 using Xunit;
@@ -35,9 +34,9 @@ public class MathComparisonConverterTests
     [Fact]
     public void NullOperand_ReturnsUnsetValue()
     {
-        IValueConverter converter = MathComparisonConverter.IsLessThan;
+        var converter = MathComparisonConverter.IsLessThan;
 
-        var result = converter.Convert((object?)null, typeof(bool), 1, CultureInfo.InvariantCulture);
+        var result = converter.Convert(null!, typeof(bool), 1, CultureInfo.InvariantCulture);
 
         result.Should().BeSameAs(AvaloniaProperty.UnsetValue);
     }

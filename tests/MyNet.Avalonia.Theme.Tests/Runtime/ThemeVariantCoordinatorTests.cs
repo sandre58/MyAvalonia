@@ -17,7 +17,7 @@ public class ThemeVariantCoordinatorTests
     [Fact]
     public void GetActiveThemeDictionary_WithoutApplication_ReturnsEmpty()
     {
-        var coordinator = new ThemeVariantCoordinator(new ResourceDictionary());
+        var coordinator = new ThemeVariantCoordinator([]);
 
         coordinator.GetActiveThemeDictionary().Should().BeEmpty();
     }
@@ -26,7 +26,6 @@ public class ThemeVariantCoordinatorTests
     public void RegisterThemeProvider_AddsThemeDictionaryEntry()
     {
         var resources = new ResourceDictionary();
-        var coordinator = new ThemeVariantCoordinator(resources);
         var variant = new ThemeVariant("CoordinatorTest", ThemeVariant.Dark);
         var inner = new ResourceDictionary { ["TestKey"] = 42 };
 

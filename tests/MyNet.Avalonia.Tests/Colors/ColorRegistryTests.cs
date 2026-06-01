@@ -13,10 +13,7 @@ namespace MyNet.Avalonia.Tests.Colors;
 public class ColorRegistryTests
 {
     [Fact]
-    public void Instance_IsSingleton()
-    {
-        ColorRegistry.Instance.Should().BeSameAs(ColorRegistry.Instance);
-    }
+    public void Instance_IsSingleton() => ColorRegistry.Instance.Should().BeSameAs(ColorRegistry.Instance);
 
     [Fact]
     public void TryResolve_KnownName_ReturnsColor()

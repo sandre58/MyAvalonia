@@ -11,6 +11,7 @@
 
     <!-- Automatic project type detection -->
     <PropertyGroup>
+        <IsHeadlessTestProject>$(MSBuildProjectName.EndsWith('Headless.Tests'))</IsHeadlessTestProject>
         <IsTestProject>$(MSBuildProjectName.EndsWith('Tests'))</IsTestProject>
         <IsDemoProject>$(MSBuildProjectName.Contains('.Demo'))</IsDemoProject>
         <IsPackable Condition="'$(IsDemoProject)' == 'True' Or '$(IsTestProject)' == 'True'">false</IsPackable>

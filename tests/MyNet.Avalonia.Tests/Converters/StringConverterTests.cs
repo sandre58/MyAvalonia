@@ -27,10 +27,7 @@ public class StringConverterTests
     }
 
     [Fact]
-    public void Convert_Null_ReturnsNull()
-    {
-        StringConverter.Default.Convert(null, null, CultureInfo.InvariantCulture).Should().BeNull();
-    }
+    public void Convert_Null_ReturnsNull() => StringConverter.Default.Convert(null, null, CultureInfo.InvariantCulture).Should().BeNull();
 
     [Fact]
     public void QuantityFromValue_PassesQuantityToOptions()

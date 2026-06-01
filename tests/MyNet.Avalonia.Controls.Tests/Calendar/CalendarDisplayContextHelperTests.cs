@@ -6,8 +6,8 @@
 
 using System;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Primitives;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Calendar;
@@ -44,7 +44,7 @@ public class CalendarDisplayContextHelperTests
         var lastSelected = new DateTime(2026, 5, 15);
         var context = new MonthContext(5, 2026);
 
-        CalendarDisplayContextHelper.GetFocusedDate(lastSelected, context, new DateTime(2026, 5, 1))
+        CalendarDisplayContextHelper.GetFocusedDate(lastSelected, context, new(2026, 5, 1))
             .Should().Be(lastSelected);
     }
 
@@ -62,7 +62,7 @@ public class CalendarDisplayContextHelperTests
     {
         var context = new MonthContext(3, 2026);
 
-        CalendarDisplayContextHelper.GetFocusedDate(null, context, new DateTime(2026, 5, 20))
-            .Should().Be(new DateTime(2026, 3, 1));
+        CalendarDisplayContextHelper.GetFocusedDate(null, context, new(2026, 5, 20))
+            .Should().Be(new(2026, 3, 1));
     }
 }

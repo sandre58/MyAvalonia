@@ -24,16 +24,10 @@ public class IconsHelperTests
     }
 
     [Fact]
-    public void Kinds_MatchesGroupKinds()
-    {
-        IconsHelper.Kinds.Should().BeEquivalentTo(IconsHelper.Groups.Select(g => g.Kind));
-    }
+    public void Kinds_MatchesGroupKinds() => IconsHelper.Kinds.Should().BeEquivalentTo(IconsHelper.Groups.Select(g => g.Kind));
 
     [Fact]
-    public void Groups_ContainsDistinctKinds()
-    {
-        IconsHelper.Groups.Select(g => g.Kind).Should().OnlyHaveUniqueItems();
-    }
+    public void Groups_ContainsDistinctKinds() => IconsHelper.Groups.Select(g => g.Kind).Should().OnlyHaveUniqueItems();
 
     [Fact]
     public void MaterialIconKindGroup_MapsKindAndHumanizesDisplayName()

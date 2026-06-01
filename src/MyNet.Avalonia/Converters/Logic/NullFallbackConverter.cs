@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 
@@ -38,11 +37,21 @@ public class NullFallbackConverter : IValueConverter, IMultiValueConverter
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => GetValueOrFallback([value, parameter]);
 
     /// <inheritdoc/>
-    public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture) => GetValueOrFallback(values);
+    public object Convert(IList<object?>? values, Type targetType, object? parameter, CultureInfo culture) =>
+        values is null ? GetValueOrFallback([null, parameter]) : GetValueOrFallback(values);
 
     /// <inheritdoc/>
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => GetValueOrFallback([value, parameter]);
 
-    private static object GetValueOrFallback(IEnumerable<object?> values) =>
-        values.FirstOrDefault(x => x is not null) ?? BindingOperations.DoNothing;
+    private static object GetValueOrFallback(IEnumerable<object?>? values)
+    {
+        if (values is null) return BindingOperations.DoNothing;
+
+        foreach (var value in values)
+        {
+            if (value is not null) return value;
+        }
+
+        return BindingOperations.DoNothing;
+    }
 }

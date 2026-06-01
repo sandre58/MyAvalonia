@@ -229,13 +229,6 @@ public class OverlayDialog : OverlayFeedbackElement
     public void ChangeLayer(OverlayDialogLayerChangeType changeType) =>
         RaiseEvent(new OverlayDialogLayerChangeEventArgs(LayerChangedEvent, changeType));
 
-    [Obsolete("Use BringForward, SendBackward, BringToFront, or SendToBack instead.")]
-    public void UpdateLayer(object? changeType)
-    {
-        if (changeType is OverlayDialogLayerChangeType type)
-            ChangeLayer(type);
-    }
-
     #endregion
 
     #region DragMove AttachedPropert

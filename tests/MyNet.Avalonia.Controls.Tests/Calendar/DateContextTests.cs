@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Primitives;
 using Xunit;
@@ -30,18 +29,15 @@ public class DateContextTests
     }
 
     [Fact]
-    public void MonthContext_Add_SupportsNegativeOffset()
-    {
-        new MonthContext(3, 2026).Add(-2).Should().Be(new MonthContext(1, 2026));
-    }
+    public void MonthContext_Add_SupportsNegativeOffset() => new MonthContext(3, 2026).Add(-2).Should().Be(new MonthContext(1, 2026));
 
     [Fact]
     public void DayContext_IsSimilar_MatchesExactDay()
     {
         var context = new DayContext(10, 5, 2026);
 
-        context.IsSimilar(new DateTime(2026, 5, 10)).Should().BeTrue();
-        context.IsSimilar(new DateTime(2026, 5, 11)).Should().BeFalse();
+        context.IsSimilar(new(2026, 5, 10)).Should().BeTrue();
+        context.IsSimilar(new(2026, 5, 11)).Should().BeFalse();
     }
 
     [Fact]
@@ -49,14 +45,11 @@ public class DateContextTests
     {
         var context = new DecadeContext(2020);
 
-        context.IsSimilar(new DateTime(2020, 1, 1)).Should().BeTrue();
-        context.IsSimilar(new DateTime(2029, 12, 31)).Should().BeTrue();
-        context.IsSimilar(new DateTime(2019, 12, 31)).Should().BeFalse();
+        context.IsSimilar(new(2020, 1, 1)).Should().BeTrue();
+        context.IsSimilar(new(2029, 12, 31)).Should().BeTrue();
+        context.IsSimilar(new(2019, 12, 31)).Should().BeFalse();
     }
 
     [Fact]
-    public void YearContext_FastNext_AdvancesByTenYears()
-    {
-        new YearContext(2020).FastNext().Should().Be(new YearContext(2030));
-    }
+    public void YearContext_FastNext_AdvancesByTenYears() => new YearContext(2020).FastNext().Should().Be(new YearContext(2030));
 }

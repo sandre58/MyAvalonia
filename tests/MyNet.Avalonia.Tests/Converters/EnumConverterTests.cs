@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using FluentAssertions;
 using MyNet.Avalonia.Converters;
@@ -15,26 +16,18 @@ public class EnumConverterTests
 {
     private enum Sample
     {
+        [SuppressMessage("ReSharper", "UnusedMember.Local", Justification = "Used for testing")]
         None = 0,
         Active = 1,
         Disabled = 2
     }
 
     [Fact]
-    public void Any_MatchingValue_ReturnsTrue()
-    {
-        EnumConverter.Any.Convert(Sample.Active, typeof(bool), Sample.Active, CultureInfo.InvariantCulture).Should().Be(true);
-    }
+    public void Any_MatchingValue_ReturnsTrue() => EnumConverter.Any.Convert(Sample.Active, typeof(bool), Sample.Active, CultureInfo.InvariantCulture).Should().Be(true);
 
     [Fact]
-    public void NotAny_DifferentValue_ReturnsTrue()
-    {
-        EnumConverter.NotAny.Convert(Sample.Active, typeof(bool), Sample.Disabled, CultureInfo.InvariantCulture).Should().Be(true);
-    }
+    public void NotAny_DifferentValue_ReturnsTrue() => EnumConverter.NotAny.Convert(Sample.Active, typeof(bool), Sample.Disabled, CultureInfo.InvariantCulture).Should().Be(true);
 
     [Fact]
-    public void Convert_NullValue_ReturnsFalse()
-    {
-        EnumConverter.Any.Convert(null, typeof(bool), Sample.Active, CultureInfo.InvariantCulture).Should().Be(false);
-    }
+    public void Convert_NullValue_ReturnsFalse() => EnumConverter.Any.Convert(null, typeof(bool), Sample.Active, CultureInfo.InvariantCulture).Should().Be(false);
 }

@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Avalonia;
 using Avalonia.Headless.XUnit;
 using FluentAssertions;
 
@@ -18,7 +17,7 @@ public class PaginationHeadlessTests
         var pagination = new Pagination
         {
             TotalCount = 95,
-            PageSize = 10,
+            PageSize = 10
         };
 
         HeadlessControlHost.Show(pagination, new(640, 48));
@@ -33,7 +32,7 @@ public class PaginationHeadlessTests
         {
             TotalCount = 100,
             PageSize = 10,
-            CurrentPage = 1,
+            CurrentPage = 1
         };
 
         HeadlessControlHost.Show(pagination, new(640, 48));
@@ -41,7 +40,7 @@ public class PaginationHeadlessTests
         var nextButton = HeadlessControlHost.FindByName<PaginationButton>(pagination, Pagination.PartNextButton);
         nextButton.Should().NotBeNull();
 
-        HeadlessControlHost.Click(nextButton!);
+        HeadlessControlHost.Click(nextButton);
 
         pagination.CurrentPage.Should().Be(2);
     }
@@ -52,7 +51,7 @@ public class PaginationHeadlessTests
         var pagination = new Pagination
         {
             TotalCount = 100,
-            PageSize = 10,
+            PageSize = 10
         };
 
         HeadlessControlHost.Show(pagination, new(640, 48));
@@ -61,7 +60,7 @@ public class PaginationHeadlessTests
         var previousButton = HeadlessControlHost.FindByName<PaginationButton>(pagination, Pagination.PartPreviousButton);
         previousButton.Should().NotBeNull();
 
-        HeadlessControlHost.Click(previousButton!);
+        HeadlessControlHost.Click(previousButton);
 
         pagination.CurrentPage.Should().Be(2);
     }
@@ -72,7 +71,7 @@ public class PaginationHeadlessTests
         var pagination = new Pagination
         {
             TotalCount = 100,
-            PageSize = 10,
+            PageSize = 10
         };
 
         HeadlessControlHost.Show(pagination, new(640, 48));

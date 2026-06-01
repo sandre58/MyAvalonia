@@ -21,7 +21,7 @@ namespace MyNet.Avalonia.Controls;
 /// Global registry for <see cref="OverlayDialogHost"/> instances and host resolution used when presenting overlay dialogs.
 /// </summary>
 /// <remarks>
-/// See <c>Dialogs/Overlay/README.md</c> for lookup rules, <see cref="HostId"/>, <c>TopLevelHashCode</c>, and automatic host creation.
+/// See <c>Dialogs/Overlay/README.md</c> for lookup rules, <see cref="HostId"/>, top-level keys, and automatic host creation.
 /// </remarks>
 public static class OverlayDialogHostManager
 {
@@ -36,7 +36,7 @@ public static class OverlayDialogHostManager
     /// Returns a stable key for the given <see cref="TopLevel"/> used by <see cref="GetHost"/>.
     /// </summary>
     public static int? GetTopLevelKey(TopLevel? topLevel) =>
-        topLevel is null ? null : Internals.TopLevelIdentity.GetKey(topLevel);
+        topLevel is null ? null : TopLevelIdentity.GetKey(topLevel);
 
     /// <summary>
     /// Registers a host for the given <paramref name="id"/> and <paramref name="topLevelKey"/>.

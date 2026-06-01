@@ -4,22 +4,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Avalonia.Controls;
 using FluentAssertions;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Registry;
-using MyNet.Avalonia.Theme.Controls;
 using Xunit;
 
 namespace MyNet.Avalonia.Theme.Tests.Classes;
 
 public class ClassRegistryTests
 {
-    static ClassRegistryTests()
-    {
-        ThemeControlsHost.Register();
-        ClassesBootstrapper.Initialize();
-    }
+    static ClassRegistryTests() => ClassesBootstrapper.Initialize();
 
     [Fact]
     public void ContainsRegisteredClass_IsCaseInsensitive()
@@ -29,14 +23,8 @@ public class ClassRegistryTests
     }
 
     [Fact]
-    public void ContainsRegisteredClass_UnknownClass_ReturnsFalse()
-    {
-        ClassRegistry.ContainsRegisteredClass("not-a-real-utility-class").Should().BeFalse();
-    }
+    public void ContainsRegisteredClass_UnknownClass_ReturnsFalse() => ClassRegistry.ContainsRegisteredClass("not-a-real-utility-class").Should().BeFalse();
 
     [Fact]
-    public void Bootstrapper_RegistersUtilityClasses()
-    {
-        ClassRegistry.RegisteredClassCount.Should().BeGreaterThan(50);
-    }
+    public void Bootstrapper_RegistersUtilityClasses() => ClassRegistry.RegisteredClassCount.Should().BeGreaterThan(50);
 }

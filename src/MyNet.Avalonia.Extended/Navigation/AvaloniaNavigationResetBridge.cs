@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using MyNet.UI.Navigation;
-using MyNet.UI.Navigation.Models;
 
 namespace MyNet.Avalonia.Extended.Navigation;
 

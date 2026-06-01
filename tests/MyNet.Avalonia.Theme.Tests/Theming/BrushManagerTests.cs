@@ -7,8 +7,8 @@
 using Avalonia.Media;
 using FluentAssertions;
 using MyNet.Avalonia.Theme.Theming.Brushes;
-using MediaColors = Avalonia.Media.Colors;
 using Xunit;
+using MediaColors = Avalonia.Media.Colors;
 
 namespace MyNet.Avalonia.Theme.Tests.Theming;
 

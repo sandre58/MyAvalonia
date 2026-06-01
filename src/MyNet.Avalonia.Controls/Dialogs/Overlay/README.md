@@ -36,7 +36,7 @@ var topLevelKey = OverlayDialogHostManager.GetTopLevelKey(TopLevel.GetTopLevel(w
 var host = OverlayDialogHostManager.GetHost("main", topLevelKey);
 ```
 
-Pass the same `HostId` and `TopLevelHashCode` (stable key from `GetTopLevelKey`) through MyNet.UI dialog options when using `MyNet.Avalonia.Extended`.
+Pass the same `HostId` and `TopLevelKey` (stable key from `GetTopLevelKey`) through MyNet.UI dialog options when using `MyNet.Avalonia.Extended`.
 
 ## Automatic top-level host
 
@@ -67,7 +67,7 @@ Set `OverlayDialog.Title` for the header text. `IsCloseButtonVisible` toggles th
 | null | set | All hosts with matching top-level key |
 | null | null | All hosts; if exactly one `IsTopLevel` host exists, use it; else try auto-creation |
 
-`TopLevelHashCode` in Extended options must be `OverlayDialogHostManager.GetTopLevelKey(topLevel)` for the target window (not `GetHashCode()`).
+`TopLevelKey` in Extended `OverlayDialogOptions` must be `OverlayDialogHostManager.GetTopLevelKey(topLevel)` for the target window (not `GetHashCode()`).
 
 ## Modal scope
 
@@ -94,7 +94,7 @@ Use explicit methods on `OverlayDialog`:
 - `BringForward()` / `SendBackward()`
 - `BringToFront()` / `SendToBack()`
 
-The host listens to `LayerChanged` and updates Z-index. `UpdateLayer(object?)` is obsolete.
+The host listens to `LayerChanged` and updates Z-index.
 
 ## Recalling dialog content
 

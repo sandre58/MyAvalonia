@@ -11,7 +11,7 @@ using MyNet.UI.Dialogs.ContentDialogs;
 namespace MyNet.Avalonia.Extended.Dialogs;
 
 /// <summary>
-/// Factory helpers for Avalonia-specific <see cref="UI.Dialogs.ContentDialogs.DialogOptions"/>.
+/// Factory helpers for Avalonia <see cref="UI.Dialogs.ContentDialogs.DialogOptions"/>.
 /// </summary>
 public static class DialogOptions
 {
@@ -38,7 +38,7 @@ public static class DialogOptions
         };
 
     /// <summary>
-    /// Creates options that present the dialog inside a modal window.
+    /// Creates options that present the dialog in a dedicated window.
     /// </summary>
     public static UI.Dialogs.ContentDialogs.DialogOptions ForWindow(
         IDialog dialog,

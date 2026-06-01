@@ -17,7 +17,7 @@ public class SelectedDatesHelperTests
     [Fact]
     public void EnumerateDateRange_Forward_IncludesBothEnds()
     {
-        var dates = SelectedDatesHelper.EnumerateDateRange(new DateTime(2026, 5, 10), new DateTime(2026, 5, 12)).ToList();
+        var dates = SelectedDatesHelper.EnumerateDateRange(new(2026, 5, 10), new(2026, 5, 12)).ToList();
 
         dates.Should().Equal(new DateTime(2026, 5, 10), new DateTime(2026, 5, 11), new DateTime(2026, 5, 12));
     }
@@ -25,15 +25,12 @@ public class SelectedDatesHelperTests
     [Fact]
     public void EnumerateDateRange_Reverse_IncludesBothEnds()
     {
-        var dates = SelectedDatesHelper.EnumerateDateRange(new DateTime(2026, 5, 12), new DateTime(2026, 5, 10)).ToList();
+        var dates = SelectedDatesHelper.EnumerateDateRange(new(2026, 5, 12), new(2026, 5, 10)).ToList();
 
         dates.Should().Equal(new DateTime(2026, 5, 12), new DateTime(2026, 5, 11), new DateTime(2026, 5, 10));
     }
 
     [Fact]
-    public void EnumerateDateRange_SingleDay_ReturnsOneDate()
-    {
-        SelectedDatesHelper.EnumerateDateRange(new DateTime(2026, 5, 15), new DateTime(2026, 5, 15))
-            .Should().ContainSingle().Which.Should().Be(new DateTime(2026, 5, 15));
-    }
+    public void EnumerateDateRange_SingleDay_ReturnsOneDate() => SelectedDatesHelper.EnumerateDateRange(new(2026, 5, 15), new(2026, 5, 15))
+        .Should().ContainSingle().Which.Should().Be(new(2026, 5, 15));
 }

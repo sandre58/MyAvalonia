@@ -1,25 +1,22 @@
 // -----------------------------------------------------------------------
-// <copyright file="AvaloniaOverlayDialogBuilder.cs" company="Stéphane ANDRE">
+// <copyright file="OverlayDialogBuilder.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
 using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.Layout;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Enums;
-using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Extended.Controls;
-using MyNet.Avalonia.Extended.Dialogs.Internal;
 using MyNet.UI;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
 
 namespace MyNet.Avalonia.Extended.Dialogs.Internal;
 
-internal static class AvaloniaOverlayDialogBuilder
+internal static class OverlayDialogBuilder
 {
     private static readonly OverlayDialogOptions DefaultOptions = new();
 
@@ -32,14 +29,14 @@ internal static class AvaloniaOverlayDialogBuilder
         if (dialog is MessageBoxViewModel messageBox)
             return CreateMessageBox(messageBox, options, request.OverlayOptions);
 
-        var overlay = new AvaloniaContentOverlayDialog();
+        var overlay = new ContentOverlayDialog();
         var overlayOptions = MergeOptions(GetOptions(view), request.OverlayOptions);
         PrepareOverlayDialog(overlay, overlayOptions, options);
 
         overlay.Content = view;
         overlay.DataContext = dialog;
 
-        WireCloseRequested(dialog, overlay, result => overlay.CloseWithResult(result));
+        WireCloseRequested(dialog, overlay, overlay.CloseWithResult);
         return overlay;
     }
 
@@ -58,9 +55,10 @@ internal static class AvaloniaOverlayDialogBuilder
             [KeyboardNavigation.TabNavigationProperty] = KeyboardNavigationMode.Cycle
         };
 
-        ApplyMessageBoxOptions(messageBoxControl, overlayOptions);
+        var mergedOverlayOptions = MergeOptions(OverlayDialogOptions.Default, overlayOptions);
+        ApplyMessageBoxOptions(messageBoxControl, mergedOverlayOptions, options);
         WireCloseRequested(messageBox, messageBoxControl, _ => messageBoxControl.Close());
-        messageBoxControl.Closed += (_, args) => AvaloniaDialogResultMapper.ApplyMessageBoxResult(messageBox, args.Result);
+        messageBoxControl.Closed += (_, args) => DialogResultMapper.ApplyMessageBoxResult(messageBox, args.Result);
         return messageBoxControl;
     }
 
@@ -103,27 +101,30 @@ internal static class AvaloniaOverlayDialogBuilder
 
     private static void WireCloseRequested(IDialog dialog, OverlayDialog overlay, Action<object?> close)
     {
-        async void OnCloseRequested(object? sender, CloseRequestedEventArgs e)
+        dialog.CloseRequested += onCloseRequested;
+        overlay.Closed += (_, _) => dialog.CloseRequested -= onCloseRequested;
+        return;
+
+        async void onCloseRequested(object? sender, CloseRequestedEventArgs e)
         {
             if (!await dialog.CanCloseAsync().ConfigureAwait(true))
                 return;
 
             close(e.Force ? true : null);
         }
-
-        dialog.CloseRequested += OnCloseRequested;
-        overlay.Closed += (_, _) => dialog.CloseRequested -= OnCloseRequested;
     }
 
-    private static OverlayDialogOptions MergeOptions(OverlayDialogOptions baseOptions, OverlayDialogOptions? overrideOptions)
-    {
-        if (overrideOptions is null) return baseOptions;
-
-        return new()
+    internal static OverlayDialogOptions MergeOptions(OverlayDialogOptions baseOptions, OverlayDialogOptions? overrideOptions) => overrideOptions is null
+        ? baseOptions
+        : new()
         {
-            FullScreen = overrideOptions.FullScreen,
-            HorizontalAnchor = overrideOptions.HorizontalAnchor,
-            VerticalAnchor = overrideOptions.VerticalAnchor,
+            FullScreen = overrideOptions.FullScreen || baseOptions.FullScreen,
+            HorizontalAnchor = overrideOptions.HorizontalAnchor != HorizontalPosition.Center
+                ? overrideOptions.HorizontalAnchor
+                : baseOptions.HorizontalAnchor,
+            VerticalAnchor = overrideOptions.VerticalAnchor != VerticalPosition.Center
+                ? overrideOptions.VerticalAnchor
+                : baseOptions.VerticalAnchor,
             HorizontalOffset = overrideOptions.HorizontalOffset ?? baseOptions.HorizontalOffset,
             VerticalOffset = overrideOptions.VerticalOffset ?? baseOptions.VerticalOffset,
             Width = overrideOptions.Width ?? baseOptions.Width,
@@ -132,16 +133,19 @@ internal static class AvaloniaOverlayDialogBuilder
             MinHeight = overrideOptions.MinHeight ?? baseOptions.MinHeight,
             MaxWidth = overrideOptions.MaxWidth ?? baseOptions.MaxWidth,
             MaxHeight = overrideOptions.MaxHeight ?? baseOptions.MaxHeight,
-            Severity = overrideOptions.Severity,
-            Buttons = overrideOptions.Buttons,
+            Severity = overrideOptions.Severity != MessageSeverity.Custom
+                ? overrideOptions.Severity
+                : baseOptions.Severity,
+            Buttons = overrideOptions.Buttons != MessageBoxResultOption.OkCancel
+                ? overrideOptions.Buttons
+                : baseOptions.Buttons,
             Title = overrideOptions.Title ?? baseOptions.Title,
             IsCloseButtonVisible = overrideOptions.IsCloseButtonVisible ?? baseOptions.IsCloseButtonVisible,
-            CanLightDismiss = overrideOptions.CanLightDismiss,
-            TopLevelHashCode = overrideOptions.TopLevelHashCode ?? baseOptions.TopLevelHashCode,
+            CanLightDismiss = overrideOptions.CanLightDismiss || baseOptions.CanLightDismiss,
+            TopLevelKey = overrideOptions.TopLevelKey ?? baseOptions.TopLevelKey,
             CanResize = overrideOptions.CanResize || baseOptions.CanResize,
             StyleClass = overrideOptions.StyleClass ?? baseOptions.StyleClass
         };
-    }
 
     private static OverlayDialogOptions GetOptions(object view) => view is not ContentDialog contentDialog
         ? DefaultOptions
@@ -157,17 +161,20 @@ internal static class AvaloniaOverlayDialogBuilder
             CanResize = contentDialog.CanResize
         };
 
-    private static void ApplyMessageBoxOptions(OverlayMessageBox messageBox, OverlayDialogOptions? options)
+    private static void ApplyMessageBoxOptions(
+        OverlayMessageBox messageBox,
+        OverlayDialogOptions options,
+        UI.Dialogs.ContentDialogs.DialogOptions dialogOptions)
     {
-        options ??= OverlayDialogOptions.Default;
-        messageBox.CanLightDismiss = options.CanLightDismiss;
-        messageBox.CanResize = options.CanResize;
+        if (options.Severity != MessageSeverity.Custom)
+            messageBox.Severity = options.Severity;
 
-        if (options.Width.HasValue) messageBox.Width = options.Width.Value;
-        if (options.Height.HasValue) messageBox.Height = options.Height.Value;
-        if (options.MinWidth.HasValue) messageBox.MinWidth = options.MinWidth.Value;
-        if (options.MinHeight.HasValue) messageBox.MinHeight = options.MinHeight.Value;
-        if (options.MaxWidth.HasValue) messageBox.MaxWidth = options.MaxWidth.Value;
-        if (options.MaxHeight.HasValue) messageBox.MaxHeight = options.MaxHeight.Value;
+        if (options.Buttons != MessageBoxResultOption.OkCancel)
+            messageBox.Buttons = options.Buttons;
+
+        if (!string.IsNullOrWhiteSpace(options.Title))
+            messageBox.Title = options.Title;
+
+        PrepareOverlayDialog(messageBox, options, dialogOptions);
     }
 }

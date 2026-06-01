@@ -9,10 +9,9 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using FluentAssertions;
 using MyNet.Avalonia.Theme.Runtime;
-using MyNet.Avalonia.Theme.Theming.Brushes;
 using MyNet.Avalonia.Theme.Theming.Palettes;
-using MediaColors = Avalonia.Media.Colors;
 using Xunit;
+using MediaColors = Avalonia.Media.Colors;
 
 namespace MyNet.Avalonia.Theme.Tests.Runtime;
 
@@ -25,8 +24,8 @@ public class ThemeLoadSessionTests
         var resources = new ResourceDictionary();
         var injector = new ThemePaletteInjector(
             resources,
-            new BrushManager(null, null),
-            new ThemeVariantCoordinator(resources),
+            new(null, null),
+            new(resources),
             () => { },
             (_, _, _, _, _) => new SolidColorBrush(MediaColors.Black));
 

@@ -16,7 +16,7 @@ internal static class TopLevelIdentity
 {
     private static int _nextKey = 1;
 
-    private static readonly ConditionalWeakTable<TopLevel, KeyHolder> Keys = new();
+    private static readonly ConditionalWeakTable<TopLevel, KeyHolder> Keys = [];
 
     public static int GetKey(TopLevel topLevel)
     {
@@ -24,7 +24,7 @@ internal static class TopLevelIdentity
             return holder.Key;
 
         var key = Interlocked.Increment(ref _nextKey);
-        Keys.Add(topLevel, new KeyHolder(key));
+        Keys.Add(topLevel, new(key));
         return key;
     }
 

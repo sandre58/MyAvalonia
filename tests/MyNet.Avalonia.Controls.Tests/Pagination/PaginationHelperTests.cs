@@ -17,19 +17,13 @@ public class PaginationHelperTests
     [InlineData(101, 10, 11)]
     [InlineData(0, 10, 0)]
     [InlineData(5, 0, 0)]
-    public void CalculatePageCount_ComputesExpectedPages(int totalCount, int pageSize, int expected)
-    {
-        PaginationHelper.CalculatePageCount(totalCount, pageSize).Should().Be(expected);
-    }
+    public void CalculatePageCount_ComputesExpectedPages(int totalCount, int pageSize, int expected) => PaginationHelper.CalculatePageCount(totalCount, pageSize).Should().Be(expected);
 
     [Theory]
     [InlineData(0, 10, 1)]
     [InlineData(15, 10, 10)]
     [InlineData(5, 10, 5)]
-    public void CoerceCurrentPage_ClampsToValidRange(int page, int pageCount, int expected)
-    {
-        PaginationHelper.CoerceCurrentPage(page, pageCount).Should().Be(expected);
-    }
+    public void CoerceCurrentPage_ClampsToValidRange(int page, int pageCount, int expected) => PaginationHelper.CoerceCurrentPage(page, pageCount).Should().Be(expected);
 
     [Fact]
     public void AddPageOffset_ClampsWithinRange()

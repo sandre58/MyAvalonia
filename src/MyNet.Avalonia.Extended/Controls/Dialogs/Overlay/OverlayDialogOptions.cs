@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using MyNet.Avalonia.Controls.Enums;
 using MyNet.UI.Dialogs.MessageBox;
 
@@ -62,17 +63,17 @@ public class OverlayDialogOptions
     public double? MaxHeight { get; set; }
 
     /// <summary>
-    ///     Gets or sets only works for DefaultDialogControl.
+    /// Gets or sets severity for <see cref="OverlayMessageBox"/> when not <see cref="MessageSeverity.Custom"/>.
     /// </summary>
     public MessageSeverity Severity { get; set; } = MessageSeverity.Custom;
 
     /// <summary>
-    ///     Gets or sets only works for DefaultDialogControl.
+    /// Gets or sets buttons for <see cref="OverlayMessageBox"/> when not the default <see cref="MessageBoxResultOption.OkCancel"/>.
     /// </summary>
     public MessageBoxResultOption Buttons { get; set; } = MessageBoxResultOption.OkCancel;
 
     /// <summary>
-    ///     Gets or sets only works for DefaultDialogControl.
+    /// Gets or sets the overlay title when provided (content and message box shells).
     /// </summary>
     public string? Title { get; set; }
 
@@ -87,7 +88,7 @@ public class OverlayDialogOptions
     /// Gets or sets the stable top-level key from <see cref="MyNet.Avalonia.Controls.OverlayDialogHostManager.GetTopLevelKey"/>.
     /// Used to target a specific window when several hosts share the same <c>HostId</c>.
     /// </summary>
-    public int? TopLevelHashCode { get; set; }
+    public int? TopLevelKey { get; set; }
 
     public bool CanResize { get; set; }
 

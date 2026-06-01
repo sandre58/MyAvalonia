@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>MyNet.Avalonia.Extended.Headless.Tests</RootNamespace>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\MyNet.Avalonia.Extended\MyNet.Avalonia.Extended.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <ApplicationDefinition Include="App.axaml" />
+        <AvaloniaResource Include="ExtendedHeadlessThemes.axaml" />
+    </ItemGroup>
+
+</Project>

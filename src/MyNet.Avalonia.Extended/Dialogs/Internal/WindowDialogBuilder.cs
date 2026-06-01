@@ -1,14 +1,11 @@
 // -----------------------------------------------------------------------
-// <copyright file="AvaloniaWindowDialogBuilder.cs" company="Stéphane ANDRE">
+// <copyright file="WindowDialogBuilder.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
-using MyNet.Avalonia;
 using MyNet.Avalonia.Extended.Controls;
 using MyNet.UI;
 using MyNet.UI.Dialogs.ContentDialogs;
@@ -16,7 +13,7 @@ using MyNet.UI.Dialogs.MessageBox;
 
 namespace MyNet.Avalonia.Extended.Dialogs.Internal;
 
-internal static class AvaloniaWindowDialogBuilder
+internal static class WindowDialogBuilder
 {
     public static WindowDialog Create(
         IDialog dialog,
@@ -86,27 +83,28 @@ internal static class AvaloniaWindowDialogBuilder
 
     private static void WireWindowLifetime(IDialog dialog, Window window)
     {
-        async void OnCloseRequested(object? sender, CloseRequestedEventArgs e)
+        dialog.CloseRequested += onCloseRequested;
+
+        window.Closing += onWindowClosingAsync;
+        window.Closed += onWindowClosed;
+        return;
+
+        async void onCloseRequested(object? sender, CloseRequestedEventArgs e)
         {
             if (!await dialog.CanCloseAsync().ConfigureAwait(true))
                 return;
 
-            window.Close(e.Force ? true : null);
+            if (window is WindowDialog windowDialog)
+                windowDialog.CloseWithResult(e.Force ? true : null);
+            else
+                window.Close(e.Force ? true : null);
         }
 
-        dialog.CloseRequested += OnCloseRequested;
-
-        window.Closing += onWindowClosingAsync;
-        window.Closed += onWindowClosed;
-
-        async void onWindowClosingAsync(object? sender, WindowClosingEventArgs e)
-        {
-            e.Cancel = !await dialog.CanCloseAsync().ConfigureAwait(true);
-        }
+        async void onWindowClosingAsync(object? sender, WindowClosingEventArgs e) => e.Cancel = !await dialog.CanCloseAsync().ConfigureAwait(true);
 
         void onWindowClosed(object? sender, EventArgs e)
         {
-            dialog.CloseRequested -= OnCloseRequested;
+            dialog.CloseRequested -= onCloseRequested;
             window.Closing -= onWindowClosingAsync;
             window.Closed -= onWindowClosed;
         }

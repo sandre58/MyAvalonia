@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\MyNet.Avalonia.Extended\MyNet.Avalonia.Extended.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MyNet.UI" />
+    </ItemGroup>
+
+</Project>

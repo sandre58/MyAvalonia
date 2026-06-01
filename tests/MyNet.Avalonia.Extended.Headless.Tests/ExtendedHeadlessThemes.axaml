@@ -1,0 +1,46 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls"
+                    xmlns:extended="clr-namespace:MyNet.Avalonia.Extended.Controls;assembly=MyNet.Avalonia.Extended">
+
+    <ControlTheme x:Key="{x:Type controls:OverlayDialog}" TargetType="controls:OverlayDialog">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:OverlayDialog">
+                <Border>
+                    <Grid RowDefinitions="Auto,*">
+                        <Grid Name="PART_TitleArea" Grid.Row="0" ColumnDefinitions="*,Auto">
+                            <TextBlock Grid.Column="0" Text="{TemplateBinding Title}" />
+                            <Button Name="PART_CloseButton" Grid.Column="1" Content="X" />
+                        </Grid>
+                        <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:OverlayDialogHost}" TargetType="controls:OverlayDialogHost" />
+
+    <ControlTheme x:Key="{x:Type extended:WindowMessageBox}" TargetType="extended:WindowMessageBox">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="extended:WindowMessageBox">
+                <Border Padding="16">
+                    <Grid RowDefinitions="*,Auto">
+                        <ContentPresenter Grid.Row="0" Content="{TemplateBinding Content}" />
+                        <StackPanel Grid.Row="1"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    Spacing="8"
+                                    Margin="0,12,0,0">
+                            <Button Name="PART_YesButton" Content="Yes" />
+                            <Button Name="PART_NoButton" Content="No" />
+                            <Button Name="PART_OKButton" Content="OK" />
+                            <Button Name="PART_CancelButton" Content="Cancel" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

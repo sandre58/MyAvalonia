@@ -32,6 +32,7 @@ public static class ServiceCollectionExtensions
     /// <see cref="MyNet.UI.Locators.ServiceCollectionExtensions.AddViewLocators"/> to be registered first.
     /// Use <see cref="DialogOptions.ForOverlay"/> or <see cref="DialogOptions.ForWindow"/>
     /// to select the presentation surface.
+    /// See <c>Dialogs/README.md</c> in this package for host setup and examples.
     /// </remarks>
     public static IServiceCollection AddAvaloniaDialogs(
         this IServiceCollection services,
@@ -41,7 +42,7 @@ public static class ServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(topLevelProvider);
 
         services.TryAddSingleton(new DialogHostOptions(topLevelProvider));
-        services.TryAddSingleton<AvaloniaDialogSessionRegistry>();
+        services.TryAddSingleton<DialogSessionRegistry>();
         services.AddDialogs(builder =>
         {
             builder.AddPresenter<OverlayDialogPresenter>();

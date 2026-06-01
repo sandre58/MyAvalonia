@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Avalonia.Styling;
 using MyNet.Avalonia.Theme.Themes;
 using MyNet.UI.Theming;
@@ -41,7 +40,7 @@ public sealed class ThemeVariantsRegistry : IThemeBaseRegistry
     public IThemeBase HighContrast { get; } = new ThemeBase(ThemeVariantProvider.HighContrast, isDark: true, isHighContrast: true);
 
     /// <inheritdoc />
-    public IReadOnlyCollection<IThemeBase> AvailableBases => _themeBases.Values.ToList();
+    public IReadOnlyCollection<IThemeBase> AvailableBases => [.. _themeBases.Values];
 
     /// <inheritdoc />
     public IThemeBase? Get(string name) => _themeBases.GetValueOrDefault(name);

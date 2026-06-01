@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="AvaloniaDialogSession.cs" company="Stéphane ANDRE">
+// <copyright file="DialogSession.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -10,7 +10,7 @@ using MyNet.Avalonia.Extended.Controls;
 
 namespace MyNet.Avalonia.Extended.Dialogs.Internal;
 
-public sealed class AvaloniaDialogSession(Action cleanup)
+public sealed class DialogSession(Action cleanup)
 {
     public OverlayDialog? Overlay { get; init; }
 
@@ -18,16 +18,14 @@ public sealed class AvaloniaDialogSession(Action cleanup)
 
     public void CloseVisual(object? result = null)
     {
-        if (Overlay is AvaloniaContentOverlayDialog contentOverlay)
+        switch (Overlay)
         {
-            contentOverlay.CloseWithResult(result);
-            return;
-        }
-
-        if (Overlay is OverlayMessageBox messageBox)
-        {
-            messageBox.Close();
-            return;
+            case ContentOverlayDialog contentOverlay:
+                contentOverlay.CloseWithResult(result);
+                return;
+            case OverlayMessageBox messageBox:
+                messageBox.Close();
+                return;
         }
 
         Overlay?.Close();
@@ -35,14 +33,11 @@ public sealed class AvaloniaDialogSession(Action cleanup)
         if (Window is not null)
         {
             if (result is not null)
-                Window.Close(result);
+                Window.CloseWithResult(result);
             else
                 Window.Close();
         }
     }
 
-    public void Dispose()
-    {
-        cleanup();
-    }
+    public void Dispose() => cleanup();
 }

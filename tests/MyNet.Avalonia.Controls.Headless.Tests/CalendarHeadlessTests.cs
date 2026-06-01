@@ -17,7 +17,7 @@ public class CalendarHeadlessTests
     [AvaloniaFact]
     public void ApplyTemplate_CreatesMonthGrid()
     {
-        var calendar = CreateCalendar(new DateTime(2026, 5, 15));
+        var calendar = CreateCalendar(new(2026, 5, 15));
         HeadlessControlHost.Show(calendar, new(420, 360));
 
         HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid).Should().NotBeNull();
@@ -26,13 +26,13 @@ public class CalendarHeadlessTests
     [AvaloniaFact]
     public void NextButton_AdvancesDisplayDateContext()
     {
-        var calendar = CreateCalendar(new DateTime(2026, 5, 15));
+        var calendar = CreateCalendar(new(2026, 5, 15));
         HeadlessControlHost.Show(calendar, new(420, 360));
 
         var nextButton = HeadlessControlHost.FindByName<Button>(calendar, Calendar.PartNextButton);
         nextButton.Should().NotBeNull();
 
-        HeadlessControlHost.Click(nextButton!);
+        HeadlessControlHost.Click(nextButton);
 
         calendar.DisplayDateContext.Should().Be(new MonthContext(6, 2026));
     }
@@ -40,7 +40,7 @@ public class CalendarHeadlessTests
     [AvaloniaFact]
     public void SettingSelectedDate_UpdatesSelection()
     {
-        var calendar = CreateCalendar(new DateTime(2026, 5, 15));
+        var calendar = CreateCalendar(new(2026, 5, 15));
         HeadlessControlHost.Show(calendar, new(420, 360));
 
         var selectedDate = new DateTime(2026, 5, 20);
@@ -54,10 +54,10 @@ public class CalendarHeadlessTests
     {
         HeadlessTestApp.EnsureGlobalizationServices();
 
-        return new Calendar
+        return new()
         {
             DisplayDate = displayDate,
-            SelectionMode = CalendarSelectionMode.SingleDate,
+            SelectionMode = CalendarSelectionMode.SingleDate
         };
     }
 }

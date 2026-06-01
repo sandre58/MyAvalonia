@@ -10,10 +10,8 @@ using Avalonia.Media;
 using FluentAssertions;
 using MyNet.Avalonia.Theme.Runtime;
 using MyNet.Avalonia.Theme.Theming;
-using MyNet.Avalonia.Theme.Theming.Brushes;
-using MyNet.Avalonia.Theme.Theming.Palettes;
-using MediaColors = Avalonia.Media.Colors;
 using Xunit;
+using MediaColors = Avalonia.Media.Colors;
 
 namespace MyNet.Avalonia.Theme.Tests.Runtime;
 
@@ -72,8 +70,8 @@ public class ThemePaletteInjectorTests
         var invalidated = false;
         var injector = new ThemePaletteInjector(
             resources,
-            new BrushManager(null, null),
-            new ThemeVariantCoordinator(resources),
+            new(null, null),
+            new(resources),
             () => invalidated = true,
             (_, _, _, _, _) => new SolidColorBrush(MediaColors.Gray));
 

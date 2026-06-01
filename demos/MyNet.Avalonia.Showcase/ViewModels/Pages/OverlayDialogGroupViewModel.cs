@@ -22,7 +22,6 @@ using MyNet.Observable;
 using MyNet.UI.Commands;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
-using MyNet.UI.Locators.Factories;
 using MyNet.UI.Notifications;
 using MyNet.UI.Notifications.Models;
 using MyNet.Utilities;
@@ -38,8 +37,7 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
     private readonly INotificationPublisher _notificationPublisher;
     private readonly IContentDialogService _contentDialogService;
     private readonly IMessageBoxFactory _messageBoxFactory;
-    private readonly IViewFactory _viewFactory;
-    private readonly AvaloniaDialogHostOptions _hostOptions;
+    private readonly DialogHostOptions _hostOptions;
 
     private bool _isModal = true;
     private bool _showCloseButton = true;
@@ -77,13 +75,11 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
         INotificationPublisher notificationPublisher,
         IContentDialogService contentDialogService,
         IMessageBoxFactory messageBoxFactory,
-        IViewFactory viewFactory,
-        AvaloniaDialogHostOptions hostOptions)
+        DialogHostOptions hostOptions)
     {
         _notificationPublisher = notificationPublisher;
         _contentDialogService = contentDialogService;
         _messageBoxFactory = messageBoxFactory;
-        _viewFactory = viewFactory;
         _hostOptions = hostOptions;
 
         var builder = new ControlThemeBuilder()
@@ -156,17 +152,10 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
         var vm = new LoginDialogViewModel();
         var options = CreateOverlayOptions();
 
-        if (_isModal)
-        {
-            var result = await _contentDialogService
-                .ShowAsync(vm, AvaloniaDialogOptions.ForOverlay(vm, true, options, OverlayDialogHostManager.MainHostId))
-                .ConfigureAwait(false);
-            ShowToasterResult(result, vm);
-        }
-        else
-        {
-            AvaloniaNonModalOverlayDialogs.Show(vm, _viewFactory, _hostOptions.TopLevelProvider, options);
-        }
+        var result = await _contentDialogService
+            .ShowAsync(vm, DialogOptions.ForOverlay(vm, _isModal, options, OverlayDialogHostManager.MainHostId))
+            .ConfigureAwait(false);
+        ShowToasterResult(result, vm);
     }
 
     private async Task ShowOverlayMessageBoxAsync(MessageSeverity severity)
@@ -195,9 +184,9 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
         var result = await _contentDialogService
             .ShowAsync<MessageBoxResult>(
                 messageBox,
-                AvaloniaDialogOptions.ForOverlay(
+                DialogOptions.ForOverlay(
                     messageBox,
-                    isModal: true,
+                    isModal: _isModal,
                     overlayOptions,
                     OverlayDialogHostManager.MainHostId))
             .ConfigureAwait(false);
@@ -212,7 +201,7 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
         FullScreen = _fullScreen,
         HorizontalAnchor = _horizontalAnchor,
         VerticalAnchor = _verticalAnchor,
-        TopLevelHashCode = OverlayDialogHostManager.GetTopLevelKey(_hostOptions.TopLevelProvider())
+        TopLevelKey = OverlayDialogHostManager.GetTopLevelKey(_hostOptions.TopLevelProvider())
     };
 
     private static MessageSeverity ToSeverity(ThemeRole role) => role switch

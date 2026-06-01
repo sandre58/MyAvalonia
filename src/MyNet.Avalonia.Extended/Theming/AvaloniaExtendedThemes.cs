@@ -16,7 +16,7 @@ public static class AvaloniaExtendedThemes
     /// </summary>
     /// <remarks>
     /// Include in <c>App.axaml</c> under <c>Application.Styles</c>:
-    /// <code>&lt;StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Generic.axaml" /&gt;</code>
+    /// <c>&lt;StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Generic.axaml" /&gt;</c>.
     /// </remarks>
     public const string GenericStyles = "avares://MyNet.Avalonia.Extended/Themes/Generic.axaml";
 }

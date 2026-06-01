@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Primitives;
 using Xunit;
@@ -14,10 +13,7 @@ namespace MyNet.Avalonia.Controls.Tests.Calendar;
 public class MonthContextTests
 {
     [Fact]
-    public void Add_SupportsMultiYearOffset()
-    {
-        new MonthContext(11, 2025).Add(3).Should().Be(new MonthContext(2, 2026));
-    }
+    public void Add_SupportsMultiYearOffset() => new MonthContext(11, 2025).Add(3).Should().Be(new MonthContext(2, 2026));
 
     [Fact]
     public void AddYears_AddDecades_AddCenturies_Work()
@@ -51,7 +47,7 @@ public class MonthContextTests
     public void IsSimilar_MatchesMonthAndYearOnly()
     {
         var context = new MonthContext(5, 2026);
-        context.IsSimilar(new DateTime(2026, 5, 31)).Should().BeTrue();
-        context.IsSimilar(new DateTime(2026, 6, 1)).Should().BeFalse();
+        context.IsSimilar(new(2026, 5, 31)).Should().BeTrue();
+        context.IsSimilar(new(2026, 6, 1)).Should().BeFalse();
     }
 }
