@@ -33,15 +33,15 @@
                     my:ThemeAssist.Context="Contrast">
 
             <!-- Language -->
-            <DropDownButton Content="{Binding SelectedCulture}" Classes="size-sm" Padding="6 2 0 2">
+            <DropDownButton Content="{Binding Culture.SelectedCulture}" Classes="size-sm" Padding="6 2 0 2">
                 <DropDownButton.Flyout>
-                    <MenuFlyout ItemsSource="{Binding Cultures}">
+                    <MenuFlyout ItemsSource="{Binding Culture.Cultures}">
                         <MenuFlyout.ItemContainerTheme>
                             <ControlTheme TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
                                 <Setter Property="IsChecked">
                                     <MultiBinding Converter="{x:Static my:EqualsConverter.IsEquals}">
                                         <Binding />
-                                        <Binding Path="((vm:MainViewModel)DataContext).SelectedCulture" ElementName="Root" FallbackValue="{x:Null}" />
+                                        <Binding Path="((vm:MainViewModel)DataContext).Culture.SelectedCulture" ElementName="Root" FallbackValue="{x:Null}" />
                                     </MultiBinding>
                                 </Setter>
                                 <Setter Property="Padding" Value="4 4" />
@@ -67,13 +67,13 @@
                         Classes="gap-md"
                         Orientation="Horizontal">
                 <Button Classes="size-sm"
-                        Command="{Binding IsLightCommand}"
+                        Command="{Binding Theme.IsLightCommand}"
                         Content="{my:MaterialIcon WeatherSunny}"
                         Theme="{StaticResource MyNet.Theme.Button.Icon}"
                         ToolTip.Tip="{my:Loc Light}" />
-                <ToggleSwitch Classes="size-sm" my:ThemeAssist.Role="Contrast" IsChecked="{Binding IsDark}" />
+                <ToggleSwitch Classes="size-sm" my:ThemeAssist.Role="Contrast" IsChecked="{Binding Theme.IsDark}" />
                 <Button Classes="size-sm"
-                        Command="{Binding IsDarkCommand}"
+                        Command="{Binding Theme.IsDarkCommand}"
                         Content="{my:MaterialIcon WeatherNight}"
                         Theme="{StaticResource MyNet.Theme.Button.Icon}"
                         ToolTip.Tip="{my:Loc Dark}" />
@@ -87,6 +87,6 @@
                               IsModalStatusReporter="True"
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch" />
-        <ext:ApplicationBusyOverlay BusyService="{Binding ApplicationBusy}" />
+        <ext:BusyServiceIndicator BusyService="{Binding ApplicationBusy}" />
     </Grid>
 </Window>

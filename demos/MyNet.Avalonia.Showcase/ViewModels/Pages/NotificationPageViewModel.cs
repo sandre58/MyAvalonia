@@ -6,25 +6,24 @@
 
 using System;
 using System.Windows.Input;
+using Avalonia.Controls;
 using Material.Icons;
 using MyNet.Avalonia.Extended.Toasting;
 using MyNet.Avalonia.Extended.Toasting.Settings;
 using MyNet.Avalonia.Showcase.Notifications;
 using MyNet.Avalonia.Showcase.Resources;
-using MyNet.Avalonia.Showcase.Services;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Theming.Core;
-using MyNet.Humanizer;
+using MyNet.Fakers.Static;
+using MyNet.UI;
 using MyNet.UI.Commands;
 using MyNet.UI.Notifications;
 using MyNet.UI.Notifications.Models;
 using MyNet.UI.Resources;
 using MyNet.UI.Toasting;
 using MyNet.UI.Toasting.Settings;
-using MyNet.Utilities;
-using MyNet.Utilities.Generator;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
@@ -47,8 +46,9 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
         AvaloniaToastHost toastHost,
         AvaloniaToastHostOptions hostOptions,
         ToastManagerOptions managerOptions,
-        ICommandFactory commandFactory)
+        ICommandFactory commands)
         : base("Notifications",
+            commands,
             [
                 new ControlThemeBuilder()
                     .AddRoles(ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information, ThemeRole.Inverse)
@@ -135,7 +135,7 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
         _hostOptions = hostOptions;
         _managerOptions = managerOptions;
 
-        ShowNotificationCommand = commandFactory.CreateRequired<ThemeRole>(ShowNotification);
+        ShowNotificationCommand = commands.CreateRequired<ThemeRole>(ShowNotification);
     }
 
     /// <inheritdoc/>
@@ -206,7 +206,7 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
         };
 
         return new MessageNotification(
-            SentenceGenerator.Paragraph(RandomGenerator.Int(4, 7), RandomGenerator.Int(1, 3)),
+            Faker.Texts.Paragraph(RandomGenerator.Current.Int(4, 7), RandomGenerator.Current.Int(1, 3)),
             role.ToString(),
             severity);
     }

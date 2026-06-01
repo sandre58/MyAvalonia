@@ -7,7 +7,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Material.Icons;
-using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 
@@ -23,12 +22,12 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 /// <param name="displayNameFunc">A function that provides the display name for this group, used for display in the user interface. Cannot be null.</param>
 /// <param name="icon">An optional icon associated with the group, used to enhance visual representation in the user interface. May be null
 /// if no icon is desired.</param>
-internal sealed class GroupOptionViewModel(ICollection<OptionViewModel> options, IProvideValue<string> displayNameFunc, MaterialIconKind? icon = null) : ObservableObject
+internal sealed class GroupOptionViewModel(ICollection<OptionViewModel> options, IObservableValue<string> displayNameFunc, MaterialIconKind? icon = null) : ObservableObject
 {
     /// <summary>
     /// Gets the display name to show for this setting in the UI.
     /// </summary>
-    public IProvideValue<string> DisplayName { get; } = displayNameFunc;
+    public IObservableValue<string> DisplayName { get; } = displayNameFunc;
 
     /// <summary>
     /// Gets an optional icon associated with the setting, which can be used for visual representation in the user interface. The icon can be of any type, such as a string representing a resource path, an image object, or any other relevant representation depending on the UI framework being used. This property allows for enhanced visual cues when displaying the setting in the UI, making it easier for users to identify and understand the purpose of the setting at a glance.

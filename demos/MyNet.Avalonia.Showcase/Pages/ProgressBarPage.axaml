@@ -49,13 +49,13 @@
                                  Orientation="Horizontal"
                                  Width="250"
                                  Value="30"
-                                 IsVisible="{Binding Theme, Converter={x:Static my:BooleanNullConverter.IsEmpty}}" />
+                                 IsVisible="{Binding Theme, Converter={x:Static my:NullConverter.IsEmpty}}" />
                     <ProgressBar behavior:PlaygroundBehavior.AttachStyle="{Binding}"
                                  Orientation="Horizontal"
                                  Width="120"
                                  Height="120"
                                  Value="30"
-                                 IsVisible="{Binding Theme, Converter={x:Static my:BooleanNullConverter.IsPresent}}" />
+                                 IsVisible="{Binding Theme, Converter={x:Static my:NullConverter.IsPresent}}" />
                 </Panel>
             </DataTemplate>
         </v:ShowcaseView.ThemeControlTemplate>

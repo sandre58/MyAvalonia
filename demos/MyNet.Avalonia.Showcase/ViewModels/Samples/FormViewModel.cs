@@ -9,26 +9,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using MyNet.Observable;
-using MyNet.Observable.Attributes;
-using MyNet.Utilities;
-using MyNet.Utilities.Geography;
+using MyNet.Geography;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Samples;
 
-internal sealed class FormViewModel : EditableObject
+internal sealed class FormViewModel : ObservableObject
 {
     // Account Information
-    [IsRequired]
     public string? Login { get; set; }
 
-    [IsRequired]
     public string? Password { get; set; }
 
-    [IsRequired]
     public string? ConfirmPassword { get; set; }
 
-    [IsEmailAddress(true)]
     public string? Email { get; set; }
 
     // Personal Information
@@ -38,7 +31,6 @@ internal sealed class FormViewModel : EditableObject
 
     public GenderType Gender { get; set; } = GenderType.Male;
 
-    [IsPhone(true)]
     public string? PhoneNumber { get; set; }
 
     public DateTime? BirthDate { get; set; }

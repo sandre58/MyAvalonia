@@ -11,7 +11,6 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Material.Icons;
 using MyNet.Avalonia.Controls;
-using MyNet.Generator.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 

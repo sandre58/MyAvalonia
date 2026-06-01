@@ -12,10 +12,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class ListBoxPageViewModel() : ShowcaseViewModel(nameof(ListBox), [
+internal sealed class ListBoxPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(ListBox), commands, [
     new ControlThemeBuilder()
         .AddShapes(CssClass.ShapeItemsCircle)
         .AddStandardVariants()

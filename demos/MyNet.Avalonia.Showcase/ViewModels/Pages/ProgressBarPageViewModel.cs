@@ -16,13 +16,12 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
-using MyNet.Humanizer;
+using MyNet.UI.Commands;
 using MyNet.UI.Resources;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class ProgressBarPageViewModel() : ShowcaseViewModel(nameof(ProgressBar),
-[
+internal sealed class ProgressBarPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(ProgressBar), commands, [
     new ControlThemeBuilder()
         .AddVariants(ControlVariant.Solid, ControlVariant.Light, ControlVariant.Outlined)
         .AddVariant(CssClass.ShadowControl)

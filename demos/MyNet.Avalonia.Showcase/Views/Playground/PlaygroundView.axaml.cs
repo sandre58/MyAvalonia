@@ -7,11 +7,9 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using PropertyChanged;
 
 namespace MyNet.Avalonia.Showcase.Views.Playground;
 
-[DoNotNotify]
 internal sealed partial class PlaygroundView : UserControl
 {
     public PlaygroundView() => InitializeComponent();

@@ -15,10 +15,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class ClockPageViewModel() : ShowcaseViewModel(nameof(Clock), [
+internal sealed class ClockPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Clock), commands, [
     new ControlThemeBuilder()
         .AddAllVariants()
         .AddVariant(CssClass.ShadowSurface)

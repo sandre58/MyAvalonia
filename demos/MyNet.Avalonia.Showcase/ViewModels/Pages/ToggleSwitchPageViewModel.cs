@@ -11,14 +11,14 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class ToggleSwitchPageViewModel() : ShowcaseViewModel(nameof(ToggleSwitch),
-    [
-        new ControlThemeBuilder()
-                .AddDefaultSizes()
-                .AddDefaultRoles(),
+internal sealed class ToggleSwitchPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(ToggleSwitch), commands, [
+    new ControlThemeBuilder()
+            .AddDefaultSizes()
+            .AddDefaultRoles(),
 
         new ControlThemeBuilder("Inner")
                 .WithContent(ContentControl.ContentProperty, ContentProviderType.Icon)

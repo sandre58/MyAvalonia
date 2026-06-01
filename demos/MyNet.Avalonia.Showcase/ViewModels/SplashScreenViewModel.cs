@@ -4,10 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using MyNet.UI.Services;
+
 namespace MyNet.Avalonia.Showcase.ViewModels;
 
 /// <summary>
-/// ViewModel for a splash screen that supports sequential tasks, parallel groups,
-/// UI-thread tasks, background tasks, retry, progress reporting and cancellation.
+/// Splash screen for the showcase desktop host.
 /// </summary>
-public class SplashScreenViewModel : UI.ViewModels.SplashScreen.SplashScreenViewModel;
+public class SplashScreenViewModel(IApplicationInfo applicationInfo)
+    : MyNet.UI.ViewModels.Shell.Startup.SplashScreenViewModel(applicationInfo);

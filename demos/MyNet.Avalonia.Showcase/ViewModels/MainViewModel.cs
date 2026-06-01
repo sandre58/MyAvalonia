@@ -10,32 +10,33 @@ using System.Linq;
 using System.Windows.Input;
 using MyNet.Avalonia.Extended.Commands;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
+using MyNet.Globalization.Culture;
 using MyNet.UI.Commands;
+using MyNet.UI.Loading;
 using MyNet.UI.Navigation;
 using MyNet.UI.Navigation.Models;
-using MyNet.UI.Notifications;
-using MyNet.UI.Loading;
 using MyNet.UI.Services;
-using MyNet.Globalization.Culture;
-using MyNet.UI.ViewModels.Shell;
-using MyNet.Utilities.Collections;
+using MyNet.UI.ViewModels.Shell.Chrome;
 
 namespace MyNet.Avalonia.Showcase.ViewModels;
 
-internal sealed class MainViewModel : MainWindowViewModelBase
+internal sealed class MainViewModel : ObservableObject
 {
-    private readonly ThreadSafeObservableCollection<IMenuItemViewModel> _menuItems = [];
+    private readonly ObservableCollection<IMenuItemViewModel> _menuItems = [];
     private readonly NavigationCommands _navigationCommands;
     private IMenuItemViewModel? _selectedMenuItem;
 
-    public MainViewModel(INotificationsManager notificationsManager,
-                         IAppCommandsService appCommandsService,
+    public MainViewModel(IApplicationInfo applicationInfo,
+                         ShellCultureViewModel cultureChrome,
+                         ShellThemeViewModel themeChrome,
                          IBusyService applicationBusy,
                          INavigationService navigationService,
                          ICommandFactory commandFactory,
                          ICultureService cultureService)
-        : base(notificationsManager, appCommandsService, applicationBusy, cultureService)
     {
+        ApplicationInfo = applicationInfo;
+        Culture = cultureChrome;
+        Theme = themeChrome;
         ApplicationBusy = applicationBusy;
         NavigationService = navigationService;
         MenuItems = new(_menuItems);
@@ -47,8 +48,16 @@ internal sealed class MainViewModel : MainWindowViewModelBase
         _navigationCommands.SubscribeToNavigationStateChanges();
         navigationService.StateChanged += OnNavigationStateChanged;
 
-        ChangeCultureCommand = commandFactory.Create<CultureInfo>(cultureInfo => SelectedCulture = cultureInfo);
+        ChangeCultureCommand = commandFactory.Create<CultureInfo>(cultureInfo => Culture.SelectedCulture = cultureInfo);
     }
+
+    public IApplicationInfo ApplicationInfo { get; }
+
+    public ShellCultureViewModel Culture { get; }
+
+    public ShellThemeViewModel Theme { get; }
+
+    public string ProductName => ApplicationInfo.ProductName;
 
     public IBusyService ApplicationBusy { get; }
 
@@ -67,7 +76,7 @@ internal sealed class MainViewModel : MainWindowViewModelBase
     public IMenuItemViewModel? SelectedMenuItem
     {
         get => _selectedMenuItem;
-        private set => RaiseAndSetIfChanged(ref _selectedMenuItem, value);
+        private set => SetProperty(ref _selectedMenuItem, value);
     }
 
     public void AddMenuItem(params IMenuItemViewModel[] item) => _menuItems.AddRange(item);

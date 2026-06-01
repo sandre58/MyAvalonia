@@ -5,11 +5,9 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using PropertyChanged;
 
 namespace MyNet.Avalonia.Showcase.Views.Samples;
 
-[DoNotNotify]
 public partial class FormContent : UserControl
 {
     public FormContent() => InitializeComponent();

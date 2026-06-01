@@ -6,8 +6,7 @@
 
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
-using MyNet.Observable;
-using MyNet.Observable.Attributes;
+using MyNet.Observable.Behaviors.Metadata.Attributes;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 
@@ -23,7 +22,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 /// <param name="definition">The control option definition associated with this setting.</param>
 /// <param name="displayNameFunc">A provider that supplies the display name for the setting, used to present the setting in the UI. Cannot be null.</param>
 /// <param name="icon">An optional icon associated with the setting, which can be used for visual representation in the user interface. The icon can be of any type, such as a string representing a resource path, an image object, or any other relevant representation depending on the UI framework being used. This property allows for enhanced visual cues when displaying the setting in the UI, making it easier for users to identify and understand the purpose of the setting at a glance.</param>
-internal abstract class OptionViewModel(IControlOptionDefinition definition, IProvideValue<string> displayNameFunc, MaterialIconKind? icon = null) : EditableObject
+internal abstract class OptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, MaterialIconKind? icon = null) : ObservableObject
 {
     /// <summary>
     /// Gets the control option definition associated with this setting. This property provides access to the metadata and configuration defined for the control option, allowing the view model to interact with the underlying definition when necessary. The definition is strongly typed as <see cref="IControlOptionDefinition"/> to ensure that it adheres to the expected structure and behavior for control options in the theming system.
@@ -33,8 +32,8 @@ internal abstract class OptionViewModel(IControlOptionDefinition definition, IPr
     /// <summary>
     /// Gets the display name to show for this setting in the UI.
     /// </summary>
-    [CanSetIsModified(false)]
-    public IProvideValue<string> DisplayName { get; } = displayNameFunc;
+    [IgnoreModificationTracking]
+    public IObservableValue<string> DisplayName { get; } = displayNameFunc;
 
     /// <summary>
     /// Gets an optional icon associated with the setting, which can be used for visual representation in the user interface. The icon can be of any type, such as a string representing a resource path, an image object, or any other relevant representation depending on the UI framework being used. This property allows for enhanced visual cues when displaying the setting in the UI, making it easier for users to identify and understand the purpose of the setting at a glance.

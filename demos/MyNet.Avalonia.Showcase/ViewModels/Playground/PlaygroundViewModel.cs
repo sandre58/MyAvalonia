@@ -1,12 +1,13 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="PlaygroundViewModel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="PlaygroundViewModel.cs" company="St?phane ANDRE">
+// Copyright (c) St?phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -27,10 +28,6 @@ using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Theming;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Avalonia.Theme.Theming.Palettes;
-using MyNet.Observable;
-using MyNet.Utilities;
-using MyNet.Utilities.Generator;
-using PropertyChanged;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground;
 
@@ -43,6 +40,18 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
 
     [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup method")]
     private CompositeDisposable _optionDisposables = [];
+    private ControlThemeViewModel? _selectedTheme;
+    private ThemeRole _selectedRole;
+    private ThemeRole _selectedSubItemsRole;
+    private string? _selectedSize;
+    private string? _selectedShape;
+    private IContentProviderViewModel? _selectedContentProvider;
+    private bool _isDisabled;
+    private bool _useIcon;
+    private MaterialIconKind? _selectedIcon;
+    private Position _iconPosition;
+    private BackgroundContext? _selectedBackgroundContext;
+    private string? _previewCode;
 
     /// <summary>
     /// Occurs when the style configuration has changed, providing the new configuration as an argument to event handlers. Subscribers to this event will be notified whenever there is a change in the style settings, allowing them to react accordingly, such as updating the user interface or applying the new styles to controls. The event handlers receive a ControlStyle object that encapsulates the current theme, classes, properties, and actions based on the user's selections in the playground.
@@ -72,20 +81,30 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
         Disposables.AddRange(
             [
                 this.WhenPropertyChanged(x => x.SelectedTheme).Subscribe(_ => ResetFrom(SelectedTheme)),
-                this.WhenAnyPropertyChanged(nameof(SelectedTheme),
-                                            nameof(SelectedVariants),
-                                            nameof(SelectedRole),
-                                            nameof(SelectedSubItemsRole),
-                                            nameof(SelectedSize),
-                                            nameof(SelectedShape),
-                                            nameof(SelectedContentProvider),
-                                            nameof(SelectedIcon),
-                                            nameof(UseIcon),
-                                            nameof(IconPosition))
-                    .Subscribe(_ => OnStyleChanged()),
-                SelectedVariants.ToObservableChangeSet().Subscribe(_ => OnStyleChanged()),
-                AvailableContentProviders.ToObservableChangeSet().SubscribeMany(x => x.WhenAnyPropertyChanged().Subscribe(_ => OnStyleChanged())).Subscribe()
+                SelectedVariants.ToObservableChangeSet().Subscribe(_ => OnStyleChanged())
             ]);
+
+        PropertyChanged += OnPlaygroundPropertyChanged;
+
+        foreach (var provider in AvailableContentProviders)
+            provider.PropertyChanged += (_, _) => OnStyleChanged();
+    }
+
+    private void OnPlaygroundPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SelectedRole):
+            case nameof(SelectedSubItemsRole):
+            case nameof(SelectedSize):
+            case nameof(SelectedShape):
+            case nameof(SelectedContentProvider):
+            case nameof(SelectedIcon):
+            case nameof(UseIcon):
+            case nameof(IconPosition):
+                OnStyleChanged();
+                break;
+        }
     }
 
     /// <summary>
@@ -106,7 +125,11 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// <summary>
     /// Gets or sets the currently selected theme.
     /// </summary>
-    public ControlThemeViewModel? SelectedTheme { get; set; }
+    public ControlThemeViewModel? SelectedTheme
+    {
+        get => _selectedTheme;
+        set => SetProperty(ref _selectedTheme, value);
+    }
 
     /// <summary>
     /// Gets or sets the collection of currently selected variants.
@@ -116,22 +139,38 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// <summary>
     /// Gets or sets the currently selected role.
     /// </summary>
-    public ThemeRole SelectedRole { get; set; }
+    public ThemeRole SelectedRole
+    {
+        get => _selectedRole;
+        set => SetProperty(ref _selectedRole, value);
+    }
 
     /// <summary>
     /// Gets or sets the currently selected role for items.
     /// </summary>
-    public ThemeRole SelectedSubItemsRole { get; set; }
+    public ThemeRole SelectedSubItemsRole
+    {
+        get => _selectedSubItemsRole;
+        set => SetProperty(ref _selectedSubItemsRole, value);
+    }
 
     /// <summary>
     /// Gets or sets the currently selected size.
     /// </summary>
-    public string? SelectedSize { get; set; }
+    public string? SelectedSize
+    {
+        get => _selectedSize;
+        set => SetProperty(ref _selectedSize, value);
+    }
 
     /// <summary>
     /// Gets or sets the currently selected shape.
     /// </summary>
-    public string? SelectedShape { get; set; }
+    public string? SelectedShape
+    {
+        get => _selectedShape;
+        set => SetProperty(ref _selectedShape, value);
+    }
 
     /// <summary>
     /// Gets or sets the currently selected content provider for the view model.
@@ -139,27 +178,47 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// <remarks>Changing this property updates the active content provider, which may affect the data or
     /// functionality presented in the associated view. Assigning a new value typically triggers updates in the user
     /// interface to reflect the selected provider.</remarks>
-    public IContentProviderViewModel? SelectedContentProvider { get; set; }
+    public IContentProviderViewModel? SelectedContentProvider
+    {
+        get => _selectedContentProvider;
+        set => SetProperty(ref _selectedContentProvider, value);
+    }
 
     /// <summary>
     /// Gets or sets a value indicating whether the control is disabled.
     /// </summary>
-    public bool IsDisabled { get; set; }
+    public bool IsDisabled
+    {
+        get => _isDisabled;
+        set => SetProperty(ref _isDisabled, value);
+    }
 
     /// <summary>
     /// Gets or sets a value indicating whether to show an icon in the control. When set to true, an icon will be displayed based on the specified data or randomly generated if no data is provided. When set to false, no icon will be shown in the control preview.
     /// </summary>
-    public bool UseIcon { get; set; }
+    public bool UseIcon
+    {
+        get => _useIcon;
+        set => SetProperty(ref _useIcon, value);
+    }
 
     /// <summary>
     /// Gets or sets the icon data to provide. This property can be used to specify a specific icon, but it is not required for the random icon generation.
     /// </summary>
-    public MaterialIconKind? SelectedIcon { get; set; }
+    public MaterialIconKind? SelectedIcon
+    {
+        get => _selectedIcon;
+        set => SetProperty(ref _selectedIcon, value);
+    }
 
     /// <summary>
     /// Gets or sets the icon position.
     /// </summary>
-    public Position IconPosition { get; set; }
+    public Position IconPosition
+    {
+        get => _iconPosition;
+        set => SetProperty(ref _iconPosition, value);
+    }
 
     /// <summary>
     /// Gets backgrounds contexts.
@@ -169,14 +228,22 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// <summary>
     /// Gets or sets the background context.
     /// </summary>
-    public BackgroundContext? SelectedBackgroundContext { get; set; }
+    public BackgroundContext? SelectedBackgroundContext
+    {
+        get => _selectedBackgroundContext;
+        set => SetProperty(ref _selectedBackgroundContext, value);
+    }
 
     /// <summary>
     /// Gets the preview code associated with the current context, which may be null if no preview is available.
     /// </summary>
     /// <remarks>This property is intended for use in scenarios where a preview representation of code is
     /// needed, such as in code editors or preview windows.</remarks>
-    public string? PreviewCode { get; private set; }
+    public string? PreviewCode
+    {
+        get => _previewCode;
+        private set => SetProperty(ref _previewCode, value);
+    }
 
     /// <summary>
     /// Gets the CSS classes name to apply to the control.
@@ -238,7 +305,7 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
 
         // Icon
         if (UseIcon)
-            properties.Add(StyleProperty.FromProperty(SelectedTheme.Definition.IconDefinition.Property, SelectedIcon ?? RandomGenerator.Enum<MaterialIconKind>()));
+            properties.Add(StyleProperty.FromProperty(SelectedTheme.Definition.IconDefinition.Property, SelectedIcon ?? RandomGenerator.Current.Enum<MaterialIconKind>()));
 
         // Custom properties
         properties.AddRange(SelectedTheme.ComputeStyleProperties());
@@ -323,7 +390,6 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// <remarks>Call this method when the style is modified to ensure that the preview and any listeners are
     /// updated to reflect the latest configuration. This method triggers the ConfigurationChanged event with the new
     /// configuration.</remarks>
-    [SuppressPropertyChangedWarnings]
     private void OnStyleChanged()
     {
         var configuration = BuildStyle();
@@ -343,10 +409,10 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// <summary>
     /// Cleans up resources used by the view model, including disposing of any option-related disposables and invoking the base cleanup method. This method should be called when the view model is no longer needed to ensure that all resources are properly released and to prevent memory leaks. The cleanup process includes disposing of any subscriptions or resources associated with the options, as well as performing any additional cleanup defined in the base class implementation.
     /// </summary>
-    protected override void Cleanup()
+    protected override void DisposeManagedResources()
     {
         _optionDisposables.Dispose();
-        base.Cleanup();
+        base.DisposeManagedResources();
     }
 
     /// <summary>

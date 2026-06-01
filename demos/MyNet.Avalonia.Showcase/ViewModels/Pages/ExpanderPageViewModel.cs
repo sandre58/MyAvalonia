@@ -17,12 +17,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
-using MyNet.Humanizer;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class ExpanderPageViewModel() : ShowcaseViewModel(nameof(Expander),
-[
+internal sealed class ExpanderPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Expander), commands, [
     new ControlThemeBuilder()
         .WithContent(HeaderedContentControl.HeaderProperty, ContentProviderType.Text)
         .AddAllVariants()

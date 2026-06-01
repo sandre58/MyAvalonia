@@ -13,11 +13,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class DrawerPagePageViewModel() : ShowcaseViewModel(nameof(DrawerPage),
-[
+internal sealed class DrawerPagePageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(DrawerPage), commands, [
     new ControlThemeBuilder()
         .AddVariants(ControlVariant.Solid)
         .AddVariant(CssClass.ShadowSurface)

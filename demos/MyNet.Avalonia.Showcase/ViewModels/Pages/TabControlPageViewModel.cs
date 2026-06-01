@@ -13,10 +13,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class TabControlPageViewModel() : ShowcaseViewModel(nameof(TabControl), [
+internal sealed class TabControlPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(TabControl), commands, [
     new ControlThemeBuilder()
         .AddShapes(CssClass.ShapeItemsCircle)
         .AddHeaderStandardVariants()

@@ -10,10 +10,11 @@ using MyNet.Avalonia.Showcase.Extensions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class ExtendedIconPageViewModel() : ShowcaseViewModel(nameof(ExtendedIcon), [
+internal sealed class ExtendedIconPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(ExtendedIcon), commands, [
     new ControlThemeBuilder()
         .AddVariants(ControlVariant.Light, ControlVariant.Outlined)
         .AddAllRoles()

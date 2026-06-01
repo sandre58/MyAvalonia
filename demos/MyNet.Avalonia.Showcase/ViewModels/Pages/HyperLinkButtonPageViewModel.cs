@@ -11,11 +11,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class HyperLinkButtonPageViewModel() : ShowcaseViewModel(nameof(HyperlinkButton),
-[
+internal sealed class HyperLinkButtonPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(HyperlinkButton), commands, [
     new ControlThemeBuilder()
         .WithContent(ContentControl.ContentProperty, ContentProviderType.Text)
         .AddVariants(ControlVariant.Text)

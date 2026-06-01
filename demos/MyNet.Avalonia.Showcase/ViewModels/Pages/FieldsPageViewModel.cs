@@ -15,27 +15,23 @@ using Material.Icons;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Behaviors;
 using MyNet.Avalonia.Controls.Enums;
-using MyNet.Avalonia.Colors;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Showcase.Extensions;
 using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Assists;
-using MyNet.Avalonia.Theme.Controls.Assists;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
-using MyNet.Humanizer;
+using MyNet.Avalonia.Theme.Controls.Assists;
+using MyNet.Fakers.Static;
+using MyNet.Primitives.Temporal;
 using MyNet.UI.Commands;
 using MyNet.UI.Resources;
-using MyNet.Utilities;
-using MyNet.Utilities.DateTimes;
-using MyNet.Utilities.Generator;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class FieldsPageViewModel() : ShowcaseViewModel("Fields", [
+internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseViewModel("Fields", commands, [
     AddProperties(new ControlThemeBuilder()
         .AddShapes(CssClass.ShapeCircle)
         .AddVariants(ControlVariant.Solid, ControlVariant.Outlined)
@@ -48,9 +44,9 @@ internal sealed class FieldsPageViewModel() : ShowcaseViewModel("Fields", [
         .AddDefaultSizes())
 ])
 {
-    public ICommand IncreaseSpinnerCommand { get; } = CommandsManager.CreateNotNull<Spinner>(IncreaseSpinner);
+    public ICommand IncreaseSpinnerCommand { get; } = commands.CreateRequired<Spinner>(IncreaseSpinner);
 
-    public ICommand DecreaseSpinnerCommand { get; } = CommandsManager.CreateNotNull<Spinner>(DecreaseSpinner);
+    public ICommand DecreaseSpinnerCommand { get; } = commands.CreateRequired<Spinner>(DecreaseSpinner);
 
     private static ControlThemeBuilder AddProperties(ControlThemeBuilder controlThemeBuilder)
         => controlThemeBuilder.AddAction<Control>(
@@ -59,43 +55,43 @@ internal sealed class FieldsPageViewModel() : ShowcaseViewModel("Fields", [
                     switch (x)
                     {
                         case TextBox textBox:
-                            textBox.SetValue(TextBox.TextProperty, SentenceGenerator.Sentence(3));
+                            textBox.SetValue(TextBox.TextProperty, Faker.Texts.Sentence(3, 8));
                             break;
                         case AutoCompleteBox autoCompleteBox:
-                            autoCompleteBox.SetValue(AutoCompleteBox.SelectedItemProperty, RandomGenerator.ListItem(autoCompleteBox.ItemsSource.OfType<object>().ToList()));
+                            autoCompleteBox.SetValue(AutoCompleteBox.SelectedItemProperty, RandomGenerator.Current.Item(autoCompleteBox.ItemsSource.OfType<object>().ToList()));
                             break;
                         case ButtonSpinner buttonSpinner:
-                            buttonSpinner.SetValue(ContentControl.ContentProperty, RandomGenerator.Int(-1000, 1000));
+                            buttonSpinner.SetValue(ContentControl.ContentProperty, RandomGenerator.Current.Int(-1000, 1000));
                             break;
                         case ComboBox comboBox:
-                            comboBox.SetValue(global::Avalonia.Controls.Primitives.SelectingItemsControl.SelectedIndexProperty, RandomGenerator.Int(0, comboBox.Items.Count));
+                            comboBox.SetValue(global::Avalonia.Controls.Primitives.SelectingItemsControl.SelectedIndexProperty, RandomGenerator.Current.Int(0, comboBox.Items.Count));
                             break;
                         case MultiComboBox multiComboBox:
-                            multiComboBox.SetValue(MultiComboBox.SelectedItemsProperty, RandomGenerator.ListItems([.. multiComboBox.Items.OfType<object>()], RandomGenerator.Int(2, 5)).ToObservableCollection());
+                            multiComboBox.SetValue(MultiComboBox.SelectedItemsProperty, RandomGenerator.Current.Subset([.. multiComboBox.Items.OfType<object>()], RandomGenerator.Current.Int(2, 5)).ToObservableCollection());
                             break;
                         case TagBox tagBox:
-                            tagBox.SetValue(TagBox.TagsProperty, Enumerable.Range(1, RandomGenerator.Int(0, 7)).Select(_ => RandomGenerator.String2(RandomGenerator.Int(4, 8))).ToObservableCollection());
+                            tagBox.SetValue(TagBox.TagsProperty, Enumerable.Range(1, RandomGenerator.Current.Int(0, 7)).Select(_ => RandomGenerator.Current.String(RandomGenerator.Current.Int(4, 8))).ToObservableCollection());
                             break;
                         case NumericUpDown numericUpDown:
-                            numericUpDown.SetValue(NumericUpDown.ValueProperty, RandomGenerator.Int(-1000, 1000));
+                            numericUpDown.SetValue(NumericUpDown.ValueProperty, RandomGenerator.Current.Int(-1000, 1000));
                             break;
                         case CalendarDatePicker calendarDatePicker:
-                            calendarDatePicker.SetValue(CalendarDatePicker.SelectedDateProperty, RandomGenerator.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)));
+                            calendarDatePicker.SetValue(CalendarDatePicker.SelectedDateProperty, RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)));
                             break;
                         case CalendarDatePickerEx calendarDatePickerEx:
-                            calendarDatePickerEx.SetValue(CalendarDatePickerEx.SelectedValueProperty, RandomGenerator.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)));
+                            calendarDatePickerEx.SetValue(CalendarDatePickerEx.SelectedValueProperty, RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)));
                             break;
                         case DatePicker datePicker:
-                            datePicker.SetValue(DatePicker.SelectedDateProperty, new DateTimeOffset(RandomGenerator.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10))));
+                            datePicker.SetValue(DatePicker.SelectedDateProperty, new DateTimeOffset(RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10))));
                             break;
                         case TimePicker timePicker:
-                            timePicker.SetValue(TimePicker.SelectedTimeProperty, RandomGenerator.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)).TimeOfDay);
+                            timePicker.SetValue(TimePicker.SelectedTimeProperty, RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)).TimeOfDay);
                             break;
                         case TimePickerEx timePickerEx:
-                            timePickerEx.SetValue(TimePickerEx.SelectedValueProperty, RandomGenerator.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)).TimeOfDay);
+                            timePickerEx.SetValue(TimePickerEx.SelectedValueProperty, RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)).TimeOfDay);
                             break;
                         case ColorPickerEx colorPickerEx:
-                            colorPickerEx.SetValue(ColorPickerEx.SelectedValueProperty, RandomGenerator.Color().ToColor());
+                            colorPickerEx.SetValue(ColorPickerEx.SelectedValueProperty, Faker.Colors.Hex().ToColor());
                             break;
                     }
                 },

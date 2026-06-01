@@ -13,10 +13,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class SplitViewPageViewModel() : ShowcaseViewModel(nameof(SplitView), [
+internal sealed class SplitViewPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(SplitView), commands, [
     new ControlThemeBuilder()
         .AddVariants(ControlVariant.Solid)
         .AddVariant(CssClass.ShadowSurface)

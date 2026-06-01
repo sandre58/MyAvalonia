@@ -10,20 +10,18 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Rendering;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Choices;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
-using MyNet.Observable;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground;
 
 /// <summary>
 /// View model for the control playground, which provides interactive testing and preview functionality.
 /// </summary>
-internal sealed class ControlThemeViewModel(ControlThemeDefinition definition, IProvideValue<string> displayName) : ObservableObject
+internal sealed class ControlThemeViewModel(ControlThemeDefinition definition, IObservableValue<string> displayName) : ObservableObject
 {
     /// <summary>
     /// Gets the definition of the control theme, which contains the configuration and properties for the theme being previewed in the playground.
     /// </summary>
-    public IProvideValue<string> DisplayName { get; } = displayName;
+    public IObservableValue<string> DisplayName { get; } = displayName;
 
     /// <summary>
     /// Gets the definition of the control theme, which specifies the visual appearance and behavior of the control.

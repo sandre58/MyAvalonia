@@ -20,7 +20,7 @@ internal static class ServiceCollectionExtensions
     /// <summary>
     /// Contributes showcase demo translation resources to the catalog.
     /// </summary>
-    public static IServiceCollection AddMyNetAvaloniaShowcaseResources(this IServiceCollection services)
+    public static IServiceCollection AddResources(this IServiceCollection services)
     {
         services.AddTranslationResource(nameof(CommonResources), CommonResources.ResourceManager);
         services.AddTranslationResource(nameof(MenuResources), MenuResources.ResourceManager);

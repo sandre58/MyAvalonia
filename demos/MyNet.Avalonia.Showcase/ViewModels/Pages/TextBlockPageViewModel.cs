@@ -9,11 +9,11 @@ using Material.Icons;
 using MyNet.Avalonia.Showcase.Extensions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class TextBlockPageViewModel() : ShowcaseViewModel(nameof(TextBlock),
-[
+internal sealed class TextBlockPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(TextBlock), commands, [
     new ControlThemeBuilder()
         .AddVariants("opacity-high", "opacity-medium", "opacity-low", "text-helper", "text-watermark", "variant-underline", "variant-strikethrough", "is-disablable")
         .AddDefaultRoles()

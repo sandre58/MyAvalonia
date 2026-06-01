@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="NavigationContent.axaml.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
@@ -6,11 +6,9 @@
 
 using Avalonia;
 using Avalonia.Controls;
-using PropertyChanged;
 
 namespace MyNet.Avalonia.Showcase.Views.Samples;
 
-[DoNotNotify]
 public partial class NavigationContent : UserControl
 {
     public NavigationContent() => InitializeComponent();

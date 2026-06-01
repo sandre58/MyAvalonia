@@ -11,6 +11,7 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Registry;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 
@@ -18,7 +19,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 /// Represents a factory for creating instances of <see cref="ControlThemeViewModel"/> based on the provided <see cref="ControlThemeBuilder"/>. This factory encapsulates the logic for constructing the necessary components, such as option factories and setting factories, to create a fully configured view model for a control theme. By utilizing the builder pattern, this factory allows for flexible and modular creation of control theme view models, enabling easy customization and extension as needed in the theme builder application.
 /// </summary>
 /// <param name="builder">The control theme builder used to construct the view models.</param>
-internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder)
+internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder, ICommandFactory commands)
 {
     /// <summary>
     /// Creates a new instance of the ControlThemeViewModel for the specified control name.
@@ -37,7 +38,7 @@ internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder)
         var choiceMetadata = builder.GetMetadata(controlName);
         var allOptions = definition.CustomSettings.Select(optionFactory.Create).ToList();
         var availableOptions = allOptions.Where(x => string.IsNullOrEmpty(x.Group)).Select(x => x.Option);
-        var availableGroups = allOptions.Where(x => !string.IsNullOrEmpty(x.Group)).GroupBy(x => x.Group).Select(x => new GroupOptionViewModel([.. x.Select(y => y.Option)], new LocalizedString(x.Key)));
+        var availableGroups = allOptions.Where(x => !string.IsNullOrEmpty(x.Group)).GroupBy(x => x.Group).Select(x => new GroupOptionViewModel([.. x.Select(y => y.Option)], new LocalizedString(x.Key!)));
 
         return new(definition, choiceMetadata.DisplayName)
         {
@@ -74,7 +75,7 @@ internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder)
         var metadata = builder.BuildOptionMetadata();
         var registry = new ControlEditorRegistry();
 
-        RegisterDefaultEditors(registry, optionFactory);
+        RegisterDefaultEditors(registry, optionFactory, commands);
 
         return new(registry, metadata);
     }
@@ -89,12 +90,13 @@ internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder)
     /// of control behaviors for different option types.</param>
     /// <param name="choiceFactory">A factory used to create view models for the options defined in the registry. This facilitates the instantiation
     /// of option-related view models required by the editors.</param>
-    private static void RegisterDefaultEditors(ControlEditorRegistry registry, ChoiceViewModelFactory choiceFactory)
+    /// <param name="commands">The command factory used to create commands for the actions. This enables the instantiation of action-related view models required by the editors.</param>
+    private static void RegisterDefaultEditors(ControlEditorRegistry registry, ChoiceViewModelFactory choiceFactory, ICommandFactory commands)
     {
         // Definitions
         registry.RegisterDefinition<ControlClassDefinition>((x, y) => new ComboBoxOptionViewModel(x, [.. (y.Metadata as IChoicesEditorMetadata)?.Choices.Select(choiceFactory.Create) ?? []], y.DisplayName));
         registry.RegisterDefinition<ControlClassToggleDefinition>((x, y) => new ToggleSwitchOptionViewModel(x, y.DisplayName));
-        registry.RegisterDefinition<ControlActionDefinition>((x, y) => new ButtonOptionViewModel(x, y.DisplayName, y.Icon));
+        registry.RegisterDefinition<ControlActionDefinition>((x, y) => new ButtonOptionViewModel(commands, x, y.DisplayName, y.Icon));
 
         // Types
         registry.Register<bool>((x, y) => new ToggleSwitchOptionViewModel(x, y.DisplayName));
@@ -104,7 +106,7 @@ internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder)
         registry.Register<string>((x, y) => new TextBoxOptionViewModel(x, y.DisplayName));
 
         // Custom editors
-        registry.RegisterEditor<ButtonEditorMetadata>((x, y) => new ButtonOptionViewModel((ControlActionDefinition)x, y.DisplayName, y.Icon) { Role = y.Metadata.Role });
+        registry.RegisterEditor<ButtonEditorMetadata>((x, y) => new ButtonOptionViewModel(commands, (ControlActionDefinition)x, y.DisplayName, y.Icon) { Role = y.Metadata.Role });
         registry.RegisterEditor<TextBoxEditorMetadata>((x, y) => new TextBoxOptionViewModel(x, y.DisplayName));
         registry.RegisterEditor<ToggleSwitchEditorMetadata>((x, y) => new ToggleSwitchOptionViewModel(x, y.DisplayName));
         registry.RegisterEditor<ListBoxEditorMetadata>((x, y) => new ListBoxOptionViewModel(x, [.. y.Metadata.Choices.Select(choiceFactory.Create)], y.DisplayName, y.Metadata.AllowMultipleSelection));

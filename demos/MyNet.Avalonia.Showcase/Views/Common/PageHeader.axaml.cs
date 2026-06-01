@@ -7,11 +7,9 @@
 using Avalonia;
 using Avalonia.Controls.Primitives;
 using Material.Icons;
-using PropertyChanged;
 
 namespace MyNet.Avalonia.Showcase.Views.Common;
 
-[DoNotNotify]
 public partial class PageHeader : HeaderedContentControl
 {
     public static readonly StyledProperty<MaterialIconKind?> IconProperty = AvaloniaProperty.Register<PageHeader, MaterialIconKind?>(nameof(Icon));

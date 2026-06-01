@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
 using System.Linq;
 using Avalonia.Controls;
 using Material.Icons;
@@ -15,13 +14,12 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Helpers;
+using MyNet.UI.Commands;
 using MyNet.UI.Resources;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class CarouselPagePageViewModel() : ShowcaseViewModel(nameof(CarouselPage),
-[
+internal sealed class CarouselPagePageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(CarouselPage), commands, [
     new ControlThemeBuilder()
         .AddAction<CarouselPage>(x => (x.SelectedIndex < x.Pages.Count()).IfTrue(() => x.SelectedIndex++),
             x => x.DisplayName(UiResources.NextPage).WithIcon(MaterialIconKind.PageNext))

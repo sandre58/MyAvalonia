@@ -7,11 +7,11 @@
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Showcase.ViewModels.Samples;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class FormPageViewModel() : ShowcaseViewModel(nameof(Form),
-[
+internal sealed class FormPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Form), commands, [
     new()
 ])
 {

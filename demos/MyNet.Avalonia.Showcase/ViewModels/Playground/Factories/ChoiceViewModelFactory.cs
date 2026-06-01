@@ -8,7 +8,6 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Registry;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Choices;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Theming.Core;
-using MyNet.Humanizer;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 
@@ -43,7 +42,7 @@ internal sealed class ChoiceViewModelFactory(ChoiceMetadataRegistry metadataRegi
     {
         var metadata = metadataRegistry.Get(role);
 
-        return new(role, metadata?.DisplayName ?? new Translatable<string>(() => role.Humanize()));
+        return new(role, metadata?.DisplayName ?? new CultureBoundValue<string>(() => role.Humanize()));
     }
 
     /// <summary>
@@ -59,6 +58,6 @@ internal sealed class ChoiceViewModelFactory(ChoiceMetadataRegistry metadataRegi
     {
         var metadata = metadataRegistry.Get(choice);
 
-        return new(choice, metadata?.DisplayName ?? new Translatable<string>(choice.ToString), metadata?.Icon);
+        return new(choice, metadata?.DisplayName ?? new CultureBoundValue<string>(choice.ToString), metadata?.Icon);
     }
 }

@@ -2,7 +2,6 @@
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:geo="using:MyNet.Utilities.Geography"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:my="http://mynet.com/avalonia"
              xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
@@ -17,9 +16,10 @@
              my:IconAssist.Icon="{Binding Icon}"
              ClipToBounds="False"
              mc:Ignorable="d"
-             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors">
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+             xmlns:geography="clr-namespace:MyNet.Geography;assembly=MyNet.Geography">
     <ContentPage.Resources>
-        <DataTemplate x:Key="MyNet.DataTemplate.Icon" DataType="{x:Type geo:Country}">
+        <DataTemplate x:Key="MyNet.DataTemplate.Icon" DataType="{x:Type geography:Country}">
             <ContentControl Content="{m:RandomIcon}" />
         </DataTemplate>
     </ContentPage.Resources>

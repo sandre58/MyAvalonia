@@ -17,14 +17,11 @@ using MyNet.Avalonia.Showcase.ViewModels.Dialogs;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 using MyNet.Avalonia.Theme.Theming.Core;
-using MyNet.Humanizer;
-using MyNet.Observable;
 using MyNet.UI.Commands;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
 using MyNet.UI.Notifications;
 using MyNet.UI.Notifications.Models;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
@@ -75,6 +72,7 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
         INotificationPublisher notificationPublisher,
         IContentDialogService contentDialogService,
         IMessageBoxFactory messageBoxFactory,
+        ICommandFactory commands,
         DialogHostOptions hostOptions)
     {
         _notificationPublisher = notificationPublisher;
@@ -130,21 +128,21 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
                            .AddChoice(VerticalPosition.Center, b => b.DisplayName(() => VerticalPosition.Center.Humanize()).WithIcon(MaterialIconKind.FormatVerticalAlignCenter))
                            .AddChoice(VerticalPosition.Bottom, b => b.DisplayName(() => VerticalPosition.Bottom.Humanize()).WithIcon(MaterialIconKind.FormatVerticalAlignBottom))));
 
-        var themes = new[] { new ControlThemeViewModelFactory(builder).Create("OverlayDialog") }.ToObservableCollection();
+        var themes = new[] { new ControlThemeViewModelFactory(builder, commands).Create("OverlayDialog") }.ToObservableCollection();
         Playground = new PlaygroundViewModel("OverlayDialog", themes);
 
-        ShowOverlayDialogCommand = CommandsManager.Create(async () => await ShowOverlayDialogAsync().ConfigureAwait(false));
-        ShowOverlayMessageBoxCommand = CommandsManager.CreateNotNull<ThemeRole>(async x => await ShowOverlayMessageBoxAsync(ToSeverity(x)).ConfigureAwait(false));
-        ShowOverlayDialogBoxCommand = CommandsManager.CreateNotNull<ThemeRole>(async x => await ShowOverlayDialogBoxAsync(ToSeverity(x)).ConfigureAwait(false));
+        ShowOverlayDialogCommand = commands.Create(async () => await ShowOverlayDialogAsync().ConfigureAwait(false));
+        ShowOverlayMessageBoxCommand = commands.CreateRequired<ThemeRole>(async x => await ShowOverlayMessageBoxAsync(ToSeverity(x)).ConfigureAwait(false));
+        ShowOverlayDialogBoxCommand = commands.CreateRequired<ThemeRole>(async x => await ShowOverlayDialogBoxAsync(ToSeverity(x)).ConfigureAwait(false));
     }
 
     /// <summary>
     /// Performs cleanup operations when the view model is disposed.
     /// </summary>
-    protected override void Cleanup()
+    protected override void DisposeManagedResources()
     {
-        base.Cleanup();
         Playground.Dispose();
+        base.DisposeManagedResources();
     }
 
     private async Task ShowOverlayDialogAsync()
@@ -173,13 +171,11 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
     private async Task<MessageBoxResult> ShowOverlayMessageBoxCoreAsync(MessageSeverity severity)
     {
         var overlayOptions = CreateOverlayOptions();
-        var messageBox = _messageBoxFactory.Create(new MessageBoxOptions
-        {
-            Message = GetSampleMessage(severity),
-            Title = severity.Humanize(),
-            Severity = severity,
-            Buttons = _buttons
-        });
+        var messageBox = _messageBoxFactory.Create(MessageBoxOptionsHelper.Create(
+            GetSampleMessage(severity),
+            severity.Humanize(),
+            severity,
+            _buttons));
 
         var result = await _contentDialogService
             .ShowAsync<MessageBoxResult>(

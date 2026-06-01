@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Registry;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 

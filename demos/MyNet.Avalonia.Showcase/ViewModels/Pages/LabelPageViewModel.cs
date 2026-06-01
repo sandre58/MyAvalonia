@@ -11,11 +11,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class LabelPageViewModel() : ShowcaseViewModel(nameof(Label),
-[
+internal sealed class LabelPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Label), commands, [
     new ControlThemeBuilder()
         .WithContent(ContentControl.ContentProperty, ContentProviderType.Text)
         .AddVariants("opacity-high", "opacity-medium", "opacity-low", "text-helper", "text-watermark")

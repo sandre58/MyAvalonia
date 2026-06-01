@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
-using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.ContentProviders;
 
@@ -14,6 +13,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground.ContentProviders;
 /// </summary>
 public class TextProviderViewModel : ObservableObject, IContentProviderViewModel
 {
+    private string _text = "Preview";
     /// <summary>
     /// Gets the identifier for this content provider, which is used to identify the type of content being provided. In this case, it returns ContentProviderType.Text to indicate that text content should be displayed in the control preview.
     /// </summary>
@@ -22,7 +22,11 @@ public class TextProviderViewModel : ObservableObject, IContentProviderViewModel
     /// <summary>
     /// Gets or sets the text content to provide.
     /// </summary>
-    public string Text { get; set; } = "Preview";
+    public string Text
+    {
+        get => _text;
+        set => SetProperty(ref _text, value);
+    }
 
     /// <summary>
     /// Provides the text content.

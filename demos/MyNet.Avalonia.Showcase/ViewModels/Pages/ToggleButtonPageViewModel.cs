@@ -12,15 +12,15 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class ToggleButtonPageViewModel() : ShowcaseViewModel(nameof(ToggleButton),
-    [
-        new ControlThemeBuilder()
-                .WithContent(ContentControl.ContentProperty, ContentProviderType.Text)
-                .AddShapes(CssClass.ShapeCircle)
-                .AddStandardVariants()
+internal sealed class ToggleButtonPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(ToggleButton), commands, [
+    new ControlThemeBuilder()
+            .WithContent(ContentControl.ContentProperty, ContentProviderType.Text)
+            .AddShapes(CssClass.ShapeCircle)
+            .AddStandardVariants()
                 .AddVariant(CssClass.ShadowControl)
                 .AddDefaultSizes()
                 .AddDefaultRoles(),

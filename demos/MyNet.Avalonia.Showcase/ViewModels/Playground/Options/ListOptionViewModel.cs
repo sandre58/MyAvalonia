@@ -10,7 +10,6 @@ using System.Collections.ObjectModel;
 using Avalonia.Controls;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Choices;
-using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 
@@ -21,7 +20,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 /// <param name="defaultValue">The initial value for the setting.</param>
 /// <param name="options">The collection of choices available for this option.</param>
 /// <param name="displayNameFunc">A provider that supplies the display name for the option, enabling localization or dynamic naming.</param>
-internal abstract class ListOptionViewModel(IControlOptionDefinition definition, object? defaultValue, ICollection<IChoiceViewModel> options, IProvideValue<string> displayNameFunc)
+internal abstract class ListOptionViewModel(IControlOptionDefinition definition, object? defaultValue, ICollection<IChoiceViewModel> options, IObservableValue<string> displayNameFunc)
     : ValueOptionViewModel<object>(definition, defaultValue, displayNameFunc)
 {
     /// <summary>
@@ -43,7 +42,7 @@ internal abstract class ListOptionViewModel(IControlOptionDefinition definition,
 /// <param name="options">A collection of choice view models that represent the selectable options available in the combo box.</param>
 /// <param name="displayNameFunc">A provider that supplies the display name for the combo box option, allowing for dynamic or context-sensitive
 /// naming.</param>
-internal sealed class ComboBoxOptionViewModel(IControlOptionDefinition definition, ICollection<IChoiceViewModel> options, IProvideValue<string> displayNameFunc)
+internal sealed class ComboBoxOptionViewModel(IControlOptionDefinition definition, ICollection<IChoiceViewModel> options, IObservableValue<string> displayNameFunc)
     : ListOptionViewModel(definition, definition.DefaultValue, options, displayNameFunc)
 {
     /// <summary>
@@ -66,7 +65,7 @@ internal sealed class ComboBoxOptionViewModel(IControlOptionDefinition definitio
 /// <param name="options">A collection of choice view models that represent the selectable options available in the list box.</param>
 /// <param name="displayNameFunc">A provider that supplies the display name for the option, allowing for dynamic or context-sensitive naming.</param>
 /// <param name="allowMultipleValues">A value indicating whether multiple selections are allowed in the list box. The default is <see langword="false"/>, allowing only single selection.</param>
-internal sealed class ListBoxOptionViewModel(IControlOptionDefinition definition, ICollection<IChoiceViewModel> options, IProvideValue<string> displayNameFunc, bool allowMultipleValues = false)
+internal sealed class ListBoxOptionViewModel(IControlOptionDefinition definition, ICollection<IChoiceViewModel> options, IObservableValue<string> displayNameFunc, bool allowMultipleValues = false)
     : ListOptionViewModel(definition, allowMultipleValues && definition.DefaultValue is not IEnumerable ? new ObservableCollection<object?> { definition.DefaultValue } : definition.DefaultValue, options, displayNameFunc)
 {
     /// <summary>

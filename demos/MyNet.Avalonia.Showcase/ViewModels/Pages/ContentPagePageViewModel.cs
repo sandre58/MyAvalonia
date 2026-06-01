@@ -15,11 +15,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Helpers;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class ContentPagePageViewModel() : ShowcaseViewModel(nameof(ContentPage),
-[
+internal sealed class ContentPagePageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(ContentPage), commands, [
     new ControlThemeBuilder()
         .AddAction<NavigationPage>(async x => await x.PushAsync(PageHelper.MakeNavigationPage($"Page {x.Pages?.Count() + 1}", $"ContentPage #{x.Pages?.Count() + 1}.\nNavigate back using the back button.")).ConfigureAwait(false),
             x => x.DisplayName(SettingsResources.PushPage).WithIcon(MaterialIconKind.PageNext))

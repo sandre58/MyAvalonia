@@ -13,10 +13,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class AvatarPageViewModel() : ShowcaseViewModel(nameof(Avatar), [
+internal sealed class AvatarPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Avatar), commands, [
     new ControlThemeBuilder()
         .WithContent(ContentControl.ContentProperty, ContentProviderType.Icon)
         .AddShapes(CssClass.ShapeCircle)

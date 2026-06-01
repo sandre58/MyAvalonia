@@ -11,11 +11,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class BorderPageViewModel() : ShowcaseViewModel(nameof(Border),
-[
+internal sealed class BorderPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Border), commands, [
     new ControlThemeBuilder()
         .WithKind(CssClass.KindCard)
         .AddVariants(ControlVariant.Light, ControlVariant.Outlined, ControlVariant.Solid)

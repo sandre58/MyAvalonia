@@ -5,12 +5,12 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.ObjectModel;
-using MyNet.UI.ViewModels.Dialogs;
-using MyNet.Utilities.Helpers;
+using System.Linq;
+using MyNet.UI.ViewModels.Dialog;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Dialogs;
 
 internal sealed class PerfDialogViewModel : DialogViewModel
 {
-    public ObservableCollection<int>? List { get; } = new(EnumerableHelper.Range(1, 1000));
+    public ObservableCollection<int>? List { get; } = new(Enumerable.Range(1, 1000));
 }

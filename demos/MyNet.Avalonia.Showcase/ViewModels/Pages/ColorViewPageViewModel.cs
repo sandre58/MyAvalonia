@@ -18,11 +18,11 @@ using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class ColorViewPageViewModel() : ShowcaseViewModel(nameof(ColorView),
-[
+internal sealed class ColorViewPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(ColorView), commands, [
     new ControlThemeBuilder()
         .AddThemeRoles()
         .AddValueAction((x, y) =>

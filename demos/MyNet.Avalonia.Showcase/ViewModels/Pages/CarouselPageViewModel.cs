@@ -13,12 +13,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Theming.Core;
-using MyNet.Humanizer;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class CarouselPageViewModel() : ShowcaseViewModel(nameof(Carousel),
-[
+internal sealed class CarouselPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Carousel), commands, [
     new(),
 
     new ControlThemeBuilder("Full")

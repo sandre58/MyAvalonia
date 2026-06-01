@@ -16,10 +16,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class BadgePageViewModel() : ShowcaseViewModel(nameof(Badge), [
+internal sealed class BadgePageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Badge), commands, [
     new ControlThemeBuilder()
         .WithContent(HeaderedContentControl.HeaderProperty, ContentProviderType.Text)
         .AddShapes(CssClass.ShapeCircle)

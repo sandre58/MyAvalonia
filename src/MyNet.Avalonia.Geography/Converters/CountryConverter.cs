@@ -6,7 +6,6 @@
 
 using System;
 using System.Globalization;
-using System.IO;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
@@ -21,8 +20,6 @@ namespace MyNet.Avalonia.Geography.Converters;
 /// </summary>
 public sealed class CountryConverter : IValueConverter
 {
-    private static readonly EmbeddedCountryFlagProvider FlagProvider = new();
-
     private enum Mode
     {
         Alpha2,
@@ -72,7 +69,7 @@ public sealed class CountryConverter : IValueConverter
     private CountryConverter(Mode mode) => _mode = mode;
 
     /// <inheritdoc />
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => ResolveCountry(value) is not { } country
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => ResolveCountry(value) is not { } country
         ? AvaloniaProperty.UnsetValue
         : _mode switch
         {
@@ -100,15 +97,9 @@ public sealed class CountryConverter : IValueConverter
         _ => null,
     };
 
-    private static Bitmap? GetFlag(Country country, FlagSize size)
+    private static Bitmap GetFlag(Country country, FlagSize size)
     {
-        var bytes = FlagProvider.GetBytes(country, size);
-        if (bytes is not { Length: > 0 })
-        {
-            return null;
-        }
-
-        using var memoryStream = new MemoryStream(bytes);
+        using var memoryStream = country.GetFlag(size);
         return new(memoryStream);
     }
 }

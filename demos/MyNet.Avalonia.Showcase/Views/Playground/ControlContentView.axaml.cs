@@ -5,11 +5,9 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using PropertyChanged;
 
 namespace MyNet.Avalonia.Showcase.Views.Playground;
 
-[DoNotNotify]
 internal sealed partial class ControlContentView : UserControl
 {
     public ControlContentView() => InitializeComponent();

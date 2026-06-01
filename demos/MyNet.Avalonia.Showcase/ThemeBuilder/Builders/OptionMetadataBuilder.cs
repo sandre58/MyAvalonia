@@ -9,7 +9,6 @@ using Material.Icons;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Registry;
-using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 
@@ -19,7 +18,7 @@ namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 internal sealed class OptionMetadataBuilder
 {
     private readonly ChoiceMetadataRegistry _choiceMetadataRegistry = new();
-    private IProvideValue<string>? _displayNameFunc;
+    private IObservableValue<string>? _displayNameFunc;
     private IEditorMetadata? _metadata;
     private MaterialIconKind? _icon;
     private string? _group;
@@ -29,7 +28,7 @@ internal sealed class OptionMetadataBuilder
     /// </summary>
     /// <param name="displayNameFunc">The value provider that supplies the display name.</param>
     /// <returns>The current instance of <see cref="OptionMetadataBuilder"/> for method chaining.</returns>
-    public OptionMetadataBuilder DisplayName(IProvideValue<string> displayNameFunc)
+    public OptionMetadataBuilder DisplayName(IObservableValue<string> displayNameFunc)
     {
         _displayNameFunc = displayNameFunc;
         return this;

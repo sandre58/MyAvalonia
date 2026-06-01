@@ -10,8 +10,6 @@ using System.Reactive.Subjects;
 using DynamicData.Binding;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
-using MyNet.Observable;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 
@@ -23,7 +21,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 /// <param name="defaultValue">The initial value for the setting.</param>
 /// <param name="displayNameFunc">A function that provides the display name for the setting.</param>
 /// <param name="icon">An optional icon associated with the setting, which can be used for visual representation in the user interface. The icon can be of any type, such as a string representing a resource path, an image object, or any other relevant representation depending on the UI framework being used. This property allows for enhanced visual cues when displaying the setting in the UI, making it easier for users to identify and understand the purpose of the setting at a glance.</param>
-internal abstract class ValueOptionViewModel<T>(IControlOptionDefinition definition, object? defaultValue, IProvideValue<string> displayNameFunc, MaterialIconKind? icon = null) : ValueOptionViewModel(definition, defaultValue, displayNameFunc, icon);
+internal abstract class ValueOptionViewModel<T>(IControlOptionDefinition definition, object? defaultValue, IObservableValue<string> displayNameFunc, MaterialIconKind? icon = null) : ValueOptionViewModel(definition, defaultValue, displayNameFunc, icon);
 
 /// <summary>
 /// Represents an abstract base class for editable settings that provides a display name for use in user interfaces.
@@ -34,6 +32,7 @@ internal abstract class ValueOptionViewModel<T>(IControlOptionDefinition definit
 internal abstract class ValueOptionViewModel : OptionViewModel
 {
     private readonly object? _defaultValue;
+    private object? _value;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ValueOptionViewModel"/> class with the specified control option definition, display name provider, and optional icon. The constructor sets up the necessary properties for the view model, including the control option definition that provides metadata and configuration for the setting, the display name provider that supplies a user-friendly name for the setting in the UI, and an optional icon that can be used for visual representation. The value of the setting is initialized to the default value defined in the control option definition, allowing for a consistent starting state when the view model is created.
@@ -42,17 +41,13 @@ internal abstract class ValueOptionViewModel : OptionViewModel
     /// <param name="defaultValue">The initial value for the setting.</param>
     /// <param name="displayNameFunc">A provider that supplies the display name for the setting, used to present the setting in the UI. Cannot be null.</param>
     /// <param name="icon">An optional icon associated with the setting, which can be used for visual representation in the user interface. The icon can be of any type, such as a string representing a resource path, an image object, or any other relevant representation depending on the UI framework being used. This property allows for enhanced visual cues when displaying the setting in the UI, making it easier for users to identify and understand the purpose of the setting at a glance.</param>
-    protected ValueOptionViewModel(IControlOptionDefinition definition, object? defaultValue, IProvideValue<string> displayNameFunc, MaterialIconKind? icon = null)
+    protected ValueOptionViewModel(IControlOptionDefinition definition, object? defaultValue, IObservableValue<string> displayNameFunc, MaterialIconKind? icon = null)
         : base(definition, displayNameFunc, icon)
     {
         _defaultValue = defaultValue;
         Value = defaultValue;
 
-        Disposables.AddRange(
-            [
-                ValueChangedSubject,
-                this.WhenPropertyChanged(x => x.Value).Subscribe(x => ValueChangedSubject.OnNext(x.Value))
-            ]);
+        Disposables.Add(ValueChangedSubject);
 
         if (Value is INotifyCollectionChanged observableCollection)
         {
@@ -65,7 +60,15 @@ internal abstract class ValueOptionViewModel : OptionViewModel
     /// </summary>
     /// <remarks>This property can hold any object, and its value can be null. It is commonly used to store
     /// data that is dynamically determined at runtime.</remarks>
-    public object? Value { get; set; }
+    public object? Value
+    {
+        get => _value;
+        set
+        {
+            if (SetProperty(ref _value, value))
+                ValueChangedSubject.OnNext(value);
+        }
+    }
 
     /// <summary>
     /// Gets the subject that represents a stream of boolean values.

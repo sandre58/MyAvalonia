@@ -33,8 +33,8 @@
                              Classes="kind-toggle"
                              SelectedValue="{Binding #Clock.IsAm, Mode=TwoWay}"
                              SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
-                        <ListBoxItem DataContext="{x:True}" Content="{my:Loc Am, Casing=AllCaps}" />
-                        <ListBoxItem DataContext="{x:False}" Content="{my:Loc Pm, Casing=AllCaps}" />
+                        <ListBoxItem DataContext="{x:True}" Content="{my:Loc Am, Casing=Upper}" />
+                        <ListBoxItem DataContext="{x:False}" Content="{my:Loc Pm, Casing=Upper}" />
                     </ListBox>
                     <TextBlock Text="{Binding #Clock.SelectedValue}" HorizontalAlignment="Center" />
                 </StackPanel>

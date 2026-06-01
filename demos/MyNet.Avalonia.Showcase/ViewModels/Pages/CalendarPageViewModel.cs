@@ -13,11 +13,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class CalendarPageViewModel() : ShowcaseViewModel(nameof(Calendar),
-[
+internal sealed class CalendarPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Calendar), commands, [
     new ControlThemeBuilder()
         .AddVariants(ControlVariant.Solid, ControlVariant.Light, ControlVariant.Outlined)
         .AddVariant(CssClass.ShadowSurface)

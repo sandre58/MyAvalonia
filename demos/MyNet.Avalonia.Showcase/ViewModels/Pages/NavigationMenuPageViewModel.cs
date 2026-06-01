@@ -11,11 +11,11 @@ using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class NavigationMenuPageViewModel() : ShowcaseViewModel(nameof(NavigationMenu),
-[
+internal sealed class NavigationMenuPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(NavigationMenu), commands, [
     new ControlThemeBuilder()
         .AddDefaultRoles()
         .AddProperty(NavigationMenu.CollapseWidthProperty, 50, x => x.DisplayName(nameof(SettingsResources.CollapseWidth)).Of<SliderEditor>(editor => editor.WithRange(40, 50)))

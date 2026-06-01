@@ -4,27 +4,20 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.IO;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media.Imaging;
 using Material.Icons;
 using MyNet.Avalonia.Controls;
-using MyNet.Collections;
 using MyNet.Fakers.Static;
-using MyNet.Generator.Facade;
 using MyNet.Geography;
 using MyNet.Geography.Resources;
-using MyNet.Humanizer.Facade;
-using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Showcase.Helpers;
 
 internal static class MenuHelper
 {
-    private static readonly EmbeddedCountryFlagProvider FlagProvider = new();
-    
     public static MenuItem RandomizeMenuItem(string? header = null, bool hasSubItems = false)
     {
         var item = new MenuItem
@@ -43,27 +36,55 @@ internal static class MenuHelper
     }
 
     public static MenuItem[] RandomizeMenuItems(int currentDepth, int min = 0, int max = 10, int maxDepth = 5)
-        => [.. 1.Range(1, RandomGenerator.Current.Int(min, max)).Select(x =>
-        {
-            var addSubItems = currentDepth < maxDepth && RandomGenerator.Current.Bool();
-            var item = RandomizeMenuItem($"Sub menu {currentDepth}.{x}", addSubItems);
-            if (addSubItems)
+        =>
+        [
+            .. 1.Range(1, RandomGenerator.Current.Int(min, max)).Select(x =>
             {
-                item.ItemsSource = RandomizeMenuItems(currentDepth + 1, min, max, maxDepth);
-            }
+                var addSubItems = currentDepth < maxDepth && RandomGenerator.Current.Bool();
+                var item = RandomizeMenuItem($"Sub menu {currentDepth}.{x}", addSubItems);
+                if (addSubItems)
+                {
+                    item.ItemsSource = RandomizeMenuItems(currentDepth + 1, min, max, maxDepth);
+                }
 
-            return item;
-        })];
+                return item;
+            })
+        ];
 
     public static MenuItem[] BuildMainMenu()
     {
         // File menu
         var file = new MenuItem { Header = "_File" };
-        var @new = new MenuItem { Header = "_New", InputGesture = new(Key.N, KeyModifiers.Control), Icon = MaterialIconKind.File.ToIcon() };
-        var open = new MenuItem { Header = "_Open", InputGesture = new(Key.O, KeyModifiers.Control), Icon = MaterialIconKind.FolderOpen.ToIcon() };
-        var save = new MenuItem { Header = "_Save", InputGesture = new(Key.S, KeyModifiers.Control), Icon = MaterialIconKind.ContentSave.ToIcon() };
-        var saveAs = new MenuItem { Header = "Save _As...", InputGesture = new(Key.S, KeyModifiers.Control | KeyModifiers.Shift), Icon = MaterialIconKind.ContentSaveAll.ToIcon() };
-        var close = new MenuItem { Header = "_Close", InputGesture = new(Key.Q, KeyModifiers.Control), Icon = MaterialIconKind.Close.ToIcon() };
+        var @new = new MenuItem
+        {
+            Header = "_New",
+            InputGesture = new(Key.N, KeyModifiers.Control),
+            Icon = MaterialIconKind.File.ToIcon()
+        };
+        var open = new MenuItem
+        {
+            Header = "_Open",
+            InputGesture = new(Key.O, KeyModifiers.Control),
+            Icon = MaterialIconKind.FolderOpen.ToIcon()
+        };
+        var save = new MenuItem
+        {
+            Header = "_Save",
+            InputGesture = new(Key.S, KeyModifiers.Control),
+            Icon = MaterialIconKind.ContentSave.ToIcon()
+        };
+        var saveAs = new MenuItem
+        {
+            Header = "Save _As...",
+            InputGesture = new(Key.S, KeyModifiers.Control | KeyModifiers.Shift),
+            Icon = MaterialIconKind.ContentSaveAll.ToIcon()
+        };
+        var close = new MenuItem
+        {
+            Header = "_Close",
+            InputGesture = new(Key.Q, KeyModifiers.Control),
+            Icon = MaterialIconKind.Close.ToIcon()
+        };
 
         _ = file.Items.Add(@new);
         _ = file.Items.Add(open);
@@ -75,17 +96,64 @@ internal static class MenuHelper
 
         // Edit menu
         var edit = new MenuItem { Header = "_Edit" };
-        var undo = new MenuItem { Header = "_Undo", InputGesture = new(Key.Z, KeyModifiers.Control), Icon = MaterialIconKind.Undo.ToIcon() };
-        var redo = new MenuItem { Header = "_Redo", InputGesture = new(Key.Y, KeyModifiers.Control), Icon = MaterialIconKind.Redo.ToIcon() };
-        var cut = new MenuItem { Header = "Cu_t", InputGesture = new(Key.X, KeyModifiers.Control), Icon = MaterialIconKind.ContentCut.ToIcon() };
-        var copy = new MenuItem { Header = "_Copy", InputGesture = new(Key.C, KeyModifiers.Control), Icon = MaterialIconKind.ContentCopy.ToIcon() };
-        var paste = new MenuItem { Header = "_Paste", InputGesture = new(Key.V, KeyModifiers.Control), Icon = MaterialIconKind.ContentPaste.ToIcon(), IsEnabled = false };
+        var undo = new MenuItem
+        {
+            Header = "_Undo",
+            InputGesture = new(Key.Z, KeyModifiers.Control),
+            Icon = MaterialIconKind.Undo.ToIcon()
+        };
+        var redo = new MenuItem
+        {
+            Header = "_Redo",
+            InputGesture = new(Key.Y, KeyModifiers.Control),
+            Icon = MaterialIconKind.Redo.ToIcon()
+        };
+        var cut = new MenuItem
+        {
+            Header = "Cu_t",
+            InputGesture = new(Key.X, KeyModifiers.Control),
+            Icon = MaterialIconKind.ContentCut.ToIcon()
+        };
+        var copy = new MenuItem
+        {
+            Header = "_Copy",
+            InputGesture = new(Key.C, KeyModifiers.Control),
+            Icon = MaterialIconKind.ContentCopy.ToIcon()
+        };
+        var paste = new MenuItem
+        {
+            Header = "_Paste",
+            InputGesture = new(Key.V, KeyModifiers.Control),
+            Icon = MaterialIconKind.ContentPaste.ToIcon(),
+            IsEnabled = false
+        };
 
         var encoding = new MenuItem { Header = "_Encoding", Icon = MaterialIconKind.FormatText.ToIcon() };
-        var ansi = new MenuItem { Header = "ANSI", ToggleType = MenuItemToggleType.Radio, GroupName = "encoding" };
-        var utf8 = new MenuItem { Header = "UTF-8", ToggleType = MenuItemToggleType.Radio, GroupName = "encoding", IsChecked = true };
-        var utf8Bom = new MenuItem { Header = "UTF-8-BOM", ToggleType = MenuItemToggleType.Radio, GroupName = "encoding" };
-        var usc2 = new MenuItem { Header = "UCS-2 BE BOM", ToggleType = MenuItemToggleType.Radio, GroupName = "encoding" };
+        var ansi = new MenuItem
+        {
+            Header = "ANSI",
+            ToggleType = MenuItemToggleType.Radio,
+            GroupName = "encoding"
+        };
+        var utf8 = new MenuItem
+        {
+            Header = "UTF-8",
+            ToggleType = MenuItemToggleType.Radio,
+            GroupName = "encoding",
+            IsChecked = true
+        };
+        var utf8Bom = new MenuItem
+        {
+            Header = "UTF-8-BOM",
+            ToggleType = MenuItemToggleType.Radio,
+            GroupName = "encoding"
+        };
+        var usc2 = new MenuItem
+        {
+            Header = "UCS-2 BE BOM",
+            ToggleType = MenuItemToggleType.Radio,
+            GroupName = "encoding"
+        };
 
         _ = encoding.Items.Add(ansi);
         _ = encoding.Items.Add(utf8);
@@ -103,9 +171,27 @@ internal static class MenuHelper
 
         // View menu
         var view = new MenuItem { Header = "_View" };
-        var showGrid = new MenuItem { Header = "Show _Grid", IsChecked = true, Icon = MaterialIconKind.Grid.ToIcon(), ToggleType = MenuItemToggleType.CheckBox };
-        var showToolbar = new MenuItem { Header = "Show _Toolbar", IsChecked = true, Icon = MaterialIconKind.Wrench.ToIcon(), ToggleType = MenuItemToggleType.CheckBox };
-        var showStatusBar = new MenuItem { Header = "Show _Status Bar", IsChecked = false, Icon = MaterialIconKind.DockBottom.ToIcon(), ToggleType = MenuItemToggleType.CheckBox };
+        var showGrid = new MenuItem
+        {
+            Header = "Show _Grid",
+            IsChecked = true,
+            Icon = MaterialIconKind.Grid.ToIcon(),
+            ToggleType = MenuItemToggleType.CheckBox
+        };
+        var showToolbar = new MenuItem
+        {
+            Header = "Show _Toolbar",
+            IsChecked = true,
+            Icon = MaterialIconKind.Wrench.ToIcon(),
+            ToggleType = MenuItemToggleType.CheckBox
+        };
+        var showStatusBar = new MenuItem
+        {
+            Header = "Show _Status Bar",
+            IsChecked = false,
+            Icon = MaterialIconKind.DockBottom.ToIcon(),
+            ToggleType = MenuItemToggleType.CheckBox
+        };
 
         _ = view.Items.Add(showGrid);
         _ = view.Items.Add(showToolbar);
@@ -115,7 +201,7 @@ internal static class MenuHelper
         var tools = new MenuItem { Header = "_Tools" };
         var languages = new MenuItem { Header = "_Languages", Icon = MaterialIconKind.Translate.ToIcon() };
 
-        Country.All.OrderBy(x => x.Humanize()).ForEach(x =>
+        CountrySource.GetAllOrderedByDisplay().ForEach(x =>
         {
             var item = new MenuItem
             {
@@ -124,14 +210,8 @@ internal static class MenuHelper
                 GroupName = "language"
             };
 
-            if (x.GetFlag(FlagSize.Pixel24) is { } flag)
-            {
-                using var memoryStream = new MemoryStream(flag);
-                item.Icon = new Image
-                {
-                    Source = new Bitmap(memoryStream)
-                };
-            }
+            using var memoryStream = x.GetFlag(FlagSize.Pixel24);
+            item.Icon = new Image { Source = new Bitmap(memoryStream) };
 
             _ = languages.Items.Add(item);
         });
@@ -144,7 +224,12 @@ internal static class MenuHelper
 
         // Help menu
         var help = new MenuItem { Header = "_Help" };
-        var documentation = new MenuItem { Header = "_Documentation", InputGesture = new(Key.F1), Icon = MaterialIconKind.BookOpenPageVariant.ToIcon() };
+        var documentation = new MenuItem
+        {
+            Header = "_Documentation",
+            InputGesture = new(Key.F1),
+            Icon = MaterialIconKind.BookOpenPageVariant.ToIcon()
+        };
         var about = new MenuItem { Header = "_About", Icon = MaterialIconKind.InformationOutline.ToIcon() };
 
         _ = help.Items.Add(documentation);

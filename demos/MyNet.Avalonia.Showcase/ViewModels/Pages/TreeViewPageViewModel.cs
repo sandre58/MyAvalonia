@@ -10,15 +10,15 @@ using MyNet.Avalonia.Showcase.Extensions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class TreeViewPageViewModel() : ShowcaseViewModel(nameof(TreeView),
-    [
-        new ControlThemeBuilder()
-                .AddItemsStandardVariants()
-                .AddVariant(CssClass.ShadowItems)
-                .AddItemsThemeRoles()
+internal sealed class TreeViewPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(TreeView), commands, [
+    new ControlThemeBuilder()
+            .AddItemsStandardVariants()
+            .AddVariant(CssClass.ShadowItems)
+            .AddItemsThemeRoles()
                 .AddDefaultSizes()
     ])
 {

@@ -6,12 +6,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reactive.Disposables;
 using Avalonia;
 using Avalonia.Controls;
 using MyNet.Avalonia.Controls;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Showcase.ThemeBuilder.Rendering;
 
@@ -26,7 +24,7 @@ internal sealed class StyleRenderer : IStyleRenderer, IDisposable
 {
     private readonly HashSet<string> _appliedClasses = [];
     private readonly HashSet<AvaloniaProperty> _appliedProperties = [];
-    private readonly CompositeDisposable _appliedActions = [];
+    private CompositeDisposable _appliedActions = new();
 
     /// <summary>
     /// Applies the specified configuration settings to the given control, including class and property adjustments.
@@ -109,18 +107,10 @@ internal sealed class StyleRenderer : IStyleRenderer, IDisposable
     /// <param name="actions">The collection of actions to apply to the control.</param>
     private void ApplyActions(Control control, IReadOnlyList<StyleAction> actions)
     {
-        var toRemove = _appliedActions.Where(action => !actions.Contains(action)).ToArray();
-        var toAdd = actions.Where(action => !_appliedActions.Contains(action)).ToArray();
+        _appliedActions.Dispose();
+        _appliedActions = [];
 
-        // Remove only previously applied actions
-        foreach (var action in toRemove)
-        {
-            action.Dispose();
-            _appliedActions.Remove(action);
-        }
-
-        // Custom properties
-        foreach (var action in toAdd)
+        foreach (var action in actions)
             _appliedActions.Add(action.Subject.Subscribe(x => action.Action.Invoke(control, x)));
     }
 

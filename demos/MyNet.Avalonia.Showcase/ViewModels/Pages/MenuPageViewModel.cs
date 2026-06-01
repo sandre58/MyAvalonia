@@ -7,11 +7,11 @@
 using Avalonia.Controls;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class MenuPageViewModel() : ShowcaseViewModel(nameof(Menu),
-[
+internal sealed class MenuPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Menu), commands, [
     new()
 ])
 {

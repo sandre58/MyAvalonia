@@ -8,7 +8,7 @@ using System.Linq;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
-using MyNet.Utilities;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground;
 
@@ -31,22 +31,20 @@ internal abstract class ShowcaseViewModel : PageViewModel
     /// Initializes a new instance of the <see cref="ShowcaseViewModel"/> class with the specified control name and theme builders. This constructor takes a control name and an array of ControlThemeBuilder instances, which are used to build the definitions for the playground and catalog. The definitions are created by invoking the Build method of each ControlThemeBuilder with the provided control name, resulting in a collection of theme definitions that are then used to initialize the PlaygroundViewModel and OptionsCatalogViewModel properties.
     /// </summary>
     /// <param name="controlName">The name of the control being showcased.</param>
+    /// <param name="commands">The command factory used to create commands for the actions. This enables the instantiation of action-related view models required by the editors.</param>
     /// <param name="builders">An array of ControlThemeBuilder instances used to build the theme definitions.</param>
-    protected ShowcaseViewModel(string controlName, ControlThemeBuilder[] builders)
+    protected ShowcaseViewModel(string controlName, ICommandFactory commands, ControlThemeBuilder[] builders)
     {
-        var themes = builders.Select(x => new ControlThemeViewModelFactory(x).Create(controlName)).ToList().ToObservableCollection();
+        var themes = builders.Select(x => new ControlThemeViewModelFactory(x, commands).Create(controlName)).ToList().ToObservableCollection();
         Playground = new(controlName, themes);
         Catalog = new(themes);
     }
 
-    /// <summary>
-    /// Performs cleanup operations when the view model is disposed. This method overrides the base class's Cleanup method to include additional cleanup logic specific to the ShowcaseViewModel. It ensures that any resources associated with the Playground are properly released by calling its Dispose method, in addition to performing any necessary cleanup defined in the base class.
-    /// </summary>
-    protected override void Cleanup()
+    /// <inheritdoc/>
+    protected override void DisposeManagedResources()
     {
-        base.Cleanup();
-
         Playground.Dispose();
         Catalog.Dispose();
+        base.DisposeManagedResources();
     }
 }

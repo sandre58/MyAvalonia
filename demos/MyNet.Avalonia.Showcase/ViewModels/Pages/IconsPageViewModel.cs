@@ -10,13 +10,10 @@ using Material.Icons;
 using MyNet.Avalonia.Controls.Helpers;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Avalonia.Theme.Theming;
-using MyNet.UI.Navigation.Models;
+using MyNet.Observable.Collections.Sources;
 using MyNet.UI.ViewModels.List;
-using MyNet.UI.ViewModels.List.Filtering;
-using MyNet.UI.ViewModels.List.Filtering.Filters;
+using MyNet.UI.ViewModels.List.Factories;
 using MyNet.UI.ViewModels.List.Paging;
-using MyNet.UI.ViewModels.List.Sorting;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
@@ -25,22 +22,14 @@ internal sealed class IconsPageViewModel : PageViewModel
     public ListViewModel<MaterialIconKindWrapper> Icons { get; }
 
     public IconsPageViewModel()
-        => Icons = new([.. IconsHelper.Groups.Select(x => new MaterialIconKindWrapper(x)).ToList()],
-            new IconsControllerProvider()) { CanPage = true };
+        => Icons = new(
+            SourceEngine<MaterialIconKindWrapper>.From(
+                IconsHelper.Groups.Select(x => new MaterialIconKindWrapper(x)),
+                readOnly: true),
+            new ListViewModelOptions<MaterialIconKindWrapper> { Paging = new PagingViewModel(100) });
 
     /// <inheritdoc/>
     public override MaterialIconKind Icon => MaterialIconKind.TagFaces;
-
-    protected override bool CanRefreshOnNavigatedTo(NavigationContext navigationContext) => !IsLoaded;
-}
-
-internal sealed class IconsControllerProvider : ListParametersProvider
-{
-    public override IFiltersViewModel ProvideFilters() => new StringFilterViewModel(nameof(MaterialIconKindWrapper.DisplayAliases));
-
-    public override ISortingViewModel ProvideSorting() => new SortingViewModel(nameof(MaterialIconKindWrapper.Name));
-
-    public override IPagingViewModel ProvidePaging() => new PagingViewModel(100);
 }
 
 internal sealed class MaterialIconKindWrapper(MaterialIconKindGroup group)

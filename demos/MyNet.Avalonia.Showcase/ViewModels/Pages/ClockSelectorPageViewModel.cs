@@ -12,12 +12,13 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.Primitives.Temporal;
+using MyNet.UI.Commands;
 using MyNet.UI.Resources;
-using MyNet.Utilities.DateTimes;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class ClockSelectorPageViewModel() : ShowcaseViewModel(nameof(ClockSelector), [
+internal sealed class ClockSelectorPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(ClockSelector), commands, [
     new ControlThemeBuilder()
         .AddAllVariants()
         .AddVariant(CssClass.ShadowSurface)

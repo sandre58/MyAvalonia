@@ -14,31 +14,26 @@ using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
 using Material.Icons;
-using MyNet.Avalonia.Colors;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Showcase.Extensions;
 using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Controls.Assists;
-using MyNet.Humanizer;
-using MyNet.Observable;
-using MyNet.Observable.Attributes;
-using MyNet.UI.Selection.Models;
-using MyNet.Utilities;
-using MyNet.Utilities.Generator;
-using MyNet.Utilities.Generator.Extensions;
-using MyNet.Utilities.Geography;
+using MyNet.Fakers.Static;
+using MyNet.Geography;
+using MyNet.Observable.Behaviors.Metadata.Attributes;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
 internal sealed class DataGridPageViewModel : ShowcaseViewModel
 {
-    private readonly ObservableCollection<SelectedFixture> _fixtures = [.. RandomGenerator.ListItems(EnumClass.GetAll<Country>()).Select(x => new SelectedFixture(new(x)))];
+    private readonly ObservableCollection<SelectedFixture> _fixtures = [.. CountrySource.GetAllOrderedByDisplay().Select(x => new SelectedFixture(new(x)))];
 
-    public DataGridPageViewModel()
+    public DataGridPageViewModel(ICommandFactory commands)
         : base(nameof(DataGrid),
+            commands,
             [
                 new ControlThemeBuilder()
                     .AddItemsThemeRoles()
@@ -115,11 +110,11 @@ internal sealed class DataGridPageViewModel : ShowcaseViewModel
         Fixtures = new(_fixtures);
         Fixtures.GroupDescriptions.Add(new DataGridPathGroupDescription("Item.Continent"));
 
-        _fixtures.ForEach(x => x.Item.Referee = RandomGenerator.ListItem(AvailableReferees));
+        _fixtures.ForEach(x => x.Item.Referee = RandomGenerator.Current.Item(AvailableReferees));
 
         Disposables.AddRange(
         [
-            _fixtures.ToObservableChangeSet().WhenPropertyChanged(x => x.IsSelected).Subscribe(_ => OnPropertyChanged(nameof(AreAllSelected)))
+            _fixtures.ToObservableChangeSet().WhenPropertyChanged(x => x.IsSelected).Subscribe(_ => OnPropertyChanged(nameof(AreAllSelected), null, AreAllSelected))
         ]);
     }
 
@@ -128,7 +123,7 @@ internal sealed class DataGridPageViewModel : ShowcaseViewModel
 
     public DataGridCollectionView Fixtures { get; }
 
-    public ObservableCollection<string> AvailableReferees { get; } = RandomGenerator.Int(5, 15).Range().Select(_ => NameGenerator.FullName()).Order().ToObservableCollection();
+    public ObservableCollection<string> AvailableReferees { get; } = Enumerable.Range(0, RandomGenerator.Current.Int(5, 15)).Select(_ => Faker.Names.FullName(GenderType.Male)).Order().ToObservableCollection();
 
     public bool CanUserSortColumns { get; set; } = true;
 
@@ -174,7 +169,18 @@ internal sealed class DataGridPageViewModel : ShowcaseViewModel
     }
 }
 
-public class SelectedFixture(Fixture fixture) : SelectedWrapper<Fixture>(fixture);
+public sealed class SelectedFixture(Fixture fixture) : ObservableObject
+{
+    private bool _isSelected;
+
+    public Fixture Item { get; } = fixture;
+
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => SetProperty(ref _isSelected, value);
+    }
+}
 
 public class Fixture(Country home) : ObservableObject
 {
@@ -183,26 +189,23 @@ public class Fixture(Country home) : ObservableObject
 
     public Country Home => home;
 
-    [IsRequired]
-    public Country Away { get; set; } = RandomGenerator.Country();
+    public Country Away { get; set; } = Faker.Countries.Country();
 
-    public Color? HomeColor { get; set; } = RandomGenerator.Color().ToColor();
+    public Color? HomeColor { get; set; } = Faker.Colors.Hex().ToColor();
 
-    public Color? AwayColor { get; set; } = RandomGenerator.Color().ToColor();
+    public Color? AwayColor { get; set; } = Faker.Colors.Hex().ToColor();
 
-    [IsRequired]
-    public DateTime? Date { get; set; } = RandomGenerator.Date(DateTime.Now.AddDays(-365), DateTime.Now.AddDays(365));
+    public DateTime? Date { get; set; } = RandomGenerator.Current.Date(DateTime.Now.AddDays(-365), DateTime.Now.AddDays(365));
 
-    [IsRequired]
-    public TimeSpan Time { get; set; } = RandomGenerator.Date(DateTime.Now.AddDays(-365), DateTime.Now.AddDays(365)).TimeOfDay;
+    public TimeSpan Time { get; set; } = RandomGenerator.Current.Date(DateTime.Now.AddDays(-365), DateTime.Now.AddDays(365)).TimeOfDay;
 
-    public string? Venue { get; set; } = RandomGenerator.Country().Humanize();
+    public string? Venue { get; set; } = Faker.Countries.Country().Humanize();
 
     public string? Referee { get; set; }
 
     [Range(0, 10)]
-    public int? HomeScore { get; set; } = RandomGenerator.Int(0, 4);
+    public int? HomeScore { get; set; } = RandomGenerator.Current.Int(0, 4);
 
     [Range(0, 10)]
-    public int? AwayScore { get; set; } = RandomGenerator.Int(0, 4);
+    public int? AwayScore { get; set; } = RandomGenerator.Current.Int(0, 4);
 }

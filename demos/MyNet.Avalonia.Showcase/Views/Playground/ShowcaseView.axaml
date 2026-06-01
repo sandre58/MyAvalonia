@@ -84,7 +84,7 @@
         </ContentPage>
 
         <!-- Custom Tab -->
-        <ContentPage Header="{my:Loc CustomControls}" TabbedPage.IsTabEnabled="{Binding #Root.CustomContent, Converter={x:Static my:BooleanNullConverter.IsPresent}}">
+        <ContentPage Header="{my:Loc CustomControls}" TabbedPage.IsTabEnabled="{Binding #Root.CustomContent, Converter={x:Static my:NullConverter.IsPresent}}">
             <ContentPage.Icon>
                 <my:MaterialIcon Kind="StarOutline" Foreground="{my:Theme Primary.Foreground}" Classes="size-md" />
             </ContentPage.Icon>

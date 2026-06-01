@@ -1,15 +1,11 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IconProviderViewModel.cs" company="Stéphane ANDRE">
-// Copyright (c) Stéphane ANDRE. All rights reserved.
+// <copyright file="IconProviderViewModel.cs" company="St?phane ANDRE">
+// Copyright (c) St?phane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using Material.Icons;
-using MyNet.Avalonia.Controls.Extensions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
-using MyNet.Avalonia.Theme.Extensions;
-using MyNet.Observable;
-using MyNet.Utilities.Generator;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.ContentProviders;
 
@@ -18,6 +14,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground.ContentProviders;
 /// </summary>
 public class IconProviderViewModel : ObservableObject, IContentProviderViewModel
 {
+    private MaterialIconKind? _kind;
     /// <summary>
     /// Gets the identifier for this content provider, which is used to identify the type of content being provided. In this case, it returns ContentProviderType.Icon to indicate that icon content should be displayed in the control preview.
     /// </summary>
@@ -26,11 +23,15 @@ public class IconProviderViewModel : ObservableObject, IContentProviderViewModel
     /// <summary>
     /// Gets or sets the icon data to provide. This property can be used to specify a specific icon, but it is not required for the random icon generation.
     /// </summary>
-    public MaterialIconKind? Kind { get; set; }
+    public MaterialIconKind? Kind
+    {
+        get => _kind;
+        set => SetProperty(ref _kind, value);
+    }
 
     /// <summary>
     /// Provides a randomly generated icon.
     /// </summary>
     /// <returns>A random icon object.</returns>
-    public object ProvideContent() => Kind ?? RandomGenerator.Enum<MaterialIconKind>();
+    public object ProvideContent() => Kind ?? RandomGenerator.Current.Enum<MaterialIconKind>();
 }

@@ -5,11 +5,9 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using PropertyChanged;
 
 namespace MyNet.Avalonia.Showcase.Pages;
 
-[DoNotNotify]
 internal sealed partial class ColorViewPage : ContentPage
 {
     public ColorViewPage() => InitializeComponent();

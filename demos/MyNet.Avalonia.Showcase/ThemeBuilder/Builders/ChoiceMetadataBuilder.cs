@@ -7,7 +7,6 @@
 using System;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
-using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 
@@ -16,7 +15,7 @@ namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 /// </summary>
 internal sealed class ChoiceMetadataBuilder
 {
-    private IProvideValue<string>? _displayNameFunc;
+    private IObservableValue<string>? _displayNameFunc;
     private MaterialIconKind? _icon;
 
     /// <summary>
@@ -27,7 +26,7 @@ internal sealed class ChoiceMetadataBuilder
     /// <param name="displayNameFunc">An object that provides the display name as a string. This provider is invoked to retrieve the display name when
     /// needed.</param>
     /// <returns>The current instance of the ChoiceMetadataBuilder to enable method chaining.</returns>
-    public ChoiceMetadataBuilder DisplayName(IProvideValue<string> displayNameFunc)
+    public ChoiceMetadataBuilder DisplayName(IObservableValue<string> displayNameFunc)
     {
         _displayNameFunc = displayNameFunc;
         return this;
@@ -43,7 +42,7 @@ internal sealed class ChoiceMetadataBuilder
     /// <returns>The current instance of the ChoiceMetadataBuilder to enable method chaining.</returns>
     public ChoiceMetadataBuilder DisplayName(Func<string?> displayNameFunc)
     {
-        _displayNameFunc = new Translatable<string>(displayNameFunc);
+        _displayNameFunc = new CultureBoundValue<string>(displayNameFunc);
         return this;
     }
 

@@ -12,26 +12,27 @@ using MyNet.Avalonia.Showcase.Extensions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
-using MyNet.Observable.Attributes;
+using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
 internal sealed class ButtonSpinnerPageViewModel : ShowcaseViewModel
 {
-    public ButtonSpinnerPageViewModel()
+    public ButtonSpinnerPageViewModel(ICommandFactory commands)
         : base(nameof(ButtonSpinner),
-        [
-            new ControlThemeBuilder()
-                .AddShapes(CssClass.ShapeCircle)
-                .AddDefaultVariants()
-                .AddVariants(CssClass.ShadowControl)
-                .AddDefaultSizes()
-                .AddDefaultRoles()
-        ])
+            commands,
+            [
+                new ControlThemeBuilder()
+                    .AddShapes(CssClass.ShapeCircle)
+                    .AddDefaultVariants()
+                    .AddVariants(CssClass.ShadowControl)
+                    .AddDefaultSizes()
+                    .AddDefaultRoles()
+            ])
     {
-        IncreaseCommand = CommandsManager.Create(IncreaseDate);
-        DecreaseCommand = CommandsManager.Create(DecreaseDate);
+        IncreaseCommand = commands.Create(IncreaseDate);
+        DecreaseCommand = commands.Create(DecreaseDate);
     }
 
     /// <inheritdoc/>

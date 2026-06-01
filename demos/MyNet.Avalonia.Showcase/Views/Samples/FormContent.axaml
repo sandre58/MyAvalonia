@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:my="http://mynet.com/avalonia"
-             xmlns:geo="http://mynet.com/avalonia/geography"
+             xmlns:geo="http://mynet.com/avalonia"
              xmlns:samples="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Samples"
              d:DesignHeight="1200"
              d:DesignWidth="1000"

@@ -14,14 +14,14 @@ using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
-using MyNet.Avalonia.Theme.Controls.Assists;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
+using MyNet.Avalonia.Theme.Controls.Assists;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class SliderPageViewModel() : ShowcaseViewModel(nameof(Slider),
-[
+internal sealed class SliderPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Slider), commands, [
     new ControlThemeBuilder()
         .AddVariants(ControlVariant.Solid, ControlVariant.Light, ControlVariant.Outlined)
         .AddVariant(CssClass.ShadowControl)

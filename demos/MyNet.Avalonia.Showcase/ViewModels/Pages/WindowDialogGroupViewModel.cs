@@ -6,21 +6,17 @@
 
 using System.Threading.Tasks;
 using System.Windows.Input;
-using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Dialogs;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 using MyNet.Avalonia.Theme.Theming.Core;
-using MyNet.Humanizer;
-using MyNet.Observable;
 using MyNet.UI.Commands;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
 using MyNet.UI.Notifications;
 using MyNet.UI.Notifications.Models;
-using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
@@ -57,7 +53,8 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
     public WindowDialogGroupViewModel(
         INotificationPublisher notificationPublisher,
         IContentDialogService contentDialogService,
-        IMessageBoxFactory messageBoxFactory)
+        IMessageBoxFactory messageBoxFactory,
+        ICommandFactory commands)
     {
         _notificationPublisher = notificationPublisher;
         _contentDialogService = contentDialogService;
@@ -79,20 +76,20 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
                            .AddChoice(MessageBoxResultOption.YesNo, b => b.DisplayName(() => MessageBoxResultOption.YesNo.Humanize()))
                            .AddChoice(MessageBoxResultOption.YesNoCancel, b => b.DisplayName(() => MessageBoxResultOption.YesNoCancel.Humanize()))));
 
-        var themes = new[] { new ControlThemeViewModelFactory(builder).Create("WindowDialog") }.ToObservableCollection();
+        var themes = new[] { new ControlThemeViewModelFactory(builder, commands).Create("WindowDialog") }.ToObservableCollection();
         Playground = new PlaygroundViewModel("WindowDialog", themes);
 
-        ShowWindowDialogCommand = CommandsManager.Create(async () => await ShowWindowDialogAsync().ConfigureAwait(false));
-        ShowWindowMessageBoxCommand = CommandsManager.CreateNotNull<ThemeRole>(async x => await ShowWindowMessageBoxAsync(ToSeverity(x)).ConfigureAwait(false));
+        ShowWindowDialogCommand = commands.Create(async () => await ShowWindowDialogAsync().ConfigureAwait(false));
+        ShowWindowMessageBoxCommand = commands.CreateRequired<ThemeRole>(async x => await ShowWindowMessageBoxAsync(ToSeverity(x)).ConfigureAwait(false));
     }
 
     /// <summary>
     /// Performs cleanup operations when the view model is disposed.
     /// </summary>
-    protected override void Cleanup()
+    protected override void DisposeManagedResources()
     {
-        base.Cleanup();
         Playground.Dispose();
+        base.DisposeManagedResources();
     }
 
     private async Task ShowWindowDialogAsync()
@@ -107,13 +104,11 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
 
     private async Task ShowWindowMessageBoxAsync(MessageSeverity severity)
     {
-        var messageBox = _messageBoxFactory.Create(new MessageBoxOptions
-        {
-            Message = GetSampleMessage(severity),
-            Title = severity.Humanize(),
-            Severity = severity,
-            Buttons = _buttons
-        });
+        var messageBox = _messageBoxFactory.Create(MessageBoxOptionsHelper.Create(
+            GetSampleMessage(severity),
+            severity.Humanize(),
+            severity,
+            _buttons));
 
         var result = await _contentDialogService
             .ShowAsync<MessageBoxResult>(messageBox, DialogOptions.ForWindow(messageBox, _isModal))

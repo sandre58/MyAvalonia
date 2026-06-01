@@ -7,32 +7,29 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Avalonia.Media;
 using DynamicData;
 using Material.Icons;
-using MyNet.Avalonia.Colors;
-using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Avalonia.Theme.Theming.Palettes;
-using MyNet.Observable.Attributes;
 using MyNet.UI.Theming;
-using MyNet.Utilities;
 using MyNet.Utilities.Suspending;
-using PropertyChanged;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-[SuppressMessage("ReSharper", "UnusedMember.Local", Justification = "Used by Fody")]
 internal sealed class ThemePageViewModel : PageViewModel
 {
     private readonly IThemeService _themeService;
     private readonly IThemeBrushService _themeBrushService;
     private readonly Suspender _updateSuspender = new();
     private readonly Suspender _refreshThemePropertiesSuspender = new();
+    private IThemeBase? _base;
+    private Color? _primaryColor;
+    private Color? _accentColor;
+    private bool _enablePerformanceDiagnostics = ThemeDiagnostics.IsEnvironmentEnabled;
 
     public ThemePageViewModel(IThemeService themeService, IThemeBrushService themeBrushService, IThemeBaseRegistry themeBaseRegistry)
     {
@@ -74,14 +71,35 @@ internal sealed class ThemePageViewModel : PageViewModel
 
     public ObservableCollection<IThemeBase> AvailableThemeVariants { get; } = [];
 
-    [IsRequired]
-    public IThemeBase? Base { get; set; }
+    public IThemeBase? Base
+    {
+        get => _base;
+        set
+        {
+            if (SetProperty(ref _base, value))
+                OnBaseChanged();
+        }
+    }
 
-    [IsRequired]
-    public Color? PrimaryColor { get; set; }
+    public Color? PrimaryColor
+    {
+        get => _primaryColor;
+        set
+        {
+            if (SetProperty(ref _primaryColor, value))
+                OnPrimaryColorChanged();
+        }
+    }
 
-    [IsRequired]
-    public Color? AccentColor { get; set; }
+    public Color? AccentColor
+    {
+        get => _accentColor;
+        set
+        {
+            if (SetProperty(ref _accentColor, value))
+                OnAccentColorChanged();
+        }
+    }
 
     public ObservableCollection<BrushDefinition> Primary { get; } = [];
 
@@ -100,7 +118,15 @@ internal sealed class ThemePageViewModel : PageViewModel
     /// <summary>
     /// Enables <see cref="PerformanceMonitor"/> output for theme and brush operations (debug output).
     /// </summary>
-    public bool EnablePerformanceDiagnostics { get; set; } = ThemeDiagnostics.IsEnvironmentEnabled;
+    public bool EnablePerformanceDiagnostics
+    {
+        get => _enablePerformanceDiagnostics;
+        set
+        {
+            if (SetProperty(ref _enablePerformanceDiagnostics, value))
+                OnEnablePerformanceDiagnosticsChanged();
+        }
+    }
 
     private ObservableCollection<BrushDefinition> GetBrushDefinitions(string prefix, ColorShades shades)
         => shades.ToResourceDictionary(prefix)
@@ -124,7 +150,6 @@ internal sealed class ThemePageViewModel : PageViewModel
         }
     }
 
-    [SuppressPropertyChangedWarnings]
     private void OnThemeChanged(object? sender, EventArgs e)
     {
         if (_refreshThemePropertiesSuspender.IsSuspended) return;
@@ -132,7 +157,6 @@ internal sealed class ThemePageViewModel : PageViewModel
         UpdatePropertiesFromCurrentTheme();
     }
 
-    [SuppressPropertyChangedWarnings]
     private void OnBaseChanged()
     {
         if (_updateSuspender.IsSuspended || Base is null) return;
@@ -141,7 +165,6 @@ internal sealed class ThemePageViewModel : PageViewModel
             _themeService.ApplyBaseTheme(Base);
     }
 
-    [SuppressPropertyChangedWarnings]
     private void OnPrimaryColorChanged()
     {
         if (_updateSuspender.IsSuspended || !PrimaryColor.HasValue) return;
@@ -150,7 +173,6 @@ internal sealed class ThemePageViewModel : PageViewModel
             _themeService.ApplyPrimary(PrimaryColor.Value.ToHex());
     }
 
-    [SuppressPropertyChangedWarnings]
     private void OnAccentColorChanged()
     {
         if (_updateSuspender.IsSuspended || !AccentColor.HasValue) return;
@@ -159,14 +181,13 @@ internal sealed class ThemePageViewModel : PageViewModel
             _themeService.ApplyAccent(AccentColor.Value.ToHex());
     }
 
-    [SuppressPropertyChangedWarnings]
     private void OnEnablePerformanceDiagnosticsChanged()
         => ThemeDiagnostics.ApplyShowcaseSettings(EnablePerformanceDiagnostics);
 
-    protected override void Cleanup()
+    protected override void DisposeManagedResources()
     {
         _themeService.ThemeChanged -= OnThemeChanged;
-        base.Cleanup();
+        base.DisposeManagedResources();
     }
 }
 

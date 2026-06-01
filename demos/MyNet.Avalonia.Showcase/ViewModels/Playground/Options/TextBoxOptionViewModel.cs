@@ -6,7 +6,6 @@
 // -----------------------------------------------------------------------
 
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
-using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 
@@ -15,4 +14,4 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 /// </summary>
 /// <param name="definition">The definition of the control option.</param>
 /// <param name="displayNameFunc">A function that provides the display name for the option.</param>
-internal sealed class TextBoxOptionViewModel(IControlOptionDefinition definition, IProvideValue<string> displayNameFunc) : ValueOptionViewModel<string>(definition, definition.DefaultValue, displayNameFunc);
+internal sealed class TextBoxOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc) : ValueOptionViewModel<string>(definition, definition.DefaultValue, displayNameFunc);

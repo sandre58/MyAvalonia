@@ -14,11 +14,11 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Helpers;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class TabbedPagePageViewModel() : ShowcaseViewModel(nameof(TabbedPage),
-[
+internal sealed class TabbedPagePageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(TabbedPage), commands, [
     new ControlThemeBuilder()
         .AddEnumProperty<TabPlacement, ListBoxEditor>(TabbedPage.TabPlacementProperty, TabPlacement.Top, x => x.DisplayName(nameof(SettingsResources.Layout)), configureChoice: (x, y) => _ = x == TabPlacement.Auto ? y.WithIcon(MaterialIconKind.AutoFix) : y.WithIcon(Enum.Parse<MaterialIconKind>($"Dock{x}")))
         .AddEnumValue<PageTransitionType, ComboBoxEditor>((x, y) => (x as TabbedPage)?.SetValue(TabbedPage.PageTransitionProperty, TransitionsHelper.CreatePageTransition(y.GetValueOrDefault())),
