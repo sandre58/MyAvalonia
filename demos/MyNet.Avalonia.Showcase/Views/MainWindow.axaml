@@ -1,7 +1,6 @@
 <Window x:Class="MyNet.Avalonia.Showcase.Views.MainWindow"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:c="clr-namespace:MyNet.Avalonia.Showcase.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:globalization="using:System.Globalization"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -57,7 +56,7 @@
                 </DropDownButton.Flyout>
                 <DropDownButton.ContentTemplate>
                     <DataTemplate x:DataType="globalization:CultureInfo">
-                        <Image Width="20" Source="{Binding Converter={x:Static c:CountryConverter.To24}}" ToolTip.Tip="{my:Display Casing=Title}" />
+                        <Image Width="20" Source="{Binding Converter={x:Static my:CountryConverter.To24}}" ToolTip.Tip="{my:Display Casing=Title}" />
                     </DataTemplate>
                 </DropDownButton.ContentTemplate>
             </DropDownButton>

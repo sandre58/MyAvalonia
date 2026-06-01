@@ -14,8 +14,7 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Theming.Core;
-using MyNet.Humanizer;
-using MyNet.Observable;
+using MyNet.Humanizer.Facade;
 
 namespace MyNet.Avalonia.Showcase.Extensions;
 
@@ -240,7 +239,7 @@ internal static class ThemeBuilderExtensions
                                                 var value = cssClass.ToEnum<T>();
                                                 if (!value.HasValue) return;
 
-                                                y.DisplayName(new Translatable<string>(() => value.Value.Humanize()));
+                                                y.DisplayName(() => value.Value.Humanize());
 
                                                 configureChoice?.Invoke(value.Value, y);
                                             });
@@ -307,7 +306,7 @@ internal static class ThemeBuilderExtensions
                     {
                         editor.AddChoices(options, (@enum, y) =>
                                                 {
-                                                    y.DisplayName(new Translatable<string>(() => @enum.Humanize()));
+                                                    y.DisplayName(() => @enum.Humanize());
 
                                                     configureChoice?.Invoke(@enum, y);
                                                 });
@@ -373,7 +372,7 @@ internal static class ThemeBuilderExtensions
                     {
                         editor.AddChoices(options, (@enum, y) =>
                                             {
-                                                y.DisplayName(new Translatable<string>(() => @enum.Humanize()));
+                                                y.DisplayName(() => @enum.Humanize());
 
                                                 configureChoice?.Invoke(@enum, y);
                                             });

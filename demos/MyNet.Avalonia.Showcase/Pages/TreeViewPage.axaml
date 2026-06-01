@@ -2,7 +2,7 @@
             xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
-            xmlns:countries="clr-namespace:MyNet.Utilities.Geography;assembly=MyNet.Utilities"
+            xmlns:countries="using:MyNet.Geography"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:my="http://mynet.com/avalonia"
@@ -10,7 +10,6 @@
             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
             xmlns:m="clr-namespace:MyNet.Avalonia.Showcase.MarkupExtensions"
-            xmlns:c="clr-namespace:MyNet.Avalonia.Showcase.Converters"
             x:DataType="vm:TreeViewPageViewModel"
             x:Name="Root" 
             Theme="{StaticResource {x:Type ContentPage}}" 
@@ -40,8 +39,8 @@
                                 <Image Width="16"
                                        Height="16"
                                        VerticalAlignment="Center"
-                                       Source="{Binding Converter={x:Static c:CountryConverter.To16}}" />
-                                <TextBlock VerticalAlignment="Center" Text="{Binding Converter={x:Static c:CountryConverter.ToDisplayName}}" TextWrapping="Wrap" />
+                                       Source="{Binding Converter={x:Static my:CountryConverter.To16}}" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Converter={x:Static my:CountryConverter.ToDisplayName}}" TextWrapping="Wrap" />
                             </StackPanel>
                         </TreeDataTemplate>
                     </TreeView.DataTemplates>
@@ -66,8 +65,8 @@
                                 <Image Width="16"
                                        Height="16"
                                        VerticalAlignment="Center"
-                                       Source="{Binding Converter={x:Static c:CountryConverter.To16}}" />
-                                <TextBlock VerticalAlignment="Center" Text="{Binding Converter={x:Static c:CountryConverter.ToDisplayName}}" TextWrapping="Wrap" />
+                                       Source="{Binding Converter={x:Static my:CountryConverter.To16}}" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Converter={x:Static my:CountryConverter.ToDisplayName}}" TextWrapping="Wrap" />
                             </StackPanel>
                         </TreeDataTemplate>
                     </TreeView.DataTemplates>

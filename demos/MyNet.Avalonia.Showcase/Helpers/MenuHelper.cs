@@ -10,12 +10,11 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media.Imaging;
 using Material.Icons;
-using MyNet.Avalonia.Controls.Extensions;
-using MyNet.Utilities;
-using MyNet.Utilities.Generator;
-using MyNet.Utilities.Geography;
-using MyNet.Utilities.Geography.Extensions;
-using MyNet.Utilities.Helpers;
+using MyNet.Avalonia.Controls;
+using MyNet.Collections;
+using MyNet.Generator.Facade;
+using MyNet.Geography;
+using MyNet.Humanizer.Facade;
 
 namespace MyNet.Avalonia.Showcase.Helpers;
 
@@ -26,22 +25,22 @@ internal static class MenuHelper
         var item = new MenuItem
         {
             Header = header ?? RandomGenerator.String2(5, 10),
-            IsChecked = !hasSubItems && RandomGenerator.Bool(),
-            ToggleType = !hasSubItems ? RandomGenerator.Enum<MenuItemToggleType>() : MenuItemToggleType.None
+            IsChecked = !hasSubItems && RandomGenerator.Current.Bool(),
+            ToggleType = !hasSubItems ? RandomGenerator.Current.Enum<MenuItemToggleType>() : MenuItemToggleType.None
         };
 
-        if (RandomGenerator.Bool())
-            item.Icon = RandomGenerator.Enum<MaterialIconKind>().ToIcon();
+        if (RandomGenerator.Current.Bool())
+            item.Icon = RandomGenerator.Current.Enum<MaterialIconKind>().ToIcon();
 
-        if (!hasSubItems && RandomGenerator.Bool())
-            item.InputGesture = new(RandomGenerator.Enum<Key>(), RandomGenerator.Enum<KeyModifiers>());
+        if (!hasSubItems && RandomGenerator.Current.Bool())
+            item.InputGesture = new(RandomGenerator.Current.Enum<Key>(), RandomGenerator.Current.Enum<KeyModifiers>());
         return item;
     }
 
     public static MenuItem[] RandomizeMenuItems(int currentDepth, int min = 0, int max = 10, int maxDepth = 5)
-        => [.. EnumerableHelper.Range(1, RandomGenerator.Int(min, max)).Select(x =>
+        => [.. EnumerableHelper.Range(1, RandomGenerator.Current.Int(min, max)).Select(x =>
         {
-            var addSubItems = currentDepth < maxDepth && RandomGenerator.Bool();
+            var addSubItems = currentDepth < maxDepth && RandomGenerator.Current.Bool();
             var item = RandomizeMenuItem($"Sub menu {currentDepth}.{x}", addSubItems);
             if (addSubItems)
             {
@@ -111,11 +110,11 @@ internal static class MenuHelper
         var tools = new MenuItem { Header = "_Tools" };
         var languages = new MenuItem { Header = "_Languages", Icon = MaterialIconKind.Translate.ToIcon() };
 
-        EnumClass.GetAll<Country>().OrderBy(x => x.ResourceKey.Translate()).ForEach(x =>
+        Country.All.OrderBy(x => x.Humanize()).ForEach(x =>
         {
             var item = new MenuItem
             {
-                Header = x.ResourceKey.Translate(),
+                Header = x.Humanize(),
                 ToggleType = MenuItemToggleType.Radio,
                 GroupName = "language"
             };

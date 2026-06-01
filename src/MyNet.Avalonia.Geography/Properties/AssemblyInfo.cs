@@ -8,3 +8,4 @@ using Avalonia.Metadata;
 
 [assembly: XmlnsPrefix("http://mynet.com/avalonia", "my")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Geography.MarkupExtensions")]
+[assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Geography.Converters")]

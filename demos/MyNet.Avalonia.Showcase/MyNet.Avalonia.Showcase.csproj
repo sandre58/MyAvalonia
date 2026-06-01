@@ -9,13 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Avalonia.Fonts.Inter" />
-        <PackageReference Include="Fody" PrivateAssets="all" />
         <PackageReference Include="MyNet.UI" />
-        <PackageReference Include="MyNet.Utilities.Generator.Extensions" />
-        <PackageReference Include="MyNet.Utilities.Geography.Extensions" />
-        <PackageReference Include="MyNet.Utilities.Localization.Extensions" />
-        <PackageReference Include="MyNet.Utilities.Logging.NLog" />
-        <PackageReference Include="PropertyChanged.Fody" PrivateAssets="All" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
         <PackageReference Include="MyNet.Globalization" />
         <PackageReference Include="MyNet.Humanizer" />

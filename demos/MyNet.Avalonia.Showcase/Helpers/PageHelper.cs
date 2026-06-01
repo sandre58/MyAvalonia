@@ -9,6 +9,7 @@ using Avalonia.Media;
 using MyNet.Avalonia.Colors;
 using MyNet.Avalonia.Extensions;
 using MyNet.Avalonia.Showcase.Views.Samples;
+using MyNet.Generator.Facade;
 using MyNet.Utilities.Generator;
 
 namespace MyNet.Avalonia.Showcase.Helpers;

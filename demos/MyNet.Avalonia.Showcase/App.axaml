@@ -1,8 +1,7 @@
 <Application x:Class="MyNet.Avalonia.Showcase.App" xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:my="http://mynet.com/avalonia"
-             xmlns:geo="clr-namespace:MyNet.Utilities.Geography;assembly=MyNet.Utilities"
-             xmlns:c="clr-namespace:MyNet.Avalonia.Showcase.Converters"
+             xmlns:geo="using:MyNet.Geography"
              xmlns:globalization="clr-namespace:System.Globalization;assembly=System.Runtime"
              RequestedThemeVariant="Light">
     <Application.Resources>
@@ -18,14 +17,14 @@
                            Margin="{my:Thickness Md, Right}"
                            VerticalAlignment="Center"
                            DockPanel.Dock="Left"
-                           Source="{Binding Converter={x:Static c:CountryConverter.To16}}" />
+                           Source="{Binding Converter={x:Static my:CountryConverter.To16}}" />
                     <TextBlock Text="{my:Display}" Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
                 </DockPanel>
             </DataTemplate>
             
             <DataTemplate x:Key="MyNet.DataTemplate.Country.Xl" DataType="{x:Type geo:Country}">
                 <Grid Width="90" Height="90" RowDefinitions="Auto,*">
-                    <Image Width="64" Source="{Binding Converter={x:Static c:CountryConverter.To64}}" />
+                    <Image Width="64" Source="{Binding Converter={x:Static my:CountryConverter.To64}}" />
                     <TextBlock Grid.Row="1"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Top"
@@ -38,7 +37,7 @@
             
             <DataTemplate x:Key="MyNet.DataTemplate.CultureInfo.Xs" DataType="globalization:CultureInfo">
                 <DockPanel>
-                    <Image DockPanel.Dock="Left" Width="20" Source="{Binding Converter={x:Static c:CountryConverter.To24}}" Margin="{my:Thickness Md, Right}" />
+                    <Image DockPanel.Dock="Left" Width="20" Source="{Binding Converter={x:Static my:CountryConverter.To24}}" Margin="{my:Thickness Md, Right}" />
                     <TextBlock Text="{my:Display Casing=Title}" />
                 </DockPanel>
             </DataTemplate>

@@ -30,3 +30,14 @@ using MyNet.Avalonia.Geography;
 
 var countries = CountrySource.GetAllOrderedByDisplay();
 ```
+
+## Country bindings
+
+`CountryConverter` resolves a `Country` (or `CultureInfo`) to codes, localized names, or flag bitmaps:
+
+```xml
+<Image Source="{Binding Converter={x:Static my:CountryConverter.To24}}" />
+<TextBlock Text="{Binding Converter={x:Static my:CountryConverter.ToDisplayName}}" />
+```
+
+Requires the `MyNet.Geography.Resources` package (referenced transitively by this project).

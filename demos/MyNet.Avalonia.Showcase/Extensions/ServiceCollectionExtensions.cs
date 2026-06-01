@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="MyNetAvaloniaShowcaseServiceCollectionExtensions.cs" company="Stéphane ANDRE">
+// <copyright file="ServiceCollectionExtensions.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -7,21 +7,21 @@
 using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Globalization;
-using MyNet.Utilities.Geography.Resources;
 
+#pragma warning disable IDE0130
 namespace MyNet.Avalonia.Showcase;
+#pragma warning restore IDE0130
 
 /// <summary>
 /// Registers showcase-specific translation resources.
 /// </summary>
-public static class MyNetAvaloniaShowcaseServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
     /// <summary>
     /// Contributes showcase demo translation resources to the catalog.
     /// </summary>
     public static IServiceCollection AddMyNetAvaloniaShowcaseResources(this IServiceCollection services)
     {
-        services.AddTranslationResource(nameof(CountryResources), CountryResources.ResourceManager);
         services.AddTranslationResource(nameof(CommonResources), CommonResources.ResourceManager);
         services.AddTranslationResource(nameof(MenuResources), MenuResources.ResourceManager);
         services.AddTranslationResource(nameof(SettingsResources), SettingsResources.ResourceManager);
