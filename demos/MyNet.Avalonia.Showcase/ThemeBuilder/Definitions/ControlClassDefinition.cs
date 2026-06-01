@@ -34,8 +34,8 @@ internal sealed record ControlClassDefinition(CssClass? DefaultValue = null, Act
     public string[] ProvideClasses(object? value) => value switch
     {
         null => [],
-        CssClass cssClass => [cssClass.ToString()],
-        IEnumerable<CssClass> cssClasses => [.. cssClasses.Select(c => c.ToString())],
+        CssClass cssClass => [cssClass.ToString().OrEmpty()],
+        IEnumerable<CssClass> cssClasses => [.. cssClasses.Select(c => c.ToString().OrEmpty())],
         IEnumerable<string> cssClassesStr => [.. cssClassesStr],
         _ => [value.ToString() ?? string.Empty]
     };

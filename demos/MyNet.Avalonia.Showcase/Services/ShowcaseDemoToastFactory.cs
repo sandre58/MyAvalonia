@@ -32,7 +32,7 @@ internal sealed class ShowcaseDemoToastFactory(ICommandFactory commandFactory) :
             ? commandFactory.Create((Action)closable.RequestClose)
             : null;
 
-        var clickCommand = notification is ActionNotification actionNotification && actionNotification.Action is not null
+        var clickCommand = notification is ActionNotification { Action: not null } actionNotification
             ? commandFactory.Create(() => actionNotification.Action(actionNotification))
             : null;
 

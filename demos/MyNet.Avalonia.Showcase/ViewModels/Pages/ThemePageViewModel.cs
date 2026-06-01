@@ -26,10 +26,6 @@ internal sealed class ThemePageViewModel : PageViewModel
     private readonly IThemeBrushService _themeBrushService;
     private readonly Suspender _updateSuspender = new();
     private readonly Suspender _refreshThemePropertiesSuspender = new();
-    private IThemeBase? _base;
-    private Color? _primaryColor;
-    private Color? _accentColor;
-    private bool _enablePerformanceDiagnostics = ThemeDiagnostics.IsEnvironmentEnabled;
 
     public ThemePageViewModel(IThemeService themeService, IThemeBrushService themeBrushService, IThemeBaseRegistry themeBaseRegistry)
     {
@@ -73,30 +69,30 @@ internal sealed class ThemePageViewModel : PageViewModel
 
     public IThemeBase? Base
     {
-        get => _base;
+        get;
         set
         {
-            if (SetProperty(ref _base, value))
+            if (SetProperty(ref field, value))
                 OnBaseChanged();
         }
     }
 
     public Color? PrimaryColor
     {
-        get => _primaryColor;
+        get;
         set
         {
-            if (SetProperty(ref _primaryColor, value))
+            if (SetProperty(ref field, value))
                 OnPrimaryColorChanged();
         }
     }
 
     public Color? AccentColor
     {
-        get => _accentColor;
+        get;
         set
         {
-            if (SetProperty(ref _accentColor, value))
+            if (SetProperty(ref field, value))
                 OnAccentColorChanged();
         }
     }
@@ -116,17 +112,19 @@ internal sealed class ThemePageViewModel : PageViewModel
     public ObservableCollection<OpacityDefinition> OpacityLevels { get; } = [];
 
     /// <summary>
-    /// Enables <see cref="PerformanceMonitor"/> output for theme and brush operations (debug output).
+    /// Gets or sets a value indicating whether enables <see cref="PerformanceMonitor"/> output for theme and brush operations (debug output).
     /// </summary>
     public bool EnablePerformanceDiagnostics
     {
-        get => _enablePerformanceDiagnostics;
+        get;
         set
         {
-            if (SetProperty(ref _enablePerformanceDiagnostics, value))
+            if (SetProperty(ref field, value))
                 OnEnablePerformanceDiagnosticsChanged();
         }
     }
+
+        = ThemeDiagnostics.IsEnvironmentEnabled;
 
     private ObservableCollection<BrushDefinition> GetBrushDefinitions(string prefix, ColorShades shades)
         => shades.ToResourceDictionary(prefix)
@@ -181,8 +179,7 @@ internal sealed class ThemePageViewModel : PageViewModel
             _themeService.ApplyAccent(AccentColor.Value.ToHex());
     }
 
-    private void OnEnablePerformanceDiagnosticsChanged()
-        => ThemeDiagnostics.ApplyShowcaseSettings(EnablePerformanceDiagnostics);
+    private void OnEnablePerformanceDiagnosticsChanged() => ThemeDiagnostics.ApplyShowcaseSettings(EnablePerformanceDiagnostics);
 
     protected override void DisposeManagedResources()
     {

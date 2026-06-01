@@ -171,21 +171,19 @@ internal sealed class DataGridPageViewModel : ShowcaseViewModel
 
 public sealed class SelectedFixture(Fixture fixture) : ObservableObject
 {
-    private bool _isSelected;
-
     public Fixture Item { get; } = fixture;
 
     public bool IsSelected
     {
-        get => _isSelected;
-        set => SetProperty(ref _isSelected, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 }
 
 public class Fixture(Country home) : ObservableObject
 {
     [UpdateOnCultureChanged]
-    public string? Continent => home.Continent.Humanize();
+    public string Continent => home.Continent.Humanize();
 
     public Country Home => home;
 

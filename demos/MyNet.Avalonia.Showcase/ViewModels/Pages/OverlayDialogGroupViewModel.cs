@@ -38,7 +38,6 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
 
     private bool _isModal = true;
     private bool _showCloseButton = true;
-    private bool _canDragMove = true;
     private bool _canLightDismiss;
     private bool _fullScreen;
     private MessageBoxResultOption _buttons = MessageBoxResultOption.OkCancel;
@@ -91,7 +90,9 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
                 true,
                 x => x.DisplayName("ShowCloseButton").Of<ToggleSwitchEditor>())
             .AddValueAction(
-                (_, y) => _canDragMove = (bool?)y ?? true,
+                (_, _) =>
+                {
+                },
                 true,
                 x => x.DisplayName("CanDragMove").Of<ToggleSwitchEditor>())
             .AddValueAction(
@@ -129,7 +130,7 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
                            .AddChoice(VerticalPosition.Bottom, b => b.DisplayName(() => VerticalPosition.Bottom.Humanize()).WithIcon(MaterialIconKind.FormatVerticalAlignBottom))));
 
         var themes = new[] { new ControlThemeViewModelFactory(builder, commands).Create("OverlayDialog") }.ToObservableCollection();
-        Playground = new PlaygroundViewModel("OverlayDialog", themes);
+        Playground = new("OverlayDialog", themes);
 
         ShowOverlayDialogCommand = commands.Create(async () => await ShowOverlayDialogAsync().ConfigureAwait(false));
         ShowOverlayMessageBoxCommand = commands.CreateRequired<ThemeRole>(async x => await ShowOverlayMessageBoxAsync(ToSeverity(x)).ConfigureAwait(false));
@@ -178,7 +179,7 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
             _buttons));
 
         var result = await _contentDialogService
-            .ShowAsync<MessageBoxResult>(
+            .ShowAsync(
                 messageBox,
                 DialogOptions.ForOverlay(
                     messageBox,

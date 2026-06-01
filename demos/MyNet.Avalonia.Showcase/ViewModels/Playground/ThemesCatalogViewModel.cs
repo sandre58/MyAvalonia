@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ThemesCatalogViewModel.cs" company="St?phane ANDRE">
-// Copyright (c) St?phane ANDRE. All rights reserved.
+// <copyright file="ThemesCatalogViewModel.cs" company="Stéphane ANDRE">
+// Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -24,12 +24,6 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground;
 /// </summary>
 internal sealed class ThemesCatalogViewModel : ObservableObject
 {
-    private ControlThemeViewModel? _selectedTheme;
-    private IReadOnlyList<CatalogSectionItem> _variantItems = [];
-    private IReadOnlyList<CatalogSectionItem> _roleItems = [];
-    private IReadOnlyList<CatalogSectionItem> _itemsRoleItems = [];
-    private IReadOnlyList<CatalogSectionItem> _sizeItems = [];
-    private IReadOnlyList<CatalogSectionItem> _shapeItems = [];
     /// <summary>
     /// Initializes a new instance of the <see cref="ThemesCatalogViewModel"/> class.
     /// </summary>
@@ -52,54 +46,34 @@ internal sealed class ThemesCatalogViewModel : ObservableObject
     /// </summary>
     public ControlThemeViewModel? SelectedTheme
     {
-        get => _selectedTheme;
-        set => SetProperty(ref _selectedTheme, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
     /// Gets the catalog items for each Variant.
     /// </summary>
-    public IReadOnlyList<CatalogSectionItem> VariantItems
-    {
-        get => _variantItems;
-        private set => SetProperty(ref _variantItems, value);
-    }
+    public IReadOnlyList<CatalogSectionItem> VariantItems { get; private set => SetProperty(ref field, value); } = [];
 
     /// <summary>
     /// Gets the catalog items for each Role.
     /// </summary>
-    public IReadOnlyList<CatalogSectionItem> RoleItems
-    {
-        get => _roleItems;
-        private set => SetProperty(ref _roleItems, value);
-    }
+    public IReadOnlyList<CatalogSectionItem> RoleItems { get; private set => SetProperty(ref field, value); } = [];
 
     /// <summary>
     /// Gets the catalog items for each ItemsRole.
     /// </summary>
-    public IReadOnlyList<CatalogSectionItem> ItemsRoleItems
-    {
-        get => _itemsRoleItems;
-        private set => SetProperty(ref _itemsRoleItems, value);
-    }
+    public IReadOnlyList<CatalogSectionItem> ItemsRoleItems { get; private set => SetProperty(ref field, value); } = [];
 
     /// <summary>
     /// Gets the catalog items for each Size.
     /// </summary>
-    public IReadOnlyList<CatalogSectionItem> SizeItems
-    {
-        get => _sizeItems;
-        private set => SetProperty(ref _sizeItems, value);
-    }
+    public IReadOnlyList<CatalogSectionItem> SizeItems { get; private set => SetProperty(ref field, value); } = [];
 
     /// <summary>
     /// Gets the catalog items for each Shape.
     /// </summary>
-    public IReadOnlyList<CatalogSectionItem> ShapeItems
-    {
-        get => _shapeItems;
-        private set => SetProperty(ref _shapeItems, value);
-    }
+    public IReadOnlyList<CatalogSectionItem> ShapeItems { get; private set => SetProperty(ref field, value); } = [];
 
     /// <summary>
     /// Refreshes the available items for the currently selected theme, including variants, roles, item roles, sizes,
@@ -133,11 +107,7 @@ internal sealed class ThemesCatalogViewModel : ObservableObject
             if (def.Kind is not null) classes.Add(def.Kind.ToString());
             if (extraClass is not null) classes.Add(extraClass.ToString());
 
-            var properties = new List<StyleProperty>
-            {
-                StyleProperty.FromProperty(ThemeAssist.RoleProperty, role),
-                StyleProperty.FromProperty(ItemsAssist.RoleProperty, itemsRole)
-            };
+            var properties = new List<StyleProperty> { StyleProperty.FromProperty(ThemeAssist.RoleProperty, role), StyleProperty.FromProperty(ItemsAssist.RoleProperty, itemsRole) };
 
             if (def.ContentDefinition is not null)
             {

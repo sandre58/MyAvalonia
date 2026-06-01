@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="PlaygroundViewModel.cs" company="St?phane ANDRE">
-// Copyright (c) St?phane ANDRE. All rights reserved.
+// <copyright file="PlaygroundViewModel.cs" company="Stéphane ANDRE">
+// Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -40,18 +40,6 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
 
     [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup method")]
     private CompositeDisposable _optionDisposables = [];
-    private ControlThemeViewModel? _selectedTheme;
-    private ThemeRole _selectedRole;
-    private ThemeRole _selectedSubItemsRole;
-    private string? _selectedSize;
-    private string? _selectedShape;
-    private IContentProviderViewModel? _selectedContentProvider;
-    private bool _isDisabled;
-    private bool _useIcon;
-    private MaterialIconKind? _selectedIcon;
-    private Position _iconPosition;
-    private BackgroundContext? _selectedBackgroundContext;
-    private string? _previewCode;
 
     /// <summary>
     /// Occurs when the style configuration has changed, providing the new configuration as an argument to event handlers. Subscribers to this event will be notified whenever there is a change in the style settings, allowing them to react accordingly, such as updating the user interface or applying the new styles to controls. The event handlers receive a ControlStyle object that encapsulates the current theme, classes, properties, and actions based on the user's selections in the playground.
@@ -127,8 +115,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// </summary>
     public ControlThemeViewModel? SelectedTheme
     {
-        get => _selectedTheme;
-        set => SetProperty(ref _selectedTheme, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
@@ -141,8 +129,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// </summary>
     public ThemeRole SelectedRole
     {
-        get => _selectedRole;
-        set => SetProperty(ref _selectedRole, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
@@ -150,8 +138,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// </summary>
     public ThemeRole SelectedSubItemsRole
     {
-        get => _selectedSubItemsRole;
-        set => SetProperty(ref _selectedSubItemsRole, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
@@ -159,8 +147,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// </summary>
     public string? SelectedSize
     {
-        get => _selectedSize;
-        set => SetProperty(ref _selectedSize, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
@@ -168,8 +156,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// </summary>
     public string? SelectedShape
     {
-        get => _selectedShape;
-        set => SetProperty(ref _selectedShape, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
@@ -180,8 +168,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// interface to reflect the selected provider.</remarks>
     public IContentProviderViewModel? SelectedContentProvider
     {
-        get => _selectedContentProvider;
-        set => SetProperty(ref _selectedContentProvider, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
@@ -189,8 +177,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// </summary>
     public bool IsDisabled
     {
-        get => _isDisabled;
-        set => SetProperty(ref _isDisabled, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
@@ -198,8 +186,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// </summary>
     public bool UseIcon
     {
-        get => _useIcon;
-        set => SetProperty(ref _useIcon, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
@@ -207,8 +195,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// </summary>
     public MaterialIconKind? SelectedIcon
     {
-        get => _selectedIcon;
-        set => SetProperty(ref _selectedIcon, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
@@ -216,8 +204,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// </summary>
     public Position IconPosition
     {
-        get => _iconPosition;
-        set => SetProperty(ref _iconPosition, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
@@ -230,8 +218,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// </summary>
     public BackgroundContext? SelectedBackgroundContext
     {
-        get => _selectedBackgroundContext;
-        set => SetProperty(ref _selectedBackgroundContext, value);
+        get;
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>
@@ -241,8 +229,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// needed, such as in code editors or preview windows.</remarks>
     public string? PreviewCode
     {
-        get => _previewCode;
-        private set => SetProperty(ref _previewCode, value);
+        get;
+        private set => SetProperty(ref field, value);
     }
 
     /// <summary>

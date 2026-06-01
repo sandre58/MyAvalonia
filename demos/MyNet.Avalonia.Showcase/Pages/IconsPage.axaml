@@ -78,7 +78,7 @@
                      VerticalAlignment="Stretch"
                      Margin="{my:Thickness Md, Top=20}"
                      my:ScrollViewerBehavior.RefreshOnScroll="True"
-                     ItemsSource="{Binding Icons.PagedItems}"
+                     ItemsSource="{Binding Icons.Items}"
                      SelectedItem="{Binding Icons.SelectedItem}"
                      Classes="kind-cards variant-items-solid">
                 <ListBox.ItemTemplate>
@@ -100,21 +100,21 @@
                            Header="{my:Loc Icons}"
                            Icon="TagFaces">
             <DockPanel Margin="{my:Thickness Md, Bottom}">
-                <my:Pagination Command="{Binding Icons.Paging.MoveToPageCommand}"
+                <my:Pagination Command="{Binding MoveToPageCommand}"
                                CommandParameter="{Binding $self.CurrentPage}"
-                               CurrentPage="{Binding Icons.Paging.CurrentPage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                               CurrentPage="{Binding Icons.Paging.CurrentPage, FallbackValue=1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                DockPanel.Dock="Right"
-                               PageSize="{Binding Icons.Paging.PageSize, Mode=TwoWay}"
+                               PageSize="{Binding Icons.Paging.PageSize, FallbackValue=10, Mode=TwoWay}"
                                PageSizeOptions="10,20,30,50,75,100,150,200,300,500,750,1000"
                                ShowPageSizeSelector="True"
                                ShowQuickJump="True"
-                               TotalCount="{Binding Icons.Paging.TotalItems, Mode=OneWay}" />
+                               TotalCount="{Binding Icons.Paging.TotalItems, FallbackValue=0, Mode=OneWay}" />
                 <TextBox Margin="{my:Thickness Sm, Right}"
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
                          my:IconAssist.Icon="{my:MaterialIcon Magnify}"
                          my:InputAssist.ShowClearButton="True"
-                         Text="{ReflectionBinding Icons.Filters.Value, Delay=50, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding SearchText, Delay=50, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          PlaceholderText="{my:Loc Search}" />
             </DockPanel>
         </common:PageHeader>

@@ -30,5 +30,5 @@ internal sealed record ControlClassToggleDefinition(CssClass Class, bool Default
     /// </summary>
     /// <param name="value">The value indicating whether the toggle is enabled or disabled.</param>
     /// <returns>An array containing the CSS class name if the toggle is enabled, or an empty array if it is disabled.</returns>
-    public string[] ProvideClasses(object? value) => value is true ? [Class.ToString()] : [];
+    public string[] ProvideClasses(object? value) => value is true ? [Class.ToString().OrEmpty()] : [];
 }

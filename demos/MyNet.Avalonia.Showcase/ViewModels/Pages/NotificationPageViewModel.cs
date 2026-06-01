@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using System.Windows.Input;
 using Avalonia.Controls;
 using Material.Icons;
@@ -30,10 +31,6 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 internal sealed class NotificationPageViewModel : ShowcaseViewModel
 {
     private readonly INotificationPublisher _notificationPublisher;
-    private readonly IToastManager _toastManager;
-    private readonly AvaloniaToastHost _toastHost;
-    private readonly AvaloniaToastHostOptions _hostOptions;
-    private readonly ToastManagerOptions _managerOptions;
 
     private static ToastClosingStrategy _closingStrategy = ToastClosingStrategy.Both;
     private static bool _freezeOnMouseEnter;
@@ -130,10 +127,6 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
             ])
     {
         _notificationPublisher = notificationPublisher;
-        _toastManager = toastManager;
-        _toastHost = toastHost;
-        _hostOptions = hostOptions;
-        _managerOptions = managerOptions;
 
         ShowNotificationCommand = commands.CreateRequired<ThemeRole>(ShowNotification);
     }
@@ -158,7 +151,7 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
                     message.Title,
                     message.Severity,
                     action: x => _notificationPublisher.Publish(new MessageNotification(
-                        NotificationPageResources.NotificationClickMessage.FormatWith(x),
+                        NotificationPageResources.NotificationClickMessage.FormatWith(CultureInfo.CurrentCulture, x),
                         severity: NotificationSeverity.Information))));
                 return;
             }
@@ -186,7 +179,7 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
     }
 
     private static void ApplyDemoSettings()
-        => ShowcaseDemoToastFactory.CurrentSettings = new ToastSettings
+        => ShowcaseDemoToastFactory.CurrentSettings = new()
         {
             ClosingStrategy = _closingStrategy,
             FreezeOnMouseEnter = _freezeOnMouseEnter

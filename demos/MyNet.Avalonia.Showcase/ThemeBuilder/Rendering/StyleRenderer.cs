@@ -24,7 +24,7 @@ internal sealed class StyleRenderer : IStyleRenderer, IDisposable
 {
     private readonly HashSet<string> _appliedClasses = [];
     private readonly HashSet<AvaloniaProperty> _appliedProperties = [];
-    private CompositeDisposable _appliedActions = new();
+    private CompositeDisposable _appliedActions = [];
 
     /// <summary>
     /// Applies the specified configuration settings to the given control, including class and property adjustments.

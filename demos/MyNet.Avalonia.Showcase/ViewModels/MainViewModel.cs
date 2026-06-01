@@ -10,7 +10,6 @@ using System.Linq;
 using System.Windows.Input;
 using MyNet.Avalonia.Extended.Commands;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
-using MyNet.Globalization.Culture;
 using MyNet.UI.Commands;
 using MyNet.UI.Loading;
 using MyNet.UI.Navigation;
@@ -23,16 +22,13 @@ namespace MyNet.Avalonia.Showcase.ViewModels;
 internal sealed class MainViewModel : ObservableObject
 {
     private readonly ObservableCollection<IMenuItemViewModel> _menuItems = [];
-    private readonly NavigationCommands _navigationCommands;
-    private IMenuItemViewModel? _selectedMenuItem;
 
     public MainViewModel(IApplicationInfo applicationInfo,
                          ShellCultureViewModel cultureChrome,
                          ShellThemeViewModel themeChrome,
                          IBusyService applicationBusy,
                          INavigationService navigationService,
-                         ICommandFactory commandFactory,
-                         ICultureService cultureService)
+                         ICommandFactory commandFactory)
     {
         ApplicationInfo = applicationInfo;
         Culture = cultureChrome;
@@ -41,11 +37,11 @@ internal sealed class MainViewModel : ObservableObject
         NavigationService = navigationService;
         MenuItems = new(_menuItems);
 
-        _navigationCommands = new NavigationCommands(navigationService, commandFactory);
-        GoBackCommand = _navigationCommands.GoBackCommand;
-        GoForwardCommand = _navigationCommands.GoForwardCommand;
-        NavigateCommand = _navigationCommands.NavigateCommand;
-        _navigationCommands.SubscribeToNavigationStateChanges();
+        var navigationCommands = new NavigationCommands(navigationService, commandFactory);
+        GoBackCommand = navigationCommands.GoBackCommand;
+        GoForwardCommand = navigationCommands.GoForwardCommand;
+        NavigateCommand = navigationCommands.NavigateCommand;
+        navigationCommands.SubscribeToNavigationStateChanges();
         navigationService.StateChanged += OnNavigationStateChanged;
 
         ChangeCultureCommand = commandFactory.Create<CultureInfo>(cultureInfo => Culture.SelectedCulture = cultureInfo);
@@ -75,8 +71,8 @@ internal sealed class MainViewModel : ObservableObject
 
     public IMenuItemViewModel? SelectedMenuItem
     {
-        get => _selectedMenuItem;
-        private set => SetProperty(ref _selectedMenuItem, value);
+        get;
+        private set => SetProperty(ref field, value);
     }
 
     public void AddMenuItem(params IMenuItemViewModel[] item) => _menuItems.AddRange(item);
@@ -89,22 +85,25 @@ internal sealed class MainViewModel : ObservableObject
             SelectedMenuItem = matchingItem;
     }
 
-    private IMenuItemViewModel? FindMatchingMenuItem(object? page)
+    private PageViewModel? FindMatchingMenuItem(object? page)
     {
         if (page is not INavigationPage navigationPage)
             return null;
 
         foreach (var item in MenuItems)
         {
-            if (item is PageViewModel pageViewModel && ReferenceEquals(pageViewModel, navigationPage))
-                return pageViewModel;
-
-            if (item is PagesGroupViewModel group)
+            switch (item)
             {
-                var match = group.Pages.FirstOrDefault(x => ReferenceEquals(x, navigationPage));
+                case PageViewModel pageViewModel when ReferenceEquals(pageViewModel, navigationPage):
+                    return pageViewModel;
+                case PagesGroupViewModel group:
+                    {
+                        var match = group.Pages.FirstOrDefault(x => ReferenceEquals(x, navigationPage));
 
-                if (match is not null)
-                    return match;
+                        if (match is not null)
+                            return match;
+                        break;
+                    }
             }
         }
 

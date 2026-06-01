@@ -32,7 +32,6 @@ internal abstract class ValueOptionViewModel<T>(IControlOptionDefinition definit
 internal abstract class ValueOptionViewModel : OptionViewModel
 {
     private readonly object? _defaultValue;
-    private object? _value;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ValueOptionViewModel"/> class with the specified control option definition, display name provider, and optional icon. The constructor sets up the necessary properties for the view model, including the control option definition that provides metadata and configuration for the setting, the display name provider that supplies a user-friendly name for the setting in the UI, and an optional icon that can be used for visual representation. The value of the setting is initialized to the default value defined in the control option definition, allowing for a consistent starting state when the view model is created.
@@ -62,10 +61,10 @@ internal abstract class ValueOptionViewModel : OptionViewModel
     /// data that is dynamically determined at runtime.</remarks>
     public object? Value
     {
-        get => _value;
+        get;
         set
         {
-            if (SetProperty(ref _value, value))
+            if (SetProperty(ref field, value))
                 ValueChangedSubject.OnNext(value);
         }
     }

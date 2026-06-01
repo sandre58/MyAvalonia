@@ -31,7 +31,7 @@ internal sealed class PagesGroupViewModel : ObservableObject, IMenuItemViewModel
 
     /// <inheritdoc/>
     [UpdateOnCultureChanged]
-    public string? Title => _titleResourceKey.Translate();
+    public string Title => _titleResourceKey.Translate();
 
     /// <inheritdoc/>
     public MaterialIconKind Icon { get; }
@@ -39,7 +39,7 @@ internal sealed class PagesGroupViewModel : ObservableObject, IMenuItemViewModel
     /// <inheritdoc/>
     public bool IsGroup => true;
 
-    /// <summary>Child pages in this group.</summary>
+    /// <summary>Gets child pages in this group.</summary>
     public ReadOnlyObservableCollection<PageViewModel> Pages { get; }
 
     /// <summary>Adds pages to the group.</summary>

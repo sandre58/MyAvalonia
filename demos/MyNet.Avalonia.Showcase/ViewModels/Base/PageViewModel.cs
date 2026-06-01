@@ -18,7 +18,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Base;
 internal abstract class PageViewModel : ObservableObject, IMenuItemViewModel, INavigationPage
 {
     /// <inheritdoc/>
-    public string? Title => CreateTitle();
+    public string Title => CreateTitle();
 
     /// <summary>
     /// Creates a user-friendly title from the runtime type name.

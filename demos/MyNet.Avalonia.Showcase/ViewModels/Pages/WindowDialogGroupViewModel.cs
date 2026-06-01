@@ -77,7 +77,7 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
                            .AddChoice(MessageBoxResultOption.YesNoCancel, b => b.DisplayName(() => MessageBoxResultOption.YesNoCancel.Humanize()))));
 
         var themes = new[] { new ControlThemeViewModelFactory(builder, commands).Create("WindowDialog") }.ToObservableCollection();
-        Playground = new PlaygroundViewModel("WindowDialog", themes);
+        Playground = new("WindowDialog", themes);
 
         ShowWindowDialogCommand = commands.Create(async () => await ShowWindowDialogAsync().ConfigureAwait(false));
         ShowWindowMessageBoxCommand = commands.CreateRequired<ThemeRole>(async x => await ShowWindowMessageBoxAsync(ToSeverity(x)).ConfigureAwait(false));
@@ -111,7 +111,7 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
             _buttons));
 
         var result = await _contentDialogService
-            .ShowAsync<MessageBoxResult>(messageBox, DialogOptions.ForWindow(messageBox, _isModal))
+            .ShowAsync(messageBox, DialogOptions.ForWindow(messageBox, _isModal))
             .ConfigureAwait(false);
 
         var mapped = result.IsSuccess ? result.Value : MessageBoxResult.Cancel;
