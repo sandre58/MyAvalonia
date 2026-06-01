@@ -164,12 +164,12 @@ public class OverlayDialogHost : Canvas
     }
 
     private IDisposable? _modalStatusSubscription;
-    private int? _toplevelHash;
+    private int? _topLevelKey;
 
     protected sealed override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
         base.OnAttachedToVisualTree(e);
-        _toplevelHash = TopLevel.GetTopLevel(this)?.GetHashCode();
+        _topLevelKey = OverlayDialogHostManager.GetTopLevelKey(TopLevel.GetTopLevel(this));
         var modalHost = this.GetVisualAncestors().OfType<Control>().FirstOrDefault(GetIsModalStatusScope);
         if (modalHost is not null)
         {
@@ -183,7 +183,7 @@ public class OverlayDialogHost : Canvas
                 });
         }
 
-        OverlayDialogHostManager.Register(this, HostId, _toplevelHash);
+        OverlayDialogHostManager.Register(this, HostId, _topLevelKey);
     }
 
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
@@ -194,7 +194,7 @@ public class OverlayDialogHost : Canvas
         }
 
         _modalStatusSubscription?.Dispose();
-        OverlayDialogHostManager.Unregister(HostId, _toplevelHash);
+        OverlayDialogHostManager.Unregister(HostId, _topLevelKey);
         base.OnDetachedFromVisualTree(e);
     }
 
@@ -236,10 +236,18 @@ public class OverlayDialogHost : Canvas
         }
     }
 
+    /// <summary>
+    /// Returns the content of the top-most open dialog whose <see cref="IContentControl.Content"/> is assignable to <typeparamref name="T"/>.
+    /// </summary>
     public T? Recall<T>()
     {
-        var element = _layers.LastOrDefault(a => a.Element.Content?.GetType() == typeof(T));
-        return element?.Element.Content is T t ? t : default;
+        for (var i = _layers.Count - 1; i >= 0; i--)
+        {
+            if (_layers[i].Element.Content is T content)
+                return content;
+        }
+
+        return default;
     }
 
     private sealed class DialogPair(PureRectangle? mask, OverlayFeedbackElement element, bool modal = true)

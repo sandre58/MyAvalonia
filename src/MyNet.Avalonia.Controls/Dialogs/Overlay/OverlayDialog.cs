@@ -14,10 +14,11 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using MyNet.Avalonia.Controls.Enums;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls.Primitives;
+namespace MyNet.Avalonia.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
 /// <summary>
@@ -38,8 +39,17 @@ public class OverlayDialog : OverlayFeedbackElement
         AvaloniaProperty.RegisterDirect<OverlayDialog, bool>(
             nameof(IsFullScreen), o => o.IsFullScreen, (o, v) => o.IsFullScreen = v);
 
+    /// <summary>
+    /// Defines the <see cref="CanResize"/> property.
+    /// </summary>
     public static readonly StyledProperty<bool> CanResizeProperty = AvaloniaProperty.Register<OverlayDialog, bool>(
         nameof(CanResize));
+
+    /// <summary>
+    /// Defines the <see cref="Title"/> property.
+    /// </summary>
+    public static readonly StyledProperty<string?> TitleProperty =
+        AvaloniaProperty.Register<OverlayDialog, string?>(nameof(Title));
 
     private Panel? _titleArea;
     private bool _moveDragging;
@@ -54,10 +64,23 @@ public class OverlayDialog : OverlayFeedbackElement
 
     protected internal Button? CloseButton { get; set; }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the dialog chrome is resizable.
+    /// Reserved for a future release; setting this property currently has no effect.
+    /// </summary>
     public bool CanResize
     {
         get => GetValue(CanResizeProperty);
         set => SetValue(CanResizeProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the title shown in the dialog chrome header.
+    /// </summary>
+    public string? Title
+    {
+        get => GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
     }
 
     public HorizontalPosition HorizontalAnchor { get; set; } = HorizontalPosition.Center;
@@ -179,9 +202,38 @@ public class OverlayDialog : OverlayFeedbackElement
         remove => RemoveHandler(LayerChangedEvent, value);
     }
 
-    public void UpdateLayer(object? o)
+    /// <summary>
+    /// Moves this dialog one layer forward within its host.
+    /// </summary>
+    public void BringForward() => ChangeLayer(OverlayDialogLayerChangeType.BringForward);
+
+    /// <summary>
+    /// Moves this dialog one layer backward within its host.
+    /// </summary>
+    public void SendBackward() => ChangeLayer(OverlayDialogLayerChangeType.SendBackward);
+
+    /// <summary>
+    /// Moves this dialog to the front of the host stack.
+    /// </summary>
+    public void BringToFront() => ChangeLayer(OverlayDialogLayerChangeType.BringToFront);
+
+    /// <summary>
+    /// Moves this dialog to the back of the host stack.
+    /// </summary>
+    public void SendToBack() => ChangeLayer(OverlayDialogLayerChangeType.SendToBack);
+
+    /// <summary>
+    /// Raises <see cref="LayerChanged"/> for the given change type.
+    /// </summary>
+    /// <param name="changeType">The layer operation to apply.</param>
+    public void ChangeLayer(OverlayDialogLayerChangeType changeType) =>
+        RaiseEvent(new OverlayDialogLayerChangeEventArgs(LayerChangedEvent, changeType));
+
+    [Obsolete("Use BringForward, SendBackward, BringToFront, or SendToBack instead.")]
+    public void UpdateLayer(object? changeType)
     {
-        if (o is OverlayDialogLayerChangeType t) RaiseEvent(new OverlayDialogLayerChangeEventArgs(LayerChangedEvent, t));
+        if (changeType is OverlayDialogLayerChangeType type)
+            ChangeLayer(type);
     }
 
     #endregion

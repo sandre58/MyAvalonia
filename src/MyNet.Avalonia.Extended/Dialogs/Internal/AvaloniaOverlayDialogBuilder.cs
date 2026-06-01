@@ -85,6 +85,7 @@ internal static class AvaloniaOverlayDialogBuilder
         control.IsCloseButtonVisible = options.IsCloseButtonVisible ?? true;
         control.CanLightDismiss = options.CanLightDismiss || dialogOptions.CloseOnOverlayClick;
         control.CanResize = options.CanResize;
+        control.Title = options.Title ?? dialogOptions.Title;
 
         if (options.Width.HasValue) control.Width = options.Width.Value;
         if (options.Height.HasValue) control.Height = options.Height.Value;

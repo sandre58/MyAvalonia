@@ -17,6 +17,7 @@
         my:WindowAssist.ShowFullScreenButton="{OnPlatform True, macOS=False}"
         my:WindowAssist.IsTitleVisible="False"
         x:Name="Root"
+        my:OverlayDialogHost.IsModalStatusScope="True"
         mc:Ignorable="d">
     <Window.Styles>
         <Style Selector="WindowDrawnDecorations">
@@ -82,6 +83,11 @@
     </my:WindowAssist.RightTitleBarContent>
     <Grid>
         <views:MainView />
+        <my:OverlayDialogHost HostId="{x:Static my:OverlayDialogHostManager.MainHostId}"
+                              IsTopLevel="True"
+                              IsModalStatusReporter="True"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch" />
         <ext:ApplicationBusyOverlay BusyService="{Binding ApplicationBusy}" />
     </Grid>
 </Window>

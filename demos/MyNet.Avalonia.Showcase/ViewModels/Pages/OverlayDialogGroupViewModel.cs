@@ -7,6 +7,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Material.Icons;
+using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Extended.Dialogs;
@@ -36,7 +37,7 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
 {
     private readonly INotificationPublisher _notificationPublisher;
     private readonly IContentDialogService _contentDialogService;
-    private readonly IMessageBoxService _messageBoxService;
+    private readonly IMessageBoxFactory _messageBoxFactory;
     private readonly IViewFactory _viewFactory;
     private readonly AvaloniaDialogHostOptions _hostOptions;
 
@@ -75,13 +76,13 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
     public OverlayDialogGroupViewModel(
         INotificationPublisher notificationPublisher,
         IContentDialogService contentDialogService,
-        IMessageBoxService messageBoxService,
+        IMessageBoxFactory messageBoxFactory,
         IViewFactory viewFactory,
         AvaloniaDialogHostOptions hostOptions)
     {
         _notificationPublisher = notificationPublisher;
         _contentDialogService = contentDialogService;
-        _messageBoxService = messageBoxService;
+        _messageBoxFactory = messageBoxFactory;
         _viewFactory = viewFactory;
         _hostOptions = hostOptions;
 
@@ -158,7 +159,7 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
         if (_isModal)
         {
             var result = await _contentDialogService
-                .ShowAsync(vm, AvaloniaDialogOptions.ForOverlay(vm, true, options))
+                .ShowAsync(vm, AvaloniaDialogOptions.ForOverlay(vm, true, options, OverlayDialogHostManager.MainHostId))
                 .ConfigureAwait(false);
             ShowToasterResult(result, vm);
         }
@@ -170,22 +171,38 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
 
     private async Task ShowOverlayMessageBoxAsync(MessageSeverity severity)
     {
-        var result = await _messageBoxService.ShowAsync(
-            GetSampleMessage(severity),
-            severity.Humanize(),
-            severity,
-            _buttons).ConfigureAwait(false);
+        var result = await ShowOverlayMessageBoxCoreAsync(severity).ConfigureAwait(false);
         _notificationPublisher.Publish(new MessageNotification($"Result: {result}", severity: NotificationSeverity.Information));
     }
 
     private async Task ShowOverlayDialogBoxAsync(MessageSeverity severity)
     {
-        var result = await _messageBoxService.ShowAsync(
-            GetSampleMessage(severity),
-            severity.Humanize(),
-            severity,
-            _buttons).ConfigureAwait(false);
+        var result = await ShowOverlayMessageBoxCoreAsync(severity).ConfigureAwait(false);
         _notificationPublisher.Publish(new MessageNotification($"Result: {result}", severity: NotificationSeverity.Information));
+    }
+
+    private async Task<MessageBoxResult> ShowOverlayMessageBoxCoreAsync(MessageSeverity severity)
+    {
+        var overlayOptions = CreateOverlayOptions();
+        var messageBox = _messageBoxFactory.Create(new MessageBoxOptions
+        {
+            Message = GetSampleMessage(severity),
+            Title = severity.Humanize(),
+            Severity = severity,
+            Buttons = _buttons
+        });
+
+        var result = await _contentDialogService
+            .ShowAsync<MessageBoxResult>(
+                messageBox,
+                AvaloniaDialogOptions.ForOverlay(
+                    messageBox,
+                    isModal: true,
+                    overlayOptions,
+                    OverlayDialogHostManager.MainHostId))
+            .ConfigureAwait(false);
+
+        return result.IsSuccess ? result.Value : MessageBoxResult.Cancel;
     }
 
     private OverlayDialogOptions CreateOverlayOptions() => new()
@@ -194,7 +211,8 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
         CanLightDismiss = _canLightDismiss,
         FullScreen = _fullScreen,
         HorizontalAnchor = _horizontalAnchor,
-        VerticalAnchor = _verticalAnchor
+        VerticalAnchor = _verticalAnchor,
+        TopLevelHashCode = OverlayDialogHostManager.GetTopLevelKey(_hostOptions.TopLevelProvider())
     };
 
     private static MessageSeverity ToSeverity(ThemeRole role) => role switch

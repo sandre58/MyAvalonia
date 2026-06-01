@@ -43,7 +43,7 @@
                                MinHeight="36">
                             <Grid ColumnDefinitions="*,Auto" Margin="{my:Thickness Md, Horizontal}">
                                 <TextBlock Grid.Column="0"
-                                           Text="{TemplateBinding Tag}"
+                                           Text="{TemplateBinding Title}"
                                            VerticalAlignment="Center"
                                            FontSize="{StaticResource MyNet.Font.Size.Lg}"
                                            FontWeight="{StaticResource MyNet.Font.Weight.Caption}"

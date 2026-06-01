@@ -13,32 +13,32 @@ namespace MyNet.Avalonia.Controls.Internals;
 
 internal static class OverlayDialogHostLookupHelper
 {
-    public static bool MatchesFilter(OverlayDialogHostKey key, string? id, int? hash) =>
-        (id is null || key.Id == id) && (hash is null || key.Hash == hash);
+    public static bool MatchesFilter(OverlayDialogHostKey key, string? id, int? topLevelKey) =>
+        (id is null || key.Id == id) && (topLevelKey is null || key.TopLevelKey == topLevelKey);
 
     public static bool TryGetExactMatch<T>(
         IReadOnlyDictionary<OverlayDialogHostKey, T?> hosts,
         string? id,
-        int? hash,
+        int? topLevelKey,
         out T? host)
     {
-        if (hash is null)
+        if (topLevelKey is null)
         {
             host = default!;
             return false;
         }
 
-        return hosts.TryGetValue(new(id, hash), out host);
+        return hosts.TryGetValue(new(id, topLevelKey), out host);
     }
 
     public static IReadOnlyList<T> GetMatchingHosts<T>(
         IEnumerable<KeyValuePair<OverlayDialogHostKey, T>> hosts,
         string? id,
-        int? hash) =>
-        [.. hosts.Where(x => MatchesFilter(x.Key, id, hash))
+        int? topLevelKey) =>
+        [.. hosts.Where(x => MatchesFilter(x.Key, id, topLevelKey))
             .Select(x => x.Value)
             .Distinct()];
 
-    public static bool ShouldFallbackToSingleTopLevel(string? id, int? hash, int candidateCount) =>
-        candidateCount != 1 && id is null && hash is null;
+    public static bool ShouldFallbackToSingleTopLevel(string? id, int? topLevelKey, int candidateCount) =>
+        candidateCount != 1 && id is null && topLevelKey is null;
 }

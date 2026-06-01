@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls">
+                    xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls"
+                    xmlns:primitives="clr-namespace:MyNet.Avalonia.Controls.Primitives;assembly=MyNet.Avalonia.Controls">
 
     <ControlTheme x:Key="{x:Type controls:PaginationButton}" TargetType="controls:PaginationButton">
         <Setter Property="MinWidth" Value="32" />
@@ -70,6 +71,27 @@
             </ControlTemplate>
         </Setter>
     </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type primitives:OverlayDialog}" TargetType="primitives:OverlayDialog">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="primitives:OverlayDialog">
+                <Border>
+                    <Grid RowDefinitions="Auto,*">
+                        <Grid Name="PART_TitleArea" Grid.Row="0" ColumnDefinitions="*,Auto">
+                            <TextBlock Grid.Column="0" Text="{TemplateBinding Title}" />
+                            <Button Name="PART_CloseButton" Grid.Column="1" Content="X" />
+                        </Grid>
+                        <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^[IsCloseButtonVisible=False] /template/ Button#PART_CloseButton">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:OverlayDialogHost}" TargetType="controls:OverlayDialogHost" />
 
     <ControlTheme x:Key="{x:Type controls:Divider}" TargetType="controls:Divider">
         <Setter Property="Template">

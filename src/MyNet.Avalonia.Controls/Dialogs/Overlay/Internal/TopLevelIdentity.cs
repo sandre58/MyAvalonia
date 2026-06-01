@@ -1,0 +1,35 @@
+// -----------------------------------------------------------------------
+// <copyright file="TopLevelIdentity.cs" company="Stéphane ANDRE">
+// Copyright (c) Stéphane ANDRE. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System.Runtime.CompilerServices;
+using System.Threading;
+using Avalonia.Controls;
+
+#pragma warning disable IDE0130
+namespace MyNet.Avalonia.Controls.Internals;
+#pragma warning restore IDE0130
+
+internal static class TopLevelIdentity
+{
+    private static int _nextKey = 1;
+
+    private static readonly ConditionalWeakTable<TopLevel, KeyHolder> Keys = new();
+
+    public static int GetKey(TopLevel topLevel)
+    {
+        if (Keys.TryGetValue(topLevel, out var holder))
+            return holder.Key;
+
+        var key = Interlocked.Increment(ref _nextKey);
+        Keys.Add(topLevel, new KeyHolder(key));
+        return key;
+    }
+
+    private sealed class KeyHolder(int key)
+    {
+        public int Key { get; } = key;
+    }
+}

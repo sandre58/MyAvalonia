@@ -181,7 +181,7 @@ Headless tests live in [`tests/MyNet.Avalonia.Controls.Headless.Tests`](../../te
 dotnet run --project tests/MyNet.Avalonia.Controls.Headless.Tests
 ```
 
-Covered controls: `Pagination`, `Calendar`, `Badge`, `Divider`.
+Covered controls: `Pagination`, `Calendar`, `Badge`, `Divider`, `OverlayDialog`, `OverlayDialogHost`.
 
 ## License
 

@@ -21,7 +21,6 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
     public DialogPageViewModel(
         INotificationPublisher notificationPublisher,
         IContentDialogService contentDialogService,
-        IMessageBoxService messageBoxService,
         IMessageBoxFactory messageBoxFactory,
         IViewFactory viewFactory,
         AvaloniaDialogHostOptions hostOptions)
@@ -36,7 +35,7 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
         OverlayGroup = new OverlayDialogGroupViewModel(
             notificationPublisher,
             contentDialogService,
-            messageBoxService,
+            messageBoxFactory,
             viewFactory,
             hostOptions);
     }

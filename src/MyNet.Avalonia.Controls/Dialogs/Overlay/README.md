@@ -19,7 +19,7 @@ Place a host in your window or page so layout and modal scope are explicit:
 <Grid>
     <views:MainView />
     <my:OverlayDialogHost x:Name="MainDialogHost"
-                          HostId="main"
+                          HostId="{x:Static my:OverlayDialogHostManager.MainHostId}"
                           IsTopLevel="True"
                           IsModalStatusReporter="True"
                           HorizontalAlignment="Stretch"
@@ -32,11 +32,11 @@ Registering happens automatically when the host attaches to the visual tree (`Ho
 Resolve the host from code:
 
 ```csharp
-var hash = TopLevel.GetTopLevel(window)?.GetHashCode();
-var host = OverlayDialogHostManager.GetHost("main", hash);
+var topLevelKey = OverlayDialogHostManager.GetTopLevelKey(TopLevel.GetTopLevel(window));
+var host = OverlayDialogHostManager.GetHost("main", topLevelKey);
 ```
 
-Pass the same `HostId` and `TopLevelHashCode` through MyNet.UI dialog options when using `MyNet.Avalonia.Extended`.
+Pass the same `HostId` and `TopLevelHashCode` (stable key from `GetTopLevelKey`) through MyNet.UI dialog options when using `MyNet.Avalonia.Extended`.
 
 ## Automatic top-level host
 
@@ -49,19 +49,25 @@ When `GetHost(id, hash)` finds no registered host:
 
 Target window selection:
 
-- When `hash` is set: first open window with `window.GetHashCode() == hash`.
+- When `topLevelKey` is set: first open window whose `GetTopLevelKey(window)` matches.
 - Otherwise: `MainWindow`, or the last window in the desktop lifetime.
+
+## Title and chrome
+
+Set `OverlayDialog.Title` for the header text. `IsCloseButtonVisible` toggles the template close button.
+
+`CanResize` is reserved for a future release and currently has no effect.
 
 ## Host lookup rules
 
-| `id` | `hash` | Behaviour |
-|------|--------|-----------|
-| set | set | Exact key `(id, hash)` |
+| `id` | `topLevelKey` | Behaviour |
+|------|---------------|-----------|
+| set | set | Exact key `(id, topLevelKey)` |
 | set | null | All hosts with matching `HostId` (error if ambiguous) |
-| null | set | All hosts with matching hash |
+| null | set | All hosts with matching top-level key |
 | null | null | All hosts; if exactly one `IsTopLevel` host exists, use it; else try auto-creation |
 
-`TopLevelHashCode` in Extended options should match `TopLevel.GetTopLevel(host)?.GetHashCode()` for the window that owns the host.
+`TopLevelHashCode` in Extended options must be `OverlayDialogHostManager.GetTopLevelKey(topLevel)` for the target window (not `GetHashCode()`).
 
 ## Modal scope
 
@@ -80,3 +86,20 @@ Set `IsModalStatusReporter="True"` on the host that should drive the scope.
 Always close via `Close()` on the dialog (or `OnElementClosing` in subclasses). The host listens for `Closed` and removes layers.
 
 `OverlayDialog.Close()` dismisses with a `null` result. Message boxes and Extended content dialogs override `Close()` to return typed results.
+
+## Layer order
+
+Use explicit methods on `OverlayDialog`:
+
+- `BringForward()` / `SendBackward()`
+- `BringToFront()` / `SendToBack()`
+
+The host listens to `LayerChanged` and updates Z-index. `UpdateLayer(object?)` is obsolete.
+
+## Recalling dialog content
+
+`OverlayDialogHost.Recall<T>()` walks the stack from top to bottom and returns the first `Content` assignable to `T` (including derived types).
+
+## Showcase integration
+
+The Avalonia showcase registers `HostId="{x:Static my:OverlayDialogHostManager.MainHostId}"` on `MainWindow` and passes the same id to `DialogOptions.ForOverlay(..., hostId: OverlayDialogHostManager.MainHostId)`.

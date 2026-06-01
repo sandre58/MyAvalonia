@@ -25,17 +25,29 @@ namespace MyNet.Avalonia.Controls;
 /// </remarks>
 public static class OverlayDialogHostManager
 {
+    /// <summary>
+    /// Default <see cref="OverlayDialogHost.HostId"/> used in showcase and documentation examples.
+    /// </summary>
+    public const string MainHostId = "main";
+
     private static readonly ConcurrentDictionary<OverlayDialogHostKey, OverlayDialogHost> Hosts = new();
 
     /// <summary>
-    /// Registers a host for the given <paramref name="id"/> and top-level <paramref name="hash"/>.
+    /// Returns a stable key for the given <see cref="TopLevel"/> used by <see cref="GetHost"/>.
     /// </summary>
-    public static void Register(OverlayDialogHost host, string? id, int? hash) => Hosts.AddOrUpdate(new(id, hash), host, (_, _) => host);
+    public static int? GetTopLevelKey(TopLevel? topLevel) =>
+        topLevel is null ? null : Internals.TopLevelIdentity.GetKey(topLevel);
+
+    /// <summary>
+    /// Registers a host for the given <paramref name="id"/> and <paramref name="topLevelKey"/>.
+    /// </summary>
+    public static void Register(OverlayDialogHost host, string? id, int? topLevelKey) =>
+        Hosts.AddOrUpdate(new(id, topLevelKey), host, (_, _) => host);
 
     /// <summary>
     /// Removes a host from the registry.
     /// </summary>
-    public static void Unregister(string? id, int? hash) => Hosts.TryRemove(new(id, hash), out _);
+    public static void Unregister(string? id, int? topLevelKey) => Hosts.TryRemove(new(id, topLevelKey), out _);
 
     /// <summary>
     /// Resolves a registered host, or creates a top-level host on the target window when <paramref name="id"/> is <see langword="null"/>.
@@ -43,38 +55,39 @@ public static class OverlayDialogHostManager
     /// <param name="id">
     /// Host identifier from <see cref="OverlayDialogHost.HostId"/>. When not <see langword="null"/>, only registered hosts are returned (no auto-creation).
     /// </param>
-    /// <param name="hash">
-    /// Hash of the owning <see cref="Avalonia.Controls.TopLevel"/> (typically <c>GetHashCode()</c>). Used for exact lookup and window selection.
+    /// <param name="topLevelKey">
+    /// Stable key from <see cref="GetTopLevelKey"/> for the owning <see cref="TopLevel"/>. Used for exact lookup and window selection.
     /// </param>
     /// <returns>The resolved host, or <see langword="null"/> when no host matches and none can be created.</returns>
-    public static OverlayDialogHost? GetHost(string? id, int? hash)
+    public static OverlayDialogHost? GetHost(string? id, int? topLevelKey)
     {
-        if (OverlayDialogHostLookupHelper.TryGetExactMatch(Hosts, id, hash, out var exactHost)) return exactHost;
+        if (OverlayDialogHostLookupHelper.TryGetExactMatch(Hosts, id, topLevelKey, out var exactHost)) return exactHost;
 
-        var candidates = OverlayDialogHostLookupHelper.GetMatchingHosts(Hosts, id, hash);
+        var candidates = OverlayDialogHostLookupHelper.GetMatchingHosts(Hosts, id, topLevelKey);
 
         if (candidates.Count == 1) return candidates[0];
 
-        if (OverlayDialogHostLookupHelper.ShouldFallbackToSingleTopLevel(id, hash, candidates.Count))
+        if (OverlayDialogHostLookupHelper.ShouldFallbackToSingleTopLevel(id, topLevelKey, candidates.Count))
         {
             var topLevelHosts = Hosts.Values.Where(x => x.IsTopLevel).Distinct().ToList();
             if (topLevelHosts.Count == 1) return topLevelHosts[0];
         }
 
-        return TryCreateTopLevelHost(id, hash);
+        return TryCreateTopLevelHost(id, topLevelKey);
     }
 
-    private static OverlayDialogHost? TryCreateTopLevelHost(string? id, int? hash)
+    private static OverlayDialogHost? TryCreateTopLevelHost(string? id, int? topLevelKey)
     {
         if (id is not null) return null;
 
-        var window = GetTargetWindow(hash);
+        var window = GetTargetWindow(topLevelKey);
         if (window is null) return null;
 
+        var key = GetTopLevelKey(window);
         var existingHost = window.GetVisualDescendants().OfType<OverlayDialogHost>().FirstOrDefault(x => x.IsTopLevel);
         if (existingHost is not null)
         {
-            Register(existingHost, id, hash ?? window.GetHashCode());
+            Register(existingHost, id, key);
             return existingHost;
         }
 
@@ -89,7 +102,7 @@ public static class OverlayDialogHostManager
         if (window.Content is Panel panelRoot)
         {
             panelRoot.Children.Add(host);
-            Register(host, id, hash ?? window.GetHashCode());
+            Register(host, id, key);
             return host;
         }
 
@@ -109,17 +122,17 @@ public static class OverlayDialogHostManager
         root.Children.Add(host);
         window.Content = root;
 
-        Register(host, id, hash ?? window.GetHashCode());
+        Register(host, id, key);
         return host;
     }
 
-    private static Window? GetTargetWindow(int? hash)
+    private static Window? GetTargetWindow(int? topLevelKey)
     {
         if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime lifetime) return null;
 
-        if (hash is not null)
+        if (topLevelKey is not null)
         {
-            var matchingWindow = lifetime.Windows.FirstOrDefault(x => x.GetHashCode() == hash.Value);
+            var matchingWindow = lifetime.Windows.FirstOrDefault(x => GetTopLevelKey(x) == topLevelKey.Value);
             if (matchingWindow is not null) return matchingWindow;
         }
 

@@ -10,11 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
-using MyNet.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;
@@ -22,12 +20,6 @@ namespace MyNet.Avalonia.Controls.Primitives;
 
 public abstract class OverlayFeedbackElement : ContentControl
 {
-    private bool _resizeDragging;
-    private Rect _resizeDragStartBounds;
-    private Point _resizeDragStartPoint;
-
-    private WindowEdge? _windowEdge;
-
     static OverlayFeedbackElement()
     {
         FocusableProperty.OverrideDefaultValue<OverlayFeedbackElement>(false);
@@ -83,126 +75,10 @@ public abstract class OverlayFeedbackElement : ContentControl
 
     public abstract void Close();
 
-    internal void BeginResizeDrag(WindowEdge windowEdge, PointerPressedEventArgs e)
-    {
-        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) return;
-        _resizeDragging = true;
-        _resizeDragStartPoint = e.GetPosition(this);
-        _resizeDragStartBounds = Bounds;
-        _windowEdge = windowEdge;
-    }
-
-    internal void BeginMoveDrag(PointerPressedEventArgs e)
-    {
-        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) return;
-        _resizeDragging = true;
-        _resizeDragStartPoint = e.GetPosition(this);
-        _resizeDragStartBounds = Bounds;
-        _windowEdge = null;
-    }
-
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
         base.OnAttachedToVisualTree(e);
         ContainerPanel = this.FindAncestorOfType<Panel>();
-    }
-
-    protected override void OnPointerReleased(PointerReleasedEventArgs e)
-    {
-        base.OnPointerReleased(e);
-        _resizeDragging = false;
-    }
-
-    protected override void OnPointerCaptureLost(PointerCaptureLostEventArgs e)
-    {
-        base.OnPointerCaptureLost(e);
-        _resizeDragging = false;
-    }
-
-    protected override void OnPointerMoved(PointerEventArgs e)
-    {
-        base.OnPointerMoved(e);
-        if (!_resizeDragging || _windowEdge is null) return;
-        var point = e.GetPosition(this);
-        Vector diff = point - _resizeDragStartPoint;
-        var left = Canvas.GetLeft(this);
-        var top = Canvas.GetTop(this);
-        var width = _windowEdge is WindowEdge.West or WindowEdge.NorthWest or WindowEdge.SouthWest
-            ? Bounds.Width
-            : _resizeDragStartBounds.Width;
-        var height = _windowEdge is WindowEdge.North or WindowEdge.NorthEast or WindowEdge.NorthWest
-            ? Bounds.Height
-            : _resizeDragStartBounds.Height;
-        var newBounds = CalculateNewBounds(left, top, width, height, diff, ContainerPanel?.Bounds, _windowEdge.Value);
-        Canvas.SetLeft(this, newBounds.Left);
-        Canvas.SetTop(this, newBounds.Top);
-        SetCurrentValue(WidthProperty, newBounds.Width);
-        SetCurrentValue(HeightProperty, newBounds.Height);
-        AnchorAndUpdatePositionInfo();
-    }
-
-    private Rect CalculateNewBounds(double left, double top, double width, double height, Vector diff, Rect? containerBounds, WindowEdge windowEdge)
-    {
-        diff = CoerceDelta(left, top, width, height, diff, containerBounds, windowEdge);
-        switch (windowEdge)
-        {
-            case WindowEdge.North:
-                top += diff.Y;
-                height -= diff.Y;
-                break;
-            case WindowEdge.NorthEast:
-                top += diff.Y;
-                width += diff.X;
-                height -= diff.Y;
-                break;
-            case WindowEdge.East:
-                width += diff.X;
-                break;
-            case WindowEdge.SouthEast:
-                width += diff.X;
-                height += diff.Y;
-                break;
-            case WindowEdge.South:
-                height += diff.Y;
-                break;
-            case WindowEdge.SouthWest:
-                left += diff.X;
-                width -= diff.X;
-                height += diff.Y;
-                break;
-            case WindowEdge.West:
-                left += diff.X;
-                width -= diff.X;
-                break;
-            case WindowEdge.NorthWest:
-                left += diff.X;
-                top += diff.Y;
-                width -= diff.X;
-                height -= diff.Y;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(windowEdge), windowEdge, null);
-        }
-
-        return new(left, top, width, height);
-    }
-
-    private Vector CoerceDelta(double left, double top, double width, double height, Vector diff, Rect? containerBounds, WindowEdge windowEdge)
-    {
-        if (containerBounds is null) return diff;
-        var minX = windowEdge is WindowEdge.West or WindowEdge.NorthWest or WindowEdge.SouthWest
-            ? -left
-            : -width;
-        var minY = windowEdge is WindowEdge.North or WindowEdge.NorthEast or WindowEdge.NorthWest
-            ? -top
-            : -height;
-        var maxX = windowEdge is WindowEdge.West or WindowEdge.NorthWest or WindowEdge.SouthWest
-            ? width - MinWidth
-            : containerBounds.Value.Width - left - width;
-        var maxY = windowEdge is WindowEdge.North or WindowEdge.NorthEast or WindowEdge.NorthWest
-            ? height - MinHeight
-            : containerBounds.Value.Height - top - height;
-        return new(diff.X.SafeClamp(minX, maxX), diff.Y.SafeClamp(minY, maxY));
     }
 
     protected internal abstract void AnchorAndUpdatePositionInfo();

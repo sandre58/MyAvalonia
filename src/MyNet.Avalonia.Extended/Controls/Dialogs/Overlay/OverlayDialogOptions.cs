@@ -84,9 +84,8 @@ public class OverlayDialogOptions
     public bool CanLightDismiss { get; set; }
 
     /// <summary>
-    ///     Gets or sets the hash code of the top level dialog host. This is used to identify the dialog host if there are multiple dialog
-    ///     hosts with the same id. If this is not provided, the dialog will be added to the first dialog host with the same
-    ///     id.
+    /// Gets or sets the stable top-level key from <see cref="MyNet.Avalonia.Controls.OverlayDialogHostManager.GetTopLevelKey"/>.
+    /// Used to target a specific window when several hosts share the same <c>HostId</c>.
     /// </summary>
     public int? TopLevelHashCode { get; set; }
 

@@ -34,8 +34,9 @@ public sealed class OverlayDialogPresenter(
         if (request.Mode != DialogPresentationMode.Overlay)
             return false;
 
-        var hash = request.OverlayOptions?.TopLevelHashCode ?? hostOptions.TopLevelProvider()?.GetHashCode();
-        return OverlayDialogHostManager.GetHost(request.OverlayHostId, hash) is not null;
+        var topLevelKey = request.OverlayOptions?.TopLevelHashCode
+                          ?? OverlayDialogHostManager.GetTopLevelKey(hostOptions.TopLevelProvider());
+        return OverlayDialogHostManager.GetHost(request.OverlayHostId, topLevelKey) is not null;
     }
 
     /// <inheritdoc />
@@ -48,8 +49,9 @@ public sealed class OverlayDialogPresenter(
         ArgumentNullException.ThrowIfNull(options);
 
         var request = DialogOptions.Resolve(options);
-        var hash = request.OverlayOptions?.TopLevelHashCode ?? hostOptions.TopLevelProvider()?.GetHashCode();
-        var host = OverlayDialogHostManager.GetHost(request.OverlayHostId, hash)
+        var topLevelKey = request.OverlayOptions?.TopLevelHashCode
+                          ?? OverlayDialogHostManager.GetTopLevelKey(hostOptions.TopLevelProvider());
+        var host = OverlayDialogHostManager.GetHost(request.OverlayHostId, topLevelKey)
                    ?? throw new InvalidOperationException("No overlay dialog host is registered.");
 
         var view = dialog is MessageBoxViewModel

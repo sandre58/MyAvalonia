@@ -50,8 +50,6 @@ public class OverlayMessageBox : OverlayDialog
 
     public static readonly StyledProperty<MessageBoxResultOption> ButtonsProperty = AvaloniaProperty.Register<OverlayMessageBox, MessageBoxResultOption>(nameof(Buttons));
 
-    public static readonly StyledProperty<string?> TitleProperty = AvaloniaProperty.Register<OverlayMessageBox, string?>(nameof(Title));
-
     private Button? _cancelButton;
     private Button? _noButton;
     private Button? _okButton;
@@ -64,12 +62,6 @@ public class OverlayMessageBox : OverlayDialog
     {
         get => GetValue(ButtonsProperty);
         set => SetValue(ButtonsProperty, value);
-    }
-
-    public string? Title
-    {
-        get => GetValue(TitleProperty);
-        set => SetValue(TitleProperty, value);
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
