@@ -21,14 +21,17 @@ public partial class App : Application
     {
         ThemeControlsHost.Register();
         AvaloniaXamlLoader.Load(this);
+        MyTheme.Current.EnsureLoaded();
     }
 
     public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            MyTheme.Current.EnsureLoaded();
             ThemeControlsHost.AttachCatalog(this);
+#if DEBUG
+            ThemeControlsHost.EnsureCatalogAttached(this);
+#endif
 
             Dispatcher.UIThread.Post(() =>
             {

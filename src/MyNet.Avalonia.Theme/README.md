@@ -33,19 +33,7 @@ dotnet add package MyNet.Avalonia.Controls
 
 ## Basic setup
 
-**1. Register control themes** in `App.axaml.cs` before loading XAML:
-
-```csharp
-using MyNet.Avalonia.Theme.Controls;
-
-public override void Initialize()
-{
-    ThemeControlsHost.Register();
-    AvaloniaXamlLoader.Load(this);
-}
-```
-
-**2. Apply `MyTheme` in `Application.Styles`**, then attach the control catalog from code (see `MyNet.Avalonia.Theme.Controls` README):
+**1. Apply `MyTheme` in `Application.Styles`:**
 
 ```xml
 <Application.Styles>
@@ -53,12 +41,22 @@ public override void Initialize()
 </Application.Styles>
 ```
 
+**2. Bootstrap from code** (requires `MyNet.Avalonia.Theme.Controls`):
+
 ```csharp
-MyTheme.Current.EnsureLoaded();
-ThemeControlsHost.AttachCatalog(this);
+using MyNet.Avalonia.Theme.Controls;
+
+public override void Initialize()
+    => MyNetThemeBootstrap.Initialize(this);
+
+public override void OnFrameworkInitializationCompleted()
+{
+    MyNetThemeBootstrap.LoadTheme(this);
+    // show main window…
+}
 ```
 
-`MyTheme` embeds theme dictionaries (Dark, Light, HighContrast, …), design tokens, and utility styles. The catalog must load **after** `EnsureLoaded()`, not via `StyleInclude` in `App.axaml`.
+`MyTheme` embeds theme dictionaries (Dark, Light, HighContrast, …), design tokens, and utility styles. The control catalog must load **after** `EnsureLoaded()`, not via `StyleInclude` in `App.axaml`. See `MyNet.Avalonia.Theme.Controls` README for details.
 
 ## Runtime API
 

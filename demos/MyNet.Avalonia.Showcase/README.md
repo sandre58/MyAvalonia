@@ -26,7 +26,8 @@ Après `BuildServiceProvider()` :
 
 - `UseGlobalization` → `UseLocalization` → **`ValidationLocalization.Configure()`** → `UseDisplayText`
 - `UseThemeManager` → `UseAvaloniaNavigation` → `UseClipboard`
-- `ThemeControlsHost.Register()` **avant** `AvaloniaXamlLoader.Load`
+- `MyNetThemeBootstrap.Initialize(this)` dans `App.Initialize`
+- `MyNetThemeBootstrap.LoadTheme(this)` avant la fenêtre principale
 - `<my:MyTheme />` dans `Application.Styles` (pas seulement en merged dictionary)
 
 ## À copier en production

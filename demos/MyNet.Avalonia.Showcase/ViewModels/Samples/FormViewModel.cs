@@ -5,16 +5,16 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
-using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Geography;
 using MyNet.Globalization.Facade;
-using MyNet.Observable;
 using MyNet.Observable.Behaviors;
 using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.UI.Commands;
@@ -26,6 +26,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Samples;
 /// </summary>
 internal sealed class FormViewModel : ObservableObject, IValidationAware
 {
+    [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup method")]
     private readonly ValidationBehavior<FormViewModel> _validation;
 
     public FormViewModel(ICommandFactory commands)
@@ -35,6 +36,8 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
 
         SubmitCommand = commands.Create(Submit);
         ResetCommand = commands.Create(Reset);
+
+        Disposables.Add(_validation);
     }
 
     #region IValidationAware / INotifyDataErrorInfo
@@ -49,7 +52,7 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
     public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
     /// <inheritdoc/>
-    System.Collections.IEnumerable INotifyDataErrorInfo.GetErrors(string? propertyName) => _validation.GetErrors(propertyName);
+    IEnumerable INotifyDataErrorInfo.GetErrors(string? propertyName) => _validation.GetErrors(propertyName);
 
     /// <inheritdoc/>
     public bool Validate() => _validation.Validate();
@@ -84,48 +87,20 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
 
     #region Validated properties
 
-    public string Login
-    {
-        get;
-        set => SetProperty(ref field, value);
-    } = string.Empty;
+    public string Login { get; set => SetProperty(ref field, value); } = string.Empty;
 
     [AlsoValidate(nameof(ConfirmPassword))]
-    public string Password
-    {
-        get;
-        set => SetProperty(ref field, value);
-    } = string.Empty;
+    public string Password { get; set => SetProperty(ref field, value); } = string.Empty;
 
-    public string ConfirmPassword
-    {
-        get;
-        set => SetProperty(ref field, value);
-    } = string.Empty;
+    public string ConfirmPassword { get; set => SetProperty(ref field, value); } = string.Empty;
 
-    public string Email
-    {
-        get;
-        set => SetProperty(ref field, value);
-    } = string.Empty;
+    public string Email { get; set => SetProperty(ref field, value); } = string.Empty;
 
-    public string FirstName
-    {
-        get;
-        set => SetProperty(ref field, value);
-    } = string.Empty;
+    public string FirstName { get; set => SetProperty(ref field, value); } = string.Empty;
 
-    public string LastName
-    {
-        get;
-        set => SetProperty(ref field, value);
-    } = string.Empty;
+    public string LastName { get; set => SetProperty(ref field, value); } = string.Empty;
 
-    public bool AcceptTerms
-    {
-        get;
-        set => SetProperty(ref field, value);
-    }
+    public bool AcceptTerms { get; set => SetProperty(ref field, value); }
 
     #endregion
 

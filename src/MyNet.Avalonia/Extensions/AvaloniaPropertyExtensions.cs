@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -14,7 +13,6 @@ using Avalonia.Interactivity;
 namespace MyNet.Avalonia;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-[SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "Extensions methods must be in a static class, and extension methods cannot be in a nested class.")]
 public static class AvaloniaPropertyExtensions
 {
     extension<T>(AvaloniaProperty<T> property)
@@ -85,7 +83,8 @@ public static class AvaloniaPropertyExtensions
         where TControl : Control
         where TArgs : RoutedEventArgs, new()
     {
-        control.Classes.Set(pseudoClass, args.NewValue.Value);
+        PseudoClassesExtensions.Set(control.Classes, pseudoClass, args.NewValue.Value);
+
         if (routedEvent != null)
         {
             control.RaiseEvent(new TArgs { RoutedEvent = routedEvent });

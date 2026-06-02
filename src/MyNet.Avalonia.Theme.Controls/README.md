@@ -12,31 +12,36 @@ Also requires `MyNet.Avalonia.Theme`, `MyNet.Avalonia.Controls`, and `MyNet.Aval
 
 ## Startup (required)
 
-**1. Register utility classes** before loading application XAML:
+Add `<my:MyTheme />` in `Application.Styles`, then use `MyNetThemeBootstrap`:
 
 ```csharp
-using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Controls;
 
 public override void Initialize()
+    => MyNetThemeBootstrap.Initialize(this);
+
+public override void OnFrameworkInitializationCompleted()
 {
-    ThemeControlsHost.Register();
-    AvaloniaXamlLoader.Load(this);
+    MyNetThemeBootstrap.LoadTheme(this);
+    // show main window…
 }
 ```
 
-**2. Load `MyTheme`, then attach the catalog** (after the splash screen or before showing the main window):
-
-```csharp
-MyTheme.Current.EnsureLoaded();
-ThemeControlsHost.AttachCatalog(this);
-```
+`Initialize` registers utility classes and loads application XAML. `LoadTheme` calls `MyTheme.Current.EnsureLoaded()` then attaches the precompiled catalog.
 
 Do **not** use `<StyleInclude Source="avares://MyNet.Avalonia.Theme.Controls/..." />` in `App.axaml` for the full catalog: Avalonia would load ~100 XAML files on the UI thread during `AvaloniaXamlLoader.Load`, before tokens are ready, which blocks startup.
 
-`AttachCatalog` uses a precompiled `ThemeControlsCatalog` (`x:Class`) and must run **after** `EnsureLoaded()`.
+In DEBUG builds, `LoadTheme` verifies the catalog is attached when `attachCatalog` is `true`.
 
-Keep `<my:MyTheme />` in `Application.Styles` as usual.
+### Advanced (manual steps)
+
+```csharp
+ThemeControlsHost.Register();
+AvaloniaXamlLoader.Load(this);
+// …
+MyTheme.Current.EnsureLoaded();
+ThemeControlsHost.AttachCatalog(this);
+```
 
 ## What gets loaded
 
@@ -49,7 +54,6 @@ Keep `<my:MyTheme />` in `Application.Styles` as usual.
 Foundation/
 Standard/
 Custom/
-Catalog/
 ThemeControlsCatalog.axaml   # precompiled entry point (AttachCatalog)
 DataGrid/
 ```

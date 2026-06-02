@@ -29,8 +29,7 @@ public static class ServiceCollectionExtensions
         /// <param name="topLevelProvider">Resolves the host top level, typically the main window.</param>
         /// <param name="enableFeedback">When true, publishes notification feedback after copy operations.</param>
         /// <returns>The same service collection for chaining.</returns>
-        public IServiceCollection AddAvaloniaClipboard(Func<TopLevel?> topLevelProvider,
-            bool enableFeedback = true)
+        public IServiceCollection AddAvaloniaClipboard(Func<TopLevel?> topLevelProvider, bool enableFeedback = true)
         {
             ArgumentNullException.ThrowIfNull(services);
             ArgumentNullException.ThrowIfNull(topLevelProvider);
