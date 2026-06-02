@@ -75,7 +75,7 @@
                     <Setter Property="IsVerticalCollapsed" Value="True" />
 
                     <Style Selector="^.isGroup">
-                        <Setter Property="ItemsSource" Value="{ReflectionBinding Pages, x:DataType={x:Type base:PagesGroupViewModel}}" />
+                        <Setter Property="ItemsSource" Value="{Binding Items}" />
                     </Style>
                     <Style Selector="^:not(.isGroup)">
                         <Setter Property="CommandParameter" Value="{Binding NavigationTarget}" />

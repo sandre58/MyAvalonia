@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Collections.Generic;
 using Material.Icons;
 using MyNet.UI.Navigation.Models;
 
@@ -33,4 +34,9 @@ public interface IMenuItemViewModel
     /// Gets the navigation page passed to the shell navigate command, or <see langword="null"/> for groups.
     /// </summary>
     INavigationPage? NavigationTarget { get; }
+
+    /// <summary>
+    /// Gets child menu items for grouped entries, or an empty sequence for leaf items.
+    /// </summary>
+    IReadOnlyList<IMenuItemViewModel> Items { get; }
 }

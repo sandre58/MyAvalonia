@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Material.Icons;
@@ -17,6 +18,8 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Base;
 /// </summary>
 internal abstract class PageViewModel : ObservableObject, IMenuItemViewModel, INavigationPage
 {
+    private static readonly IReadOnlyList<IMenuItemViewModel> EmptyItems = [];
+
     /// <inheritdoc/>
     public string Title => CreateTitle();
 
@@ -46,6 +49,9 @@ internal abstract class PageViewModel : ObservableObject, IMenuItemViewModel, IN
 
     /// <inheritdoc/>
     public INavigationPage NavigationTarget => this;
+
+    /// <inheritdoc/>
+    public IReadOnlyList<IMenuItemViewModel> Items => EmptyItems;
 
     /// <inheritdoc/>
     public virtual Task OnNavigatingToAsync(NavigationContext context, CancellationToken cancellationToken) => Task.CompletedTask;

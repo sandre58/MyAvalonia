@@ -96,7 +96,9 @@ internal sealed class MainViewModel : ObservableObject
                     return lazy;
                 case PagesGroupViewModel group:
                     {
-                        var match = group.Pages.FirstOrDefault(x => ReferenceEquals(x.Page, navigationPage));
+                        var match = group.Pages
+                            .OfType<LazyPageMenuItem>()
+                            .FirstOrDefault(x => ReferenceEquals(x.Page, navigationPage));
 
                         if (match is not null)
                             return match;

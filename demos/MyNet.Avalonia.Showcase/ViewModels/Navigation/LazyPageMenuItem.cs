@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using Material.Icons;
 using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
@@ -18,6 +19,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Navigation;
 /// </summary>
 internal sealed class LazyPageMenuItem : IMenuItemViewModel
 {
+    private static readonly IReadOnlyList<IMenuItemViewModel> EmptyItems = [];
     private readonly Type _viewModelType;
     private readonly IServiceProvider _services;
     private PageViewModel? _page;
@@ -42,6 +44,9 @@ internal sealed class LazyPageMenuItem : IMenuItemViewModel
 
     /// <inheritdoc/>
     public bool IsGroup => false;
+
+    /// <inheritdoc/>
+    public IReadOnlyList<IMenuItemViewModel> Items => EmptyItems;
 
     private static string CreateTitleFromTypeName(string name)
     {

@@ -25,7 +25,7 @@ internal sealed class PagesGroupViewModel : ObservableObject, IMenuItemViewModel
 {
     [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed with the view model.")]
     private readonly string _titleResourceKey;
-    private readonly ObservableCollection<LazyPageMenuItem> _pages = [];
+    private readonly ObservableCollection<IMenuItemViewModel> _pages = [];
 
     public PagesGroupViewModel(string resourceKey, MaterialIconKind icon)
     {
@@ -48,7 +48,10 @@ internal sealed class PagesGroupViewModel : ObservableObject, IMenuItemViewModel
     public INavigationPage? NavigationTarget => null;
 
     /// <summary>Gets child pages in this group (resolved from DI when opened).</summary>
-    public ReadOnlyObservableCollection<LazyPageMenuItem> Pages { get; }
+    public ReadOnlyObservableCollection<IMenuItemViewModel> Pages { get; }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<IMenuItemViewModel> Items => Pages;
 
     /// <summary>Adds lazy menu entries for the given page view model types.</summary>
     public void AddPages(IEnumerable<Type> viewModelTypes, IServiceProvider services)
