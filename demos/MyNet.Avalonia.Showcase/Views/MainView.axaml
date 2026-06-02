@@ -30,7 +30,7 @@
                         <Border Background="{my:Theme Surface.Level5}" />
                         <StackPanel Spacing="{my:Spacing Lg}" Orientation="Horizontal" Margin="{my:Thickness Sm}">
                             <Image Width="40" Height="40" VerticalAlignment="Center"
-                                   RenderOptions.BitmapInterpolationMode="HighQuality" Source="../Assets/Demo.ico" />
+                                   RenderOptions.BitmapInterpolationMode="HighQuality" Source="/Assets/Demo.ico" />
                             <StackPanel VerticalAlignment="Center" Spacing="{my:Spacing Xs}">
                                 <TextBlock Classes="text-h6" Text="{Binding ProductName}" />
                                 <TextBlock Classes="font-md opacity-high" Text="{my:Loc Showcase}" />

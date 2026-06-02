@@ -35,7 +35,6 @@ internal sealed class MainViewModel : ObservableObject
         Culture = cultureChrome;
         Theme = themeChrome;
         ApplicationBusy = applicationBusy;
-        NavigationService = navigationService;
         MenuItems = new(_menuItems);
 
         var navigationCommands = new NavigationCommands(navigationService, commandFactory);
@@ -57,8 +56,6 @@ internal sealed class MainViewModel : ObservableObject
     public string ProductName => ApplicationInfo.ProductName;
 
     public IBusyService ApplicationBusy { get; }
-
-    public INavigationService NavigationService { get; }
 
     public ICommand GoBackCommand { get; }
 
@@ -86,7 +83,7 @@ internal sealed class MainViewModel : ObservableObject
             SelectedMenuItem = matchingItem;
     }
 
-    private IMenuItemViewModel? FindMatchingMenuItem(object? page)
+    private LazyPageMenuItem? FindMatchingMenuItem(object? page)
     {
         if (page is not INavigationPage navigationPage)
             return null;
@@ -97,8 +94,6 @@ internal sealed class MainViewModel : ObservableObject
             {
                 case LazyPageMenuItem lazy when ReferenceEquals(lazy.Page, navigationPage):
                     return lazy;
-                case PageViewModel pageViewModel when ReferenceEquals(pageViewModel, navigationPage):
-                    return pageViewModel;
                 case PagesGroupViewModel group:
                     {
                         var match = group.Pages.FirstOrDefault(x => ReferenceEquals(x.Page, navigationPage));
