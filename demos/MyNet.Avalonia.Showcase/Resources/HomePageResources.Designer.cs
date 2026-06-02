@@ -204,7 +204,7 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Appeler ThemeControlsHost.Register() puis ajouter &lt;my:MyTheme /&gt; dans Application.Styles.
+        ///   Looks up a localized string similar to Dans Application.Styles : &lt;my:MyTheme /&gt; puis &lt;my:ThemeControlsCatalog /&gt; (voir README du showcase).
         /// </summary>
         internal static string GettingStartedStep2 {
             get {
@@ -213,7 +213,7 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enregistrer la DI : globalization → controls → extended → navigation → shell (voir README du showcase).
+        ///   Looks up a localized string similar to Configurer la DI via AppComposition (globalization → extended → shell, voir README).
         /// </summary>
         internal static string GettingStartedStep3 {
             get {

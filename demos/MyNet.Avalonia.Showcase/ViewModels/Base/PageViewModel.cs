@@ -45,6 +45,9 @@ internal abstract class PageViewModel : ObservableObject, IMenuItemViewModel, IN
     public bool IsGroup => false;
 
     /// <inheritdoc/>
+    public INavigationPage NavigationTarget => this;
+
+    /// <inheritdoc/>
     public virtual Task OnNavigatingToAsync(NavigationContext context, CancellationToken cancellationToken) => Task.CompletedTask;
 
     /// <inheritdoc/>

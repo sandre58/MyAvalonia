@@ -52,10 +52,10 @@
     <value>Référencer MyNet.Observable, MyNet.UI, MyNet.Globalization et les packages MyNet.Avalonia.*</value>
   </data>
   <data name="GettingStartedStep2" xml:space="preserve">
-    <value>Appeler ThemeControlsHost.Register() puis ajouter &lt;my:MyTheme /&gt; dans Application.Styles</value>
+    <value>Dans Application.Styles : &lt;my:MyTheme /&gt; puis &lt;my:ThemeControlsCatalog /&gt; (voir README du showcase)</value>
   </data>
   <data name="GettingStartedStep3" xml:space="preserve">
-    <value>Enregistrer la DI : globalization → controls → extended → navigation → shell (voir README du showcase)</value>
+    <value>Configurer la DI via AppComposition (globalization → extended → shell, voir README)</value>
   </data>
   <data name="GettingStartedStep4" xml:space="preserve">
     <value>Utiliser INavigationClient pour les pages et ICommandFactory pour les commandes</value>

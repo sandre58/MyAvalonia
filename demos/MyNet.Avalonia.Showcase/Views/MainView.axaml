@@ -78,7 +78,7 @@
                         <Setter Property="ItemsSource" Value="{ReflectionBinding Pages, x:DataType={x:Type base:PagesGroupViewModel}}" />
                     </Style>
                     <Style Selector="^:not(.isGroup)">
-                        <Setter Property="CommandParameter" Value="{Binding}" />
+                        <Setter Property="CommandParameter" Value="{Binding NavigationTarget}" />
                         <Setter Property="Command"
                                 Value="{Binding ((vm:MainViewModel)Data).NavigateCommand, FallbackValue={x:Null}, Source={StaticResource Proxy}}" />
                     </Style>

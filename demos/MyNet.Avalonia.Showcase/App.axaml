@@ -7,7 +7,7 @@
     <!-- Styles before Resources so theme tokens are available to app markup extensions. -->
     <Application.Styles>
 
-        <!-- My theme and styles -->
+        <!-- My theme and styles (catalog in XAML: required for this showcase host) -->
         <my:MyTheme />
         <my:ThemeControlsCatalog />
         <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Generic.axaml" />

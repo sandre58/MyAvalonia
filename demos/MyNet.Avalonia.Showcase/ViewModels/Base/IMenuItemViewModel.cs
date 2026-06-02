@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using Material.Icons;
+using MyNet.UI.Navigation.Models;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Base;
 
@@ -27,4 +28,9 @@ public interface IMenuItemViewModel
     /// Gets a value indicating whether the menu item represents a group of items rather than a single actionable item. This property can be used to differentiate between menu items that serve as containers for other items (groups) and those that represent individual actions or pages. When this property is true, it indicates that the menu item is a group, which may contain child items that can be displayed in a nested manner in user interfaces.
     /// </summary>
     bool IsGroup { get; }
+
+    /// <summary>
+    /// Gets the navigation page passed to the shell navigate command, or <see langword="null"/> for groups.
+    /// </summary>
+    INavigationPage? NavigationTarget { get; }
 }

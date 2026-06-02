@@ -4,12 +4,17 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using DynamicData;
 using Material.Icons;
+using Microsoft.Extensions.DependencyInjection;
+using MyNet.Avalonia.Showcase.ViewModels.Navigation;
 using MyNet.Globalization.Facade;
 using MyNet.Observable.Behaviors.Metadata.Attributes;
+using MyNet.UI.Navigation.Models;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Base;
 
@@ -20,7 +25,7 @@ internal sealed class PagesGroupViewModel : ObservableObject, IMenuItemViewModel
 {
     [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed with the view model.")]
     private readonly string _titleResourceKey;
-    private readonly ObservableCollection<PageViewModel> _pages = [];
+    private readonly ObservableCollection<LazyPageMenuItem> _pages = [];
 
     public PagesGroupViewModel(string resourceKey, MaterialIconKind icon)
     {
@@ -39,9 +44,16 @@ internal sealed class PagesGroupViewModel : ObservableObject, IMenuItemViewModel
     /// <inheritdoc/>
     public bool IsGroup => true;
 
-    /// <summary>Gets child pages in this group.</summary>
-    public ReadOnlyObservableCollection<PageViewModel> Pages { get; }
+    /// <inheritdoc/>
+    public INavigationPage? NavigationTarget => null;
 
-    /// <summary>Adds pages to the group.</summary>
-    public void AddPages(params PageViewModel[] pages) => _pages.AddRange(pages);
+    /// <summary>Gets child pages in this group (resolved from DI when opened).</summary>
+    public ReadOnlyObservableCollection<LazyPageMenuItem> Pages { get; }
+
+    /// <summary>Adds lazy menu entries for the given page view model types.</summary>
+    public void AddPages(IEnumerable<Type> viewModelTypes, IServiceProvider services)
+    {
+        foreach (var viewModelType in viewModelTypes)
+            _pages.Add(new LazyPageMenuItem(viewModelType, services));
+    }
 }
