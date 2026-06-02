@@ -71,6 +71,11 @@ public class App : Application
 
             await Task.Delay(50).ConfigureAwait(true);
 
+            MyTheme.Current.EnsureLoaded();
+
+            if (Environment.GetEnvironmentVariable("MYNET_SKIP_CATALOG") != "1")
+                ThemeControlsHost.AttachCatalog(this);
+
             var vm = Prepare();
 
             var mainWindow = new MainWindow { DataContext = vm };
@@ -80,6 +85,11 @@ public class App : Application
         }
         else
         {
+            MyTheme.Current.EnsureLoaded();
+
+            if (Environment.GetEnvironmentVariable("MYNET_SKIP_CATALOG") != "1")
+                ThemeControlsHost.AttachCatalog(this);
+
             var vm = Prepare();
 
             if (ApplicationLifetime is ISingleViewApplicationLifetime singleView)
@@ -95,7 +105,6 @@ public class App : Application
         var viewModelTypes = pagesProviders.SelectMany(x => x.GetPageAssociations()).Select(x => x.ViewModelType).ToList();
 
         ThemeDiagnostics.ConfigureFromEnvironment();
-        MyTheme.Current.EnsureLoaded();
 
         var collection = new ServiceCollection();
         RegisterServices(collection);

@@ -1,0 +1,13 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="MyNet.Avalonia.Theme.Controls.ThemeControlsCatalog"
+        x:ClassModifier="internal">
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Resources/DataTemplates.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Catalog/_index.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+</Styles>

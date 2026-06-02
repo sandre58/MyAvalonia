@@ -8,6 +8,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
+using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Controls;
 using MyNet.Avalonia.PerfTest.ViewModels;
 using MyNet.Avalonia.PerfTest.Views;
@@ -26,6 +27,9 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            MyTheme.Current.EnsureLoaded();
+            ThemeControlsHost.AttachCatalog(this);
+
             Dispatcher.UIThread.Post(() =>
             {
                 desktop.MainWindow = new MainWindow

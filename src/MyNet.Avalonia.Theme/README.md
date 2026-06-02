@@ -45,19 +45,20 @@ public override void Initialize()
 }
 ```
 
-**2. Apply `MyTheme` in `Application.Styles`**, not in `MergedDictionaries`:
+**2. Apply `MyTheme` in `Application.Styles`**, then attach the control catalog from code (see `MyNet.Avalonia.Theme.Controls` README):
 
 ```xml
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:my="http://mynet.com/avalonia"
-             RequestedThemeVariant="Default">
-    <Application.Styles>
-        <my:MyTheme />
-    </Application.Styles>
-</Application>
+<Application.Styles>
+    <my:MyTheme />
+</Application.Styles>
 ```
 
-`MyTheme` embeds theme dictionaries (Dark, Light, HighContrast, …), design tokens, and utility styles. `ThemeControlsHost.Register()` merges the full control catalog from **`MyNet.Avalonia.Theme.Controls`** (Foundation → Standard → Custom).
+```csharp
+MyTheme.Current.EnsureLoaded();
+ThemeControlsHost.AttachCatalog(this);
+```
+
+`MyTheme` embeds theme dictionaries (Dark, Light, HighContrast, …), design tokens, and utility styles. The catalog must load **after** `EnsureLoaded()`, not via `StyleInclude` in `App.axaml`.
 
 ## Runtime API
 

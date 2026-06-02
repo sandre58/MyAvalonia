@@ -8,30 +8,24 @@ using System;
 using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
 using MyNet.Avalonia.Theme.Controls.Classes;
-using MyNet.Avalonia.Theme.Diagnostics;
-using MyNet.Avalonia.Theme.Runtime;
 
 namespace MyNet.Avalonia.Theme.Controls;
 
 /// <summary>
-/// Entry point for wiring control themes into <see cref="MyNet.Avalonia.Theme.MyTheme"/>.
-/// Call <see cref="Register"/> once at application startup, before <c>MyTheme</c> loads resources
-/// (typically in <c>App.Initialize</c>, before <c>AvaloniaXamlLoader.Load</c>).
+/// Entry point for wiring control themes into the application.
 /// </summary>
 public static class ThemeControlsHost
 {
-    private const string CatalogIndex = "avares://MyNet.Avalonia.Theme.Controls/Catalog/_index.axaml";
-
-    private const string DataTemplates = "avares://MyNet.Avalonia.Theme.Controls/Resources/DataTemplates.axaml";
-
     private static int _registered;
+
+    private static int _catalogAttached;
 
     private static bool _utilityClassesInitialized;
 
     /// <summary>
-    /// Registers utility classes and hooks control-theme XAML merge into <see cref="ThemeComposition"/>.
+    /// Registers utility classes used by control themes.
     /// Safe to call multiple times.
     /// </summary>
     public static void Register()
@@ -40,7 +34,45 @@ public static class ThemeControlsHost
             return;
 
         RegisterUtilityClasses();
-        ThemeComposition.RegisterCatalogMerger(MergeCatalog);
+    }
+
+    /// <summary>
+    /// Loads and attaches the precompiled control-theme catalog to <paramref name="application"/>.
+    /// Call after <see cref="MyNet.Avalonia.Theme.MyTheme"/> has completed <c>EnsureLoaded()</c>.
+    /// Safe to call multiple times.
+    /// </summary>
+    /// <param name="application">Application instance (typically <c>this</c> from <c>App</c>).</param>
+    public static void AttachCatalog(Application application)
+    {
+        ArgumentNullException.ThrowIfNull(application);
+
+        if (Interlocked.CompareExchange(ref _catalogAttached, 1, 0) != 0)
+            return;
+
+        application.Styles.Add(new ThemeControlsCatalog());
+    }
+
+    /// <summary>
+    /// Ensures the catalog is attached; throws when missing after startup.
+    /// </summary>
+    /// <param name="application">Optional application; uses <see cref="Application.Current"/> when null.</param>
+    /// <exception cref="InvalidOperationException">Catalog styles are not attached.</exception>
+    public static void EnsureCatalogAttached(Application? application = null)
+    {
+        if (Volatile.Read(ref _catalogAttached) != 0)
+            return;
+
+        application ??= Application.Current
+            ?? throw new InvalidOperationException("No Avalonia Application is available.");
+
+        foreach (var item in application.Styles)
+        {
+            if (item is ThemeControlsCatalog)
+                return;
+        }
+
+        throw new InvalidOperationException(
+            $"Control themes are not loaded. Call {nameof(AttachCatalog)}(application) after MyTheme.Current.EnsureLoaded().");
     }
 
     private static void RegisterUtilityClasses()
@@ -52,29 +84,5 @@ public static class ThemeControlsHost
 
         IconClassRegistry.Register();
         LayoutClassRegistry.Register();
-    }
-
-    private static void MergeCatalog(ResourceDictionary themeResources)
-    {
-        ArgumentNullException.ThrowIfNull(themeResources);
-
-        if (!CanLoadXamlResources())
-            return;
-
-        MergeDictionary(themeResources, DataTemplates);
-        MergeDictionary(themeResources, CatalogIndex);
-    }
-
-    private static bool CanLoadXamlResources() => Application.Current is not null;
-
-    private static void MergeDictionary(ResourceDictionary themeResources, string avaresSource)
-    {
-        using (PerformanceMonitor.Measure($"[Theme.Controls] Merge {avaresSource}", category: PerformanceCategory.Theme))
-        {
-            var dictionary = AvaloniaXamlLoader.Load(new(avaresSource)) as ResourceDictionary
-                ?? throw new InvalidOperationException($"Theme resource '{avaresSource}' did not resolve to a ResourceDictionary.");
-
-            themeResources.MergedDictionaries.Add(dictionary);
-        }
     }
 }

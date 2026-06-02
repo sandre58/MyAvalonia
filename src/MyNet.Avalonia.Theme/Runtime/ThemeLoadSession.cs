@@ -27,8 +27,6 @@ internal sealed class ThemeLoadSession(
         using (PerformanceMonitor.Measure(category: PerformanceCategory.Theme))
             xamlLoader.Load(serviceProvider, theme);
 
-        ThemeComposition.MergeRegisteredCatalogs((ResourceDictionary)theme.Resources);
-
         paletteInjector.AddOrUpdateAccentShades(accent);
         paletteInjector.AddOrUpdatePrimaryShades(primary);
         paletteInjector.UpdateBrushesFromCurrentTheme();
