@@ -27,13 +27,13 @@
     <my:WindowAssist.RightTitleBarContent>
         <StackPanel Margin="{my:Thickness Md, Horizontal}"
                     VerticalAlignment="Center"
-                    Classes="gap-sm"
+                    Classes="gap-md"
                     Orientation="Horizontal"
                     TextElement.Foreground="{my:Theme Primary.Foreground}"
                     my:ThemeAssist.Context="Contrast">
 
             <!-- Language -->
-            <DropDownButton Content="{Binding Culture.SelectedCulture}" Classes="size-sm" Padding="6 2 0 2">
+            <DropDownButton Content="{Binding Culture.SelectedCulture}" Classes="size-sm shape-circle" Padding="6 2 0 2">
                 <DropDownButton.Flyout>
                     <MenuFlyout ItemsSource="{Binding Culture.Cultures}">
                         <MenuFlyout.ItemContainerTheme>
@@ -41,43 +41,65 @@
                                 <Setter Property="IsChecked">
                                     <MultiBinding Converter="{x:Static my:EqualsConverter.IsEquals}">
                                         <Binding />
-                                        <Binding Path="((vm:MainViewModel)DataContext).Culture.SelectedCulture" ElementName="Root" FallbackValue="{x:Null}" />
+                                        <Binding Path="((vm:MainViewModel)DataContext).Culture.SelectedCulture"
+                                                 ElementName="Root" FallbackValue="{x:Null}" />
                                     </MultiBinding>
                                 </Setter>
                                 <Setter Property="Padding" Value="4 4" />
-                                <Setter Property="Command" Value="{Binding ((vm:MainViewModel)DataContext).ChangeCultureCommand, ElementName=Root, FallbackValue={x:Null}}" />
+                                <Setter Property="Command"
+                                        Value="{Binding ((vm:MainViewModel)DataContext).ChangeCultureCommand, ElementName=Root, FallbackValue={x:Null}}" />
                                 <Setter Property="CommandParameter" Value="{Binding}" />
                                 <Setter Property="ToggleType" Value="CheckBox" />
                                 <Setter Property="Header" Value="{Binding}" />
-                                <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.CultureInfo.Xs}" />
+                                <Setter Property="HeaderTemplate"
+                                        Value="{StaticResource MyNet.DataTemplate.CultureInfo.Xs}" />
                             </ControlTheme>
                         </MenuFlyout.ItemContainerTheme>
                     </MenuFlyout>
                 </DropDownButton.Flyout>
                 <DropDownButton.ContentTemplate>
                     <DataTemplate x:DataType="globalization:CultureInfo">
-                        <Image Width="20" Source="{Binding Converter={x:Static my:CountryConverter.To24}}" ToolTip.Tip="{my:Display Casing=Title}" />
+                        <Image Width="20" Source="{Binding Converter={x:Static my:CountryConverter.To24}}"
+                               ToolTip.Tip="{my:Display Casing=Title}" />
                     </DataTemplate>
                 </DropDownButton.ContentTemplate>
             </DropDownButton>
 
             <!-- Theme -->
-            <StackPanel Margin="{my:Thickness Sm, Horizontal}"
-                        VerticalAlignment="Center"
-                        Classes="gap-md"
-                        Orientation="Horizontal">
-                <Button Classes="size-sm"
-                        Command="{Binding Theme.IsLightCommand}"
-                        Content="{my:MaterialIcon WeatherSunny}"
-                        Theme="{StaticResource MyNet.Theme.Button.Icon}"
-                        ToolTip.Tip="{my:Loc Light}" />
-                <ToggleSwitch Classes="size-sm" my:ThemeAssist.Role="Contrast" IsChecked="{Binding Theme.IsDark}" />
-                <Button Classes="size-sm"
-                        Command="{Binding Theme.IsDarkCommand}"
-                        Content="{my:MaterialIcon WeatherNight}"
-                        Theme="{StaticResource MyNet.Theme.Button.Icon}"
-                        ToolTip.Tip="{my:Loc Dark}" />
-            </StackPanel>
+            <ToggleSwitch OnContent="{my:MaterialIcon WeatherNight, DefinedSize=Xs}"
+                          OffContent="{my:MaterialIcon WeatherSunny, DefinedSize=Xs}"
+                          my:ThemeAssist.Role="Contrast"
+                          Classes.isDark="{Binding Theme.IsDark}"
+                          IsChecked="{Binding !Theme.IsDark}"
+                          Margin="{my:Thickness Xs, Horizontal}"
+                          Theme="{StaticResource MyNet.Theme.ToggleSwitch.Inner}"
+                          BorderBrush="{my:Theme Surface.Level1}"
+                          Background="{my:Theme Surface.Level1}"
+                          Foreground="{my:Foreground AncestorType=TemplatedControl, Opacity=Disabled}"
+                          my:InteractionAssist.IndicatorColor="{my:Theme Surface.Inverse}"
+                          my:InteractionAssist.ActiveBorderBrush="{my:Theme Surface.Level1}"
+                          my:InteractionAssist.ActiveBackground="{my:Theme Surface.Level1}"
+                          my:InteractionAssist.ActiveForeground="{my:Foreground AncestorType=TemplatedControl, Opacity=Disabled}"
+                          my:InteractionAssist.ActiveIndicatorColor="{my:Theme Surface.Inverse}">
+                <ToggleSwitch.Styles>
+                    <Style Selector="ToggleSwitch.isDark">
+                        <Setter Property="Content">
+                            <Template>
+                                <my:MaterialIcon Classes="size-sm" Kind="WeatherNight" Foreground="{my:Theme Foreground.Inverse}" />
+                            </Template>
+                        </Setter>
+                        <Setter Property="ToolTip.Tip" Value="{my:Loc Dark}" />
+                    </Style>
+                    <Style Selector="ToggleSwitch:not(.isDark)">
+                        <Setter Property="Content">
+                            <Template>
+                                <my:MaterialIcon Classes="size-sm" Kind="WeatherSunny" Foreground="Gold" />
+                            </Template>
+                        </Setter>
+                        <Setter Property="ToolTip.Tip" Value="{my:Loc Light}" />
+                    </Style>
+                </ToggleSwitch.Styles>
+            </ToggleSwitch>
         </StackPanel>
     </my:WindowAssist.RightTitleBarContent>
     <Grid>

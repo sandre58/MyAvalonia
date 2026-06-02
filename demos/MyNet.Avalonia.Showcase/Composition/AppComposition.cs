@@ -19,7 +19,9 @@ using MyNet.Avalonia.Theme.Themes;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Fakers;
 using MyNet.Globalization;
+using MyNet.Globalization.Culture;
 using MyNet.Humanizer;
+using MyNet.UI.ViewModels.Shell.Chrome;
 using MyNet.Observable.Validation;
 using MyNet.UI.Loading;
 using MyNet.UI.Locators.Conventions;
@@ -71,6 +73,9 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
             .AddFakers()
             .AddBusy()
             .AddShell()
+            .AddTransient(static sp => new ShellCultureViewModel(
+                sp.GetRequiredService<ICultureService>(),
+                [SupportedCultures.English, SupportedCultures.French]))
             .AddAvaloniaColors()
             .AddMyNetAvaloniaControls()
             .AddMyNetAvaloniaExtended(topLevelProvider)

@@ -68,7 +68,7 @@
     
     <!-- Drawer Header Heights -->
     <sys:Double x:Key="MyNet.Height.Drawer.Header.Sm">30</sys:Double>
-    <sys:Double x:Key="MyNet.Height.Drawer.Header.Md">40</sys:Double>
+    <sys:Double x:Key="MyNet.Height.Drawer.Header.Md">41</sys:Double>
     <sys:Double x:Key="MyNet.Height.Drawer.Header.Lg">50</sys:Double>
 
     <!-- ===================================================================== -->
@@ -77,7 +77,7 @@
 
     <!-- ToggleSwitch Widths -->
     <sys:Double x:Key="MyNet.Width.ToggleSwitch.Sm">28</sys:Double>
-    <sys:Double x:Key="MyNet.Width.ToggleSwitch.Md">44</sys:Double>
+    <sys:Double x:Key="MyNet.Width.ToggleSwitch.Md">42</sys:Double>
     <sys:Double x:Key="MyNet.Width.ToggleSwitch.Lg">54</sys:Double>
 
     <!-- ===================================================================== -->
