@@ -4,6 +4,18 @@
              xmlns:geo="using:MyNet.Geography"
              xmlns:globalization="clr-namespace:System.Globalization;assembly=System.Runtime"
              RequestedThemeVariant="Light">
+    <!-- Styles before Resources so theme tokens are available to app markup extensions. -->
+    <Application.Styles>
+
+        <!-- My theme and styles -->
+        <my:MyTheme />
+        <my:ThemeControlsCatalog />
+        <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Generic.axaml" />
+
+        <!-- App Styles -->
+        <StyleInclude Source="avares://MyNet.Avalonia.Showcase/Styles/Playground.axaml" />
+    </Application.Styles>
+
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -44,15 +56,4 @@
         </ResourceDictionary>
         
     </Application.Resources>
-
-    <!-- Styles -->
-    <Application.Styles>
-
-        <!-- My theme and styles -->
-        <my:MyTheme />
-        <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Generic.axaml" />
-
-        <!-- App Styles -->
-        <StyleInclude Source="avares://MyNet.Avalonia.Showcase/Styles/Playground.axaml" />
-    </Application.Styles>
 </Application>

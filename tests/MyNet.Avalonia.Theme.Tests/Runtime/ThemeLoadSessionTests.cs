@@ -18,14 +18,14 @@ namespace MyNet.Avalonia.Theme.Tests.Runtime;
 public class ThemeLoadSessionTests
 {
     [Fact]
-    public void LoadInitialResources_LoadsXamlThenInjectsPalettes()
+    public void LoadBaseResources_LoadsXamlThenInjectsPalettes()
     {
         var loader = new RecordingThemeXamlLoader();
         var resources = new ResourceDictionary();
         var injector = new ThemePaletteInjector(
-            resources,
+            () => resources,
             new(null, null),
-            new(resources),
+            new(() => resources),
             () => { },
             (_, _, _, _, _) => new SolidColorBrush(MediaColors.Black));
 
@@ -34,7 +34,7 @@ public class ThemeLoadSessionTests
         var primary = new ColorShades(MediaColors.Blue);
         var accent = new ColorShades(MediaColors.Orange);
 
-        session.LoadInitialResources(null, theme, primary, accent);
+        session.LoadBaseResources(null, theme, primary, accent);
 
         loader.LoadCount.Should().Be(1);
         loader.LastTarget.Should().BeSameAs(theme);

@@ -46,7 +46,7 @@ public static class ClipboardManager
         if (_clipboardService is null)
         {
             throw new InvalidOperationException(
-                "Clipboard is not initialized. Register IClipboardService and call UseClipboard() on the built IServiceProvider.");
+                "Clipboard is not initialized. Register IClipboardService and call UseAvaloniaClipboard() on the built IServiceProvider.");
         }
     }
 }

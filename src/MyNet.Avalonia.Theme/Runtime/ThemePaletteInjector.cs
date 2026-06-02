@@ -22,7 +22,7 @@ namespace MyNet.Avalonia.Theme.Runtime;
 /// Injects brand palettes and variant colors into theme resources and synchronizes <see cref="BrushManager"/> entries.
 /// </summary>
 internal sealed class ThemePaletteInjector(
-    ResourceDictionary resources,
+    Func<ResourceDictionary> getResources,
     BrushManager brushManager,
     ThemeVariantCoordinator variants,
     Action invalidateResourceCache,
@@ -57,6 +57,7 @@ internal sealed class ThemePaletteInjector(
     {
         const string transparencyKey = "Transparency";
         const string transparencySmallKey = "Transparency.Small";
+        var resources = getResources();
 
         using (PerformanceMonitor.Measure("UpdateBrushesFromCurrentTheme", category: PerformanceCategory.Theme))
         {
@@ -132,10 +133,14 @@ internal sealed class ThemePaletteInjector(
     }
 
     private void AddOrUpdateColor(string key, Color color)
-        => resources[ThemeResourceKeyFactory.Color(key)] = color;
+    {
+        var resources = getResources();
+        resources[ThemeResourceKeyFactory.Color(key)] = color;
+    }
 
     private void AddOrUpdateBrush(string key, Color color, Color? contrastedColor)
     {
+        var resources = getResources();
         var fullBrushKey = ThemeResourceKeyFactory.Brush(key);
         var brush = brushManager.Register(fullBrushKey, color, contrastedColor);
         resources[fullBrushKey] = brush;

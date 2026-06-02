@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia.Controls;
 using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.Avalonia.Theme.Theming.Palettes;
 
@@ -18,7 +17,7 @@ internal sealed class ThemeLoadSession(
     IThemeXamlLoader xamlLoader,
     ThemePaletteInjector paletteInjector)
 {
-    public void LoadInitialResources(
+    public void LoadBaseResources(
         IServiceProvider? serviceProvider,
         MyTheme theme,
         ColorShades primary,
@@ -29,6 +28,7 @@ internal sealed class ThemeLoadSession(
 
         paletteInjector.AddOrUpdateAccentShades(accent);
         paletteInjector.AddOrUpdatePrimaryShades(primary);
-        paletteInjector.UpdateBrushesFromCurrentTheme();
     }
+
+    public void ApplyVariantBrushes() => paletteInjector.UpdateBrushesFromCurrentTheme();
 }

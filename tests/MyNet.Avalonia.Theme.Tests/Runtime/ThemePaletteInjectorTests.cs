@@ -69,9 +69,9 @@ public class ThemePaletteInjectorTests
         var resources = new ResourceDictionary();
         var invalidated = false;
         var injector = new ThemePaletteInjector(
-            resources,
+            () => resources,
             new(null, null),
-            new(resources),
+            new(() => resources),
             () => invalidated = true,
             (_, _, _, _, _) => new SolidColorBrush(MediaColors.Gray));
 

@@ -9,6 +9,8 @@ using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MyNet.Avalonia.Extended.Toasting.Settings;
+using MyNet.UI.Notifications;
+using MyNet.UI.Toasting;
 using MyNet.UI.Toasting.Settings;
 
 #pragma warning disable IDE0130
@@ -49,6 +51,8 @@ public static class ServiceCollectionExtensions
         var options = new AvaloniaToastHostOptions();
         configureOptions?.Invoke(options);
 
+        services.AddNotifications();
+        services.AddToasting();
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAvaloniaToastContentContributor, MessageNotificationToastContentContributor>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAvaloniaToastContentContributor, FallbackToastContentContributor>());
         services.TryAddSingleton<IAvaloniaToastContentFactory, CompositeAvaloniaToastContentFactory>();
@@ -62,7 +66,7 @@ public static class ServiceCollectionExtensions
 
             return new AvaloniaToastHost(
                 topLevelProvider,
-                sp.GetRequiredService<MyNet.UI.Toasting.IToastManager>(),
+                sp.GetRequiredService<IToastManager>(),
                 sp.GetRequiredService<IAvaloniaToastContentFactory>(),
                 hostOptions,
                 sp.GetService<ToastManagerOptions>()?.DefaultDuration);

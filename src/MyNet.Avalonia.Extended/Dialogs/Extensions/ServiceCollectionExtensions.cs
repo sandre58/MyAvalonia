@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using MyNet.Avalonia.Extended.Dialogs.Internal;
 using MyNet.Avalonia.Extended.Dialogs.Presentation;
 using MyNet.UI.Dialogs;
+using MyNet.UI.Locators;
 
 #pragma warning disable IDE0130
 namespace MyNet.Avalonia.Extended.Dialogs;
@@ -41,6 +42,7 @@ public static class ServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(topLevelProvider);
 
+        services.AddViewLocators();
         services.TryAddSingleton(new DialogHostOptions(topLevelProvider));
         services.TryAddSingleton<DialogSessionRegistry>();
         services.AddDialogs(builder =>

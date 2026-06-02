@@ -25,9 +25,9 @@ public static class ServiceCollectionExtensions
     /// <c>AddHumanizer()</c>, then <c>UseGlobalization()</c>, <c>UseLocalization()</c>, and <c>UseDisplayText()</c>
     /// on the built <see cref="IServiceProvider"/>.
     /// When using MyNet.Avalonia.Extended, also call <c>AddMyNetAvaloniaClipboard()</c> during registration and
-    /// <c>UseClipboard()</c> after building the service provider.
+    /// <c>UseAvaloniaClipboard()</c> after building the service provider.
     /// </remarks>
-    public static IServiceCollection AddMyNetAvalonia(this IServiceCollection services)
+    public static IServiceCollection AddAvaloniaColors(this IServiceCollection services)
     {
         services.AddTranslationResource(ColorRegistry.ResourceName, ColorResources.ResourceManager);
         services.AddSingleton<IColorRegistry>(ColorRegistry.Instance);

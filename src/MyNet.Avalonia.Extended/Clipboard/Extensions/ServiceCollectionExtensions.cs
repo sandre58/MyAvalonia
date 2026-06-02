@@ -24,7 +24,7 @@ public static class ServiceCollectionExtensions
         /// <remarks>
         /// When <paramref name="enableFeedback"/> is true, requires <see cref="MyNet.UI.Notifications.INotificationPublisher"/>
         /// (typically via <c>AddNotifications()</c>).
-        /// Call <c>UseClipboard()</c> on the built service provider to wire <see cref="ClipboardManager"/>.
+        /// Call <c>UseAvaloniaClipboard()</c> on the built service provider to wire <see cref="ClipboardManager"/>.
         /// </remarks>
         /// <param name="topLevelProvider">Resolves the host top level, typically the main window.</param>
         /// <param name="enableFeedback">When true, publishes notification feedback after copy operations.</param>

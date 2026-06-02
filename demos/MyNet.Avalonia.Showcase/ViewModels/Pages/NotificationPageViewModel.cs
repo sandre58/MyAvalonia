@@ -140,8 +140,6 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
 
     private void PublishNotification(INotification notification)
     {
-        ApplyDemoSettings();
-
         if (notification is MessageNotification message)
         {
             if (_enableOnClick)
@@ -177,13 +175,6 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
             NotificationPageResources.NotificationClosedMessage,
             severity: NotificationSeverity.Success));
     }
-
-    private static void ApplyDemoSettings()
-        => ShowcaseDemoToastFactory.CurrentSettings = new()
-        {
-            ClosingStrategy = _closingStrategy,
-            FreezeOnMouseEnter = _freezeOnMouseEnter
-        };
 
     private static INotification CreateNotificationFromRole(ThemeRole role)
     {

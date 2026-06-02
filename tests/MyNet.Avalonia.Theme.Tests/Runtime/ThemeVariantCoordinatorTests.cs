@@ -17,9 +17,20 @@ public class ThemeVariantCoordinatorTests
     [Fact]
     public void GetActiveThemeDictionary_WithoutApplication_ReturnsEmpty()
     {
-        var coordinator = new ThemeVariantCoordinator([]);
+        var coordinator = new ThemeVariantCoordinator(() => []);
 
         coordinator.GetActiveThemeDictionary().Should().BeEmpty();
+    }
+
+    [Fact]
+    public void GetActiveThemeDictionary_WithoutApplication_UsesLightFallbackWhenAvailable()
+    {
+        var resources = new ResourceDictionary();
+        var lightDictionary = new ResourceDictionary { ["Color.Primary"] = 1 };
+        resources.ThemeDictionaries[ThemeVariant.Light] = lightDictionary;
+        var coordinator = new ThemeVariantCoordinator(() => resources);
+
+        coordinator.GetActiveThemeDictionary().Should().BeSameAs(lightDictionary);
     }
 
     [Fact]

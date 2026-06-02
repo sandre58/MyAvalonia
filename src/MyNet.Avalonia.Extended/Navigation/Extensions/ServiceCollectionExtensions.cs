@@ -7,6 +7,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using MyNet.UI.Locators;
 using MyNet.UI.Navigation;
 
 #pragma warning disable IDE0130
@@ -33,6 +34,8 @@ public static class ServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
+        services.AddViewLocators();
+        services.AddNavigation();
         services.TryAddSingleton<IAvaloniaPageFactory, AvaloniaPageFactory>();
         services.TryAddSingleton<IAvaloniaNavigationPageHost, AvaloniaNavigationPageHost>();
         services.TryAddSingleton<AvaloniaNavigationGestureBridge>();
@@ -46,9 +49,11 @@ public static class ServiceCollectionExtensions
     /// Configures shared navigation dependencies used by Avalonia attached properties.
     /// </summary>
     /// <param name="services">The built service provider.</param>
-    public static void UseAvaloniaNavigation(this IServiceProvider services)
+    public static IServiceProvider UseAvaloniaNavigation(this IServiceProvider services)
     {
         ArgumentNullException.ThrowIfNull(services);
         AvaloniaNavigationBootstrap.Configure(services);
+
+        return services;
     }
 }

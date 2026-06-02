@@ -40,6 +40,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     private readonly ThemePaletteInjector _paletteInjector;
     private readonly ThemeResourceStore _resourceStore;
     private readonly ThemeLoadSession _loadSession;
+    private bool _applicationThemeSubscribed;
 
     /// <summary>
     /// Gets the current theme instance from the application, providing color palettes, theme management, and resource injection.
@@ -69,11 +70,10 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     {
         _serviceProvider = serviceProvider;
         _brushManager = new(ColorTransitionDuration, ColorTransitionEasing);
-        var resources = (ResourceDictionary)Resources;
-        _variantCoordinator = new(resources);
+        _variantCoordinator = new(() => (ResourceDictionary)Resources);
         _resourceStore = new();
         _paletteInjector = new(
-            resources,
+            () => (ResourceDictionary)Resources,
             _brushManager,
             _variantCoordinator,
             _resourceStore.Invalidate,
@@ -85,10 +85,7 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
         ClassesBootstrapper.Initialize();
 
         if (Application.Current is not null)
-        {
             Theme = Application.Current.ActualThemeVariant.Key.ToString();
-            Application.Current.ActualThemeVariantChanged += (_, _) => OnActualThemeVariantChanged();
-        }
     }
 
     /// <summary>
@@ -350,12 +347,32 @@ public sealed class MyTheme : Styles, IResourceNode, IThemeBrushService
     /// <summary>
     /// Eagerly loads all theme resources, palettes, and brushes. Call this at application startup
     /// (e.g., behind a splash screen) to avoid a freeze on first resource access.
-    /// This method is idempotent ? subsequent calls are no-ops.
+    /// This method is idempotent — subsequent calls are no-ops for base resources; variant brushes are refreshed each time.
     /// </summary>
-    public void EnsureLoaded() => _resourceStore.EnsureLoaded(OnResourcedAccessed);
+    public void EnsureLoaded()
+    {
+        EnsureApplicationThemeSubscription();
+        _resourceStore.EnsureLoaded(OnResourcedAccessed);
+        ApplyVariantBrushes();
+    }
+
+    /// <summary>
+    /// Synchronizes semantic brushes from the active theme variant dictionary.
+    /// Call after the application theme variant is known (e.g. before showing the main window).
+    /// </summary>
+    public void ApplyVariantBrushes() => _loadSession.ApplyVariantBrushes();
 
     private void OnResourcedAccessed()
-        => _loadSession.LoadInitialResources(_serviceProvider, this, Primary, Accent);
+        => _loadSession.LoadBaseResources(_serviceProvider, this, Primary, Accent);
+
+    private void EnsureApplicationThemeSubscription()
+    {
+        if (_applicationThemeSubscribed || Application.Current is null)
+            return;
+
+        Application.Current.ActualThemeVariantChanged += (_, _) => OnActualThemeVariantChanged();
+        _applicationThemeSubscribed = true;
+    }
 
     /// <summary>
     /// Loads compiled theme XAML. Called by <see cref="ThemeXamlLoader"/> (satisfies Avalonia XAML source generator).

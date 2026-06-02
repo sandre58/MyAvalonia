@@ -6,13 +6,18 @@
 
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
+using MyNet.Avalonia.Theme.Controls.Classes;
 
 namespace MyNet.Avalonia.Theme.Controls;
 
 /// <summary>
 /// Precompiled control-theme catalog. Attach via <see cref="ThemeControlsHost.AttachCatalog"/> after <see cref="MyNet.Avalonia.Theme.MyTheme"/> has loaded.
 /// </summary>
-internal partial class ThemeControlsCatalog : Styles
+public sealed class ThemeControlsCatalog : Styles
 {
-    public ThemeControlsCatalog() => AvaloniaXamlLoader.Load(this);
+    public ThemeControlsCatalog()
+    {
+        ClassesBootstrapper.Initialize();
+        AvaloniaXamlLoader.Load(this);
+    }
 }

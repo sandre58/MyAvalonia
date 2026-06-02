@@ -19,11 +19,12 @@ namespace MyNet.Avalonia.Theme.Runtime;
 /// <summary>
 /// Manages <see cref="ResourceDictionary.ThemeDictionaries"/> and application theme variant selection.
 /// </summary>
-internal sealed class ThemeVariantCoordinator(ResourceDictionary resources)
+internal sealed class ThemeVariantCoordinator(Func<ResourceDictionary> getResources)
 {
     public void RegisterThemeProvider(ThemeVariantPalette theme)
     {
         ArgumentNullException.ThrowIfNull(theme);
+        var resources = getResources();
         var rd = new ResourceDictionary();
         theme.ToResourceDictionary().ForEach(kv => rd.Add(kv.Key, kv.Value));
         resources.ThemeDictionaries[theme.Variant] = rd;
@@ -31,8 +32,9 @@ internal sealed class ThemeVariantCoordinator(ResourceDictionary resources)
 
     public ThemeVariantPalette? GetThemePalette()
     {
-        var currentVariant = Application.Current?.ActualThemeVariant ?? ThemeVariant.Default;
-        return resources.ThemeDictionaries.TryGetValue(currentVariant, out var rd) && rd is ResourceDictionary resourceDict
+        var resources = getResources();
+        var currentVariant = ResolveActiveThemeVariant();
+        return currentVariant is not null && ThemeDictionaryResolver.TryGetThemeDictionary(resources, currentVariant, out var resourceDict)
             ? ThemeVariantPalette.FromResourceDictionary(
                 currentVariant,
                 resourceDict.ToDictionary(
@@ -46,18 +48,44 @@ internal sealed class ThemeVariantCoordinator(ResourceDictionary resources)
 
     public ResourceDictionary GetActiveThemeDictionary()
     {
-        var current = Application.Current?.ActualThemeVariant ?? ThemeVariant.Default;
-        return resources.ThemeDictionaries.TryGetValue(current, out var rd) && rd is ResourceDictionary resources1
-            ? resources1
+        var resources = getResources();
+        var current = ResolveActiveThemeVariant();
+        return current is not null && ThemeDictionaryResolver.TryGetThemeDictionary(resources, current, out var themeDictionary)
+            ? themeDictionary
             : [];
     }
 
     public void SyncApplicationThemeVariant(string? themeKey)
     {
+        var resources = getResources();
         if (resources.ThemeDictionaries.Count == 0 || string.IsNullOrEmpty(themeKey))
             return;
 
         Application.Current!.RequestedThemeVariant = resources.ThemeDictionaries.Keys
             .FirstOrDefault(x => x.Key.Equals(themeKey));
+    }
+
+    private ThemeVariant? ResolveActiveThemeVariant()
+    {
+        var resources = getResources();
+        if (resources.ThemeDictionaries.Count == 0)
+            return null;
+
+        var application = Application.Current;
+        var candidates = new[]
+        {
+            application?.ActualThemeVariant,
+            application?.RequestedThemeVariant,
+            ThemeVariant.Default,
+            ThemeVariant.Light
+        };
+
+        foreach (var candidate in candidates)
+        {
+            if (candidate is not null && resources.ThemeDictionaries.ContainsKey(candidate))
+                return candidate;
+        }
+
+        return resources.ThemeDictionaries.Keys.FirstOrDefault();
     }
 }
