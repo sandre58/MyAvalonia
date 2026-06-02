@@ -136,9 +136,9 @@ public class DataGridDateColumn : DataGridBoundColumn<CalendarDatePickerEx, Cont
         });
     }
 
-    private static CompiledBinding CreateCultureBinding() => GlobalizationBinding.CreateCultureBinding();
+    private static BindingBase CreateCultureBinding() => GlobalizationBinding.CreateCultureBinding();
 
-    private static CompiledBinding CreateTimeZoneBinding() => GlobalizationBinding.CreateTimeZoneBinding();
+    private static BindingBase CreateTimeZoneBinding() => GlobalizationBinding.CreateTimeZoneBinding();
 
     private static CompiledBinding CreateObjectBinding()
     {

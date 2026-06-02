@@ -11,7 +11,7 @@
              ClipToBounds="False"
              x:Name="Root"
              Theme="{StaticResource {x:Type ContentPage}}"
-             Header="{my:Display Title}"
+             Header="{my:Loc Home}"
              my:IconAssist.Icon="{Binding Icon}"
              mc:Ignorable="d">
     <ContentPage.Resources>
@@ -66,9 +66,9 @@
                                                              VerticalAlignment="Center" />
                                         </Border>
                                         <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{my:Spacing Xs}">
-                                            <TextBlock Classes="text-h6" Text="{Binding Title}" />
+                                            <TextBlock Classes="text-h6" Text="{my:Display TitleResourceKey}" />
                                             <TextBlock Classes="font-sm opacity-high"
-                                                       Text="{Binding Description}"
+                                                       Text="{my:Display DescriptionResourceKey}"
                                                        TextWrapping="Wrap" />
                                         </StackPanel>
                                         <TextBlock Grid.Column="2"
@@ -103,10 +103,10 @@
                                     <StackPanel Spacing="{my:Spacing Xs}">
                                         <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Sm}">
                                             <my:MaterialIcon Kind="{Binding Icon}" Classes="size-sm" />
-                                            <TextBlock Classes="text-subtitle-1" Text="{Binding Title}" />
+                                            <TextBlock Classes="text-subtitle-1" Text="{my:Display TitleResourceKey}" />
                                         </StackPanel>
                                         <TextBlock Classes="font-sm opacity-high"
-                                                   Text="{Binding Description}"
+                                                   Text="{my:Display DescriptionResourceKey}"
                                                    TextWrapping="Wrap" />
                                     </StackPanel>
                                 </Button>

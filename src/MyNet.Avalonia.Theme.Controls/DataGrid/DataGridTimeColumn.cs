@@ -117,9 +117,9 @@ public class DataGridTimeColumn : DataGridBoundColumn<TimePickerEx, ContentContr
         contentControl.ContentTemplate = new FuncDataTemplate<TimeSpan?>((_, _) => new TextBlock { [!TextBlock.TextProperty] = new MultiBinding { Converter = new DateTimeConverter(DateTimeConverterKind.Default, LetterCasing.Title), ConverterParameter = DisplayFormat, Mode = BindingMode.OneWay, Bindings = { CreateObjectBinding(), CreateCultureBinding(), CreateTimeZoneBinding() } } });
     }
 
-    private static CompiledBinding CreateCultureBinding() => GlobalizationBinding.CreateCultureBinding();
+    private static BindingBase CreateCultureBinding() => GlobalizationBinding.CreateCultureBinding();
 
-    private static CompiledBinding CreateTimeZoneBinding() => GlobalizationBinding.CreateTimeZoneBinding();
+    private static BindingBase CreateTimeZoneBinding() => GlobalizationBinding.CreateTimeZoneBinding();
 
     private static CompiledBinding CreateObjectBinding()
     {

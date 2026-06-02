@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
+using MyNet.Avalonia;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extended;
 using MyNet.Avalonia.Extended.Theming;
@@ -84,7 +85,7 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
 
     private static void InitializeServices(IServiceProvider services)
     {
-        services.UseGlobalization();
+        services.UseAvaloniaGlobalization();
         services.UseLocalization();
         services.UseDisplayText();
         services.UseFakers();

@@ -8,6 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using MyNet.Globalization;
 using MyNet.Globalization.Facade;
 
 namespace MyNet.Avalonia.Bindings;
@@ -22,7 +23,7 @@ public sealed class GlobalizationBindingSource : INotifyPropertyChanged
     /// </summary>
     public static GlobalizationBindingSource Instance { get; } = new();
 
-    private bool _isSubscribed;
+    private IGlobalizationService? _subscribedService;
 
     private GlobalizationBindingSource() { }
 
@@ -53,14 +54,27 @@ public sealed class GlobalizationBindingSource : INotifyPropertyChanged
     /// <inheritdoc />
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private void EnsureSubscribed()
-    {
-        if (_isSubscribed) return;
+    /// <summary>
+    /// Reconnects culture/time zone change handlers to <see cref="GlobalizationServices.Current"/>.
+    /// Call after <c>UseGlobalization()</c> when bindings may have subscribed to the default service instance.
+    /// </summary>
+    internal static void ReconnectToCurrentService() => Instance.EnsureSubscribed(force: true);
 
+    private void EnsureSubscribed(bool force = false)
+    {
         var service = GlobalizationServices.Current;
+        if (!force && ReferenceEquals(_subscribedService, service))
+            return;
+
+        if (_subscribedService is not null)
+        {
+            _subscribedService.CultureChanged -= OnCultureChanged;
+            _subscribedService.TimeZoneChanged -= OnTimeZoneChanged;
+        }
+
         service.CultureChanged += OnCultureChanged;
         service.TimeZoneChanged += OnTimeZoneChanged;
-        _isSubscribed = true;
+        _subscribedService = service;
     }
 
     private void OnCultureChanged(object? sender, EventArgs e) => OnPropertyChanged(nameof(Culture));

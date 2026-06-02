@@ -47,22 +47,18 @@ public static class GlobalizationBinding
     /// <summary>
     /// Creates a binding to <see cref="GlobalizationBindingSource.Culture"/>.
     /// </summary>
-    public static CompiledBinding CreateCultureBinding()
+    public static BindingBase CreateCultureBinding() => new ReflectionBinding(nameof(GlobalizationBindingSource.Culture))
     {
-        var binding = CompiledBinding.Create<GlobalizationBindingSource, CultureInfo?>(x => x.Culture);
-        binding.Source = GlobalizationBindingSource.Instance;
-        binding.Mode = BindingMode.OneWay;
-        return binding;
-    }
+        Source = GlobalizationBindingSource.Instance,
+        Mode = BindingMode.OneWay
+    };
 
     /// <summary>
     /// Creates a binding to <see cref="GlobalizationBindingSource.TimeZone"/>.
     /// </summary>
-    public static CompiledBinding CreateTimeZoneBinding()
+    public static BindingBase CreateTimeZoneBinding() => new ReflectionBinding(nameof(GlobalizationBindingSource.TimeZone))
     {
-        var binding = CompiledBinding.Create<GlobalizationBindingSource, TimeZoneInfo?>(x => x.TimeZone);
-        binding.Source = GlobalizationBindingSource.Instance;
-        binding.Mode = BindingMode.OneWay;
-        return binding;
-    }
+        Source = GlobalizationBindingSource.Instance,
+        Mode = BindingMode.OneWay
+    };
 }
