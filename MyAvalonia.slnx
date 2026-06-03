@@ -90,6 +90,7 @@
     <Project Path="tests/MyNet.Avalonia.Geography.Tests/MyNet.Avalonia.Geography.Tests.csproj" />
     <Project Path="tests/MyNet.Avalonia.Tests/MyNet.Avalonia.Tests.csproj" />
     <Project Path="tests/MyNet.Avalonia.Theme.Tests/MyNet.Avalonia.Theme.Tests.csproj" />
+    <Project Path="tests/MyNet.Avalonia.Showcase.Tests/MyNet.Avalonia.Showcase.Tests.csproj" />
   </Folder>
   <Project Path="src/MyNet.Avalonia.Controls/MyNet.Avalonia.Controls.csproj" />
   <Project Path="src/MyNet.Avalonia.Extended/MyNet.Avalonia.Extended.csproj" />

@@ -35,7 +35,7 @@ internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder, 
         var choiceFactory = CreateChoiceFactory();
         var optionFactory = CreateOptionFactory(choiceFactory);
         var definition = builder.Build(controlName);
-        var choiceMetadata = builder.GetMetadata(controlName);
+        var choiceMetadata = builder.GetThemeDisplayName(controlName);
         var allOptions = definition.CustomSettings.Select(optionFactory.Create).ToList();
         var availableOptions = allOptions.Where(x => string.IsNullOrEmpty(x.Group)).Select(x => x.Option);
         var availableGroups = allOptions.Where(x => !string.IsNullOrEmpty(x.Group)).GroupBy(x => x.Group).Select(x => new GroupOptionViewModel([.. x.Select(y => y.Option)], new LocalizedString(x.Key!)));

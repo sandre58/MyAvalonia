@@ -243,8 +243,7 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
         var classes = new List<string>();
 
         // Theme
-        var themeClass = SelectedTheme.Definition.Key?.ToLower(CultureInfo.CurrentCulture).Replace(ThemeResourceKeyFactory.Theme(_controlName), "theme", StringComparison.OrdinalIgnoreCase).Replace(".", "-", StringComparison.OrdinalIgnoreCase);
-        classes.Add(!string.IsNullOrEmpty(themeClass) ? themeClass : "theme-default");
+        classes.Add(PlaygroundStyleComposer.ResolveThemeClassName(_controlName, SelectedTheme.Definition.Key));
 
         // Kind
         if (SelectedTheme.Definition.Kind is not null)

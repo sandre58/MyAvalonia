@@ -11,6 +11,10 @@
         <Using Alias="DialogOptions" Include="MyNet.Avalonia.Extended.Dialogs.DialogOptions" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="MyNet.Avalonia.Showcase.Tests" />
+    </ItemGroup>
+
     <PropertyGroup>
         <Product>My .NET Avalonia</Product>
         <Description>Platform for testing and experimenting with Avalonia controls and styles. </Description>

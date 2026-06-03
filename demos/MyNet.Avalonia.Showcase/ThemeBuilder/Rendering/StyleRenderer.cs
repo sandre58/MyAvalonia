@@ -69,6 +69,9 @@ internal sealed class StyleRenderer : IStyleRenderer, IDisposable
 
         void addClass(string? cls)
         {
+            if (string.IsNullOrEmpty(cls))
+                return;
+
             control.Classes.Add(cls);
             _appliedClasses.Add(cls);
         }

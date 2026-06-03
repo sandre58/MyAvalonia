@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Reactive.Disposables;
 using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
@@ -46,10 +47,15 @@ internal static class PlaygroundBehavior
 
         DisposeSubscription(control);
 
-        // Re-apply whenever any style-affecting property changes on the view model.
-        Subscribe(control, styleProvider);
+        var styler = new StyleRenderer();
+        styler.Apply(control, styleProvider.BuildStyle());
 
-        new StyleRenderer().Apply(control, styleProvider.BuildStyle());
+        var subscription = System.Reactive.Linq.Observable.FromEventPattern<ControlStyle>(
+                h => styleProvider.StyleChanged += h,
+                h => styleProvider.StyleChanged -= h)
+            .Subscribe(x => styler.Apply(control, x.EventArgs));
+
+        Subscriptions.Add(control, new CompositeDisposable(subscription, styler));
 
         // Clean up when the control is detached from the visual tree.
         control.DetachedFromVisualTree += onDetached;
@@ -66,7 +72,18 @@ internal static class PlaygroundBehavior
         {
             control.AttachedToVisualTree -= onAttached;
             control.DetachedFromVisualTree += onDetached;
-            Subscribe(control, GetAttachStyleProvider(control));
+
+            if (GetAttachStyleProvider(control) is { } provider)
+            {
+                DisposeSubscription(control);
+                var styler = new StyleRenderer();
+                styler.Apply(control, provider.BuildStyle());
+                var subscription = System.Reactive.Linq.Observable.FromEventPattern<ControlStyle>(
+                        h => provider.StyleChanged += h,
+                        h => provider.StyleChanged -= h)
+                    .Subscribe(x => styler.Apply(control, x.EventArgs));
+                Subscriptions.Add(control, new CompositeDisposable(subscription, styler));
+            }
         }
     }
 
@@ -76,19 +93,6 @@ internal static class PlaygroundBehavior
 
         sub.Dispose();
         Subscriptions.Remove(control);
-    }
-
-    private static void Subscribe(Control control, IStyleProvider styleProvider)
-    {
-        if (Subscriptions.TryGetValue(control, out _)) return;
-
-        var styler = new StyleRenderer();
-        var subscription = System.Reactive.Linq.Observable.FromEventPattern<ControlStyle>(
-                h => styleProvider.StyleChanged += h,
-                h => styleProvider.StyleChanged -= h)
-            .Subscribe(x => styler.Apply(control, x.EventArgs));
-
-        Subscriptions.Add(control, subscription);
     }
 
     #region AttachStyle

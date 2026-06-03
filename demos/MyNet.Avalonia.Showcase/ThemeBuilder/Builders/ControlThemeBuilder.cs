@@ -7,6 +7,8 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Styling;
@@ -14,6 +16,7 @@ using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Registry;
+using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Controls.Assists;
 using MyNet.Avalonia.Theme.Theming;
@@ -32,6 +35,7 @@ namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 internal sealed class ControlThemeBuilder(string? themeKey = null)
 {
     private static readonly ConcurrentDictionary<string, ControlTheme> ThemeCache = new();
+    private static int _themeChangedSubscribed;
 
     private readonly List<CssClass> _shapes = [];
     private readonly List<CssClass> _variants = [];
@@ -438,7 +442,7 @@ internal sealed class ControlThemeBuilder(string? themeKey = null)
     /// applied.</param>
     /// <returns>A ChoiceMetadata instance containing the metadata for the specified control, with theming applied as
     /// appropriate.</returns>
-    public ChoiceMetadata GetMetadata(string controlName) => new(new LocalizedString(!string.IsNullOrEmpty(themeKey) || _kind is not null ? $"Theme{controlName}{themeKey?.Replace(".", string.Empty, StringComparison.OrdinalIgnoreCase)}{_kind?.Name.Humanize()}" : nameof(ControlThemeResources.ThemeDefault)));
+    public ChoiceMetadata GetThemeDisplayName(string controlName) => new(new LocalizedString(!string.IsNullOrEmpty(themeKey) || _kind is not null ? $"Theme{controlName}{themeKey?.Replace(".", string.Empty, StringComparison.OrdinalIgnoreCase)}{_kind?.Name.Humanize()}" : nameof(ControlThemeResources.ThemeDefault)));
 
     #endregion
 
@@ -462,6 +466,8 @@ internal sealed class ControlThemeBuilder(string? themeKey = null)
         if (string.IsNullOrEmpty(themeKey))
             return null;
 
+        EnsureThemeCacheInvalidation();
+
         if (ThemeCache.TryGetValue(themeKey, out var cached))
             return cached;
 
@@ -472,6 +478,17 @@ internal sealed class ControlThemeBuilder(string? themeKey = null)
         }
 
         return null;
+    }
+
+    private static void EnsureThemeCacheInvalidation()
+    {
+        if (Interlocked.CompareExchange(ref _themeChangedSubscribed, 1, 0) != 0)
+            return;
+
+        if (Application.Current?.Styles.OfType<MyTheme>().FirstOrDefault() is not { } theme)
+            return;
+
+        theme.ThemeChanged += (_, _) => ThemeCache.Clear();
     }
 
     #endregion
