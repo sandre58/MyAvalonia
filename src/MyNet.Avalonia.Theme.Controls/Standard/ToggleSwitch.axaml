@@ -303,6 +303,43 @@
                 <Setter Property="IsVisible" Value="False" />
             </Style>
         </Style>
+        
+        <Style Selector="^.kind-theme">
+            <Setter Property="OnContent">
+                <Template>
+                    <my:MaterialIcon Classes="size-xs" Kind="WeatherNight" />
+                </Template>
+            </Setter>
+            <Setter Property="OffContent">
+                <Template>
+                    <my:MaterialIcon Classes="size-xs" Kind="WeatherSunny" />
+                </Template>
+            </Setter>
+            <Setter Property="BorderBrush" Value="{my:Theme Surface.Level1}" />
+            <Setter Property="Background" Value="{my:Theme Surface.Level1}" />
+            <Setter Property="Foreground" Value="{my:ThemeBrush Background, Contrast=True, Opacity=Disabled}" />
+            <Setter Property="my:InteractionAssist.IndicatorColor" Value="{my:Theme Surface.Inverse}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:Theme Surface.Level1}" />
+            <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:Theme Surface.Level1}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeBrush Background, Contrast=True, Opacity=Disabled}" />
+            <Setter Property="my:InteractionAssist.ActiveIndicatorColor" Value="{my:Theme Surface.Inverse}" />
+            <Style Selector="^:unchecked">
+                <Setter Property="Content">
+                    <Template>
+                        <my:MaterialIcon Classes="size-sm" Kind="WeatherNight" Foreground="{my:Theme Foreground.Inverse}" />
+                    </Template>
+                </Setter>
+                <Setter Property="ToolTip.Tip" Value="{my:Loc Dark}" />
+            </Style>
+            <Style Selector="^:checked">
+                <Setter Property="Content">
+                    <Template>
+                        <my:MaterialIcon Classes="size-sm" Kind="WeatherSunny" Foreground="Gold" />
+                    </Template>
+                </Setter>
+                <Setter Property="ToolTip.Tip" Value="{my:Loc Light}" />
+            </Style>
+        </Style>
     </ControlTheme>
 
     <!-- ═════════════════════════════════════════════════════════ -->

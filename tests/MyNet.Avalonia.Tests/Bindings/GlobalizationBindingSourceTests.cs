@@ -6,7 +6,6 @@
 
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using MyNet.Avalonia;
 using MyNet.Avalonia.Bindings;
 using MyNet.Globalization;
 using MyNet.Globalization.Culture;
@@ -17,7 +16,7 @@ namespace MyNet.Avalonia.Tests.Bindings;
 public class GlobalizationBindingSourceTests
 {
     [Fact]
-    public void UseAvaloniaGlobalization_ReconnectsBindingSourceToConfiguredCultureService()
+    public void UseGlobalization_PropagatesCultureChangesToBindingSource()
     {
         var services = new ServiceCollection()
             .AddGlobalization()
@@ -26,7 +25,7 @@ public class GlobalizationBindingSourceTests
 
         _ = GlobalizationBindingSource.Instance.Culture;
 
-        services.UseAvaloniaGlobalization();
+        services.UseGlobalization();
         services.UseLocalization();
 
         var cultureService = services.GetRequiredService<ICultureService>();

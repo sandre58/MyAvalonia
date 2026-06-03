@@ -59,47 +59,16 @@
                 </DropDownButton.Flyout>
                 <DropDownButton.ContentTemplate>
                     <DataTemplate x:DataType="globalization:CultureInfo">
-                        <Image Width="20" Source="{Binding Converter={x:Static my:CountryConverter.To24}}"
-                               ToolTip.Tip="{my:Display Casing=Title}" />
+                        <Image Width="20" Source="{Binding Converter={x:Static my:CountryConverter.To24}}" ToolTip.Tip="{my:Display Casing=Title}" />
                     </DataTemplate>
                 </DropDownButton.ContentTemplate>
             </DropDownButton>
 
             <!-- Theme -->
-            <ToggleSwitch OnContent="{my:MaterialIcon WeatherNight, DefinedSize=Xs}"
-                          OffContent="{my:MaterialIcon WeatherSunny, DefinedSize=Xs}"
-                          my:ThemeAssist.Role="Contrast"
-                          Classes.isDark="{Binding Theme.IsDark}"
+            <ToggleSwitch Classes="kind-theme"
                           IsChecked="{Binding !Theme.IsDark}"
                           Margin="{my:Thickness Xs, Horizontal}"
-                          Theme="{StaticResource MyNet.Theme.ToggleSwitch.Inner}"
-                          BorderBrush="{my:Theme Surface.Level1}"
-                          Background="{my:Theme Surface.Level1}"
-                          Foreground="{my:Foreground AncestorType=TemplatedControl, Opacity=Disabled}"
-                          my:InteractionAssist.IndicatorColor="{my:Theme Surface.Inverse}"
-                          my:InteractionAssist.ActiveBorderBrush="{my:Theme Surface.Level1}"
-                          my:InteractionAssist.ActiveBackground="{my:Theme Surface.Level1}"
-                          my:InteractionAssist.ActiveForeground="{my:Foreground AncestorType=TemplatedControl, Opacity=Disabled}"
-                          my:InteractionAssist.ActiveIndicatorColor="{my:Theme Surface.Inverse}">
-                <ToggleSwitch.Styles>
-                    <Style Selector="ToggleSwitch.isDark">
-                        <Setter Property="Content">
-                            <Template>
-                                <my:MaterialIcon Classes="size-sm" Kind="WeatherNight" Foreground="{my:Theme Foreground.Inverse}" />
-                            </Template>
-                        </Setter>
-                        <Setter Property="ToolTip.Tip" Value="{my:Loc Dark}" />
-                    </Style>
-                    <Style Selector="ToggleSwitch:not(.isDark)">
-                        <Setter Property="Content">
-                            <Template>
-                                <my:MaterialIcon Classes="size-sm" Kind="WeatherSunny" Foreground="Gold" />
-                            </Template>
-                        </Setter>
-                        <Setter Property="ToolTip.Tip" Value="{my:Loc Light}" />
-                    </Style>
-                </ToggleSwitch.Styles>
-            </ToggleSwitch>
+                          Theme="{StaticResource MyNet.Theme.ToggleSwitch.Inner}" />
         </StackPanel>
     </my:WindowAssist.RightTitleBarContent>
     <Grid>

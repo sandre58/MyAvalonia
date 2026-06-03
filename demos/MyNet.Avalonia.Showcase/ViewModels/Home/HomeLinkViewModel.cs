@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using Material.Icons;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Home;
 
@@ -24,11 +25,11 @@ internal sealed class HomeLinkViewModel(
     /// <summary>Gets the card icon.</summary>
     public MaterialIconKind Icon { get; } = icon;
 
-    /// <summary>Gets the resource key for the card title (bind with <c>{my:Display TitleResourceKey}</c>).</summary>
-    public string TitleResourceKey { get; } = titleResourceKey;
+    /// <summary>Gets the localized card title.</summary>
+    public LocalizedString Title { get; } = new(titleResourceKey);
 
-    /// <summary>Gets the resource key for the card description (bind with <c>{my:Display DescriptionResourceKey}</c>).</summary>
-    public string DescriptionResourceKey { get; } = descriptionResourceKey;
+    /// <summary>Gets the localized card description.</summary>
+    public LocalizedString Description { get; } = new(descriptionResourceKey);
 
     /// <summary>Gets the navigation target key.</summary>
     internal string NavigationKey { get; } = navigationKey;

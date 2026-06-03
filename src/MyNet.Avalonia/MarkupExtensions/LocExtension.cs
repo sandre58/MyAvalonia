@@ -4,11 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Metadata;
 using MyNet.Avalonia.Converters;
 using MyNet.Globalization.Localization.Translation;
+using MyNet.Observable;
 using MyNet.Text.TextCasing;
 
 namespace MyNet.Avalonia.MarkupExtensions;
@@ -74,9 +76,30 @@ public class LocExtension : GlobalizationExtensionBase
     /// <inheritdoc/>
     protected override BindingBase CreateBinding() => new ReflectionBinding
     {
-        Source = new Localizable(Key, Filename),
-        Mode = BindingMode.OneTime
+        Source = new LocalizedString(Key, Casing, Filename),
+        Path = nameof(LocalizedString.Value),
+        Mode = BindingMode.OneWay
     };
+
+    /// <inheritdoc/>
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        if (Format is not null || Style != DisplayStyle.Default)
+            return base.ProvideValue(serviceProvider);
+
+        var binding = CreateBinding();
+
+        if (binding is ReflectionBinding reflectionBinding)
+        {
+            if (FallbackValue is not null)
+                reflectionBinding.FallbackValue = FallbackValue;
+
+            if (TargetNullValue is not null)
+                reflectionBinding.TargetNullValue = TargetNullValue;
+        }
+
+        return binding;
+    }
 
     /// <inheritdoc/>
     protected override IMultiValueConverter CreateConverter() =>

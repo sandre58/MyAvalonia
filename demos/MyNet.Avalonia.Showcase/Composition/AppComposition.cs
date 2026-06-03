@@ -85,7 +85,7 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
 
     private static void InitializeServices(IServiceProvider services)
     {
-        services.UseAvaloniaGlobalization();
+        services.UseGlobalization();
         services.UseLocalization();
         services.UseDisplayText();
         services.UseFakers();

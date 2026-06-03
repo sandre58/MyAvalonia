@@ -16,6 +16,7 @@ using MyNet.Collections;
 using MyNet.Globalization.Facade;
 using MyNet.Globalization.Localization.Translation;
 using MyNet.Humanizer.Facade;
+using MyNet.Observable;
 using MyNet.Primitives;
 using MyNet.Text;
 using MyNet.Text.TextCasing;
@@ -79,8 +80,8 @@ public class StringConverter(LetterCasing casing, TranslationOptions? translatio
         RegisterTypeConverter<TimeSpan>((timespan, format, _, culture) => ConvertTimeSpan(timespan, format, culture));
         RegisterTypeConverter<Array>((array, _, _, _) => ConvertArray(array));
 
-        RegisterTypeConverter<Localizable>((localizable, format, options, culture) =>
-            ConvertString(localizable.Key, localizable.Filename, format, options, culture));
+        RegisterTypeConverter<IObservableValue<string>>((value, format, options, culture) =>
+            ConvertString(value.Value.OrEmpty(), null, format, options, culture));
 
         RegisterTypeConverter<CultureInfo>((cultureInfo, format, options, culture) =>
             ConvertString(GetCultureDisplayName(cultureInfo, culture), null, format, options, culture));
@@ -238,13 +239,3 @@ public class StringConverter(LetterCasing casing, TranslationOptions? translatio
         return !string.Equals(translatedName, cultureInfo.Name, StringComparison.Ordinal) ? translatedName : cultureInfo.NativeName;
     }
 }
-
-/// <summary>
-/// Represents a localizable resource key and optional filename for <see cref="StringConverter"/>.
-/// </summary>
-/// <param name="Key">The resource key to translate.</param>
-/// <param name="Filename">The optional .resx filename (without extension).</param>
-/// <example>
-/// Bind a <see cref="Localizable"/> value through <see cref="StringConverter"/> to translate a keyed resource.
-/// </example>
-public record Localizable(string Key, string? Filename);

@@ -66,9 +66,9 @@
                                                              VerticalAlignment="Center" />
                                         </Border>
                                         <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{my:Spacing Xs}">
-                                            <TextBlock Classes="text-h6" Text="{my:Display TitleResourceKey}" />
+                                            <TextBlock Classes="text-h6" Text="{my:Display Title}" />
                                             <TextBlock Classes="font-sm opacity-high"
-                                                       Text="{my:Display DescriptionResourceKey}"
+                                                       Text="{my:Display Description}"
                                                        TextWrapping="Wrap" />
                                         </StackPanel>
                                         <TextBlock Grid.Column="2"
@@ -103,10 +103,10 @@
                                     <StackPanel Spacing="{my:Spacing Xs}">
                                         <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Sm}">
                                             <my:MaterialIcon Kind="{Binding Icon}" Classes="size-sm" />
-                                            <TextBlock Classes="text-subtitle-1" Text="{my:Display TitleResourceKey}" />
+                                            <TextBlock Classes="text-subtitle-1" Text="{my:Display Title}" />
                                         </StackPanel>
                                         <TextBlock Classes="font-sm opacity-high"
-                                                   Text="{my:Display DescriptionResourceKey}"
+                                                   Text="{my:Display Description}"
                                                    TextWrapping="Wrap" />
                                     </StackPanel>
                                 </Button>

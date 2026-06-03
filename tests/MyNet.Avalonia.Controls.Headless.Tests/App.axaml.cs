@@ -8,7 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 using Avalonia;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
-using MyNet.Avalonia;
 using MyNet.Globalization;
 using MyNet.Humanizer;
 
@@ -39,7 +38,7 @@ public partial class HeadlessTestApp : Application
             .AddHumanizer()
             .BuildServiceProvider();
 
-        services.UseAvaloniaGlobalization();
+        services.UseGlobalization();
         services.UseLocalization();
         services.UseDisplayText();
         _globalizationInitialized = true;

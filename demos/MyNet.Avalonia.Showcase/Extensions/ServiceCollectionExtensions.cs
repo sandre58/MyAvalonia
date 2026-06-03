@@ -7,6 +7,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Globalization;
+using MyNet.UI.Resources;
 
 #pragma warning disable IDE0130
 namespace MyNet.Avalonia.Showcase;
@@ -22,6 +23,10 @@ internal static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddResources(this IServiceCollection services)
     {
+        services.AddTranslationResource(nameof(UiResources), UiResources.ResourceManager);
+        services.AddTranslationResource(nameof(FormatResources), FormatResources.ResourceManager);
+        services.AddTranslationResource(nameof(MessageResources), MessageResources.ResourceManager);
+
         services.AddTranslationResource(nameof(CommonResources), CommonResources.ResourceManager);
         services.AddTranslationResource(nameof(MenuResources), MenuResources.ResourceManager);
         services.AddTranslationResource(nameof(SettingsResources), SettingsResources.ResourceManager);

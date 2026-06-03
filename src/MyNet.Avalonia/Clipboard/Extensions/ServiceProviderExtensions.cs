@@ -6,7 +6,6 @@
 
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using MyNet.Avalonia.Bindings;
 using MyNet.Avalonia.Clipboard;
 using MyNet.Globalization;
 
@@ -19,19 +18,6 @@ namespace MyNet.Avalonia;
 /// </summary>
 public static class ServiceProviderExtensions
 {
-    /// <summary>
-    /// Initializes globalization facades and reconnects Avalonia culture bindings to the configured service.
-    /// </summary>
-    public static IServiceProvider UseAvaloniaGlobalization(this IServiceProvider serviceProvider)
-    {
-        ArgumentNullException.ThrowIfNull(serviceProvider);
-
-        serviceProvider.UseGlobalization();
-        GlobalizationBindingSource.ReconnectToCurrentService();
-
-        return serviceProvider;
-    }
-
     /// <summary>
     /// Initializes <see cref="ClipboardManager"/> from the built service provider.
     /// </summary>
