@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:my="http://mynet.com/avalonia"
              xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels"
-             xmlns:base="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Base"
+             xmlns:menu="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Menu"
              d:DesignHeight="450"
              d:DesignWidth="800"
              x:DataType="vm:MainViewModel"
@@ -64,7 +64,7 @@
             <my:NavigationMenu.ItemContainerTheme>
                 <ControlTheme TargetType="my:NavigationMenuItem"
                               BasedOn="{StaticResource {x:Type my:NavigationMenuItem}}"
-                              x:DataType="{x:Type base:IMenuItemViewModel}">
+                              x:DataType="{x:Type menu:IMenuItemViewModel}">
                     <Setter Property="Icon">
                         <Template>
                             <my:MaterialIcon Kind="{Binding Icon}" />

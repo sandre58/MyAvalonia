@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+﻿// -----------------------------------------------------------------------
 // <copyright file="LazyPageMenuItem.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
@@ -12,23 +12,17 @@ using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Globalization.Facade;
 using MyNet.UI.Navigation.Models;
 
-namespace MyNet.Avalonia.Showcase.ViewModels.Navigation;
+namespace MyNet.Avalonia.Showcase.ViewModels.Menu;
 
 /// <summary>
 /// Menu entry that resolves the page view model from DI only when the page is opened.
 /// </summary>
-internal sealed class LazyPageMenuItem : IMenuItemViewModel
+internal sealed class LazyPageMenuItem(Type viewModelType, IServiceProvider services) : IMenuItemViewModel
 {
     private static readonly IReadOnlyList<IMenuItemViewModel> EmptyItems = [];
-    private readonly Type _viewModelType;
-    private readonly IServiceProvider _services;
+    private readonly Type _viewModelType = viewModelType ?? throw new ArgumentNullException(nameof(viewModelType));
+    private readonly IServiceProvider _services = services ?? throw new ArgumentNullException(nameof(services));
     private PageViewModel? _page;
-
-    public LazyPageMenuItem(Type viewModelType, IServiceProvider services)
-    {
-        _viewModelType = viewModelType ?? throw new ArgumentNullException(nameof(viewModelType));
-        _services = services ?? throw new ArgumentNullException(nameof(services));
-    }
 
     /// <summary>Gets the resolved page view model (singleton from DI).</summary>
     public PageViewModel Page => _page ??= (PageViewModel)_services.GetRequiredService(_viewModelType);
@@ -37,7 +31,7 @@ internal sealed class LazyPageMenuItem : IMenuItemViewModel
     public INavigationPage NavigationTarget => Page;
 
     /// <inheritdoc/>
-    public string? Title => _page?.Title ?? CreateTitleFromTypeName(_viewModelType.Name);
+    public string Title => _page?.Title ?? CreateTitleFromTypeName(_viewModelType.Name);
 
     /// <inheritdoc/>
     public MaterialIconKind Icon => _page?.Icon ?? MaterialIconKind.CircleOffOutline;

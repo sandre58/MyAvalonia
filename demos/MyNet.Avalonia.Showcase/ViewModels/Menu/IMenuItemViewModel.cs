@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using Material.Icons;
 using MyNet.UI.Navigation.Models;
 
-namespace MyNet.Avalonia.Showcase.ViewModels.Base;
+namespace MyNet.Avalonia.Showcase.ViewModels.Menu;
 
 /// <summary>
 /// Defines an interface for menu item view models, providing properties for the title and icon of a menu item. The title is a string that represents the display text for the menu item, while the icon is specified using the <see cref="MaterialIconKind"/> enumeration, allowing for visual representation of the menu item in user interfaces. Implementing this interface allows for consistent handling of menu items across different parts of the application, ensuring that each menu item has a defined title and icon for display purposes.

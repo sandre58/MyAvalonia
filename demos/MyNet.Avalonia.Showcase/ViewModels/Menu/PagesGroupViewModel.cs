@@ -8,15 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using DynamicData;
 using Material.Icons;
-using Microsoft.Extensions.DependencyInjection;
-using MyNet.Avalonia.Showcase.ViewModels.Navigation;
 using MyNet.Globalization.Facade;
 using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.UI.Navigation.Models;
 
-namespace MyNet.Avalonia.Showcase.ViewModels.Base;
+namespace MyNet.Avalonia.Showcase.ViewModels.Menu;
 
 /// <summary>
 /// View model for a grouped set of showcase pages in the navigation menu.

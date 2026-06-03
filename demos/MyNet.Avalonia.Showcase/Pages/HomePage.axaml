@@ -5,7 +5,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:my="http://mynet.com/avalonia"
              xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
-             xmlns:home="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Home"
              xmlns:common="clr-namespace:MyNet.Avalonia.Showcase.Views.Common"
              x:DataType="vm:HomePageViewModel"
              ClipToBounds="False"
@@ -46,7 +45,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="home:HomeLinkViewModel">
+                            <DataTemplate x:DataType="vm:HomeLinkViewModel">
                                 <Button Margin="{my:Thickness Sm}"
                                         Padding="{my:Thickness Lg}"
                                         HorizontalAlignment="Stretch"
@@ -92,7 +91,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="home:HomeLinkViewModel">
+                            <DataTemplate x:DataType="vm:HomeLinkViewModel">
                                 <Button Margin="{my:Thickness Sm}"
                                         Padding="{my:Thickness Md}"
                                         HorizontalAlignment="Stretch"

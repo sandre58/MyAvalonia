@@ -10,8 +10,7 @@ using System.Linq;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.Pages;
 using MyNet.Avalonia.Showcase.Resources;
-using MyNet.Avalonia.Showcase.ViewModels.Base;
-using MyNet.Avalonia.Showcase.ViewModels.Navigation;
+using MyNet.Avalonia.Showcase.ViewModels.Menu;
 using MyNet.Avalonia.Showcase.ViewModels.Pages;
 
 namespace MyNet.Avalonia.Showcase.Composition;
