@@ -23,7 +23,7 @@ internal sealed class HomePageViewModel : PageViewModel
     public HomePageViewModel(INavigationClient navigationClient, ICommandFactory commandFactory)
     {
         _navigationClient = navigationClient;
-        OpenLinkCommand = commandFactory.Create<HomeLinkViewModel>(link => NavigateAsync(link.NavigationKey));
+        OpenLinkCommand = commandFactory.CreateRequired<HomeLinkViewModel>(link => NavigateAsync(link.NavigationKey));
     }
 
     /// <inheritdoc/>

@@ -4,7 +4,7 @@
     </PropertyGroup>
     <!-- Versions -->
     <PropertyGroup>
-        <MyNetVersion>19.3.4</MyNetVersion>
+        <MyNetVersion>19.3.5</MyNetVersion>
         <AvaloniaVersion>12.0.4</AvaloniaVersion>
     </PropertyGroup>
     

@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
 using MyNet.Avalonia.Extended.Commands;
@@ -43,8 +42,6 @@ internal sealed class MainViewModel : ObservableObject
         NavigateCommand = navigationCommands.NavigateCommand;
         navigationCommands.SubscribeToNavigationStateChanges();
         navigationService.StateChanged += OnNavigationStateChanged;
-
-        ChangeCultureCommand = commandFactory.Create<CultureInfo>(cultureInfo => Culture.SelectedCulture = cultureInfo);
     }
 
     public IApplicationInfo ApplicationInfo { get; }
@@ -62,8 +59,6 @@ internal sealed class MainViewModel : ObservableObject
     public ICommand GoForwardCommand { get; }
 
     public ICommand NavigateCommand { get; }
-
-    public ICommand ChangeCultureCommand { get; }
 
     public ReadOnlyObservableCollection<IMenuItemViewModel> MenuItems { get; }
 

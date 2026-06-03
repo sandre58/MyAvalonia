@@ -1,0 +1,20 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:globalization="clr-namespace:System.Globalization;assembly=System.Runtime">
+
+    <DataTemplate x:Key="MyNet.DataTemplate.CultureInfo.Xs" DataType="globalization:CultureInfo">
+        <DockPanel>
+            <Image DockPanel.Dock="Left"
+                   Width="20"
+                   Margin="0,0,8,0"
+                   Source="{Binding Converter={x:Static my:CountryConverter.To24}}" />
+            <TextBlock Text="{my:Display Casing=Title}" />
+        </DockPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MyNet.DataTemplate.CultureInfo.Flag" DataType="globalization:CultureInfo">
+        <Image Width="20" Source="{Binding Converter={x:Static my:CountryConverter.To24}}" />
+    </DataTemplate>
+
+</ResourceDictionary>

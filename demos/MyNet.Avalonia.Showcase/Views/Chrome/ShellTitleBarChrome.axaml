@@ -1,0 +1,24 @@
+<UserControl x:Class="MyNet.Avalonia.Showcase.Views.Chrome.ShellTitleBarChrome"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:chrome="clr-namespace:MyNet.Avalonia.Showcase.Views.Chrome"
+             xmlns:geo="clr-namespace:MyNet.Avalonia.Geography.Controls;assembly=MyNet.Avalonia.Geography"
+             x:CompileBindings="False"
+             VerticalAlignment="Center">
+    <StackPanel Margin="{my:Thickness Md, Horizontal}"
+                VerticalAlignment="Center"
+                Classes="gap-md"
+                Orientation="Horizontal"
+                TextElement.Foreground="{my:Theme Primary.Foreground}"
+                my:ThemeAssist.Context="Contrast">
+        <geo:CulturePicker Classes="size-sm shape-circle"
+                           Cultures="{Binding CultureManager.Cultures, RelativeSource={RelativeSource AncestorType=chrome:ShellTitleBarChrome}, FallbackValue={x:Null}}"
+                           SelectedCulture="{Binding CultureManager.SelectedCulture, RelativeSource={RelativeSource AncestorType=chrome:ShellTitleBarChrome}, FallbackValue={x:Null}}"
+                           SelectCultureCommand="{Binding CultureManager.ChangeCultureCommand, RelativeSource={RelativeSource AncestorType=chrome:ShellTitleBarChrome}, FallbackValue={x:Null}}" />
+        <ToggleSwitch AutomationProperties.Name="{my:Loc Theme}"
+                      Classes="kind-theme"
+                      IsChecked="{Binding !ThemeManager.IsDark, RelativeSource={RelativeSource AncestorType=chrome:ShellTitleBarChrome}}"
+                      Theme="{StaticResource MyNet.Theme.ToggleSwitch.Inner}" />
+    </StackPanel>
+</UserControl>

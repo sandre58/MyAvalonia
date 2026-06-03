@@ -1,0 +1,32 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:geo="clr-namespace:MyNet.Geography;assembly=MyNet.Geography">
+
+    <DataTemplate x:Key="MyNet.DataTemplate.Country.Xs" DataType="{x:Type geo:Country}">
+        <DockPanel>
+            <Image Width="16"
+                   Height="16"
+                   Margin="0,0,8,0"
+                   VerticalAlignment="Center"
+                   DockPanel.Dock="Left"
+                   Source="{Binding Converter={x:Static my:CountryConverter.To16}}" />
+            <TextBlock Text="{my:Display}"
+                       Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
+        </DockPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MyNet.DataTemplate.Country.Xl" DataType="{x:Type geo:Country}">
+        <Grid Width="90" Height="90" RowDefinitions="Auto,*">
+            <Image Width="64" Source="{Binding Converter={x:Static my:CountryConverter.To64}}" />
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Text="{my:Display}"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"
+                       Foreground="{Binding $parent[Control].(TextElement.Foreground)}" />
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

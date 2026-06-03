@@ -1,0 +1,26 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:globalization="clr-namespace:System.Globalization;assembly=System.Runtime">
+
+    <ControlTheme x:Key="MyNet.Theme.MenuItem.CulturePicker" TargetType="MenuItem"
+                  BasedOn="{StaticResource {x:Type MenuItem}}" x:DataType="globalization:CultureInfo">
+        <Setter Property="Padding" Value="4 4" />
+        <Setter Property="Header" Value="{Binding}" />
+        <Setter Property="HeaderTemplate" Value="{StaticResource MyNet.DataTemplate.CultureInfo.Xs}" />
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type my:CulturePicker}"
+                  TargetType="{x:Type my:CulturePicker}"
+                  BasedOn="{StaticResource {x:Type DropDownButton}}">
+        <Setter Property="AutomationProperties.Name" Value="{my:Loc Languages}" />
+        <Setter Property="Content" Value="{Binding SelectedCulture, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="ContentTemplate" Value="{StaticResource MyNet.DataTemplate.CultureInfo.Flag}" />
+        <Setter Property="ToolTip.Tip" Value="{my:Display SelectedCulture, RelativeSource={RelativeSource Self}, Casing=Title}" />
+        <Setter Property="Padding" Value="6 2 0 2" />
+        <Setter Property="Flyout">
+            <MenuFlyout ItemContainerTheme="{StaticResource MyNet.Theme.MenuItem.CulturePicker}" />
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

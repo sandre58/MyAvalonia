@@ -3,8 +3,8 @@
     <PropertyGroup>
         <Product>My .NET Avalonia - Geography</Product>
         <PackageIcon>MyAvalonia.png</PackageIcon>
-        <Description>Avalonia markup and helpers for MyNet.Geography (country lists, bindings).</Description>
-        <PackageTags>Avalonia;UI;Geography;Countries;MyNet;Extensions;CrossPlatform;Desktop</PackageTags>
+        <Description>Avalonia markup and helpers for MyNet.Geography (country lists, culture/country templates, CulturePicker).</Description>
+        <PackageTags>Avalonia;UI;Geography;Countries;Culture;MyNet;Extensions;CrossPlatform;Desktop</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,5 +13,13 @@
         <PackageReference Include="MyNet.Geography.Resources" />
     </ItemGroup>
 
-</Project>
+    <ItemGroup>
+        <ProjectReference Include="..\MyNet.Avalonia.Controls\MyNet.Avalonia.Controls.csproj" />
+        <ProjectReference Include="..\MyNet.Avalonia\MyNet.Avalonia.csproj" />
+    </ItemGroup>
 
+    <ItemGroup>
+        <AvaloniaResource Include="**/*.axaml" />
+    </ItemGroup>
+
+</Project>
