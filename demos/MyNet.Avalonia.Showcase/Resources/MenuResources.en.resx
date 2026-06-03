@@ -144,8 +144,8 @@
   <data name="Navigation" xml:space="preserve">
       <value>Navigation</value>
   </data>
-  <data name="DialogsAndFeeback" xml:space="preserve">
-      <value>Dialogs and feeback</value>
+  <data name="DialogsAndFeedback" xml:space="preserve">
+      <value>Dialogs and feedback</value>
   </data>
   <data name="DataAndLists" xml:space="preserve">
       <value>Data and lists</value>

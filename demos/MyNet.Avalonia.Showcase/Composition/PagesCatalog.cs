@@ -86,7 +86,7 @@ internal static class PagesCatalog
                 new(typeof(TabbedPagePageViewModel), typeof(TabbedPagePage))
             ]),
 
-            new PagesGroup(nameof(MenuResources.DialogsAndFeeback), MaterialIconKind.MessageAlertOutline, [
+            new PagesGroup(nameof(MenuResources.DialogsAndFeedback), MaterialIconKind.MessageAlertOutline, [
                 new(typeof(DialogPageViewModel), typeof(DialogPage)),
                 new(typeof(NotificationPageViewModel), typeof(NotificationPage)),
                 new(typeof(ProgressBarPageViewModel), typeof(ProgressBarPage))

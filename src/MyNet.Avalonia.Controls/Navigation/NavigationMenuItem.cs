@@ -302,6 +302,9 @@ public class NavigationMenuItem : HeaderedItemsControl
         SetCurrentValue(IsSelectedProperty, item == this);
         SetCurrentValue(IsActiveProperty, true);
 
+        if (!ReferenceEquals(item, this) && ItemCount > 0)
+            SetCurrentValue(IsVerticalCollapsedProperty, false);
+
         switch (Parent)
         {
             case NavigationMenuItem menuItem:

@@ -107,7 +107,7 @@
     <value>Icônes</value>
   </data>
   <data name="Inputs" xml:space="preserve">
-    <value>Champs texte</value>
+    <value>Entrées</value>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>Notifications</value>
@@ -130,7 +130,7 @@
   <data name="Navigation" xml:space="preserve">
       <value>Navigation</value>
   </data>
-  <data name="DialogsAndFeeback" xml:space="preserve">
+  <data name="DialogsAndFeedback" xml:space="preserve">
       <value>Dialogues et retours visuels</value>
   </data>
   <data name="ShapesAndVisuals" xml:space="preserve">

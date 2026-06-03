@@ -89,9 +89,9 @@ namespace MyNet.Avalonia.Showcase.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Dialogues et retours visuels.
         /// </summary>
-        internal static string DialogsAndFeeback {
+        internal static string DialogsAndFeedback {
             get {
-                return ResourceManager.GetString("DialogsAndFeeback", resourceCulture);
+                return ResourceManager.GetString("DialogsAndFeedback", resourceCulture);
             }
         }
         
@@ -114,7 +114,7 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Champs texte.
+        ///   Looks up a localized string similar to Entrées.
         /// </summary>
         internal static string Inputs {
             get {

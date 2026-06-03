@@ -33,7 +33,7 @@ internal sealed class HomePageViewModel : PageViewModel
         new(MaterialIconKind.Palette, nameof(MenuResources.Theme), "FeaturedThemeDescription", "Theme"),
         new(MaterialIconKind.TagFaces, nameof(MenuResources.Icons), "FeaturedIconsDescription", "Icons"),
         new(MaterialIconKind.FormatLineStyle, "FeaturedFormTitle", "FeaturedFormDescription", "Form"),
-        new(MaterialIconKind.MessageAlertOutline, nameof(MenuResources.DialogsAndFeeback), "FeaturedDialogsDescription", "Dialogs")
+        new(MaterialIconKind.MessageAlertOutline, nameof(MenuResources.DialogsAndFeedback), "FeaturedDialogsDescription", "Dialogs")
     ];
 
     public IReadOnlyList<HomeLinkViewModel> CategoryLinks { get; } =
@@ -44,7 +44,7 @@ internal sealed class HomePageViewModel : PageViewModel
         new(MaterialIconKind.ViewCarousel, nameof(MenuResources.Containers), "CategoryContainersDescription", "Containers"),
         new(MaterialIconKind.Table, nameof(MenuResources.DataAndLists), "CategoryDataDescription", "DataAndLists"),
         new(MaterialIconKind.BookOpenPageVariantOutline, nameof(MenuResources.Navigation), "CategoryNavigationDescription", "Navigation"),
-        new(MaterialIconKind.MessageAlertOutline, nameof(MenuResources.DialogsAndFeeback), "CategoryDialogsDescription", "DialogsAndFeedback"),
+        new(MaterialIconKind.MessageAlertOutline, nameof(MenuResources.DialogsAndFeedback), "CategoryDialogsDescription", "DialogsAndFeedback"),
         new(MaterialIconKind.Shape, nameof(MenuResources.ShapesAndVisuals), "CategoryShapesDescription", "ShapesAndVisuals")
     ];
 
@@ -60,10 +60,10 @@ internal sealed class HomePageViewModel : PageViewModel
             "Texts" => _navigationClient.NavigateToAsync<LabelPageViewModel>(),
             "Buttons" => _navigationClient.NavigateToAsync<ButtonPageViewModel>(),
             "Inputs" => _navigationClient.NavigateToAsync<FieldsPageViewModel>(),
-            "Containers" => _navigationClient.NavigateToAsync<FormPageViewModel>(),
+            "Containers" => _navigationClient.NavigateToAsync<AvatarPageViewModel>(),
             "DataAndLists" => _navigationClient.NavigateToAsync<DataGridPageViewModel>(),
             "Navigation" => _navigationClient.NavigateToAsync<NavigationMenuPageViewModel>(),
-            "DialogsAndFeedback" => _navigationClient.NavigateToAsync<NotificationPageViewModel>(),
+            "DialogsAndFeedback" => _navigationClient.NavigateToAsync<DialogPageViewModel>(),
             "ShapesAndVisuals" => _navigationClient.NavigateToAsync<BorderPageViewModel>(),
             _ => Task.CompletedTask
         };
