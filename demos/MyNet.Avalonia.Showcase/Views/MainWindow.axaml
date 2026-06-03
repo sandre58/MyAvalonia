@@ -15,6 +15,8 @@
         Icon="/Assets/Demo.ico"
         my:WindowAssist.ShowFullScreenButton="{OnPlatform True, macOS=False}"
         my:WindowAssist.IsTitleVisible="False"
+        my:WindowAssist.TitleBarBackground="Transparent"
+        my:WindowAssist.ExtendContentIntoTitleBar="True"
         x:Name="Root"
         my:OverlayDialogHost.IsModalStatusScope="True"
         mc:Ignorable="d">

@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -12,25 +13,42 @@ namespace MyNet.Avalonia.Theme.Controls.Assists;
 
 public static class WindowAssist
 {
-    private const double CaptionButtonWidth = 45;
-
     static WindowAssist()
     {
-        ShowMinimizeButtonProperty.Changed.AddClassHandler<Window>((w, _) => UpdateCaptionButtonsWidth(w));
-        ShowMaximizeButtonProperty.Changed.AddClassHandler<Window>((w, _) => UpdateCaptionButtonsWidth(w));
-        ShowCloseButtonProperty.Changed.AddClassHandler<Window>((w, _) => UpdateCaptionButtonsWidth(w));
-        ShowFullScreenButtonProperty.Changed.AddClassHandler<Window>((w, _) => UpdateCaptionButtonsWidth(w));
+        Control.LoadedEvent.AddClassHandler<Window>((window, _) =>
+        {
+            UpdateCaptionButtonsWidth(window);
+            UpdateTitleBarContentInset(window);
+        });
+
+        ShowMinimizeButtonProperty.Changed.AddClassHandler<Window>(OnCaptionButtonVisibilityChanged);
+        ShowMaximizeButtonProperty.Changed.AddClassHandler<Window>(OnCaptionButtonVisibilityChanged);
+        ShowCloseButtonProperty.Changed.AddClassHandler<Window>(OnCaptionButtonVisibilityChanged);
+        ShowFullScreenButtonProperty.Changed.AddClassHandler<Window>(OnCaptionButtonVisibilityChanged);
+
+        TitleBarHeightProperty.Changed.AddClassHandler<Window>((w, _) => UpdateTitleBarContentInset(w));
+        ExtendContentIntoTitleBarProperty.Changed.AddClassHandler<Window>((w, _) => UpdateTitleBarContentInset(w));
+        ReserveTitleBarSafeAreaProperty.Changed.AddClassHandler<Window>((w, _) => UpdateTitleBarContentInset(w));
     }
 
-    private static void UpdateCaptionButtonsWidth(StyledElement element)
-    {
-        var width = 0.0;
-        if (GetShowMinimizeButton(element)) width += CaptionButtonWidth;
-        if (GetShowMaximizeButton(element)) width += CaptionButtonWidth;
-        if (GetShowCloseButton(element)) width += CaptionButtonWidth;
-        if (GetShowFullScreenButton(element)) width += CaptionButtonWidth;
-        element.SetCurrentValue(CaptionButtonsWidthProperty, width);
-    }
+    private static void OnCaptionButtonVisibilityChanged(Window window, AvaloniaPropertyChangedEventArgs e) => UpdateCaptionButtonsWidth(window);
+
+    private static void UpdateCaptionButtonsWidth(Window window)
+        => window.SetCurrentValue(
+            CaptionButtonsWidthProperty,
+            WindowCaptionLayout.CalculateCaptionButtonsWidth(
+                GetShowMinimizeButton(window),
+                GetShowMaximizeButton(window),
+                GetShowCloseButton(window),
+                GetShowFullScreenButton(window)));
+
+    private static void UpdateTitleBarContentInset(Window window)
+        => window.SetCurrentValue(
+            TitleBarContentInsetProperty,
+            WindowCaptionLayout.CalculateContentInset(
+                GetExtendContentIntoTitleBar(window),
+                GetReserveTitleBarSafeArea(window),
+                GetTitleBarHeight(window)));
 
     // ------------------------------------------------------------------
     // Title bar
@@ -39,7 +57,7 @@ public static class WindowAssist
         AvaloniaProperty.RegisterAttached<StyledElement, double>(
             "TitleBarHeight",
             typeof(WindowAssist),
-            40,
+            WindowLayoutMetrics.TitleBarHeight,
             inherits: true);
 
     public static double GetTitleBarHeight(StyledElement element) => element.GetValue(TitleBarHeightProperty);
@@ -67,6 +85,32 @@ public static class WindowAssist
 
     public static void SetTitleBarBackground(StyledElement element, IBrush? value) => element.SetValue(TitleBarBackgroundProperty, value);
 
+    /// <summary>
+    /// When true and <see cref="ExtendContentIntoTitleBar"/> is true, adds top padding to window content so it does not sit under the title bar chrome.
+    /// </summary>
+    public static readonly AttachedProperty<bool> ReserveTitleBarSafeAreaProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, bool>(
+            "ReserveTitleBarSafeArea",
+            typeof(WindowAssist),
+            inherits: true);
+
+    public static bool GetReserveTitleBarSafeArea(StyledElement element) => element.GetValue(ReserveTitleBarSafeAreaProperty);
+
+    public static void SetReserveTitleBarSafeArea(StyledElement element, bool value) => element.SetValue(ReserveTitleBarSafeAreaProperty, value);
+
+    /// <summary>
+    /// Computed top padding applied to the window content presenter (see <see cref="ReserveTitleBarSafeAreaProperty"/> and <see cref="ExtendContentIntoTitleBarProperty"/>).
+    /// </summary>
+    public static readonly AttachedProperty<Thickness> TitleBarContentInsetProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, Thickness>(
+            "TitleBarContentInset",
+            typeof(WindowAssist),
+            inherits: true);
+
+    public static Thickness GetTitleBarContentInset(StyledElement element) => element.GetValue(TitleBarContentInsetProperty);
+
+    public static void SetTitleBarContentInset(StyledElement element, Thickness value) => element.SetValue(TitleBarContentInsetProperty, value);
+
     // ------------------------------------------------------------------
     // Title bar content
     // ------------------------------------------------------------------
@@ -80,6 +124,16 @@ public static class WindowAssist
 
     public static void SetLeftTitleBarContent(StyledElement element, object? value) => element.SetValue(LeftTitleBarContentProperty, value);
 
+    public static readonly AttachedProperty<object?> CenterTitleBarContentProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, object?>(
+            "CenterTitleBarContent",
+            typeof(WindowAssist),
+            inherits: true);
+
+    public static object? GetCenterTitleBarContent(StyledElement element) => element.GetValue(CenterTitleBarContentProperty);
+
+    public static void SetCenterTitleBarContent(StyledElement element, object? value) => element.SetValue(CenterTitleBarContentProperty, value);
+
     public static readonly AttachedProperty<object?> RightTitleBarContentProperty =
         AvaloniaProperty.RegisterAttached<StyledElement, object?>(
             "RightTitleBarContent",
@@ -89,6 +143,20 @@ public static class WindowAssist
     public static object? GetRightTitleBarContent(StyledElement element) => element.GetValue(RightTitleBarContentProperty);
 
     public static void SetRightTitleBarContent(StyledElement element, object? value) => element.SetValue(RightTitleBarContentProperty, value);
+
+    /// <summary>
+    /// Reserved width on the left for system caption controls (e.g. macOS traffic lights). Defaults to <see cref="WindowLayoutMetrics.MacTitleBarInset"/> on macOS.
+    /// </summary>
+    public static readonly AttachedProperty<double> LeftCaptionButtonsWidthProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, double>(
+            "LeftCaptionButtonsWidth",
+            typeof(WindowAssist),
+            GetDefaultLeftCaptionButtonsWidth(),
+            inherits: true);
+
+    public static double GetLeftCaptionButtonsWidth(StyledElement element) => element.GetValue(LeftCaptionButtonsWidthProperty);
+
+    public static void SetLeftCaptionButtonsWidth(StyledElement element, double value) => element.SetValue(LeftCaptionButtonsWidthProperty, value);
 
     // ------------------------------------------------------------------
     // Buttons
@@ -140,7 +208,7 @@ public static class WindowAssist
         AvaloniaProperty.RegisterAttached<StyledElement, double>(
             "CaptionButtonsWidth",
             typeof(WindowAssist),
-            3 * CaptionButtonWidth,
+            3 * WindowLayoutMetrics.CaptionButtonWidth,
             inherits: true);
 
     public static double GetCaptionButtonsWidth(StyledElement element) => element.GetValue(CaptionButtonsWidthProperty);
@@ -184,4 +252,39 @@ public static class WindowAssist
     public static bool GetExtendContentIntoTitleBar(StyledElement element) => element.GetValue(ExtendContentIntoTitleBarProperty);
 
     public static void SetExtendContentIntoTitleBar(StyledElement element, bool value) => element.SetValue(ExtendContentIntoTitleBarProperty, value);
+
+    private static double GetDefaultLeftCaptionButtonsWidth() => OperatingSystem.IsMacOS() ? WindowLayoutMetrics.MacTitleBarInset : 0;
+}
+
+internal static class WindowCaptionLayout
+{
+    public static double CalculateCaptionButtonsWidth(
+        bool showMinimize,
+        bool showMaximize,
+        bool showClose,
+        bool showFullScreen)
+    {
+        var width = 0.0;
+        if (showMinimize) width += WindowLayoutMetrics.CaptionButtonWidth;
+        if (showMaximize) width += WindowLayoutMetrics.CaptionButtonWidth;
+        if (showClose) width += WindowLayoutMetrics.CaptionButtonWidth;
+        if (showFullScreen) width += WindowLayoutMetrics.CaptionButtonWidth;
+        return width;
+    }
+
+    public static Thickness CalculateContentInset(bool extendContentIntoTitleBar, bool reserveTitleBarSafeArea, double titleBarHeight)
+    {
+        var top = extendContentIntoTitleBar && reserveTitleBarSafeArea ? titleBarHeight : 0;
+        return new(0, top, 0, 0);
+    }
+}
+
+/// <summary>
+/// Default window chrome measurements. Values must stay aligned with <c>Tokens/Layout.axaml</c>.
+/// </summary>
+internal static class WindowLayoutMetrics
+{
+    public const double TitleBarHeight = 30;
+    public const double CaptionButtonWidth = 45;
+    public const double MacTitleBarInset = 78;
 }

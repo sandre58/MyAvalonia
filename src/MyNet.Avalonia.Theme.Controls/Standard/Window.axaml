@@ -1,47 +1,47 @@
 ﻿
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DEFAULT WINDOW THEME                                      -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <ControlTheme x:Key="{x:Type Window}" TargetType="Window">
-            <Setter Property="my:ThemeAssist.Category" Value="Surface" />
-            <Setter Property="my:WindowAssist.IsTitleVisible" Value="True" />
-            <Setter Property="my:WindowAssist.TitleBarHeight" Value="30" />
-            <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Surface.Level3}" />
-            <Setter Property="my:WindowAssist.ExtendContentIntoTitleBar" Value="True" />
-            <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="-1" />
-            <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
-            <Setter Property="Margin" Value="0" />
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT WINDOW THEME                                      -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <ControlTheme x:Key="{x:Type Window}" TargetType="Window">
+        <Setter Property="my:ThemeAssist.Category" Value="Surface" />
+        <Setter Property="my:WindowAssist.IsTitleVisible" Value="True" />
+        <Setter Property="my:WindowAssist.TitleBarHeight" Value="{StaticResource MyNet.Height.TitleBar}" />
+        <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Surface.Level3}" />
+        <Setter Property="my:WindowAssist.ExtendContentIntoTitleBar" Value="False" />
+        <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="-1" />
+        <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
+        <Setter Property="Margin" Value="0" />
 
-            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
-            <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
+        <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />
 
-            <!-- Default colors -->
-            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:Theme Surface.Level2}" />
-            <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:Theme Surface.Border}" />
-            <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Theme Foreground.Primary}" />
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:Theme Surface.Level2}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:Theme Surface.Border}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Theme Foreground.Primary}" />
 
-            <!-- Variant -->
-            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background, IgnoreForegroundParent=True}" />
-            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush, IgnoreForegroundParent=True}" />
-            <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True, IgnoreForegroundParent=True}" />
-            <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background, IgnoreForegroundParent=True}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush, IgnoreForegroundParent=True}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True, IgnoreForegroundParent=True}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
 
-            <!-- Theme -->
-            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
-            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
-            <Setter Property="TransparencyBackgroundFallback" Value="{Binding $self.(my:VariantAssist.Background)}" />
-            <Setter Property="TopLevel.SystemBarColor" Value="{Binding $self.(my:VariantAssist.Background)}"/>
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
-            <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <!-- Theme -->
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="TransparencyBackgroundFallback" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="TopLevel.SystemBarColor" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
 
-            <Setter Property="Template">
-                <ControlTemplate TargetType="Window">
-                    <Panel>
-                        <Border Name="PART_TransparencyFallback" IsHitTestVisible="False" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="Window">
+                <Panel>
+                    <Border Name="PART_TransparencyFallback" IsHitTestVisible="False" />
                     <Border Background="{TemplateBinding Background}"
                             BackgroundSizing="InnerBorderEdge"
                             BorderBrush="{TemplateBinding BorderBrush}"
@@ -49,48 +49,64 @@
                             IsHitTestVisible="False" />
                     <Panel Margin="{TemplateBinding WindowDecorationMargin}" Background="Transparent" />
                     <VisualLayerManager Padding="{TemplateBinding OffScreenMargin, Mode=OneWay}">
-                            <Panel>
-                                <ContentPresenter
-                                    Name="PART_ContentPresenter"
-                                    Margin="{TemplateBinding WindowDecorationMargin}"
-                                    Padding="{TemplateBinding Padding}"
-                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    Content="{TemplateBinding Content}"
-                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
-                                <!-- Drag region above client content (ExtendContentIntoTitleBar) -->
+                        <Panel>
+                            <ContentPresenter Name="PART_ContentPresenter"
+                                              Margin="{TemplateBinding WindowDecorationMargin}"
+                                              Padding="{TemplateBinding (my:WindowAssist.TitleBarContentInset)}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                            <!-- Extended title bar chrome (background, drag, custom content) -->
+                            <Panel x:Name="PART_TitleBarChrome"
+                                   IsVisible="{TemplateBinding (my:WindowAssist.ExtendContentIntoTitleBar)}">
+                                <Border VerticalAlignment="Top"
+                                        Height="{TemplateBinding (my:WindowAssist.TitleBarHeight)}"
+                                        Background="{TemplateBinding (my:WindowAssist.TitleBarBackground)}"
+                                        IsHitTestVisible="False" />
                                 <Panel x:Name="PART_ClientTitleBarDragRegion"
                                        VerticalAlignment="Top"
                                        Height="{TemplateBinding (my:WindowAssist.TitleBarHeight)}"
                                        Background="Transparent"
                                        WindowDecorationProperties.ElementRole="TitleBar" />
-                                <ContentPresenter HorizontalAlignment="Left"
-                                                  VerticalAlignment="Top"
-                                                  Height="{TemplateBinding (my:WindowAssist.TitleBarHeight)}"
-                                                  VerticalContentAlignment="Center"
-                                                  WindowDecorationProperties.ElementRole="User"
-                                                  Content="{TemplateBinding (my:WindowAssist.LeftTitleBarContent)}" />
-                                <StackPanel Orientation="Horizontal"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Top"
-                                            Height="{TemplateBinding (my:WindowAssist.TitleBarHeight)}"
-                                            WindowDecorationProperties.ElementRole="User">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                      Content="{TemplateBinding (my:WindowAssist.RightTitleBarContent)}" />
-                                    <Panel Width="{TemplateBinding (my:WindowAssist.CaptionButtonsWidth)}"
-                                           IsHitTestVisible="False" />
-                                </StackPanel>
+                                <Grid VerticalAlignment="Top"
+                                      Height="{TemplateBinding (my:WindowAssist.TitleBarHeight)}"
+                                      ColumnDefinitions="Auto,*,Auto">
+                                    <StackPanel Grid.Column="0"
+                                                Orientation="Horizontal"
+                                                VerticalAlignment="Center"
+                                                WindowDecorationProperties.ElementRole="User">
+                                        <Panel Width="{TemplateBinding (my:WindowAssist.LeftCaptionButtonsWidth)}"
+                                               IsHitTestVisible="False" />
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                          Content="{TemplateBinding (my:WindowAssist.LeftTitleBarContent)}" />
+                                    </StackPanel>
+                                    <ContentPresenter Grid.Column="1"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      WindowDecorationProperties.ElementRole="User"
+                                                      Content="{TemplateBinding (my:WindowAssist.CenterTitleBarContent)}" />
+                                    <StackPanel Grid.Column="2"
+                                                Orientation="Horizontal"
+                                                VerticalAlignment="Center"
+                                                WindowDecorationProperties.ElementRole="User">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                          Content="{TemplateBinding (my:WindowAssist.RightTitleBarContent)}" />
+                                        <Panel Width="{TemplateBinding (my:WindowAssist.CaptionButtonsWidth)}"
+                                               IsHitTestVisible="False" />
+                                    </StackPanel>
+                                </Grid>
                             </Panel>
-                        </VisualLayerManager>
-                    </Panel>
-                </ControlTemplate>
-            </Setter>
+                        </Panel>
+                    </VisualLayerManager>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
 
-                    <!-- Style to extend content into titlebar -->
-                    <Style Selector="^[(my|WindowAssist.ExtendContentIntoTitleBar)=true] /template/ ContentPresenter#PART_ContentPresenter">
-                        <Setter Property="Margin" Value="0" />
-                    </Style>
-                </ControlTheme>
+        <Style Selector="^[(my|WindowAssist.ExtendContentIntoTitleBar)=true] /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Margin" Value="0" />
+        </Style>
+    </ControlTheme>
 
-
-        </ResourceDictionary>
+</ResourceDictionary>

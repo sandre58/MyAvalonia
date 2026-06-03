@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
-using MyNet.Avalonia;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extended;
 using MyNet.Avalonia.Extended.Theming;
+using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ViewModels;
 using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Diagnostics;
@@ -22,12 +22,12 @@ using MyNet.Fakers;
 using MyNet.Globalization;
 using MyNet.Globalization.Culture;
 using MyNet.Humanizer;
-using MyNet.UI.ViewModels.Shell.Chrome;
 using MyNet.Observable.Validation;
 using MyNet.UI.Loading;
 using MyNet.UI.Locators.Conventions;
 using MyNet.UI.Theming;
 using MyNet.UI.ViewModels;
+using MyNet.UI.ViewModels.Shell.Chrome;
 
 namespace MyNet.Avalonia.Showcase.Composition;
 
@@ -46,24 +46,15 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
 
         var collection = new ServiceCollection();
         RegisterServices(collection);
+        RegisterTranslations(collection);
         RegisterPageViewModels(collection, viewModelTypes);
 
         var services = collection.BuildServiceProvider();
         InitializeServices(services);
         InitializeTheme(services);
-        RegisterNavigationMappings(services);
+        InitializePageMappings(services);
 
         return services;
-    }
-
-    /// <summary>Registers view-model to view mappings for navigation.</summary>
-    public static void RegisterNavigationMappings(IServiceProvider services)
-    {
-        var providers = PagesCatalog.GetProviders();
-        var typeResolver = services.GetRequiredService<ITypeResolver>();
-
-        foreach (var association in providers.SelectMany(x => x.GetPageAssociations()))
-            typeResolver.Register(association.ViewModelType, association.ViewType);
     }
 
     private void RegisterServices(IServiceCollection collection)
@@ -80,8 +71,30 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
             .AddAvaloniaColors()
             .AddMyNetAvaloniaControls()
             .AddMyNetAvaloniaExtended(topLevelProvider)
-            .AddSingleton<IThemeBrushService>(MyTheme.Current)
-            .AddResources();
+            .AddSingleton<IThemeBrushService>(MyTheme.Current);
+
+    /// <summary>
+    /// Contributes showcase demo translation resources to the catalog.
+    /// </summary>
+    private static void RegisterTranslations(IServiceCollection services)
+        => services.AddTranslationResource(nameof(CommonResources), CommonResources.ResourceManager)
+            .AddTranslationResource(nameof(MenuResources), MenuResources.ResourceManager)
+            .AddTranslationResource(nameof(SettingsResources), SettingsResources.ResourceManager)
+            .AddTranslationResource(nameof(NotificationPageResources), NotificationPageResources.ResourceManager)
+            .AddTranslationResource(nameof(FormResources), FormResources.ResourceManager)
+            .AddTranslationResource(nameof(DataGridPageResources), DataGridPageResources.ResourceManager)
+            .AddTranslationResource(nameof(MenuPageResources), MenuPageResources.ResourceManager)
+            .AddTranslationResource(nameof(NavigationMenuPageResources), NavigationMenuPageResources.ResourceManager)
+            .AddTranslationResource(nameof(DialogsPageResources), DialogsPageResources.ResourceManager)
+            .AddTranslationResource(nameof(ThemePageResources), ThemePageResources.ResourceManager)
+            .AddTranslationResource(nameof(ControlThemeResources), ControlThemeResources.ResourceManager)
+            .AddTranslationResource(nameof(HomePageResources), HomePageResources.ResourceManager);
+
+    private static void RegisterPageViewModels(IServiceCollection collection, IEnumerable<Type> viewModelTypes)
+    {
+        collection.AddSingleton<MainViewModel>();
+        viewModelTypes.ForEach(x => collection.AddSingleton(x));
+    }
 
     private static void InitializeServices(IServiceProvider services)
     {
@@ -101,9 +114,12 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
         registry.Register(new ThemeBase(ThemeVariantProvider.DarkBlue, true, false));
     }
 
-    private static void RegisterPageViewModels(IServiceCollection collection, IEnumerable<Type> viewModelTypes)
+    private static void InitializePageMappings(IServiceProvider services)
     {
-        collection.AddSingleton<MainViewModel>();
-        viewModelTypes.ForEach(x => collection.AddSingleton(x));
+        var providers = PagesCatalog.GetProviders();
+        var typeResolver = services.GetRequiredService<ITypeResolver>();
+
+        foreach (var association in providers.SelectMany(x => x.GetPageAssociations()))
+            typeResolver.Register(association.ViewModelType, association.ViewType);
     }
 }
