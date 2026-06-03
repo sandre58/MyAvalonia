@@ -14,6 +14,7 @@ using MyNet.Avalonia.Extended;
 using MyNet.Avalonia.Extended.Theming;
 using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ViewModels;
+using MyNet.Avalonia.Showcase.ViewModels.Pages;
 using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.Avalonia.Theme.Themes;
@@ -23,6 +24,7 @@ using MyNet.Globalization;
 using MyNet.Globalization.Culture;
 using MyNet.UI;
 using MyNet.UI.Locators.Conventions;
+using MyNet.UI.Navigation;
 using MyNet.UI.Theming;
 
 namespace MyNet.Avalonia.Showcase.Composition;
@@ -52,6 +54,21 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
 
         return services;
     }
+
+    /// <summary>Resolves <see cref="MainViewModel"/> and registers showcase menu items.</summary>
+    public static MainViewModel ConfigureMainViewModel(IServiceProvider services)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+
+        var mainViewModel = services.GetRequiredService<MainViewModel>();
+        var providers = PagesCatalog.GetProviders();
+        mainViewModel.AddMenuItem([.. providers.Select(x => PagesCatalog.CreateMenuItem(x, services))]);
+        return mainViewModel;
+    }
+
+    /// <summary>Navigates to the default landing page.</summary>
+    public static void NavigateToDefaultPage(IServiceProvider services)
+        => _ = services.GetRequiredService<INavigationClient>().NavigateToAsync<HomePageViewModel>();
 
     private void RegisterServices(IServiceCollection collection)
         => collection.AddUi([SupportedCultures.English, SupportedCultures.French])

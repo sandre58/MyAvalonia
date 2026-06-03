@@ -51,6 +51,16 @@ internal sealed class MainViewModel : ObservableObject
 
     public string ProductName => ApplicationInfo.ProductName;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether culture/theme chrome is shown inside <see cref="Views.MainView"/> (browser host).
+    /// Desktop hosts it in the window title bar instead.
+    /// </summary>
+    public bool ShowShellChromeInView
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
+
     public IBusyService ApplicationBusy { get; }
 
     public ICommand GoBackCommand { get; }

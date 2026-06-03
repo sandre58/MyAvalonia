@@ -4,91 +4,118 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:my="http://mynet.com/avalonia"
+             xmlns:ext="using:MyNet.Avalonia.Extended.Controls"
+             xmlns:chrome="clr-namespace:MyNet.Avalonia.Showcase.Views.Chrome"
              xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels"
              xmlns:menu="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Menu"
+             xmlns:composition="clr-namespace:MyNet.Avalonia.Showcase.Composition"
+             d:DataContext="{x:Static composition:MainViewDesignData.MainViewModel}"
              d:DesignHeight="450"
              d:DesignWidth="800"
              x:DataType="vm:MainViewModel"
+             my:OverlayDialogHost.IsModalStatusScope="True"
              mc:Ignorable="d">
     <UserControl.Resources>
         <my:BindingProxy x:Key="Proxy" Data="{Binding}" />
     </UserControl.Resources>
 
-    <Grid ColumnDefinitions="Auto, *">
+    <Grid>
+        <Grid RowDefinitions="Auto, *">
+            <!-- Browser / single-view: culture + theme (desktop uses WindowAssist title bar) -->
+            <Border Grid.Row="0"
+                    Padding="{my:Thickness Sm, Vertical}"
+                    Background="{my:Theme Surface.Level4}"
+                    BorderBrush="{my:Theme Surface.Border}"
+                    BorderThickness="0 0 0 1"
+                    IsVisible="{Binding ShowShellChromeInView}">
+                <chrome:ShellTitleBarChrome CultureManager="{Binding Culture}"
+                                            HorizontalAlignment="Right"
+                                            ThemeManager="{Binding Theme}" />
+            </Border>
 
-        <!-- Menu -->
-        <my:NavigationMenu x:Name="Menu"
-                           ItemsSource="{Binding MenuItems}"
-                           SelectedItem="{Binding SelectedMenuItem, Mode=TwoWay}"
-                           Classes="shadow-surface"
-                           Padding="{my:Thickness Sm}">
-            <my:NavigationMenu.Header>
-                <Grid RowDefinitions="Auto, Auto" RowSpacing="{my:Spacing Sm}">
+            <Grid Grid.Row="1" ColumnDefinitions="Auto, *">
+                <!-- Menu -->
+                <my:NavigationMenu x:Name="Menu"
+                                   ItemsSource="{Binding MenuItems}"
+                                   SelectedItem="{Binding SelectedMenuItem, Mode=TwoWay}"
+                                   Classes="shadow-surface"
+                                   Padding="{my:Thickness Sm}">
+                    <my:NavigationMenu.Header>
+                        <Grid RowDefinitions="Auto, Auto" RowSpacing="{my:Spacing Sm}">
 
-                    <!-- Title -->
-                    <Grid>
-                        <Border Background="{my:Theme Surface.Level5}" />
-                        <StackPanel Spacing="{my:Spacing Lg}" Orientation="Horizontal" Margin="{my:Thickness Sm}">
-                            <Image Width="40" Height="40" VerticalAlignment="Center"
-                                   RenderOptions.BitmapInterpolationMode="HighQuality" Source="/Assets/Demo.ico" />
-                            <StackPanel VerticalAlignment="Center" Spacing="{my:Spacing Xs}">
-                                <TextBlock Classes="text-h6" Text="{Binding ProductName}" />
-                                <TextBlock Classes="font-md opacity-high" Text="{my:Loc Showcase}" />
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
+                            <!-- Title -->
+                            <Grid>
+                                <Border Background="{my:Theme Surface.Level5}" />
+                                <StackPanel Spacing="{my:Spacing Lg}" Orientation="Horizontal" Margin="{my:Thickness Sm}">
+                                    <Image Width="40" Height="40" VerticalAlignment="Center"
+                                           RenderOptions.BitmapInterpolationMode="HighQuality" Source="/Assets/Demo.ico" />
+                                    <StackPanel VerticalAlignment="Center" Spacing="{my:Spacing Xs}">
+                                        <TextBlock Classes="text-h6" Text="{Binding ProductName}" />
+                                        <TextBlock Classes="font-md opacity-high" Text="{my:Loc Showcase}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
 
-                    <!-- Toggle Menu -->
-                    <DockPanel Grid.Row="1" Margin="{my:Thickness Sm, Horizontal}">
-                        <Button DockPanel.Dock="Left"
-                                Width="40"
-                                Height="40"
-                                Padding="0"
-                                Classes="variant-text"
-                                Content="{my:MaterialIcon Menu, Md}"
-                                Command="{Binding #Menu.Toggle}" />
-                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Sm}"
-                                    HorizontalAlignment="Right" Margin="{my:Thickness Md, Left}">
-                            <Button Command="{Binding GoBackCommand, FallbackValue={x:Null}}"
-                                    Content="{my:MaterialIcon ArrowLeft}" Classes="variant-outlined"
-                                    Theme="{StaticResource MyNet.Theme.Button.Rounded}"
-                                    ToolTip.Tip="{my:Loc PreviousPage}" />
-                            <Button Command="{Binding GoForwardCommand, FallbackValue={x:Null}}"
-                                    Content="{my:MaterialIcon ArrowRight}" Classes="variant-outlined"
-                                    Theme="{StaticResource MyNet.Theme.Button.Rounded}"
-                                    ToolTip.Tip="{my:Loc NextPage}" />
-                        </StackPanel>
-                    </DockPanel>
-                </Grid>
-            </my:NavigationMenu.Header>
-            <my:NavigationMenu.ItemContainerTheme>
-                <ControlTheme TargetType="my:NavigationMenuItem"
-                              BasedOn="{StaticResource {x:Type my:NavigationMenuItem}}"
-                              x:DataType="{x:Type menu:IMenuItemViewModel}">
-                    <Setter Property="Icon">
-                        <Template>
-                            <my:MaterialIcon Kind="{Binding Icon}" />
-                        </Template>
-                    </Setter>
-                    <Setter Property="Header" Value="{my:Display Title}" />
-                    <Setter Property="Classes.isGroup" Value="{Binding IsGroup}" />
-                    <Setter Property="IsVerticalCollapsed" Value="True" />
+                            <!-- Toggle Menu -->
+                            <DockPanel Grid.Row="1" Margin="{my:Thickness Sm, Horizontal}">
+                                <Button DockPanel.Dock="Left"
+                                        Width="40"
+                                        Height="40"
+                                        Padding="0"
+                                        Classes="variant-text"
+                                        Content="{my:MaterialIcon Menu, Md}"
+                                        Command="{Binding #Menu.Toggle}" />
+                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Sm}"
+                                            HorizontalAlignment="Right" Margin="{my:Thickness Md, Left}">
+                                    <Button Command="{Binding GoBackCommand, FallbackValue={x:Null}}"
+                                            Content="{my:MaterialIcon ArrowLeft}" Classes="variant-outlined"
+                                            Theme="{StaticResource MyNet.Theme.Button.Rounded}"
+                                            ToolTip.Tip="{my:Loc PreviousPage}" />
+                                    <Button Command="{Binding GoForwardCommand, FallbackValue={x:Null}}"
+                                            Content="{my:MaterialIcon ArrowRight}" Classes="variant-outlined"
+                                            Theme="{StaticResource MyNet.Theme.Button.Rounded}"
+                                            ToolTip.Tip="{my:Loc NextPage}" />
+                                </StackPanel>
+                            </DockPanel>
+                        </Grid>
+                    </my:NavigationMenu.Header>
+                    <my:NavigationMenu.ItemContainerTheme>
+                        <ControlTheme TargetType="my:NavigationMenuItem"
+                                      BasedOn="{StaticResource {x:Type my:NavigationMenuItem}}"
+                                      x:DataType="{x:Type menu:IMenuItemViewModel}">
+                            <Setter Property="Icon">
+                                <Template>
+                                    <my:MaterialIcon Kind="{Binding Icon}" />
+                                </Template>
+                            </Setter>
+                            <Setter Property="Header" Value="{my:Display Title}" />
+                            <Setter Property="Classes.isGroup" Value="{Binding IsGroup}" />
+                            <Setter Property="IsVerticalCollapsed" Value="True" />
 
-                    <Style Selector="^.isGroup">
-                        <Setter Property="ItemsSource" Value="{Binding Items}" />
-                    </Style>
-                    <Style Selector="^:not(.isGroup)">
-                        <Setter Property="CommandParameter" Value="{Binding NavigationTarget}" />
-                        <Setter Property="Command"
-                                Value="{Binding ((vm:MainViewModel)Data).NavigateCommand, FallbackValue={x:Null}, Source={StaticResource Proxy}}" />
-                    </Style>
-                </ControlTheme>
-            </my:NavigationMenu.ItemContainerTheme>
-        </my:NavigationMenu>
+                            <Style Selector="^.isGroup">
+                                <Setter Property="ItemsSource" Value="{Binding Items}" />
+                            </Style>
+                            <Style Selector="^:not(.isGroup)">
+                                <Setter Property="CommandParameter" Value="{Binding NavigationTarget}" />
+                                <Setter Property="Command"
+                                        Value="{Binding ((vm:MainViewModel)Data).NavigateCommand, FallbackValue={x:Null}, Source={StaticResource Proxy}}" />
+                            </Style>
+                        </ControlTheme>
+                    </my:NavigationMenu.ItemContainerTheme>
+                </my:NavigationMenu>
 
-        <!-- Main content -->
-        <NavigationPage Grid.Column="1" my:NavigationPageHostAssist.IsHost="True"
-                        IsBackButtonVisible="False" BarHeight="0"
-                        PageTransition="{my:PageTransition Crossfade, FillMode=Both}" />
+                <!-- Main content -->
+                <NavigationPage Grid.Column="1" my:NavigationPageHostAssist.IsHost="True"
+                                IsBackButtonVisible="False" BarHeight="0"
+                                PageTransition="{my:PageTransition Crossfade, FillMode=Both}" />
+            </Grid>
+        </Grid>
+
+        <my:OverlayDialogHost HostId="{x:Static my:OverlayDialogHostManager.MainHostId}"
+                              IsTopLevel="True"
+                              IsModalStatusReporter="True"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch" />
+        <ext:BusyServiceIndicator BusyService="{Binding ApplicationBusy}" />
     </Grid>
 </UserControl>

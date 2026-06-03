@@ -43,14 +43,33 @@ La composition (services, pages, menu) est centralisée dans `Composition/AppCom
 - `UseGlobalization` → `UseLocalization` → **`ValidationLocalization.Configure()`** → `UseDisplayText`
 - `UseFakers` → `UseThemeManager` → `UseAvaloniaClipboard` → `UseMyNetAvaloniaExtended()` (navigation)
 
-### Top-level (desktop)
+### Top-level (desktop et browser)
 
-`AddMyNetAvaloniaExtended` reçoit un `Func<TopLevel?>` qui résout `IClassicDesktopStyleApplicationLifetime.MainWindow` (assignée avant `Show()`).
+`AddMyNetAvaloniaExtended` reçoit un `Func<TopLevel?>` :
+
+- **Desktop** : `IClassicDesktopStyleApplicationLifetime.MainWindow`
+- **Browser** : `TopLevel.GetTopLevel(singleView.MainView)` une fois la vue racine assignée
+
+### Shell (`MainView` / `MainWindow`)
+
+| Élément | Desktop | Browser |
+|---------|---------|---------|
+| Menu + navigation | `MainView` | `MainView` |
+| Culture / thème | `ShellTitleBarChrome` dans la barre de titre (`MainWindow`) | `ShellTitleBarChrome` en bandeau (`ShowShellChromeInView`) |
+| Overlay dialogs + busy | `MainView` (`OverlayDialogHost`, `BusyServiceIndicator`) | idem |
+
+`MainWindow` ne contient plus que le chrome fenêtre Avalonia + `MainView`.
 
 ### Menu navigation
 
 Les entrées du menu sont des `LazyPageMenuItem` : le `PageViewModel` n’est résolu depuis le conteneur DI qu’à l’ouverture de la page (clic menu ou navigation). Les types restent en singleton une fois créés.
 Le clic sur une entrée appelle `NavigateCommand` avec `NavigationTarget`, puis `SelectedMenuItem` est resynchronisé sur l’état réel de navigation via `INavigationService.StateChanged`.
+
+Le menu est construit par `AppComposition.ConfigureMainViewModel()` (pas dans `App.axaml.cs`).
+
+### Aperçu designer (DEBUG)
+
+`MainView` et `MainWindow` utilisent `d:DataContext="{x:Static composition:MainViewDesignData.MainViewModel}"` : même DI et catalogue de pages que au runtime.
 
 ## À copier en production
 
@@ -75,6 +94,17 @@ Le clic sur une entrée appelle `NavigateCommand` avec `NavigationTarget`, puis 
 | Pas de virtualisation des listes | Simplicité du catalogue ; la page Icônes utilise la **pagination** |
 | `ShowcasePagesCatalog` explicite | Registre de toutes les pages démo |
 | Moteur `ThemeBuilder` / playground | Outil interactif du showcase, hors packages MyNet |
+
+## Test plan (browser / WASM)
+
+Après `dotnet run --project demos/MyNet.Avalonia.Showcase.Browser` :
+
+- [ ] Bandeau culture + thème visible en haut de `MainView`
+- [ ] Navigation menu : ouverture d’une page racine et d’une page dans un groupe
+- [ ] Page **Dialogs** : overlay modal et non modal
+- [ ] Page **Notifications** : toasts visibles
+- [ ] Changement de culture : libellés menu / page mis à jour
+- [ ] Bascule clair/sombre : contrôles MyNet cohérents
 
 ## Validation (exemple officiel)
 

@@ -4,18 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Showcase.Composition;
-using MyNet.Avalonia.Showcase.ViewModels;
-using MyNet.Avalonia.Showcase.ViewModels.Pages;
 using MyNet.Avalonia.Showcase.Views;
 using MyNet.Avalonia.Theme;
-using MyNet.UI.Navigation;
 
 namespace MyNet.Avalonia.Showcase;
 
@@ -33,10 +29,8 @@ public sealed class App : Application
     /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
-        var composition = new AppComposition(GetTopLevel);
-        _services = composition.Build();
-
-        var mainViewModel = CreateMainViewModel();
+        _services = new AppComposition(GetTopLevel).Build();
+        var mainViewModel = AppComposition.ConfigureMainViewModel(_services);
 
         switch (ApplicationLifetime)
         {
@@ -49,22 +43,20 @@ public sealed class App : Application
                 }
 
             case ISingleViewApplicationLifetime singleView:
+                mainViewModel.ShowShellChromeInView = true;
                 singleView.MainView = new MainView { DataContext = mainViewModel };
                 break;
         }
 
-        _ = _services.GetRequiredService<INavigationClient>().NavigateToAsync<HomePageViewModel>();
+        AppComposition.NavigateToDefaultPage(_services);
 
         base.OnFrameworkInitializationCompleted();
     }
 
-    private static Window? GetTopLevel() => (Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
-
-    private MainViewModel CreateMainViewModel()
+    private static TopLevel? GetTopLevel() => Current?.ApplicationLifetime switch
     {
-        var mainViewModel = _services!.GetRequiredService<MainViewModel>();
-        var providers = PagesCatalog.GetProviders();
-        mainViewModel.AddMenuItem([.. providers.Select(x => PagesCatalog.CreateMenuItem(x, _services))]);
-        return mainViewModel;
-    }
+        IClassicDesktopStyleApplicationLifetime desktop => desktop.MainWindow,
+        ISingleViewApplicationLifetime { MainView: { } mainView } => TopLevel.GetTopLevel(mainView),
+        _ => null
+    };
 }
