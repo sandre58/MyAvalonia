@@ -137,7 +137,7 @@ internal sealed class OverlayDialogGroupViewModel : ObservableObject
                            .AddChoice(VerticalPosition.Bottom, b => b.DisplayName(() => VerticalPosition.Bottom.Humanize()).WithIcon(MaterialIconKind.FormatVerticalAlignBottom))));
 
         var themes = new[] { new ControlThemeViewModelFactory(builder, commands).Create("OverlayDialog") }.ToObservableCollection();
-        Playground = new("OverlayDialog", themes);
+        Playground = new("OverlayDialog", themes, commands);
 
         ShowOverlayDialogCommand = commands.Create(async () => await ShowOverlayDialogAsync().ConfigureAwait(false));
         ShowOverlayMessageBoxCommand = commands.CreateRequired<ThemeRole>(async x => await ShowOverlayMessageBoxAsync(ToSeverity(x)).ConfigureAwait(false));

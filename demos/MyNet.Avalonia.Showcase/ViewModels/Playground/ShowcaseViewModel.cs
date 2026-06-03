@@ -27,7 +27,7 @@ internal abstract class ShowcaseViewModel : PageViewModel
     protected ShowcaseViewModel(string controlName, ICommandFactory commands, ControlThemeBuilder[] builders)
     {
         var themes = builders.Select(x => new ControlThemeViewModelFactory(x, commands).Create(controlName)).ToList().ToObservableCollection();
-        Playground = new(controlName, themes);
+        Playground = new(controlName, themes, commands);
         Catalog = new(themes);
     }
 

@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Text;
+using System.Windows.Input;
 using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
@@ -31,6 +32,7 @@ using MyNet.Avalonia.Theme.Theming.Palettes;
 using MyNet.Collections;
 using MyNet.Generator.Facade;
 using MyNet.Observable;
+using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground;
 
@@ -59,10 +61,11 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// associated with the view model.</param>
     /// <param name="themes">An observable collection of ControlThemeViewModel instances that represent the available themes for the control.
     /// Cannot be null.</param>
-    public PlaygroundViewModel(string controlName, ObservableCollection<ControlThemeViewModel> themes)
+    public PlaygroundViewModel(string controlName, ObservableCollection<ControlThemeViewModel> themes, ICommandFactory commands)
     {
         _controlName = controlName;
         AvailableThemes = new(themes);
+        ResetCommand = commands.Create(Reset);
         BackgroundContexts.AddRange(CreateBackgroundContexts());
 
         SelectedBackgroundContext = BackgroundContexts[0];
@@ -93,10 +96,16 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
             case nameof(SelectedIcon):
             case nameof(UseIcon):
             case nameof(IconPosition):
+            case nameof(IsEnabled):
                 OnStyleChanged();
                 break;
         }
     }
+
+    /// <summary>
+    /// Gets the command that resets the playground to its default state.
+    /// </summary>
+    public ICommand ResetCommand { get; }
 
     /// <summary>
     /// Gets the collection of available themes.
@@ -176,9 +185,9 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the control is disabled.
+    /// Gets or sets a value indicating whether the preview control is enabled.
     /// </summary>
-    public bool IsDisabled
+    public bool IsEnabled
     {
         get;
         set => SetProperty(ref field, value);
@@ -424,11 +433,17 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
         UseIcon = false;
         SelectedIcon = null;
         IconPosition = Position.Left;
+        IsEnabled = true;
 
         _optionDisposables.Dispose();
         _optionDisposables = [];
         foreach (var option in theme?.AvailableOptions.Concat(theme.AvailableGroups.SelectMany(x => x.Options)).OfType<ValueOptionViewModel>() ?? [])
+        {
+            option.Reset();
             _optionDisposables.Add(option.ValueChangedSubject.Subscribe(_ => OnStyleChanged()));
+        }
+
+        OnStyleChanged();
     }
 
     /// <summary>

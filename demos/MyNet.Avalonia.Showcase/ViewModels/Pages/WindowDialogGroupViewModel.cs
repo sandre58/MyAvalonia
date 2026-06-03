@@ -84,7 +84,7 @@ internal sealed class WindowDialogGroupViewModel : ObservableObject
                            .AddChoice(MessageBoxResultOption.YesNoCancel, b => b.DisplayName(() => MessageBoxResultOption.YesNoCancel.Humanize()))));
 
         var themes = new[] { new ControlThemeViewModelFactory(builder, commands).Create("WindowDialog") }.ToObservableCollection();
-        Playground = new("WindowDialog", themes);
+        Playground = new("WindowDialog", themes, commands);
 
         ShowWindowDialogCommand = commands.Create(async () => await ShowWindowDialogAsync().ConfigureAwait(false));
         ShowWindowMessageBoxCommand = commands.CreateRequired<ThemeRole>(async x => await ShowWindowMessageBoxAsync(ToSeverity(x)).ConfigureAwait(false));

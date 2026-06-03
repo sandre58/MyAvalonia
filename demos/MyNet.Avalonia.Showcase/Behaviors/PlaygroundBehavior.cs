@@ -42,9 +42,18 @@ internal static class PlaygroundBehavior
         if (args.Sender is not Control control)
             return;
 
+        UnregisterVisualTreeHandlers(control);
+        DisposeSubscription(control);
+
         if (args.NewValue.Value is not { } styleProvider)
             return;
 
+        SubscribeStyleProvider(control, styleProvider);
+        RegisterVisualTreeHandlers(control);
+    }
+
+    private static void SubscribeStyleProvider(Control control, IStyleProvider styleProvider)
+    {
         DisposeSubscription(control);
 
         var styler = new StyleRenderer();
@@ -56,35 +65,37 @@ internal static class PlaygroundBehavior
             .Subscribe(x => styler.Apply(control, x.EventArgs));
 
         Subscriptions.Add(control, new CompositeDisposable(subscription, styler));
+    }
 
-        // Clean up when the control is detached from the visual tree.
-        control.DetachedFromVisualTree += onDetached;
-        control.AttachedToVisualTree += onAttached;
+    private static void RegisterVisualTreeHandlers(Control control)
+    {
+        control.DetachedFromVisualTree -= OnControlDetachedFromVisualTree;
+        control.AttachedToVisualTree -= OnControlAttachedToVisualTree;
+        control.DetachedFromVisualTree += OnControlDetachedFromVisualTree;
+        control.AttachedToVisualTree += OnControlAttachedToVisualTree;
+    }
 
-        void onDetached(object? sender, VisualTreeAttachmentEventArgs e)
-        {
-            control.DetachedFromVisualTree -= onDetached;
-            control.AttachedToVisualTree += onAttached;
-            DisposeSubscription(control);
-        }
+    private static void UnregisterVisualTreeHandlers(Control control)
+    {
+        control.DetachedFromVisualTree -= OnControlDetachedFromVisualTree;
+        control.AttachedToVisualTree -= OnControlAttachedToVisualTree;
+    }
 
-        void onAttached(object? sender, VisualTreeAttachmentEventArgs e)
-        {
-            control.AttachedToVisualTree -= onAttached;
-            control.DetachedFromVisualTree += onDetached;
+    private static void OnControlDetachedFromVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+    {
+        if (sender is not Control control)
+            return;
 
-            if (GetAttachStyleProvider(control) is { } provider)
-            {
-                DisposeSubscription(control);
-                var styler = new StyleRenderer();
-                styler.Apply(control, provider.BuildStyle());
-                var subscription = System.Reactive.Linq.Observable.FromEventPattern<ControlStyle>(
-                        h => provider.StyleChanged += h,
-                        h => provider.StyleChanged -= h)
-                    .Subscribe(x => styler.Apply(control, x.EventArgs));
-                Subscriptions.Add(control, new CompositeDisposable(subscription, styler));
-            }
-        }
+        DisposeSubscription(control);
+    }
+
+    private static void OnControlAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+    {
+        if (sender is not Control control)
+            return;
+
+        if (GetAttachStyleProvider(control) is { } provider)
+            SubscribeStyleProvider(control, provider);
     }
 
     private static void DisposeSubscription(Control control)
