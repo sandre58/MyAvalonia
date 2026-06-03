@@ -21,13 +21,9 @@ using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Fakers;
 using MyNet.Globalization;
 using MyNet.Globalization.Culture;
-using MyNet.Humanizer;
-using MyNet.Observable.Validation;
-using MyNet.UI.Loading;
+using MyNet.UI;
 using MyNet.UI.Locators.Conventions;
 using MyNet.UI.Theming;
-using MyNet.UI.ViewModels;
-using MyNet.UI.ViewModels.Shell.Chrome;
 
 namespace MyNet.Avalonia.Showcase.Composition;
 
@@ -58,17 +54,9 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
     }
 
     private void RegisterServices(IServiceCollection collection)
-        => collection.AddGlobalization()
-            .AddLocalization()
-            .AddInflection()
-            .AddHumanizer()
+        => collection.AddUi([SupportedCultures.English, SupportedCultures.French])
             .AddFakers()
-            .AddBusy()
-            .AddShell()
-            .AddTransient(static sp => new ShellCultureViewModel(
-                sp.GetRequiredService<ICultureService>(),
-                [SupportedCultures.English, SupportedCultures.French]))
-            .AddAvaloniaColors()
+            .AddMyNetAvaloniaColors()
             .AddMyNetAvaloniaControls()
             .AddMyNetAvaloniaExtended(topLevelProvider)
             .AddSingleton<IThemeBrushService>(MyTheme.Current);
@@ -98,14 +86,10 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
 
     private static void InitializeServices(IServiceProvider services)
     {
-        services.UseGlobalization();
-        services.UseLocalization();
-        services.UseDisplayText();
+        services.UseUi();
         services.UseFakers();
-        services.UseThemeManager();
-        services.UseAvaloniaClipboard();
+        services.UseMyNetAvaloniaClipboard();
         services.UseMyNetAvaloniaExtended();
-        ValidationLocalization.Configure();
     }
 
     private static void InitializeTheme(IServiceProvider services)

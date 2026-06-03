@@ -25,7 +25,7 @@ public static class ServiceProviderExtensions
     /// The host must register <see cref="IClipboardService"/> first, for example via
     /// <c>AddMyNetAvaloniaClipboard()</c>.
     /// </remarks>
-    public static IServiceProvider UseAvaloniaClipboard(this IServiceProvider services)
+    public static IServiceProvider UseMyNetAvaloniaClipboard(this IServiceProvider services)
     {
         ClipboardManager.Configure(services.GetRequiredService<IClipboardService>());
         return services;
