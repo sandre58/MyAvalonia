@@ -129,9 +129,6 @@
   <data name="Inputs" xml:space="preserve">
     <value>Inputs</value>
   </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
-  </data>
   <data name="Showcase" xml:space="preserve">
     <value>Showcase</value>
   </data>
@@ -153,10 +150,10 @@
   <data name="Containers" xml:space="preserve">
       <value>Containers</value>
   </data>
+  <data name="ComponentsCatalog" xml:space="preserve">
+      <value>Components</value>
+  </data>
   <data name="Buttons" xml:space="preserve">
       <value>Buttons</value>
-  </data>
-  <data name="Pages" xml:space="preserve">
-      <value>Pages</value>
   </data>
 </root>

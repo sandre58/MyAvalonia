@@ -99,6 +99,23 @@ internal static class PagesCatalog
             ])
         ];
 
+    /// <summary>Number of top-level page entries before catalog groups (Home, Theme, Icons).</summary>
+    public const int RootPageCount = 3;
+
+    /// <summary>Builds the full navigation menu, including the components catalog section header.</summary>
+    public static IReadOnlyList<IMenuItemViewModel> CreateMenuItems(IServiceProvider services)
+    {
+        var items = new List<IMenuItemViewModel>();
+        foreach (var provider in GetProviders())
+        {
+            items.Add(CreateMenuItem(provider, services));
+            if (items.Count == RootPageCount)
+                items.Add(MenuSectionViewModel.ComponentsCatalog);
+        }
+
+        return items;
+    }
+
     public static IMenuItemViewModel CreateMenuItem(IPagesProvider pagesProvider, IServiceProvider services)
     {
         switch (pagesProvider)

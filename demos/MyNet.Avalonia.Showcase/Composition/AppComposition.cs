@@ -61,8 +61,7 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
         ArgumentNullException.ThrowIfNull(services);
 
         var mainViewModel = services.GetRequiredService<MainViewModel>();
-        var providers = PagesCatalog.GetProviders();
-        mainViewModel.AddMenuItem([.. providers.Select(x => PagesCatalog.CreateMenuItem(x, services))]);
+        mainViewModel.AddMenuItem([.. PagesCatalog.CreateMenuItems(services)]);
         return mainViewModel;
     }
 

@@ -465,20 +465,24 @@
             <Setter Property="Grid.IsSharedSizeScope" Value="True" />
         </Style>
 
-        <!-- Separator -->
+        <!-- Section header (IsSeparator): titled group label, optional icon, not clickable -->
         <Style Selector="^[IsSeparator=True]">
-            <Setter Property="Background" Value="{my:Foreground Opacity=Overlay}" />
-            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
-            <Setter Property="Margin" Value="{my:Thickness Top=10, Bottom=2}" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Cursor" Value="Arrow" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="{my:Thickness Sm, Vertical}" />
+            <Setter Property="Margin" Value="{my:Thickness Top=10, Bottom=4}" />
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Template">
                 <ControlTemplate>
                     <Border Name="PART_MainBorder"
                             Padding="{TemplateBinding Padding}"
                             HorizontalAlignment="Stretch"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            CornerRadius="{TemplateBinding CornerRadius}"
-                            Opacity="{DynamicResource MyNet.Opacity.High}">
+                            Background="Transparent"
+                            BorderThickness="0">
 
                         <Grid Name="PART_RootGrid" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
@@ -486,21 +490,28 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <!-- Icon -->
-                            <Grid Width="{Binding $parent[my:NavigationMenu].CollapseWidth}"
-                                  IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
-                                <Viewbox Width="14" Height="14" HorizontalAlignment="Center">
-                                    <ContentPresenter Name="PART_IconPresenter"
-                                                      Content="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
-                                                      ContentTemplate="{Binding IconTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
-                                </Viewbox>
-                            </Grid>
+                            <!-- Icon (aligned with menu items) -->
+                            <ContentPresenter Name="PART_IconPresenter"
+                                              HorizontalContentAlignment="Center"
+                                              VerticalContentAlignment="Center"
+                                              Content="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
+                                              ContentTemplate="{Binding IconTemplate, RelativeSource={RelativeSource TemplatedParent}}"
+                                              IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
+                                <ContentPresenter.Width>
+                                    <MultiBinding Converter="{x:Static c:NavigationMenuIconWidthConverter.Default}">
+                                        <Binding Path="$parent[my:NavigationMenu].CollapseWidth" />
+                                        <Binding Path="$parent[my:NavigationMenu].Padding" />
+                                        <Binding Path="Margin" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    </MultiBinding>
+                                </ContentPresenter.Width>
+                            </ContentPresenter>
 
-                            <!-- Header -->
+                            <!-- Section title -->
                             <ContentPresenter Name="PART_HeaderPresenter"
                                               Grid.Column="1"
-                                              Margin="{my:Thickness Md, Right}"
-                                              HorizontalAlignment="Center"
+                                              Margin="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}}"
+                                              HorizontalContentAlignment="Left"
+                                              VerticalContentAlignment="Center"
                                               Content="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}"
                                               ContentTemplate="{Binding HeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"
                                               IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
@@ -508,6 +519,15 @@
                     </Border>
                 </ControlTemplate>
             </Setter>
+
+            <Style Selector="^:horizontal-collapsed">
+                <Setter Property="ToolTip.Tip" Value="{Binding $self.Header}" />
+                <Setter Property="ToolTip.ShowDelay" Value="0" />
+            </Style>
+
+            <Style Selector="^:horizontal-collapsed /template/ ContentPresenter#PART_HeaderPresenter">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
         </Style>
     </ControlTheme>
 

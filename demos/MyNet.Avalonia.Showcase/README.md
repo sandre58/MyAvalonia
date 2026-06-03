@@ -65,7 +65,7 @@ La composition (services, pages, menu) est centralisée dans `Composition/AppCom
 Les entrées du menu sont des `LazyPageMenuItem` : le `PageViewModel` n’est résolu depuis le conteneur DI qu’à l’ouverture de la page (clic menu ou navigation). Les types restent en singleton une fois créés.
 Le clic sur une entrée appelle `NavigateCommand` avec `NavigationTarget`, puis `SelectedMenuItem` est resynchronisé sur l’état réel de navigation via `INavigationService.StateChanged`.
 
-Le menu est construit par `AppComposition.ConfigureMainViewModel()` (pas dans `App.axaml.cs`).
+Le menu est construit par `AppComposition.ConfigureMainViewModel()` (pas dans `App.axaml.cs`). Un en-tête de section (`MenuSectionViewModel` → `NavigationMenuItem.IsSeparator`, titre + icône) précède le catalogue de composants via `PagesCatalog.CreateMenuItems`.
 
 ### Aperçu designer (DEBUG)
 
@@ -92,7 +92,7 @@ Le menu est construit par `AppComposition.ConfigureMainViewModel()` (pas dans `A
 | `<my:ThemeControlsCatalog />` dans `App.axaml` | Requis pour ce host showcase ; pas le seul pattern possible |
 | Sous-menus pilotés par `IMenuItemViewModel.Items` | Permet les bindings compilés sans `ReflectionBinding` dans le menu |
 | Pas de virtualisation des listes | Simplicité du catalogue ; la page Icônes utilise la **pagination** |
-| `ShowcasePagesCatalog` explicite | Registre de toutes les pages démo |
+| `PagesCatalog` explicite | Registre de toutes les pages démo |
 | Moteur `ThemeBuilder` / playground | Outil interactif du showcase, hors packages MyNet |
 
 ## Test plan (browser / WASM)

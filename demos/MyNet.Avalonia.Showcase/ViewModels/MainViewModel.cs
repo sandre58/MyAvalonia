@@ -94,6 +94,9 @@ internal sealed class MainViewModel : ObservableObject
 
         foreach (var item in MenuItems)
         {
+            if (item.IsSeparator)
+                continue;
+
             switch (item)
             {
                 case LazyPageMenuItem lazy when ReferenceEquals(lazy.Page, navigationPage):

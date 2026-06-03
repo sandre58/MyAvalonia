@@ -148,6 +148,9 @@ public class NavigationMenuItem : HeaderedItemsControl
         set => SetAndRaise(LevelProperty, ref field, value);
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether this item is a section header (title and optional icon, not navigable).
+    /// </summary>
     public bool IsSeparator
     {
         get => GetValue(IsSeparatorProperty);

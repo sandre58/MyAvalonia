@@ -40,6 +40,9 @@ internal sealed class LazyPageMenuItem(Type viewModelType, IServiceProvider serv
     public bool IsGroup => false;
 
     /// <inheritdoc/>
+    public bool IsSeparator => false;
+
+    /// <inheritdoc/>
     public IReadOnlyList<IMenuItemViewModel> Items => EmptyItems;
 
     private static string CreateTitleFromTypeName(string name)

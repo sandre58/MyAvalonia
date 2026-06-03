@@ -109,9 +109,6 @@
   <data name="Inputs" xml:space="preserve">
     <value>Entrées</value>
   </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
-  </data>
   <data name="Showcase" xml:space="preserve">
     <value>Démo</value>
   </data>
@@ -124,6 +121,9 @@
   <data name="Containers" xml:space="preserve">
       <value>Conteneurs</value>
   </data>
+  <data name="ComponentsCatalog" xml:space="preserve">
+      <value>Composants</value>
+  </data>
   <data name="DataAndLists" xml:space="preserve">
       <value>Données et listes</value>
   </data>
@@ -135,8 +135,5 @@
   </data>
   <data name="ShapesAndVisuals" xml:space="preserve">
       <value>Formes et visuels</value>
-  </data>
-  <data name="Pages" xml:space="preserve">
-      <value>Pages</value>
   </data>
 </root>

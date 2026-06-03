@@ -42,6 +42,9 @@ internal sealed class PagesGroupViewModel : ObservableObject, IMenuItemViewModel
     public bool IsGroup => true;
 
     /// <inheritdoc/>
+    public bool IsSeparator => false;
+
+    /// <inheritdoc/>
     public INavigationPage? NavigationTarget => null;
 
     /// <summary>Gets child pages in this group (resolved from DI when opened).</summary>

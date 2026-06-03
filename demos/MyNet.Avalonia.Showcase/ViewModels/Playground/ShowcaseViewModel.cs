@@ -13,26 +13,16 @@ using MyNet.UI.Commands;
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground;
 
 /// <summary>
-/// Represents a view model for showcasing a control in the catalog, providing properties and functionality to manage the interactive playground and options catalog for the control. This class serves as a base for specific control showcase view models, encapsulating common logic for initializing the playground and catalog based on provided theme builders. It allows users to explore different themes and configurations for the showcased control through an interactive interface, enhancing the user experience when browsing the control catalog.
+/// Base view model for control playground pages (interactive preview + theme catalog).
 /// </summary>
 internal abstract class ShowcaseViewModel : PageViewModel
 {
-    /// <summary>
-    /// Gets the playground view model that manages the interactive area where users can experiment with different themes and configurations for the showcased control. This property is initialized in the constructor using the control name and the theme definitions built from the provided ControlThemeBuilder instances. The Playground property allows users to interact with the control's appearance and behavior based on the defined themes, providing a hands-on experience for exploring the various options available for customization.
-    /// </summary>
+    /// <summary>Gets the interactive theme preview for the showcased control.</summary>
     public PlaygroundViewModel Playground { get; }
 
-    /// <summary>
-    /// Gets the options catalog view model that provides a collection of theme definitions for the showcased control. This property is initialized in the constructor using the theme definitions built from the provided ControlThemeBuilder instances. The Catalog property allows access to the available options and configurations for the control being showcased, enabling users to explore and customize its appearance and behavior based on the defined themes.
-    /// </summary>
+    /// <summary>Gets the available theme variants for the showcased control.</summary>
     public ThemesCatalogViewModel Catalog { get; }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ShowcaseViewModel"/> class with the specified control name and theme builders. This constructor takes a control name and an array of ControlThemeBuilder instances, which are used to build the definitions for the playground and catalog. The definitions are created by invoking the Build method of each ControlThemeBuilder with the provided control name, resulting in a collection of theme definitions that are then used to initialize the PlaygroundViewModel and OptionsCatalogViewModel properties.
-    /// </summary>
-    /// <param name="controlName">The name of the control being showcased.</param>
-    /// <param name="commands">The command factory used to create commands for the actions. This enables the instantiation of action-related view models required by the editors.</param>
-    /// <param name="builders">An array of ControlThemeBuilder instances used to build the theme definitions.</param>
     protected ShowcaseViewModel(string controlName, ICommandFactory commands, ControlThemeBuilder[] builders)
     {
         var themes = builders.Select(x => new ControlThemeViewModelFactory(x, commands).Create(controlName)).ToList().ToObservableCollection();

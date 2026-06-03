@@ -78,6 +78,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Composants.
+        /// </summary>
+        internal static string ComponentsCatalog {
+            get {
+                return ResourceManager.GetString("ComponentsCatalog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Données et listes.
         /// </summary>
         internal static string DataAndLists {
@@ -128,24 +137,6 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string Navigation {
             get {
                 return ResourceManager.GetString("Navigation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Notifications.
-        /// </summary>
-        internal static string Notifications {
-            get {
-                return ResourceManager.GetString("Notifications", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pages.
-        /// </summary>
-        internal static string Pages {
-            get {
-                return ResourceManager.GetString("Pages", resourceCulture);
             }
         }
         
