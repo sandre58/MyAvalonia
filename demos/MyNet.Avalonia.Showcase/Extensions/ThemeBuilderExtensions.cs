@@ -14,6 +14,7 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Theming.Core;
+using MyNet.Humanizer.Facade;
 
 namespace MyNet.Avalonia.Showcase.Extensions;
 

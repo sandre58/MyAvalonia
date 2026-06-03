@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Theme.Theming.Core;
+using MyNet.Observable;
 using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;

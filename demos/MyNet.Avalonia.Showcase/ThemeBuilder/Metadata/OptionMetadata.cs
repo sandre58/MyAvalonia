@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using Material.Icons;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
 

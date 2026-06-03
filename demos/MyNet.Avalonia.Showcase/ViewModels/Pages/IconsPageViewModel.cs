@@ -15,6 +15,7 @@ using MyNet.Avalonia.Theme.Theming;
 using MyNet.Observable.Collections;
 using MyNet.Observable.Collections.Filters;
 using MyNet.Observable.Collections.Selection;
+using MyNet.Primitives;
 using MyNet.UI.Commands;
 using MyNet.UI.ViewModels.List.Factories;
 using MyNet.UI.ViewModels.List.Paging;

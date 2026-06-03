@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using Material.Icons;
+using MyNet.Observable;
 using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.UI.Navigation.Models;
 

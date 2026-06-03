@@ -1,20 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <ItemGroup>
-        <Using Include="MyNet.Collections" />
-        <Using Include="MyNet.Generator.Facade" />
-        <Using Include="MyNet.Humanizer.Facade" />
-        <Using Include="MyNet.Primitives" />
-        <Using Include="MyNet.Observable" />
-        <Using Include="MyNet.Avalonia.Showcase.Services" />
-        <Using Include="MyNet.Avalonia.Geography" />
-        <Using Alias="DialogOptions" Include="MyNet.Avalonia.Extended.Dialogs.DialogOptions" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <InternalsVisibleTo Include="MyNet.Avalonia.Showcase.Tests" />
-    </ItemGroup>
-
     <PropertyGroup>
         <Product>My .NET Avalonia</Product>
         <Description>Platform for testing and experimenting with Avalonia controls and styles. </Description>
@@ -44,6 +29,10 @@
         <ProjectReference Include="..\..\src\MyNet.Avalonia.Theme\MyNet.Avalonia.Theme.csproj" />
         <ProjectReference Include="..\..\src\MyNet.Avalonia.Theme.Controls\MyNet.Avalonia.Theme.Controls.csproj" />
         <ProjectReference Include="..\..\src\MyNet.Avalonia.Extended\MyNet.Avalonia.Extended.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="MyNet.Avalonia.Showcase.Tests" />
     </ItemGroup>
 
     <ItemGroup>

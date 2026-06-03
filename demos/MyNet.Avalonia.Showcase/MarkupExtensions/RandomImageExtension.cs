@@ -8,6 +8,7 @@ using System;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using MyNet.Generator.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 

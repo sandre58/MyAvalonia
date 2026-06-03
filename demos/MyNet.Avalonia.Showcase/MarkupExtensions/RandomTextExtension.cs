@@ -7,6 +7,7 @@
 using System;
 using Avalonia.Markup.Xaml;
 using MyNet.Fakers.Static;
+using MyNet.Generator.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 

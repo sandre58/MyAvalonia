@@ -8,6 +8,8 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Registry;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Choices;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Theming.Core;
+using MyNet.Humanizer.Facade;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 

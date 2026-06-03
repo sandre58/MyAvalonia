@@ -10,6 +10,8 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Rendering;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Choices;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
+using MyNet.Collections;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground;
 

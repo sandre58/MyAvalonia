@@ -8,7 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using MyNet.Avalonia.Geography;
+using MyNet.Generator.Facade;
 using MyNet.Geography;
+using MyNet.Humanizer.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 

@@ -21,6 +21,8 @@ using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Controls.Assists;
 using MyNet.Avalonia.Theme.Theming;
 using MyNet.Avalonia.Theme.Theming.Core;
+using MyNet.Humanizer.Facade;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 

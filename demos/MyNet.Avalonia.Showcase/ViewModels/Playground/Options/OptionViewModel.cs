@@ -6,6 +6,7 @@
 
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
+using MyNet.Observable;
 using MyNet.Observable.Behaviors.Metadata.Attributes;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;

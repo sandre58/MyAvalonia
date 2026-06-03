@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Material.Icons;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 

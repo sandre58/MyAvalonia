@@ -10,9 +10,14 @@ using Avalonia.Input;
 using Avalonia.Media.Imaging;
 using Material.Icons;
 using MyNet.Avalonia.Controls;
+using MyNet.Avalonia.Geography;
+using MyNet.Collections;
 using MyNet.Fakers.Static;
+using MyNet.Generator.Facade;
 using MyNet.Geography;
 using MyNet.Geography.Resources;
+using MyNet.Humanizer.Facade;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Showcase.Helpers;
 

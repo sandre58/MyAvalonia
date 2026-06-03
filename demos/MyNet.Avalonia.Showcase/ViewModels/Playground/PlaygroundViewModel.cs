@@ -28,6 +28,9 @@ using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Theming;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Avalonia.Theme.Theming.Palettes;
+using MyNet.Collections;
+using MyNet.Generator.Facade;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground;
 
@@ -67,10 +70,10 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
         Reset();
 
         Disposables.AddRange(
-            [
-                this.WhenPropertyChanged(x => x.SelectedTheme).Subscribe(_ => ResetFrom(SelectedTheme)),
-                SelectedVariants.ToObservableChangeSet().Subscribe(_ => OnStyleChanged())
-            ]);
+        [
+            this.WhenPropertyChanged(x => x.SelectedTheme).Subscribe(_ => ResetFrom(SelectedTheme)),
+            SelectedVariants.ToObservableChangeSet().Subscribe(_ => OnStyleChanged())
+        ]);
 
         PropertyChanged += OnPlaygroundPropertyChanged;
 
@@ -240,10 +243,11 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     {
         if (SelectedTheme is null) return [];
 
-        var classes = new List<string>();
-
-        // Theme
-        classes.Add(PlaygroundStyleComposer.ResolveThemeClassName(_controlName, SelectedTheme.Definition.Key));
+        var classes = new List<string>
+        {
+            // Theme
+            PlaygroundStyleComposer.ResolveThemeClassName(_controlName, SelectedTheme.Definition.Key)
+        };
 
         // Kind
         if (SelectedTheme.Definition.Kind is not null)
@@ -361,14 +365,15 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// theme. The Classes and Properties collections are determined by invoking their respective computation methods.
     /// Use this method to obtain a configuration that matches the current state of the control's settings.</remarks>
     /// <returns>A ControlConfiguration object that encapsulates the current theme, classes, and properties for the control.</returns>
-    public ControlStyle BuildStyle() => new()
-    {
-        Theme = SelectedTheme?.Definition.Theme,
-        ThemeKey = SelectedTheme?.Definition.Key,
-        Classes = ComputeClasses(),
-        Properties = ComputeProperties(),
-        Actions = ComputeActions()
-    };
+    public ControlStyle BuildStyle()
+        => new()
+        {
+            Theme = SelectedTheme?.Definition.Theme,
+            ThemeKey = SelectedTheme?.Definition.Key,
+            Classes = ComputeClasses(),
+            Properties = ComputeProperties(),
+            Actions = ComputeActions()
+        };
 
     /// <summary>
     /// Handles changes to the style configuration, updating the preview code and notifying subscribers of the
@@ -413,9 +418,9 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
         SelectedShape = null;
         SelectedRole = theme?.AvailableRoles.FirstOrDefault()?.Value ?? ThemeRole.Default;
         SelectedSubItemsRole = theme?.AvailableItemsRoles.FirstOrDefault()?.Value ?? ThemeRole.Default;
-        SelectedContentProvider = theme?.Definition.ContentDefinition is not null ?
-                                    AvailableContentProviders.GetById(theme.Definition.ContentDefinition.ContentProviderType)
-                                    : null;
+        SelectedContentProvider = theme?.Definition.ContentDefinition is not null
+            ? AvailableContentProviders.GetById(theme.Definition.ContentDefinition.ContentProviderType)
+            : null;
         UseIcon = false;
         SelectedIcon = null;
         IconPosition = Position.Left;
@@ -443,7 +448,8 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
         var primaryForeground = theme.GetBrush($"{nameof(MyTheme.Primary)}.{nameof(ColorShades.Foreground)}");
         var surface = theme.GetBrush("Surface.Level2");
         var surfaceForeground = theme.GetBrush(ThemeResourceKeyFactory.PrimaryForeground);
-        return [
+        return
+        [
             new(surface, surfaceForeground, ThemeContext.Default),
             new(primary, primaryForeground, ThemeContext.Contrast),
             new(accent, accentForeground, ThemeContext.Contrast)

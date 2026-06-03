@@ -4,6 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Material.Icons;
+using MyNet.Observable;
+
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Choices;
 
 /// <summary>

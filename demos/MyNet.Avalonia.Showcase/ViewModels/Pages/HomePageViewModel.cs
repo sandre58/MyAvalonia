@@ -10,6 +10,7 @@ using System.Windows.Input;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
+using MyNet.Observable;
 using MyNet.UI.Commands;
 using MyNet.UI.Navigation;
 

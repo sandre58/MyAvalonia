@@ -11,6 +11,7 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Registry;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
+using MyNet.Observable;
 using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;

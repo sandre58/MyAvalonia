@@ -6,6 +6,8 @@
 
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
+using MyNet.Generator.Facade;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.ContentProviders;
 

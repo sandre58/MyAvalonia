@@ -6,8 +6,10 @@
 
 using System.Collections.Generic;
 using Material.Icons;
+using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Globalization.Facade;
+using MyNet.Observable;
 using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.UI.Navigation.Models;
 

@@ -6,6 +6,7 @@
 
 using System.ComponentModel;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
+using MyNet.Primitives;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.ContentProviders;
 

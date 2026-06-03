@@ -9,6 +9,7 @@ using Material.Icons;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Registry;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 

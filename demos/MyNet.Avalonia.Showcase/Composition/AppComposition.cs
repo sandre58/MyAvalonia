@@ -19,6 +19,7 @@ using MyNet.Avalonia.Theme;
 using MyNet.Avalonia.Theme.Diagnostics;
 using MyNet.Avalonia.Theme.Themes;
 using MyNet.Avalonia.Theme.Theming.Core;
+using MyNet.Collections;
 using MyNet.Fakers;
 using MyNet.Globalization;
 using MyNet.Globalization.Culture;

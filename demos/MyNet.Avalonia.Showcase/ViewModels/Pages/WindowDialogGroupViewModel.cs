@@ -6,17 +6,22 @@
 
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MyNet.Avalonia.Showcase.Services;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Dialogs;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 using MyNet.Avalonia.Theme.Theming.Core;
+using MyNet.Collections;
+using MyNet.Humanizer.Facade;
+using MyNet.Observable;
 using MyNet.UI.Commands;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
 using MyNet.UI.Notifications;
 using MyNet.UI.Notifications.Models;
+using DialogOptions = MyNet.Avalonia.Extended.Dialogs.DialogOptions;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 

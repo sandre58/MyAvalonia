@@ -7,6 +7,7 @@
 using System;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 

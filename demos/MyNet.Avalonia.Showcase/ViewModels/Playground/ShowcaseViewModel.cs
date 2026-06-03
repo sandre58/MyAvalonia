@@ -8,6 +8,7 @@ using System.Linq;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
+using MyNet.Collections;
 using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground;

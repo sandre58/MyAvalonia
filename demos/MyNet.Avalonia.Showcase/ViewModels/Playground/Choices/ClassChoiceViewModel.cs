@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Choices;
 

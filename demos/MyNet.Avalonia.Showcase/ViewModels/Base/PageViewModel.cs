@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ViewModels.Menu;
 using MyNet.Globalization.Facade;
+using MyNet.Observable;
 using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.UI.Navigation.Models;
 

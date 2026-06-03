@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using Avalonia.Markup.Xaml;
 using MyNet.Avalonia.Showcase.Helpers;
+using MyNet.Generator.Facade;
 
 namespace MyNet.Avalonia.Showcase.MarkupExtensions;
 

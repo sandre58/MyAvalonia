@@ -10,6 +10,7 @@ using System.Reactive.Subjects;
 using DynamicData.Binding;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 
