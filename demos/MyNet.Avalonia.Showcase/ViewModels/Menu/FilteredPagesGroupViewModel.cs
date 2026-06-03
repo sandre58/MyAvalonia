@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using Material.Icons;
+using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.UI.Navigation.Models;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Menu;
@@ -14,9 +15,10 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Menu;
 /// Group menu entry showing only pages that match the active menu filter.
 /// </summary>
 internal sealed class FilteredPagesGroupViewModel(PagesGroupViewModel source, IReadOnlyList<IMenuItemViewModel> pages)
-    : IMenuItemViewModel
+    : ObservableObject, IMenuItemViewModel
 {
     /// <inheritdoc/>
+    [UpdateOnCultureChanged]
     public string Title => source.Title;
 
     /// <inheritdoc/>

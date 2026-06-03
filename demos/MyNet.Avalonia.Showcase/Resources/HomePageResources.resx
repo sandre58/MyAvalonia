@@ -82,13 +82,16 @@
     <value>Label, TextBlock, texte sélectionnable</value>
   </data>
   <data name="CategoryButtonsDescription" xml:space="preserve">
-    <value>Boutons, cases, interrupteurs</value>
+    <value>Boutons, liens, menus déroulants</value>
+  </data>
+  <data name="CategorySelectionDescription" xml:space="preserve">
+    <value>Cases à cocher, radios, bascules</value>
   </data>
   <data name="CategoryInputsDescription" xml:space="preserve">
     <value>Champs, sliders, calendrier, horloge</value>
   </data>
   <data name="CategoryContainersDescription" xml:space="preserve">
-    <value>Cartes, onglets, formulaires, bannières</value>
+    <value>Expander, onglets, formulaires, bannières</value>
   </data>
   <data name="CategoryDataDescription" xml:space="preserve">
     <value>DataGrid, listes, arborescence</value>
@@ -97,7 +100,7 @@
     <value>NavigationPage, menus, pagination</value>
   </data>
   <data name="CategoryDialogsDescription" xml:space="preserve">
-    <value>Dialogs, notifications, barres de progression</value>
+    <value>Dialogues, notifications, progression</value>
   </data>
   <data name="CategoryShapesDescription" xml:space="preserve">
     <value>Bordures, ellipses, icônes étendues</value>
@@ -105,7 +108,4 @@
   <data name="OpenPage" xml:space="preserve">
     <value>Ouvrir</value>
   </data>
-    <data name="rer" xml:space="preserve">
-        <value />
-    </data>
 </root>

@@ -60,20 +60,128 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Boutons.
+        ///   Looks up a localized string similar to Avatar.
         /// </summary>
-        internal static string Buttons {
+        internal static string Avatar {
             get {
-                return ResourceManager.GetString("Buttons", resourceCulture);
+                return ResourceManager.GetString("Avatar", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Conteneurs.
+        ///   Looks up a localized string similar to Badge.
         /// </summary>
-        internal static string Containers {
+        internal static string Badge {
             get {
-                return ResourceManager.GetString("Containers", resourceCulture);
+                return ResourceManager.GetString("Badge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bandeau.
+        /// </summary>
+        internal static string Banner {
+            get {
+                return ResourceManager.GetString("Banner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bordure.
+        /// </summary>
+        internal static string Border {
+            get {
+                return ResourceManager.GetString("Border", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bouton.
+        /// </summary>
+        internal static string Button {
+            get {
+                return ResourceManager.GetString("Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boutons et actions.
+        /// </summary>
+        internal static string ButtonsAndActions {
+            get {
+                return ResourceManager.GetString("ButtonsAndActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bouton avec indicateur.
+        /// </summary>
+        internal static string ButtonSpinner {
+            get {
+                return ResourceManager.GetString("ButtonSpinner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calendrier.
+        /// </summary>
+        internal static string Calendar {
+            get {
+                return ResourceManager.GetString("Calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Carrousel.
+        /// </summary>
+        internal static string Carousel {
+            get {
+                return ResourceManager.GetString("Carousel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page carrousel.
+        /// </summary>
+        internal static string CarouselPage {
+            get {
+                return ResourceManager.GetString("CarouselPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Case à cocher.
+        /// </summary>
+        internal static string CheckBox {
+            get {
+                return ResourceManager.GetString("CheckBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horloge.
+        /// </summary>
+        internal static string Clock {
+            get {
+                return ResourceManager.GetString("Clock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sélecteur d&apos;horloge.
+        /// </summary>
+        internal static string ClockSelector {
+            get {
+                return ResourceManager.GetString("ClockSelector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sélecteur de couleur.
+        /// </summary>
+        internal static string ColorView {
+            get {
+                return ResourceManager.GetString("ColorView", resourceCulture);
             }
         }
         
@@ -87,6 +195,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page de contenu.
+        /// </summary>
+        internal static string ContentPage {
+            get {
+                return ResourceManager.GetString("ContentPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Données et listes.
         /// </summary>
         internal static string DataAndLists {
@@ -96,11 +213,110 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dialogues et retours visuels.
+        ///   Looks up a localized string similar to Grille de données.
         /// </summary>
-        internal static string DialogsAndFeedback {
+        internal static string DataGrid {
             get {
-                return ResourceManager.GetString("DialogsAndFeedback", resourceCulture);
+                return ResourceManager.GetString("DataGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dialogue.
+        /// </summary>
+        internal static string Dialog {
+            get {
+                return ResourceManager.GetString("Dialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiroir.
+        /// </summary>
+        internal static string DrawerPage {
+            get {
+                return ResourceManager.GetString("DrawerPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bouton déroulant.
+        /// </summary>
+        internal static string DropDownButton {
+            get {
+                return ResourceManager.GetString("DropDownButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ellipse.
+        /// </summary>
+        internal static string Ellipse {
+            get {
+                return ResourceManager.GetString("Ellipse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expander.
+        /// </summary>
+        internal static string Expander {
+            get {
+                return ResourceManager.GetString("Expander", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Icône étendue.
+        /// </summary>
+        internal static string ExtendedIcon {
+            get {
+                return ResourceManager.GetString("ExtendedIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retours utilisateur.
+        /// </summary>
+        internal static string Feedback {
+            get {
+                return ResourceManager.GetString("Feedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Champs.
+        /// </summary>
+        internal static string Fields {
+            get {
+                return ResourceManager.GetString("Fields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formulaire.
+        /// </summary>
+        internal static string Form {
+            get {
+                return ResourceManager.GetString("Form", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Séparateur de grille.
+        /// </summary>
+        internal static string GridSplitter {
+            get {
+                return ResourceManager.GetString("GridSplitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contrôle avec en-tête.
+        /// </summary>
+        internal static string HeaderedContentControl {
+            get {
+                return ResourceManager.GetString("HeaderedContentControl", resourceCulture);
             }
         }
         
@@ -110,6 +326,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lien.
+        /// </summary>
+        internal static string HyperLinkButton {
+            get {
+                return ResourceManager.GetString("HyperLinkButton", resourceCulture);
             }
         }
         
@@ -132,20 +357,119 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Navigation.
+        ///   Looks up a localized string similar to Étiquette.
         /// </summary>
-        internal static string Navigation {
+        internal static string Label {
             get {
-                return ResourceManager.GetString("Navigation", resourceCulture);
+                return ResourceManager.GetString("Label", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Formes et visuels.
+        ///   Looks up a localized string similar to Mise en page.
         /// </summary>
-        internal static string ShapesAndVisuals {
+        internal static string Layout {
             get {
-                return ResourceManager.GetString("ShapesAndVisuals", resourceCulture);
+                return ResourceManager.GetString("Layout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Liste.
+        /// </summary>
+        internal static string ListBox {
+            get {
+                return ResourceManager.GetString("ListBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menu.
+        /// </summary>
+        internal static string Menu {
+            get {
+                return ResourceManager.GetString("Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menu de navigation.
+        /// </summary>
+        internal static string NavigationMenu {
+            get {
+                return ResourceManager.GetString("NavigationMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        internal static string Notification {
+            get {
+                return ResourceManager.GetString("Notification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pagination.
+        /// </summary>
+        internal static string Pagination {
+            get {
+                return ResourceManager.GetString("Pagination", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barre de progression.
+        /// </summary>
+        internal static string ProgressBar {
+            get {
+                return ResourceManager.GetString("ProgressBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bouton radio.
+        /// </summary>
+        internal static string RadioButton {
+            get {
+                return ResourceManager.GetString("RadioButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Texte sélectionnable.
+        /// </summary>
+        internal static string SelectableTextBlock {
+            get {
+                return ResourceManager.GetString("SelectableTextBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sélection.
+        /// </summary>
+        internal static string Selection {
+            get {
+                return ResourceManager.GetString("Selection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formes et dessin.
+        /// </summary>
+        internal static string ShapesAndDrawing {
+            get {
+                return ResourceManager.GetString("ShapesAndDrawing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shell et navigation.
+        /// </summary>
+        internal static string ShellNavigation {
+            get {
+                return ResourceManager.GetString("ShellNavigation", resourceCulture);
             }
         }
         
@@ -159,11 +483,56 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Textes.
+        ///   Looks up a localized string similar to Curseur.
         /// </summary>
-        internal static string Texts {
+        internal static string Slider {
             get {
-                return ResourceManager.GetString("Texts", resourceCulture);
+                return ResourceManager.GetString("Slider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bouton partagé.
+        /// </summary>
+        internal static string SplitButton {
+            get {
+                return ResourceManager.GetString("SplitButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vue partagée.
+        /// </summary>
+        internal static string SplitView {
+            get {
+                return ResourceManager.GetString("SplitView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page à onglets.
+        /// </summary>
+        internal static string TabbedPage {
+            get {
+                return ResourceManager.GetString("TabbedPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onglets.
+        /// </summary>
+        internal static string TabControl {
+            get {
+                return ResourceManager.GetString("TabControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bloc de texte.
+        /// </summary>
+        internal static string TextBlock {
+            get {
+                return ResourceManager.GetString("TextBlock", resourceCulture);
             }
         }
         
@@ -173,6 +542,60 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vue horaire.
+        /// </summary>
+        internal static string TimeView {
+            get {
+                return ResourceManager.GetString("TimeView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bouton basculant.
+        /// </summary>
+        internal static string ToggleButton {
+            get {
+                return ResourceManager.GetString("ToggleButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bouton partagé basculant.
+        /// </summary>
+        internal static string ToggleSplitButton {
+            get {
+                return ResourceManager.GetString("ToggleSplitButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interrupteur.
+        /// </summary>
+        internal static string ToggleSwitch {
+            get {
+                return ResourceManager.GetString("ToggleSwitch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arborescence.
+        /// </summary>
+        internal static string TreeView {
+            get {
+                return ResourceManager.GetString("TreeView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Typographie.
+        /// </summary>
+        internal static string Typography {
+            get {
+                return ResourceManager.GetString("Typography", resourceCulture);
             }
         }
     }

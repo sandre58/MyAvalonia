@@ -9,6 +9,8 @@ using System.Linq;
 using System.Windows.Input;
 using MyNet.Avalonia.Extended.Commands;
 using MyNet.Avalonia.Showcase.ViewModels.Menu;
+using MyNet.Globalization.Culture;
+using MyNet.Globalization.Facade;
 using MyNet.UI.Commands;
 using MyNet.UI.Loading;
 using MyNet.UI.Navigation;
@@ -42,6 +44,7 @@ internal sealed class MainViewModel : ObservableObject
         NavigateCommand = navigationCommands.NavigateCommand;
         navigationCommands.SubscribeToNavigationStateChanges();
         navigationService.StateChanged += OnNavigationStateChanged;
+        GlobalizationServices.Current.CultureChanged += OnCultureChanged;
     }
 
     public IApplicationInfo ApplicationInfo { get; }
@@ -113,6 +116,12 @@ internal sealed class MainViewModel : ObservableObject
             _filteredMenuItems.Add(item);
 
         OnPropertyChanged(nameof(ShowMenuFilterEmpty), null, ShowMenuFilterEmpty);
+    }
+
+    private void OnCultureChanged(object? sender, CultureChangedEventArgs e)
+    {
+        if (HasActiveMenuFilter)
+            RebuildFilteredMenuItems();
     }
 
     private void OnNavigationStateChanged(object? sender, NavigationStateChangedEventArgs e)

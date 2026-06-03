@@ -33,19 +33,20 @@ internal sealed class HomePageViewModel : PageViewModel
         new(MaterialIconKind.Palette, nameof(MenuResources.Theme), "FeaturedThemeDescription", "Theme"),
         new(MaterialIconKind.TagFaces, nameof(MenuResources.Icons), "FeaturedIconsDescription", "Icons"),
         new(MaterialIconKind.FormatLineStyle, "FeaturedFormTitle", "FeaturedFormDescription", "Form"),
-        new(MaterialIconKind.MessageAlertOutline, nameof(MenuResources.DialogsAndFeedback), "FeaturedDialogsDescription", "Dialogs")
+        new(MaterialIconKind.MessageAlertOutline, nameof(MenuResources.Feedback), "FeaturedDialogsDescription", "Dialogs")
     ];
 
     public IReadOnlyList<HomeLinkViewModel> CategoryLinks { get; } =
     [
-        new(MaterialIconKind.FormatText, nameof(MenuResources.Texts), "CategoryTextsDescription", "Texts"),
-        new(MaterialIconKind.GestureTapButton, nameof(MenuResources.Buttons), "CategoryButtonsDescription", "Buttons"),
+        new(MaterialIconKind.FormatText, nameof(MenuResources.Typography), "CategoryTextsDescription", "Typography"),
+        new(MaterialIconKind.GestureTapButton, nameof(MenuResources.ButtonsAndActions), "CategoryButtonsDescription", "ButtonsAndActions"),
+        new(MaterialIconKind.CheckboxMarkedOutline, nameof(MenuResources.Selection), "CategorySelectionDescription", "Selection"),
         new(MaterialIconKind.FormTextbox, nameof(MenuResources.Inputs), "CategoryInputsDescription", "Inputs"),
-        new(MaterialIconKind.ViewCarousel, nameof(MenuResources.Containers), "CategoryContainersDescription", "Containers"),
+        new(MaterialIconKind.ViewDashboardOutline, nameof(MenuResources.Layout), "CategoryContainersDescription", "Layout"),
         new(MaterialIconKind.Table, nameof(MenuResources.DataAndLists), "CategoryDataDescription", "DataAndLists"),
-        new(MaterialIconKind.BookOpenPageVariantOutline, nameof(MenuResources.Navigation), "CategoryNavigationDescription", "Navigation"),
-        new(MaterialIconKind.MessageAlertOutline, nameof(MenuResources.DialogsAndFeedback), "CategoryDialogsDescription", "DialogsAndFeedback"),
-        new(MaterialIconKind.Shape, nameof(MenuResources.ShapesAndVisuals), "CategoryShapesDescription", "ShapesAndVisuals")
+        new(MaterialIconKind.BookOpenPageVariantOutline, nameof(MenuResources.ShellNavigation), "CategoryNavigationDescription", "ShellNavigation"),
+        new(MaterialIconKind.MessageAlertOutline, nameof(MenuResources.Feedback), "CategoryDialogsDescription", "Feedback"),
+        new(MaterialIconKind.Shape, nameof(MenuResources.ShapesAndDrawing), "CategoryShapesDescription", "ShapesAndDrawing")
     ];
 
     public ICommand OpenLinkCommand { get; }
@@ -57,14 +58,15 @@ internal sealed class HomePageViewModel : PageViewModel
             "Icons" => _navigationClient.NavigateToAsync<IconsPageViewModel>(),
             "Form" => _navigationClient.NavigateToAsync<FormPageViewModel>(),
             "Dialogs" => _navigationClient.NavigateToAsync<DialogPageViewModel>(),
-            "Texts" => _navigationClient.NavigateToAsync<LabelPageViewModel>(),
-            "Buttons" => _navigationClient.NavigateToAsync<ButtonPageViewModel>(),
+            "Typography" => _navigationClient.NavigateToAsync<LabelPageViewModel>(),
+            "ButtonsAndActions" => _navigationClient.NavigateToAsync<ButtonPageViewModel>(),
+            "Selection" => _navigationClient.NavigateToAsync<CheckBoxPageViewModel>(),
             "Inputs" => _navigationClient.NavigateToAsync<FieldsPageViewModel>(),
-            "Containers" => _navigationClient.NavigateToAsync<AvatarPageViewModel>(),
+            "Layout" => _navigationClient.NavigateToAsync<ExpanderPageViewModel>(),
             "DataAndLists" => _navigationClient.NavigateToAsync<DataGridPageViewModel>(),
-            "Navigation" => _navigationClient.NavigateToAsync<NavigationMenuPageViewModel>(),
-            "DialogsAndFeedback" => _navigationClient.NavigateToAsync<DialogPageViewModel>(),
-            "ShapesAndVisuals" => _navigationClient.NavigateToAsync<BorderPageViewModel>(),
+            "ShellNavigation" => _navigationClient.NavigateToAsync<NavigationMenuPageViewModel>(),
+            "Feedback" => _navigationClient.NavigateToAsync<DialogPageViewModel>(),
+            "ShapesAndDrawing" => _navigationClient.NavigateToAsync<BorderPageViewModel>(),
             _ => Task.CompletedTask
         };
 }

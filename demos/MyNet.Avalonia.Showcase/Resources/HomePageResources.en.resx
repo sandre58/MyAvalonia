@@ -85,13 +85,16 @@
     <value>Label, TextBlock, selectable text</value>
   </data>
   <data name="CategoryButtonsDescription" xml:space="preserve">
-    <value>Buttons, checkboxes, toggles</value>
+    <value>Buttons, links, drop-down menus</value>
+  </data>
+  <data name="CategorySelectionDescription" xml:space="preserve">
+    <value>Check boxes, radios, toggles</value>
   </data>
   <data name="CategoryInputsDescription" xml:space="preserve">
     <value>Fields, sliders, calendar, clock</value>
   </data>
   <data name="CategoryContainersDescription" xml:space="preserve">
-    <value>Cards, tabs, forms, banners</value>
+    <value>Expander, tabs, forms, banners</value>
   </data>
   <data name="CategoryDataDescription" xml:space="preserve">
     <value>DataGrid, lists, tree view</value>

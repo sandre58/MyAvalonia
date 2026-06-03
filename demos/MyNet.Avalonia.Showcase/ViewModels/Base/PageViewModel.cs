@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ViewModels.Menu;
 using MyNet.Globalization.Facade;
+using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.UI.Navigation.Models;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Base;
@@ -21,26 +22,11 @@ internal abstract class PageViewModel : ObservableObject, IMenuItemViewModel, IN
 {
     private static readonly IReadOnlyList<IMenuItemViewModel> EmptyItems = [];
 
+    protected PageViewModel() => Title = MenuPageTitleKeys.For(GetType());
+
     /// <inheritdoc/>
-    public string Title => CreateTitle();
-
-    /// <summary>
-    /// Creates a user-friendly title from the runtime type name.
-    /// </summary>
-    protected virtual string CreateTitle()
-    {
-        var name = GetType().Name;
-        foreach (var suffix in new[] { "PageViewModel", "ViewModel", "Page" })
-        {
-            if (name.EndsWith(suffix, System.StringComparison.OrdinalIgnoreCase))
-            {
-                name = name[..^suffix.Length];
-                break;
-            }
-        }
-
-        return name.Translate();
-    }
+    [UpdateOnCultureChanged]
+    public string Title => field.Translate();
 
     /// <inheritdoc/>
     public virtual MaterialIconKind Icon { get; } = MaterialIconKind.CircleOffOutline;

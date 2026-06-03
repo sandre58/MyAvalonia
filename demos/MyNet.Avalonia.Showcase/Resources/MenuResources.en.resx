@@ -132,28 +132,77 @@
   <data name="Showcase" xml:space="preserve">
     <value>Showcase</value>
   </data>
-  <data name="Texts" xml:space="preserve">
-      <value>Texts</value>
+  <data name="ComponentsCatalog" xml:space="preserve">
+      <value>Components</value>
   </data>
-  <data name="ShapesAndVisuals" xml:space="preserve">
-      <value>Shapes and visuals</value>
+  <data name="Typography" xml:space="preserve">
+      <value>Typography</value>
   </data>
-  <data name="Navigation" xml:space="preserve">
-      <value>Navigation</value>
+  <data name="ButtonsAndActions" xml:space="preserve">
+      <value>Buttons and actions</value>
   </data>
-  <data name="DialogsAndFeedback" xml:space="preserve">
-      <value>Dialogs and feedback</value>
+  <data name="Selection" xml:space="preserve">
+      <value>Selection</value>
+  </data>
+  <data name="Layout" xml:space="preserve">
+      <value>Layout</value>
   </data>
   <data name="DataAndLists" xml:space="preserve">
       <value>Data and lists</value>
   </data>
-  <data name="Containers" xml:space="preserve">
-      <value>Containers</value>
+  <data name="ShellNavigation" xml:space="preserve">
+      <value>Shell and navigation</value>
   </data>
-  <data name="ComponentsCatalog" xml:space="preserve">
-      <value>Components</value>
+  <data name="Feedback" xml:space="preserve">
+      <value>User feedback</value>
   </data>
-  <data name="Buttons" xml:space="preserve">
-      <value>Buttons</value>
+  <data name="ShapesAndDrawing" xml:space="preserve">
+      <value>Shapes and drawing</value>
   </data>
+  <data name="Avatar" xml:space="preserve"><value>Avatar</value></data>
+  <data name="Badge" xml:space="preserve"><value>Badge</value></data>
+  <data name="Banner" xml:space="preserve"><value>Banner</value></data>
+  <data name="Border" xml:space="preserve"><value>Border</value></data>
+  <data name="Button" xml:space="preserve"><value>Button</value></data>
+  <data name="ButtonSpinner" xml:space="preserve"><value>Button spinner</value></data>
+  <data name="Calendar" xml:space="preserve"><value>Calendar</value></data>
+  <data name="Carousel" xml:space="preserve"><value>Carousel</value></data>
+  <data name="CarouselPage" xml:space="preserve"><value>Carousel page</value></data>
+  <data name="CheckBox" xml:space="preserve"><value>Check box</value></data>
+  <data name="Clock" xml:space="preserve"><value>Clock</value></data>
+  <data name="ClockSelector" xml:space="preserve"><value>Clock selector</value></data>
+  <data name="ColorView" xml:space="preserve"><value>Color picker</value></data>
+  <data name="ContentPage" xml:space="preserve"><value>Content page</value></data>
+  <data name="DataGrid" xml:space="preserve"><value>Data grid</value></data>
+  <data name="Dialog" xml:space="preserve"><value>Dialog</value></data>
+  <data name="DrawerPage" xml:space="preserve"><value>Drawer</value></data>
+  <data name="DropDownButton" xml:space="preserve"><value>Drop-down button</value></data>
+  <data name="Ellipse" xml:space="preserve"><value>Ellipse</value></data>
+  <data name="Expander" xml:space="preserve"><value>Expander</value></data>
+  <data name="ExtendedIcon" xml:space="preserve"><value>Extended icon</value></data>
+  <data name="Fields" xml:space="preserve"><value>Fields</value></data>
+  <data name="Form" xml:space="preserve"><value>Form</value></data>
+  <data name="GridSplitter" xml:space="preserve"><value>Grid splitter</value></data>
+  <data name="HeaderedContentControl" xml:space="preserve"><value>Headered content control</value></data>
+  <data name="HyperLinkButton" xml:space="preserve"><value>Hyperlink</value></data>
+  <data name="Label" xml:space="preserve"><value>Label</value></data>
+  <data name="ListBox" xml:space="preserve"><value>List box</value></data>
+  <data name="Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="NavigationMenu" xml:space="preserve"><value>Navigation menu</value></data>
+  <data name="Notification" xml:space="preserve"><value>Notification</value></data>
+  <data name="Pagination" xml:space="preserve"><value>Pagination</value></data>
+  <data name="ProgressBar" xml:space="preserve"><value>Progress bar</value></data>
+  <data name="RadioButton" xml:space="preserve"><value>Radio button</value></data>
+  <data name="SelectableTextBlock" xml:space="preserve"><value>Selectable text</value></data>
+  <data name="Slider" xml:space="preserve"><value>Slider</value></data>
+  <data name="SplitButton" xml:space="preserve"><value>Split button</value></data>
+  <data name="SplitView" xml:space="preserve"><value>Split view</value></data>
+  <data name="TabControl" xml:space="preserve"><value>Tabs</value></data>
+  <data name="TabbedPage" xml:space="preserve"><value>Tabbed page</value></data>
+  <data name="TextBlock" xml:space="preserve"><value>Text block</value></data>
+  <data name="TimeView" xml:space="preserve"><value>Time view</value></data>
+  <data name="ToggleButton" xml:space="preserve"><value>Toggle button</value></data>
+  <data name="ToggleSplitButton" xml:space="preserve"><value>Toggle split button</value></data>
+  <data name="ToggleSwitch" xml:space="preserve"><value>Toggle switch</value></data>
+  <data name="TreeView" xml:space="preserve"><value>Tree view</value></data>
 </root>

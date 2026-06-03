@@ -90,7 +90,7 @@
                                     <my:MaterialIcon Kind="{Binding Icon}" />
                                 </Template>
                             </Setter>
-                            <Setter Property="Header" Value="{my:Display Title}" />
+                            <Setter Property="Header" Value="{Binding Title}" />
                             <Setter Property="IsSeparator" Value="{Binding IsSeparator}" />
                             <Setter Property="Classes.isGroup" Value="{Binding IsGroup}" />
                             <Setter Property="Classes.isSeparator" Value="{Binding IsSeparator}" />

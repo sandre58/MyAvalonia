@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using Material.Icons;
 using MyNet.Globalization.Facade;
 using MyNet.Observable.Behaviors.Metadata.Attributes;
@@ -20,20 +19,18 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Menu;
 /// </summary>
 internal sealed class PagesGroupViewModel : ObservableObject, IMenuItemViewModel
 {
-    [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed with the view model.")]
-    private readonly string _titleResourceKey;
     private readonly ObservableCollection<IMenuItemViewModel> _pages = [];
 
     public PagesGroupViewModel(string resourceKey, MaterialIconKind icon)
     {
-        _titleResourceKey = resourceKey;
+        Title = resourceKey;
         Icon = icon;
         Pages = new(_pages);
     }
 
     /// <inheritdoc/>
     [UpdateOnCultureChanged]
-    public string Title => _titleResourceKey.Translate();
+    public string Title => field.Translate();
 
     /// <inheritdoc/>
     public MaterialIconKind Icon { get; }

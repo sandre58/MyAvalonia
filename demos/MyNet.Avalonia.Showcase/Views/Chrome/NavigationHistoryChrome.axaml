@@ -14,13 +14,15 @@
                 Classes="variant-text"
                 Command="{Binding GoBackCommand, RelativeSource={RelativeSource AncestorType=chrome:NavigationHistoryChrome}, FallbackValue={x:Null}}"
                 Content="{my:MaterialIcon ArrowLeft}"
-                ToolTip.Tip="{my:Loc PreviousPage}" />
+                ToolTip.Tip="{my:Loc PreviousPage}"
+                AutomationProperties.Name="{my:Loc PreviousPage}" />
         <Button Width="36"
                 Height="36"
                 Padding="0"
                 Classes="variant-text"
                 Command="{Binding GoForwardCommand, RelativeSource={RelativeSource AncestorType=chrome:NavigationHistoryChrome}, FallbackValue={x:Null}}"
                 Content="{my:MaterialIcon ArrowRight}"
-                ToolTip.Tip="{my:Loc NextPage}" />
+                ToolTip.Tip="{my:Loc NextPage}"
+                AutomationProperties.Name="{my:Loc NextPage}" />
     </StackPanel>
 </UserControl>

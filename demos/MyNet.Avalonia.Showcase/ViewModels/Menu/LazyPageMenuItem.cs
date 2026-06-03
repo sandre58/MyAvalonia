@@ -10,6 +10,7 @@ using Material.Icons;
 using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Globalization.Facade;
+using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.UI.Navigation.Models;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Menu;
@@ -17,7 +18,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Menu;
 /// <summary>
 /// Menu entry that resolves the page view model from DI only when the page is opened.
 /// </summary>
-internal sealed class LazyPageMenuItem(Type viewModelType, IServiceProvider services) : IMenuItemViewModel
+internal sealed class LazyPageMenuItem(Type viewModelType, IServiceProvider services) : ObservableObject, IMenuItemViewModel
 {
     private static readonly IReadOnlyList<IMenuItemViewModel> EmptyItems = [];
     private readonly Type _viewModelType = viewModelType ?? throw new ArgumentNullException(nameof(viewModelType));
@@ -31,7 +32,8 @@ internal sealed class LazyPageMenuItem(Type viewModelType, IServiceProvider serv
     public INavigationPage NavigationTarget => Page;
 
     /// <inheritdoc/>
-    public string Title => _page?.Title ?? CreateTitleFromTypeName(_viewModelType.Name);
+    [UpdateOnCultureChanged]
+    public string Title { get => field.Translate(); } = MenuPageTitleKeys.For(viewModelType);
 
     /// <inheritdoc/>
     public MaterialIconKind Icon => _page?.Icon ?? MaterialIconKind.CircleOffOutline;
@@ -44,18 +46,4 @@ internal sealed class LazyPageMenuItem(Type viewModelType, IServiceProvider serv
 
     /// <inheritdoc/>
     public IReadOnlyList<IMenuItemViewModel> Items => EmptyItems;
-
-    private static string CreateTitleFromTypeName(string name)
-    {
-        foreach (var suffix in new[] { "PageViewModel", "ViewModel", "Page" })
-        {
-            if (name.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
-            {
-                name = name[..^suffix.Length];
-                break;
-            }
-        }
-
-        return name.Translate();
-    }
 }

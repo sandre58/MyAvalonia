@@ -79,6 +79,7 @@ public class NavigationMenuItem : HeaderedItemsControl
     {
         PressedMixin.Attach<NavigationMenuItem>();
         FocusableProperty.OverrideDefaultValue<NavigationMenuItem>(true);
+        KeyDownEvent.AddClassHandler<NavigationMenuItem>((item, e) => item.OnMenuKeyDown(e), RoutingStrategies.Tunnel, handledEventsToo: true);
         _ = LevelProperty.Changed.AddClassHandler<NavigationMenuItem, int>((item, args) => item.OnLevelChange(args));
         IsActiveProperty.AffectsPseudoClass<NavigationMenuItem>(PseudoClassName.Active);
         IsHorizontalCollapsedProperty.AffectsPseudoClass<NavigationMenuItem>(PseudoClassName.HorizontalCollapsed);
@@ -228,6 +229,7 @@ public class NavigationMenuItem : HeaderedItemsControl
             return;
         }
 
+        Focus(NavigationMethod.Pointer);
         base.OnPointerPressed(e);
         if (e.Handled) return;
 
@@ -240,8 +242,7 @@ public class NavigationMenuItem : HeaderedItemsControl
         {
             if (ItemCount == 0)
             {
-                SelectItem(this);
-                Command?.Execute(CommandParameter);
+                ActivateItem(this);
                 e.Handled = true;
             }
             else
@@ -276,27 +277,58 @@ public class NavigationMenuItem : HeaderedItemsControl
 
         var point = e.GetCurrentPoint(this);
         if (!new Rect(Bounds.Size).ContainsExclusive(point.Position) || e.Pointer.Type != PointerType.Touch) return;
-        if (ItemCount == 0)
+        ActivateItem(this);
+        e.Handled = true;
+    }
+
+    private void OnMenuKeyDown(KeyEventArgs e)
+    {
+        if (IsSeparator || !IsEnabled)
+            return;
+
+        switch (e.Key)
         {
-            SelectItem(this);
-            Command?.Execute(CommandParameter);
-            e.Handled = true;
-        }
-        else
-        {
-            if (!IsHorizontalCollapsed)
-            {
-                SetCurrentValue(IsVerticalCollapsedProperty, !IsVerticalCollapsed);
+            case Key.Enter:
+            case Key.Space:
+                ActivateItem(this);
                 e.Handled = true;
-            }
+                break;
+            case Key.Right:
+                if (ItemCount > 0 && IsVerticalCollapsed)
+                {
+                    SetCurrentValue(IsVerticalCollapsedProperty, false);
+                    e.Handled = true;
+                }
+
+                break;
+            case Key.Left:
+                if (ItemCount > 0 && !IsVerticalCollapsed)
+                {
+                    SetCurrentValue(IsVerticalCollapsedProperty, true);
+                    e.Handled = true;
+                }
+
+                break;
+        }
+    }
+
+    private void ActivateItem(NavigationMenuItem item)
+    {
+        if (item.ItemCount == 0)
+        {
+            item.SelectItem(item);
+            item.Command?.Execute(item.CommandParameter);
+            return;
+        }
+
+        if (!item.IsHorizontalCollapsed)
+            item.SetCurrentValue(IsVerticalCollapsedProperty, !item.IsVerticalCollapsed);
+        else if (_popup is not null)
+        {
+            if (_popup.IsOpen)
+                _popup.Close();
             else
-            {
-                if (_popup is null || e.Source is not Visual v || _popup.IsInsidePopup(v)) return;
-                if (_popup.IsOpen)
-                    _popup.Close();
-                else
-                    _popup.Open();
-            }
+                _popup.Open();
         }
     }
 
