@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="CornerRadiusExtensions.cs" company="Stéphane ANDRE">
+// <copyright file="CornerRadiusExtension.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -14,18 +14,18 @@ namespace MyNet.Avalonia.Theme.MarkupExtensions;
 /// <summary>
 /// Markup extension for creating standard corner radius values based on the <see cref="CornerSize"/> enumeration.
 /// </summary>
-public class CornerRadiusExtensions : MarkupExtension
+public class CornerRadiusExtension : MarkupExtension
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="CornerRadiusExtensions"/> class.
+    /// Initializes a new instance of the <see cref="CornerRadiusExtension"/> class.
     /// </summary>
-    public CornerRadiusExtensions() { }
+    public CornerRadiusExtension() { }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CornerRadiusExtensions"/> class with the specified size.
+    /// Initializes a new instance of the <see cref="CornerRadiusExtension"/> class with the specified size.
     /// </summary>
     /// <param name="size">The standard corner radius size to use.</param>
-    public CornerRadiusExtensions(CornerSize size) => Size = size;
+    public CornerRadiusExtension(CornerSize size) => Size = size;
 
     /// <summary>
     /// Gets or sets the standard corner radius size to use.

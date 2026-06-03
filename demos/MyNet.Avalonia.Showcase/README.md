@@ -55,7 +55,7 @@ La composition (services, pages, menu) est centralisée dans `Composition/AppCom
 | Élément | Desktop | Browser |
 |---------|---------|---------|
 | Menu + navigation | `MainView` | `MainView` |
-| Culture / thème | `ShellTitleBarChrome` dans la barre de titre (`MainWindow`) | `ShellTitleBarChrome` en bandeau (`ShowShellChromeInView`) |
+| Marque + historique + culture / thème | `ShellPrimaryChrome` + `ShellTitleBarChrome` dans la barre de titre (`MainWindow`) | même bandeau en haut de `MainView` (`ShowShellChromeInView`) |
 | Overlay dialogs + busy | `MainView` (`OverlayDialogHost`, `BusyServiceIndicator`) | idem |
 
 `MainWindow` ne contient plus que le chrome fenêtre Avalonia + `MainView`.
@@ -65,7 +65,7 @@ La composition (services, pages, menu) est centralisée dans `Composition/AppCom
 Les entrées du menu sont des `LazyPageMenuItem` : le `PageViewModel` n’est résolu depuis le conteneur DI qu’à l’ouverture de la page (clic menu ou navigation). Les types restent en singleton une fois créés.
 Le clic sur une entrée appelle `NavigateCommand` avec `NavigationTarget`, puis `SelectedMenuItem` est resynchronisé sur l’état réel de navigation via `INavigationService.StateChanged`.
 
-Le menu est construit par `AppComposition.ConfigureMainViewModel()` (pas dans `App.axaml.cs`). Un en-tête de section (`MenuSectionViewModel` → `NavigationMenuItem.IsSeparator`, titre + icône) précède le catalogue de composants via `PagesCatalog.CreateMenuItems`.
+Le menu est construit par `AppComposition.ConfigureMainViewModel()` (pas dans `App.axaml.cs`). Un en-tête de section (`MenuSectionViewModel` → `NavigationMenuItem.IsSeparator`, titre + icône) précède le catalogue de composants via `PagesCatalog.CreateMenuItems`. Le rail n’affiche que le repli du menu et la recherche (`MenuSearchText` / `MenuFilter`). La marque et l’historique Précédent / Suivant sont dans `ShellPrimaryChrome` (barre de titre desktop avec `ReserveTitleBarSafeArea`, bandeau browser).
 
 ### Aperçu designer (DEBUG)
 

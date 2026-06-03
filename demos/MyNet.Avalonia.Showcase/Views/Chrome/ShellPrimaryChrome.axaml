@@ -1,0 +1,33 @@
+<UserControl x:Class="MyNet.Avalonia.Showcase.Views.Chrome.ShellPrimaryChrome"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:chrome="clr-namespace:MyNet.Avalonia.Showcase.Views.Chrome"
+             x:CompileBindings="False"
+             VerticalAlignment="Center">
+    <StackPanel Margin="{my:Thickness Sm, Horizontal}"
+                VerticalAlignment="Center"
+                Classes="gap-md"
+                Orientation="Horizontal">
+        <chrome:NavigationHistoryChrome GoBackCommand="{Binding GoBackCommand, RelativeSource={RelativeSource AncestorType=chrome:ShellPrimaryChrome}, FallbackValue={x:Null}}"
+                                        GoForwardCommand="{Binding GoForwardCommand, RelativeSource={RelativeSource AncestorType=chrome:ShellPrimaryChrome}, FallbackValue={x:Null}}" />
+        <StackPanel VerticalAlignment="Center"
+                    Classes="gap-sm"
+                    Orientation="Horizontal">
+            <Image Width="24"
+                   Height="24"
+                   VerticalAlignment="Center"
+                   RenderOptions.BitmapInterpolationMode="HighQuality"
+                   Source="/Assets/Demo.ico" />
+            <TextBlock VerticalAlignment="Center"
+                       Classes="font-md"
+                       Text="{Binding ProductName, RelativeSource={RelativeSource AncestorType=chrome:ShellPrimaryChrome}}" />
+            <TextBlock VerticalAlignment="Center"
+                       Classes="font-sm opacity-high"
+                       Text="·" />
+            <TextBlock VerticalAlignment="Center"
+                       Classes="font-sm opacity-high"
+                       Text="{my:Loc Showcase}" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

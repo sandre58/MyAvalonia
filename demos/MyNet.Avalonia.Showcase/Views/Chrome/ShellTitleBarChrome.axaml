@@ -9,9 +9,7 @@
     <StackPanel Margin="{my:Thickness Md, Horizontal}"
                 VerticalAlignment="Center"
                 Classes="gap-md"
-                Orientation="Horizontal"
-                TextElement.Foreground="{my:Theme Primary.Foreground}"
-                my:ThemeAssist.Context="Contrast">
+                Orientation="Horizontal">
         <geo:CulturePicker Classes="size-sm shape-circle"
                            Cultures="{Binding CultureManager.Cultures, RelativeSource={RelativeSource AncestorType=chrome:ShellTitleBarChrome}, FallbackValue={x:Null}}"
                            SelectedCulture="{Binding CultureManager.SelectedCulture, RelativeSource={RelativeSource AncestorType=chrome:ShellTitleBarChrome}, FallbackValue={x:Null}}"

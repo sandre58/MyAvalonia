@@ -15,16 +15,19 @@
         x:DataType="vm:MainViewModel"
         Icon="/Assets/Demo.ico"
         my:WindowAssist.ShowFullScreenButton="{OnPlatform True, macOS=False}"
-        my:WindowAssist.IsTitleVisible="False"
         my:WindowAssist.TitleBarBackground="Transparent"
+        my:WindowAssist.TitleBarHeight="40"
+        my:WindowAssist.IsTitleVisible="False"
         my:WindowAssist.ExtendContentIntoTitleBar="True"
+        my:WindowAssist.ReserveTitleBarSafeArea="True"
         mc:Ignorable="d">
-    <Window.Styles>
-        <Style Selector="WindowDrawnDecorations">
-            <Setter Property="my:ThemeAssist.Context" Value="Contrast" />
-            <Setter Property="TextElement.Foreground" Value="{my:Theme Primary.Foreground}" />
-        </Style>
-    </Window.Styles>
+
+
+    <my:WindowAssist.LeftTitleBarContent>
+        <chrome:ShellPrimaryChrome GoBackCommand="{Binding GoBackCommand}"
+                                   GoForwardCommand="{Binding GoForwardCommand}"
+                                   ProductName="{Binding ProductName}" />
+    </my:WindowAssist.LeftTitleBarContent>
 
     <my:WindowAssist.RightTitleBarContent>
         <chrome:ShellTitleBarChrome CultureManager="{Binding Culture}" ThemeManager="{Binding Theme}" />

@@ -138,4 +138,16 @@
   <data name="Center" xml:space="preserve">
     <value>Center</value>
   </data>
+  <data name="MenuSearch" xml:space="preserve">
+    <value>Search pages…</value>
+  </data>
+  <data name="MenuNoResults" xml:space="preserve">
+    <value>No matching pages.</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Forward" xml:space="preserve">
+    <value>Forward</value>
+  </data>
 </root>

@@ -20,7 +20,8 @@ namespace MyNet.Avalonia.Showcase.ViewModels;
 
 internal sealed class MainViewModel : ObservableObject
 {
-    private readonly ObservableCollection<IMenuItemViewModel> _menuItems = [];
+    private readonly ObservableCollection<IMenuItemViewModel> _allMenuItems = [];
+    private readonly ObservableCollection<IMenuItemViewModel> _filteredMenuItems = [];
 
     public MainViewModel(IApplicationInfo applicationInfo,
                          ShellCultureViewModel cultureChrome,
@@ -33,7 +34,7 @@ internal sealed class MainViewModel : ObservableObject
         Culture = cultureChrome;
         Theme = themeChrome;
         ApplicationBusy = applicationBusy;
-        MenuItems = new(_menuItems);
+        MenuItems = new(_filteredMenuItems);
 
         var navigationCommands = new NavigationCommands(navigationService, commandFactory);
         GoBackCommand = navigationCommands.GoBackCommand;
@@ -69,6 +70,7 @@ internal sealed class MainViewModel : ObservableObject
 
     public ICommand NavigateCommand { get; }
 
+    /// <summary>Gets menu items after applying <see cref="MenuSearchText"/>.</summary>
     public ReadOnlyObservableCollection<IMenuItemViewModel> MenuItems { get; }
 
     public IMenuItemViewModel? SelectedMenuItem
@@ -77,7 +79,41 @@ internal sealed class MainViewModel : ObservableObject
         private set => SetProperty(ref field, value);
     }
 
-    public void AddMenuItem(params IMenuItemViewModel[] item) => _menuItems.AddRange(item);
+    /// <summary>Gets or sets the menu filter query (title contains, culture-aware).</summary>
+    public string? MenuSearchText
+    {
+        get;
+        set
+        {
+            if (!SetProperty(ref field, value))
+                return;
+
+            RebuildFilteredMenuItems();
+            OnPropertyChanged(nameof(HasActiveMenuFilter), null, HasActiveMenuFilter);
+            OnPropertyChanged(nameof(ShowMenuFilterEmpty), null, ShowMenuFilterEmpty);
+        }
+    }
+
+    /// <summary>Gets a value indicating whether <see cref="MenuSearchText"/> is filtering the menu.</summary>
+    public bool HasActiveMenuFilter => !string.IsNullOrWhiteSpace(MenuSearchText);
+
+    /// <summary>Gets a value indicating whether the filter is active but returned no entries.</summary>
+    public bool ShowMenuFilterEmpty => HasActiveMenuFilter && _filteredMenuItems.Count == 0;
+
+    public void AddMenuItem(params IMenuItemViewModel[] item)
+    {
+        _allMenuItems.AddRange(item);
+        RebuildFilteredMenuItems();
+    }
+
+    private void RebuildFilteredMenuItems()
+    {
+        _filteredMenuItems.Clear();
+        foreach (var item in MenuFilter.Apply(_allMenuItems, MenuSearchText))
+            _filteredMenuItems.Add(item);
+
+        OnPropertyChanged(nameof(ShowMenuFilterEmpty), null, ShowMenuFilterEmpty);
+    }
 
     private void OnNavigationStateChanged(object? sender, NavigationStateChangedEventArgs e)
     {
@@ -92,7 +128,7 @@ internal sealed class MainViewModel : ObservableObject
         if (page is not INavigationPage navigationPage)
             return null;
 
-        foreach (var item in MenuItems)
+        foreach (var item in _allMenuItems)
         {
             if (item.IsSeparator)
                 continue;

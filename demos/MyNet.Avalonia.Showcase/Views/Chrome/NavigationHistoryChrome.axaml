@@ -1,0 +1,26 @@
+<UserControl x:Class="MyNet.Avalonia.Showcase.Views.Chrome.NavigationHistoryChrome"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:chrome="clr-namespace:MyNet.Avalonia.Showcase.Views.Chrome"
+             x:CompileBindings="False"
+             VerticalAlignment="Center">
+    <StackPanel VerticalAlignment="Center"
+                Classes="gap-sm"
+                Orientation="Horizontal">
+        <Button Width="36"
+                Height="36"
+                Padding="0"
+                Classes="variant-text"
+                Command="{Binding GoBackCommand, RelativeSource={RelativeSource AncestorType=chrome:NavigationHistoryChrome}, FallbackValue={x:Null}}"
+                Content="{my:MaterialIcon ArrowLeft}"
+                ToolTip.Tip="{my:Loc PreviousPage}" />
+        <Button Width="36"
+                Height="36"
+                Padding="0"
+                Classes="variant-text"
+                Command="{Binding GoForwardCommand, RelativeSource={RelativeSource AncestorType=chrome:NavigationHistoryChrome}, FallbackValue={x:Null}}"
+                Content="{my:MaterialIcon ArrowRight}"
+                ToolTip.Tip="{my:Loc NextPage}" />
+    </StackPanel>
+</UserControl>

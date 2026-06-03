@@ -18,7 +18,7 @@
     <TabbedPage PageTransition="{my:PageTransition Slide}">
         <my:TabbedPageAssist.TabControlTheme>
             <ControlTheme TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
-                <Setter Property="Padding" Value="{my:Thickness Md, Top=20}" />
+                <Setter Property="Padding" Value="{my:Thickness Md, Top}" />
                 <Setter Property="my:ItemsAssist.Spacing" Value="{my:Spacing Md}" />
                 <Setter Property="my:HeaderAssist.Foreground" Value="{my:Theme Primary.Foreground}" />
                 <Setter Property="my:ItemsAssist.Role" Value="Accent" />

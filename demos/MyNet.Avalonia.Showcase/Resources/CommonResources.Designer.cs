@@ -127,5 +127,41 @@ namespace MyNet.Avalonia.Showcase.Resources {
                 return ResourceManager.GetString("Up", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Précédent.
+        /// </summary>
+        internal static string Back {
+            get {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suivant.
+        /// </summary>
+        internal static string Forward {
+            get {
+                return ResourceManager.GetString("Forward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aucune page ne correspond..
+        /// </summary>
+        internal static string MenuNoResults {
+            get {
+                return ResourceManager.GetString("MenuNoResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rechercher une page….
+        /// </summary>
+        internal static string MenuSearch {
+            get {
+                return ResourceManager.GetString("MenuSearch", resourceCulture);
+            }
+        }
     }
 }

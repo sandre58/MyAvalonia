@@ -315,11 +315,11 @@
                     <my:MaterialIcon Classes="size-xs" Kind="WeatherSunny" />
                 </Template>
             </Setter>
-            <Setter Property="BorderBrush" Value="{my:Theme Surface.Level1}" />
+            <Setter Property="BorderBrush" Value="{my:Theme Surface.Inverse}" />
             <Setter Property="Background" Value="{my:Theme Surface.Level1}" />
             <Setter Property="Foreground" Value="{my:ThemeBrush Background, Contrast=True, Opacity=Disabled}" />
             <Setter Property="my:InteractionAssist.IndicatorColor" Value="{my:Theme Surface.Inverse}" />
-            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:Theme Surface.Level1}" />
+            <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{my:Theme Surface.Inverse}" />
             <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:Theme Surface.Level1}" />
             <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:ThemeBrush Background, Contrast=True, Opacity=Disabled}" />
             <Setter Property="my:InteractionAssist.ActiveIndicatorColor" Value="{my:Theme Surface.Inverse}" />
