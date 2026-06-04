@@ -60,7 +60,151 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Boutons, cases, interrupteurs.
+        ///   Looks up a localized string similar to Ce que fournit MyNet.
+        /// </summary>
+        internal static string CapabilitiesSection {
+            get {
+                return ResourceManager.GetString("CapabilitiesSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stack UI complet au-delà des contrôles : thème, navigation, validation, globalisation et playground interactif..
+        /// </summary>
+        internal static string CapabilitiesSectionDescription {
+            get {
+                return ResourceManager.GetString("CapabilitiesSectionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modales, overlays, toasts, busy et barres de progression..
+        /// </summary>
+        internal static string CapabilityFeedbackDescription {
+            get {
+                return ResourceManager.GetString("CapabilityFeedbackDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dialogs &amp; notifications.
+        /// </summary>
+        internal static string CapabilityFeedbackTitle {
+            get {
+                return ResourceManager.GetString("CapabilityFeedbackTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ressources .resx, formats et inflexions pour FR / EN..
+        /// </summary>
+        internal static string CapabilityGlobalizationDescription {
+            get {
+                return ResourceManager.GetString("CapabilityGlobalizationDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Globalisation.
+        /// </summary>
+        internal static string CapabilityGlobalizationTitle {
+            get {
+                return ResourceManager.GetString("CapabilityGlobalizationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ContentPage, onglets, tiroirs, historique et menus hiérarchiques..
+        /// </summary>
+        internal static string CapabilityNavigationDescription {
+            get {
+                return ResourceManager.GetString("CapabilityNavigationDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigation &amp; shell.
+        /// </summary>
+        internal static string CapabilityNavigationTitle {
+            get {
+                return ResourceManager.GetString("CapabilityNavigationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ajustez variantes, tailles et rôles sur chaque page de contrôle..
+        /// </summary>
+        internal static string CapabilityPlaygroundDescription {
+            get {
+                return ResourceManager.GetString("CapabilityPlaygroundDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playground.
+        /// </summary>
+        internal static string CapabilityPlaygroundTitle {
+            get {
+                return ResourceManager.GetString("CapabilityPlaygroundTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palette dynamique, brushes sémantiques et variantes clair / sombre..
+        /// </summary>
+        internal static string CapabilityThemeDescription {
+            get {
+                return ResourceManager.GetString("CapabilityThemeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thème &amp; design tokens.
+        /// </summary>
+        internal static string CapabilityThemeTitle {
+            get {
+                return ResourceManager.GetString("CapabilityThemeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FluentValidation intégré aux ViewModels et messages localisés..
+        /// </summary>
+        internal static string CapabilityValidationDescription {
+            get {
+                return ResourceManager.GetString("CapabilityValidationDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation.
+        /// </summary>
+        internal static string CapabilityValidationTitle {
+            get {
+                return ResourceManager.GetString("CapabilityValidationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Catégories des contrôles.
+        /// </summary>
+        internal static string CategoriesSection {
+            get {
+                return ResourceManager.GetString("CategoriesSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Explorez le catalogue par famille — le badge indique le nombre de pages de démo..
+        /// </summary>
+        internal static string CategoriesSectionDescription {
+            get {
+                return ResourceManager.GetString("CategoriesSectionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boutons, liens, menus déroulants.
         /// </summary>
         internal static string CategoryButtonsDescription {
             get {
@@ -69,7 +213,7 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cartes, onglets, formulaires, bannières.
+        ///   Looks up a localized string similar to Expander, onglets, formulaires, bannières.
         /// </summary>
         internal static string CategoryContainersDescription {
             get {
@@ -87,7 +231,7 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dialogs, notifications, barres de progression.
+        ///   Looks up a localized string similar to Dialogues, notifications, progression.
         /// </summary>
         internal static string CategoryDialogsDescription {
             get {
@@ -114,6 +258,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cases à cocher, radios, bascules.
+        /// </summary>
+        internal static string CategorySelectionDescription {
+            get {
+                return ResourceManager.GetString("CategorySelectionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bordures, ellipses, icônes étendues.
         /// </summary>
         internal static string CategoryShapesDescription {
@@ -128,6 +281,60 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string CategoryTextsDescription {
             get {
                 return ResourceManager.GetString("CategoryTextsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Explorer le showcase.
+        /// </summary>
+        internal static string ExploreSection {
+            get {
+                return ResourceManager.GetString("ExploreSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quelques raccourcis pour tirer le meilleur parti de cette application..
+        /// </summary>
+        internal static string ExploreSectionDescription {
+            get {
+                return ResourceManager.GetString("ExploreSectionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Le menu regroupe 9 familles couvrant l’ensemble du catalogue MyNet..
+        /// </summary>
+        internal static string ExploreTipMenu {
+            get {
+                return ResourceManager.GetString("ExploreTipMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sur les pages de contrôles, onglet Playground pour tester styles et tailles..
+        /// </summary>
+        internal static string ExploreTipPlayground {
+            get {
+                return ResourceManager.GetString("ExploreTipPlayground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utilisez la recherche du menu latéral pour trouver une page par nom..
+        /// </summary>
+        internal static string ExploreTipSearch {
+            get {
+                return ResourceManager.GetString("ExploreTipSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page Thème : personnalisez primaire, accent et variantes en direct..
+        /// </summary>
+        internal static string ExploreTipTheme {
+            get {
+                return ResourceManager.GetString("ExploreTipTheme", resourceCulture);
             }
         }
         
@@ -177,6 +384,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parcours recommandés pour découvrir le thème, les icônes, les formulaires et les retours utilisateur..
+        /// </summary>
+        internal static string FeaturedSectionDescription {
+            get {
+                return ResourceManager.GetString("FeaturedSectionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Palette, brushes et rôles de thème.
         /// </summary>
         internal static string FeaturedThemeDescription {
@@ -191,6 +407,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string GettingStartedSection {
             get {
                 return ResourceManager.GetString("GettingStartedSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Intégrez MyNet dans une application Avalonia existante ou nouvelle..
+        /// </summary>
+        internal static string GettingStartedSectionDescription {
+            get {
+                return ResourceManager.GetString("GettingStartedSectionDescription", resourceCulture);
             }
         }
         
@@ -240,6 +465,42 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Avalonia 12.
+        /// </summary>
+        internal static string HeroTagAvalonia {
+            get {
+                return ResourceManager.GetString("HeroTagAvalonia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FluentValidation.
+        /// </summary>
+        internal static string HeroTagFluentValidation {
+            get {
+                return ResourceManager.GetString("HeroTagFluentValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Material Icons.
+        /// </summary>
+        internal static string HeroTagMaterialIcons {
+            get {
+                return ResourceManager.GetString("HeroTagMaterialIcons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MVVM &amp; DI.
+        /// </summary>
+        internal static string HeroTagMvvm {
+            get {
+                return ResourceManager.GetString("HeroTagMvvm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ouvrir.
         /// </summary>
         internal static string OpenPage {
@@ -249,11 +510,65 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to README du showcase.
         /// </summary>
-        internal static string rer {
+        internal static string ResourceReadme {
             get {
-                return ResourceManager.GetString("rer", resourceCulture);
+                return ResourceManager.GetString("ResourceReadme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dépôt GitHub MyAvalonia.
+        /// </summary>
+        internal static string ResourceRepository {
+            get {
+                return ResourceManager.GetString("ResourceRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ressources.
+        /// </summary>
+        internal static string ResourcesSection {
+            get {
+                return ResourceManager.GetString("ResourcesSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Catégories.
+        /// </summary>
+        internal static string StatCategoriesLabel {
+            get {
+                return ResourceManager.GetString("StatCategoriesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pages de démo.
+        /// </summary>
+        internal static string StatDemoPagesLabel {
+            get {
+                return ResourceManager.GetString("StatDemoPagesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Icônes Material.
+        /// </summary>
+        internal static string StatMaterialIconsLabel {
+            get {
+                return ResourceManager.GetString("StatMaterialIconsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packages NuGet.
+        /// </summary>
+        internal static string StatPackagesLabel {
+            get {
+                return ResourceManager.GetString("StatPackagesLabel", resourceCulture);
             }
         }
         
@@ -267,7 +582,7 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bienvenue dans MyNet Avalonia Showcase.
+        ///   Looks up a localized string similar to Bienvenue dans My .NET Avalonia.
         /// </summary>
         internal static string WelcomeTitle {
             get {

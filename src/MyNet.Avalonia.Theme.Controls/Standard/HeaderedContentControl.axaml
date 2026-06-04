@@ -90,7 +90,8 @@
                                                        FontWeight="{TemplateBinding my:HeaderAssist.FontWeight}"
                                                        Foreground="{TemplateBinding my:HeaderAssist.Foreground}"
                                                        UseLayoutRounding="False">
-                                    <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
+                                    <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}"
+                                                      ContentTemplate="{TemplateBinding HeaderTemplate}" />
                                 </my:IconContentControl>
                             </Border>
                             <ContentPresenter Name="PART_ContentPresenter"
@@ -227,7 +228,8 @@
             <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize}" />
 
             <Style Selector="^.variant-watermark">
-                <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
+                <Setter Property="my:HeaderAssist.FontSize"
+                        Value="{Binding $self.FontSize, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
                 <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
                 <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
             </Style>
@@ -249,6 +251,16 @@
             </Style>
         </Style>
 
+        <Style Selector="^.kind-section">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="{my:Thickness Md, Top}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
+            <Setter Property="my:HeaderAssist.Padding" Value="0" />
+        </Style>
+        
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- VARIANTS                                                  -->
         <!-- ═════════════════════════════════════════════════════════ -->
@@ -273,24 +285,29 @@
         </Style>
 
         <Style Selector="^.variant-header /template/ Border#PART_Header">
-            <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}}" />
+            <Setter Property="CornerRadius"
+                    Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}}" />
         </Style>
 
-        <Style Selector="^.variant-light.variant-header, ^.variant-outlined.variant-headered">
+        <Style Selector="^.variant-light.variant-header, ^.variant-outlined.variant-header">
             <Style Selector="^ /template/ Border#PART_Header">
-                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Top}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Top}}" />
             </Style>
 
             <Style Selector="^.position-left /template/ Border#PART_Header">
-                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
             </Style>
 
             <Style Selector="^.position-right /template/ Border#PART_Header">
-                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
             </Style>
 
             <Style Selector="^.position-bottom /template/ Border#PART_Header">
-                <Setter Property="CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Bottom}}" />
+                <Setter Property="CornerRadius"
+                        Value="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=HeaderedContentControl}, Converter={x:Static my:CornerRadiusAdjustConverter.Bottom}}" />
             </Style>
         </Style>
 

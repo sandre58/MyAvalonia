@@ -36,14 +36,116 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="WelcomeTitle" xml:space="preserve">
-    <value>Bienvenue dans MyNet Avalonia Showcase</value>
-  </data>
+    <data name="WelcomeTitle" xml:space="preserve">
+        <value>Bienvenue dans My .NET Avalonia</value>
+    </data>
   <data name="WelcomeSubtitle" xml:space="preserve">
     <value>Application de référence pour explorer les contrôles, le thème MyNet et les services UI (navigation, validation, dialogs).</value>
   </data>
+    <data name="HeroTagAvalonia" xml:space="preserve">
+        <value>Avalonia 12</value>
+    </data>
+  <data name="HeroTagMaterialIcons" xml:space="preserve">
+    <value>Material Icons</value>
+  </data>
+  <data name="HeroTagFluentValidation" xml:space="preserve">
+    <value>FluentValidation</value>
+  </data>
+  <data name="HeroTagMvvm" xml:space="preserve">
+    <value>MVVM &amp; DI</value>
+  </data>
+  <data name="StatDemoPagesLabel" xml:space="preserve">
+    <value>Pages de démo</value>
+  </data>
+  <data name="StatCategoriesLabel" xml:space="preserve">
+    <value>Catégories</value>
+  </data>
+  <data name="StatPackagesLabel" xml:space="preserve">
+    <value>Packages NuGet</value>
+  </data>
+  <data name="StatMaterialIconsLabel" xml:space="preserve">
+    <value>Icônes Material</value>
+  </data>
   <data name="FeaturedSection" xml:space="preserve">
     <value>Démarrage rapide</value>
+  </data>
+  <data name="FeaturedSectionDescription" xml:space="preserve">
+    <value>Parcours recommandés pour découvrir le thème, les icônes, les formulaires et les retours utilisateur.</value>
+  </data>
+  <data name="CapabilitiesSection" xml:space="preserve">
+    <value>Ce que fournit MyNet</value>
+  </data>
+  <data name="CapabilitiesSectionDescription" xml:space="preserve">
+    <value>Stack UI complet au-delà des contrôles : thème, navigation, validation, globalisation et playground interactif.</value>
+  </data>
+  <data name="CapabilityThemeTitle" xml:space="preserve">
+    <value>Thème &amp; design tokens</value>
+  </data>
+  <data name="CapabilityThemeDescription" xml:space="preserve">
+    <value>Palette dynamique, brushes sémantiques et variantes clair / sombre.</value>
+  </data>
+  <data name="CapabilityNavigationTitle" xml:space="preserve">
+    <value>Navigation &amp; shell</value>
+  </data>
+  <data name="CapabilityNavigationDescription" xml:space="preserve">
+    <value>ContentPage, onglets, tiroirs, historique et menus hiérarchiques.</value>
+  </data>
+  <data name="CapabilityValidationTitle" xml:space="preserve">
+    <value>Validation</value>
+  </data>
+  <data name="CapabilityValidationDescription" xml:space="preserve">
+    <value>FluentValidation intégré aux ViewModels et messages localisés.</value>
+  </data>
+  <data name="CapabilityGlobalizationTitle" xml:space="preserve">
+    <value>Globalisation</value>
+  </data>
+  <data name="CapabilityGlobalizationDescription" xml:space="preserve">
+    <value>Ressources .resx, formats et inflexions pour FR / EN.</value>
+  </data>
+  <data name="CapabilityFeedbackTitle" xml:space="preserve">
+    <value>Dialogs &amp; notifications</value>
+  </data>
+  <data name="CapabilityFeedbackDescription" xml:space="preserve">
+    <value>Modales, overlays, toasts, busy et barres de progression.</value>
+  </data>
+  <data name="CapabilityPlaygroundTitle" xml:space="preserve">
+    <value>Playground</value>
+  </data>
+  <data name="CapabilityPlaygroundDescription" xml:space="preserve">
+    <value>Ajustez variantes, tailles et rôles sur chaque page de contrôle.</value>
+  </data>
+  <data name="CategoriesSectionDescription" xml:space="preserve">
+    <value>Explorez le catalogue par famille — le badge indique le nombre de pages de démo.</value>
+  </data>
+  <data name="GettingStartedSectionDescription" xml:space="preserve">
+    <value>Intégrez MyNet dans une application Avalonia existante ou nouvelle.</value>
+  </data>
+  <data name="ExploreSection" xml:space="preserve">
+    <value>Explorer le showcase</value>
+  </data>
+  <data name="ExploreSectionDescription" xml:space="preserve">
+    <value>Quelques raccourcis pour tirer le meilleur parti de cette application.</value>
+  </data>
+  <data name="ExploreTipSearch" xml:space="preserve">
+    <value>Utilisez la recherche du menu latéral pour trouver une page par nom.</value>
+  </data>
+  <data name="ExploreTipTheme" xml:space="preserve">
+    <value>Page Thème : personnalisez primaire, accent et variantes en direct.</value>
+  </data>
+  <data name="ExploreTipPlayground" xml:space="preserve">
+    <value>Sur les pages de contrôles, onglet Playground pour tester styles et tailles.</value>
+  </data>
+  <data name="ExploreTipMenu" xml:space="preserve">
+    <value>Le menu regroupe 9 familles couvrant l’ensemble du catalogue MyNet.</value>
+  </data>
+  <data name="ResourcesSection" xml:space="preserve">
+    <value>Ressources</value>
+  </data>
+  <data name="ResourceRepository" xml:space="preserve">
+    <value>Dépôt GitHub MyAvalonia</value>
+  </data>
+  <data name="ResourceReadme" xml:space="preserve">
+    <value>README du showcase</value>
   </data>
     <data name="GettingStartedSection" xml:space="preserve">
     <value>Brancher MyNet dans votre app</value>
@@ -108,4 +210,7 @@
   <data name="OpenPage" xml:space="preserve">
     <value>Ouvrir</value>
   </data>
+    <data name="CategoriesSection" xml:space="preserve">
+        <value>Catégories des contrôles</value>
+    </data>
 </root>

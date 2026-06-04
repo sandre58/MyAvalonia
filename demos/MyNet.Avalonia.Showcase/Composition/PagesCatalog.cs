@@ -105,6 +105,12 @@ internal static class PagesCatalog
     /// <summary>Number of top-level page entries before catalog groups (Home, Theme, Icons).</summary>
     public const int RootPageCount = 3;
 
+    /// <summary>Gets the total number of registered showcase demo pages.</summary>
+    public static int DemoPageCount => GetProviders().SelectMany(p => p.GetPageAssociations()).Count();
+
+    /// <summary>Gets the number of component catalog menu groups.</summary>
+    public static int CategoryGroupCount => GetProviders().Count(p => p is PagesGroup);
+
     /// <summary>Builds the full navigation menu, including the components catalog section header.</summary>
     public static IReadOnlyList<IMenuItemViewModel> CreateMenuItems(IServiceProvider services)
     {

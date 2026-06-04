@@ -47,6 +47,7 @@ public record CssClass(string Name, string? Prefix = "")
     // Kinds
     public static readonly CssClass KindFocus = new("focus", CssPrefix.Kind);
     public static readonly CssClass KindCard = new("card", CssPrefix.Kind);
+    public static readonly CssClass KindSection = new("section", CssPrefix.Kind);
 
     // States
     public static readonly CssClass IsDisablable = new("disablable", CssPrefix.Is);
