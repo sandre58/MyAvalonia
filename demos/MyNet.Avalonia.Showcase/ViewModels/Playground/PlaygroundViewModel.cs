@@ -449,11 +449,9 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// <summary>
     /// Retrieves a collection of background contexts representing different visual themes for the application UI.
     /// </summary>
-    /// <remarks>Each <see cref="BackgroundContext"/> in the returned collection is initialized with brushes
-    /// corresponding to a particular theme element, ensuring consistent theming across various UI components. Override
-    /// this method to customize or extend the available background contexts for derived classes.</remarks>
-    /// <returns>An enumerable collection of <see cref="BackgroundContext"/> instances, each configured with specific theme
-    /// brushes for accent, primary, and surface backgrounds.</returns>
+    /// <remarks>Each <see cref="BackgroundContext"/> stores live <see cref="BrushManager"/> brushes resolved once; theme
+    /// markup multi-bindings re-sample them when <see cref="MyTheme.ThemeVersion"/> changes.</remarks>
+    /// <returns>An enumerable collection of <see cref="BackgroundContext"/> instances for accent, primary, and surface backgrounds.</returns>
     private static IEnumerable<BackgroundContext> CreateBackgroundContexts()
     {
         var theme = MyTheme.Current;

@@ -35,9 +35,6 @@ internal sealed class ThemeChangeCoordinator
 
     private void Publish()
     {
-        if (_deferrer.IsDeferred)
-            return;
-
         _incrementThemeVersion();
         ThemeChanged?.Invoke(_sender, EventArgs.Empty);
     }

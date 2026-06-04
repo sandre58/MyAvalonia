@@ -70,7 +70,6 @@
                     <!-- Is Enabled -->
                     <ToggleSwitch DockPanel.Dock="Right"
                                   IsChecked="{Binding IsEnabled}"
-                                  Theme="{StaticResource MyNet.Theme.ToggleSwitch.Inner}"
                                   ToolTip.Tip="{my:Loc Activate}" />
 
                     <!-- Background contexts -->
