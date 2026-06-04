@@ -40,6 +40,6 @@ public class ControlClassDefinitionTests
 
         var classes = definition.ProvideClasses(value);
 
-        classes.Should().BeEquivalentTo(["variant-solid", "size-md"]);
+        classes.Should().BeEquivalentTo("variant-solid", "size-md");
     }
 }

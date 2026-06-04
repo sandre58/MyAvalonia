@@ -8,7 +8,6 @@ using System;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Metadata;
-using MyNet.Avalonia.Converters;
 using MyNet.Globalization.Localization.Translation;
 using MyNet.Observable;
 using MyNet.Text.TextCasing;

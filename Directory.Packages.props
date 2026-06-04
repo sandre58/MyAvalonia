@@ -27,6 +27,9 @@
         <PackageVersion Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
         <PackageVersion Include="Material.Icons" Version="3.0.3-nightly.0.2"/>
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0-preview.4.26230.115"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging" Version="11.0.0-preview.4.26230.115"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0-preview.4.26230.115"/>
+        <PackageVersion Include="NLog.Extensions.Logging" Version="6.1.2"/>
         <PackageVersion Include="MyNet.Collections" Version="$(MyNetVersion)"/>
         <PackageVersion Include="MyNet.Fakers" Version="$(MyNetVersion)"/>
         <PackageVersion Include="MyNet.Humanizer" Version="$(MyNetVersion)"/>

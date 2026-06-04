@@ -31,7 +31,7 @@ public sealed class CountryConverter : IValueConverter
         To32,
         To48,
         To64,
-        To128,
+        To128
     }
 
     /// <summary>Gets a converter that returns the ISO 3166-1 alpha-2 code in upper case.</summary>
@@ -83,7 +83,7 @@ public sealed class CountryConverter : IValueConverter
             Mode.To48 => GetFlag(country, FlagSize.Pixel48),
             Mode.To64 => GetFlag(country, FlagSize.Pixel64),
             Mode.To128 => GetFlag(country, FlagSize.Pixel128),
-            _ => AvaloniaProperty.UnsetValue,
+            _ => AvaloniaProperty.UnsetValue
         };
 
     /// <inheritdoc />
@@ -94,7 +94,7 @@ public sealed class CountryConverter : IValueConverter
     {
         Country country => country,
         CultureInfo cultureInfo => cultureInfo.GetCountry(),
-        _ => null,
+        _ => null
     };
 
     private static Bitmap GetFlag(Country country, FlagSize size)

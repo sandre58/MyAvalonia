@@ -6,6 +6,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using MyNet.Globalization.Facade;
@@ -34,11 +35,13 @@ public sealed class GlobalizationBindingSource : INotifyPropertyChanged
     /// <summary>
     /// Gets the current UI culture.
     /// </summary>
+    [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Instance property for binding")]
     public CultureInfo Culture => GlobalizationServices.Current.CurrentCulture;
 
     /// <summary>
     /// Gets the current application time zone.
     /// </summary>
+    [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Instance property for binding")]
     public TimeZoneInfo TimeZone => GlobalizationServices.Current.CurrentTimeZone;
 
     /// <inheritdoc />

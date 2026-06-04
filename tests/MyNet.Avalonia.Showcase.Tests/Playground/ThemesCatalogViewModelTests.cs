@@ -6,8 +6,8 @@
 
 using System.Linq;
 using FluentAssertions;
-using MyNet.Avalonia.Showcase.ThemeBuilder;
 using MyNet.Avalonia.Showcase.Tests.Infrastructure;
+using MyNet.Avalonia.Showcase.ThemeBuilder;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 using MyNet.Avalonia.Theme.Theming.Core;

@@ -10,6 +10,9 @@
     <ItemGroup>
         <PackageReference Include="Avalonia.Fonts.Inter" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+        <PackageReference Include="Microsoft.Extensions.Logging" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+        <PackageReference Include="NLog.Extensions.Logging" />
         <PackageReference Include="MyNet.Collections" />
         <PackageReference Include="MyNet.Fakers" />
         <PackageReference Include="MyNet.Geography" />

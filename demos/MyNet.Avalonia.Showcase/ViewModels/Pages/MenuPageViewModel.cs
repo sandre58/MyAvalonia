@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Avalonia.Controls;
 using Material.Icons;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.UI.Commands;

@@ -7,7 +7,6 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using MyNet.Avalonia.Extended.Schedulers;
 using MyNet.UI.Commands;
 using MyNet.UI.Threading;
 

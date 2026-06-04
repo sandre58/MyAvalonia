@@ -7,7 +7,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Clipboard;
-using MyNet.Globalization;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia;

@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Avalonia;
 using Avalonia.Headless;
@@ -16,7 +17,7 @@ namespace MyNet.Avalonia.Showcase.Tests.Infrastructure;
 
 internal static class PlaygroundTestHost
 {
-    private static readonly object Sync = new();
+    private static readonly Lock Sync = new();
     private static bool _globalizationInitialized;
     private static bool _avaloniaInitialized;
 
@@ -42,17 +43,15 @@ internal static class PlaygroundTestHost
             if (_avaloniaInitialized)
                 return;
 
-            RunOnStaThread(() =>
-            {
-                AppBuilder.Configure<ShowcaseTestApp>()
-                    .UseHeadless(new AvaloniaHeadlessPlatformOptions())
-                    .SetupWithoutStarting();
-            });
+            RunOnStaThread(() => AppBuilder.Configure<ShowcaseTestApp>()
+                    .UseHeadless(new())
+                    .SetupWithoutStarting());
 
             _avaloniaInitialized = true;
         }
     }
 
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "STA thread is required for Avalonia initialization.")]
     private static void RunOnStaThread(Action action)
     {
         Exception? error = null;

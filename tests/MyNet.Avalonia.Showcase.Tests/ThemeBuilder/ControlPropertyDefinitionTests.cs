@@ -18,7 +18,7 @@ namespace MyNet.Avalonia.Showcase.Tests.ThemeBuilder;
 public class ControlPropertyDefinitionTests
 {
     private static readonly StyledProperty<ControlVariant> TestVariantProperty =
-        AvaloniaProperty.Register<Control, ControlVariant>(nameof(TestVariantProperty), ControlVariant.None);
+        AvaloniaProperty.Register<Control, ControlVariant>(nameof(TestVariantProperty));
 
     [Fact]
     public void ProvideStyleProperty_WhenValueEqualsDefault_ReturnsNull()
@@ -43,7 +43,7 @@ public class ControlPropertyDefinitionTests
     [Fact]
     public void ProvideStyleProperty_WithFlagEnumCollection_CombinesValues()
     {
-        var definition = new ControlPropertyDefinition<ControlVariant>(TestVariantProperty, ControlVariant.None);
+        var definition = new ControlPropertyDefinition<ControlVariant>(TestVariantProperty);
         var combined = new[] { ControlVariant.Solid, ControlVariant.Light };
 
         var styleProperty = definition.ProvideStyleProperty(combined);
@@ -55,7 +55,7 @@ public class ControlPropertyDefinitionTests
     [Fact]
     public void ProvideStyleProperty_WithThemeRole_UsesPropertyName()
     {
-        var definition = new ControlPropertyDefinition<ThemeRole>(ThemeAssist.RoleProperty, ThemeRole.Default);
+        var definition = new ControlPropertyDefinition<ThemeRole>(ThemeAssist.RoleProperty);
 
         var styleProperty = definition.ProvideStyleProperty(ThemeRole.Primary);
 

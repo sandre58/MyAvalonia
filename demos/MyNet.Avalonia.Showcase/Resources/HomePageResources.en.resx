@@ -45,9 +45,6 @@
   <data name="FeaturedSection" xml:space="preserve">
     <value>Quick start</value>
   </data>
-  <data name="test" xml:space="preserve">
-    <value>Catalog by category</value>
-  </data>
   <data name="GettingStartedSection" xml:space="preserve">
     <value>Wire MyNet in your app</value>
   </data>

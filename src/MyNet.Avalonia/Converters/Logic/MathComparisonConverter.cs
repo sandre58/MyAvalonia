@@ -48,17 +48,14 @@ public sealed class MathComparisonConverter : IValueConverter, IMultiValueConver
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => DoConvert(value, parameter, Comparison);
 
     /// <inheritdoc/>
-    public object Convert(IList<object?>? values, Type targetType, object? parameter, CultureInfo culture)
-    {
-        if (values is null) return DoConvert(null, parameter, Comparison);
-
-        return values.Count switch
+    public object Convert(IList<object?>? values, Type targetType, object? parameter, CultureInfo culture) => values is null
+        ? DoConvert(null, parameter, Comparison)
+        : values.Count switch
         {
             0 => DoConvert(null, parameter, Comparison),
             1 => DoConvert(values[0], parameter, Comparison),
             _ => DoConvert(values[0], values[1], Comparison)
         };
-    }
 
     /// <inheritdoc/>
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => AvaloniaProperty.UnsetValue;

@@ -7,9 +7,9 @@
 using System.Linq;
 using Avalonia.Controls;
 using FluentAssertions;
+using MyNet.Avalonia.Showcase.Tests.Infrastructure;
 using MyNet.Avalonia.Showcase.ThemeBuilder;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
-using MyNet.Avalonia.Showcase.Tests.Infrastructure;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.ContentProviders;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
@@ -99,6 +99,6 @@ public class PlaygroundViewModelTests
             .Select(x => new ControlThemeViewModelFactory(x, commands).Create("Button"))
             .ToList()
             .ToObservableCollection();
-        return new PlaygroundViewModel("Button", themes, commands);
+        return new("Button", themes, commands);
     }
 }

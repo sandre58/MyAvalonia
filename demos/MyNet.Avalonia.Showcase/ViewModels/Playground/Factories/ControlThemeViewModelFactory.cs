@@ -20,6 +20,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Factories;
 /// Represents a factory for creating instances of <see cref="ControlThemeViewModel"/> based on the provided <see cref="ControlThemeBuilder"/>. This factory encapsulates the logic for constructing the necessary components, such as option factories and setting factories, to create a fully configured view model for a control theme. By utilizing the builder pattern, this factory allows for flexible and modular creation of control theme view models, enabling easy customization and extension as needed in the theme builder application.
 /// </summary>
 /// <param name="builder">The control theme builder used to construct the view models.</param>
+/// <param name="commands">The command factory used to create commands for the view models.</param>
 internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder, ICommandFactory commands)
 {
     /// <summary>

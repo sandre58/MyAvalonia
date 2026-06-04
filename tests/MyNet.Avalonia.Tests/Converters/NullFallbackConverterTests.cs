@@ -27,7 +27,7 @@ public class NullFallbackConverterTests
     [Fact]
     public void Convert_UsesFallbackWhenPrimaryNull()
     {
-        var result = Converter.Convert(null!, typeof(string), "fallback", CultureInfo.InvariantCulture);
+        var result = Converter.Convert(null, typeof(string), "fallback", CultureInfo.InvariantCulture);
 
         result.Should().Be("fallback");
     }
@@ -35,7 +35,7 @@ public class NullFallbackConverterTests
     [Fact]
     public void Convert_AllNull_ReturnsDoNothing()
     {
-        var result = Converter.Convert(null!, typeof(string), null, CultureInfo.InvariantCulture);
+        var result = Converter.Convert(null, typeof(string), null, CultureInfo.InvariantCulture);
 
         result.Should().BeSameAs(BindingOperations.DoNothing);
     }

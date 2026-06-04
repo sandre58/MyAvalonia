@@ -36,7 +36,7 @@ public class MathComparisonConverterTests
     {
         var converter = MathComparisonConverter.IsLessThan;
 
-        var result = converter.Convert(null!, typeof(bool), 1, CultureInfo.InvariantCulture);
+        var result = converter.Convert(null, typeof(bool), 1, CultureInfo.InvariantCulture);
 
         result.Should().BeSameAs(AvaloniaProperty.UnsetValue);
     }

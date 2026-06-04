@@ -35,8 +35,6 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
 {
     private readonly INotificationPublisher _notificationPublisher;
 
-    private static ToastClosingStrategy _closingStrategy = ToastClosingStrategy.Both;
-    private static bool _freezeOnMouseEnter;
     private static bool _enableOnClick;
     private static bool _enableOnClose;
 
@@ -108,7 +106,9 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
                         10,
                         x => x.DisplayName(nameof(SettingsResources.OffsetY)).Of<IntSliderEditor>(editor => editor.WithRange(0, 300)))
                     .AddValueAction(
-                        (_, y) => _closingStrategy = (ToastClosingStrategy?)y ?? ToastClosingStrategy.Both,
+                        (_, _) =>
+                        {
+                        },
                         ToastClosingStrategy.Both,
                         x => x.DisplayName(nameof(SettingsResources.ClosingStrategy))
                             .Of<ListBoxEditor>(editor => editor.AddChoice(ToastClosingStrategy.None, builder => builder.DisplayName(() => ToastClosingStrategy.None.Humanize()).WithIcon(MaterialIconKind.CircleOffOutline))
@@ -116,7 +116,9 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
                                 .AddChoice(ToastClosingStrategy.CloseButton, builder => builder.DisplayName(() => ToastClosingStrategy.CloseButton.Humanize()).WithIcon(MaterialIconKind.CloseBox))
                                 .AddChoice(ToastClosingStrategy.Both, builder => builder.DisplayName(() => ToastClosingStrategy.CloseButton.Humanize()).WithIcon(MaterialIconKind.CloseBoxMultiple))))
                     .AddValueAction(
-                        (_, y) => _freezeOnMouseEnter = (bool?)y ?? false,
+                        (_, _) =>
+                        {
+                        },
                         false,
                         x => x.DisplayName(nameof(SettingsResources.FreezeOnMouseEnter)).Of<ToggleSwitchEditor>())
                     .AddValueAction(

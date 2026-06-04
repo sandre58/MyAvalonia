@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using MyNet.Avalonia.Controls.Enums;
 using MyNet.UI.Dialogs.MessageBox;
 

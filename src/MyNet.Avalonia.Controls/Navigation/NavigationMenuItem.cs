@@ -322,7 +322,9 @@ public class NavigationMenuItem : HeaderedItemsControl
         }
 
         if (!item.IsHorizontalCollapsed)
+        {
             item.SetCurrentValue(IsVerticalCollapsedProperty, !item.IsVerticalCollapsed);
+        }
         else if (_popup is not null)
         {
             if (_popup.IsOpen)

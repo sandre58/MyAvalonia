@@ -61,6 +61,7 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
     /// associated with the view model.</param>
     /// <param name="themes">An observable collection of ControlThemeViewModel instances that represent the available themes for the control.
     /// Cannot be null.</param>
+    /// <param name="commands">An ICommandFactory instance used to create commands for the view model. Cannot be null.</param>
     public PlaygroundViewModel(string controlName, ObservableCollection<ControlThemeViewModel> themes, ICommandFactory commands)
     {
         _controlName = controlName;

@@ -74,7 +74,7 @@ public class CulturePicker : DropDownButton
                 Command = SelectCultureCommand,
                 CommandParameter = culture,
                 ToggleType = MenuItemToggleType.CheckBox,
-                IsChecked = CultureEquals(culture, SelectedCulture),
+                IsChecked = CultureEquals(culture, SelectedCulture)
             });
         }
     }

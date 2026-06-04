@@ -26,7 +26,7 @@ internal static class MenuFilter
         var result = new List<IMenuItemViewModel>();
         var sectionIndex = IndexOfSection(source);
 
-        var roots = sectionIndex < 0 ? source : source.Take(sectionIndex).ToList();
+        var roots = sectionIndex < 0 ? source : [.. source.Take(sectionIndex)];
         var catalog = sectionIndex < 0 ? [] : source.Skip(sectionIndex + 1).ToList();
 
         foreach (var item in roots)

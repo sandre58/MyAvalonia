@@ -10,7 +10,7 @@ using MyNet.Avalonia.Theme;
 
 namespace MyNet.Avalonia.Showcase.Tests.Infrastructure;
 
-public sealed partial class ShowcaseTestApp : Application
+internal sealed class ShowcaseTestApp : Application
 {
     public override void Initialize()
     {

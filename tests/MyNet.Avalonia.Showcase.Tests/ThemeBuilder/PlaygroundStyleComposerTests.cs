@@ -22,8 +22,5 @@ public class PlaygroundStyleComposerTests
     }
 
     [Fact]
-    public void ResolveThemeClassName_WithoutThemeKey_ReturnsThemeDefault()
-    {
-        PlaygroundStyleComposer.ResolveThemeClassName("Button", null).Should().Be("theme-default");
-    }
+    public void ResolveThemeClassName_WithoutThemeKey_ReturnsThemeDefault() => PlaygroundStyleComposer.ResolveThemeClassName("Button", null).Should().Be("theme-default");
 }

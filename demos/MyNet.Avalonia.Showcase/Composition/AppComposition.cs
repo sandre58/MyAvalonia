@@ -49,6 +49,7 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
         RegisterPageViewModels(collection, viewModelTypes);
 
         var services = collection.BuildServiceProvider();
+        services.UseShowcaseLogging();
         InitializeServices(services);
         InitializeTheme(services);
         InitializePageMappings(services);
@@ -71,12 +72,13 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
         => _ = services.GetRequiredService<INavigationClient>().NavigateToAsync<HomePageViewModel>();
 
     private void RegisterServices(IServiceCollection collection)
-        => collection.AddUi([SupportedCultures.English, SupportedCultures.French])
-            .AddFakers()
+        => collection.AddFakers()
+            .AddUi([SupportedCultures.English, SupportedCultures.French])
             .AddMyNetAvaloniaColors()
             .AddMyNetAvaloniaControls()
             .AddMyNetAvaloniaExtended(topLevelProvider)
-            .AddSingleton<IThemeBrushService>(MyTheme.Current);
+            .AddSingleton<IThemeBrushService>(MyTheme.Current)
+            .AddShowcaseLogging();
 
     /// <summary>
     /// Contributes showcase demo translation resources to the catalog.
