@@ -148,7 +148,7 @@ public sealed class DateTimeConverter(DateTimeConverterKind dateTimeConverterKin
             DateTimeConverterKind.Local => dateTimeOffset.ToLocalTime(),
             DateTimeConverterKind.Utc => dateTimeOffset.ToUniversalTime(),
             _ => customTimeZone is not null
-                ? globalization.Convert(dateTimeOffset, TimeZone, customTimeZone)
+                ? globalization.Convert(dateTimeOffset, TimeZone ?? GlobalizationServices.Current.CurrentTimeZone, customTimeZone)
                 : dateTimeOffset
         };
 

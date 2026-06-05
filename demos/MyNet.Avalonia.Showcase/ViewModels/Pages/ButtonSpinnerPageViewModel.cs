@@ -43,7 +43,7 @@ internal sealed class ButtonSpinnerPageViewModel : ShowcaseViewModel
     public ICommand DecreaseCommand { get; }
 
     [UpdateOnCultureChanged]
-    public DateTime Date { get; set; } = DateTime.Now;
+    public DateTime Date { get; set => SetProperty(ref field, value); } = DateTime.Now;
 
     public void IncreaseDate() => Date = Date.AddDays(1);
 

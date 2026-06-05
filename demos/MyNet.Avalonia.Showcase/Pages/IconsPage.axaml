@@ -28,7 +28,7 @@
             <SplitView.Pane>
                 <my:PlaceholderContentControl my:IconAssist.Icon="{my:MaterialIcon CircleOffOutline, Size=80}"
                                               Classes="variant-watermark size-xl"
-                                              Content="{Binding Icons.SelectedItem}"
+                                              Content="{Binding SelectedItem, ElementName=IconsList}"
                                               PlaceholderText="{my:Loc SelectItem}">
                     <my:PlaceholderContentControl.ContentTemplate>
                         <DataTemplate x:DataType="{x:Type vm:MaterialIconKindWrapper}">
@@ -74,12 +74,13 @@
 
             </SplitView.Pane>
 
-            <ListBox HorizontalAlignment="Stretch"
+            <ListBox x:Name="IconsList"
+                     HorizontalAlignment="Stretch"
                      VerticalAlignment="Stretch"
                      Margin="{my:Thickness Md, Top=20}"
                      my:ScrollViewerBehavior.RefreshOnScroll="True"
                      ItemsSource="{Binding Icons.Items}"
-                     SelectedItem="{Binding Icons.SelectedItem}"
+                     SelectedItem="{Binding Icons.SelectedItem, Mode=TwoWay}"
                      Classes="kind-cards variant-items-solid">
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type vm:MaterialIconKindWrapper}">

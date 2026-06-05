@@ -9,6 +9,7 @@
              xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
              xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
              xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:p="clr-namespace:MyNet.Avalonia.Showcase.Pages"
              xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
              x:DataType="vm:ButtonSpinnerPageViewModel"
              x:Name="Root"
@@ -17,7 +18,7 @@
              my:IconAssist.Icon="{Binding Icon}"
              ClipToBounds="False">
     <ContentPage.Resources>
-        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+        <p:ButtonSpinnerPageViewModelProxy x:Key="PageProxy" Data="{Binding}" />
     </ContentPage.Resources>
 
     <v:ShowcaseView ShowContent="False">
@@ -25,9 +26,9 @@
         <v:ShowcaseView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
                 <ButtonSpinner behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
-                               my:SpinnerBehavior.IncreaseCommand="{ReflectionBinding ((vm:ButtonSpinnerPageViewModel)Data).IncreaseCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
-                               my:SpinnerBehavior.DecreaseCommand="{ReflectionBinding ((vm:ButtonSpinnerPageViewModel)Data).DecreaseCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
-                               Content="{my:Display ((vm:ButtonSpinnerPageViewModel)Data).Date, Source={StaticResource PageProxy}, Format=LongDatePattern, Casing=Title, FallbackValue={x:Null}}"
+                               my:SpinnerBehavior.IncreaseCommand="{ReflectionBinding Data.IncreaseCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                               my:SpinnerBehavior.DecreaseCommand="{ReflectionBinding Data.DecreaseCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"
+                               Content="{my:Display Data.Date, Source={StaticResource PageProxy}, Format=LongDatePattern, Casing=Title, FallbackValue={x:Null}}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Width="250" />
@@ -39,7 +40,7 @@
                 <ButtonSpinner behavior:PlaygroundBehavior.AttachStyle="{Binding}"
                                my:SpinnerBehavior.IncreaseMethod="IncreaseDate"
                                my:SpinnerBehavior.DecreaseMethod="DecreaseDate"
-                               Content="{my:Display ((vm:ButtonSpinnerPageViewModel)Data).Date, Source={StaticResource PageProxy}, Format=LongDatePattern, Casing=Title, FallbackValue={x:Null}}" />
+                               Content="{my:Display Data.Date, Source={StaticResource PageProxy}, Format=LongDatePattern, Casing=Title, FallbackValue={x:Null}}" />
             </DataTemplate>
         </v:ShowcaseView.ThemeControlTemplate>
 

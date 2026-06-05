@@ -28,7 +28,7 @@ internal sealed class IconsPageViewModel : PageViewModel
     public IconsPageViewModel(ICommandFactory commands)
     {
         Icons = new(
-            ExtendedCollection.FromReadOnly(IconsHelper.Groups.Select(x => new MaterialIconKindWrapper(x))),
+            ExtendedCollection.FromReadOnly(IconsHelper.Groups.Select(GetOrCreateWrapper)),
             new() { Paging = new PagingViewModel(100) });
 
         MoveToPageCommand = commands.CreateRequired<int>(page => Icons.Paging!.MoveToPage(page));
@@ -52,6 +52,11 @@ internal sealed class IconsPageViewModel : PageViewModel
             Icons.ApplySearch(value);
         }
     }
+
+    private static MaterialIconKindWrapper GetOrCreateWrapper(MaterialIconKindGroup group) =>
+        WrapperCache.GetOrCreate(group);
+
+    private static readonly MaterialIconKindWrapperCache WrapperCache = new();
 }
 
 internal sealed class IconsMaterialListViewModel(
@@ -84,6 +89,21 @@ internal sealed class IconsMaterialListViewModel(
     }
 }
 
+internal sealed class MaterialIconKindWrapperCache
+{
+    private readonly Dictionary<string, MaterialIconKindWrapper> _wrappers = new(StringComparer.OrdinalIgnoreCase);
+
+    public MaterialIconKindWrapper GetOrCreate(MaterialIconKindGroup group)
+    {
+        if (_wrappers.TryGetValue(group.Name, out var wrapper))
+            return wrapper;
+
+        wrapper = new(group);
+        _wrappers[group.Name] = wrapper;
+        return wrapper;
+    }
+}
+
 internal sealed class MaterialIconKindWrapper(MaterialIconKindGroup group)
 {
     public static readonly ICollection<string> CodePatterns =
@@ -103,5 +123,6 @@ internal sealed class MaterialIconKindWrapper(MaterialIconKindGroup group)
 
     public string DisplayAliases { get; } = string.Join(",", group.Aliases);
 
-    public string[] CodeBlocks { get; } = [.. group.Aliases.SelectMany(x => CodePatterns.Select(y => y.FormatWithInvariant(x)))];
+    /// <summary>Gets code snippets for the detail pane (built on first access).</summary>
+    public string[] CodeBlocks => field ??= [.. Aliases.SelectMany(x => CodePatterns.Select(y => y.FormatWithInvariant(x)))];
 }
