@@ -36,16 +36,11 @@
                                                     my:HeaderAssist.HorizontalAlignment="Center"
                                                     Classes="variant-transparent header-h2"
                                                     Header="{Binding DisplayName}">
-                                <HeaderedContentControl.HeaderTemplate>
-                                    <DataTemplate DataType="{x:Type vm:MaterialIconKindWrapper}">
-                                        <TextBlock Text="{Binding}" TextAlignment="Center" TextWrapping="Wrap" />
-                                    </DataTemplate>
-                                </HeaderedContentControl.HeaderTemplate>
 
                                 <Grid RowDefinitions="Auto,40,*">
                                     <my:MaterialIcon x:Name="Icon"
                                                      Grid.Row="0"
-                                                     IconSize="100"
+                                                     Classes="size-xxxl"
                                                      HorizontalAlignment="Center"
                                                      Kind="{Binding Kind}" />
 
@@ -97,7 +92,7 @@
         </SplitView>
 
         <!-- Header -->
-        <common:PageHeader Grid.Row="0" 
+        <common:PageHeader Grid.Row="0"
                            Header="{my:Loc Icons}"
                            Icon="TagFaces">
             <DockPanel Margin="{my:Thickness Md, Bottom}">

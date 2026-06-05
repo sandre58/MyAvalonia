@@ -10,6 +10,7 @@
     <ItemGroup>
         <PackageReference Include="MyNet.Humanizer" />
         <PackageReference Include="MyNet.Geography" />
+        <PackageReference Include="MyNet.Geography.Localization" />
         <PackageReference Include="MyNet.Geography.Resources" />
     </ItemGroup>
 

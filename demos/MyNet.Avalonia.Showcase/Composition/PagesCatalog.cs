@@ -24,82 +24,82 @@ internal static class PagesCatalog
     public static IReadOnlyList<IPagesProvider> GetProviders()
         =>
         [
-            new PageAssociation(typeof(HomePageViewModel), typeof(HomePage)),
-            new PageAssociation(typeof(ThemePageViewModel), typeof(ThemePage)),
-            new PageAssociation(typeof(IconsPageViewModel), typeof(IconsPage)),
+            new PageAssociation(typeof(HomePageViewModel), typeof(HomePage), MaterialIconKind.Home),
+            new PageAssociation(typeof(ThemePageViewModel), typeof(ThemePage), MaterialIconKind.PaletteSwatchVariant),
+            new PageAssociation(typeof(IconsPageViewModel), typeof(IconsPage), MaterialIconKind.TagFaces),
 
             new PagesGroup(nameof(MenuResources.Typography), MaterialIconKind.FormatText, [
-                new(typeof(LabelPageViewModel), typeof(LabelPage)),
-                new(typeof(TextBlockPageViewModel), typeof(TextBlockPage)),
-                new(typeof(SelectableTextBlockPageViewModel), typeof(SelectableTextBlockPage))
+                new(typeof(LabelPageViewModel), typeof(LabelPage), MaterialIconKind.TagText),
+                new(typeof(TextBlockPageViewModel), typeof(TextBlockPage), MaterialIconKind.FormatText),
+                new(typeof(SelectableTextBlockPageViewModel), typeof(SelectableTextBlockPage), MaterialIconKind.CursorText)
             ]),
 
             new PagesGroup(nameof(MenuResources.ButtonsAndActions), MaterialIconKind.GestureTapButton, [
-                new(typeof(ButtonPageViewModel), typeof(ButtonPage)),
-                new(typeof(ButtonSpinnerPageViewModel), typeof(ButtonSpinnerPage)),
-                new(typeof(HyperLinkButtonPageViewModel), typeof(HyperLinkButtonPage)),
-                new(typeof(DropDownButtonPageViewModel), typeof(DropDownButtonPage)),
-                new(typeof(SplitButtonPageViewModel), typeof(SplitButtonPage)),
-                new(typeof(ToggleSplitButtonPageViewModel), typeof(ToggleSplitButtonPage))
+                new(typeof(ButtonPageViewModel), typeof(ButtonPage), MaterialIconKind.ButtonPointer),
+                new(typeof(ButtonSpinnerPageViewModel), typeof(ButtonSpinnerPage), MaterialIconKind.ButtonCursor),
+                new(typeof(HyperLinkButtonPageViewModel), typeof(HyperLinkButtonPage), MaterialIconKind.LinkVariant),
+                new(typeof(DropDownButtonPageViewModel), typeof(DropDownButtonPage), MaterialIconKind.FormSelect),
+                new(typeof(SplitButtonPageViewModel), typeof(SplitButtonPage), MaterialIconKind.FormDropdown),
+                new(typeof(ToggleSplitButtonPageViewModel), typeof(ToggleSplitButtonPage), MaterialIconKind.FormDropdown)
             ]),
 
             new PagesGroup(nameof(MenuResources.Selection), MaterialIconKind.CheckboxMarkedOutline, [
-                new(typeof(CheckBoxPageViewModel), typeof(CheckBoxPage)),
-                new(typeof(RadioButtonPageViewModel), typeof(RadioButtonPage)),
-                new(typeof(ToggleButtonPageViewModel), typeof(ToggleButtonPage)),
-                new(typeof(ToggleSwitchPageViewModel), typeof(ToggleSwitchPage))
+                new(typeof(CheckBoxPageViewModel), typeof(CheckBoxPage), MaterialIconKind.CheckboxMultipleMarked),
+                new(typeof(RadioButtonPageViewModel), typeof(RadioButtonPage), MaterialIconKind.RadioboxMarked),
+                new(typeof(ToggleButtonPageViewModel), typeof(ToggleButtonPage), MaterialIconKind.ToggleSwitchVariant),
+                new(typeof(ToggleSwitchPageViewModel), typeof(ToggleSwitchPage), MaterialIconKind.ToggleSwitch)
             ]),
 
             new PagesGroup(nameof(MenuResources.Inputs), MaterialIconKind.FormTextbox, [
-                new(typeof(FieldsPageViewModel), typeof(FieldsPage)),
-                new(typeof(SliderPageViewModel), typeof(SliderPage)),
-                new(typeof(ColorViewPageViewModel), typeof(ColorViewPage)),
-                new(typeof(CalendarPageViewModel), typeof(CalendarPage)),
-                new(typeof(ClockPageViewModel), typeof(ClockPage)),
-                new(typeof(ClockSelectorPageViewModel), typeof(ClockSelectorPage)),
-                new(typeof(TimeViewPageViewModel), typeof(TimeViewPage))
+                new(typeof(FieldsPageViewModel), typeof(FieldsPage), MaterialIconKind.FocusFieldHorizontal),
+                new(typeof(SliderPageViewModel), typeof(SliderPage), MaterialIconKind.TuneVariant),
+                new(typeof(ColorViewPageViewModel), typeof(ColorViewPage), MaterialIconKind.Palette),
+                new(typeof(CalendarPageViewModel), typeof(CalendarPage), MaterialIconKind.Calendar),
+                new(typeof(ClockPageViewModel), typeof(ClockPage), MaterialIconKind.Clock),
+                new(typeof(ClockSelectorPageViewModel), typeof(ClockSelectorPage), MaterialIconKind.ClockEdit),
+                new(typeof(TimeViewPageViewModel), typeof(TimeViewPage), MaterialIconKind.ClockEdit)
             ]),
 
             new PagesGroup(nameof(MenuResources.Layout), MaterialIconKind.ViewDashboardOutline, [
-                new(typeof(ExpanderPageViewModel), typeof(ExpanderPage)),
-                new(typeof(SplitViewPageViewModel), typeof(SplitViewPage)),
-                new(typeof(TabControlPageViewModel), typeof(TabControlPage)),
-                new(typeof(GridSplitterPageViewModel), typeof(GridSplitterPage)),
-                new(typeof(HeaderedContentControlPageViewModel), typeof(HeaderedContentControlPage)),
-                new(typeof(FormPageViewModel), typeof(FormPage)),
-                new(typeof(BannerPageViewModel), typeof(BannerPage)),
-                new(typeof(CardPageViewModel), typeof(CardPage)),
-                new(typeof(BadgePageViewModel), typeof(BadgePage)),
-                new(typeof(AvatarPageViewModel), typeof(AvatarPage)),
-                new(typeof(CarouselPageViewModel), typeof(CarouselPage))
+                new(typeof(ExpanderPageViewModel), typeof(ExpanderPage), MaterialIconKind.ArrowExpand),
+                new(typeof(SplitViewPageViewModel), typeof(SplitViewPage), MaterialIconKind.ViewSplitVertical),
+                new(typeof(TabControlPageViewModel), typeof(TabControlPage), MaterialIconKind.Tab),
+                new(typeof(GridSplitterPageViewModel), typeof(GridSplitterPage), MaterialIconKind.ArrowSplitVertical),
+                new(typeof(HeaderedContentControlPageViewModel), typeof(HeaderedContentControlPage), MaterialIconKind.CardBulleted),
+                new(typeof(FormPageViewModel), typeof(FormPage), MaterialIconKind.FormatLineStyle),
+                new(typeof(BannerPageViewModel), typeof(BannerPage), MaterialIconKind.InformationBox),
+                new(typeof(CardPageViewModel), typeof(CardPage), MaterialIconKind.CardOutline),
+                new(typeof(BadgePageViewModel), typeof(BadgePage), MaterialIconKind.CheckboxBlankBadge),
+                new(typeof(AvatarPageViewModel), typeof(AvatarPage), MaterialIconKind.AccountBox),
+                new(typeof(CarouselPageViewModel), typeof(CarouselPage), MaterialIconKind.ViewCarousel)
             ]),
 
             new PagesGroup(nameof(MenuResources.DataAndLists), MaterialIconKind.Table, [
-                new(typeof(DataGridPageViewModel), typeof(DataGridPage)),
-                new(typeof(ListBoxPageViewModel), typeof(ListBoxPage)),
-                new(typeof(TreeViewPageViewModel), typeof(TreeViewPage))
+                new(typeof(DataGridPageViewModel), typeof(DataGridPage), MaterialIconKind.Table),
+                new(typeof(ListBoxPageViewModel), typeof(ListBoxPage), MaterialIconKind.ListBox),
+                new(typeof(TreeViewPageViewModel), typeof(TreeViewPage), MaterialIconKind.FileTree)
             ]),
 
             new PagesGroup(nameof(MenuResources.ShellNavigation), MaterialIconKind.BookOpenPageVariantOutline, [
-                new(typeof(NavigationMenuPageViewModel), typeof(NavigationMenuPage)),
-                new(typeof(MenuPageViewModel), typeof(MenuPage)),
-                new(typeof(DrawerPagePageViewModel), typeof(DrawerPagePage)),
-                new(typeof(PaginationPageViewModel), typeof(PaginationPage)),
-                new(typeof(ContentPagePageViewModel), typeof(ContentPagePage)),
-                new(typeof(TabbedPagePageViewModel), typeof(TabbedPagePage)),
-                new(typeof(CarouselPagePageViewModel), typeof(CarouselPagePage))
+                new(typeof(NavigationMenuPageViewModel), typeof(NavigationMenuPage), MaterialIconKind.Navigation),
+                new(typeof(MenuPageViewModel), typeof(MenuPage), MaterialIconKind.Menu),
+                new(typeof(DrawerPagePageViewModel), typeof(DrawerPagePage), MaterialIconKind.ViewSplitVertical),
+                new(typeof(PaginationPageViewModel), typeof(PaginationPage), MaterialIconKind.PageLayoutBody),
+                new(typeof(ContentPagePageViewModel), typeof(ContentPagePage), MaterialIconKind.FileDocumentOutline),
+                new(typeof(TabbedPagePageViewModel), typeof(TabbedPagePage), MaterialIconKind.Tab),
+                new(typeof(CarouselPagePageViewModel), typeof(CarouselPagePage), MaterialIconKind.BookOpenPageVariantOutline)
             ]),
 
             new PagesGroup(nameof(MenuResources.Feedback), MaterialIconKind.MessageAlertOutline, [
-                new(typeof(DialogPageViewModel), typeof(DialogPage)),
-                new(typeof(NotificationPageViewModel), typeof(NotificationPage)),
-                new(typeof(ProgressBarPageViewModel), typeof(ProgressBarPage))
+                new(typeof(DialogPageViewModel), typeof(DialogPage), MaterialIconKind.DockWindow),
+                new(typeof(NotificationPageViewModel), typeof(NotificationPage), MaterialIconKind.MessageAlert),
+                new(typeof(ProgressBarPageViewModel), typeof(ProgressBarPage), MaterialIconKind.ProgressCheck)
             ]),
 
             new PagesGroup(nameof(MenuResources.ShapesAndDrawing), MaterialIconKind.Shape, [
-                new(typeof(BorderPageViewModel), typeof(BorderPage)),
-                new(typeof(EllipsePageViewModel), typeof(EllipsePage)),
-                new(typeof(ExtendedIconPageViewModel), typeof(ExtendedIconPage))
+                new(typeof(BorderPageViewModel), typeof(BorderPage), MaterialIconKind.CardOutline),
+                new(typeof(EllipsePageViewModel), typeof(EllipsePage), MaterialIconKind.Circle),
+                new(typeof(ExtendedIconPageViewModel), typeof(ExtendedIconPage), MaterialIconKind.Shape)
             ])
         ];
 
@@ -131,11 +131,11 @@ internal static class PagesCatalog
         switch (pagesProvider)
         {
             case PageAssociation pageAssociation:
-                return new LazyPageMenuItem(pageAssociation.ViewModelType, services);
+                return new LazyPageMenuItem(pageAssociation.ViewModelType, pageAssociation.Icon, services);
 
             case PagesGroup pagesGroup:
                 var group = new PagesGroupViewModel(pagesGroup.ResourceKey, pagesGroup.Icon);
-                group.AddPages(pagesGroup.Associations.Select(x => x.ViewModelType), services);
+                group.AddPages(pagesGroup.Associations.Select(x => (x.ViewModelType, x.Icon)), services);
                 return group;
 
             default:
@@ -154,7 +154,7 @@ internal static class PagesCatalog
         public IEnumerable<PageAssociation> GetPageAssociations() => Associations;
     }
 
-    internal sealed record PageAssociation(Type ViewModelType, Type ViewType) : IPagesProvider
+    internal sealed record PageAssociation(Type ViewModelType, Type ViewType, MaterialIconKind Icon) : IPagesProvider
     {
         public IEnumerable<PageAssociation> GetPageAssociations() => [this];
     }

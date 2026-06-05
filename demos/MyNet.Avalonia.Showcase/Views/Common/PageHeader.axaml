@@ -57,10 +57,7 @@
                             <DockPanel Margin="{my:Thickness Xl, Top=16, Bottom=0}" LastChildFill="False">
 
                                 <!-- Icon + Title row -->
-                                <StackPanel Orientation="Horizontal"
-                                            DockPanel.Dock="Top"
-                                            Spacing="{StaticResource MyNet.Spacing.Xl}"
-                                            VerticalAlignment="Center">
+                                <DockPanel DockPanel.Dock="Top" VerticalAlignment="Center">
 
                                     <!-- Icon container with glass effect -->
                                     <Border Width="48"
@@ -68,7 +65,9 @@
                                             CornerRadius="{StaticResource MyNet.Corners.Lg}"
                                             Background="{my:Theme Primary.Foreground, Opacity=Overlay}"
                                             BoxShadow="0 2 8 0 #20000000"
-                                            ClipToBounds="True">
+                                            ClipToBounds="True"
+                                            DockPanel.Dock="Left"
+                                            Margin="{my:Thickness Xl, Right}">
                                         <my:MaterialIcon Kind="{TemplateBinding Icon}"
                                                          Classes="size-xl"
                                                          HorizontalAlignment="Center"
@@ -79,13 +78,15 @@
                                     <TextBlock Text="{TemplateBinding Header}"
                                                Classes="text-h1"
                                                VerticalAlignment="Center"
-                                               LetterSpacing="0.3" />
-                                </StackPanel>
+                                               LetterSpacing="0.3"
+                                               TextTrimming="CharacterEllipsis" />
+                                </DockPanel>
 
                                 <!-- Content at bottom -->
                                 <ContentPresenter DockPanel.Dock="Bottom"
                                                   HorizontalAlignment="Stretch"
                                                   VerticalAlignment="Stretch"
+                                                  Margin="{my:Thickness Sm, Top}"
                                                   Content="{TemplateBinding Content}" />
                             </DockPanel>
                         </Panel>

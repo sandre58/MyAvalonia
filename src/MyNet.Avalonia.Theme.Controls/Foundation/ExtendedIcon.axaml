@@ -101,6 +101,12 @@
         <Style Selector="^.size-xl">
             <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Xl}" />
         </Style>
+        <Style Selector="^.size-xxl">
+            <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Xxl}" />
+        </Style>
+        <Style Selector="^.size-xxxl">
+            <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Icon.Xxxl}" />
+        </Style>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- GLYPH VARIANT                                             -->
@@ -123,6 +129,12 @@
             </Style>
             <Style Selector="^.size-xl">
                 <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Glyph.Xl}" />
+            </Style>
+            <Style Selector="^.size-xxl">
+                <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Glyph.Xxl}" />
+            </Style>
+            <Style Selector="^.size-xxxl">
+                <Setter Property="IconSize" Value="{StaticResource MyNet.Size.Glyph.Xxxl}" />
             </Style>
         </Style>
     </ControlTheme>

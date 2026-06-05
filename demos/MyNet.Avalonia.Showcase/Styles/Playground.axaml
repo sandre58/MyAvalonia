@@ -45,4 +45,12 @@
             </Setter>
         </Style>
     </Style>
+    
+    <Style Selector="ContentControl.kind-custom-controls > StackPanel">
+        <Setter Property="Spacing" Value="{my:Spacing Lg}" />
+    </Style>
+    
+    <Style Selector="ContentControl.kind-custom-controls > StackPanel > HeaderedContentControl">
+        <Setter Property="my:ClassesAssist.AddClasses" Value="kind-section" />
+    </Style>
 </Styles>

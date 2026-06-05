@@ -92,7 +92,7 @@
             <Border Classes="kind-card shadow-surface">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                     <ContentControl Margin="{my:Thickness Md}"
-                                    Classes="kind-custom-settings"
+                                    Classes="kind-custom-controls"
                                     ClipToBounds="False"
                                     Content="{Binding CustomContent, RelativeSource={RelativeSource AncestorType=v:ShowcaseView}}" />
                 </ScrollViewer>

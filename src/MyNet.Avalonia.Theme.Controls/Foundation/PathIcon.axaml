@@ -54,6 +54,14 @@
             <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Xl}" />
             <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Xl}" />
         </Style>
+        <Style Selector="^.size-xxl">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Xxl}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Xxl}" />
+        </Style>
+        <Style Selector="^.size-xxxl">
+            <Setter Property="Height" Value="{StaticResource MyNet.Size.Icon.Xxxl}" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Xxxl}" />
+        </Style>
 
         <!-- ═════════════════════════════════════════════════════════ -->
         <!-- GLYPH VARIANT                                             -->
@@ -92,6 +100,14 @@
             <Style Selector="^.size-xl">
                 <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Xl}" />
                 <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Xl}" />
+            </Style>
+            <Style Selector="^.size-xxl">
+                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Xxl}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Xxl}" />
+            </Style>
+            <Style Selector="^.size-xxxl">
+                <Setter Property="Height" Value="{StaticResource MyNet.Size.Glyph.Xxxl}" />
+                <Setter Property="Width" Value="{StaticResource MyNet.Size.Glyph.Xxxl}" />
             </Style>
         </Style>
         

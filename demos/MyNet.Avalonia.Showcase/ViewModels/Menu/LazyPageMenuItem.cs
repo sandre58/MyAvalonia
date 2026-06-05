@@ -17,20 +17,19 @@ using MyNet.UI.Navigation.Models;
 namespace MyNet.Avalonia.Showcase.ViewModels.Menu;
 
 /// <summary>
-/// Menu entry that resolves the page view model from DI only when the page is opened.
+/// Menu entry that resolves the page view model from DI only when navigation needs it.
 /// </summary>
-internal sealed class LazyPageMenuItem(Type viewModelType, IServiceProvider services) : ObservableObject, IMenuItemViewModel
+internal sealed class LazyPageMenuItem(Type viewModelType, MaterialIconKind icon, IServiceProvider services) : ObservableObject, IMenuItemViewModel
 {
     private static readonly IReadOnlyList<IMenuItemViewModel> EmptyItems = [];
-    private readonly Type _viewModelType = viewModelType ?? throw new ArgumentNullException(nameof(viewModelType));
     private readonly IServiceProvider _services = services ?? throw new ArgumentNullException(nameof(services));
     private PageViewModel? _page;
 
     /// <summary>Gets the view model type registered in DI for this menu entry.</summary>
-    public Type ViewModelType => _viewModelType;
+    public Type ViewModelType { get; } = viewModelType ?? throw new ArgumentNullException(nameof(viewModelType));
 
     /// <summary>Gets the resolved page view model (singleton from DI).</summary>
-    public PageViewModel Page => _page ??= (PageViewModel)_services.GetRequiredService(_viewModelType);
+    public PageViewModel Page => _page ??= (PageViewModel)_services.GetRequiredService(ViewModelType);
 
     /// <summary>Resolves and returns the navigation page from DI.</summary>
     public INavigationPage ResolvePage() => Page;
@@ -43,7 +42,7 @@ internal sealed class LazyPageMenuItem(Type viewModelType, IServiceProvider serv
     public string Title { get => field.Translate(); } = MenuPageTitleKeys.For(viewModelType);
 
     /// <inheritdoc/>
-    public MaterialIconKind Icon => _page?.Icon ?? MaterialIconKind.CircleOffOutline;
+    public MaterialIconKind Icon { get; } = icon;
 
     /// <inheritdoc/>
     public bool IsGroup => false;

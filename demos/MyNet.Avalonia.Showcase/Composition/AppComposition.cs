@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extended;
 using MyNet.Avalonia.Extended.Theming;
+using MyNet.Avalonia.Geography;
 using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ViewModels;
 using MyNet.Avalonia.Showcase.ViewModels.Pages;
@@ -21,6 +22,7 @@ using MyNet.Avalonia.Theme.Themes;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Collections;
 using MyNet.Fakers;
+using MyNet.Geography.Resources;
 using MyNet.Globalization;
 using MyNet.Globalization.Culture;
 using MyNet.UI;
@@ -76,6 +78,7 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
             .AddUi([SupportedCultures.English, SupportedCultures.French])
             .AddMyNetAvaloniaColors()
             .AddMyNetAvaloniaControls()
+            .AddMyNetAvaloniaGeography()
             .AddMyNetAvaloniaExtended(topLevelProvider)
             .AddSingleton<IThemeBrushService>(MyTheme.Current)
             .AddShowcaseLogging();

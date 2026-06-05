@@ -51,10 +51,10 @@ internal sealed class PagesGroupViewModel : ObservableObject, IMenuItemViewModel
     /// <inheritdoc/>
     public IReadOnlyList<IMenuItemViewModel> Items => Pages;
 
-    /// <summary>Adds lazy menu entries for the given page view model types.</summary>
-    public void AddPages(IEnumerable<Type> viewModelTypes, IServiceProvider services)
+    /// <summary>Adds lazy menu entries for the given page descriptors.</summary>
+    public void AddPages(IEnumerable<(Type ViewModelType, MaterialIconKind Icon)> pages, IServiceProvider services)
     {
-        foreach (var viewModelType in viewModelTypes)
-            _pages.Add(new LazyPageMenuItem(viewModelType, services));
+        foreach (var page in pages)
+            _pages.Add(new LazyPageMenuItem(page.ViewModelType, page.Icon, services));
     }
 }

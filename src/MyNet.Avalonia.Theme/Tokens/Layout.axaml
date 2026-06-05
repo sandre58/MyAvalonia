@@ -97,6 +97,8 @@
     <sys:Double x:Key="MyNet.Size.Glyph.Md">12</sys:Double>
     <sys:Double x:Key="MyNet.Size.Glyph.Lg">16</sys:Double>
     <sys:Double x:Key="MyNet.Size.Glyph.Xl">20</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Glyph.Xxl">24</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Glyph.Xxxl">32</sys:Double>
 
     <!-- Caption Button Sizes -->
     <sys:Double x:Key="MyNet.Width.Button.Caption">45</sys:Double>
@@ -112,6 +114,9 @@
     <sys:Double x:Key="MyNet.Size.Icon.Md">20</sys:Double>
     <sys:Double x:Key="MyNet.Size.Icon.Lg">24</sys:Double>
     <sys:Double x:Key="MyNet.Size.Icon.Xl">36</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Xxl">48</sys:Double>
+    <sys:Double x:Key="MyNet.Size.Icon.Xxxl">64</sys:Double>
+    
 
     <!-- Circular ProgressBar Sizes -->
     <sys:Double x:Key="MyNet.Size.ProgressBar.Circular.Sm">30</sys:Double>
