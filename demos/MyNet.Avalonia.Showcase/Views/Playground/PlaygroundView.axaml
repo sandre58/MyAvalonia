@@ -27,7 +27,7 @@
             </Grid.Styles>
 
             <!-- Settings (Left) -->
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled" Width="250" Margin="{my:Thickness Lg, Right}">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" Width="270" Margin="{my:Thickness Lg, Right}">
                 <ScrollViewer.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.Or}">
                         <Binding Path="#Root.ShowAppearance" />
@@ -142,7 +142,7 @@
 
             <!-- Options (Right) -->
             <Expander Grid.Column="2"
-                      Width="250"
+                      Width="270"
                       Margin="{my:Thickness Lg, Left}"
                       my:IconAssist.Icon="{my:MaterialIcon Cogs, DefinedSize=Sm}"
                       Header="{my:Loc Settings}">

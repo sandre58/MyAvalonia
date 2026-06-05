@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Globalization;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Observable;
 
@@ -18,7 +19,8 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 /// <param name="minimum">The minimum allowed value for the numeric option.</param>
 /// <param name="maximum">The maximum allowed value for the numeric option.</param>
 /// <param name="increment">The increment step value for the numeric option.</param>
-internal abstract class NumericOptionViewModel<T>(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, T minimum, T maximum, T increment) : ValueOptionViewModel<T>(definition, definition.DefaultValue, displayNameFunc)
+/// <param name="initialValue">The initial value of the numeric option.</param>
+internal abstract class NumericOptionViewModel<T>(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, T minimum, T maximum, T increment, T? initialValue = default) : ValueOptionViewModel<T>(definition, initialValue ?? definition.DefaultValue, displayNameFunc)
 {
     /// <summary>
     /// Gets the minimum allowed value for the numeric option. This property is initialized to 0 by default, but can be set to any desired minimum value as needed. The minimum value defines the lower bound for the numeric input, ensuring that users cannot enter a value below this threshold.
@@ -44,7 +46,8 @@ internal abstract class NumericOptionViewModel<T>(IControlOptionDefinition defin
 /// manipulated via a slider control in the UI.</remarks>
 /// <param name="definition">The control option definition that supplies metadata and configuration for the slider option.</param>
 /// <param name="displayNameFunc">A provider that returns the display name for the slider option, allowing for dynamic or context-sensitive naming.</param>
-internal sealed class SliderOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc) : NumericOptionViewModel<decimal>(definition, displayNameFunc, 0, 100, 1);
+/// <param name="initialValue">The initial value of the slider option.</param>
+internal sealed class SliderOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, decimal? initialValue = null) : NumericOptionViewModel<decimal>(definition, displayNameFunc, 0, 100, 1, initialValue ?? System.Convert.ToDecimal(definition.DefaultValue, CultureInfo.CurrentCulture));
 
 /// <summary>
 /// Represents a view model for a slider-based numeric option, providing logic for managing its value and display within
@@ -54,7 +57,8 @@ internal sealed class SliderOptionViewModel(IControlOptionDefinition definition,
 /// manipulated via a slider control in the UI.</remarks>
 /// <param name="definition">The control option definition that supplies metadata and configuration for the slider option.</param>
 /// <param name="displayNameFunc">A provider that returns the display name for the slider option, allowing for dynamic or context-sensitive naming.</param>
-internal sealed class IntSliderOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc) : NumericOptionViewModel<int>(definition, displayNameFunc, 0, 100, 1);
+/// <param name="initialValue">The initial value of the slider option.</param>
+internal sealed class IntSliderOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, int? initialValue = null) : NumericOptionViewModel<int>(definition, displayNameFunc, 0, 100, 1, initialValue ?? System.Convert.ToInt32(definition.DefaultValue, CultureInfo.CurrentCulture));
 
 /// <summary>
 /// Represents a view model for a NumericUpDown-based numeric option, providing logic for managing its value and display within
@@ -64,7 +68,8 @@ internal sealed class IntSliderOptionViewModel(IControlOptionDefinition definiti
 /// manipulated via a slider control in the UI.</remarks>
 /// <param name="definition">The control option definition that supplies metadata and configuration for the slider option.</param>
 /// <param name="displayNameFunc">A provider that returns the display name for the slider option, allowing for dynamic or context-sensitive naming.</param>
-internal sealed class NumericUpDownOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc) : NumericOptionViewModel<decimal>(definition, displayNameFunc, 0, 100, 1);
+/// <param name="initialValue">The initial value of the slider option.</param>
+internal sealed class NumericUpDownOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, decimal? initialValue = null) : NumericOptionViewModel<decimal>(definition, displayNameFunc, 0, 100, 1, initialValue ?? System.Convert.ToDecimal(definition.DefaultValue, CultureInfo.CurrentCulture));
 
 /// <summary>
 /// Represents a view model for a NumericUpDown-based numeric option, providing logic for managing its value and display within
@@ -74,4 +79,5 @@ internal sealed class NumericUpDownOptionViewModel(IControlOptionDefinition defi
 /// manipulated via a slider control in the UI.</remarks>
 /// <param name="definition">The control option definition that supplies metadata and configuration for the slider option.</param>
 /// <param name="displayNameFunc">A provider that returns the display name for the slider option, allowing for dynamic or context-sensitive naming.</param>
-internal sealed class IntNumericUpDownOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc) : NumericOptionViewModel<int>(definition, displayNameFunc, 0, 100, 1);
+/// <param name="initialValue">The initial value of the slider option.</param>
+internal sealed class IntNumericUpDownOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, int? initialValue = null) : NumericOptionViewModel<int>(definition, displayNameFunc, 0, 100, 1, initialValue ?? System.Convert.ToInt32(definition.DefaultValue, CultureInfo.CurrentCulture));

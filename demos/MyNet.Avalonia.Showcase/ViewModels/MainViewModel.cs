@@ -81,7 +81,7 @@ internal sealed class MainViewModel : ObservableObject
     public IMenuItemViewModel? SelectedMenuItem
     {
         get;
-        private set => SetProperty(ref field, value);
+        set => SetProperty(ref field, value);
     }
 
     /// <summary>Gets or sets the menu filter query (title contains, culture-aware).</summary>

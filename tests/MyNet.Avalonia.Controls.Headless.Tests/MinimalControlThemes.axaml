@@ -92,6 +92,49 @@
 
     <ControlTheme x:Key="{x:Type controls:OverlayDialogHost}" TargetType="controls:OverlayDialogHost" />
 
+    <DataTemplate x:Key="CardBody" DataType="controls:Card">
+        <Grid Name="PART_BodyGrid" ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto">
+            <Panel Name="PART_LeadingHost" Grid.Row="0" Grid.Column="0"
+                   IsVisible="{Binding Leading, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <Border Name="PART_LeadingBackground" />
+                <ContentPresenter Name="PART_Leading" Content="{Binding Leading}" />
+            </Panel>
+            <ContentPresenter Name="PART_Title" Grid.Row="0" Grid.Column="1" Content="{Binding Title}" />
+            <ContentPresenter Name="PART_Subtitle" Grid.Row="1" Grid.Column="1" Content="{Binding Subtitle}" />
+            <Panel Name="PART_Trailing" Grid.Row="0" Grid.Column="2" />
+            <Border Name="PART_Header" IsVisible="{Binding Header, Converter={x:Static ObjectConverters.IsNotNull}}" />
+            <Border Name="PART_Footer" IsVisible="{Binding Footer, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        </Grid>
+    </DataTemplate>
+
+    <ControlTheme x:Key="{x:Type controls:Card}" TargetType="controls:Card">
+        <Style Selector="^:vertical /template/ Border#PART_LeadingBackground">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:Card">
+                <Border Name="PART_Root">
+                    <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                      ContentTemplate="{StaticResource CardBody}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="MyNet.Theme.Card.Interactive" TargetType="controls:Card"
+                  BasedOn="{StaticResource {x:Type controls:Card}}">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:Card">
+                <Button Name="PART_ActionButton"
+                        Command="{TemplateBinding Command}"
+                        CommandParameter="{TemplateBinding CommandParameter}">
+                    <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                      ContentTemplate="{StaticResource CardBody}" />
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
     <ControlTheme x:Key="{x:Type controls:Divider}" TargetType="controls:Divider">
         <Setter Property="Template">
             <ControlTemplate TargetType="controls:Divider">

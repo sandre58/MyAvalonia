@@ -510,7 +510,7 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to README du showcase.
+        ///   Looks up a localized string similar to README.
         /// </summary>
         internal static string ResourceReadme {
             get {
@@ -519,7 +519,7 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dépôt GitHub MyAvalonia.
+        ///   Looks up a localized string similar to GitHub.
         /// </summary>
         internal static string ResourceRepository {
             get {

@@ -50,7 +50,8 @@ internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder, 
             AvailableSizes = [.. definition.Sizes.Select(choiceFactory.Create)],
             AvailableItemsRoles = [.. definition.ItemsRoles.Select(choiceFactory.Create)],
             AvailableOptions = [.. availableOptions],
-            AvailableGroups = [.. availableGroups]
+            AvailableGroups = [.. availableGroups],
+            UseIconByDefault = definition.UseIconByDefault
         };
     }
 
@@ -109,7 +110,11 @@ internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder, 
 
         // Custom editors
         registry.RegisterEditor<ButtonEditorMetadata>((x, y) => new ButtonOptionViewModel(commands, (ControlActionDefinition)x, y.DisplayName, y.Icon) { Role = y.Metadata.Role });
-        registry.RegisterEditor<TextBoxEditorMetadata>((x, y) => new TextBoxOptionViewModel(x, y.DisplayName));
+        registry.RegisterEditor<TextBoxEditorMetadata>((x, y) => new TextBoxOptionViewModel(x, y.DisplayName, y.Metadata.Value)
+        {
+            IsMultiLine = y.Metadata.IsMultiline,
+            RandomizeText = y.Metadata.RandomizeText
+        });
         registry.RegisterEditor<ToggleSwitchEditorMetadata>((x, y) => new ToggleSwitchOptionViewModel(x, y.DisplayName));
         registry.RegisterEditor<ListBoxEditorMetadata>((x, y) => new ListBoxOptionViewModel(x, [.. y.Metadata.Choices.Select(choiceFactory.Create)], y.DisplayName, y.Metadata.AllowMultipleSelection));
         registry.RegisterEditor<ComboBoxEditorMetadata>((x, y) => new ComboBoxOptionViewModel(x, [.. y.Metadata.Choices.Select(choiceFactory.Create)], y.DisplayName)

@@ -26,5 +26,5 @@ public sealed record MaterialIconKindGroup(string[] Aliases)
 
     public MaterialIconKind Kind { get; } = Enum.Parse<MaterialIconKind>(Aliases[0]);
 
-    public string DisplayName { get; } = Aliases[0].Humanize().ToTitleCase();
+    public string DisplayName { get; } = Aliases[0];
 }

@@ -141,12 +141,12 @@
   <data name="ResourcesSection" xml:space="preserve">
     <value>Ressources</value>
   </data>
-  <data name="ResourceRepository" xml:space="preserve">
-    <value>Dépôt GitHub MyAvalonia</value>
-  </data>
-  <data name="ResourceReadme" xml:space="preserve">
-    <value>README du showcase</value>
-  </data>
+    <data name="ResourceRepository" xml:space="preserve">
+        <value>GitHub</value>
+    </data>
+    <data name="ResourceReadme" xml:space="preserve">
+        <value>README</value>
+    </data>
     <data name="GettingStartedSection" xml:space="preserve">
     <value>Brancher MyNet dans votre app</value>
   </data>

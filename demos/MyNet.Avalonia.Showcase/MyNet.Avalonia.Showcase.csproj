@@ -103,6 +103,11 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>ThemePageResources.resx</DependentUpon>
       </Compile>
+      <Compile Update="Resources\CardPageResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>CardPageResources.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -153,6 +158,10 @@
         <EmbeddedResource Update="Resources\ThemePageResources.resx">
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>ThemePageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\CardPageResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>CardPageResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 </Project>

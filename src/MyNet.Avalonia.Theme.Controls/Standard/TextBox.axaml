@@ -221,6 +221,7 @@
         <Style Selector="^.icon-right, ^.button-right">
             <Style Selector="^ /template/ ContentControl#PART_Icon">
                 <Setter Property="Grid.Column" Value="5" />
+                <Setter Property="my:IconAssist.Spacing" Value="5" />
             </Style>
         </Style>
 

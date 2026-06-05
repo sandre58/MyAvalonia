@@ -69,7 +69,7 @@
     <sys:Double x:Key="MyNet.Opacity.Drag">0.32</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Pressed">0.24</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Focus">0.16</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Hover">0.12</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Hover">0.10</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Overlay">0.08</sys:Double>
 
 </ResourceDictionary>

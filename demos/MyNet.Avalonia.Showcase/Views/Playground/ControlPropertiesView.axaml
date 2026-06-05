@@ -17,7 +17,16 @@
 
         <!-- NumericUpDown -->
         <DataTemplate DataType="options:TextBoxOptionViewModel">
-            <TextBox Text="{Binding Value}" my:FormItem.Label="{Binding DisplayName}" />
+            <TextBox Classes="button-right"
+                     Text="{Binding Value}" my:FormItem.Label="{Binding DisplayName}"
+                     AcceptsReturn="{Binding IsMultiLine}"
+                     TextWrapping="Wrap"
+                     my:IconAssist.Opacity="1.0">
+                <my:IconAssist.Icon>
+                        <Button Classes="kind-tool is-stretch" Command="{Binding RandomizeTextCommand}"
+                                Content="{my:MaterialIcon Kind=AutoFix}" />
+                </my:IconAssist.Icon>
+            </TextBox>
         </DataTemplate>
 
         <!-- ToggleSwitch -->
@@ -69,7 +78,8 @@
                       SelectedValue="{Binding Value}"
                       my:InputAssist.ShowClearButton="{Binding AllowNullValue}">
                 <ComboBox.ItemContainerTheme>
-                    <ControlTheme TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}" x:DataType="{x:Type choices:IChoiceViewModel}">
+                    <ControlTheme TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}"
+                                  x:DataType="{x:Type choices:IChoiceViewModel}">
                         <Setter Property="my:IconAssist.Icon">
                             <Template>
                                 <my:MaterialIcon Kind="{Binding Icon}" />
@@ -100,8 +110,10 @@
                 <ListBox.DataTemplates>
                     <DataTemplate x:DataType="choices:IChoiceViewModel">
                         <Panel>
-                            <ContentControl Content="{my:MaterialIcon KindBinding={Binding Icon}}" IsVisible="{Binding Icon, Converter={x:Static my:NullConverter.IsPresent}}" />
-                            <ContentControl Content="{my:Display DisplayName}" IsVisible="{Binding Icon, Converter={x:Static my:NullConverter.IsEmpty}}" />
+                            <ContentControl Content="{my:MaterialIcon KindBinding={Binding Icon}}"
+                                            IsVisible="{Binding Icon, Converter={x:Static my:NullConverter.IsPresent}}" />
+                            <ContentControl Content="{my:Display DisplayName}"
+                                            IsVisible="{Binding Icon, Converter={x:Static my:NullConverter.IsEmpty}}" />
                         </Panel>
                     </DataTemplate>
                 </ListBox.DataTemplates>
@@ -110,9 +122,9 @@
 
         <!-- Button -->
         <DataTemplate DataType="options:ButtonOptionViewModel">
-            <Button Command="{Binding ExecuteCommand}" 
-                    my:FormItem.NoLabel="True" 
-                    Content="{my:Display DisplayName}" 
+            <Button Command="{Binding ExecuteCommand}"
+                    my:FormItem.NoLabel="True"
+                    Content="{my:Display DisplayName}"
                     my:IconAssist.Icon="{my:MaterialIcon KindBinding={Binding Icon}}"
                     my:ThemeAssist.Role="{Binding Role}" />
         </DataTemplate>

@@ -15,11 +15,13 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
 /// </summary>
 /// <param name="definition">The definition of the control option.</param>
 /// <param name="displayNameFunc">A function that provides the display name for the option.</param>
-internal abstract class BooleanOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc) : ValueOptionViewModel<bool>(definition, definition.DefaultValue, displayNameFunc);
+/// <param name="initialValue">The initial value of the option.</param>
+internal abstract class BooleanOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, bool? initialValue = null) : ValueOptionViewModel<bool>(definition, initialValue ?? definition.DefaultValue, displayNameFunc);
 
 /// <summary>
 /// ViewModel for a toggle switch option, which represents a boolean value that can be toggled on or off. This class inherits from <see cref="ValueOptionViewModel{T}"/>, which provides the necessary functionality to manage the state and display of the toggle switch option in the UI.
 /// </summary>
 /// <param name="definition">The definition of the control option.</param>
 /// <param name="displayNameFunc">A function that provides the display name for the option.</param>
-internal sealed class ToggleSwitchOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc) : BooleanOptionViewModel(definition, displayNameFunc);
+/// <param name="initialValue">The initial value of the option.</param>
+internal sealed class ToggleSwitchOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, bool? initialValue = null) : BooleanOptionViewModel(definition, displayNameFunc, initialValue);

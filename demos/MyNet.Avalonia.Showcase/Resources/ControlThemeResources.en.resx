@@ -201,4 +201,7 @@
   <data name="ThemeFieldsUnderline" xml:space="preserve">
     <value>Underline theme</value>
   </data>
+  <data name="ThemeCardInteractive" xml:space="preserve">
+      <value>Interactive theme</value>
+  </data>
 </root>

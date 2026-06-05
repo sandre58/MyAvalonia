@@ -85,7 +85,13 @@ namespace MyNet.Avalonia.Showcase.Resources {
                 return ResourceManager.GetString("Banner", resourceCulture);
             }
         }
-        
+
+        internal static string Card {
+            get {
+                return ResourceManager.GetString("Card", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Bordure.
         /// </summary>

@@ -431,7 +431,7 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
         SelectedContentProvider = theme?.Definition.ContentDefinition is not null
             ? AvailableContentProviders.GetById(theme.Definition.ContentDefinition.ContentProviderType)
             : null;
-        UseIcon = false;
+        UseIcon = theme?.UseIconByDefault ?? false;
         SelectedIcon = null;
         IconPosition = Position.Left;
         IsEnabled = true;

@@ -25,39 +25,16 @@
                            Icon="{Binding Icon}">
             <StackPanel Margin="{my:Thickness Md, Bottom}" Spacing="{my:Spacing Md}">
                 <TextBlock Text="{my:Loc WelcomeSubtitle}" TextWrapping="Wrap" />
-                <WrapPanel Orientation="Horizontal" ItemSpacing="{my:Spacing Sm}" LineSpacing="{my:Spacing Sm}">
-                    <Border Padding="{my:Thickness Sm, Horizontal}"
-                            CornerRadius="{StaticResource MyNet.Corners.Full}"
-                            Background="{my:Theme Primary.Foreground, Opacity=Overlay}">
-                        <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Xs}">
-                            <my:MaterialIcon Kind="ApplicationBracesOutline" Classes="size-sm" />
-                            <TextBlock Classes="font-sm" Text="{my:Loc HeroTagAvalonia}" />
-                        </StackPanel>
-                    </Border>
-                    <Border Padding="{my:Thickness Sm, Horizontal}"
-                            CornerRadius="{StaticResource MyNet.Corners.Full}"
-                            Background="{my:Theme Primary.Foreground, Opacity=Overlay}">
-                        <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Xs}">
-                            <my:MaterialIcon Kind="TagFaces" Classes="size-sm" />
-                            <TextBlock Classes="font-sm" Text="{my:Loc HeroTagMaterialIcons}" />
-                        </StackPanel>
-                    </Border>
-                    <Border Padding="{my:Thickness Sm, Horizontal}"
-                            CornerRadius="{StaticResource MyNet.Corners.Full}"
-                            Background="{my:Theme Primary.Foreground, Opacity=Overlay}">
-                        <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Xs}">
-                            <my:MaterialIcon Kind="CheckDecagramOutline" Classes="size-sm" />
-                            <TextBlock Classes="font-sm" Text="{my:Loc HeroTagFluentValidation}" />
-                        </StackPanel>
-                    </Border>
-                    <Border Padding="{my:Thickness Sm, Horizontal}"
-                            CornerRadius="{StaticResource MyNet.Corners.Full}"
-                            Background="{my:Theme Primary.Foreground, Opacity=Overlay}">
-                        <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Xs}">
-                            <my:MaterialIcon Kind="ViewDashboardOutline" Classes="size-sm" />
-                            <TextBlock Classes="font-sm" Text="{my:Loc HeroTagMvvm}" />
-                        </StackPanel>
-                    </Border>
+                <WrapPanel Orientation="Horizontal"
+                           ItemSpacing="{my:Spacing Lg}"
+                           LineSpacing="{my:Spacing Md}">
+                    <HyperlinkButton NavigateUri="https://github.com/sandre58/MyAvalonia"
+                                     Content="{my:Loc ResourceRepository}"
+                                     my:IconAssist.Icon="{my:MaterialIcon Kind=Github}" />
+                    <HyperlinkButton
+                        NavigateUri="https://github.com/sandre58/MyAvalonia/tree/main/demos/MyNet.Avalonia.Showcase"
+                        Content="{my:Loc ResourceReadme}"
+                        my:IconAssist.Icon="{my:MaterialIcon Kind=BookOpen}" />
                 </WrapPanel>
             </StackPanel>
         </common:PageHeader>
@@ -74,34 +51,26 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="vm:HomeStatViewModel">
-                            <Border Padding="{my:Thickness Lg}" Classes="kind-card">
-                                <Grid ColumnDefinitions="Auto, *" ColumnSpacing="{my:Spacing Md}">
-                                    <Border Grid.Column="0"
-                                            Width="40"
-                                            Height="40"
-                                            CornerRadius="{StaticResource MyNet.Corners.Md}"
-                                            Background="{my:Theme Primary, Opacity=Overlay}">
-                                        <my:MaterialIcon Kind="{Binding Icon}"
-                                                         Classes="size-md"
-                                                         HorizontalAlignment="Center"
-                                                         VerticalAlignment="Center" />
-                                    </Border>
-                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{my:Spacing Xs}">
-                                        <TextBlock Classes="text-h4" Text="{Binding Value}" />
-                                        <TextBlock Classes="font-sm opacity-high"
-                                                   Text="{my:Display Label}"
-                                                   TextWrapping="Wrap" />
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
+                            <my:Card Padding="{my:Thickness Lg}"
+                                     Classes="header-h4"
+                                     Layout="Horizontal"
+                                     Title="{Binding Value}"
+                                     Subtitle="{my:Display Label}"
+                                     HorizontalAlignment="Stretch">
+                                <my:Card.Leading>
+                                    <my:MaterialIcon Kind="{Binding Icon}" />
+                                </my:Card.Leading>
+                            </my:Card>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
                 <!-- Quick start -->
-                <HeaderedContentControl Header="{my:Loc FeaturedSection}" Classes="kind-section">
+                <HeaderedContentControl Header="{my:Loc FeaturedSection}" Classes="kind-section"
+                                        HorizontalContentAlignment="Stretch">
                     <StackPanel Spacing="{my:Spacing Md}">
-                        <TextBlock Classes="font-sm opacity-high" Text="{my:Loc FeaturedSectionDescription}" TextWrapping="Wrap" />
+                        <TextBlock Classes="font-sm opacity-high" Text="{my:Loc FeaturedSectionDescription}"
+                                   TextWrapping="Wrap" />
                         <ItemsControl ItemsSource="{Binding FeaturedLinks}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -110,37 +79,21 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="vm:HomeLinkViewModel">
-                                    <Button Margin="{my:Thickness Sm}"
-                                            Padding="{my:Thickness Lg}"
-                                            HorizontalAlignment="Stretch"
-                                            HorizontalContentAlignment="Stretch"
-                                            Command="{Binding ((vm:HomePageViewModel)Data).OpenLinkCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}"
-                                            CommandParameter="{Binding}"
-                                            Classes="variant-solid shadow-control">
-                                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="{my:Spacing Md}">
-                                            <Border Grid.Column="0"
-                                                    Width="48"
-                                                    Height="48"
-                                                    CornerRadius="{StaticResource MyNet.Corners.Lg}"
-                                                    Background="{my:Theme Primary, Opacity=Overlay}">
-                                                <my:MaterialIcon Kind="{Binding Icon}"
-                                                                 Classes="size-lg"
-                                                                 HorizontalAlignment="Center"
-                                                                 VerticalAlignment="Center" />
-                                            </Border>
-                                            <StackPanel Grid.Column="1" VerticalAlignment="Center"
-                                                        Spacing="{my:Spacing Xs}">
-                                                <TextBlock Classes="text-h6" Text="{my:Display Title}" />
-                                                <TextBlock Classes="font-sm opacity-high"
-                                                           Text="{my:Display Description}"
-                                                           TextWrapping="Wrap" />
-                                            </StackPanel>
-                                            <my:MaterialIcon Grid.Column="2"
-                                                             Kind="ChevronRight"
-                                                             Classes="size-md opacity-high"
-                                                             VerticalAlignment="Center" />
-                                        </Grid>
-                                    </Button>
+                                    <my:Card Margin="{my:Thickness Sm}"
+                                             Padding="{my:Thickness Lg}"
+                                             Classes="header-h6"
+                                             Layout="Horizontal"
+                                             Theme="{StaticResource MyNet.Theme.Card.Interactive}"
+                                             Title="{my:Display Title}"
+                                             Subtitle="{my:Display Description}"
+                                             ShowTrailing="True"
+                                             Command="{Binding ((vm:HomePageViewModel)Data).OpenLinkCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}"
+                                             CommandParameter="{Binding}"
+                                             HorizontalAlignment="Stretch">
+                                        <my:Card.Leading>
+                                            <my:MaterialIcon Kind="{Binding Icon}" Classes="size-md" />
+                                        </my:Card.Leading>
+                                    </my:Card>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -148,7 +101,8 @@
                 </HeaderedContentControl>
 
                 <!-- Capabilities -->
-                <HeaderedContentControl Header="{my:Loc CapabilitiesSection}" Classes="kind-section">
+                <HeaderedContentControl Header="{my:Loc CapabilitiesSection}" Classes="kind-section"
+                                        HorizontalContentAlignment="Stretch">
                     <StackPanel Spacing="{my:Spacing Md}">
                         <TextBlock Classes="font-sm opacity-high"
                                    Text="{my:Loc CapabilitiesSectionDescription}"
@@ -161,19 +115,17 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="vm:HomeCapabilityViewModel">
-                                    <Border Margin="{my:Thickness Sm}"
-                                            Padding="{my:Thickness Lg}"
-                                            Classes="kind-card">
-                                        <StackPanel Spacing="{my:Spacing Sm}">
-                                            <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Sm}">
-                                                <my:MaterialIcon Kind="{Binding Icon}" Classes="size-sm" />
-                                                <TextBlock Classes="text-subtitle-1" Text="{my:Display Title}" />
-                                            </StackPanel>
-                                            <TextBlock Classes="font-sm opacity-high"
-                                                       Text="{my:Display Description}"
-                                                       TextWrapping="Wrap" />
-                                        </StackPanel>
-                                    </Border>
+                                    <my:Card Margin="{my:Thickness Sm}"
+                                             Padding="{my:Thickness Lg}"
+                                             Classes="header-h6"
+                                             Layout="Vertical"
+                                             Title="{my:Display Title}"
+                                             Subtitle="{my:Display Description}"
+                                             HorizontalAlignment="Stretch">
+                                        <my:Card.Leading>
+                                            <my:MaterialIcon Kind="{Binding Icon}" Classes="size-md" />
+                                        </my:Card.Leading>
+                                    </my:Card>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -181,7 +133,8 @@
                 </HeaderedContentControl>
 
                 <!-- Categories -->
-                <HeaderedContentControl Header="{my:Loc CategoriesSection}" Classes="kind-section">
+                <HeaderedContentControl Header="{my:Loc CategoriesSection}" Classes="kind-section"
+                                        HorizontalContentAlignment="Stretch">
                     <StackPanel Spacing="{my:Spacing Md}">
                         <TextBlock Classes="font-sm opacity-high"
                                    Text="{my:Loc CategoriesSectionDescription}"
@@ -194,35 +147,27 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="vm:HomeLinkViewModel">
-                                    <Button Margin="{my:Thickness Sm}"
-                                            Padding="{my:Thickness Md}"
-                                            HorizontalAlignment="Stretch"
-                                            HorizontalContentAlignment="Stretch"
-                                            Command="{Binding ((vm:HomePageViewModel)Data).OpenLinkCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}"
-                                            CommandParameter="{Binding}"
-                                            Classes="variant-solid shadow-control">
-                                        <Grid RowDefinitions="Auto, Auto" RowSpacing="{my:Spacing Sm}">
-                                            <Grid ColumnDefinitions="Auto, *, Auto">
-                                                <my:MaterialIcon Grid.Column="0"
-                                                                 Kind="{Binding Icon}"
-                                                                 Classes="size-sm"
-                                                                 VerticalAlignment="Center" />
-                                                <TextBlock Grid.Column="1"
-                                                           Classes="text-subtitle-1"
-                                                           Margin="{my:Thickness Sm, Horizontal}"
-                                                           VerticalAlignment="Center"
-                                                           Text="{my:Display Title}" />
-                                                <Label Grid.Column="2" VerticalAlignment="Center"
-                                                       Content="{Binding DemoPageCount}"
-                                                       my:VariantAssist.Background="{my:Theme Surface.Level2}"
-                                                       Classes="shadow-control variant-solid font-sm size-sm kind-badge shape-circle" />
-                                            </Grid>
-                                            <TextBlock Grid.Row="1"
-                                                       Classes="font-sm opacity-high"
-                                                       Text="{my:Display Description}"
-                                                       TextWrapping="Wrap" />
-                                        </Grid>
-                                    </Button>
+                                    <my:Card Margin="{my:Thickness Sm}"
+                                             Classes="size-sm"
+                                             Layout="Vertical"
+                                             Theme="{StaticResource MyNet.Theme.Card.Interactive}"
+                                             Title="{my:Display Title}"
+                                             Subtitle="{my:Display Description}"
+                                             ShowTrailing="True"
+                                             Command="{Binding ((vm:HomePageViewModel)Data).OpenLinkCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}"
+                                             CommandParameter="{Binding}"
+                                             HorizontalAlignment="Stretch">
+                                        <my:Card.Leading>
+                                            <my:MaterialIcon Kind="{Binding Icon}" />
+                                        </my:Card.Leading>
+                                        <my:Card.Trailing>
+                                            <Label Grid.Column="2" VerticalAlignment="Center"
+                                                   my:ThemeAssist.Role="Inverse"
+                                                   Content="{Binding DemoPageCount}"
+                                                   my:VariantAssist.Background="{my:Theme Surface.Level2}"
+                                                   Classes="shadow-control variant-solid font-sm size-sm kind-badge shape-circle" />
+                                        </my:Card.Trailing>
+                                    </my:Card>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -231,11 +176,8 @@
 
                 <!-- Getting started + Explore -->
                 <Grid ColumnDefinitions="*, *" ColumnSpacing="{my:Spacing Xl}">
-                    <Border Grid.Column="0"
-                            Classes="kind-card variant-solid shadow-surface"
-                            Padding="{my:Thickness Lg}">
+                    <HeaderedContentControl Header="{my:Loc GettingStartedSection}">
                         <StackPanel Spacing="{my:Spacing Md}">
-                            <TextBlock Classes="text-h5" Text="{my:Loc GettingStartedSection}" />
                             <TextBlock Classes="font-sm opacity-high"
                                        Text="{my:Loc GettingStartedSectionDescription}"
                                        TextWrapping="Wrap" />
@@ -272,13 +214,10 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </StackPanel>
-                    </Border>
+                    </HeaderedContentControl>
 
-                    <Border Grid.Column="1"
-                            Classes="kind-card variant-outlined"
-                            Padding="{my:Thickness Lg}">
+                    <HeaderedContentControl Grid.Column="1" Header="{my:Loc ExploreSection}">
                         <StackPanel Spacing="{my:Spacing Md}">
-                            <TextBlock Classes="text-h5" Text="{my:Loc ExploreSection}" />
                             <TextBlock Classes="font-sm opacity-high"
                                        Text="{my:Loc ExploreSectionDescription}"
                                        TextWrapping="Wrap" />
@@ -302,20 +241,8 @@
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
-                    </Border>
+                    </HeaderedContentControl>
                 </Grid>
-
-                <!-- Resources -->
-                <my:Divider Content="{my:Loc ResourcesSection}" />
-                <WrapPanel Orientation="Horizontal"
-                           ItemSpacing="{my:Spacing Lg}"
-                           LineSpacing="{my:Spacing Md}">
-                    <HyperlinkButton NavigateUri="https://github.com/sandre58/MyAvalonia"
-                                     Content="{my:Loc ResourceRepository}" />
-                    <HyperlinkButton
-                        NavigateUri="https://github.com/sandre58/MyAvalonia/tree/main/demos/MyNet.Avalonia.Showcase"
-                        Content="{my:Loc ResourceReadme}" />
-                </WrapPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

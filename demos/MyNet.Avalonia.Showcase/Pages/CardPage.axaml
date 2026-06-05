@@ -1,0 +1,97 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.CardPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:m="clr-namespace:MyNet.Avalonia.Showcase.MarkupExtensions"
+             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+             x:DataType="vm:CardPageViewModel"
+             x:Name="Root"
+             Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Display Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             ClipToBounds="False"
+             mc:Ignorable="d">
+
+    <v:ShowcaseView>
+
+        <!-- Playground: shows one card with all options controllable -->
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <my:Card behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                         MaxWidth="360"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center" />
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <!-- Theme gallery: all variants side by side -->
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <my:Card behavior:PlaygroundBehavior.AttachStyle="{Binding}"
+                         MaxWidth="360"
+                         Padding="{my:Thickness Lg}"
+                         Title="{m:RandomText}"
+                         Subtitle="{m:RandomText}"
+                         Leading="{m:RandomIcon}">
+                </my:Card>
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+        <!-- Custom examples -->
+        <v:ShowcaseView.CustomContent>
+            <StackPanel Spacing="{my:Spacing Lg}">
+                <!-- Horizontal + Vertical -->
+                <UniformGrid Columns="2" ColumnSpacing="{my:Spacing Md}" RowSpacing="{my:Spacing Md}">
+                    <my:Card Padding="{my:Thickness Lg}"
+                             Layout="Horizontal"
+                             Title="6"
+                             Subtitle="Packages"
+                             Leading="{my:MaterialIcon Kind=PackageVariantClosed}" />
+                    <my:Card Padding="{my:Thickness Lg}"
+                             Layout="Vertical"
+                             Title="Theming"
+                             Subtitle="Variants, roles, shadows and density tokens."
+                             Leading="{my:MaterialIcon Kind=PaletteOutline}" />
+
+                </UniformGrid>
+                
+                <!-- Interactive theme -->
+                <my:Card Padding="{my:Thickness Lg}"
+                         Theme="{StaticResource MyNet.Theme.Card.Interactive}"
+                         Title="Theme playground"
+                         Subtitle="Open the theme page and tweak control classes live."
+                         ShowTrailing="True"
+                         Command="{Binding SampleCommand}"
+                         Leading="{my:MaterialIcon Kind=Palette}" />
+                
+                <!-- With Header band -->
+                <my:Card Padding="{my:Thickness Lg}"
+                         Layout="Horizontal"
+                         Title="With header band"
+                         Subtitle="The header band is styleable via card properties."
+                         Leading="{my:MaterialIcon Kind=CheckCircleOutline}"
+                         Header="Status" />
+
+                <!-- With Footer band -->
+                <my:Card Padding="{my:Thickness Lg}"
+                         Title="With footer band"
+                         Subtitle="Any content can appear in the footer zone.">
+                    <my:Card.Footer>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                    Spacing="{my:Spacing Sm}" Margin="{my:Thickness Sm}">
+                            <Button Content="Cancel" Classes="kind-flat" />
+                            <Button Content="Confirm" Classes="variant-solid" />
+                        </StackPanel>
+                    </my:Card.Footer>
+                </my:Card>
+                
+            </StackPanel>
+        </v:ShowcaseView.CustomContent>
+    </v:ShowcaseView>
+</ContentPage>

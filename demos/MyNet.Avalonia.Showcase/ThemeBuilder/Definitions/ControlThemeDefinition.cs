@@ -101,4 +101,9 @@ internal sealed class ControlThemeDefinition(ControlTheme? theme, string? key = 
     /// appearance of the control's icon. It is initialized with a default value based on the
     /// IconAssist.IconProperty.</remarks>
     public IControlPropertyDefinition IconDefinition { get; init; } = new ControlAttachedPropertyDefinition<object>(IconAssist.IconProperty);
+
+    /// <summary>
+    /// Gets a value indicating whether the control should use an icon by default when no specific icon is provided.
+    /// </summary>
+    public bool UseIconByDefault { get; init; }
 }

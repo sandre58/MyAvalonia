@@ -68,6 +68,7 @@ internal static class PagesCatalog
                 new(typeof(HeaderedContentControlPageViewModel), typeof(HeaderedContentControlPage)),
                 new(typeof(FormPageViewModel), typeof(FormPage)),
                 new(typeof(BannerPageViewModel), typeof(BannerPage)),
+                new(typeof(CardPageViewModel), typeof(CardPage)),
                 new(typeof(BadgePageViewModel), typeof(BadgePage)),
                 new(typeof(AvatarPageViewModel), typeof(AvatarPage)),
                 new(typeof(CarouselPageViewModel), typeof(CarouselPage))

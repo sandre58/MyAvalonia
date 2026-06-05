@@ -45,6 +45,7 @@ internal sealed class ControlThemeBuilder(string? themeKey = null)
     private readonly List<ThemeRole> _roles = [];
     private readonly List<ThemeRole> _itemsRoles = [];
     private readonly List<IControlOptionDefinition> _customOptions = [];
+    private bool _useIconByDefault;
     private CssClass? _kind;
     private ControlContentDefinition? _controlContentDefinition;
     private IControlPropertyDefinition _iconContentDefinition = new ControlAttachedPropertyDefinition<object>(IconAssist.IconProperty);
@@ -113,10 +114,12 @@ internal sealed class ControlThemeBuilder(string? themeKey = null)
     /// all controls configured by this builder.
     /// </summary>
     /// <param name="property">The Avalonia property to be used for the icon.</param>
+    /// <param name="useByDefault">A value indicating whether to use the icon by default when rendering the control. This parameter allows toggling the default display of the icon, providing flexibility in how the control is presented during testing and previewing.</param>
     /// <returns>The current instance of the ControlThemeBuilder to allow for method chaining.</returns>
-    public ControlThemeBuilder WithIcon(AvaloniaProperty<object> property)
+    public ControlThemeBuilder WithIcon(AvaloniaProperty<object> property, bool useByDefault = false)
     {
         _iconContentDefinition = new ControlPropertyDefinition<object>(property);
+        _useIconByDefault = useByDefault;
         return this;
     }
 
@@ -418,7 +421,8 @@ internal sealed class ControlThemeBuilder(string? themeKey = null)
             ItemsRoles = _itemsRoles,
             Sizes = _sizes,
             Shapes = _shapes,
-            CustomSettings = _customOptions
+            CustomSettings = _customOptions,
+            UseIconByDefault = _useIconByDefault
         };
     }
 

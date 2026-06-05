@@ -13,14 +13,16 @@ namespace MyNet.Avalonia.Colors;
 /// </summary>
 /// <param name="Opacity">The opacity value (0.0 to 1.0).</param>
 /// <param name="Contrast">Whether to apply contrast transformation.</param>
-/// <param name="Darken">The darken factor (0.0 to 1.0).</param>
-/// <param name="Lighten">The lighten factor (0.0 to 1.0).</param>
+/// <param name="Darken">The darken factor. A value of 0 means no change; higher values increase the effect.</param>
+/// <param name="Lighten">The lighten factor. A value of 0 means no change; higher values increase the effect.</param>
 public record ColorInterpolation(double? Opacity = null, bool Contrast = false, double? Darken = null, double? Lighten = null)
 {
     /// <summary>
     /// Gets a value indicating whether no interpolation parameters are set.
     /// </summary>
-    public bool IsEmpty => (!Opacity.HasValue || Opacity.Value.IsCloseTo(1.0)) && !Darken.HasValue && !Lighten.HasValue;
+    public bool IsEmpty => (!Opacity.HasValue || Opacity.Value.IsCloseTo(1.0))
+                           && (!Darken.HasValue || Darken.Value.IsCloseTo(0.0))
+                           && (!Lighten.HasValue || Lighten.Value.IsCloseTo(0.0));
 
     /// <summary>
     /// Gets a value indicating whether the opacity has been explicitly set.
@@ -30,12 +32,12 @@ public record ColorInterpolation(double? Opacity = null, bool Contrast = false, 
     /// <summary>
     /// Gets a value indicating whether the darken factor has been explicitly set.
     /// </summary>
-    public bool HasDarken => Darken.HasValue;
+    public bool HasDarken => Darken.HasValue && !Darken.Value.IsCloseTo(0.0);
 
     /// <summary>
     /// Gets a value indicating whether the lighten factor has been explicitly set.
     /// </summary>
-    public bool HasLighten => Lighten.HasValue;
+    public bool HasLighten => Lighten.HasValue && !Lighten.Value.IsCloseTo(0.0);
 
     /// <inheritdoc />
     public override string ToString() => $"Opacity: {Opacity}, Contrast: {Contrast}, Darken: {Darken}, Lighten: {Lighten}";

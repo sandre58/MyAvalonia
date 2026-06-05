@@ -52,7 +52,7 @@ internal record ControlPropertyDefinition<T>(AvaloniaProperty<T> Property, T? De
     /// </summary>
     /// <param name="value">The object to convert to a XAML string. If the object is null, an empty string is returned.</param>
     /// <returns>A string representing the XAML value of the specified object. Returns an empty string if the object is null.</returns>
-    protected virtual string GetXamlValue(object? value) => value is IEnumerable enumerable ? string.Join(", ", enumerable.Cast<object>()) : value?.ToString() ?? string.Empty;
+    protected virtual string GetXamlValue(object? value) => value is IEnumerable enumerable and not string ? string.Join(", ", enumerable.Cast<object>()) : value?.ToString() ?? string.Empty;
 
     /// <summary>
     /// Provides a <see cref="StyleProperty"/> instance based on the current property definition and the specified value. This method constructs a new <see cref="StyleProperty"/> using the associated Avalonia property, the provided value, and the XAML key and value derived from the property and value. The resulting <see cref="StyleProperty"/> can be used in styling scenarios to apply the defined property with the specified value to controls in a theming system.

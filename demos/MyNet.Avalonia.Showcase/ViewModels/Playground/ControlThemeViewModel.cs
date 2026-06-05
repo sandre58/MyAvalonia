@@ -73,6 +73,11 @@ internal sealed class ControlThemeViewModel(ControlThemeDefinition definition, I
     public IReadOnlyCollection<object> AvailableItems => [.. AvailableOptions, .. AvailableGroups];
 
     /// <summary>
+    /// Gets a value indicating whether to use the icon by default when rendering the control in the playground. This property allows toggling the default display of the icon, providing flexibility in how the control is presented during testing and previewing.
+    /// </summary>
+    public bool UseIconByDefault { get; init; }
+
+    /// <summary>
     /// Computes the style properties based on the available options and their definitions. It filters the options to include only those that provide style properties, then transforms them into a collection of StyleProperty instances.
     /// </summary>
     /// <returns>A collection of StyleProperty instances representing the computed style properties.</returns>

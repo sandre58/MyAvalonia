@@ -59,7 +59,7 @@ public static class ShadowAssist
             case Border border:
                 {
                     var targetBoxShadows = (bool?)obj.NewValue == true
-                        ? GetShadowDepth(border).ToBoxShadows(ShadowProvider.ShadowColor.Darken())
+                        ? GetShadowDepth(border).ToBoxShadows(ShadowProvider.ShadowColor.Darken(7))
                         : GetShadowDepth(border).ToBoxShadows();
 
                     _ = border.SetValue(Border.BoxShadowProperty, targetBoxShadows);
@@ -69,7 +69,7 @@ public static class ShadowAssist
             case Ellipse ellipse:
                 {
                     var targetBoxShadows = (bool?)obj.NewValue == true
-                        ? GetShadowDepth(ellipse).ToBoxShadows(ShadowProvider.ShadowColor.Darken())
+                        ? GetShadowDepth(ellipse).ToBoxShadows(ShadowProvider.ShadowColor.Darken(7))
                         : GetShadowDepth(ellipse).ToBoxShadows();
 
                     _ = ellipse.SetValue(Visual.EffectProperty, targetBoxShadows.ToDropShadowEffect());

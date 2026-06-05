@@ -162,6 +162,7 @@
   <data name="Avatar" xml:space="preserve"><value>Avatar</value></data>
   <data name="Badge" xml:space="preserve"><value>Badge</value></data>
   <data name="Banner" xml:space="preserve"><value>Banner</value></data>
+  <data name="Card" xml:space="preserve"><value>Card</value></data>
   <data name="Border" xml:space="preserve"><value>Border</value></data>
   <data name="Button" xml:space="preserve"><value>Button</value></data>
   <data name="ButtonSpinner" xml:space="preserve"><value>Button spinner</value></data>
