@@ -15,7 +15,8 @@
              mc:Ignorable="d">
 
     <!-- Tabs -->
-    <TabbedPage PageTransition="{my:PageTransition Slide}">
+    <TabbedPage x:Name="TabbedPages"
+                PageTransition="{my:PageTransition Slide}">
         <my:TabbedPageAssist.TabControlTheme>
             <ControlTheme TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
                 <Setter Property="Padding" Value="{my:Thickness Md, Top}" />
@@ -61,13 +62,13 @@
             </ContentPage.Icon>
             <Panel>
                 <v:PlaygroundView ClipToBounds="False"
-                                  ControlTemplate="{Binding #Root.PlaygroundControlTemplate}"
+                                  ControlTemplate="{Binding PlaygroundControlTemplate, RelativeSource={RelativeSource AncestorType=v:ShowcaseView}}"
                                   DataContext="{Binding Playground}"
-                                  ShowAppearance="{Binding #Root.ShowAppearance}"
-                                  ShowBackgroundsSelection="{Binding #Root.ShowBackgroundsSelection}"
-                                  ShowContent="{Binding #Root.ShowContent}"
-                                  ShowIcon="{Binding #Root.ShowIcon}"
-                                  ShowPreviewCode="{Binding #Root.ShowPreviewCode}" />
+                                  ShowAppearance="{Binding ShowAppearance, RelativeSource={RelativeSource AncestorType=v:ShowcaseView}}"
+                                  ShowBackgroundsSelection="{Binding ShowBackgroundsSelection, RelativeSource={RelativeSource AncestorType=v:ShowcaseView}}"
+                                  ShowContent="{Binding ShowContent, RelativeSource={RelativeSource AncestorType=v:ShowcaseView}}"
+                                  ShowIcon="{Binding ShowIcon, RelativeSource={RelativeSource AncestorType=v:ShowcaseView}}"
+                                  ShowPreviewCode="{Binding ShowPreviewCode, RelativeSource={RelativeSource AncestorType=v:ShowcaseView}}" />
             </Panel>
         </ContentPage>
 
@@ -78,7 +79,7 @@
             </ContentPage.Icon>
             <Panel>
                 <v:ThemesCatalogView ClipToBounds="False"
-                                     ControlTemplate="{Binding #Root.ThemeControlTemplate}"
+                                     ControlTemplate="{Binding ThemeControlTemplate, RelativeSource={RelativeSource AncestorType=v:ShowcaseView}}"
                                      DataContext="{Binding Catalog}" />
             </Panel>
         </ContentPage>
@@ -93,7 +94,7 @@
                     <ContentControl Margin="{my:Thickness Md}"
                                     Classes="kind-custom-settings"
                                     ClipToBounds="False"
-                                    Content="{Binding #Root.CustomContent}" />
+                                    Content="{Binding CustomContent, RelativeSource={RelativeSource AncestorType=v:ShowcaseView}}" />
                 </ScrollViewer>
             </Border>
         </ContentPage>

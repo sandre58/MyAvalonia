@@ -105,7 +105,7 @@
                                         Value="{Binding !((vm:MainViewModel)Data).HasActiveMenuFilter, FallbackValue=True, Source={StaticResource Proxy}}" />
                             </Style>
                             <Style Selector="^:not(.isGroup):not(.isSeparator)">
-                                <Setter Property="CommandParameter" Value="{Binding NavigationTarget}" />
+                                <Setter Property="CommandParameter" Value="{Binding}" />
                                 <Setter Property="Command"
                                         Value="{Binding ((vm:MainViewModel)Data).NavigateCommand, FallbackValue={x:Null}, Source={StaticResource Proxy}}" />
                             </Style>

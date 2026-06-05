@@ -26,6 +26,8 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Playground;
 /// </summary>
 internal sealed class ThemesCatalogViewModel : ObservableObject
 {
+    private bool _isLoaded;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ThemesCatalogViewModel"/> class.
     /// </summary>
@@ -33,9 +35,11 @@ internal sealed class ThemesCatalogViewModel : ObservableObject
     {
         Themes = new(themes);
 
-        Disposables.Add(this.WhenPropertyChanged(x => x.SelectedTheme).Subscribe(_ => RefreshItems()));
-
-        SelectedTheme = Themes.FirstOrDefault();
+        Disposables.Add(this.WhenPropertyChanged(x => x.SelectedTheme).Subscribe(_ =>
+        {
+            if (_isLoaded)
+                RefreshItems();
+        }));
     }
 
     /// <summary>
@@ -76,6 +80,18 @@ internal sealed class ThemesCatalogViewModel : ObservableObject
     /// Gets the catalog items for each Shape.
     /// </summary>
     public IReadOnlyList<CatalogSectionItem> ShapeItems { get; private set => SetProperty(ref field, value); } = [];
+
+    /// <summary>
+    /// Materializes catalog preview items when the Themes tab is first shown.
+    /// </summary>
+    public void EnsureLoaded()
+    {
+        if (_isLoaded)
+            return;
+
+        _isLoaded = true;
+        SelectedTheme ??= Themes.FirstOrDefault();
+    }
 
     /// <summary>
     /// Refreshes the available items for the currently selected theme, including variants, roles, item roles, sizes,

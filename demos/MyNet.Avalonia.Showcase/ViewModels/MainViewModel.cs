@@ -4,8 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using DynamicData;
 using MyNet.Avalonia.Extended.Commands;
@@ -26,6 +28,7 @@ internal sealed class MainViewModel : ObservableObject
 {
     private readonly ObservableCollection<IMenuItemViewModel> _allMenuItems = [];
     private readonly ObservableCollection<IMenuItemViewModel> _filteredMenuItems = [];
+    private readonly INavigationService _navigationService;
 
     public MainViewModel(IApplicationInfo applicationInfo,
                          ShellCultureViewModel cultureChrome,
@@ -34,6 +37,7 @@ internal sealed class MainViewModel : ObservableObject
                          INavigationService navigationService,
                          ICommandFactory commandFactory)
     {
+        _navigationService = navigationService;
         ApplicationInfo = applicationInfo;
         Culture = cultureChrome;
         Theme = themeChrome;
@@ -43,7 +47,7 @@ internal sealed class MainViewModel : ObservableObject
         var navigationCommands = new NavigationCommands(navigationService, commandFactory);
         GoBackCommand = navigationCommands.GoBackCommand;
         GoForwardCommand = navigationCommands.GoForwardCommand;
-        NavigateCommand = navigationCommands.NavigateCommand;
+        NavigateCommand = commandFactory.CreateRequired<IMenuItemViewModel>(NavigateMenuItemAsync);
         navigationCommands.SubscribeToNavigationStateChanges();
         navigationService.StateChanged += OnNavigationStateChanged;
         GlobalizationServices.Current.CultureChanged += OnCultureChanged;
@@ -134,10 +138,24 @@ internal sealed class MainViewModel : ObservableObject
             SelectedMenuItem = matchingItem;
     }
 
+    private Task NavigateMenuItemAsync(IMenuItemViewModel item)
+    {
+        ArgumentNullException.ThrowIfNull(item);
+
+        return item switch
+        {
+            LazyPageMenuItem lazy => _navigationService.NavigateToAsync(lazy.ResolvePage()),
+            _ when item.NavigationTarget is not null => _navigationService.NavigateToAsync(item.NavigationTarget),
+            _ => Task.CompletedTask
+        };
+    }
+
     private LazyPageMenuItem? FindMatchingMenuItem(object? page)
     {
         if (page is not INavigationPage navigationPage)
             return null;
+
+        var pageType = navigationPage.GetType();
 
         foreach (var item in _allMenuItems)
         {
@@ -146,13 +164,13 @@ internal sealed class MainViewModel : ObservableObject
 
             switch (item)
             {
-                case LazyPageMenuItem lazy when ReferenceEquals(lazy.Page, navigationPage):
+                case LazyPageMenuItem lazy when lazy.ViewModelType == pageType:
                     return lazy;
                 case PagesGroupViewModel group:
                     {
                         var match = group.Pages
                             .OfType<LazyPageMenuItem>()
-                            .FirstOrDefault(x => ReferenceEquals(x.Page, navigationPage));
+                            .FirstOrDefault(x => x.ViewModelType == pageType);
 
                         if (match is not null)
                             return match;

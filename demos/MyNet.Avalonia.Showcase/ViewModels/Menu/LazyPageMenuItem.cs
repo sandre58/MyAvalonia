@@ -26,11 +26,17 @@ internal sealed class LazyPageMenuItem(Type viewModelType, IServiceProvider serv
     private readonly IServiceProvider _services = services ?? throw new ArgumentNullException(nameof(services));
     private PageViewModel? _page;
 
+    /// <summary>Gets the view model type registered in DI for this menu entry.</summary>
+    public Type ViewModelType => _viewModelType;
+
     /// <summary>Gets the resolved page view model (singleton from DI).</summary>
     public PageViewModel Page => _page ??= (PageViewModel)_services.GetRequiredService(_viewModelType);
 
+    /// <summary>Resolves and returns the navigation page from DI.</summary>
+    public INavigationPage ResolvePage() => Page;
+
     /// <inheritdoc/>
-    public INavigationPage NavigationTarget => Page;
+    public INavigationPage? NavigationTarget => null;
 
     /// <inheritdoc/>
     [UpdateOnCultureChanged]

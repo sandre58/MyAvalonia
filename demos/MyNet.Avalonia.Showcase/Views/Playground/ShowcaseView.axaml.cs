@@ -4,15 +4,22 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using Avalonia.VisualTree;
+using MyNet.Avalonia.Showcase.ViewModels.Playground;
 
 namespace MyNet.Avalonia.Showcase.Views.Playground;
 
 internal sealed partial class ShowcaseView : UserControl
 {
-    public ShowcaseView() => InitializeComponent();
+    public ShowcaseView()
+    {
+        InitializeComponent();
+        TabbedPages.SelectionChanged += OnTabbedPagesSelectionChanged;
+    }
 
     public static readonly StyledProperty<IDataTemplate?> PlaygroundControlTemplateProperty = AvaloniaProperty.Register<ShowcaseView, IDataTemplate?>(nameof(PlaygroundControlTemplate));
 
@@ -92,5 +99,30 @@ internal sealed partial class ShowcaseView : UserControl
     {
         get => GetValue(ShowBackgroundsSelectionProperty);
         set => SetValue(ShowBackgroundsSelectionProperty, value);
+    }
+
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+        ActivateSelectedTabContent();
+    }
+
+    private void OnTabbedPagesSelectionChanged(object? sender, PageSelectionChangedEventArgs e)
+        => ActivateSelectedTabContent();
+
+    private void ActivateSelectedTabContent()
+    {
+        if (DataContext is not ShowcaseViewModel viewModel)
+            return;
+
+        var selectedPage = TabbedPages.SelectedPage;
+        if (selectedPage is null)
+            return;
+
+        if (selectedPage.GetVisualDescendants().OfType<PlaygroundView>().Any())
+            _ = viewModel.Playground;
+
+        if (selectedPage.GetVisualDescendants().OfType<ThemesCatalogView>().Any())
+            viewModel.Catalog.EnsureLoaded();
     }
 }
