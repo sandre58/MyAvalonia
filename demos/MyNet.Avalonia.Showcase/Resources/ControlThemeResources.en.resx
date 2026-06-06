@@ -213,4 +213,10 @@
   <data name="ThemeExpanderCard" xml:space="preserve">
       <value>Card theme</value>
   </data>
+  <data name="ThemeMultiComboBoxUnderline" xml:space="preserve">
+      <value>Underline theme</value>
+  </data>
+  <data name="ThemeTagBoxUnderline" xml:space="preserve">
+      <value>Underline theme</value>
+  </data>
 </root>

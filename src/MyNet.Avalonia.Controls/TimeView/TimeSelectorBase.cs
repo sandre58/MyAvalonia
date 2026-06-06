@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
@@ -31,7 +33,11 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
     static TimeSelectorBase()
     {
-        SelectedValueProperty.Changed.AddClassHandler<TimeSelectorBase>((o, _) => o.UpdateTimeValues());
+        SelectedValueProperty.Changed.AddClassHandler<TimeSelectorBase>((o, _) =>
+        {
+            o.UpdateTimeValues();
+            o.UpdateAutomationName();
+        });
         TimeFormatProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.UpdateTimeValues());
         HourProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.OnComponentChanged(true));
         MinuteProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.OnComponentChanged());
@@ -39,6 +45,11 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
         IsAmProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.OnComponentChanged());
         SelectedComponentProperty.Changed.AddClassHandler<TimeSelectorBase>((x, args) => x.OnSelectedComponentChanged(args));
     }
+
+    protected TimeSelectorBase() => UpdateAutomationName();
+
+    private void UpdateAutomationName() =>
+        AutomationProperties.SetName(this, SelectedValue?.ToString() ?? string.Empty);
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {

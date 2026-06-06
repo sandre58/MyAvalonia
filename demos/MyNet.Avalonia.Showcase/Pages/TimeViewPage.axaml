@@ -20,9 +20,22 @@
 
         <v:ShowcaseView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
-                <my:TimeView Width="316"
-                             Height="380"
-                             behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                <StackPanel Classes="gap-md"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                    <my:TimeView x:Name="TimeViewControl"
+                                 Width="316"
+                                 Height="380"
+                                 behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <ListBox HorizontalAlignment="Center"
+                             Classes="kind-toggle"
+                             SelectedValue="{Binding #TimeViewControl.IsAm, Mode=TwoWay}"
+                             SelectedValueBinding="{Binding DataContext, x:DataType=ListBoxItem}">
+                        <ListBoxItem DataContext="{x:True}" Content="{my:Loc Am, Casing=Upper}" />
+                        <ListBoxItem DataContext="{x:False}" Content="{my:Loc Pm, Casing=Upper}" />
+                    </ListBox>
+                    <TextBlock Text="{Binding #TimeViewControl.SelectedValue}" HorizontalAlignment="Center" />
+                </StackPanel>
             </DataTemplate>
         </v:ShowcaseView.PlaygroundControlTemplate>
 

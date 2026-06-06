@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using Avalonia.Automation;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Mixins;
@@ -77,6 +78,7 @@ public class CalendarDateButton : Button
         DateContext = context;
         DataContext = context.ToDate();
         SetCurrentValue(ContentProperty, context.ToString());
+        AutomationProperties.SetName(this, context.ToString());
         IsToday = context.IsSimilar(DateTime.Today);
     }
 

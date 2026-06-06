@@ -38,17 +38,5 @@
             </DataTemplate>
         </v:ShowcaseView.ThemeControlTemplate>
 
-        <!--        <v:ShowcaseView.Settings>
-        <my:Form>
-        <ComboBox x:Name="SelectionMode"
-        my:FormItem.Label="{my:LocObject SelectionMode}"
-        my:ItemsBehavior.EnumSourceType="{x:Type CalendarSelectionMode}"
-        SelectedIndex="0" />
-        <ToggleSwitch x:Name="AllowTapRangeSelection"
-        my:FormItem.Label="{my:LocObject AllowTapRangeSelection}"
-        IsChecked="False" />
-        </my:Form>
-        </v:ShowcaseView.Settings>-->
-
     </v:ShowcaseView>
 </ContentPage>

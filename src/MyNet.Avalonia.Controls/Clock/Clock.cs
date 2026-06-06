@@ -9,6 +9,8 @@ using System.Threading;
 using System.Timers;
 using Avalonia;
 using Avalonia.Animation;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
@@ -51,15 +53,23 @@ public sealed class Clock : TemplatedControl, IDisposable
 
     static Clock()
     {
-        _ = TimeProperty.Changed.AddClassHandler<Clock, TimeSpan>((clock, args) => clock.OnTimeChanged(args));
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<Clock>(AutomationControlType.Custom);
+        _ = TimeProperty.Changed.AddClassHandler<Clock, TimeSpan>((clock, args) =>
+        {
+            clock.OnTimeChanged(args);
+            clock.UpdateAutomationName();
+        });
         _ = IsSmoothProperty.Changed.AddClassHandler<Clock, bool>((clock, args) => clock.OnIsSmoothChanged(args));
         _ = LiveUpdateProperty.Changed.AddClassHandler<Clock, bool>((clock, args) => clock.OnLiveUpdateChanged(args));
     }
+
+    private void UpdateAutomationName() => AutomationProperties.SetName(this, Time.ToString());
 
     public Clock()
     {
         Time = DateTime.Now.TimeOfDay;
         _timer.Elapsed += TimerOnElapsed;
+        UpdateAutomationName();
     }
 
     #region LiveUpdate

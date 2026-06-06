@@ -6,6 +6,8 @@
 
 using System.Linq;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Input;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Collections;
@@ -17,6 +19,9 @@ namespace MyNet.Avalonia.Controls;
 
 public class TimeView : TimeSelectorBase
 {
+    static TimeView() =>
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<TimeView>(AutomationControlType.Spinner);
+
     #region NumberFormat
 
     /// <summary>

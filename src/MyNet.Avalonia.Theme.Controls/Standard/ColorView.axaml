@@ -435,7 +435,7 @@
                 <Setter Property="Label" Value="{my:Loc Saturation}" />
             </Style>
             <Style Selector="^ /template/ my|FormItemContainer#Component3Field">
-                <Setter Property="Label" Value="{my:Loc Value}" />
+                <Setter Property="Label" Value="{my:Loc HSVValue}" />
             </Style>
             <Style Selector="^ /template/ my|FormItemContainer#AlphaComponentField">
                 <Setter Property="Label" Value="{my:Loc Alpha}" />
@@ -758,7 +758,7 @@
                 <Setter Property="Label" Value="{my:Loc Saturation}" />
             </Style>
             <Style Selector="^ /template/ my|FormItemContainer#Component3Field">
-                <Setter Property="Label" Value="{my:Loc Value}" />
+                <Setter Property="Label" Value="{my:Loc HSVValue}" />
             </Style>
             <Style Selector="^ /template/ my|FormItemContainer#AlphaComponentField">
                 <Setter Property="Label" Value="{my:Loc Alpha}" />

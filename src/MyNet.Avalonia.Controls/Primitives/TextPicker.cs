@@ -7,6 +7,8 @@
 using System;
 using System.Collections.ObjectModel;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
@@ -36,7 +38,25 @@ public abstract partial class TextPicker<T, TPreviewer> : DropDownControl, IText
 
     protected TextBox? TextBox { get; private set; }
 
-    static TextPicker() => FocusableProperty.OverrideDefaultValue<TextPicker<T, TPreviewer>>(true);
+    static TextPicker()
+    {
+        FocusableProperty.OverrideDefaultValue<TextPicker<T, TPreviewer>>(true);
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<TextPicker<T, TPreviewer>>(AutomationControlType.ComboBox);
+        _ = PlaceholderTextProperty.Changed.AddClassHandler<TextPicker<T, TPreviewer>>((picker, _) => picker.UpdateAutomationName());
+        _ = TextProperty.Changed.AddClassHandler<TextPicker<T, TPreviewer>>((picker, _) => picker.UpdateAutomationName());
+        _ = SelectedValueProperty.Changed.AddClassHandler<TextPicker<T, TPreviewer>>((picker, _) => picker.UpdateAutomationName());
+    }
+
+    protected TextPicker() => UpdateAutomationName();
+
+    private void UpdateAutomationName()
+    {
+        var name = !string.IsNullOrWhiteSpace(Text) ? Text
+            : !string.IsNullOrWhiteSpace(PlaceholderText) ? PlaceholderText
+            : SelectedValue?.ToString() ?? string.Empty;
+
+        AutomationProperties.SetName(this, name);
+    }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {

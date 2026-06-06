@@ -8,6 +8,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
@@ -29,6 +31,9 @@ namespace MyNet.Avalonia.Controls;
 [SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
 public class CalendarDatePickerEx : TextPicker<DateTime?, Calendar>
 {
+    static CalendarDatePickerEx() =>
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<CalendarDatePickerEx>(AutomationControlType.Custom);
+
     public CalendarDatePickerEx()
     {
         SetCurrentValue(FirstDayOfWeekProperty, DateTimeHelper.GetCurrentDateTimeFormatInfo().FirstDayOfWeek);

@@ -18,7 +18,6 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Fakers.Static;
-using MyNet.Generator.Facade;
 using MyNet.Humanizer.Facade;
 using MyNet.Primitives;
 using MyNet.UI;
@@ -195,7 +194,7 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
         };
 
         return new MessageNotification(
-            Faker.Texts.Paragraph(RandomGenerator.Current.Int(4, 7), RandomGenerator.Current.Int(1, 3)),
+            Faker.Texts.Paragraph(1, 3),
             role.ToString(),
             severity);
     }

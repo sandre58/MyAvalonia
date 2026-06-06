@@ -258,6 +258,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Souligné.
+        /// </summary>
+        internal static string ThemeMultiComboBoxUnderline {
+            get {
+                return ResourceManager.GetString("ThemeMultiComboBoxUnderline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compact.
         /// </summary>
         internal static string ThemePaginationCompact {
@@ -281,6 +290,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string ThemeTabControlIndicator {
             get {
                 return ResourceManager.GetString("ThemeTabControlIndicator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Souligné.
+        /// </summary>
+        internal static string ThemeTagBoxUnderline {
+            get {
+                return ResourceManager.GetString("ThemeTagBoxUnderline", resourceCulture);
             }
         }
         

@@ -8,6 +8,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
@@ -29,6 +31,7 @@ public class TimePickerEx : TextPicker<TimeSpan?, TimeView>
 {
     static TimePickerEx()
     {
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<TimePickerEx>(AutomationControlType.Custom);
         CloseOnCommitProperty.OverrideDefaultValue<TimePickerEx>(false);
         DisplayFormatProperty.OverrideDefaultValue<TimePickerEx>("hh\\:mm");
         ShowSecondsProperty.Changed.AddClassHandler<TimePickerEx>((o, _) => o.DisplayFormat = o.ComputeDisplayFormat());

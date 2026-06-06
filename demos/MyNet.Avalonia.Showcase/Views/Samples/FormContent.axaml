@@ -192,10 +192,12 @@
         <my:FormGroup Header="{my:Loc Availability}">
             <!-- Working hours -->
             <Grid my:FormItem.Label="{my:MaterialIcon ClipboardClock}" ColumnDefinitions="*,Auto,*" ColumnSpacing="{my:Spacing Md}">
-                <TimePicker SelectedTime="{Binding PreferredStartTime}"
+                <my:TimePickerEx SelectedValue="{Binding PreferredStartTime}"
                                  my:InputAssist.PlaceholderText="{my:Loc StartTime}" />
                 <TextBlock Grid.Column="1" Text="{my:Loc To}" />
-                <TimePicker Grid.Column="2" SelectedTime="{Binding PreferredEndTime}" my:InputAssist.PlaceholderText="{my:Loc EndTime}" />
+                <my:TimePickerEx Grid.Column="2"
+                                   SelectedValue="{Binding PreferredEndTime}"
+                                   my:InputAssist.PlaceholderText="{my:Loc EndTime}" />
             </Grid>
             
             <Slider Maximum="100"

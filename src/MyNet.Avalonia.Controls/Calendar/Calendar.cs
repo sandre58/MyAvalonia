@@ -10,6 +10,8 @@ using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
@@ -77,6 +79,9 @@ public class Calendar : TemplatedControl
     static Calendar()
     {
         FocusableProperty.OverrideDefaultValue<Calendar>(true);
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<Calendar>(AutomationControlType.Calendar);
+        _ = SelectedDateProperty.Changed.AddClassHandler<Calendar>((calendar, _) => calendar.UpdateAutomationName());
+        _ = DisplayDateProperty.Changed.AddClassHandler<Calendar>((calendar, _) => calendar.UpdateAutomationName());
         FirstDayOfWeekProperty.Changed.AddClassHandler<Calendar>((x, e) => x.OnFirstDayOfWeekChanged(e));
         IsTodayHighlightedProperty.Changed.AddClassHandler<Calendar>((x, e) => x.OnIsTodayHighlightedChanged(e));
         DisplayDateContextProperty.Changed.AddClassHandler<Calendar>((x, e) => x.OnDisplayDateContextPropertyChanged(e));
@@ -104,6 +109,14 @@ public class Calendar : TemplatedControl
             () => DisplayDate,
             IsValidSelection,
             new SelectionCommands(this));
+
+        UpdateAutomationName();
+    }
+
+    private void UpdateAutomationName()
+    {
+        var name = SelectedDate?.ToString() ?? DisplayDate.ToString();
+        AutomationProperties.SetName(this, name);
     }
 
     private sealed class SelectionCommands(Calendar owner) : ICalendarSelectionCommands

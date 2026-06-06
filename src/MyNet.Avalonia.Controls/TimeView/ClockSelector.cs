@@ -6,6 +6,8 @@
 
 using System;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
@@ -20,6 +22,9 @@ namespace MyNet.Avalonia.Controls;
 [TemplatePart(PartCarousel, typeof(Carousel))]
 public class ClockSelector : TimeSelectorBase
 {
+    static ClockSelector() =>
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<ClockSelector>(AutomationControlType.Custom);
+
     public const string PartCarousel = "PART_Carousel";
 
     private Carousel? _carousel;

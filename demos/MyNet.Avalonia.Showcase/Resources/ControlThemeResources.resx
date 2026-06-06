@@ -193,4 +193,10 @@
   <data name="ThemeExpanderCard" xml:space="preserve">
       <value>Carte</value>
   </data>
+  <data name="ThemeMultiComboBoxUnderline" xml:space="preserve">
+      <value>Souligné</value>
+  </data>
+  <data name="ThemeTagBoxUnderline" xml:space="preserve">
+      <value>Souligné</value>
+  </data>
 </root>

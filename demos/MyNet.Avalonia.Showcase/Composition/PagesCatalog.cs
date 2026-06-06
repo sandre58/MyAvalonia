@@ -59,7 +59,7 @@ internal static class PagesCatalog
                 new(typeof(CalendarPageViewModel), typeof(CalendarPage), MaterialIconKind.Calendar),
                 new(typeof(ClockPageViewModel), typeof(ClockPage), MaterialIconKind.Clock),
                 new(typeof(ClockSelectorPageViewModel), typeof(ClockSelectorPage), MaterialIconKind.ClockEdit),
-                new(typeof(TimeViewPageViewModel), typeof(TimeViewPage), MaterialIconKind.ClockEdit)
+                new(typeof(TimeViewPageViewModel), typeof(TimeViewPage), MaterialIconKind.TimerOutline)
             ]),
 
             new PagesGroup(nameof(MenuResources.Layout), MaterialIconKind.ViewDashboardOutline, [
