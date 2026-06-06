@@ -164,6 +164,11 @@
             <Setter Property="Background" Value="{my:Foreground Contrast=True}" />
         </Style>
 
+        <Style Selector="^ /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="NoWrap" />
+            <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
+        </Style>
+
         <Style Selector="^:icon /template/ Viewbox#PART_IconPresenter">
             <Setter Property="IsVisible" Value="True" />
         </Style>

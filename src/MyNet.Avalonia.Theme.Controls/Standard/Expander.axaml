@@ -98,6 +98,10 @@
             </ControlTemplate>
         </Setter>
 
+        <Style Selector="^ /template/ my|ExpandControl#PART_ExpandControl">
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+        </Style>
+
         <Style Selector="^.use-transitions /template/ my|ExpandControl#PART_ExpandControl">
             <Setter Property="Transitions">
                 <Transitions>
@@ -292,6 +296,15 @@
                 </DockPanel>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^ /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="NoWrap" />
+            <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
+        </Style>
+
+        <Style Selector="^ /template/ my|ExpandControl#PART_ExpandControl">
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+        </Style>
 
         <Style Selector="^.use-transitions /template/ my|ExpandControl#PART_ExpandControl">
             <Setter Property="Transitions">

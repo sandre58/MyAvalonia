@@ -82,6 +82,7 @@ public record CssClass(string Name, string? Prefix = "")
 
     // Texts
     public static readonly CssClass TextHelper = new("helper", CssPrefix.Text);
+    public static readonly CssClass TextWrap = new("wrap", CssPrefix.Text);
     public static readonly CssClass TextWatermark = new("watermark", CssPrefix.Text);
     public static readonly CssClass TextUnderline = new("underline", CssPrefix.Text);
     public static readonly CssClass TextStrikethrough = new("strikethrough", CssPrefix.Text);

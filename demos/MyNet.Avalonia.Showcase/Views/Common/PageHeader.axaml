@@ -76,10 +76,9 @@
 
                                     <!-- Title -->
                                     <TextBlock Text="{TemplateBinding Header}"
-                                               Classes="text-h1"
+                                               Classes="text-h1 truncate"
                                                VerticalAlignment="Center"
-                                               LetterSpacing="0.3"
-                                               TextTrimming="CharacterEllipsis" />
+                                               LetterSpacing="0.3" />
                                 </DockPanel>
 
                                 <!-- Content at bottom -->

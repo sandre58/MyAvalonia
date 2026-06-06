@@ -126,6 +126,11 @@
                 </ControlTemplate>
             </Setter>
 
+            <Style Selector="^ /template/ ContentPresenter#PART_HeaderPresenter">
+                <Setter Property="TextBlock.TextWrapping" Value="NoWrap" />
+                <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
+            </Style>
+
             <!-- Hover -->
             <Style Selector="^:not(:disabled):pointerover">
                 <Style Selector="^ /template/ ToggleButton#PART_ExpandCollapseChevron">

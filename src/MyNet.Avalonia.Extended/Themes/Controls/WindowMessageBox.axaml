@@ -34,10 +34,10 @@
                                                      Classes="size-lg"
                                                      Kind="InformationVariantCircle" />
                                     <TextBlock Text="{Binding $parent[my:WindowMessageBox].Title}"
+                                               Classes="truncate"
                                                VerticalAlignment="Center"
                                                FontSize="{StaticResource MyNet.Font.Size.Lg}"
-                                               FontWeight="{StaticResource MyNet.Font.Weight.Caption}"
-                                               TextTrimming="CharacterEllipsis" />
+                                               FontWeight="{StaticResource MyNet.Font.Weight.Caption}" />
                                 </StackPanel>
                             </Border>
 

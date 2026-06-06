@@ -344,6 +344,11 @@
                 <Setter Property="Opacity" Value="0" />
             </Style>
 
+            <Style Selector="^ /template/ ContentPresenter#PART_HeaderPresenter">
+                <Setter Property="TextBlock.TextWrapping" Value="NoWrap" />
+                <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
+            </Style>
+
             <!-- Hover -->
             <Style Selector="^:not(:disabled):pointerover">
                 <Style Selector="^ /template/ ContentPresenter#PART_HeaderPresenter">

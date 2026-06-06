@@ -51,11 +51,11 @@
                                                      Classes="size-lg"
                                                      Kind="InformationVariantCircle" />
                                     <TextBlock Grid.Column="1"
+                                               Classes="truncate"
                                                Text="{TemplateBinding Title}"
                                                VerticalAlignment="Center"
                                                FontSize="{StaticResource MyNet.Font.Size.Lg}"
-                                               FontWeight="{StaticResource MyNet.Font.Weight.Caption}"
-                                               TextTrimming="CharacterEllipsis" />
+                                               FontWeight="{StaticResource MyNet.Font.Weight.Caption}" />
                                     <Button Name="PART_CloseButton"
                                             Grid.Column="2"
                                             Classes="kind-tool"
@@ -73,7 +73,7 @@
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}">
                             <ContentPresenter.Styles>
-                                <Style Selector="AccessText">
+                                <Style Selector="TextBlock, AccessText">
                                     <Setter Property="TextWrapping" Value="Wrap" />
                                 </Style>
                             </ContentPresenter.Styles>

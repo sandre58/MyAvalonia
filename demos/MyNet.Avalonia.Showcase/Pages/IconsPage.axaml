@@ -29,7 +29,8 @@
                 <my:PlaceholderContentControl my:IconAssist.Icon="{my:MaterialIcon CircleOffOutline, Size=80}"
                                               Classes="variant-watermark size-xl"
                                               Content="{Binding SelectedItem, ElementName=IconsList}"
-                                              PlaceholderText="{my:Loc SelectItem}">
+                                              PlaceholderText="{my:Loc SelectItem}"
+                                              Margin="{my:Thickness Md}">
                     <my:PlaceholderContentControl.ContentTemplate>
                         <DataTemplate x:DataType="{x:Type vm:MaterialIconKindWrapper}">
                             <HeaderedContentControl HorizontalContentAlignment="Stretch"

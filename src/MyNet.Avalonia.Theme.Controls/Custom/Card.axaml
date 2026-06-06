@@ -31,7 +31,7 @@
                                       FontStyle="{TemplateBinding FontStyle}"
                                       FontWeight="{TemplateBinding HeaderFontWeight}"
                                       Foreground="{TemplateBinding HeaderForeground}"
-                                      TextBlock.TextWrapping="Wrap" />
+                                      />
                 </Border>
 
                 <Border Name="PART_Footer"
@@ -47,7 +47,7 @@
                                       FontStyle="{TemplateBinding FontStyle}"
                                       FontWeight="{TemplateBinding FooterFontWeight}"
                                       Foreground="{TemplateBinding FooterForeground}"
-                                      TextBlock.TextWrapping="Wrap" />
+                                      />
                 </Border>
 
                 <Grid Name="PART_BodyGrid"
@@ -83,7 +83,7 @@
                                       FontStyle="{TemplateBinding FontStyle}"
                                       FontWeight="{TemplateBinding TitleFontWeight}"
                                       Foreground="{TemplateBinding TitleForeground}"
-                                      TextBlock.TextWrapping="Wrap" />
+                                      />
 
                     <ContentPresenter Name="PART_Subtitle"
                                       Grid.Row="1"
@@ -97,7 +97,6 @@
                                       FontWeight="{TemplateBinding FontWeight}"
                                       Foreground="{TemplateBinding SubtitleForeground}"
                                       Opacity="{TemplateBinding SubtitleOpacity}"
-                                      TextBlock.TextWrapping="Wrap"
                                       IsVisible="{Binding Subtitle, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
 
                     <ContentPresenter Name="PART_Content"
@@ -106,7 +105,6 @@
                                       Grid.ColumnSpan="2"
                                       Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      TextBlock.TextWrapping="Wrap"
                                       IsVisible="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
                     
                         <ContentPresenter Name="PART_Trailing"
@@ -169,7 +167,7 @@
                                       FontStyle="{TemplateBinding FontStyle}"
                                       FontWeight="{TemplateBinding TitleFontWeight}"
                                       Foreground="{TemplateBinding Foreground}"
-                                      TextBlock.TextWrapping="Wrap" />
+                                      />
                 </Border>
 
                 <Border Name="PART_Footer"
@@ -182,7 +180,7 @@
                                       FontStyle="{TemplateBinding FontStyle}"
                                       FontWeight="{TemplateBinding FooterFontWeight}"
                                       Foreground="{TemplateBinding FooterForeground}"
-                                      TextBlock.TextWrapping="Wrap" />
+                                      />
                 </Border>
 
                 <Grid Name="PART_BodyGrid"
@@ -220,7 +218,7 @@
                                       FontStyle="{TemplateBinding FontStyle}"
                                       FontWeight="{TemplateBinding TitleFontWeight}"
                                       Foreground="{TemplateBinding TitleForeground}"
-                                      TextBlock.TextWrapping="Wrap" />
+                                      />
                     
                     <ContentPresenter Name="PART_Subtitle"
                                       Grid.Row="1"
@@ -234,7 +232,6 @@
                                       FontWeight="{TemplateBinding FontWeight}"
                                       Foreground="{TemplateBinding SubtitleForeground}"
                                       Opacity="{TemplateBinding SubtitleOpacity}"
-                                      TextBlock.TextWrapping="Wrap"
                                       IsVisible="{Binding Subtitle, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
 
                     <ContentPresenter Name="PART_Content"
@@ -243,7 +240,6 @@
                                       Grid.ColumnSpan="2"
                                       Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      TextBlock.TextWrapping="Wrap"
                                       IsVisible="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
 
                     <ContentPresenter Name="PART_Trailing"
@@ -323,6 +319,10 @@
         <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
 
         <Setter Property="Template" Value="{StaticResource MyNet.Card.Template.Default}" />
+
+        <Style Selector="^ /template/ ContentPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+        </Style>
 
         <Style Selector="^ /template/ ContentPresenter#PART_Subtitle">
             <Setter Property="Margin" Value="{my:Thickness Xs, Top}" />

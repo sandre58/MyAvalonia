@@ -103,6 +103,11 @@
             </Setter>
         </Style>
 
+        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="NoWrap" />
+            <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
+        </Style>
+
         <!-- Hover -->
         <Style Selector="^:not(:disabled):pointerover">
             <Style Selector="^ /template/ my|IconContentControl#IconContent">

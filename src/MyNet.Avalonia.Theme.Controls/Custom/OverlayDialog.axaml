@@ -43,11 +43,11 @@
                                MinHeight="36">
                             <Grid ColumnDefinitions="*,Auto" Margin="{my:Thickness Md, Horizontal}">
                                 <TextBlock Grid.Column="0"
+                                           Classes="truncate"
                                            Text="{TemplateBinding Title}"
                                            VerticalAlignment="Center"
                                            FontSize="{StaticResource MyNet.Font.Size.Lg}"
-                                           FontWeight="{StaticResource MyNet.Font.Weight.Caption}"
-                                           TextTrimming="CharacterEllipsis" />
+                                           FontWeight="{StaticResource MyNet.Font.Weight.Caption}" />
                                 <Button Name="PART_CloseButton"
                                         Grid.Column="1"
                                         Classes="kind-tool"

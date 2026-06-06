@@ -89,7 +89,6 @@ public static class TypographyClassRegistry
         // Texts
         ClassRegistry.RegisterMany<TextAlignment, TextBlock>(CssPrefix.Text, (x, y) => x.SetProperty(TextBlock.TextAlignmentProperty, y));
         ClassRegistry.RegisterMany<FontSize, Control>(CssPrefix.Text, (x, y) => new CompositeDisposable { x.SetProperty(TextElement.FontSizeProperty, ThemeResources.Font.Size.Get(y).Value), y.ToString().StartsWith('H') ? x.SetProperty(TextElement.FontWeightProperty, ThemeResources.Font.Weight.Header.Value) : Disposable.Empty });
-        ClassRegistry.RegisterMany<TextWrapping, TextBlock>(CssPrefix.Truncate, (x, y) => x.SetProperty(TextBlock.TextWrappingProperty, y));
 
         ClassRegistry.Register<Control>(CssClass.TextHelper, x => new CompositeDisposable { x.SetProperty(TextElement.FontSizeProperty, ThemeResources.Font.Size.Get(FontSize.Sm).Value), x.SetProperty(Visual.OpacityProperty, x.GetResourceObservable(ThemeResourceKeyFactory.Opacity(nameof(Opacity.Medium)))) });
 

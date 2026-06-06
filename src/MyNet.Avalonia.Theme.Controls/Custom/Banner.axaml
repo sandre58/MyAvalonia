@@ -94,6 +94,15 @@
             </ControlTemplate>
         </Setter>
 
+        <Style Selector="^ /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="NoWrap" />
+            <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
+        </Style>
+
+        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+        </Style>
+
         <Style Selector="^[CanClose=True] /template/ Button#PART_CloseButton">
             <Setter Property="IsVisible" Value="True" />
         </Style>

@@ -259,6 +259,11 @@
             </ControlTemplate>
         </Setter>
 
+        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="NoWrap" />
+            <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
+        </Style>
+
         <Style Selector="^.use-transitions /template/ PathIcon#PART_ExpanderIcon">
             <Setter Property="my:TransitionsAssist.Transitions">
                 <Transitions>

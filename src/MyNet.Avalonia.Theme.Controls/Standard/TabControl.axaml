@@ -428,6 +428,8 @@
 
         <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Foreground" Value="{my:ThemeBrush (my:ItemsAssist.Foreground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            <Setter Property="TextBlock.TextWrapping" Value="NoWrap" />
+            <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
         </Style>
         <Style Selector="^ /template/ ContentControl#Icon">
             <Setter Property="Foreground" Value="{Binding $parent[TabControl].(my:ItemsAssist.Foreground)}" />

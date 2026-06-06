@@ -112,6 +112,15 @@
             </ControlTemplate>
         </Setter>
 
+        <Style Selector="^ /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="NoWrap" />
+            <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
+        </Style>
+
+        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+        </Style>
+
         <Style Selector="^">
             <Style Selector="^ /template/ Grid#PART_Grid">
                 <Setter Property="my:GridBehavior.RowDefinitions" Value="Auto,*" />

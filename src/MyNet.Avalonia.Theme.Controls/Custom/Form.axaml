@@ -59,7 +59,7 @@
                         <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}" />
                         <TextBlock Grid.Row="1" Margin="{my:Thickness Xs, Top}" Text="{TemplateBinding HelpText}"
-                                   Classes="text-helper" TextWrapping="Wrap"
+                                   Classes="text-helper text-wrap"
                                    IsVisible="{TemplateBinding HelpText, Converter={x:Static ObjectConverters.IsNotNull}}" />
                     </Grid>
                 </Grid>
