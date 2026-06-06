@@ -8,8 +8,7 @@
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="{x:Type ToggleButton}" TargetType="ToggleButton" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="my:ThemeAssist.Category" Value="Selection" />
-            <Setter Property="Cursor" Value="Arrow" />
-            
+
             <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
             <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
             <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
@@ -20,8 +19,7 @@
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.ToggleButton.Rounded" TargetType="ToggleButton" BasedOn="{StaticResource MyNet.Theme.Button.Rounded}">
             <Setter Property="my:ThemeAssist.Category" Value="Selection" />
-            <Setter Property="Cursor" Value="Arrow" />
-            
+
             <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
             <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
             <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
@@ -32,8 +30,7 @@
         <!-- ═════════════════════════════════════════════════════════ -->
         <ControlTheme x:Key="MyNet.Theme.ToggleButton.Icon" TargetType="ToggleButton" BasedOn="{StaticResource MyNet.Theme.Button.Icon}">
             <Setter Property="my:ThemeAssist.Category" Value="Selection" />
-            <Setter Property="Cursor" Value="Arrow" />
-            
+
             <Setter Property="my:VariantAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
             <Setter Property="my:InteractionAssist.HoverForeground" Value="{my:Foreground}" />
             <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
@@ -47,7 +44,7 @@
             <Setter Property="my:ThemeAssist.Category" Value="Selection" />
             <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
             <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
-            <Setter Property="Cursor" Value="Arrow" />
+            <Setter Property="Cursor" Value="Hand" />
             <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
             <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
             <Setter Property="VerticalContentAlignment" Value="Center" />

@@ -7,18 +7,9 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type DropDownButton}" TargetType="DropDownButton"
                   BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="my:ThemeAssist.Category" Value="Action" />
-        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
-        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
         <Setter Property="my:PopupBehavior.Placement" Value="BottomEdgeAlignedRight" />
-        <Setter Property="Cursor" Value="Arrow" />
         <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True" />
         <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True" />
-
-        <!-- Variant -->
-        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
-        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
-        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="DropDownButton">
@@ -223,7 +214,6 @@
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Height" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
         <Setter Property="Width" Value="{StaticResource MyNet.Height.DropDownButton.Rounded.Md}" />
-        <Setter Property="Cursor" Value="Arrow" />
         <Setter Property="FocusAdorner">
             <FocusAdornerTemplate>
                 <Ellipse Classes="kind-focus" />

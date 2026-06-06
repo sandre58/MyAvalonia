@@ -184,7 +184,6 @@
                         <Button Name="PART_SecondaryButton"
                                 Grid.Column="2"
                                 Padding="4"
-                                Cursor="Arrow"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 HorizontalContentAlignment="Center"

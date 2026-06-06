@@ -87,6 +87,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Souligné.
+        /// </summary>
+        internal static string ThemeButtonSpinnerUnderline {
+            get {
+                return ResourceManager.GetString("ThemeButtonSpinnerUnderline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interactif.
         /// </summary>
         internal static string ThemeCardInteractive {

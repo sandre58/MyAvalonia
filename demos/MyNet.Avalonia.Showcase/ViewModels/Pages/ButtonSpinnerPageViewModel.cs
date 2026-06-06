@@ -8,10 +8,15 @@ using System;
 using System.Windows.Input;
 using Avalonia.Controls;
 using Material.Icons;
+using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.Showcase.Extensions;
+using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
+using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
+using MyNet.Avalonia.Theme.Controls.Assists;
+using MyNet.Humanizer.Facade;
 using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.UI.Commands;
 
@@ -29,6 +34,28 @@ internal sealed class ButtonSpinnerPageViewModel : ShowcaseViewModel
                     .AddVariants(CssClass.ShadowControl)
                     .AddDefaultSizes()
                     .AddDefaultRoles()
+                    .AddValueAction(
+                        (x, y) => x.SetValue(SpinnerAssist.LayoutProperty, y is SpinnerLayout layout ? layout : SpinnerLayout.Horizontal),
+                        SpinnerLayout.Horizontal,
+                        x => x.DisplayName(nameof(SettingsResources.ButtonsLayout)).Of<ListBoxEditor>(editor =>
+                            editor.AddChoices(Enum.GetValues<SpinnerLayout>(), (value, y) => y.DisplayName(() => value.Humanize()))))
+                    .AddValueAction(
+                        (x, y) => x.SetValue(SpinnerAssist.SwitchButtonsProperty, ((bool?)y).GetValueOrDefault()),
+                        false,
+                        x => x.DisplayName(nameof(SettingsResources.SwitchButtons)).Of<ToggleSwitchEditor>()),
+
+                new ControlThemeBuilder("Underline")
+                    .AddDefaultSizes()
+                    .AddDefaultRoles()
+                    .AddValueAction(
+                        (x, y) => x.SetValue(SpinnerAssist.LayoutProperty, y is SpinnerLayout layout ? layout : SpinnerLayout.Horizontal),
+                        SpinnerLayout.Horizontal,
+                        x => x.DisplayName(nameof(SettingsResources.ButtonsLayout)).Of<ListBoxEditor>(editor =>
+                            editor.AddChoices(Enum.GetValues<SpinnerLayout>(), (value, y) => y.DisplayName(() => value.Humanize()))))
+                    .AddValueAction(
+                        (x, y) => x.SetValue(SpinnerAssist.SwitchButtonsProperty, ((bool?)y).GetValueOrDefault()),
+                        false,
+                        x => x.DisplayName(nameof(SettingsResources.SwitchButtons)).Of<ToggleSwitchEditor>())
             ])
     {
         IncreaseCommand = commands.Create(IncreaseDate);

@@ -32,5 +32,15 @@
             </DataTemplate>
         </v:ShowcaseView.ThemeControlTemplate>
 
+        <v:ShowcaseView.CustomContent>
+            <StackPanel>
+                <HeaderedContentControl Header="Visited appearance">
+                    <HyperlinkButton Content="Already visited link"
+                                     Foreground="{my:ThemeContext Primary}"
+                                     Opacity="{DynamicResource MyNet.Opacity.Medium}" />
+                </HeaderedContentControl>
+            </StackPanel>
+        </v:ShowcaseView.CustomContent>
+
     </v:ShowcaseView>
 </ContentPage>

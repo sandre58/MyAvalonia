@@ -184,4 +184,7 @@
   <data name="ThemeCardInteractive" xml:space="preserve">
       <value>Interactif</value>
   </data>
+  <data name="ThemeButtonSpinnerUnderline" xml:space="preserve">
+      <value>Souligné</value>
+  </data>
 </root>

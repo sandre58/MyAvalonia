@@ -19,6 +19,7 @@ internal sealed class HyperLinkButtonPageViewModel(ICommandFactory commands) : S
     new ControlThemeBuilder()
         .WithContent(ContentControl.ContentProperty, ContentProviderType.Text)
         .AddVariants(ControlVariant.Text)
+        .AddDefaultSizes()
         .AddDefaultRoles()
 ])
 {

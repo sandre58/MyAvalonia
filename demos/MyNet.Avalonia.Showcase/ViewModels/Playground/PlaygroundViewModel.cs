@@ -15,6 +15,7 @@ using System.Reactive.Disposables;
 using System.Text;
 using System.Windows.Input;
 using Avalonia.Media;
+using Avalonia.Threading;
 using DynamicData;
 using DynamicData.Binding;
 using Material.Icons;
@@ -441,7 +442,7 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
         foreach (var option in theme?.AvailableOptions.Concat(theme.AvailableGroups.SelectMany(x => x.Options)).OfType<ValueOptionViewModel>() ?? [])
         {
             option.Reset();
-            _optionDisposables.Add(option.ValueChangedSubject.Subscribe(_ => OnStyleChanged()));
+            _optionDisposables.Add(option.ValueChangedSubject.Subscribe(_ => Dispatcher.UIThread.Post(OnStyleChanged)));
         }
 
         OnStyleChanged();
