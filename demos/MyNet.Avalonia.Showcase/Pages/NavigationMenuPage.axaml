@@ -16,25 +16,76 @@
              mc:Ignorable="d"
              xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors">
 
+    <ContentPage.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+        <DataTemplate x:Key="MyNet.DataTemplate.NavigationMenuDemoItem" DataType="{x:Type vm:NavigationMenuDemoItem}">
+            <StackPanel Orientation="Horizontal" Classes="gap-sm">
+                <my:MaterialIcon Kind="{Binding Icon}" IsVisible="{Binding !IsSectionHeader}" />
+                <TextBlock Text="{Binding Header}" VerticalAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+    </ContentPage.Resources>
+
     <v:ShowcaseView ShowContent="False" ShowIcon="False">
 
         <v:ShowcaseView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
-                <my:NavigationMenu x:Name="menu" behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" HorizontalAlignment="Left">
-                    <my:NavigationMenu.Header>
-                        <ToggleButton Margin="0 0 0 10" IsChecked="{Binding #menu.IsHorizontalCollapsed}" Content="{my:MaterialIcon Menu}" />
-                    </my:NavigationMenu.Header>
-                    <my:NavigationMenuItem Header="{my:Loc Home}" Icon="{my:MaterialIcon Home}" />
-                    <my:NavigationMenuItem Header="{my:Loc Dashboard}" Icon="{my:MaterialIcon ViewDashboard}">
-                        <my:NavigationMenuItem Header="{my:Loc Statistics}" Icon="{my:MaterialIcon ChartLine}" />
-                        <my:NavigationMenuItem Header="{my:Loc Reports}" Icon="{my:MaterialIcon FileDocument}" />
-                    </my:NavigationMenuItem>
-                    <my:NavigationMenuItem Header="{my:Loc Settings}" Icon="{my:MaterialIcon Cog}">
-                        <my:NavigationMenuItem Header="{my:Loc General}" Icon="{my:MaterialIcon Tune}" />
-                        <my:NavigationMenuItem Header="{my:Loc Advanced}" Icon="{my:MaterialIcon TuneVariant}" />
-                    </my:NavigationMenuItem>
-                    <my:NavigationMenuItem Header="{my:Loc Help}" Icon="{my:MaterialIcon Help}" />
-                </my:NavigationMenu>
+                <Grid ColumnDefinitions="Auto, Auto"
+                      ColumnSpacing="{StaticResource MyNet.Spacing.Xl}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+                    <StackPanel Grid.Column="0" Spacing="{StaticResource MyNet.Spacing.Md}">
+                        <TextBlock Classes="text-helper" Text="Static menu" />
+                        <my:NavigationMenu x:Name="menu" behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" HorizontalAlignment="Left">
+                            <my:NavigationMenu.Header>
+                                <ToggleButton Margin="0 0 0 10" IsChecked="{Binding #menu.IsHorizontalCollapsed}" Content="{my:MaterialIcon Menu}" />
+                            </my:NavigationMenu.Header>
+                            <my:NavigationMenuItem Header="Workspace" IsSectionHeader="True" />
+                            <my:NavigationMenuItem Header="{my:Loc Home}" Icon="{my:MaterialIcon Home}" />
+                            <my:NavigationMenuItem Header="{my:Loc Dashboard}" Icon="{my:MaterialIcon ViewDashboard}">
+                                <my:NavigationMenuItem Header="{my:Loc Statistics}" Icon="{my:MaterialIcon ChartLine}" />
+                                <my:NavigationMenuItem Header="{my:Loc Reports}" Icon="{my:MaterialIcon FileDocument}" />
+                            </my:NavigationMenuItem>
+                            <my:NavigationMenuItem Header="{my:Loc Settings}" Icon="{my:MaterialIcon Cog}">
+                                <my:NavigationMenuItem Header="{my:Loc General}" Icon="{my:MaterialIcon Tune}" />
+                                <my:NavigationMenuItem Header="{my:Loc Advanced}" Icon="{my:MaterialIcon TuneVariant}" />
+                            </my:NavigationMenuItem>
+                            <my:NavigationMenu.Footer>
+                                <TextBlock Margin="{my:Thickness Sm, Top}" Classes="text-helper" Text="{my:Loc Help}" />
+                            </my:NavigationMenu.Footer>
+                        </my:NavigationMenu>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Spacing="{StaticResource MyNet.Spacing.Md}">
+                        <TextBlock Classes="text-helper" Text="ItemsSource binding" />
+                        <ContentControl Content="{ReflectionBinding Data, Source={StaticResource PageProxy}}">
+                            <ContentControl.ContentTemplate>
+                                <DataTemplate x:DataType="vm:NavigationMenuPageViewModel">
+                                    <StackPanel Spacing="{StaticResource MyNet.Spacing.Sm}">
+                                        <my:NavigationMenu ItemsSource="{Binding BoundItems}"
+                                                           SelectedItem="{Binding SelectedBoundItem, Mode=TwoWay}"
+                                                           Icon="{Binding Icon, x:DataType=vm:NavigationMenuDemoItem}"
+                                                           HeaderBinding="{Binding Header, x:DataType=vm:NavigationMenuDemoItem}"
+                                                           SubMenu="{Binding Children, x:DataType=vm:NavigationMenuDemoItem}"
+                                                           HorizontalAlignment="Left">
+                                            <my:NavigationMenu.ItemContainerTheme>
+                                                <ControlTheme TargetType="my:NavigationMenuItem" BasedOn="{StaticResource {x:Type my:NavigationMenuItem}}" x:DataType="{x:Type vm:NavigationMenuDemoItem}">
+                                                    <Setter Property="IsSectionHeader" Value="{Binding IsSectionHeader}" />
+                                                    <Setter Property="Icon">
+                                                        <Template>
+                                                            <my:MaterialIcon Kind="{Binding Icon}" />
+                                                        </Template>
+                                                    </Setter>
+                                                </ControlTheme>
+                                            </my:NavigationMenu.ItemContainerTheme>
+                                        </my:NavigationMenu>
+                                        <TextBlock Classes="text-helper" Text="{Binding SelectedBoundItemLabel, StringFormat='Selected: {0}', FallbackValue='Selected: —'}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ContentControl.ContentTemplate>
+                        </ContentControl>
+                    </StackPanel>
+                </Grid>
             </DataTemplate>
         </v:ShowcaseView.PlaygroundControlTemplate>
 
@@ -44,8 +95,7 @@
                     <my:NavigationMenu.Header>
                         <ToggleButton Margin="0 0 0 10" Content="{my:MaterialIcon Menu}" />
                     </my:NavigationMenu.Header>
-                    <my:NavigationMenuItem Header="{my:Loc Home}"
-                                           Icon="{my:MaterialIcon Home}" />
+                    <my:NavigationMenuItem Header="{my:Loc Home}" Icon="{my:MaterialIcon Home}" />
                     <my:NavigationMenuItem Header="{my:Loc Dashboard}" Icon="{my:MaterialIcon ViewDashboard}">
                         <my:NavigationMenuItem Header="{my:Loc Statistics}" Icon="{my:MaterialIcon ChartLine}" />
                         <my:NavigationMenuItem Header="{my:Loc Reports}" Icon="{my:MaterialIcon FileDocument}" />

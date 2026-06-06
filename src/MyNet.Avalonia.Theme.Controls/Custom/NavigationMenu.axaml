@@ -327,7 +327,7 @@
             <Setter Property="IsVisible" Value="False" />
         </Style>
 
-        <Style Selector="^[IsSeparator=False]">
+        <Style Selector="^[IsSectionHeader=False]">
             <Setter Property="Cursor" Value="Hand" />
 
             <!-- Transitions -->
@@ -470,8 +470,8 @@
             <Setter Property="Grid.IsSharedSizeScope" Value="True" />
         </Style>
 
-        <!-- Section header (IsSeparator): titled group label, optional icon, not clickable -->
-        <Style Selector="^[IsSeparator=True]">
+        <!-- Section header (IsSectionHeader): titled group label, optional icon, not clickable -->
+        <Style Selector="^[IsSectionHeader=True]">
             <Setter Property="Focusable" Value="False" />
             <Setter Property="Cursor" Value="Arrow" />
             <Setter Property="Background" Value="Transparent" />

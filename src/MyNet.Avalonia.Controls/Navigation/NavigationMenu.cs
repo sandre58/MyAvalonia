@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
@@ -85,6 +87,7 @@ public class NavigationMenu : ItemsControl
         _ = SelectedItemProperty.Changed.AddClassHandler<NavigationMenu, object?>((o, e) => o.OnSelectedItemChange(e));
         IsHorizontalCollapsedProperty.AffectsPseudoClass<NavigationMenu>(PseudoClassName.HorizontalCollapsed);
         _ = CanToggleProperty.Changed.AddClassHandler<InputElement, bool>(OnInputRegisteredAsToggle);
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<NavigationMenu>(AutomationControlType.Menu);
     }
 
     public object? SelectedItem
@@ -312,4 +315,44 @@ public class NavigationMenu : ItemsControl
     }
 
     public void Toggle() => IsHorizontalCollapsed = !IsHorizontalCollapsed;
+
+    internal bool TryMoveFocus(NavigationMenuItem current, Key key)
+    {
+        var visible = GetFocusableItems().ToList();
+        if (visible.Count == 0)
+            return false;
+
+        var index = visible.IndexOf(current);
+        if (index < 0)
+            return false;
+
+        NavigationMenuItem? target = key switch
+        {
+            Key.Down => index < visible.Count - 1 ? visible[index + 1] : null,
+            Key.Up => index > 0 ? visible[index - 1] : null,
+            Key.Home => visible[0],
+            Key.End => visible[^1],
+            _ => null
+        };
+
+        if (target is null || ReferenceEquals(target, current))
+            return false;
+
+        return target.Focus(NavigationMethod.Directional);
+    }
+
+    private IEnumerable<NavigationMenuItem> GetFocusableItems()
+    {
+        foreach (var child in LogicalChildren.OfType<NavigationMenuItem>())
+        {
+            foreach (var item in GetFocusableItemsRecursive(child))
+                yield return item;
+        }
+    }
+
+    private static IEnumerable<NavigationMenuItem> GetFocusableItemsRecursive(NavigationMenuItem item)
+    {
+        foreach (var focusable in item.GetFocusableDescendants())
+            yield return focusable;
+    }
 }

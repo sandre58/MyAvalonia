@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Mixins;
@@ -66,8 +68,8 @@ public class NavigationMenuItem : HeaderedItemsControl
         AvaloniaProperty.RegisterDirect<NavigationMenuItem, int>(
             nameof(Level), o => o.Level, (o, v) => o.Level = v);
 
-    public static readonly StyledProperty<bool> IsSeparatorProperty = AvaloniaProperty.Register<NavigationMenuItem, bool>(
-        nameof(IsSeparator));
+    public static readonly StyledProperty<bool> IsSectionHeaderProperty = AvaloniaProperty.Register<NavigationMenuItem, bool>(
+        nameof(IsSectionHeader));
 
     private Panel? _overflowPanel;
     private Point _pointerDownPoint = InvalidPoint;
@@ -87,6 +89,8 @@ public class NavigationMenuItem : HeaderedItemsControl
         IsSelectedProperty.AffectsPseudoClass<NavigationMenuItem>(PseudoClassName.Selected, IsSelectedChangedEvent);
         _ = IsHorizontalCollapsedProperty.Changed.AddClassHandler<NavigationMenuItem, bool>((item, args) =>
             item.OnIsHorizontalCollapsedChanged(args));
+        _ = IsSectionHeaderProperty.Changed.AddClassHandler<NavigationMenuItem, bool>((item, _) => item.UpdateAutomationProperties());
+        _ = HeaderProperty.Changed.AddClassHandler<NavigationMenuItem, object?>((item, _) => item.UpdateAutomationProperties());
     }
 
     public object? Icon
@@ -152,10 +156,10 @@ public class NavigationMenuItem : HeaderedItemsControl
     /// <summary>
     /// Gets or sets a value indicating whether this item is a section header (title and optional icon, not navigable).
     /// </summary>
-    public bool IsSeparator
+    public bool IsSectionHeader
     {
-        get => GetValue(IsSeparatorProperty);
-        set => SetValue(IsSeparatorProperty, value);
+        get => GetValue(IsSectionHeaderProperty);
+        set => SetValue(IsSectionHeaderProperty, value);
     }
 
     private static int CalculateDistanceFromLogicalParent<T>(ILogical? logical, int @default = -1)
@@ -212,6 +216,7 @@ public class NavigationMenuItem : HeaderedItemsControl
         this[!HeaderTemplateProperty] = _rootMenu[!NavigationMenu.HeaderTemplateProperty];
         this[!SubMenuIndentProperty] = _rootMenu[!NavigationMenu.SubMenuIndentProperty];
         this[!IsHorizontalCollapsedProperty] = _rootMenu[!NavigationMenu.IsHorizontalCollapsedProperty];
+        UpdateAutomationProperties();
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
@@ -223,7 +228,7 @@ public class NavigationMenuItem : HeaderedItemsControl
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
-        if (IsSeparator)
+        if (IsSectionHeader)
         {
             e.Handled = true;
             return;
@@ -283,7 +288,7 @@ public class NavigationMenuItem : HeaderedItemsControl
 
     private void OnMenuKeyDown(KeyEventArgs e)
     {
-        if (IsSeparator || !IsEnabled)
+        if (IsSectionHeader || !IsEnabled)
             return;
 
         switch (e.Key)
@@ -309,7 +314,20 @@ public class NavigationMenuItem : HeaderedItemsControl
                 }
 
                 break;
+            case Key.Down:
+            case Key.Up:
+            case Key.Home:
+            case Key.End:
+                if (GetRootMenu()?.TryMoveFocus(this, e.Key) == true)
+                    e.Handled = true;
+                break;
         }
+    }
+
+    private void UpdateAutomationProperties()
+    {
+        AutomationProperties.SetName(this, Header?.ToString() ?? string.Empty);
+        SetValue(AutomationProperties.ControlTypeOverrideProperty, IsSectionHeader ? AutomationControlType.Group : AutomationControlType.MenuItem);
     }
 
     private void ActivateItem(NavigationMenuItem item)
@@ -396,6 +414,23 @@ public class NavigationMenuItem : HeaderedItemsControl
                 continue;
             var items = item.GetLeafMenus();
             foreach (var i in items) yield return i;
+        }
+    }
+
+    internal IEnumerable<NavigationMenuItem> GetFocusableDescendants()
+    {
+        if (IsSectionHeader || !IsEffectivelyEnabled)
+            yield break;
+
+        yield return this;
+
+        if (ItemCount <= 0 || IsVerticalCollapsed)
+            yield break;
+
+        foreach (var child in LogicalChildren.OfType<NavigationMenuItem>())
+        {
+            foreach (var sub in child.GetFocusableDescendants())
+                yield return sub;
         }
     }
 }

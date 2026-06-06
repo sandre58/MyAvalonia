@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Collections.ObjectModel;
 using Material.Icons;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Showcase.Extensions;
@@ -25,4 +26,30 @@ internal sealed class NavigationMenuPageViewModel(ICommandFactory commands) : Sh
 {
     /// <inheritdoc/>
     public override MaterialIconKind Icon => MaterialIconKind.Navigation;
+
+    public ObservableCollection<NavigationMenuDemoItem> BoundItems { get; } =
+    [
+        new() { Header = "Workspace", IsSectionHeader = true },
+        new()
+        {
+            Header = "Projects",
+            Icon = MaterialIconKind.FolderOutline,
+            Children =
+            [
+                new() { Header = "Active", Icon = MaterialIconKind.PlayCircleOutline },
+                new() { Header = "Archived", Icon = MaterialIconKind.ArchiveOutline }
+            ]
+        },
+        new() { Header = "Team", IsSectionHeader = true },
+        new() { Header = "Members", Icon = MaterialIconKind.AccountGroupOutline },
+        new() { Header = "Settings", Icon = MaterialIconKind.CogOutline }
+    ];
+
+    public NavigationMenuDemoItem? SelectedBoundItem
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
+
+    public string? SelectedBoundItemLabel => SelectedBoundItem?.Header;
 }
