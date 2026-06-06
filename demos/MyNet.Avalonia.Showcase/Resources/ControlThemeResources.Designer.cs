@@ -159,6 +159,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Carte.
+        /// </summary>
+        internal static string ThemeExpanderCard {
+            get {
+                return ResourceManager.GetString("ThemeExpanderCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Souligné.
         /// </summary>
         internal static string ThemeFieldsUnderline {

@@ -210,4 +210,7 @@
   <data name="ThemeHeaderedContentControlCard" xml:space="preserve">
       <value>Card theme</value>
   </data>
+  <data name="ThemeExpanderCard" xml:space="preserve">
+      <value>Card theme</value>
+  </data>
 </root>
