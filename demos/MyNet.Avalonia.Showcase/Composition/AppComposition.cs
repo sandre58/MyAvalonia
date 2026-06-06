@@ -22,7 +22,6 @@ using MyNet.Avalonia.Theme.Themes;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Collections;
 using MyNet.Fakers;
-using MyNet.Geography.Resources;
 using MyNet.Globalization;
 using MyNet.Globalization.Culture;
 using MyNet.UI;

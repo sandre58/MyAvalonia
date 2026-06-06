@@ -15,7 +15,7 @@ namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 internal sealed class TextBoxEditor : IEditorBuilder
 {
     private string? _value;
-    private bool _isMultiline = false;
+    private bool _isMultiline;
     private RandomizeText _randomizeText = RandomizeText.Words;
 
     /// <summary>

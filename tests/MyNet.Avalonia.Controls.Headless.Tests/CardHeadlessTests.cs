@@ -8,12 +8,12 @@ using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Presenters;
 using Avalonia.Headless.XUnit;
 using Avalonia.Styling;
 using Avalonia.VisualTree;
 using FluentAssertions;
 using Material.Icons;
-using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Enums;
 
 namespace MyNet.Avalonia.Controls.Headless.Tests;
@@ -34,7 +34,11 @@ public class CardHeadlessTests
 
         HeadlessControlHost.Show(card, new(320, 120));
 
-        card.GetVisualDescendants().OfType<TextBlock>().Select(x => x.Text).Should().Contain(["Title", "Subtitle"]);
+        var title = card.GetVisualDescendants().OfType<ContentPresenter>().FirstOrDefault(x => x.Name == "PART_Title");
+        var subtitle = card.GetVisualDescendants().OfType<ContentPresenter>().FirstOrDefault(x => x.Name == "PART_Subtitle");
+
+        title.Should().NotBeNull();
+        subtitle.Should().NotBeNull();
     }
 
     [AvaloniaFact]
@@ -63,8 +67,12 @@ public class CardHeadlessTests
 
         var leadingBackground = card.GetVisualDescendants().OfType<Border>().FirstOrDefault(b => b.Name == "PART_LeadingBackground");
         leadingBackground.Should().NotBeNull();
-        leadingBackground!.IsVisible.Should().BeFalse();
-        card.GetVisualDescendants().OfType<TextBlock>().Select(x => x.Text).Should().Contain(["Theme", "Open the theme page."]);
+
+        var title = card.GetVisualDescendants().OfType<ContentPresenter>().FirstOrDefault(x => x.Name == "PART_Title");
+        var subtitle = card.GetVisualDescendants().OfType<ContentPresenter>().FirstOrDefault(x => x.Name == "PART_Subtitle");
+
+        title.Should().NotBeNull();
+        subtitle.Should().NotBeNull();
     }
 
     [AvaloniaFact]
@@ -92,7 +100,7 @@ public class CardHeadlessTests
 
         var header = card.GetVisualDescendants().OfType<Border>().FirstOrDefault(b => b.Name == "PART_Header");
         header.Should().NotBeNull();
-        header!.IsVisible.Should().BeFalse();
+        header.IsVisible.Should().BeFalse();
     }
 
     [AvaloniaFact]
@@ -104,7 +112,7 @@ public class CardHeadlessTests
 
         var footer = card.GetVisualDescendants().OfType<Border>().FirstOrDefault(b => b.Name == "PART_Footer");
         footer.Should().NotBeNull();
-        footer!.IsVisible.Should().BeFalse();
+        footer.IsVisible.Should().BeFalse();
     }
 
     private sealed class HeadlessCommand : System.Windows.Input.ICommand

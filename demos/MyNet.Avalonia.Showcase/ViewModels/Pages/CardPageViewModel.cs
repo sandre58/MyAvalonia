@@ -47,7 +47,7 @@ internal sealed class CardPageViewModel(ICommandFactory commands, INotificationP
         .AddProperty(Card.ShowTrailingProperty, true, configure: x => x.DisplayName(nameof(CardPageResources.ShowTrailing)))
         .AddProperty(Card.SubtitleProperty, configure: x => x.DisplayName(nameof(CardPageResources.Subtitle)).Of<TextBoxEditor>(y => y.WithValue("Subtitle with a very long text must be wrapped").WithRandomizeText(RandomizeText.Sentence)))
         .AddProperty(Card.HeaderProperty, configure: x => x.DisplayName(nameof(CardPageResources.Header)).Of<TextBoxEditor>())
-        .AddProperty(Card.FooterProperty, configure: x => x.DisplayName(nameof(CardPageResources.Footer)).Of<TextBoxEditor>()),
+        .AddProperty(Card.FooterProperty, configure: x => x.DisplayName(nameof(CardPageResources.Footer)).Of<TextBoxEditor>())
 ])
 {
     public ICommand SampleCommand { get; } = commands.Create(() => notificationPublisher.Publish(new MessageNotification(CardPageResources.ClickTitle, CardPageResources.ClickMessage, NotificationSeverity.Success)));

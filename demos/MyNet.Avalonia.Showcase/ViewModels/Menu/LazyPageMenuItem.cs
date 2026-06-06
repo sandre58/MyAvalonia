@@ -23,13 +23,12 @@ internal sealed class LazyPageMenuItem(Type viewModelType, MaterialIconKind icon
 {
     private static readonly IReadOnlyList<IMenuItemViewModel> EmptyItems = [];
     private readonly IServiceProvider _services = services ?? throw new ArgumentNullException(nameof(services));
-    private PageViewModel? _page;
 
     /// <summary>Gets the view model type registered in DI for this menu entry.</summary>
     public Type ViewModelType { get; } = viewModelType ?? throw new ArgumentNullException(nameof(viewModelType));
 
     /// <summary>Gets the resolved page view model (singleton from DI).</summary>
-    public PageViewModel Page => _page ??= (PageViewModel)_services.GetRequiredService(ViewModelType);
+    public PageViewModel Page => field ??= (PageViewModel)_services.GetRequiredService(ViewModelType);
 
     /// <summary>Resolves and returns the navigation page from DI.</summary>
     public INavigationPage ResolvePage() => Page;

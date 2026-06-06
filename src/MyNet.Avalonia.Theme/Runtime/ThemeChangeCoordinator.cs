@@ -31,7 +31,11 @@ internal sealed class ThemeChangeCoordinator
 
     public IDisposable Defer() => _deferrer.Defer();
 
-    public void NotifyChange() => Publish();
+    public void NotifyChange()
+    {
+        if (!IsDeferred)
+            Publish();
+    }
 
     private void Publish()
     {

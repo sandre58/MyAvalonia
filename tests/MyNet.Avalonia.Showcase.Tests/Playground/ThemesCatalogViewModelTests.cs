@@ -16,10 +16,9 @@ using Xunit;
 
 namespace MyNet.Avalonia.Showcase.Tests.Playground;
 
+[Collection(PlaygroundUiCollectionNames.Name)]
 public class ThemesCatalogViewModelTests
 {
-    static ThemesCatalogViewModelTests() => PlaygroundTestHost.EnsureInitialized();
-
     [Fact]
     public void SelectedTheme_populatesCatalogSections()
     {
@@ -29,6 +28,7 @@ public class ThemesCatalogViewModelTests
             .ToList()
             .ToObservableCollection();
         using var catalog = new ThemesCatalogViewModel(themes);
+        catalog.EnsureLoaded();
 
         catalog.ShapeItems.Should().NotBeEmpty();
         catalog.VariantItems.Should().NotBeEmpty();

@@ -19,10 +19,9 @@ using Xunit;
 
 namespace MyNet.Avalonia.Showcase.Tests.Playground;
 
+[Collection(PlaygroundUiCollectionNames.Name)]
 public class PlaygroundViewModelTests
 {
-    static PlaygroundViewModelTests() => PlaygroundTestHost.EnsureInitialized();
-
     [Fact]
     public void BuildStyle_includesResolvedThemeClass()
     {

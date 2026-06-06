@@ -16,7 +16,6 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
-using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Humanizer.Facade;
 using MyNet.UI.Commands;
 

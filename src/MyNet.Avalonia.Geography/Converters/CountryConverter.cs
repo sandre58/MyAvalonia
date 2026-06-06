@@ -11,7 +11,6 @@ using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
 using MyNet.Geography;
 using MyNet.Geography.Resources;
-using MyNet.Humanizer.Facade;
 
 namespace MyNet.Avalonia.Geography.Converters;
 
@@ -75,7 +74,7 @@ public sealed class CountryConverter : IValueConverter
         {
             Mode.Alpha2 => country.Alpha2.ToUpperInvariant(),
             Mode.Alpha3 => country.Alpha3.ToUpperInvariant(),
-            Mode.DisplayName => country.Humanize(),
+            Mode.DisplayName => country.Name,
             Mode.Iso => country.Iso.ToString(culture),
             Mode.To16 => GetFlag(country, FlagSize.Pixel16),
             Mode.To24 => GetFlag(country, FlagSize.Pixel24),

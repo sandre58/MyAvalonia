@@ -36,7 +36,7 @@ public class ControlPropertyDefinitionTests
         var styleProperty = definition.ProvideStyleProperty(ControlVariant.Light);
 
         styleProperty.Should().NotBeNull();
-        styleProperty!.Property.Should().Be(TestVariantProperty);
+        styleProperty.Property.Should().Be(TestVariantProperty);
         styleProperty.Value.Should().Be(ControlVariant.Light);
     }
 
@@ -49,7 +49,7 @@ public class ControlPropertyDefinitionTests
         var styleProperty = definition.ProvideStyleProperty(combined);
 
         styleProperty.Should().NotBeNull();
-        styleProperty!.Value.Should().Be(ControlVariant.Solid | ControlVariant.Light);
+        styleProperty.Value.Should().Be(ControlVariant.Solid | ControlVariant.Light);
     }
 
     [Fact]
@@ -60,6 +60,6 @@ public class ControlPropertyDefinitionTests
         var styleProperty = definition.ProvideStyleProperty(ThemeRole.Primary);
 
         styleProperty.Should().NotBeNull();
-        styleProperty!.XamlKey.Should().Be(ThemeAssist.RoleProperty.Name);
+        styleProperty.XamlKey.Should().Be(ThemeAssist.RoleProperty.Name);
     }
 }

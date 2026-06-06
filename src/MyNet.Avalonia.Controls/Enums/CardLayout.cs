@@ -21,5 +21,5 @@ public enum CardLayout
     /// Leading element and title on the first row, subtitle and content below.
     /// Suitable for feature tiles and capability cards.
     /// </summary>
-    Vertical,
+    Vertical
 }

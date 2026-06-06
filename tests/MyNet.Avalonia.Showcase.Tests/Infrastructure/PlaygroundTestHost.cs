@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Avalonia;
 using Avalonia.Headless;
@@ -43,35 +41,17 @@ internal static class PlaygroundTestHost
             if (_avaloniaInitialized)
                 return;
 
-            RunOnStaThread(() => AppBuilder.Configure<ShowcaseTestApp>()
+            if (Application.Current is not null)
+            {
+                _avaloniaInitialized = true;
+                return;
+            }
+
+            AppBuilder.Configure<ShowcaseTestApp>()
                     .UseHeadless(new())
-                    .SetupWithoutStarting());
+                    .SetupWithoutStarting();
 
             _avaloniaInitialized = true;
         }
-    }
-
-    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "STA thread is required for Avalonia initialization.")]
-    private static void RunOnStaThread(Action action)
-    {
-        Exception? error = null;
-        var thread = new Thread(() =>
-        {
-            try
-            {
-                action();
-            }
-            catch (Exception ex)
-            {
-                error = ex;
-            }
-        });
-
-        thread.SetApartmentState(ApartmentState.STA);
-        thread.Start();
-        thread.Join();
-
-        if (error is not null)
-            throw error;
     }
 }
