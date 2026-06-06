@@ -78,7 +78,7 @@
             <ListBox my:FormItem.Label="{my:MaterialIcon GenderMaleFemale}"
                      Width="205"
                      HorizontalAlignment="Left"
-                     Classes="kind-toggle kind-gender"
+                     Theme="{StaticResource MyNet.Theme.ListBox.Gender}"
                      SelectedValue="{Binding Gender}" />
 
             <!-- Birth Date with Calendar (without InnerLeftContent) -->

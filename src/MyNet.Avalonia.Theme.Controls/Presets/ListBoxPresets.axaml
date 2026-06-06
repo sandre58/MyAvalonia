@@ -1,0 +1,36 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:t="clr-namespace:MyNet.Observable;assembly=MyNet.Observable"
+                    xmlns:primitives="clr-namespace:MyNet.Primitives;assembly=MyNet.Primitives">
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- ENUM LIST PRESETS (business / domain-specific patterns)   -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <ControlTheme x:Key="MyNet.Theme.ListBoxItem.LocalizedEnum" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+        <Setter Property="Content" Value="{Binding Display, x:DataType=t:LocalizedEnum}" />
+    </ControlTheme>
+
+    <ControlTheme x:Key="MyNet.Theme.ListBox.Enum" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+        <Setter Property="my:ClassesAssist.Classes" Value="kind-toggle flex-uniform" />
+        <Setter Property="my:ItemsBehavior.UseDisplayMember" Value="False" />
+        <Setter Property="SelectedValueBinding" Value="{Binding Value, x:DataType=t:LocalizedEnum}" />
+        <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.ListBoxItem.LocalizedEnum}" />
+    </ControlTheme>
+
+    <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Gender" TargetType="ListBoxItem" BasedOn="{StaticResource MyNet.Theme.ListBoxItem.LocalizedEnum}">
+        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding Value, Converter={x:Static my:GenderTypeConverter.Brush}, x:DataType=t:LocalizedEnum}" />
+        <Setter Property="my:IconAssist.Icon">
+            <Template>
+                <my:MaterialIcon Kind="{Binding Value, Converter={x:Static my:GenderTypeConverter.Icon}, x:DataType=t:LocalizedEnum}" />
+            </Template>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="MyNet.Theme.ListBox.Gender" TargetType="ListBox" BasedOn="{StaticResource MyNet.Theme.ListBox.Enum}">
+        <Setter Property="my:ItemsBehavior.EnumSourceType" Value="{x:Type primitives:GenderType}" />
+        <Setter Property="ItemContainerTheme" Value="{StaticResource MyNet.Theme.ListBoxItem.Gender}" />
+    </ControlTheme>
+
+</ResourceDictionary>

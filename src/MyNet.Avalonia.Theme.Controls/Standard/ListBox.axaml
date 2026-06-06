@@ -1,9 +1,6 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:my="http://mynet.com/avalonia"
-                    xmlns:t="clr-namespace:MyNet.Observable;assembly=MyNet.Observable"
-                    xmlns:primitives="clr-namespace:MyNet.Primitives;assembly=MyNet.Primitives">
-
+                    xmlns:my="http://mynet.com/avalonia">
     <!-- ═════════════════════════════════════════════════════════ -->
     <!-- DEFAULT LISTBOXITEM THEME                                 -->
     <!-- ═════════════════════════════════════════════════════════ -->
@@ -291,25 +288,6 @@
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" Spacing="{Binding (my:ItemsAssist.Spacing), RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
                 </ItemsPanelTemplate>
-            </Setter>
-        </Style>
-
-        <Style Selector="^.kind-gender">
-            <Setter Property="my:ClassesAssist.Classes" Value="flex-uniform" />
-            <Setter Property="my:ItemsBehavior.EnumSourceType" Value="{x:Type primitives:GenderType}" />
-            <Setter Property="my:ItemsBehavior.UseDisplayMember" Value="False" />
-            <Setter Property="SelectedValueBinding" Value="{Binding Value, x:DataType=t:LocalizedEnum}" />
-
-            <Setter Property="ItemContainerTheme">
-                <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                    <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding Value, Converter={x:Static my:GenderTypeConverter.Brush}, x:DataType=t:LocalizedEnum}" />
-                    <Setter Property="my:IconAssist.Icon">
-                        <Template>
-                            <my:MaterialIcon Kind="{Binding Value, Converter={x:Static my:GenderTypeConverter.Icon}, x:DataType=t:LocalizedEnum}" />
-                        </Template>
-                    </Setter>
-                    <Setter Property="Content" Value="{Binding Display, x:DataType=t:LocalizedEnum}" />
-                </ControlTheme>
             </Setter>
         </Style>
 

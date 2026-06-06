@@ -201,6 +201,34 @@ internal sealed class ListBoxPageViewModel(ICommandFactory commands) : ShowcaseV
                         y.WithIcon(MaterialIconKind.CheckAll);
                         break;
                 }
+            }),
+
+    new ControlThemeBuilder()
+        .WithKind(CssClass.KindFocus)
+        .AddVariants(CssClass.Vertical, CssClass.Horizontal, CssClass.Uniform, CssClass.Wrap)
+        .AddItemsThemeRoles()
+        .AddDefaultSizes()
+        .AddEnumProperty<SelectionMode, ListBoxEditor>(ListBox.SelectionModeProperty,
+            SelectionMode.Single,
+            x => x.DisplayName(nameof(SettingsResources.SelectionMode)),
+            x => x.AllowMultipleSelection(),
+            configureChoice: (x, y) =>
+            {
+                switch (x)
+                {
+                    case SelectionMode.Single:
+                        y.WithIcon(MaterialIconKind.Check);
+                        break;
+                    case SelectionMode.AlwaysSelected:
+                        y.WithIcon(MaterialIconKind.CheckboxMarked);
+                        break;
+                    case SelectionMode.Toggle:
+                        y.WithIcon(MaterialIconKind.ToggleSwitch);
+                        break;
+                    case SelectionMode.Multiple:
+                        y.WithIcon(MaterialIconKind.CheckAll);
+                        break;
+                }
             })
 ])
 {

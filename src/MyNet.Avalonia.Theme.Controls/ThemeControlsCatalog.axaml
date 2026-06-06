@@ -7,6 +7,7 @@
                 <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Foundation/_index.axaml" />
                 <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Standard/_index.axaml" />
                 <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/_index.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Presets/_index.axaml" />
                 <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Resources/DataTemplates.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
