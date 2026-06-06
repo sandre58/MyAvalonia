@@ -9,9 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extended;
 using MyNet.Avalonia.Extended.Theming;
+using MyNet.Avalonia.Extended.Toasting;
+using MyNet.Avalonia.Showcase.Notifications;
 using MyNet.Avalonia.Geography;
 using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ViewModels;
@@ -28,6 +31,7 @@ using MyNet.UI;
 using MyNet.UI.Locators.Conventions;
 using MyNet.UI.Navigation;
 using MyNet.UI.Theming;
+using MyNet.UI.Toasting.Settings;
 
 namespace MyNet.Avalonia.Showcase.Composition;
 
@@ -72,15 +76,23 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
     public static void NavigateToDefaultPage(IServiceProvider services)
         => _ = services.GetRequiredService<INavigationClient>().NavigateToAsync<HomePageViewModel>();
 
-    private void RegisterServices(IServiceCollection collection)
-        => collection.AddFakers()
-            .AddUi([SupportedCultures.English, SupportedCultures.French])
-            .AddMyNetAvaloniaColors()
-            .AddMyNetAvaloniaControls()
-            .AddMyNetAvaloniaGeography()
-            .AddMyNetAvaloniaExtended(topLevelProvider)
-            .AddSingleton<IThemeBrushService>(MyTheme.Current)
-            .AddShowcaseLogging();
+    private void RegisterServices(IServiceCollection collection) => collection.AddFakers()
+        .AddUi(b => b
+            .WithSupportedCultures([SupportedCultures.English, SupportedCultures.French])
+            .ConfigureToasting(options =>
+            {
+                options.DefaultDuration = TimeSpan.FromSeconds(3.5);
+                options.MaxVisibleToasts = 30;
+                options.DefaultClosingStrategy = ToastClosingStrategy.AutoClose;
+                options.DefaultFreezeOnMouseEnter = false;
+            }))
+        .AddMyNetAvaloniaColors()
+        .AddMyNetAvaloniaControls()
+        .AddMyNetAvaloniaGeography()
+        .AddMyNetAvaloniaExtended(topLevelProvider)
+        .AddSingleton<IThemeBrushService>(MyTheme.Current)
+        .AddShowcaseLogging()
+        .TryAddEnumerable(ServiceDescriptor.Singleton<IAvaloniaToastContentContributor, ShowcaseCustomNotificationToastContentContributor>());
 
     /// <summary>
     /// Contributes showcase demo translation resources to the catalog.

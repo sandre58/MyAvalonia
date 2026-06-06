@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Threading;
 using MyNet.Avalonia.Extended.Toasting.Settings;
 using MyNet.UI.Notifications.Models;
@@ -38,6 +39,7 @@ public sealed class AvaloniaToastHost : IDisposable
     private readonly INotifyCollectionChanged _toastsCollection;
     private bool _suppressCloseCallback;
     private bool _topLevelRetryScheduled;
+    private bool _notificationManagerReady;
     private bool _isDisposed;
 
     /// <summary>
@@ -91,7 +93,7 @@ public sealed class AvaloniaToastHost : IDisposable
         _displayContentByNotificationId.Clear();
         _pendingToasts.Clear();
         DisposeHoverAttachments();
-        _notificationManager = null;
+        ReleaseNotificationManager();
 
         foreach (var toast in _toastManager.Toasts.ToList())
             ShowToastCore(toast);
@@ -108,7 +110,7 @@ public sealed class AvaloniaToastHost : IDisposable
         _pendingToasts.Clear();
         _displayContentByNotificationId.Clear();
         DisposeHoverAttachments();
-        _notificationManager = null;
+        ReleaseNotificationManager();
     }
 
     private void OnToastsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -251,21 +253,42 @@ public sealed class AvaloniaToastHost : IDisposable
 
     private bool EnsureNotificationManager()
     {
-        if (_notificationManager is not null)
+        if (_notificationManager is not null && _notificationManagerReady)
             return true;
 
         var topLevel = _topLevelProvider();
         if (topLevel is null)
             return false;
 
-        _notificationManager = new(topLevel)
+        if (_notificationManager is null)
         {
-            Position = ConvertPosition(_options.Position),
-            MaxItems = _options.MaxItems,
-            Margin = new(_options.OffsetX, _options.OffsetY)
-        };
+            _notificationManager = new(topLevel)
+            {
+                Position = ConvertPosition(_options.Position),
+                MaxItems = _options.MaxItems,
+                Margin = new(_options.OffsetX, _options.OffsetY)
+            };
 
-        return true;
+            _notificationManager.TemplateApplied += OnNotificationManagerTemplateApplied;
+        }
+
+        return _notificationManagerReady;
+    }
+
+    private void OnNotificationManagerTemplateApplied(object? sender, TemplateAppliedEventArgs e)
+    {
+        _notificationManagerReady = true;
+        FlushPendingToasts();
+    }
+
+    private void ReleaseNotificationManager()
+    {
+        if (_notificationManager is null)
+            return;
+
+        _notificationManager.TemplateApplied -= OnNotificationManagerTemplateApplied;
+        _notificationManager = null;
+        _notificationManagerReady = false;
     }
 
     private void ScheduleTopLevelRetry()

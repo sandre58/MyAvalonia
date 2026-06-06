@@ -5,6 +5,8 @@
 // -----------------------------------------------------------------------
 
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls.Primitives;
 using MyNet.UI.Notifications.Models;
 
@@ -14,6 +16,26 @@ namespace MyNet.Avalonia.Extended.Controls;
 
 public sealed class MessageNotificationControl : HeaderedContentControl
 {
+    static MessageNotificationControl()
+    {
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<MessageNotificationControl>(AutomationControlType.Group);
+        AutomationProperties.LiveSettingProperty.OverrideDefaultValue<MessageNotificationControl>(AutomationLiveSetting.Polite);
+        HeaderProperty.Changed.AddClassHandler<MessageNotificationControl, object?>((control, _) => control.UpdateAutomationName());
+        ContentProperty.Changed.AddClassHandler<MessageNotificationControl, object?>((control, _) => control.UpdateAutomationName());
+    }
+
+    private void UpdateAutomationName()
+    {
+        var header = Header?.ToString();
+        var content = Content?.ToString();
+
+        AutomationProperties.SetName(this, string.IsNullOrEmpty(header)
+            ? content ?? string.Empty
+            : string.IsNullOrEmpty(content)
+                ? header
+                : $"{header}: {content}");
+    }
+
     #region Severity
 
     /// <summary>

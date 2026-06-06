@@ -73,24 +73,36 @@ Declare an `OverlayDialogHost` in XAML (see showcase `MainWindow`) with `HostId=
 
 ### Toast Notifications
 
-Non-intrusive notifications for user feedback:
+Register MyNet UI notifications and the Avalonia toast host, then resolve the host during startup:
 
 ```csharp
-// Show simple toast notifications
-ToastService.ShowSuccess("Item saved successfully");
-ToastService.ShowError("Failed to save item");
-ToastService.ShowWarning("Please check your input");
-ToastService.ShowInfo("New update available");
+services.AddMyNetAvaloniaExtended(() => mainWindow);
 
-// Custom toast with options
-ToastService.Show(new ToastOptions
-{
-    Title = "Custom Toast",
-    Message = "This is a custom toast notification",
-    Type = ToastType.Success,
-    Duration = TimeSpan.FromSeconds(5)
-});
+var provider = services.BuildServiceProvider();
+provider.UseMyNetAvaloniaExtended(); // attaches AvaloniaToastHost to IToastManager.Toasts
 ```
+
+Publish notifications through `INotificationPublisher`:
+
+```csharp
+public class MainViewModel(INotificationPublisher notifications)
+{
+    public void Save()
+    {
+        notifications.PublishSuccess("Item saved successfully");
+        notifications.PublishError("Failed to save item");
+        notifications.PublishWarning("Please check your input");
+        notifications.PublishInformation("New update available");
+
+        notifications.Publish(new MessageNotification(
+            "This is a custom toast notification",
+            "Custom Toast",
+            NotificationSeverity.Success));
+    }
+}
+```
+
+Customize toast visuals by registering `IAvaloniaToastContentContributor` implementations. Include extended control themes in `App.axaml` via `AvaloniaExtendedThemes.GenericStyles`.
 
 ### Busy Indicators
 
@@ -119,7 +131,6 @@ public class App : Application
         
         // Register UI services
         ServiceLocator.Register<IDialogService, DialogService>();
-        ServiceLocator.Register<IToastService, ToastService>();
         ServiceLocator.Register<IClipboardService, ClipboardService>();
     }
 }
@@ -145,7 +156,7 @@ public class MainViewModel : ViewModelBase
         try
         {
             await DataService.SaveAsync(Data);
-            ToastService.ShowSuccess("Data saved successfully");
+            notifications.PublishSuccess("Data saved successfully");
         }
         catch (Exception ex)
         {
@@ -167,7 +178,7 @@ public class ClipboardManager
     public async Task CopyToClipboardAsync(string text)
     {
         await ClipboardService.SetTextAsync(text);
-        ToastService.ShowInfo("Copied to clipboard");
+        notifications.PublishInformation("Copied to clipboard");
     }
     
     public async Task<string> PasteFromClipboardAsync()

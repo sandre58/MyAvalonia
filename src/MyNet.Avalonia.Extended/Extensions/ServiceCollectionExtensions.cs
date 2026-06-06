@@ -46,5 +46,9 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="services">The service provider.</param>
     /// <returns>The same service provider for chaining.</returns>
-    public static IServiceProvider UseMyNetAvaloniaExtended(this IServiceProvider services) => services.UseAvaloniaNavigation();
+    public static IServiceProvider UseMyNetAvaloniaExtended(this IServiceProvider services)
+    {
+        _ = services.GetService<AvaloniaToastHost>();
+        return services.UseAvaloniaNavigation();
+    }
 }

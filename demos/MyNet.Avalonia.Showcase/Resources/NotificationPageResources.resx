@@ -106,4 +106,10 @@
   <data name="ShowNotification" xml:space="preserve">
     <value>Afficher la notification</value>
   </data>
+  <data name="CustomNotificationTitle" xml:space="preserve">
+    <value>Notification personnalisée</value>
+  </data>
+  <data name="CustomNotificationMessage" xml:space="preserve">
+    <value>Contenu rendu par un contributeur IAvaloniaToastContentContributor dédié.</value>
+  </data>
 </root>

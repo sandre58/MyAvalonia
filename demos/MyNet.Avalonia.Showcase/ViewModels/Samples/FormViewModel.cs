@@ -21,6 +21,7 @@ using MyNet.Observable.Behaviors;
 using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.Primitives;
 using MyNet.UI.Commands;
+using MyNet.UI.Notifications;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Samples;
 
@@ -31,9 +32,11 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
 {
     [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup method")]
     private readonly ValidationBehavior<FormViewModel> _validation;
+    private readonly INotificationPublisher? _notificationPublisher;
 
-    public FormViewModel(ICommandFactory commands)
+    public FormViewModel(ICommandFactory commands, INotificationPublisher? notificationPublisher = null)
     {
+        _notificationPublisher = notificationPublisher;
         _validation = this.UseValidation(new FormViewModelValidator());
         _validation.ErrorsChanged += (_, e) => ErrorsChanged?.Invoke(this, e);
 
@@ -186,6 +189,9 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
 
         IsSubmitSuccessful = true;
         StatusMessage = "SubmitSuccess".Translate();
+
+        if (EnableNotifications && _notificationPublisher is not null)
+            _notificationPublisher.PublishSuccess(StatusMessage);
     }
 
     private void Reset()

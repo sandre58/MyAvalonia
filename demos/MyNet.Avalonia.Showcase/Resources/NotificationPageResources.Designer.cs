@@ -84,6 +84,24 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contenu rendu par un contributeur IAvaloniaToastContentContributor dédié..
+        /// </summary>
+        internal static string CustomNotificationMessage {
+            get {
+                return ResourceManager.GetString("CustomNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification personnalisée.
+        /// </summary>
+        internal static string CustomNotificationTitle {
+            get {
+                return ResourceManager.GetString("CustomNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Afficher la notification.
         /// </summary>
         internal static string ShowNotification {

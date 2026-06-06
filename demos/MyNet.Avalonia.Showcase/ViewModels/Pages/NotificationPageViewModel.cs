@@ -105,19 +105,15 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
                         10,
                         x => x.DisplayName(nameof(SettingsResources.OffsetY)).Of<IntSliderEditor>(editor => editor.WithRange(0, 300)))
                     .AddValueAction(
-                        (_, _) =>
-                        {
-                        },
-                        ToastClosingStrategy.Both,
+                        (_, y) => managerOptions.DefaultClosingStrategy = (ToastClosingStrategy?)y ?? ToastClosingStrategy.AutoClose,
+                        ToastClosingStrategy.AutoClose,
                         x => x.DisplayName(nameof(SettingsResources.ClosingStrategy))
                             .Of<ListBoxEditor>(editor => editor.AddChoice(ToastClosingStrategy.None, builder => builder.DisplayName(() => ToastClosingStrategy.None.Humanize()).WithIcon(MaterialIconKind.CircleOffOutline))
                                 .AddChoice(ToastClosingStrategy.AutoClose, builder => builder.DisplayName(() => ToastClosingStrategy.AutoClose.Humanize()).WithIcon(MaterialIconKind.ProgressClose))
                                 .AddChoice(ToastClosingStrategy.CloseButton, builder => builder.DisplayName(() => ToastClosingStrategy.CloseButton.Humanize()).WithIcon(MaterialIconKind.CloseBox))
                                 .AddChoice(ToastClosingStrategy.Both, builder => builder.DisplayName(() => ToastClosingStrategy.CloseButton.Humanize()).WithIcon(MaterialIconKind.CloseBoxMultiple))))
                     .AddValueAction(
-                        (_, _) =>
-                        {
-                        },
+                        (_, y) => managerOptions.DefaultFreezeOnMouseEnter = (bool?)y ?? false,
                         false,
                         x => x.DisplayName(nameof(SettingsResources.FreezeOnMouseEnter)).Of<ToggleSwitchEditor>())
                     .AddValueAction(
@@ -148,13 +144,14 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
         {
             if (_enableOnClick)
             {
-                _notificationPublisher.Publish(new ActionNotification(
-                    message.Message,
-                    message.Title,
-                    message.Severity,
-                    action: x => _notificationPublisher.Publish(new MessageNotification(
+                _notificationPublisher.Notify()
+                    .WithMessage(message.Message)
+                    .WithTitle(message.Title)
+                    .WithSeverity(message.Severity)
+                    .OnClick(x => _notificationPublisher.Publish(new MessageNotification(
                         NotificationPageResources.NotificationClickMessage.FormatWith(CultureInfo.CurrentCulture, x),
-                        severity: NotificationSeverity.Information))));
+                        severity: NotificationSeverity.Information)))
+                    .Publish();
                 return;
             }
 
