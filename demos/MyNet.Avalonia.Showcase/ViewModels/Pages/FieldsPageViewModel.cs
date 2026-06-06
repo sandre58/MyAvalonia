@@ -36,22 +36,24 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
 internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseViewModel("Fields", commands, [
     AddProperties(new ControlThemeBuilder()
-        .AddShapes(CssClass.ShapeCircle)
-        .AddVariants(ControlVariant.Solid, ControlVariant.Outlined)
-        .AddThemeRoles()
-        .AddDefaultSizes()),
+            .AddShapes(CssClass.ShapeCircle)
+            .AddVariants(ControlVariant.Solid, ControlVariant.Outlined)
+            .AddThemeRoles()
+            .AddDefaultSizes(),
+        false),
 
     AddProperties(new ControlThemeBuilder()
-        .WithKind("underline")
-        .AddThemeRoles()
-        .AddDefaultSizes())
+            .WithKind("underline")
+            .AddThemeRoles()
+            .AddDefaultSizes(),
+        true)
 ])
 {
     public ICommand IncreaseSpinnerCommand { get; } = commands.CreateRequired<Spinner>(IncreaseSpinner);
 
     public ICommand DecreaseSpinnerCommand { get; } = commands.CreateRequired<Spinner>(DecreaseSpinner);
 
-    private static ControlThemeBuilder AddProperties(ControlThemeBuilder controlThemeBuilder)
+    private static ControlThemeBuilder AddProperties(ControlThemeBuilder controlThemeBuilder, bool useDefaultFloatingPlaceholder)
         => controlThemeBuilder.AddAction<Control>(
                 x =>
                 {
@@ -164,9 +166,9 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                     },
                     x,
                     ((bool?)y).GetValueOrDefault() ? x.GetType().Name : string.Empty),
-                false,
+                useDefaultFloatingPlaceholder,
                 x => x.DisplayName(nameof(SettingsResources.ShowPlaceholderText)).Of<ToggleSwitchEditor>())
-            .AddProperty(InputAssist.UseFloatingPlaceholderProperty, false, x => x.DisplayName(nameof(SettingsResources.IsFloating)))
+            .AddProperty(InputAssist.UseFloatingPlaceholderProperty, useDefaultFloatingPlaceholder, x => x.DisplayName(nameof(SettingsResources.IsFloating)))
             .AddProperty(InputBehavior.IsTextEditableProperty,
                 true,
                 x => x.DisplayName(nameof(SettingsResources.IsEditable)),
@@ -178,13 +180,23 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
             .AddProperty(InputAssist.InnerLeftContentProperty,
                 string.Empty,
                 x => x.DisplayName(nameof(SettingsResources.Prefix)).Of<TextBoxEditor>(),
-                (x, y) => UpdateControl(new() { { typeof(TextBox), TextBox.InnerLeftContentProperty }, { typeof(AutoCompleteBox), AutoCompleteBox.InnerLeftContentProperty }, { typeof(NumericUpDown), NumericUpDown.InnerLeftContentProperty } },
+                (x, y) => UpdateControl(new()
+                    {
+                        { typeof(TextBox), TextBox.InnerLeftContentProperty },
+                        { typeof(AutoCompleteBox), AutoCompleteBox.InnerLeftContentProperty },
+                        { typeof(NumericUpDown), NumericUpDown.InnerLeftContentProperty }
+                    },
                     x,
                     y?.ToString()))
             .AddProperty(InputAssist.InnerRightContentProperty,
                 string.Empty,
                 x => x.DisplayName(nameof(SettingsResources.Suffix)).Of<TextBoxEditor>(),
-                (x, y) => UpdateControl(new() { { typeof(TextBox), TextBox.InnerRightContentProperty }, { typeof(AutoCompleteBox), AutoCompleteBox.InnerRightContentProperty }, { typeof(NumericUpDown), NumericUpDown.InnerRightContentProperty } },
+                (x, y) => UpdateControl(new()
+                    {
+                        { typeof(TextBox), TextBox.InnerRightContentProperty },
+                        { typeof(AutoCompleteBox), AutoCompleteBox.InnerRightContentProperty },
+                        { typeof(NumericUpDown), NumericUpDown.InnerRightContentProperty }
+                    },
                     x,
                     y?.ToString()))
             .AddProperty(InputAssist.UnderTextProperty, string.Empty, x => x.DisplayName(nameof(SettingsResources.UnderText)).Of<TextBoxEditor>())

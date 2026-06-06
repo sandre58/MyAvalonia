@@ -41,6 +41,7 @@
         <Setter Property="my:ClipboardAssist.Content" Value="{Binding $self.Text, Mode=OneWay}" />
         <Setter Property="PlaceholderText" Value="{x:Static sys:String.Empty}" />
         <Setter Property="UseFloatingPlaceholder" Value="False" />
+        <Setter Property="my:InputAssist.UseFloatingPlaceholder" Value="False" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="my:GlobalizationBehavior.UpdateOnCultureChanged" Value="True" />
 
@@ -132,9 +133,16 @@
                                                   InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
                                                   InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
                                                   Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                                  UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
                                                   PlaceholderText="{TemplateBinding PlaceholderText}"
                                                   PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
+                                        <my:InputChrome.UseFloatingPlaceholder>
+                                            <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                                <Binding Path="UseFloatingPlaceholder"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Path="(my:InputAssist.UseFloatingPlaceholder)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </my:InputChrome.UseFloatingPlaceholder>
 
                                         <!-- Text -->
                                         <TextBox Name="PART_TextBox"
@@ -250,7 +258,7 @@
             <Setter Property="Margin" Value="0" />
         </Style>
 
-        <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
+        <Style Selector="^[UseFloatingPlaceholder=True], ^[(my|InputAssist.UseFloatingPlaceholder)=True]">
             <Style Selector="^ /template/ my|InputChrome#PART_Input">
                 <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Top}}" />
             </Style>
@@ -388,7 +396,7 @@
                                     </ContentControl.IsVisible>
                                 </ContentControl>
 
-                                <my:InputChrome Grid.Column="1"
+                                <my:InputChrome Name="PART_Input" Grid.Column="1"
                                               Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                               HorizontalAlignment="Stretch"
                                               VerticalAlignment="Center"
@@ -401,9 +409,16 @@
                                               InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
                                               InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
                                               Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                              UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
                                               PlaceholderText="{TemplateBinding PlaceholderText}"
                                               PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
+                                    <my:InputChrome.UseFloatingPlaceholder>
+                                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                            <Binding Path="UseFloatingPlaceholder"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Path="(my:InputAssist.UseFloatingPlaceholder)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </my:InputChrome.UseFloatingPlaceholder>
 
                                     <!-- Text -->
                                     <TextBox Name="PART_TextBox"

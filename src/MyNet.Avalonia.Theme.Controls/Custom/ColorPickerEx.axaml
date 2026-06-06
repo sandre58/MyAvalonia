@@ -434,7 +434,7 @@
                                     </ContentControl.IsVisible>
                                 </ContentControl>
 
-                                <my:InputChrome Grid.Column="1"
+                                <my:InputChrome Name="PART_Input" Grid.Column="1"
                                               Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                               HorizontalAlignment="Stretch"
                                               VerticalAlignment="Center"

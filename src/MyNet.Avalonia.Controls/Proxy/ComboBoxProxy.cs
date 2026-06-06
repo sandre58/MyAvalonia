@@ -17,7 +17,7 @@ public sealed class ComboBoxProxy : IControlProxy
 
     public bool IsFocused() => _control.IsKeyboardFocusWithin || _control.IsDropDownOpen;
 
-    public bool IsActive() => !IsEmpty();
+    public bool IsActive() => !IsEmpty() || IsFocused();
 
     public event EventHandler? IsEmptyChanged;
 
@@ -34,11 +34,23 @@ public sealed class ComboBoxProxy : IControlProxy
         _control.LostFocus += OnLostFocus;
     }
 
-    private void OnDropDownOpened(object? sender, EventArgs e) => IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
+    private void OnDropDownOpened(object? sender, EventArgs e)
+    {
+        IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
+        IsActiveChanged?.Invoke(sender, EventArgs.Empty);
+    }
 
-    private void OnGotFocus(object? sender, global::Avalonia.Input.FocusChangedEventArgs e) => IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
+    private void OnGotFocus(object? sender, global::Avalonia.Input.FocusChangedEventArgs e)
+    {
+        IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
+        IsActiveChanged?.Invoke(sender, EventArgs.Empty);
+    }
 
-    private void OnLostFocus(object? sender, global::Avalonia.Interactivity.RoutedEventArgs e) => IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
+    private void OnLostFocus(object? sender, global::Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        IsFocusedChanged?.Invoke(sender, EventArgs.Empty);
+        IsActiveChanged?.Invoke(sender, EventArgs.Empty);
+    }
 
     private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {

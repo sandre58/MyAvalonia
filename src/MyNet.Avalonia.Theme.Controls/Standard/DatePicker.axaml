@@ -3,10 +3,12 @@
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
-    <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Embedded.DatePicker" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+    <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Embedded.DatePicker" TargetType="ListBoxItem"
+                  BasedOn="{StaticResource {x:Type ListBoxItem}}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HorizontalAlignment)}" />
+        <Setter Property="HorizontalAlignment"
+                Value="{Binding $parent[DatePicker].(my:ItemsAssist.HorizontalAlignment)}" />
         <Setter Property="VerticalAlignment" Value="{Binding $parent[DatePicker].(my:ItemsAssist.VerticalAlignment)}" />
         <Setter Property="Margin" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Margin)}" />
         <Setter Property="Padding" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Padding)}" />
@@ -15,14 +17,22 @@
         <Setter Property="BorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderBrush)}" />
         <Setter Property="Foreground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.Foreground)}" />
         <Setter Property="BorderThickness" Value="{Binding $parent[DatePicker].(my:ItemsAssist.BorderThickness)}" />
-        <Setter Property="my:InteractionAssist.HoverBackground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBackground)}" />
-        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBorderBrush)}" />
-        <Setter Property="my:InteractionAssist.HoverForeground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverForeground)}" />
-        <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveBackground)}" />
-        <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveBorderBrush)}" />
-        <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveForeground)}" />
-        <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $parent[DatePicker].(my:ItemsAssist.RippleColor)}" />
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="{Binding $parent[DatePicker].(my:ItemsAssist.ShadowDepth)}" />
+        <Setter Property="my:InteractionAssist.HoverBackground"
+                Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBackground)}" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush"
+                Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.HoverForeground"
+                Value="{Binding $parent[DatePicker].(my:ItemsAssist.HoverForeground)}" />
+        <Setter Property="my:InteractionAssist.ActiveBackground"
+                Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveBackground)}" />
+        <Setter Property="my:InteractionAssist.ActiveBorderBrush"
+                Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveBorderBrush)}" />
+        <Setter Property="my:InteractionAssist.ActiveForeground"
+                Value="{Binding $parent[DatePicker].(my:ItemsAssist.ActiveForeground)}" />
+        <Setter Property="my:InteractionAssist.RippleColor"
+                Value="{Binding $parent[DatePicker].(my:ItemsAssist.RippleColor)}" />
+        <Setter Property="my:ShadowAssist.ShadowDepth"
+                Value="{Binding $parent[DatePicker].(my:ItemsAssist.ShadowDepth)}" />
         <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[DatePicker].(my:IconAssist.Alignment)}" />
         <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[DatePicker].(my:IconAssist.Spacing)}" />
         <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[DatePicker].(my:IconAssist.Opacity)}" />
@@ -55,10 +65,12 @@
                             <Grid Name="PART_PickerContainer">
                                 <Grid.Styles>
                                     <Style Selector="DateTimePickerPanel">
-                                        <Setter Property="ItemHeight" Value="{Binding $parent[DatePicker].Bounds.Height}" />
+                                        <Setter Property="ItemHeight"
+                                                Value="{Binding $parent[DatePicker].Bounds.Height}" />
 
                                         <Style Selector="^ > ListBoxItem">
-                                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ListBoxItem.Embedded.DatePicker}" />
+                                            <Setter Property="Theme"
+                                                    Value="{StaticResource MyNet.Theme.ListBoxItem.Embedded.DatePicker}" />
                                             <Setter Property="ContentTemplate">
                                                 <Setter.Value>
                                                     <DataTemplate>
@@ -77,16 +89,21 @@
                                                       DockPanel.Dock="Top"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
                                                       Opacity="0">
-                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronUp}" Classes="size-xs" />
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronUp}"
+                                                      Classes="size-xs" />
                                         </RepeatButton>
                                         <RepeatButton Name="PART_DayDownButton"
                                                       DockPanel.Dock="Bottom"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
                                                       Opacity="0">
-                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronDown}" Classes="size-xs" />
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronDown}"
+                                                      Classes="size-xs" />
                                         </RepeatButton>
-                                        <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-                                            <DateTimePickerPanel Name="PART_DaySelector" PanelType="Day" ShouldLoop="True" />
+                                        <ScrollViewer Margin="{my:Thickness Sm}"
+                                                      HorizontalScrollBarVisibility="Disabled"
+                                                      VerticalScrollBarVisibility="Hidden">
+                                            <DateTimePickerPanel Name="PART_DaySelector" PanelType="Day"
+                                                                 ShouldLoop="True" />
                                         </ScrollViewer>
                                     </DockPanel>
                                 </Panel>
@@ -97,16 +114,21 @@
                                                       DockPanel.Dock="Top"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
                                                       Opacity="0">
-                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronUp}" Classes="size-xs" />
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronUp}"
+                                                      Classes="size-xs" />
                                         </RepeatButton>
                                         <RepeatButton Name="PART_MonthDownButton"
                                                       DockPanel.Dock="Bottom"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
                                                       Opacity="0">
-                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronDown}" Classes="size-xs" />
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronDown}"
+                                                      Classes="size-xs" />
                                         </RepeatButton>
-                                        <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-                                            <DateTimePickerPanel Name="PART_MonthSelector" PanelType="Month" ShouldLoop="True" />
+                                        <ScrollViewer Margin="{my:Thickness Sm}"
+                                                      HorizontalScrollBarVisibility="Disabled"
+                                                      VerticalScrollBarVisibility="Hidden">
+                                            <DateTimePickerPanel Name="PART_MonthSelector" PanelType="Month"
+                                                                 ShouldLoop="True" />
                                         </ScrollViewer>
                                     </DockPanel>
                                 </Panel>
@@ -117,16 +139,21 @@
                                                       DockPanel.Dock="Top"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
                                                       Opacity="0">
-                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronUp}" Classes="size-xs" />
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronUp}"
+                                                      Classes="size-xs" />
                                         </RepeatButton>
                                         <RepeatButton Name="PART_YearDownButton"
                                                       DockPanel.Dock="Bottom"
                                                       Theme="{StaticResource MyNet.Theme.RepeatButton.Embedded.ScrollViewer.Popup}"
                                                       Opacity="0">
-                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronDown}" Classes="size-xs" />
+                                            <PathIcon Data="{StaticResource MyNet.Geometry.ChevronDown}"
+                                                      Classes="size-xs" />
                                         </RepeatButton>
-                                        <ScrollViewer Margin="{my:Thickness Sm}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-                                            <DateTimePickerPanel Name="PART_YearSelector" PanelType="Year" ShouldLoop="False" />
+                                        <ScrollViewer Margin="{my:Thickness Sm}"
+                                                      HorizontalScrollBarVisibility="Disabled"
+                                                      VerticalScrollBarVisibility="Hidden">
+                                            <DateTimePickerPanel Name="PART_YearSelector" PanelType="Year"
+                                                                 ShouldLoop="False" />
                                         </ScrollViewer>
                                     </DockPanel>
                                 </Panel>
@@ -225,8 +252,8 @@
         <Setter Property="my:DateTimePickerAssist.PlaceholderYear" Value="{my:Loc Year}" />
         <Setter Property="my:DateTimePickerBehavior.OverridePlaceholderText" Value="True" />
         <Setter Property="my:GlobalizationBehavior.UpdateOnCultureChanged" Value="True" />
-        <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True"/>
-        <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True"/>
+        <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True" />
+        <Setter Property="my:PopupBehavior.AutoFocusOnOpening" Value="True" />
 
         <!-- Default -->
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
@@ -256,14 +283,20 @@
         <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
         <Setter Property="my:ItemsAssist.BorderBrush" Value="Transparent" />
         <Setter Property="my:ItemsAssist.BorderThickness" Value="0 0.75" />
-        <Setter Property="my:ItemsAssist.Foreground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True, Opacity=Medium}" />
-        <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:ThemeBrush (my:PopupAssist.Background), Opacity=Hover, Contrast=True}" />
+        <Setter Property="my:ItemsAssist.Foreground"
+                Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True, Opacity=Medium}" />
+        <Setter Property="my:ItemsAssist.HoverBackground"
+                Value="{my:ThemeBrush (my:PopupAssist.Background), Opacity=Hover, Contrast=True}" />
         <Setter Property="my:ItemsAssist.HoverBorderBrush" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.HoverForeground"
+                Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
         <Setter Property="my:ItemsAssist.ActiveBackground" Value="Transparent" />
-        <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:ThemeRole Primary, Role='(my:PopupAssist.Role)'}" />
-        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
-        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.ActiveBorderBrush"
+                Value="{my:ThemeRole Primary, Role='(my:PopupAssist.Role)'}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground"
+                Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
+        <Setter Property="my:ItemsAssist.RippleColor"
+                Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
 
         <Style Selector="^.context-contrast:not(.has-role)">
             <Setter Property="my:ItemsAssist.ActiveBorderBrush" Value="{my:Theme Primary}" />
@@ -296,8 +329,10 @@
                                 Theme="{StaticResource MyNet.Theme.Border.State}" />
 
                         <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
-                                <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto,Auto,Auto">
+                            <my:Ripple Name="PART_Ripple"
+                                       RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                                <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}"
+                                      ColumnDefinitions="Auto,*,Auto,Auto,Auto">
 
                                     <!-- Icon -->
                                     <ContentControl x:Name="PART_Icon"
@@ -311,8 +346,12 @@
                                                     Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
                                         <ContentControl.IsVisible>
                                             <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                         Path="(my:IconAssist.Icon)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                         Path="(my:IconAssist.IconTemplate)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
                                             </MultiBinding>
                                         </ContentControl.IsVisible>
                                     </ContentControl>
@@ -324,23 +363,24 @@
                                             my:DisableAssist.IsDisablable="False"
                                             Theme="{StaticResource MyNet.Theme.Button.Clean}">
                                         <my:InputChrome Name="PART_Input"
-                                                      Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
-                                                      HorizontalAlignment="Stretch"
-                                                      VerticalAlignment="Center"
-                                                      ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
-                                                      FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
-                                                      FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
-                                                      InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
-                                                      InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
-                                                      InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
-                                                      InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
-                                                      InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
-                                                      Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                                      UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
-                                                      PlaceholderText="{TemplateBinding (my:InputAssist.PlaceholderText)}"
-                                                      PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
+                                                        Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Center"
+                                                        ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
+                                                        FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
+                                                        FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
+                                                        InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
+                                                        InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
+                                                        InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
+                                                        InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
+                                                        InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
+                                                        Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
+                                                        UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
+                                                        PlaceholderText="{TemplateBinding (my:InputAssist.PlaceholderText)}"
+                                                        PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
 
-                                            <Grid Name="PART_ButtonContentGrid" VerticalAlignment="Center" ColumnDefinitions="78*,Auto,132*,Auto,78*">
+                                            <Grid Name="PART_ButtonContentGrid" VerticalAlignment="Center"
+                                                  ColumnDefinitions="78*,Auto,132*,Auto,78*">
                                                 <TextBlock Name="PART_DayTextBlock"
                                                            Padding="{my:Thickness Sm, Horizontal}"
                                                            HorizontalAlignment="Center"
@@ -421,7 +461,8 @@
                             <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
                                     Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                     Background="{TemplateBinding (my:PopupAssist.Background)}">
-                                <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                <Border HorizontalAlignment="Stretch" ClipToBounds="True"
+                                        CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                     <DatePickerPresenter Name="PART_PickerPresenter"
                                                          Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
                                                          my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}" />
@@ -445,11 +486,13 @@
         </Style>
 
         <Style Selector="^.icon-right:not(.button-right) /template/ Grid#PART_Grid">
-            <Setter Property="Margin" Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessAdjustConverter.AddLeftToRight}}" />
+            <Setter Property="Margin"
+                    Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessAdjustConverter.AddLeftToRight}}" />
         </Style>
 
         <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
-            <Setter Property="Margin" Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Left}}" />
+            <Setter Property="Margin"
+                    Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Left}}" />
         </Style>
 
         <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
@@ -458,7 +501,8 @@
 
         <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
             <Style Selector="^ /template/ my|InputChrome#PART_Input">
-                <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Top}}" />
+                <Setter Property="Margin"
+                        Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Top}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
                 <Setter Property="Padding" Value="{my:Thickness Sm}" />
@@ -490,12 +534,14 @@
 
         <!-- No date -->
         <Style Selector="^:hasnodate">
-            <Style Selector="^[(my|DateTimePickerBehavior.OverridePlaceholderText)=False] /template/ Grid#PART_ButtonContentGrid">
+            <Style
+                Selector="^[(my|DateTimePickerBehavior.OverridePlaceholderText)=False] /template/ Grid#PART_ButtonContentGrid">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
 
             <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=False]">
-                <Style Selector="^[(my|DateTimePickerBehavior.OverridePlaceholderText)=True] /template/ Button#PART_FlyoutButton > my|InputChrome">
+                <Style
+                    Selector="^[(my|DateTimePickerBehavior.OverridePlaceholderText)=True] /template/ Button#PART_FlyoutButton > my|InputChrome">
                     <Setter Property="InactiveForeground" Value="Transparent" />
                 </Style>
             </Style>
@@ -543,7 +589,8 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="MyNet.Theme.DatePicker.Underline" TargetType="DatePicker" BasedOn="{StaticResource {x:Type DatePicker}}">
+    <ControlTheme x:Key="MyNet.Theme.DatePicker.Underline" TargetType="DatePicker"
+                  BasedOn="{StaticResource {x:Type DatePicker}}">
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Underline.Md}" />
         <Setter Property="my:InputAssist.InnerPadding" Value="{StaticResource MyNet.Padding.Input.Underline.Inner.Md}" />
@@ -593,8 +640,12 @@
                                                 Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
                                     <ContentControl.IsVisible>
                                         <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                     Path="(my:IconAssist.Icon)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                     Path="(my:IconAssist.IconTemplate)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
                                         </MultiBinding>
                                     </ContentControl.IsVisible>
                                 </ContentControl>
@@ -605,23 +656,25 @@
                                         VerticalAlignment="Stretch"
                                         my:DisableAssist.IsDisablable="False"
                                         Theme="{StaticResource MyNet.Theme.Button.Clean}">
-                                    <my:InputChrome Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
-                                                  HorizontalAlignment="Stretch"
-                                                  VerticalAlignment="Center"
-                                                  ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
-                                                  FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
-                                                  FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
-                                                  InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
-                                                  InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
-                                                  InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
-                                                  InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
-                                                  InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
-                                                  Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                                  UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
-                                                  PlaceholderText="{TemplateBinding (my:InputAssist.PlaceholderText)}"
-                                                  PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
+                                    <my:InputChrome Name="PART_Input"
+                                                    Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
+                                                    FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
+                                                    FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
+                                                    InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
+                                                    InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
+                                                    InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
+                                                    InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
+                                                    InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
+                                                    Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
+                                                    UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
+                                                    PlaceholderText="{TemplateBinding (my:InputAssist.PlaceholderText)}"
+                                                    PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
 
-                                        <Grid Name="PART_ButtonContentGrid" VerticalAlignment="Center" ColumnDefinitions="78*,Auto,132*,Auto,78*">
+                                        <Grid Name="PART_ButtonContentGrid" VerticalAlignment="Center"
+                                              ColumnDefinitions="78*,Auto,132*,Auto,78*">
                                             <TextBlock Name="PART_DayTextBlock"
                                                        Padding="{my:Thickness Sm, Horizontal}"
                                                        HorizontalAlignment="Center"
@@ -716,7 +769,8 @@
                             <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
                                     Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                     Background="{TemplateBinding (my:PopupAssist.Background)}">
-                                <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                <Border HorizontalAlignment="Stretch" ClipToBounds="True"
+                                        CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                     <DatePickerPresenter Name="PART_PickerPresenter"
                                                          Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
                                                          my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}" />
