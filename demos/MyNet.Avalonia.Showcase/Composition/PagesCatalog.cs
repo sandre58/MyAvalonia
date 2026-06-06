@@ -52,6 +52,8 @@ internal static class PagesCatalog
 
             new PagesGroup(nameof(MenuResources.Inputs), MaterialIconKind.FormTextbox, [
                 new(typeof(FieldsPageViewModel), typeof(FieldsPage), MaterialIconKind.FocusFieldHorizontal),
+                new(typeof(MultiComboBoxPageViewModel), typeof(MultiComboBoxPage), MaterialIconKind.FormSelect),
+                new(typeof(TagBoxPageViewModel), typeof(TagBoxPage), MaterialIconKind.TagMultiple),
                 new(typeof(SliderPageViewModel), typeof(SliderPage), MaterialIconKind.TuneVariant),
                 new(typeof(ColorViewPageViewModel), typeof(ColorViewPage), MaterialIconKind.Palette),
                 new(typeof(CalendarPageViewModel), typeof(CalendarPage), MaterialIconKind.Calendar),

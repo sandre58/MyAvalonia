@@ -24,8 +24,8 @@ public interface IMenuItemViewModel
     /// <summary>Gets a value indicating whether this entry is a collapsible group.</summary>
     bool IsGroup { get; }
 
-    /// <summary>Gets a value indicating whether this entry is a non-interactive section header (<see cref="NavigationMenuItem.IsSeparator"/>).</summary>
-    bool IsSeparator { get; }
+    /// <summary>Gets a value indicating whether this entry is a non-interactive section header (<see cref="NavigationMenuItem.IsSectionHeader"/>).</summary>
+    bool IsSectionHeader { get; }
 
     /// <summary>Gets the navigation target for leaf items, or <see langword="null"/> for groups and separators.</summary>
     INavigationPage? NavigationTarget { get; }

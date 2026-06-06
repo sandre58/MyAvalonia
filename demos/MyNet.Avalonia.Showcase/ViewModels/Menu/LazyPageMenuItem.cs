@@ -47,7 +47,7 @@ internal sealed class LazyPageMenuItem(Type viewModelType, MaterialIconKind icon
     public bool IsGroup => false;
 
     /// <inheritdoc/>
-    public bool IsSeparator => false;
+    public bool IsSectionHeader => false;
 
     /// <inheritdoc/>
     public IReadOnlyList<IMenuItemViewModel> Items => EmptyItems;

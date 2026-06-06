@@ -79,7 +79,7 @@ internal static class MenuFilter
     {
         for (var i = 0; i < source.Count; i++)
         {
-            if (source[i].IsSeparator)
+            if (source[i].IsSectionHeader)
                 return i;
         }
 

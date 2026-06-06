@@ -16,7 +16,7 @@ using MyNet.UI.Navigation.Models;
 namespace MyNet.Avalonia.Showcase.ViewModels.Menu;
 
 /// <summary>
-/// Non-navigable section header mapped to <see cref="NavigationMenuItem.IsSeparator"/> (title + optional icon).
+/// Non-navigable section header mapped to <see cref="NavigationMenuItem.IsSectionHeader"/> (title + optional icon).
 /// </summary>
 internal sealed class MenuSectionViewModel : ObservableObject, IMenuItemViewModel
 {
@@ -42,7 +42,7 @@ internal sealed class MenuSectionViewModel : ObservableObject, IMenuItemViewMode
     public bool IsGroup => false;
 
     /// <inheritdoc/>
-    public bool IsSeparator => true;
+    public bool IsSectionHeader => true;
 
     /// <inheritdoc/>
     public INavigationPage? NavigationTarget => null;

@@ -159,7 +159,7 @@ internal sealed class MainViewModel : ObservableObject
 
         foreach (var item in _allMenuItems)
         {
-            if (item.IsSeparator)
+            if (item.IsSectionHeader)
                 continue;
 
             switch (item)

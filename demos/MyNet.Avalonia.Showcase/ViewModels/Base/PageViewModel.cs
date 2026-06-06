@@ -36,7 +36,7 @@ internal abstract class PageViewModel : ObservableObject, IMenuItemViewModel, IN
     public bool IsGroup => false;
 
     /// <inheritdoc/>
-    public bool IsSeparator => false;
+    public bool IsSectionHeader => false;
 
     /// <inheritdoc/>
     public INavigationPage NavigationTarget => this;

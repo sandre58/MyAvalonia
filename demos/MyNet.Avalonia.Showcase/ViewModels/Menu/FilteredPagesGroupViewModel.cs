@@ -29,7 +29,7 @@ internal sealed class FilteredPagesGroupViewModel(PagesGroupViewModel source, IR
     public bool IsGroup => true;
 
     /// <inheritdoc/>
-    public bool IsSeparator => false;
+    public bool IsSectionHeader => false;
 
     /// <inheritdoc/>
     public INavigationPage? NavigationTarget => null;

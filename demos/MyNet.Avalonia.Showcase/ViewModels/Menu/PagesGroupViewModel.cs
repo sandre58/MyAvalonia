@@ -40,7 +40,7 @@ internal sealed class PagesGroupViewModel : ObservableObject, IMenuItemViewModel
     public bool IsGroup => true;
 
     /// <inheritdoc/>
-    public bool IsSeparator => false;
+    public bool IsSectionHeader => false;
 
     /// <inheritdoc/>
     public INavigationPage? NavigationTarget => null;
