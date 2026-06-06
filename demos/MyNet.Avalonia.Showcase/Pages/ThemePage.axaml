@@ -19,7 +19,7 @@
                                     Header="{Binding}"
                                     my:HeaderAssist.HorizontalAlignment="Stretch"
                                     VerticalContentAlignment="Bottom"
-                                    Classes="shadow-header shadow-surface header-lg">
+                                    Classes="kind-card shadow-header shadow-surface header-lg">
                 <HeaderedContentControl.Styles>
                     <Style Selector="HeaderedContentControl.for-surface">
                         <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
@@ -243,20 +243,20 @@
                 <StackPanel Grid.Column="1" Spacing="{my:Spacing Md}" Width="450">
 
                     <!-- Opacity Levels -->
-                    <HeaderedContentControl Header="{my:Loc Opacities}" Classes="shadow-surface">
+                    <HeaderedContentControl Header="{my:Loc Opacities}" Classes="kind-card shadow-surface">
                         <ItemsControl ItemsSource="{Binding OpacityLevels}"
                                       Classes="flex-vertical"
                                       ItemTemplate="{StaticResource OpacityDefinitionTemplate}" />
                     </HeaderedContentControl>
 
                     <!-- Control Examples -->
-                    <HeaderedContentControl Header="{my:Loc Examples}" Classes="shadow-surface"
+                    <HeaderedContentControl Header="{my:Loc Examples}" Classes="kind-card shadow-surface"
                                             HorizontalContentAlignment="Stretch">
                         <UniformGrid Columns="2" ColumnSpacing="{StaticResource MyNet.Spacing.Md}"
                                      RowSpacing="{StaticResource MyNet.Spacing.Md}">
 
                             <!-- Buttons Examples -->
-                            <HeaderedContentControl Header="Buttons" Classes="variant-light header-lg"
+                            <HeaderedContentControl Header="Buttons" Classes="kind-card variant-light header-lg"
                                                     my:ThemeAssist.Role="Inverse" HorizontalContentAlignment="Stretch">
                                 <WrapPanel Classes="gap-sm">
                                     <Button Content="Primary" Classes="variant-solid" my:ThemeAssist.Role="Primary" />
@@ -267,7 +267,7 @@
                             </HeaderedContentControl>
 
                             <!-- Input Examples -->
-                            <HeaderedContentControl Header="Inputs" Classes="variant-light header-lg"
+                            <HeaderedContentControl Header="Inputs" Classes="kind-card variant-light header-lg"
                                                     my:ThemeAssist.Role="Inverse" HorizontalContentAlignment="Stretch">
                                 <StackPanel Classes="gap-sm">
                                     <TextBox Text="Text Input" PlaceholderText="Enter text..."
@@ -282,7 +282,7 @@
                             </HeaderedContentControl>
 
                             <!-- Progress Examples -->
-                            <HeaderedContentControl Header="Progress" Classes="variant-light header-lg"
+                            <HeaderedContentControl Header="Progress" Classes="kind-card variant-light header-lg"
                                                     my:ThemeAssist.Role="Inverse" HorizontalContentAlignment="Stretch">
                                 <StackPanel Classes="gap-sm">
                                     <ProgressBar Value="60" Maximum="100" Classes="variant-solid"
@@ -294,7 +294,7 @@
                             </HeaderedContentControl>
 
                             <!-- Text Examples -->
-                            <HeaderedContentControl Header="Header" Classes="variant-light header-lg"
+                            <HeaderedContentControl Header="Header" Classes="kind-card variant-light header-lg"
                                                     my:ThemeAssist.Role="Inverse" HorizontalContentAlignment="Stretch">
                                 <StackPanel Classes="gap-sm">
                                     <TextBlock Text="Primary Text" Foreground="{my:Theme Foreground}" />

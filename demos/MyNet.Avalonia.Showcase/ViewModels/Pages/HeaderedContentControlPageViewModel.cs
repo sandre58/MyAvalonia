@@ -24,8 +24,22 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 internal sealed class HeaderedContentControlPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(HeaderedContentControl), commands, [
     new ControlThemeBuilder()
         .WithContent(HeaderedContentControl.HeaderProperty, ContentProviderType.Text)
-        .AddAllVariants()
         .AddVariant(CssClass.Underline)
+        .AddDefaultSizes()
+        .AddSizes("header-xs", "header-sm", "header-md", "header-lg", "header-xl", "header-h6", "header-h5", "header-h4", "header-h3", "header-h2", "header-h1")
+        .AddEnumClass<Position, ListBoxEditor>(Position.Top, x => x.DisplayName(nameof(SettingsResources.Layout)), configureChoice: (x, y) => y.WithIcon(Enum.Parse<MaterialIconKind>($"Dock{x}")))
+        .AddClass(CssClass.HeaderAlignment(nameof(Position.Left)),
+            x => x.DisplayName(nameof(SettingsResources.HeaderPosition))
+                .Of<ListBoxEditor>(editor => editor.AddChoice(CssClass.HeaderAlignment(nameof(Position.Left)), builder => builder.DisplayName(() => Position.Left.Humanize()).WithIcon(MaterialIconKind.GamepadCircleLeft))
+                    .AddChoice(CssClass.HeaderAlignment(nameof(Position.Top)), builder => builder.DisplayName(() => Position.Top.Humanize()).WithIcon(MaterialIconKind.GamepadCircleUp))
+                    .AddChoice(CssClass.HeaderAlignment(nameof(Position.Right)), builder => builder.DisplayName(() => Position.Right.Humanize()).WithIcon(MaterialIconKind.GamepadCircleRight))
+                    .AddChoice(CssClass.HeaderAlignment(nameof(Position.Bottom)), builder => builder.DisplayName(() => Position.Bottom.Humanize()).WithIcon(MaterialIconKind.GamepadCircleDown))
+                    .AddChoice(CssClass.HeaderAlignment($"{CssSuffix.Middle}-{nameof(HorizontalAlignment.Center)}"), builder => builder.DisplayName(() => SettingsResources.Center).WithIcon(MaterialIconKind.ImageFilterCenterFocus)))),
+
+    new ControlThemeBuilder()
+        .WithKind(CssClass.KindCard)
+        .WithContent(HeaderedContentControl.HeaderProperty, ContentProviderType.Text)
+        .AddAllVariants()
         .AddVariant(CssClass.ShadowSurface)
         .AddVariant(CssClass.VariantHeader)
         .AddDefaultVariants()
@@ -40,37 +54,7 @@ internal sealed class HeaderedContentControlPageViewModel(ICommandFactory comman
                     .AddChoice(CssClass.HeaderAlignment(nameof(Position.Top)), builder => builder.DisplayName(() => Position.Top.Humanize()).WithIcon(MaterialIconKind.GamepadCircleUp))
                     .AddChoice(CssClass.HeaderAlignment(nameof(Position.Right)), builder => builder.DisplayName(() => Position.Right.Humanize()).WithIcon(MaterialIconKind.GamepadCircleRight))
                     .AddChoice(CssClass.HeaderAlignment(nameof(Position.Bottom)), builder => builder.DisplayName(() => Position.Bottom.Humanize()).WithIcon(MaterialIconKind.GamepadCircleDown))
-                    .AddChoice(CssClass.HeaderAlignment($"{CssSuffix.Middle}-{nameof(HorizontalAlignment.Center)}"), builder => builder.DisplayName(() => SettingsResources.Center).WithIcon(MaterialIconKind.ImageFilterCenterFocus)))),
-
-    new ControlThemeBuilder()
-        .WithContent(HeaderedContentControl.HeaderProperty, ContentProviderType.Text)
-        .WithKind("label")
-        .AddVariant(CssClass.Watermark)
-        .AddDefaultSizes()
-        .AddSizes("header-xs", "header-sm", "header-md", "header-lg", "header-xl", "header-h6", "header-h5", "header-h4", "header-h3", "header-h2", "header-h1")
-        .AddEnumClass<Position, ListBoxEditor>(Position.Top, x => x.DisplayName(nameof(SettingsResources.Layout)), configureChoice: (x, y) => y.WithIcon(Enum.Parse<MaterialIconKind>($"Dock{x}")))
-        .AddClass(CssClass.HeaderAlignment(nameof(Position.Left)),
-            x => x.DisplayName(nameof(SettingsResources.HeaderPosition))
-                .Of<ListBoxEditor>(editor => editor.AddChoice(CssClass.HeaderAlignment(nameof(Position.Left)), builder => builder.DisplayName(() => Position.Left.Humanize()).WithIcon(MaterialIconKind.GamepadCircleLeft))
-                    .AddChoice(CssClass.HeaderAlignment(nameof(Position.Top)), builder => builder.DisplayName(() => Position.Top.Humanize()).WithIcon(MaterialIconKind.GamepadCircleUp))
-                    .AddChoice(CssClass.HeaderAlignment(nameof(Position.Right)), builder => builder.DisplayName(() => Position.Right.Humanize()).WithIcon(MaterialIconKind.GamepadCircleRight))
-                    .AddChoice(CssClass.HeaderAlignment(nameof(Position.Bottom)), builder => builder.DisplayName(() => Position.Bottom.Humanize()).WithIcon(MaterialIconKind.GamepadCircleDown))
-                    .AddChoice(CssClass.HeaderAlignment($"{CssSuffix.Middle}-{nameof(HorizontalAlignment.Center)}"), builder => builder.DisplayName(() => SettingsResources.Center).WithIcon(MaterialIconKind.ImageFilterCenterFocus)))),
-
-    new ControlThemeBuilder()
-    .WithContent(HeaderedContentControl.HeaderProperty, ContentProviderType.Text)
-    .WithKind(CssClass.KindSection)
-    .AddVariant(CssClass.Underline)
-    .AddDefaultSizes()
-    .AddSizes("header-xs", "header-sm", "header-md", "header-lg", "header-xl", "header-h6", "header-h5", "header-h4", "header-h3", "header-h2", "header-h1")
-    .AddEnumClass<Position, ListBoxEditor>(Position.Top, x => x.DisplayName(nameof(SettingsResources.Layout)), configureChoice: (x, y) => y.WithIcon(Enum.Parse<MaterialIconKind>($"Dock{x}")))
-    .AddClass(CssClass.HeaderAlignment(nameof(Position.Left)),
-        x => x.DisplayName(nameof(SettingsResources.HeaderPosition))
-            .Of<ListBoxEditor>(editor => editor.AddChoice(CssClass.HeaderAlignment(nameof(Position.Left)), builder => builder.DisplayName(() => Position.Left.Humanize()).WithIcon(MaterialIconKind.GamepadCircleLeft))
-                .AddChoice(CssClass.HeaderAlignment(nameof(Position.Top)), builder => builder.DisplayName(() => Position.Top.Humanize()).WithIcon(MaterialIconKind.GamepadCircleUp))
-                .AddChoice(CssClass.HeaderAlignment(nameof(Position.Right)), builder => builder.DisplayName(() => Position.Right.Humanize()).WithIcon(MaterialIconKind.GamepadCircleRight))
-                .AddChoice(CssClass.HeaderAlignment(nameof(Position.Bottom)), builder => builder.DisplayName(() => Position.Bottom.Humanize()).WithIcon(MaterialIconKind.GamepadCircleDown))
-                .AddChoice(CssClass.HeaderAlignment($"{CssSuffix.Middle}-{nameof(HorizontalAlignment.Center)}"), builder => builder.DisplayName(() => SettingsResources.Center).WithIcon(MaterialIconKind.ImageFilterCenterFocus))))
+                    .AddChoice(CssClass.HeaderAlignment($"{CssSuffix.Middle}-{nameof(HorizontalAlignment.Center)}"), builder => builder.DisplayName(() => SettingsResources.Center).WithIcon(MaterialIconKind.ImageFilterCenterFocus))))
 ])
 {
     /// <inheritdoc/>

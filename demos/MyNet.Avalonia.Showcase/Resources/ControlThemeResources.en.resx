@@ -207,4 +207,7 @@
   <data name="ThemeButtonSpinnerUnderline" xml:space="preserve">
       <value>Underline theme</value>
   </data>
+  <data name="ThemeHeaderedContentControlCard" xml:space="preserve">
+      <value>Card theme</value>
+  </data>
 </root>

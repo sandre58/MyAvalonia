@@ -30,7 +30,6 @@
                     <!-- Menu Section -->
                     <HeaderedContentControl HorizontalContentAlignment="Stretch"
                                             Header="Menu"
-                                            Classes="variant-transparent header-caption"
                                             my:IconAssist.Icon="{my:MaterialIcon Menu, DefinedSize=Sm}">
                         <Menu ItemsSource="{m:MainMenuItems}" />
                     </HeaderedContentControl>
@@ -38,7 +37,6 @@
                     <!-- ContextMenu Section -->
                     <HeaderedContentControl HorizontalContentAlignment="Stretch"
                                             Header="ContextMenu"
-                                            Classes="variant-transparent header-caption"
                                             my:IconAssist.Icon="{my:MaterialIcon MouseRightClick, DefinedSize=Sm}">
                         <Border Classes="kind-card">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="{StaticResource MyNet.Spacing.Md}">
@@ -54,7 +52,6 @@
                     <!-- MenuFlyout Section -->
                     <HeaderedContentControl HorizontalContentAlignment="Stretch"
                                             Header="MenuFlyout"
-                                            Classes="variant-transparent header-caption"
                                             my:IconAssist.Icon="{my:MaterialIcon MenuDown, DefinedSize=Sm}">
                         <UniformGrid Columns="2" Rows="1" ColumnSpacing="{StaticResource MyNet.Spacing.Lg}">
                             <Border Classes="kind-card">
@@ -78,7 +75,6 @@
                     <!-- Flyout Section -->
                     <HeaderedContentControl HorizontalContentAlignment="Stretch"
                                             Header="Flyout"
-                                            Classes="variant-transparent header-caption"
                                             my:IconAssist.Icon="{my:MaterialIcon InformationOutline, DefinedSize=Sm}">
                         <UniformGrid Columns="2" Rows="1" ColumnSpacing="{StaticResource MyNet.Spacing.Lg}">
                             <Border Classes="kind-card">

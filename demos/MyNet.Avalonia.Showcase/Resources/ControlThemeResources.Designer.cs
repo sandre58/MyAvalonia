@@ -168,6 +168,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Carte.
+        /// </summary>
+        internal static string ThemeHeaderedContentControlCard {
+            get {
+                return ResourceManager.GetString("ThemeHeaderedContentControlCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Libellé.
         /// </summary>
         internal static string ThemeHeaderedContentControlLabel {

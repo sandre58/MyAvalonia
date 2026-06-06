@@ -115,7 +115,7 @@
                 <!-- Code XAML -->
                 <HeaderedContentControl Grid.Row="2"
                                         my:IconAssist.Icon="{my:MaterialIcon CodeTags, DefinedSize=Sm}"
-                                        Classes="variant-header variant-outlined variant-solid header-h6"
+                                        Classes="kind-card variant-header variant-outlined variant-solid header-h6"
                                         Background="{my:Theme Surface.Level1}"
                                         HorizontalAlignment="Stretch"
                                         HorizontalContentAlignment="Stretch"

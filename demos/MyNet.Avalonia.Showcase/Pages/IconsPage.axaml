@@ -34,7 +34,6 @@
                         <DataTemplate x:DataType="{x:Type vm:MaterialIconKindWrapper}">
                             <HeaderedContentControl HorizontalContentAlignment="Stretch"
                                                     my:HeaderAssist.HorizontalAlignment="Center"
-                                                    Classes="variant-transparent header-h2"
                                                     Header="{Binding DisplayName}">
 
                                 <Grid RowDefinitions="Auto,40,*">

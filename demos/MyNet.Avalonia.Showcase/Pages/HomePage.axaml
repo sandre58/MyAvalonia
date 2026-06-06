@@ -67,7 +67,7 @@
                 </ItemsControl>
 
                 <!-- Quick start -->
-                <HeaderedContentControl Header="{my:Loc FeaturedSection}" Classes="kind-section"
+                <HeaderedContentControl Header="{my:Loc FeaturedSection}"
                                         HorizontalContentAlignment="Stretch">
                     <StackPanel Spacing="{my:Spacing Md}">
                         <TextBlock Classes="font-sm opacity-high" Text="{my:Loc FeaturedSectionDescription}"
@@ -103,8 +103,7 @@
                 </HeaderedContentControl>
 
                 <!-- Capabilities -->
-                <HeaderedContentControl Header="{my:Loc CapabilitiesSection}" Classes="kind-section"
-                                        HorizontalContentAlignment="Stretch">
+                <HeaderedContentControl Header="{my:Loc CapabilitiesSection}" HorizontalContentAlignment="Stretch">
                     <StackPanel Spacing="{my:Spacing Md}">
                         <TextBlock Classes="font-sm opacity-high"
                                    Text="{my:Loc CapabilitiesSectionDescription}"
@@ -136,8 +135,7 @@
                 </HeaderedContentControl>
 
                 <!-- Categories -->
-                <HeaderedContentControl Header="{my:Loc CategoriesSection}" Classes="kind-section"
-                                        HorizontalContentAlignment="Stretch">
+                <HeaderedContentControl Header="{my:Loc CategoriesSection}" HorizontalContentAlignment="Stretch">
                     <StackPanel Spacing="{my:Spacing Md}">
                         <TextBlock Classes="font-sm opacity-high"
                                    Text="{my:Loc CategoriesSectionDescription}"
@@ -180,7 +178,7 @@
 
                 <!-- Getting started + Explore -->
                 <Grid ColumnDefinitions="*, *" ColumnSpacing="{my:Spacing Xl}">
-                    <HeaderedContentControl Header="{my:Loc GettingStartedSection}">
+                    <HeaderedContentControl Header="{my:Loc GettingStartedSection}" Classes="kind-card">
                         <StackPanel Spacing="{my:Spacing Md}">
                             <TextBlock Classes="font-sm opacity-high"
                                        Text="{my:Loc GettingStartedSectionDescription}"
@@ -220,7 +218,7 @@
                         </StackPanel>
                     </HeaderedContentControl>
 
-                    <HeaderedContentControl Grid.Column="1" Header="{my:Loc ExploreSection}">
+                    <HeaderedContentControl Grid.Column="1" Header="{my:Loc ExploreSection}" Classes="kind-card">
                         <StackPanel Spacing="{my:Spacing Md}">
                             <TextBlock Classes="font-sm opacity-high"
                                        Text="{my:Loc ExploreSectionDescription}"

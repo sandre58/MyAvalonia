@@ -37,7 +37,7 @@
                             <HeaderedContentControl Grid.Row="0"
                                                     Header="Window Dialogs"
                                                     my:IconAssist.Icon="{my:MaterialIcon DockWindow, DefinedSize=Sm}"
-                                                    Classes="variant-header variant-outlined header-h5"
+                                                    Classes="kind-card variant-header variant-outlined header-h5"
                                                     HorizontalContentAlignment="Stretch"
                                                     my:HeaderAssist.HorizontalAlignment="Stretch"
                                                     Margin="{my:Thickness Md, Bottom}" />
@@ -80,7 +80,7 @@
                             <HeaderedContentControl Grid.Row="0"
                                                     Header="Overlay Dialogs"
                                                     my:IconAssist.Icon="{my:MaterialIcon CardOutline, DefinedSize=Sm}"
-                                                    Classes="variant-header variant-outlined header-h5"
+                                                    Classes="kind-card variant-header variant-outlined header-h5"
                                                     HorizontalContentAlignment="Stretch"
                                                     my:HeaderAssist.HorizontalAlignment="Stretch"
                                                     Margin="{my:Thickness Md, Bottom}" />

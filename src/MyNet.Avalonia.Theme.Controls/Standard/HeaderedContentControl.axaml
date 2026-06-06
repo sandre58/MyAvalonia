@@ -10,14 +10,14 @@
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Surface}" />
-        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
+        <Setter Property="Padding" Value="{my:Thickness Md, Top}" />
         <Setter Property="Focusable" Value="false" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="my:HeaderAssist.CornerRadius" Value="0" />
         <Setter Property="my:HeaderAssist.ShadowDepth" Value="Depth0" />
-        <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
+        <Setter Property="my:HeaderAssist.Padding" Value="0" />
         <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
         <Setter Property="my:HeaderAssist.FontFamily" Value="{Binding $self.FontFamily}" />
         <Setter Property="my:HeaderAssist.FontStyle" Value="{Binding $self.FontStyle}" />
@@ -40,12 +40,12 @@
         <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
-        <!-- Default Theme -->
-        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
-        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
-        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
-        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
-        <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <!-- Section (default) -->
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
         <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
         <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
         <Setter Property="my:HeaderAssist.BorderBrush" Value="Transparent" />
@@ -129,23 +129,6 @@
             </Style>
         </Style>
 
-        <Style Selector="^.kind-label">
-            <Style Selector="^ /template/ Grid#PART_Grid">
-                <Setter Property="my:GridBehavior.RowDefinitions" Value="*" />
-                <Setter Property="my:GridBehavior.ColumnDefinitions" Value="Auto,*" />
-            </Style>
-            <Style Selector="^ /template/ Border#PART_Header">
-                <Setter Property="Width" Value="{Binding $parent[HeaderedContentControl].(my:HeaderAssist.Size)}" />
-                <Setter Property="Height" Value="{x:Static x:Double.NaN}" />
-                <Setter Property="Grid.Row" Value="0" />
-                <Setter Property="Grid.Column" Value="0" />
-            </Style>
-            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Grid.Row" Value="0" />
-                <Setter Property="Grid.Column" Value="1" />
-            </Style>
-        </Style>
-
         <Style Selector="^.position-top">
             <Style Selector="^ /template/ Grid#PART_Grid">
                 <Setter Property="my:GridBehavior.RowDefinitions" Value="Auto,*" />
@@ -215,50 +198,18 @@
         <!-- KINDS                                                     -->
         <!-- ═════════════════════════════════════════════════════════ -->
 
-        <Style Selector="^.kind-label">
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
-            <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
-            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Right}" />
-            <Setter Property="my:HeaderAssist.FontWeight" Value="Normal" />
-            <Setter Property="my:HeaderAssist.FontSize" Value="{Binding $self.FontSize}" />
-
-            <Style Selector="^.variant-watermark">
-                <Setter Property="my:HeaderAssist.FontSize"
-                        Value="{Binding $self.FontSize, Converter={x:Static my:MathConverter.Multiply}, ConverterParameter=0.75}" />
-                <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
-                <Setter Property="my:HeaderAssist.Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
-            </Style>
-
-            <Style Selector="^.position-left">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Right}" />
-            </Style>
-
-            <Style Selector="^.position-right">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Left}" />
-            </Style>
-
-            <Style Selector="^.position-top">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Bottom}" />
-            </Style>
-
-            <Style Selector="^.position-bottom">
-                <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm, Top}" />
-            </Style>
-        </Style>
-
-        <Style Selector="^.kind-section">
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="{my:Thickness Md, Top}" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
-            <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
-            <Setter Property="my:HeaderAssist.Padding" Value="0" />
+        <Style Selector="^.kind-card">
+            <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
+            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+            <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+            <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+            <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+            <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
         </Style>
         
         <!-- ═════════════════════════════════════════════════════════ -->
@@ -266,8 +217,6 @@
         <!-- ═════════════════════════════════════════════════════════ -->
 
         <Style Selector="^.variant-underline">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
             <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
             <Setter Property="my:HeaderAssist.BorderThickness" Value="0 0 0 1" />
