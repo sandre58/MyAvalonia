@@ -96,6 +96,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Doublons autorisés.
+        /// </summary>
+        internal static string AllowDuplicates {
+            get {
+                return ResourceManager.GetString("AllowDuplicates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Animation.
         /// </summary>
         internal static string Animation {
@@ -254,6 +263,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string CollapseWidth {
             get {
                 return ResourceManager.GetString("CollapseWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Colonnes.
+        /// </summary>
+        internal static string Columns {
+            get {
+                return ResourceManager.GetString("Columns", resourceCulture);
             }
         }
         
@@ -735,6 +753,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alignement libellé.
+        /// </summary>
+        internal static string LabelAlignment {
+            get {
+                return ResourceManager.GetString("LabelAlignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Est centré.
         /// </summary>
         internal static string IsCentered {
@@ -951,6 +978,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comportement perte focus.
+        /// </summary>
+        internal static string LostFocusBehavior {
+            get {
+                return ResourceManager.GetString("LostFocusBehavior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Couleurs Material.
         /// </summary>
         internal static string MaterialColorPalette {
@@ -974,6 +1010,24 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string Maximum {
             get {
                 return ResourceManager.GetString("Maximum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nombre max..
+        /// </summary>
+        internal static string MaxCount {
+            get {
+                return ResourceManager.GetString("MaxCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hauteur max. liste.
+        /// </summary>
+        internal static string MaxDropDownHeight {
+            get {
+                return ResourceManager.GetString("MaxDropDownHeight", resourceCulture);
             }
         }
         
@@ -1302,6 +1356,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Séparateur.
+        /// </summary>
+        internal static string Separator {
+            get {
+                return ResourceManager.GetString("Separator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forme.
         /// </summary>
         internal static string Shape {
@@ -1424,6 +1487,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string ShowSelection {
             get {
                 return ResourceManager.GetString("ShowSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tout sélectionner.
+        /// </summary>
+        internal static string ShowSelectAll {
+            get {
+                return ResourceManager.GetString("ShowSelectAll", resourceCulture);
             }
         }
         

@@ -11,6 +11,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
@@ -95,6 +97,7 @@ public class TagBox : TemplatedControl
 
     static TagBox()
     {
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<TagBox>(AutomationControlType.Edit);
         _ = TextProperty.Changed.AddClassHandler<TagBox>((x, e) => x.OnTextPropertyChanged(e));
         _ = InputThemeProperty.Changed.AddClassHandler<TagBox>((o, e) => o.OnInputThemePropertyChanged(e));
         _ = TagsProperty.Changed.AddClassHandler<TagBox>((o, e) => o.OnTagsPropertyChanged(e));

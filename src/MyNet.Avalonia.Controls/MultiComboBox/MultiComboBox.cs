@@ -11,6 +11,8 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
@@ -65,6 +67,7 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
         ItemsPanelProperty.OverrideDefaultValue<MultiComboBox>(DefaultPanel);
         IsDropDownOpenProperty.AffectsPseudoClass<MultiComboBox>(PseudoClassName.FlyoutOpen);
         KeyboardNavigation.TabNavigationProperty.OverrideDefaultValue<MultiComboBox>(KeyboardNavigationMode.Once);
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<MultiComboBox>(AutomationControlType.ComboBox);
     }
 
     #region SelectedItemContainerTheme

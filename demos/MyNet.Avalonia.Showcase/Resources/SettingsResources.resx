@@ -730,4 +730,28 @@
   <data name="UseTransitions" xml:space="preserve">
       <value>Utiliser les transitions</value>
   </data>
+  <data name="Columns" xml:space="preserve">
+      <value>Colonnes</value>
+  </data>
+  <data name="LabelAlignment" xml:space="preserve">
+      <value>Alignement libellé</value>
+  </data>
+  <data name="ShowSelectAll" xml:space="preserve">
+      <value>Tout sélectionner</value>
+  </data>
+  <data name="MaxDropDownHeight" xml:space="preserve">
+      <value>Hauteur max. liste</value>
+  </data>
+  <data name="MaxCount" xml:space="preserve">
+      <value>Nombre max.</value>
+  </data>
+  <data name="AllowDuplicates" xml:space="preserve">
+      <value>Doublons autorisés</value>
+  </data>
+  <data name="Separator" xml:space="preserve">
+      <value>Séparateur</value>
+  </data>
+  <data name="LostFocusBehavior" xml:space="preserve">
+      <value>Comportement perte focus</value>
+  </data>
 </root>

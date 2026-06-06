@@ -87,6 +87,7 @@ public class Pagination : TemplatedControl
 
     static Pagination()
     {
+        FocusableProperty.OverrideDefaultValue<Pagination>(true);
         _ = PageSizeProperty.Changed.AddClassHandler<Pagination, int>((pagination, args) =>
             pagination.OnPageSizeChanged(args));
         _ = CurrentPageProperty.Changed.AddClassHandler<Pagination, int?>((pagination, args) =>
@@ -333,5 +334,41 @@ public class Pagination : TemplatedControl
     private void InvokeCommand()
     {
         if (Command?.CanExecute(CommandParameter) == true) Command.Execute(CommandParameter);
+    }
+
+    /// <inheritdoc />
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        if (e.Handled)
+        {
+            base.OnKeyDown(e);
+            return;
+        }
+
+        switch (e.Key)
+        {
+            case Key.Left when _previousButton?.IsEnabled == true:
+                AddCurrentPage(-1);
+                InvokeCommand();
+                e.Handled = true;
+                break;
+            case Key.Right when _nextButton?.IsEnabled == true:
+                AddCurrentPage(1);
+                InvokeCommand();
+                e.Handled = true;
+                break;
+            case Key.Home when PageCount > 0:
+                SetCurrentValue(CurrentPageProperty, 1);
+                InvokeCommand();
+                e.Handled = true;
+                break;
+            case Key.End when PageCount > 0:
+                SetCurrentValue(CurrentPageProperty, PageCount);
+                InvokeCommand();
+                e.Handled = true;
+                break;
+        }
+
+        base.OnKeyDown(e);
     }
 }
