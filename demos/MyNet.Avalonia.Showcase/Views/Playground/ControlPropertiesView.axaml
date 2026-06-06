@@ -41,6 +41,8 @@
                     Maximum="{Binding Maximum}"
                     SmallChange="{Binding Increment}"
                     LargeChange="{Binding Increment}"
+                    IsSnapToTickEnabled="True"
+                    TickFrequency="{Binding Increment}"
                     my:FormItem.Label="{Binding DisplayName}" />
         </DataTemplate>
         <DataTemplate DataType="options:IntSliderOptionViewModel">
@@ -49,6 +51,8 @@
                     Maximum="{Binding Maximum}"
                     SmallChange="{Binding Increment}"
                     LargeChange="{Binding Increment}"
+                    IsSnapToTickEnabled="True"
+                    TickFrequency="{Binding Increment}"
                     my:FormItem.Label="{Binding DisplayName}" />
         </DataTemplate>
 

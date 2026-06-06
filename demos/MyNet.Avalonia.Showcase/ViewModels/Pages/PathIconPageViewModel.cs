@@ -1,27 +1,23 @@
 // -----------------------------------------------------------------------
-// <copyright file="ExtendedIconPageViewModel.cs" company="Stéphane ANDRE">
+// <copyright file="PathIconPageViewModel.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using Material.Icons;
-using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Showcase.Extensions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
-using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.UI.Commands;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class ExtendedIconPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(ExtendedIcon), commands, [
+internal sealed class PathIconPageViewModel(ICommandFactory commands) : ShowcaseViewModel("PathIcon", commands, [
     new ControlThemeBuilder()
-        .AddVariants(ControlVariant.Light, ControlVariant.Outlined)
-        .AddVariants("kind-glyph")
-        .AddAllRoles()
         .AddStandardSizes()
+        .AddVariants("kind-glyph")
 ])
 {
     /// <inheritdoc/>
-    public override MaterialIconKind Icon => MaterialIconKind.Shape;
+    public override MaterialIconKind Icon => MaterialIconKind.VectorSquare;
 }

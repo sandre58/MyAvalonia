@@ -97,9 +97,13 @@ internal static class PagesCatalog
             ]),
 
             new PagesGroup(nameof(MenuResources.ShapesAndDrawing), MaterialIconKind.Shape, [
+                new(typeof(PathIconPageViewModel), typeof(PathIconPage), MaterialIconKind.VectorSquare),
+                new(typeof(ExtendedIconPageViewModel), typeof(ExtendedIconPage), MaterialIconKind.Shape),
+                new(typeof(MaterialIconPageViewModel), typeof(MaterialIconPage), MaterialIconKind.AnimationOutline),
+                new(typeof(IconContentControlPageViewModel), typeof(IconContentControlPage), MaterialIconKind.TextBoxOutline),
+                new(typeof(RipplePageViewModel), typeof(RipplePage), MaterialIconKind.RadiusOutline),
                 new(typeof(BorderPageViewModel), typeof(BorderPage), MaterialIconKind.CardOutline),
-                new(typeof(EllipsePageViewModel), typeof(EllipsePage), MaterialIconKind.Circle),
-                new(typeof(ExtendedIconPageViewModel), typeof(ExtendedIconPage), MaterialIconKind.Shape)
+                new(typeof(EllipsePageViewModel), typeof(EllipsePage), MaterialIconKind.Circle)
             ])
         ];
 

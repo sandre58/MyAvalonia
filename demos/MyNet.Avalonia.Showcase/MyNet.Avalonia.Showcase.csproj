@@ -108,6 +108,11 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>CardPageResources.resx</DependentUpon>
       </Compile>
+      <Compile Update="Resources\RipplePageResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>RipplePageResources.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -162,6 +167,10 @@
         <EmbeddedResource Update="Resources\CardPageResources.resx">
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>CardPageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\RipplePageResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>RipplePageResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 </Project>

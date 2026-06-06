@@ -51,7 +51,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="my:ClipboardAssist.Content"
                 Value="{my:Display Content, RelativeSource={RelativeSource Self}}" />
-        <Setter Property="my:TextField.PlaceholderText" Value="{x:Static sys:String.Empty}" />
+        <Setter Property="my:InputChrome.PlaceholderText" Value="{x:Static sys:String.Empty}" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.Margin" Value="0 1" />
@@ -129,7 +129,7 @@
                                                 </MultiBinding>
                                             </ContentControl.IsVisible>
                                         </ContentControl>
-                                        <my:TextField Name="PART_TextField"
+                                        <my:InputChrome Name="PART_Input"
                                                       Grid.Column="1"
                                                       Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -150,7 +150,7 @@
                                             <ContentPresenter Name="PART_ContentPresenter"
                                                               Content="{TemplateBinding Content}"
                                                               ContentTemplate="{TemplateBinding ContentTemplate}" />
-                                        </my:TextField>
+                                        </my:InputChrome>
                                     </Grid>
 
                                     <!-- Spinner buttons (default: Vertical layout, right side) -->
@@ -206,7 +206,7 @@
             <Setter Property="Margin" Value="0" />
         </Style>
         <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
-            <Style Selector="^ /template/ my|TextField#PART_TextField">
+            <Style Selector="^ /template/ my|InputChrome#PART_Input">
                 <Setter Property="Margin"
                         Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Top}}" />
             </Style>
@@ -410,7 +410,7 @@
                                         </ContentControl.IsVisible>
                                     </ContentControl>
 
-                                    <my:TextField Grid.Column="1"
+                                    <my:InputChrome Grid.Column="1"
                                                   Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -432,7 +432,7 @@
                                                           Content="{TemplateBinding Content}"
                                                           ContentTemplate="{TemplateBinding ContentTemplate}" />
 
-                                    </my:TextField>
+                                    </my:InputChrome>
                                 </Grid>
 
                                 <!-- Spinner buttons (default: Vertical layout, right side) -->

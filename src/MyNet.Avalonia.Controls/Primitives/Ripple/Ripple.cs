@@ -13,6 +13,7 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Rendering.Composition;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;
@@ -29,6 +30,7 @@ public class Ripple : ContentControl
     private CompositionContainerVisual? _container;
     private CompositionCustomVisual? _last;
     private byte _pointers;
+    private IInputElement? _interactiveParent;
 
     static Ripple() => BackgroundProperty.OverrideDefaultValue<Ripple>(Brushes.Transparent);
 
@@ -48,6 +50,8 @@ public class Ripple : ContentControl
         _container = thisVisual.Compositor.CreateContainerVisual();
         (_container.Size, _container.Offset) = ComputeContainerLayout(Bounds.Size);
         ElementComposition.SetElementChildVisual(this, _container);
+
+        AttachInteractiveParent();
     }
 
     private (Vector Size, Vector3D Offset) ComputeContainerLayout(Size size)
@@ -60,6 +64,8 @@ public class Ripple : ContentControl
 
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
+        DetachInteractiveParent();
+
         base.OnDetachedFromVisualTree(e);
 
         _container = null;
@@ -87,32 +93,7 @@ public class Ripple : ContentControl
     private void PointerPressedHandler(object? sender, PointerPressedEventArgs e)
     {
         var (x, y) = e.GetPosition(this);
-        if (_container is null || x < 0 || x > Bounds.Width || y < 0 || y > Bounds.Height || RippleFill is null)
-        {
-            return;
-        }
-
-        _isCancelled = false;
-
-        if (!IsActive)
-            return;
-
-        if (_pointers != 0)
-            return;
-
-        // Only first pointer can arrive a ripple
-        _pointers++;
-        var r = CreateRipple(x, y, IsCentered);
-        _last = r;
-
-        // AttachOnUpdateValueOnMouseWheel ripple instance to canvas
-        _container.Children.Add(r);
-        r.SendHandlerMessage(RippleHandler.FirstStepMessage);
-
-        if (_isCancelled)
-        {
-            RemoveLastRipple();
-        }
+        TryStartRipple(x, y, IsCentered);
     }
 
     private void LostFocusHandler(object? sender, RoutedEventArgs e)
@@ -133,25 +114,61 @@ public class Ripple : ContentControl
         RemoveLastRipple();
     }
 
+    private void InteractiveParentKeyDownHandler(object? sender, KeyEventArgs e)
+    {
+        if (e.Key is not Key.Space and not Key.Enter)
+            return;
+
+        TryStartRipple(Bounds.Width / 2, Bounds.Height / 2, isCentered: true);
+    }
+
+    private void InteractiveParentKeyUpHandler(object? sender, KeyEventArgs e)
+    {
+        if (e.Key is not Key.Space and not Key.Enter)
+            return;
+
+        _isCancelled = true;
+        RemoveLastRipple();
+    }
+
+    private void TryStartRipple(double x, double y, bool isCentered)
+    {
+        if (_container is null || RippleFill is null)
+            return;
+
+        if (x < 0 || x > Bounds.Width || y < 0 || y > Bounds.Height)
+            return;
+
+        _isCancelled = false;
+
+        if (!IsActive || _pointers != 0)
+            return;
+
+        _pointers++;
+        var r = CreateRipple(x, y, isCentered);
+        _last = r;
+
+        _container.Children.Add(r);
+        r.SendHandlerMessage(RippleHandler.FirstStepMessage);
+
+        if (_isCancelled)
+            RemoveLastRipple();
+    }
+
     private void RemoveLastRipple()
     {
         if (_last == null)
             return;
 
         _pointers--;
-
-        // This way to handle pointer released is pretty tricky
-        // could have more better way to improve
         OnReleaseHandler(_last);
         _last = null;
     }
 
     private void OnReleaseHandler(CompositionCustomVisual r)
     {
-        // Fade out ripple
         r.SendHandlerMessage(RippleHandler.SecondStepMessage);
 
-        // Remove ripple from canvas to finalize ripple instance
         var container = _container;
         _ = DispatcherTimer.RunOnce(() => container?.Children.Remove(r), Duration, DispatcherPriority.Render);
     }
@@ -186,6 +203,39 @@ public class Ripple : ContentControl
         var visual = ElementComposition.GetElementVisual(this)!.Compositor.CreateCustomVisual(handler);
         visual.Size = _container?.Size ?? default;
         return visual;
+    }
+
+    private void AttachInteractiveParent()
+    {
+        DetachInteractiveParent();
+
+        _interactiveParent = FindInteractiveParent();
+        if (_interactiveParent is null)
+            return;
+
+        _interactiveParent.AddHandler(KeyDownEvent, InteractiveParentKeyDownHandler, RoutingStrategies.Tunnel);
+        _interactiveParent.AddHandler(KeyUpEvent, InteractiveParentKeyUpHandler, RoutingStrategies.Tunnel);
+    }
+
+    private void DetachInteractiveParent()
+    {
+        if (_interactiveParent is null)
+            return;
+
+        _interactiveParent.RemoveHandler(KeyDownEvent, InteractiveParentKeyDownHandler);
+        _interactiveParent.RemoveHandler(KeyUpEvent, InteractiveParentKeyUpHandler);
+        _interactiveParent = null;
+    }
+
+    private IInputElement? FindInteractiveParent()
+    {
+        for (var current = Parent; current is not null; current = current.Parent)
+        {
+            if (current is IInputElement { Focusable: true } input)
+                return input;
+        }
+
+        return null;
     }
 
     #region Styled properties

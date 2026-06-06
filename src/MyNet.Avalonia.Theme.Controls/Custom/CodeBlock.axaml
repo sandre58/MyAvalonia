@@ -107,7 +107,7 @@
                                         </ContentControl.IsVisible>
                                     </ContentControl>
 
-                                    <my:TextField Name="PART_TextField"
+                                    <my:InputChrome Name="PART_Input"
                                                   Grid.Column="1"
                                                   Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -140,7 +140,7 @@
                                                               TextElement.Foreground="{TemplateBinding Foreground}" />
                                         </ScrollViewer>
 
-                                    </my:TextField>
+                                    </my:InputChrome>
 
                                     <!-- Clipboard button -->
                                     <Button Name="PART_ClipboardButton"
@@ -195,7 +195,7 @@
         </Style>
 
         <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
-            <Style Selector="^ /template/ my|TextField#PART_TextField">
+            <Style Selector="^ /template/ my|InputChrome#PART_Input">
                 <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Top}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">

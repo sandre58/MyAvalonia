@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="TextField.cs" company="Stéphane ANDRE">
+// <copyright file="InputChrome.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -14,16 +14,16 @@ using MyNet.Avalonia.Controls.Proxy;
 namespace MyNet.Avalonia.Controls.Primitives;
 
 [PseudoClasses(PseudoClassName.Active, PseudoClassName.Empty, PseudoClassName.Floating)]
-public class TextField : ContentControl
+public class InputChrome : ContentControl
 {
-    static TextField() => ProxyProperty.Changed.AddClassHandler<TextField, IControlProxy>((o, e) => o.OnProxyChanged(e));
+    static InputChrome() => ProxyProperty.Changed.AddClassHandler<InputChrome, IControlProxy>((o, e) => o.OnProxyChanged(e));
 
     #region PlaceholderText
 
     /// <summary>
     /// Defines the <see cref="PlaceholderText"/> property.
     /// </summary>
-    public static readonly StyledProperty<string?> PlaceholderTextProperty = AvaloniaProperty.Register<TextField, string?>(nameof(PlaceholderText));
+    public static readonly StyledProperty<string?> PlaceholderTextProperty = AvaloniaProperty.Register<InputChrome, string?>(nameof(PlaceholderText));
 
     /// <summary>
     /// Gets or sets the placeholder or descriptive text that is displayed even if the text.
@@ -42,7 +42,7 @@ public class TextField : ContentControl
     /// <summary>
     /// Defines the <see cref="UseFloatingPlaceholder"/> property.
     /// </summary>
-    public static readonly StyledProperty<bool> UseFloatingPlaceholderProperty = AvaloniaProperty.Register<TextField, bool>(nameof(UseFloatingPlaceholder));
+    public static readonly StyledProperty<bool> UseFloatingPlaceholderProperty = AvaloniaProperty.Register<InputChrome, bool>(nameof(UseFloatingPlaceholder));
 
     /// <summary>
     /// Gets or sets a value indicating whether the <see cref="PlaceholderText"/> will still be shown above the
@@ -61,7 +61,7 @@ public class TextField : ContentControl
     /// <summary>
     /// Provides FloatingScale Property.
     /// </summary>
-    public static readonly StyledProperty<double> FloatingScaleProperty = AvaloniaProperty.Register<TextField, double>(nameof(FloatingScale), 0.75d);
+    public static readonly StyledProperty<double> FloatingScaleProperty = AvaloniaProperty.Register<InputChrome, double>(nameof(FloatingScale), 0.75d);
 
     /// <summary>
     /// Gets or sets the FloatingScale property.
@@ -79,7 +79,7 @@ public class TextField : ContentControl
     /// <summary>
     /// Provides FloatingOffset Property.
     /// </summary>
-    public static readonly StyledProperty<double> FloatingOffsetProperty = AvaloniaProperty.Register<TextField, double>(nameof(FloatingOffset), 12.0d);
+    public static readonly StyledProperty<double> FloatingOffsetProperty = AvaloniaProperty.Register<InputChrome, double>(nameof(FloatingOffset), 12.0d);
 
     /// <summary>
     /// Gets or sets the FloatingOffset property.
@@ -97,7 +97,7 @@ public class TextField : ContentControl
     /// <summary>
     /// Provides CurrentFloatingScale Property.
     /// </summary>
-    public static readonly StyledProperty<double> CurrentFloatingScaleProperty = AvaloniaProperty.Register<TextField, double>(nameof(CurrentFloatingScale), 1.0d);
+    public static readonly StyledProperty<double> CurrentFloatingScaleProperty = AvaloniaProperty.Register<InputChrome, double>(nameof(CurrentFloatingScale), 1.0d);
 
     /// <summary>
     /// Gets or sets the CurrentFloatingScale property.
@@ -115,7 +115,7 @@ public class TextField : ContentControl
     /// <summary>
     /// Provides CurrentFloatingOffset Property.
     /// </summary>
-    public static readonly StyledProperty<double> CurrentFloatingOffsetProperty = AvaloniaProperty.Register<TextField, double>(nameof(CurrentFloatingOffset));
+    public static readonly StyledProperty<double> CurrentFloatingOffsetProperty = AvaloniaProperty.Register<InputChrome, double>(nameof(CurrentFloatingOffset));
 
     /// <summary>
     /// Gets or sets the CurrentFloatingOffset property.
@@ -133,7 +133,7 @@ public class TextField : ContentControl
     /// <summary>
     /// Defines the <see cref="ActiveForeground"/> property.
     /// </summary>
-    public static readonly StyledProperty<IBrush?> ActiveForegroundProperty = AvaloniaProperty.Register<TextField, IBrush?>(nameof(ActiveForeground));
+    public static readonly StyledProperty<IBrush?> ActiveForegroundProperty = AvaloniaProperty.Register<InputChrome, IBrush?>(nameof(ActiveForeground));
 
     public IBrush? ActiveForeground
     {
@@ -148,7 +148,7 @@ public class TextField : ContentControl
     /// <summary>
     /// Provides InactiveForeground Property.
     /// </summary>
-    public static readonly StyledProperty<IBrush> InactiveForegroundProperty = AvaloniaProperty.Register<TextField, IBrush>(nameof(InactiveForeground));
+    public static readonly StyledProperty<IBrush> InactiveForegroundProperty = AvaloniaProperty.Register<InputChrome, IBrush>(nameof(InactiveForeground));
 
     /// <summary>
     /// Gets or sets the InactiveForeground property.
@@ -166,7 +166,7 @@ public class TextField : ContentControl
     /// <summary>
     /// Provides PlaceholderFontSize Property.
     /// </summary>
-    public static readonly StyledProperty<double> PlaceholderFontSizeProperty = AvaloniaProperty.Register<TextField, double>(nameof(PlaceholderFontSize));
+    public static readonly StyledProperty<double> PlaceholderFontSizeProperty = AvaloniaProperty.Register<InputChrome, double>(nameof(PlaceholderFontSize));
 
     /// <summary>
     /// Gets or sets the PlaceholderFontSize property.
@@ -185,7 +185,7 @@ public class TextField : ContentControl
     /// Defines the <see cref="InnerLeftContent"/> property.
     /// </summary>
     public static readonly StyledProperty<object?> InnerLeftContentProperty =
-        AvaloniaProperty.Register<TextField, object?>(nameof(InnerLeftContent));
+        AvaloniaProperty.Register<InputChrome, object?>(nameof(InnerLeftContent));
 
     /// <summary>
     /// Gets or sets custom content that is positioned on the left side of the text layout box.
@@ -204,7 +204,7 @@ public class TextField : ContentControl
     /// Defines the <see cref="InnerRightContent"/> property.
     /// </summary>
     public static readonly StyledProperty<object?> InnerRightContentProperty =
-        AvaloniaProperty.Register<TextField, object?>(nameof(InnerRightContent));
+        AvaloniaProperty.Register<InputChrome, object?>(nameof(InnerRightContent));
 
     /// <summary>
     /// Gets or sets custom content that is positioned on the right side of the text layout box.
@@ -222,7 +222,7 @@ public class TextField : ContentControl
     /// <summary>
     /// Provides InnerForeground Property.
     /// </summary>
-    public static readonly StyledProperty<IBrush> InnerForegroundProperty = AvaloniaProperty.Register<TextField, IBrush>(nameof(InnerForeground));
+    public static readonly StyledProperty<IBrush> InnerForegroundProperty = AvaloniaProperty.Register<InputChrome, IBrush>(nameof(InnerForeground));
 
     /// <summary>
     /// Gets or sets the InnerForeground property.
@@ -240,7 +240,7 @@ public class TextField : ContentControl
     /// <summary>
     /// Provides InnerFontSize Property.
     /// </summary>
-    public static readonly StyledProperty<double> InnerFontSizeProperty = AvaloniaProperty.Register<TextField, double>(nameof(InnerFontSize));
+    public static readonly StyledProperty<double> InnerFontSizeProperty = AvaloniaProperty.Register<InputChrome, double>(nameof(InnerFontSize));
 
     /// <summary>
     /// Gets or sets the InnerFontSize property.
@@ -258,7 +258,7 @@ public class TextField : ContentControl
     /// <summary>
     /// Provides Proxy Property.
     /// </summary>
-    public static readonly StyledProperty<IControlProxy> ProxyProperty = AvaloniaProperty.Register<TextField, IControlProxy>(nameof(Proxy));
+    public static readonly StyledProperty<IControlProxy> ProxyProperty = AvaloniaProperty.Register<InputChrome, IControlProxy>(nameof(Proxy));
 
     /// <summary>
     /// Gets or sets the Proxy property.
@@ -271,25 +271,25 @@ public class TextField : ContentControl
 
     private void OnProxyChanged(AvaloniaPropertyChangedEventArgs<IControlProxy> args)
     {
-        if (args.Sender is not TextField textField) return;
+        if (args.Sender is not InputChrome inputChrome) return;
 
         if (args.OldValue.Value is { } oldHintProxy)
         {
-            oldHintProxy.IsEmptyChanged -= textField.IsEmptyChangedCallback;
-            oldHintProxy.IsFocusedChanged -= textField.IsFocusedChangedCallback;
-            oldHintProxy.IsActiveChanged -= textField.IsActiveChangedCallback;
+            oldHintProxy.IsEmptyChanged -= inputChrome.IsEmptyChangedCallback;
+            oldHintProxy.IsFocusedChanged -= inputChrome.IsFocusedChangedCallback;
+            oldHintProxy.IsActiveChanged -= inputChrome.IsActiveChangedCallback;
         }
 
         if (args.NewValue.Value is not { } newHintProxy)
             return;
 
-        newHintProxy.IsEmptyChanged -= textField.IsEmptyChangedCallback;
-        newHintProxy.IsFocusedChanged -= textField.IsFocusedChangedCallback;
-        newHintProxy.IsActiveChanged -= textField.IsActiveChangedCallback;
+        newHintProxy.IsEmptyChanged -= inputChrome.IsEmptyChangedCallback;
+        newHintProxy.IsFocusedChanged -= inputChrome.IsFocusedChangedCallback;
+        newHintProxy.IsActiveChanged -= inputChrome.IsActiveChangedCallback;
 
-        newHintProxy.IsEmptyChanged += textField.IsEmptyChangedCallback;
-        newHintProxy.IsFocusedChanged += textField.IsFocusedChangedCallback;
-        newHintProxy.IsActiveChanged += textField.IsActiveChangedCallback;
+        newHintProxy.IsEmptyChanged += inputChrome.IsEmptyChangedCallback;
+        newHintProxy.IsFocusedChanged += inputChrome.IsFocusedChangedCallback;
+        newHintProxy.IsActiveChanged += inputChrome.IsActiveChangedCallback;
 
         RefreshIsActive();
         RefreshIsFloating();

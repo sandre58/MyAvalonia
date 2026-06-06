@@ -166,14 +166,18 @@
   <data name="GridSplitter" xml:space="preserve"><value>Séparateur de grille</value></data>
   <data name="HeaderedContentControl" xml:space="preserve"><value>Contrôle avec en-tête</value></data>
   <data name="HyperLinkButton" xml:space="preserve"><value>Lien</value></data>
+  <data name="IconContentControl" xml:space="preserve"><value>Contrôle icône + contenu</value></data>
   <data name="Label" xml:space="preserve"><value>Étiquette</value></data>
   <data name="ListBox" xml:space="preserve"><value>Liste</value></data>
+  <data name="MaterialIcon" xml:space="preserve"><value>Icône Material</value></data>
   <data name="Menu" xml:space="preserve"><value>Menu</value></data>
   <data name="NavigationMenu" xml:space="preserve"><value>Menu de navigation</value></data>
   <data name="Notification" xml:space="preserve"><value>Notification</value></data>
   <data name="Pagination" xml:space="preserve"><value>Pagination</value></data>
+  <data name="PathIcon" xml:space="preserve"><value>Icône vectorielle</value></data>
   <data name="ProgressBar" xml:space="preserve"><value>Barre de progression</value></data>
   <data name="RadioButton" xml:space="preserve"><value>Bouton radio</value></data>
+  <data name="Ripple" xml:space="preserve"><value>Ripple</value></data>
   <data name="SelectableTextBlock" xml:space="preserve"><value>Texte sélectionnable</value></data>
   <data name="Slider" xml:space="preserve"><value>Curseur</value></data>
   <data name="SplitButton" xml:space="preserve"><value>Bouton partagé</value></data>
@@ -181,6 +185,7 @@
   <data name="TabControl" xml:space="preserve"><value>Onglets</value></data>
   <data name="TabbedPage" xml:space="preserve"><value>Page à onglets</value></data>
   <data name="TextBlock" xml:space="preserve"><value>Bloc de texte</value></data>
+  <data name="TextField" xml:space="preserve"><value>Chrome de champ</value></data>
   <data name="TimeView" xml:space="preserve"><value>Vue horaire</value></data>
   <data name="ToggleButton" xml:space="preserve"><value>Bouton basculant</value></data>
   <data name="ToggleSplitButton" xml:space="preserve"><value>Bouton partagé basculant</value></data>

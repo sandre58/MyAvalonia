@@ -186,14 +186,18 @@
   <data name="GridSplitter" xml:space="preserve"><value>Grid splitter</value></data>
   <data name="HeaderedContentControl" xml:space="preserve"><value>Headered content control</value></data>
   <data name="HyperLinkButton" xml:space="preserve"><value>Hyperlink</value></data>
+  <data name="IconContentControl" xml:space="preserve"><value>Icon content control</value></data>
   <data name="Label" xml:space="preserve"><value>Label</value></data>
   <data name="ListBox" xml:space="preserve"><value>List box</value></data>
+  <data name="MaterialIcon" xml:space="preserve"><value>Material icon</value></data>
   <data name="Menu" xml:space="preserve"><value>Menu</value></data>
   <data name="NavigationMenu" xml:space="preserve"><value>Navigation menu</value></data>
   <data name="Notification" xml:space="preserve"><value>Notification</value></data>
   <data name="Pagination" xml:space="preserve"><value>Pagination</value></data>
+  <data name="PathIcon" xml:space="preserve"><value>Path icon</value></data>
   <data name="ProgressBar" xml:space="preserve"><value>Progress bar</value></data>
   <data name="RadioButton" xml:space="preserve"><value>Radio button</value></data>
+  <data name="Ripple" xml:space="preserve"><value>Ripple</value></data>
   <data name="SelectableTextBlock" xml:space="preserve"><value>Selectable text</value></data>
   <data name="Slider" xml:space="preserve"><value>Slider</value></data>
   <data name="SplitButton" xml:space="preserve"><value>Split button</value></data>
@@ -201,6 +205,7 @@
   <data name="TabControl" xml:space="preserve"><value>Tabs</value></data>
   <data name="TabbedPage" xml:space="preserve"><value>Tabbed page</value></data>
   <data name="TextBlock" xml:space="preserve"><value>Text block</value></data>
+  <data name="TextField" xml:space="preserve"><value>Input chrome</value></data>
   <data name="TimeView" xml:space="preserve"><value>Time view</value></data>
   <data name="ToggleButton" xml:space="preserve"><value>Toggle button</value></data>
   <data name="ToggleSplitButton" xml:space="preserve"><value>Toggle split button</value></data>

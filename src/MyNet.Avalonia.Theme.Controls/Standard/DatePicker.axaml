@@ -323,7 +323,7 @@
                                             VerticalAlignment="Stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Theme="{StaticResource MyNet.Theme.Button.Clean}">
-                                        <my:TextField Name="PART_TextField"
+                                        <my:InputChrome Name="PART_Input"
                                                       Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                                       HorizontalAlignment="Stretch"
                                                       VerticalAlignment="Center"
@@ -381,7 +381,7 @@
                                                            HorizontalAlignment="Center"
                                                            Fill="{TemplateBinding BorderBrush}" />
                                             </Grid>
-                                        </my:TextField>
+                                        </my:InputChrome>
                                     </Button>
 
                                     <!-- Clear button -->
@@ -457,7 +457,7 @@
         </Style>
 
         <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
-            <Style Selector="^ /template/ my|TextField#PART_TextField">
+            <Style Selector="^ /template/ my|InputChrome#PART_Input">
                 <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Top}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
@@ -495,12 +495,12 @@
             </Style>
 
             <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=False]">
-                <Style Selector="^[(my|DateTimePickerBehavior.OverridePlaceholderText)=True] /template/ Button#PART_FlyoutButton > my|TextField">
+                <Style Selector="^[(my|DateTimePickerBehavior.OverridePlaceholderText)=True] /template/ Button#PART_FlyoutButton > my|InputChrome">
                     <Setter Property="InactiveForeground" Value="Transparent" />
                 </Style>
             </Style>
 
-            <Style Selector="^ /template/ Button#PART_FlyoutButton > my|TextField TextBlock">
+            <Style Selector="^ /template/ Button#PART_FlyoutButton > my|InputChrome TextBlock">
                 <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
             </Style>
         </Style>
@@ -605,7 +605,7 @@
                                         VerticalAlignment="Stretch"
                                         my:DisableAssist.IsDisablable="False"
                                         Theme="{StaticResource MyNet.Theme.Button.Clean}">
-                                    <my:TextField Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
+                                    <my:InputChrome Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                                   HorizontalAlignment="Stretch"
                                                   VerticalAlignment="Center"
                                                   ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
@@ -663,7 +663,7 @@
                                                        Fill="{TemplateBinding BorderBrush}" />
                                         </Grid>
 
-                                    </my:TextField>
+                                    </my:InputChrome>
                                 </Button>
 
                                 <!-- Clear button -->

@@ -709,4 +709,25 @@
   <data name="Transition" xml:space="preserve">
       <value>Transition</value>
   </data>
+  <data name="Animation" xml:space="preserve">
+      <value>Animation</value>
+  </data>
+  <data name="Opacity" xml:space="preserve">
+      <value>Opacité</value>
+  </data>
+  <data name="Spacing" xml:space="preserve">
+      <value>Espacement</value>
+  </data>
+  <data name="SizeMultiplier" xml:space="preserve">
+      <value>Taille</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+      <value>Est actif</value>
+  </data>
+  <data name="IsCentered" xml:space="preserve">
+      <value>Est centré</value>
+  </data>
+  <data name="UseTransitions" xml:space="preserve">
+      <value>Utiliser les transitions</value>
+  </data>
 </root>

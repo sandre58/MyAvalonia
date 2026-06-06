@@ -85,13 +85,7 @@ namespace MyNet.Avalonia.Showcase.Resources {
                 return ResourceManager.GetString("Banner", resourceCulture);
             }
         }
-
-        internal static string Card {
-            get {
-                return ResourceManager.GetString("Card", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bordure.
         /// </summary>
@@ -134,6 +128,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string Calendar {
             get {
                 return ResourceManager.GetString("Calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Carte.
+        /// </summary>
+        internal static string Card {
+            get {
+                return ResourceManager.GetString("Card", resourceCulture);
             }
         }
         
@@ -345,6 +348,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contrôle icône + contenu.
+        /// </summary>
+        internal static string IconContentControl {
+            get {
+                return ResourceManager.GetString("IconContentControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Icônes.
         /// </summary>
         internal static string Icons {
@@ -390,6 +402,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Icône Material.
+        /// </summary>
+        internal static string MaterialIcon {
+            get {
+                return ResourceManager.GetString("MaterialIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Menu.
         /// </summary>
         internal static string Menu {
@@ -426,6 +447,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Icône vectorielle.
+        /// </summary>
+        internal static string PathIcon {
+            get {
+                return ResourceManager.GetString("PathIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Barre de progression.
         /// </summary>
         internal static string ProgressBar {
@@ -440,6 +470,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string RadioButton {
             get {
                 return ResourceManager.GetString("RadioButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ripple.
+        /// </summary>
+        internal static string Ripple {
+            get {
+                return ResourceManager.GetString("Ripple", resourceCulture);
             }
         }
         
@@ -539,6 +578,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string TextBlock {
             get {
                 return ResourceManager.GetString("TextBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chrome de champ.
+        /// </summary>
+        internal static string TextField {
+            get {
+                return ResourceManager.GetString("TextField", resourceCulture);
             }
         }
         

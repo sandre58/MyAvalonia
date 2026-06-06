@@ -7,6 +7,7 @@
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type my:Ripple}" TargetType="my:Ripple">
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="UseTransitions" Value="{Binding $self.(my:TransitionsAssist.UseTransitions)}" />
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="HorizontalContentAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
@@ -29,10 +30,6 @@
             </ControlTemplate>
         </Setter>
 
-
-        <Style Selector="^:not(.use-transitions)">
-            <Setter Property="UseTransitions" Value="False" />
-        </Style>
     </ControlTheme>
 
 

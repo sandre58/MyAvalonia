@@ -3,12 +3,12 @@
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
-    <sys:Double x:Key="MyNet.Double.Zero">1.0</sys:Double>
+    <sys:Double x:Key="MyNet.Double.UnitScale">1.0</sys:Double>
 
     <!-- ═════════════════════════════════════════════════════════ -->
-    <!-- DEFAULT TEXTFIELD THEME                                   -->
+    <!-- DEFAULT INPUT CHROME THEME                                -->
     <!-- ═════════════════════════════════════════════════════════ -->
-    <ControlTheme x:Key="{x:Type my:TextField}" TargetType="my:TextField">
+    <ControlTheme x:Key="{x:Type my:InputChrome}" TargetType="my:InputChrome">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="PlaceholderFontSize" Value="{StaticResource MyNet.Font.Size}" />
@@ -82,7 +82,7 @@
                         <MultiBinding Converter="{x:Static my:TransformConverter.Group}">
                             <Binding Path="CurrentFloatingScale" RelativeSource="{RelativeSource TemplatedParent}" />
                             <Binding Path="CurrentFloatingScale" RelativeSource="{RelativeSource TemplatedParent}" />
-                            <Binding Source="{StaticResource MyNet.Double.Zero}" />
+                            <Binding Source="{StaticResource MyNet.Double.UnitScale}" />
                             <Binding Converter="{x:Static my:MathConverter.Multiply}"
                                      ConverterParameter="-1"
                                      Path="CurrentFloatingOffset"

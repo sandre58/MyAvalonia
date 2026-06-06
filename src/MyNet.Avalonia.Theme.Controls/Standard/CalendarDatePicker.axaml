@@ -118,7 +118,7 @@
                                         </ContentControl.IsVisible>
                                     </ContentControl>
 
-                                    <my:TextField Name="PART_TextField"
+                                    <my:InputChrome Name="PART_Input"
                                                   Grid.Column="1"
                                                   Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                                   HorizontalAlignment="Stretch"
@@ -149,7 +149,7 @@
                                                  SelectionBrush="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Opacity=Scrim}"
                                                  SelectionForegroundBrush="{TemplateBinding Foreground}"
                                                  Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
-                                    </my:TextField>
+                                    </my:InputChrome>
 
                                     <!-- Clipboard button -->
                                     <Button Name="PART_ClipboardButton"
@@ -251,7 +251,7 @@
         </Style>
 
         <Style Selector="^[(my|InputAssist.UseFloatingPlaceholder)=True]">
-            <Style Selector="^ /template/ my|TextField#PART_TextField">
+            <Style Selector="^ /template/ my|InputChrome#PART_Input">
                 <Setter Property="Margin" Value="{Binding (my:InputAssist.FloatingOffset), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Top}}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_ClearButton">
@@ -388,7 +388,7 @@
                                     </ContentControl.IsVisible>
                                 </ContentControl>
 
-                                <my:TextField Grid.Column="1"
+                                <my:InputChrome Grid.Column="1"
                                               Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                               HorizontalAlignment="Stretch"
                                               VerticalAlignment="Center"
@@ -419,7 +419,7 @@
                                              SelectionForegroundBrush="{TemplateBinding Foreground}"
                                              Theme="{StaticResource MyNet.Theme.TextBox.Clean}" />
 
-                                </my:TextField>
+                                </my:InputChrome>
 
                                 <!-- Clipboard button -->
                                 <Button Name="PART_ClipboardButton"

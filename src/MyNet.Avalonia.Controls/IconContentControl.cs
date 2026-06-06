@@ -36,7 +36,7 @@ public class IconContentControl : ContentControl
     /// <summary>
     /// Provides Spacing Property.
     /// </summary>
-    public static readonly StyledProperty<double> SpacingProperty = AvaloniaProperty.Register<IconContentControl, double>(nameof(Spacing), 10.0d);
+    public static readonly StyledProperty<double> SpacingProperty = AvaloniaProperty.Register<IconContentControl, double>(nameof(Spacing), 5.0d);
 
     /// <summary>
     /// Gets or sets the Spacing property.

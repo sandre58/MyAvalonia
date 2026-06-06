@@ -96,6 +96,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Animation.
+        /// </summary>
+        internal static string Animation {
+            get {
+                return ResourceManager.GetString("Animation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apparence.
         /// </summary>
         internal static string Appearance {
@@ -699,6 +708,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Est actif.
+        /// </summary>
+        internal static string IsActive {
+            get {
+                return ResourceManager.GetString("IsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Afficher la transparence.
         /// </summary>
         internal static string IsAlphaVisible {
@@ -713,6 +731,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string IsBackButtonVisible {
             get {
                 return ResourceManager.GetString("IsBackButtonVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Est centré.
+        /// </summary>
+        internal static string IsCentered {
+            get {
+                return ResourceManager.GetString("IsCentered", resourceCulture);
             }
         }
         
@@ -1028,6 +1055,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string OffsetY {
             get {
                 return ResourceManager.GetString("OffsetY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opacité.
+        /// </summary>
+        internal static string Opacity {
+            get {
+                return ResourceManager.GetString("Opacity", resourceCulture);
             }
         }
         
@@ -1419,6 +1455,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Taille.
+        /// </summary>
+        internal static string SizeMultiplier {
+            get {
+                return ResourceManager.GetString("SizeMultiplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tailles.
         /// </summary>
         internal static string Sizes {
@@ -1433,6 +1478,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string Slider {
             get {
                 return ResourceManager.GetString("Slider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Espacement.
+        /// </summary>
+        internal static string Spacing {
+            get {
+                return ResourceManager.GetString("Spacing", resourceCulture);
             }
         }
         
@@ -1856,6 +1910,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string UseSeconds {
             get {
                 return ResourceManager.GetString("UseSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utiliser les transitions.
+        /// </summary>
+        internal static string UseTransitions {
+            get {
+                return ResourceManager.GetString("UseTransitions", resourceCulture);
             }
         }
         

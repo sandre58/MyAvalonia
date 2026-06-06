@@ -47,7 +47,7 @@ internal abstract class NumericOptionViewModel<T>(IControlOptionDefinition defin
 /// <param name="definition">The control option definition that supplies metadata and configuration for the slider option.</param>
 /// <param name="displayNameFunc">A provider that returns the display name for the slider option, allowing for dynamic or context-sensitive naming.</param>
 /// <param name="initialValue">The initial value of the slider option.</param>
-internal sealed class SliderOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, decimal? initialValue = null) : NumericOptionViewModel<decimal>(definition, displayNameFunc, 0, 100, 1, initialValue ?? System.Convert.ToDecimal(definition.DefaultValue, CultureInfo.CurrentCulture));
+internal sealed class SliderOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, decimal? initialValue = null) : NumericOptionViewModel<decimal>(definition, displayNameFunc, 0m, 100m, 1m, initialValue ?? System.Convert.ToDecimal(definition.DefaultValue, CultureInfo.CurrentCulture));
 
 /// <summary>
 /// Represents a view model for a slider-based numeric option, providing logic for managing its value and display within
