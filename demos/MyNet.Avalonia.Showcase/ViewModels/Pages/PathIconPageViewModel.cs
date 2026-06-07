@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using Material.Icons;
-using MyNet.Avalonia.Showcase.Extensions;
+using MyNet.Avalonia.Showcase.ThemeBuilder;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.UI.Commands;

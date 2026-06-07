@@ -1,7 +1,8 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls"
-                    xmlns:extended="clr-namespace:MyNet.Avalonia.Extended.Controls;assembly=MyNet.Avalonia.Extended">
+                    xmlns:extended="clr-namespace:MyNet.Avalonia.Extended.Controls;assembly=MyNet.Avalonia.Extended"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <ControlTheme x:Key="{x:Type controls:OverlayDialog}" TargetType="controls:OverlayDialog">
         <Setter Property="Template">
@@ -21,25 +22,33 @@
 
     <ControlTheme x:Key="{x:Type controls:OverlayDialogHost}" TargetType="controls:OverlayDialogHost" />
 
-    <ControlTheme x:Key="{x:Type extended:WindowMessageBox}" TargetType="extended:WindowMessageBox">
+    <ControlTheme x:Key="{x:Type extended:WindowMessageBoxContent}" TargetType="extended:WindowMessageBoxContent">
         <Setter Property="Template">
-            <ControlTemplate TargetType="extended:WindowMessageBox">
-                <Border Padding="16">
-                    <Grid RowDefinitions="*,Auto">
-                        <ContentPresenter Grid.Row="0" Content="{TemplateBinding Content}" />
-                        <StackPanel Grid.Row="1"
-                                    Orientation="Horizontal"
-                                    HorizontalAlignment="Right"
-                                    Spacing="8"
-                                    Margin="0,12,0,0">
-                            <Button Name="PART_YesButton" Content="Yes" />
-                            <Button Name="PART_NoButton" Content="No" />
-                            <Button Name="PART_OKButton" Content="OK" />
-                            <Button Name="PART_CancelButton" Content="Cancel" />
-                        </StackPanel>
-                    </Grid>
-                </Border>
+            <ControlTemplate TargetType="extended:WindowMessageBoxContent">
+                <Grid RowDefinitions="*,Auto">
+                    <ContentPresenter Grid.Row="0" Content="{TemplateBinding Message}" />
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Spacing="8"
+                                Margin="0,12,0,0">
+                        <Button Name="PART_YesButton" Content="Yes" />
+                        <Button Name="PART_NoButton" Content="No" />
+                        <Button Name="PART_OKButton" Content="OK" />
+                        <Button Name="PART_CancelButton" Content="Cancel" />
+                    </StackPanel>
+                </Grid>
             </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type extended:WindowMessageBox}" TargetType="extended:WindowMessageBox">
+        <Setter Property="ContentTemplate">
+            <DataTemplate DataType="{x:Type system:Object}">
+                <extended:WindowMessageBoxContent Message="{Binding}"
+                                                  Severity="{Binding $parent[extended:WindowMessageBox].Severity}"
+                                                  Buttons="{Binding $parent[extended:WindowMessageBox].Buttons}" />
+            </DataTemplate>
         </Setter>
     </ControlTheme>
 

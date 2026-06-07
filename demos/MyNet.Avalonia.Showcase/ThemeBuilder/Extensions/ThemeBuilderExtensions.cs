@@ -16,7 +16,9 @@ using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.Avalonia.Theme.Theming.Core;
 using MyNet.Humanizer.Facade;
 
-namespace MyNet.Avalonia.Showcase.Extensions;
+#pragma warning disable IDE0130
+namespace MyNet.Avalonia.Showcase.ThemeBuilder;
+#pragma warning restore IDE0130
 
 /// <summary>
 /// Provides extension methods for <see cref="ControlThemeBuilder"/> to add custom CSS classes related to control positioning and header alignment.

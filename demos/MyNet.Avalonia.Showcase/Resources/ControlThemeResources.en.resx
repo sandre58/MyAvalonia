@@ -219,4 +219,10 @@
   <data name="ThemeTagBoxUnderline" xml:space="preserve">
       <value>Underline theme</value>
   </data>
+  <data name="ThemeDialogsWindow" xml:space="preserve">
+      <value>Window</value>
+  </data>
+  <data name="ThemeDialogsOverlay" xml:space="preserve">
+      <value>Overlay</value>
+  </data>
 </root>

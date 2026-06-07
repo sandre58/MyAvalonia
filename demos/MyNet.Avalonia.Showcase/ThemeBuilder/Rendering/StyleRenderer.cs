@@ -114,7 +114,10 @@ internal sealed class StyleRenderer : IStyleRenderer, IDisposable
         _appliedActions = [];
 
         foreach (var action in actions)
+        {
+            action.Action.Invoke(control, action.CurrentValue);
             _appliedActions.Add(action.Subject.Subscribe(x => action.Action.Invoke(control, x)));
+        }
     }
 
     /// <summary>

@@ -111,7 +111,7 @@ internal sealed class ControlThemeViewModel(ControlThemeDefinition definition, I
         actions.AddRange(AvailableOptions.Concat(AvailableGroups.SelectMany(x => x.Options)).OfType<ActionOptionViewModel>().Select(x => new StyleAction((control, _) => ((ControlActionDefinition)x.Definition).Action(control), x.ExecuteSubject)));
 
         // Custom options
-        actions.AddRange(AvailableOptions.Concat(AvailableGroups.SelectMany(x => x.Options)).OfType<ValueOptionViewModel>().Where(x => x.Definition.OnValueChanged is not null).Select(x => new StyleAction(x.Definition.OnValueChanged, x.ValueChangedSubject)));
+        actions.AddRange(AvailableOptions.Concat(AvailableGroups.SelectMany(x => x.Options)).OfType<ValueOptionViewModel>().Where(x => x.Definition.OnValueChanged is not null).Select(x => new StyleAction(x.Definition.OnValueChanged, x.ValueChangedSubject, x.Value)));
 
         return actions.NotNull();
     }

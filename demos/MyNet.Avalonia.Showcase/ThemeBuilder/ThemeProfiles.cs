@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Controls;
-using MyNet.Avalonia.Showcase.Extensions;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Theme.Classes;

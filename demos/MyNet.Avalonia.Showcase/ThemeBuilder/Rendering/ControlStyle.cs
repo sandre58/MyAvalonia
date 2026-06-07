@@ -101,4 +101,4 @@ internal sealed record StyleProperty(AvaloniaProperty Property, object? Value, s
 /// </summary>
 /// <param name="Action">The action to be executed when the control action is triggered.</param>
 /// <param name="Subject">The subject that holds a boolean value, representing the current state or condition related to the control action.</param>
-internal sealed record StyleAction(Action<Control, object?> Action, Subject<object?> Subject);
+internal sealed record StyleAction(Action<Control, object?> Action, Subject<object?> Subject, object? CurrentValue = null);

@@ -132,6 +132,24 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overlay.
+        /// </summary>
+        internal static string ThemeDialogsOverlay {
+            get {
+                return ResourceManager.GetString("ThemeDialogsOverlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fenêtre.
+        /// </summary>
+        internal static string ThemeDialogsWindow {
+            get {
+                return ResourceManager.GetString("ThemeDialogsWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Circulaire.
         /// </summary>
         internal static string ThemeDropDownButtonRounded {

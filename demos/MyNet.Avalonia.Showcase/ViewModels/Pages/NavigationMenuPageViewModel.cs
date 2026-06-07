@@ -7,8 +7,8 @@
 using System.Collections.ObjectModel;
 using Material.Icons;
 using MyNet.Avalonia.Controls;
-using MyNet.Avalonia.Showcase.Extensions;
 using MyNet.Avalonia.Showcase.Resources;
+using MyNet.Avalonia.Showcase.ThemeBuilder;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
