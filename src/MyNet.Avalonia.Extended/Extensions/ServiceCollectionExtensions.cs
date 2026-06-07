@@ -33,8 +33,8 @@ public static class ServiceCollectionExtensions
     /// <returns>The same service collection for chaining.</returns>
     public static IServiceCollection AddMyNetAvaloniaExtended(this IServiceCollection services, Func<TopLevel?> topLevelProvider)
         => services.AddAvaloniaAppCommands()
-            .AddAvaloniaCommands()
             .AddAvaloniaScheduler()
+            .AddAvaloniaCommands()
             .AddAvaloniaTheming()
             .AddAvaloniaClipboard(topLevelProvider)
             .AddAvaloniaToasting(topLevelProvider)

@@ -6,9 +6,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using MyNet.Globalization.Culture;
 using MyNet.UI.Commands;
-using MyNet.UI.Threading;
 
 #pragma warning disable IDE0130
 namespace MyNet.Avalonia.Extended.Commands;
@@ -29,8 +27,6 @@ public static class ServiceCollectionExtensions
     /// <returns>The same service collection for chaining.</returns>
     public static IServiceCollection AddAvaloniaCommands(this IServiceCollection services)
     {
-        services.AddSchedulerProvider();
-
         services.TryAddSingleton<ICommandFactory, AvaloniaCommandFactory>();
         return services;
     }

@@ -1,11 +1,16 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
-    <ControlTheme x:Key="{x:Type my:WindowDialog}" TargetType="my:WindowDialog"
-                  BasedOn="{StaticResource {x:Type Window}}">
-        <Setter Property="SizeToContent" Value="WidthAndHeight" />
-        <Setter Property="MinWidth" Value="150" />
-        <Setter Property="MinHeight" Value="100" />
-    </ControlTheme>
 
+
+    <ControlTheme x:Key="{x:Type my:WindowDialog}" TargetType="my:WindowDialog" BasedOn="{StaticResource {x:Type Window}}">
+        <Setter Property="MinWidth" Value="320" />
+        <Setter Property="MinHeight" Value="120" />
+        <Setter Property="MaxWidth" Value="960" />
+        <Setter Property="WindowStartupLocation" Value="CenterOwner" />
+        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+        <Setter Property="my:WindowAssist.ShowMinimizeButton" Value="False" />
+        <Setter Property="my:WindowAssist.ShowMaximizeButton" Value="False" />
+        <Setter Property="Background" Value="{my:Theme Surface.Level2}" />
+    </ControlTheme>
 </ResourceDictionary>

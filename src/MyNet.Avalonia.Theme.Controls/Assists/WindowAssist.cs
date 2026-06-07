@@ -5,8 +5,11 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Chrome;
+using Avalonia.LogicalTree;
 using Avalonia.Media;
 
 namespace MyNet.Avalonia.Theme.Controls.Assists;
@@ -84,6 +87,16 @@ public static class WindowAssist
     public static IBrush? GetTitleBarBackground(StyledElement element) => element.GetValue(TitleBarBackgroundProperty);
 
     public static void SetTitleBarBackground(StyledElement element, IBrush? value) => element.SetValue(TitleBarBackgroundProperty, value);
+
+    public static readonly AttachedProperty<IBrush?> TitleBarForegroundProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>(
+            "TitleBarForeground",
+            typeof(WindowAssist),
+            inherits: true);
+
+    public static IBrush? GetTitleBarForeground(StyledElement element) => element.GetValue(TitleBarForegroundProperty);
+
+    public static void SetTitleBarForeground(StyledElement element, IBrush? value) => element.SetValue(TitleBarForegroundProperty, value);
 
     /// <summary>
     /// When true and <see cref="ExtendContentIntoTitleBar"/> is true, adds top padding to window content so it does not sit under the title bar chrome.

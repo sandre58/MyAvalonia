@@ -43,16 +43,18 @@ public static class DialogOptions
     public static UI.Dialogs.ContentDialogs.DialogOptions ForWindow(
         IDialog dialog,
         bool isModal = true,
-        Window? owner = null)
+        Window? owner = null,
+        WindowDialogOptions? windowOptions = null)
         => new()
         {
             Dialog = dialog,
             IsModal = isModal,
-            Title = dialog.Title,
+            Title = windowOptions?.Title ?? dialog.Title,
             Owner = new DialogHostRequest
             {
                 Mode = DialogPresentationMode.Window,
-                WindowOwner = owner
+                WindowOwner = owner,
+                WindowOptions = windowOptions
             }
         };
 

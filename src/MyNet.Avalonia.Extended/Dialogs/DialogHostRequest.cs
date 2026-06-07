@@ -33,4 +33,9 @@ public sealed class DialogHostRequest
     /// Gets the owner window when <see cref="Mode"/> is <see cref="DialogPresentationMode.Window"/>.
     /// </summary>
     public Window? WindowOwner { get; init; }
+
+    /// <summary>
+    /// Gets window-specific layout options when <see cref="Mode"/> is <see cref="DialogPresentationMode.Window"/>.
+    /// </summary>
+    public WindowDialogOptions? WindowOptions { get; init; }
 }

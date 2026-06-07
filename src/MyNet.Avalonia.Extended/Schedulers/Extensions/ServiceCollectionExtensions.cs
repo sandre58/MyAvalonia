@@ -29,7 +29,9 @@ public static class ServiceCollectionExtensions
         services.TryAddSingleton<AvaloniaScheduler>(static sp => new(sp.GetRequiredService<ICultureContext>()));
 
         services.TryAddSingleton<IScheduler>(static sp => sp.GetRequiredService<AvaloniaScheduler>());
-        services.TryAddSingleton<ISchedulerProvider, AvaloniaSchedulerProvider>();
+
+        // AddUi/AddToasting registers DefaultSchedulerProvider first; override with the Avalonia dispatcher.
+        services.Replace(ServiceDescriptor.Singleton<ISchedulerProvider, AvaloniaSchedulerProvider>());
         return services;
     }
 }

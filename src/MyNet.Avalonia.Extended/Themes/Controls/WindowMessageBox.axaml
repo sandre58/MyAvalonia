@@ -1,129 +1,58 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:my="http://mynet.com/avalonia">
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <ControlTheme x:Key="{x:Type my:WindowMessageBox}" TargetType="my:WindowMessageBox"
-                  BasedOn="{StaticResource {x:Type Window}}">
-        <Setter Property="SizeToContent" Value="WidthAndHeight" />
-        <Setter Property="MinWidth" Value="350" />
-        <Setter Property="MaxWidth" Value="500" />
-        <Setter Property="MinHeight" Value="150" />
+                  BasedOn="{StaticResource {x:Type my:WindowDialog}}">
+        <Setter Property="Width" Value="400" />
+        <Setter Property="MinWidth" Value="360" />
+        <Setter Property="MaxWidth" Value="480" />
+        <Setter Property="MinHeight" Value="140" />
         <Setter Property="ShowInTaskbar" Value="False" />
-        <Setter Property="CanResize" Value="False" />
         <Setter Property="WindowStartupLocation" Value="CenterOwner" />
-
-        <Setter Property="Template">
-            <ControlTemplate TargetType="my:WindowMessageBox">
-                <Panel>
-                    <Border Name="PART_TransparencyFallback" IsHitTestVisible="False" />
-                    <Border Background="{TemplateBinding Background}"
-                            BackgroundSizing="InnerBorderEdge"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            IsHitTestVisible="False" />
-                    <Panel Margin="{TemplateBinding WindowDecorationMargin}" Background="Transparent" />
-                    <VisualLayerManager Padding="{TemplateBinding OffScreenMargin, Mode=OneWay}">
-                        <Grid RowDefinitions="Auto,*,Auto">
-                            <!-- Severity Header -->
-                            <Border Name="PART_SeverityHeader"
-                                    Grid.Row="0"
-                                    Padding="{my:Thickness Lg, Horizontal}"
-                                    MinHeight="48">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
-                                    <my:MaterialIcon Name="PART_SeverityIcon"
-                                                     Classes="size-lg"
-                                                     Kind="InformationVariantCircle" />
-                                    <TextBlock Text="{Binding $parent[my:WindowMessageBox].Title}"
-                                               Classes="truncate"
-                                               VerticalAlignment="Center"
-                                               FontSize="{StaticResource MyNet.Font.Size.Lg}"
-                                               FontWeight="{StaticResource MyNet.Font.Weight.Caption}" />
-                                </StackPanel>
-                            </Border>
-
-                            <!-- Content -->
-                            <ContentPresenter Name="PART_ContentPresenter"
-                                              Grid.Row="1"
-                                              Margin="{my:Thickness Lg}"
-                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}">
-                                <ContentPresenter.Styles>
-                                    <Style Selector="TextBlock">
-                                        <Setter Property="TextWrapping" Value="Wrap" />
-                                    </Style>
-                                </ContentPresenter.Styles>
-                            </ContentPresenter>
-
-                            <!-- Action Buttons -->
-                            <Border Grid.Row="2" Padding="{my:Thickness Lg}" Background="{my:Theme Surface.Level3}">
-                                <StackPanel HorizontalAlignment="Right"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                    <Button Name="PART_YesButton" Content="{my:Loc Yes}" Classes="kind-filled" />
-                                    <Button Name="PART_NoButton" Content="{my:Loc No}" />
-                                    <Button Name="PART_OKButton" Content="{my:Loc OK}" Classes="kind-filled" />
-                                    <Button Name="PART_CancelButton" Content="{my:Loc Cancel}" />
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-                    </VisualLayerManager>
-                </Panel>
-            </ControlTemplate>
+        <Setter Property="CanResize" Value="False" />
+        <Setter Property="SizeToContent" Value="Height" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="{StaticResource MyNet.Height.TitleBar}" />
+        <Setter Property="my:WindowAssist.ExtendContentIntoTitleBar" Value="True" />
+        <Setter Property="my:WindowAssist.ReserveTitleBarSafeArea" Value="True" />
+        <Setter Property="my:WindowAssist.TitleBarBackground" Value="Transparent" />
+        
+        <Setter Property="ContentTemplate">
+            <DataTemplate DataType="{x:Type system:Object}">
+                <my:WindowMessageBoxContent Message="{Binding}"
+                                            Margin="{my:Thickness Md}"
+                                            HorizontalAlignment="Stretch"
+                                            Severity="{Binding $parent[my:WindowMessageBox].Severity}"
+                                            Buttons="{Binding $parent[my:WindowMessageBox].Buttons}" />
+            </DataTemplate>
         </Setter>
-
-        <!-- Severity icon and header styles -->
-        <Style Selector="^ /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="IsVisible" Value="False" />
+        
+        <Style Selector="^[Severity=Success]">
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:Theme Success}" />
+            <Setter Property="TransparencyBackgroundFallback" Value="{my:Theme Success}" />
+            <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Success, Opacity=Overlay}" />
+            <Setter Property="my:WindowAssist.TitleBarForeground" Value="{my:Theme Success}" />
         </Style>
-        <Style Selector="^ /template/ Border#PART_SeverityHeader">
-            <Setter Property="IsVisible" Value="False" />
-        </Style>
-
-        <Style Selector="^[Severity=Information] /template/ Border#PART_SeverityHeader">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Background" Value="{my:Theme Information, Opacity=Hover}" />
-        </Style>
-        <Style Selector="^[Severity=Information] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Kind" Value="InformationVariantCircle" />
-            <Setter Property="Foreground" Value="{my:Theme Information}" />
+        <Style Selector="^[Severity=Warning]">
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:Theme Warning}" />
+            <Setter Property="TransparencyBackgroundFallback" Value="{my:Theme Warning}" />
+            <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Warning, Opacity=Overlay}" />
+            <Setter Property="my:WindowAssist.TitleBarForeground" Value="{my:Theme Warning}" />
         </Style>
 
-        <Style Selector="^[Severity=Success] /template/ Border#PART_SeverityHeader">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Background" Value="{my:Theme Success, Opacity=Hover}" />
+        <Style Selector="^[Severity=Error]">
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:Theme Error}" />
+            <Setter Property="TransparencyBackgroundFallback" Value="{my:Theme Error}" />
+            <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Error, Opacity=Overlay}" />
+            <Setter Property="my:WindowAssist.TitleBarForeground" Value="{my:Theme Error}" />
         </Style>
-        <Style Selector="^[Severity=Success] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Kind" Value="CheckCircle" />
-            <Setter Property="Foreground" Value="{my:Theme Success}" />
-        </Style>
-
-        <Style Selector="^[Severity=Warning] /template/ Border#PART_SeverityHeader">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Background" Value="{my:Theme Warning, Opacity=Hover}" />
-        </Style>
-        <Style Selector="^[Severity=Warning] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Kind" Value="Alert" />
-            <Setter Property="Foreground" Value="{my:Theme Warning}" />
-        </Style>
-
-        <Style Selector="^[Severity=Error] /template/ Border#PART_SeverityHeader">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Background" Value="{my:Theme Error, Opacity=Hover}" />
-        </Style>
-        <Style Selector="^[Severity=Error] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Kind" Value="AlertCircle" />
-            <Setter Property="Foreground" Value="{my:Theme Error}" />
-        </Style>
-
     </ControlTheme>
 
 </ResourceDictionary>
-
 
 

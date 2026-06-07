@@ -19,7 +19,7 @@ public class WindowMessageBoxHeadlessTests
     {
         var messageBox = new WindowMessageBox(MessageBoxResultOption.OkCancel)
         {
-            Content = "Body",
+            Message = "Body",
             Title = "Test",
             Width = 360,
             Height = 200

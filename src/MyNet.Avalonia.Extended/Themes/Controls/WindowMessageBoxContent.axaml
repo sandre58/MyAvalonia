@@ -1,0 +1,128 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
+
+    <ControlTheme x:Key="{x:Type my:WindowMessageBoxContent}" TargetType="my:WindowMessageBoxContent">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:WindowMessageBoxContent">
+                <Grid RowDefinitions="*,Auto">
+                    <ScrollViewer Grid.Row="0"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  VerticalScrollBarVisibility="Auto">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Panel Name="PART_SeverityHost"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Top"
+                                   Margin="{my:Thickness Md, Right}"
+                                   IsVisible="False">
+
+                                <Border Name="PART_SeverityBackground"
+                                        CornerRadius="{StaticResource MyNet.Corners.Md}"
+                                        Opacity="{DynamicResource MyNet.Opacity.Overlay}" />
+                                <my:MaterialIcon Name="PART_SeverityIcon"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"
+                                                 Classes="size-lg"
+                                                 Margin="{my:Thickness Md}"
+                                                 Kind="InformationVariantCircle" />
+                            </Panel>
+
+                            <ContentPresenter Name="PART_Message"
+                                              Grid.Column="1"
+                                              VerticalAlignment="Top"
+                                              Content="{TemplateBinding Message}">
+                                <ContentPresenter.Styles>
+                                    <Style Selector="TextBlock, AccessText">
+                                        <Setter Property="TextWrapping" Value="Wrap" />
+                                    </Style>
+                                </ContentPresenter.Styles>
+                            </ContentPresenter>
+                        </Grid>
+                    </ScrollViewer>
+
+                    <UniformGrid Grid.Row="1"
+                                 HorizontalAlignment="Right"
+                                 Rows="1"
+                                 Margin="{my:Thickness Md, Top}"
+                                 ColumnSpacing="{my:Spacing Sm}">
+
+                        <Button Name="PART_CancelButton" Content="{my:Loc Cancel}" HorizontalAlignment="Stretch"
+                                Classes="variant-text" />
+                        <Button Name="PART_NoButton" Content="{my:Loc No}" HorizontalAlignment="Stretch" Classes="variant-outlined" />
+                        <Button Name="PART_OKButton" Content="{my:Loc Ok}" HorizontalAlignment="Stretch"
+                                my:ThemeAssist.Role="Primary" />
+                        <Button Name="PART_YesButton" Content="{my:Loc Yes}" HorizontalAlignment="Stretch"
+                                my:ThemeAssist.Role="Primary" />
+                    </UniformGrid>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^[Severity=Information] /template/ Panel#PART_SeverityHost">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+
+        <Style Selector="^[Severity=Information] /template/ Border#PART_SeverityBackground">
+            <Setter Property="Background" Value="{my:Theme Information}" />
+        </Style>
+
+        <Style Selector="^[Severity=Information] /template/ my|MaterialIcon#PART_SeverityIcon">
+            <Setter Property="Kind" Value="InformationVariantCircle" />
+            <Setter Property="Foreground" Value="{my:Theme Information}" />
+        </Style>
+        
+        <Style Selector="^[Severity=Success] /template/ Panel#PART_SeverityHost">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+
+        <Style Selector="^[Severity=Success] /template/ Border#PART_SeverityBackground">
+            <Setter Property="Background" Value="{my:Theme Success}" />
+        </Style>
+
+        <Style Selector="^[Severity=Success] /template/ my|MaterialIcon#PART_SeverityIcon">
+            <Setter Property="Kind" Value="CheckCircle" />
+            <Setter Property="Foreground" Value="{my:Theme Success}" />
+        </Style>
+
+        <Style Selector="^[Severity=Success] /template/ Button#PART_OKButton, ^[Severity=Success] /template/ Button#PART_YesButton, ^[Severity=Success] /template/ Button#PART_NoButton">
+            <Setter Property="my:ThemeAssist.Role" Value="Success" />
+        </Style>
+
+        <Style Selector="^[Severity=Warning] /template/ Panel#PART_SeverityHost">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+
+        <Style Selector="^[Severity=Warning] /template/ Border#PART_SeverityBackground">
+            <Setter Property="Background" Value="{my:Theme Warning}" />
+        </Style>
+
+        <Style Selector="^[Severity=Warning] /template/ my|MaterialIcon#PART_SeverityIcon">
+            <Setter Property="Kind" Value="Alert" />
+            <Setter Property="Foreground" Value="{my:Theme Warning}" />
+        </Style>
+
+        <Style Selector="^[Severity=Warning] /template/ Button#PART_OKButton, ^[Severity=Warning] /template/ Button#PART_YesButton, ^[Severity=Warning] /template/ Button#PART_NoButton">
+            <Setter Property="my:ThemeAssist.Role" Value="Warning" />
+        </Style>
+        
+        <Style Selector="^[Severity=Error] /template/ Panel#PART_SeverityHost">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+
+        <Style Selector="^[Severity=Error] /template/ Border#PART_SeverityBackground">
+            <Setter Property="Background" Value="{my:Theme Error}" />
+        </Style>
+
+        <Style Selector="^[Severity=Error] /template/ my|MaterialIcon#PART_SeverityIcon">
+            <Setter Property="Kind" Value="AlertCircle" />
+            <Setter Property="Foreground" Value="{my:Theme Error}" />
+        </Style>
+
+        <Style Selector="^[Severity=Error] /template/ Button#PART_OKButton, ^[Severity=Error] /template/ Button#PART_YesButton, ^[Severity=Error] /template/ Button#PART_NoButton">
+            <Setter Property="my:ThemeAssist.Role" Value="Error" />
+        </Style>
+
+    </ControlTheme>
+    
+</ResourceDictionary>

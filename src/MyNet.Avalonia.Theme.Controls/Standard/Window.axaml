@@ -11,10 +11,13 @@
         <Setter Property="my:WindowAssist.IsTitleVisible" Value="True" />
         <Setter Property="my:WindowAssist.TitleBarHeight" Value="{StaticResource MyNet.Height.TitleBar}" />
         <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Surface.Level3}" />
+        <Setter Property="my:WindowAssist.TitleBarForeground" Value="{my:Theme Foreground.Primary}" />
         <Setter Property="my:WindowAssist.ExtendContentIntoTitleBar" Value="False" />
         <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="-1" />
         <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
         <Setter Property="Margin" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
 
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
         <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />
@@ -37,6 +40,7 @@
         <Setter Property="TopLevel.SystemBarColor" Value="{Binding $self.(my:VariantAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
         <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <Setter Property="CornerRadius" Value="7" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="Window">
@@ -46,6 +50,7 @@
                             BackgroundSizing="InnerBorderEdge"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
                             IsHitTestVisible="False" />
                     <Panel Margin="{TemplateBinding WindowDecorationMargin}" Background="Transparent" />
                     <VisualLayerManager Padding="{TemplateBinding OffScreenMargin, Mode=OneWay}">
@@ -86,7 +91,8 @@
                                                       HorizontalAlignment="Center"
                                                       VerticalAlignment="Center"
                                                       WindowDecorationProperties.ElementRole="User"
-                                                      Content="{TemplateBinding (my:WindowAssist.CenterTitleBarContent)}" />
+                                                      Content="{TemplateBinding (my:WindowAssist.CenterTitleBarContent)}"
+                                                      Foreground="{TemplateBinding (my:WindowAssist.TitleBarForeground)}" />
                                     <StackPanel Grid.Column="2"
                                                 Orientation="Horizontal"
                                                 VerticalAlignment="Center"

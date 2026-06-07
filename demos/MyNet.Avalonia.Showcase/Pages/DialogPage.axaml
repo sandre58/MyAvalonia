@@ -4,6 +4,7 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             mc:Ignorable="d"
+            xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
             xmlns:my="http://mynet.com/avalonia"
             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
@@ -29,12 +30,13 @@
                 <StackPanel HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Spacing="{StaticResource MyNet.Spacing.Md}"
-                            Margin="{my:Thickness Md}">
+                            Margin="{my:Thickness Md}"
+                            behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}">
                     <TextBlock HorizontalAlignment="Center"
                                Text="{my:Loc OverlayDialogDescription}"
                                TextWrapping="Wrap"
                                Classes="opacity-high"
-                               IsVisible="{ReflectionBinding ((vm:DialogPageViewModel)Data).IsOverlayPresentation, Source={StaticResource PageProxy}}" />
+                               IsVisible="{ReflectionBinding ((vm:DialogPageViewModel)Data).IsOverlayPresentation, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
                     <TextBlock HorizontalAlignment="Center"
                                Text="{my:Loc WindowDialogDescription}"
                                TextWrapping="Wrap"
@@ -44,30 +46,30 @@
                     <Button Content="{my:Loc ShowContentDialog}"
                             my:IconAssist.Icon="{my:MaterialIcon AccountEditOutline}"
                             HorizontalAlignment="Stretch"
-                            Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).ShowContentDialogCommand, Source={StaticResource PageProxy}}" />
+                            Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).ShowContentDialogCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
                     <Button Content="{my:Loc ShowMessageBox}"
                             my:IconAssist.Icon="{my:MaterialIcon MessageAlertOutline}"
                             HorizontalAlignment="Stretch"
-                            Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).ShowMessageBoxCommand, Source={StaticResource PageProxy}}"
+                            Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).ShowMessageBoxCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}"
                             CommandParameter="{Binding SelectedRole}" />
                     <Button Content="{my:Loc ShowDialogBox}"
                             my:IconAssist.Icon="{my:MaterialIcon CardBulletedOutline}"
                             HorizontalAlignment="Stretch"
-                            Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).ShowDialogBoxCommand, Source={StaticResource PageProxy}}"
+                            Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).ShowDialogBoxCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}"
                             CommandParameter="{Binding SelectedRole}" />
 
-                    <Separator IsVisible="{ReflectionBinding ((vm:DialogPageViewModel)Data).IsOverlayPresentation, Source={StaticResource PageProxy}}" />
+                    <Separator IsVisible="{ReflectionBinding ((vm:DialogPageViewModel)Data).IsOverlayPresentation, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
 
                     <Button Content="{my:Loc ShowStackedOverlay}"
                             my:IconAssist.Icon="{my:MaterialIcon LayersTriple}"
                             HorizontalAlignment="Stretch"
-                            IsVisible="{ReflectionBinding ((vm:DialogPageViewModel)Data).IsOverlayPresentation, Source={StaticResource PageProxy}}"
-                            Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).ShowStackedOverlayCommand, Source={StaticResource PageProxy}}" />
+                            IsVisible="{ReflectionBinding ((vm:DialogPageViewModel)Data).IsOverlayPresentation, Source={StaticResource PageProxy}, FallbackValue={x:Null}}"
+                            Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).ShowStackedOverlayCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
                     <Button Content="{my:Loc CloseTopDialog}"
                             my:IconAssist.Icon="{my:MaterialIcon CloseBoxMultipleOutline}"
                             HorizontalAlignment="Stretch"
-                            IsVisible="{ReflectionBinding ((vm:DialogPageViewModel)Data).IsOverlayPresentation, Source={StaticResource PageProxy}}"
-                            Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).CloseTopDialogCommand, Source={StaticResource PageProxy}}" />
+                            IsVisible="{ReflectionBinding ((vm:DialogPageViewModel)Data).IsOverlayPresentation, Source={StaticResource PageProxy}, FallbackValue={x:Null}}"
+                            Command="{ReflectionBinding ((vm:DialogPageViewModel)Data).CloseTopDialogCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
                 </StackPanel>
             </DataTemplate>
         </v:ShowcaseView.PlaygroundControlTemplate>
