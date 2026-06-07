@@ -5,6 +5,9 @@
 // -----------------------------------------------------------------------
 
 using System;
+using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
@@ -16,6 +19,12 @@ namespace MyNet.Avalonia.Extended.Controls;
 /// </summary>
 public class WindowDialog : Window
 {
+    static WindowDialog()
+    {
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<WindowDialog>(AutomationControlType.Window);
+        TitleProperty.Changed.AddClassHandler<WindowDialog, string?>((dialog, _) => UpdateAutomationName(dialog));
+    }
+
     protected override Type StyleKeyOverride { get; } = typeof(WindowDialog);
 
     /// <summary>
@@ -31,4 +40,7 @@ public class WindowDialog : Window
         LastCloseResult = result;
         Close(result);
     }
+
+    private static void UpdateAutomationName(WindowDialog dialog)
+        => AutomationProperties.SetName(dialog, dialog.Title ?? string.Empty);
 }

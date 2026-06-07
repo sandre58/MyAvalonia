@@ -64,4 +64,14 @@ public class OverlayDialogOptionsMergeTests
 
         merged.Severity.Should().Be(MessageSeverity.Warning);
     }
+
+    [Fact]
+    public void MergeOptions_UsesOverrideCanDragMove()
+    {
+        var merged = OverlayDialogBuilder.MergeOptions(
+            new() { CanDragMove = true },
+            new() { CanDragMove = false });
+
+        merged.CanDragMove.Should().BeFalse();
+    }
 }

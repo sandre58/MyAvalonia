@@ -9,7 +9,7 @@
                   d:DesignHeight="600"
                   d:DesignWidth="900"
                   x:DataType="vm:LoginDialogViewModel"
-                  CanResize="True"
+                  CanResize="{Binding CanResize}"
                   Header="User Registration"
                   mc:Ignorable="d">
     <ScrollViewer MaxHeight="500">

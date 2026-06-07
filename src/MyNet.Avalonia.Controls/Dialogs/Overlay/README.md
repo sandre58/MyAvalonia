@@ -56,7 +56,7 @@ Target window selection:
 
 Set `OverlayDialog.Title` for the header text. `IsCloseButtonVisible` toggles the template close button.
 
-`CanResize` is reserved for a future release and currently has no effect.
+Use `ContentDialog.CanResize` for window presentation only; overlay shells do not support resizing.
 
 ## Host lookup rules
 

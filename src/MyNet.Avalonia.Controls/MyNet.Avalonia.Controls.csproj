@@ -22,10 +22,12 @@
         <PackageReference Include="Avalonia.Controls.ItemsRepeater" />
         <PackageReference Include="Avalonia.Xaml.Behaviors" />
         <PackageReference Include="Material.Icons" />
-    </ItemGroup>
-    
-    <ItemGroup>
         <PackageReference Include="MyNet.Globalization" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Globalization\MyNet.Globalization.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Globalization\MyNet.Globalization.csproj" />
+        <PackageReference Remove="MyNet.Globalization" />
     </ItemGroup>
 
     <ItemGroup>

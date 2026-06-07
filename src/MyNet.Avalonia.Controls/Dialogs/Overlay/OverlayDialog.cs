@@ -7,6 +7,8 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
@@ -40,12 +42,6 @@ public class OverlayDialog : OverlayFeedbackElement
             nameof(IsFullScreen), o => o.IsFullScreen, (o, v) => o.IsFullScreen = v);
 
     /// <summary>
-    /// Defines the <see cref="CanResize"/> property.
-    /// </summary>
-    public static readonly StyledProperty<bool> CanResizeProperty = AvaloniaProperty.Register<OverlayDialog, bool>(
-        nameof(CanResize));
-
-    /// <summary>
     /// Defines the <see cref="Title"/> property.
     /// </summary>
     public static readonly StyledProperty<string?> TitleProperty =
@@ -60,19 +56,11 @@ public class OverlayDialog : OverlayFeedbackElement
         _ = CanDragMoveProperty.Changed.AddClassHandler<InputElement, bool>(OnCanDragMoveChanged);
         _ = CanCloseProperty.Changed.AddClassHandler<InputElement, bool>(OnCanCloseChanged);
         IsFullScreenProperty.AffectsPseudoClass<OverlayDialog>(PseudoClassName.FullScreen);
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<OverlayDialog>(AutomationControlType.Window);
+        TitleProperty.Changed.AddClassHandler<OverlayDialog, string?>((dialog, _) => UpdateAutomationName(dialog));
     }
 
     protected internal Button? CloseButton { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether the dialog chrome is resizable.
-    /// Reserved for a future release; setting this property currently has no effect.
-    /// </summary>
-    public bool CanResize
-    {
-        get => GetValue(CanResizeProperty);
-        set => SetValue(CanResizeProperty, value);
-    }
 
     /// <summary>
     /// Gets or sets the title shown in the dialog chrome header.
@@ -347,4 +335,7 @@ public class OverlayDialog : OverlayFeedbackElement
         HorizontalOffsetRatio = (left + right).IsZero() ? 0 : left / (left + right);
         VerticalOffsetRatio = (top + bottom).IsZero() ? 0 : top / (top + bottom);
     }
+
+    private static void UpdateAutomationName(OverlayDialog dialog)
+        => AutomationProperties.SetName(dialog, dialog.Title ?? string.Empty);
 }

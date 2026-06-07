@@ -14,6 +14,26 @@
         <PackageReference Include="MyNet.Geography.Resources" />
     </ItemGroup>
 
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Humanizer\MyNet.Humanizer.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Humanizer\MyNet.Humanizer.csproj" />
+        <PackageReference Remove="MyNet.Humanizer" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Geography\MyNet.Geography.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Geography\MyNet.Geography.csproj" />
+        <PackageReference Remove="MyNet.Geography" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Geography.Localization\MyNet.Geography.Localization.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Geography.Localization\MyNet.Geography.Localization.csproj" />
+        <PackageReference Remove="MyNet.Geography.Localization" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Geography.Resources\MyNet.Geography.Resources.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Geography.Resources\MyNet.Geography.Resources.csproj" />
+        <PackageReference Remove="MyNet.Geography.Resources" />
+    </ItemGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\MyNet.Avalonia.Controls\MyNet.Avalonia.Controls.csproj" />
         <ProjectReference Include="..\MyNet.Avalonia\MyNet.Avalonia.csproj" />

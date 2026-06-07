@@ -50,6 +50,8 @@ public class OverlayDialogPresenterHeadlessTests
         var presentTask = presenter.PresentAsync(dialog, uiOptions, CancellationToken.None);
 
         var shell = host.GetVisualDescendants().OfType<ContentOverlayDialog>().Single();
+        var content = host.GetVisualDescendants().OfType<ContentDialog>().Single();
+        content.ShowHeader.Should().BeFalse();
         await Dispatcher.UIThread.InvokeAsync(() => shell.CloseWithResult(true));
 
         var result = await presentTask.ConfigureAwait(true);

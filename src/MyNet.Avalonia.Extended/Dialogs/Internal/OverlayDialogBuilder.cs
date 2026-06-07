@@ -33,6 +33,9 @@ internal static class OverlayDialogBuilder
         var overlayOptions = MergeOptions(GetOptions(view), request.OverlayOptions);
         PrepareOverlayDialog(overlay, overlayOptions, options);
 
+        if (view is ContentDialog contentDialog)
+            contentDialog.ShowHeader = false;
+
         overlay.Content = view;
         overlay.DataContext = dialog;
 
@@ -82,7 +85,7 @@ internal static class OverlayDialogBuilder
         control.VerticalOffset = options.VerticalAnchor == VerticalPosition.Center ? null : options.VerticalOffset;
         control.IsCloseButtonVisible = options.IsCloseButtonVisible ?? true;
         control.CanLightDismiss = options.CanLightDismiss || dialogOptions.CloseOnOverlayClick;
-        control.CanResize = options.CanResize;
+        OverlayDialog.SetCanDragMove(control, options.CanDragMove);
         control.Title = options.Title ?? dialogOptions.Title;
 
         if (options.Width.HasValue) control.Width = options.Width.Value;
@@ -143,7 +146,7 @@ internal static class OverlayDialogBuilder
             IsCloseButtonVisible = overrideOptions.IsCloseButtonVisible ?? baseOptions.IsCloseButtonVisible,
             CanLightDismiss = overrideOptions.CanLightDismiss || baseOptions.CanLightDismiss,
             TopLevelKey = overrideOptions.TopLevelKey ?? baseOptions.TopLevelKey,
-            CanResize = overrideOptions.CanResize || baseOptions.CanResize,
+            CanDragMove = overrideOptions.CanDragMove,
             StyleClass = overrideOptions.StyleClass ?? baseOptions.StyleClass
         };
 
@@ -157,8 +160,7 @@ internal static class OverlayDialogBuilder
                 null => null,
                 var header => header.ToString()
             },
-            IsCloseButtonVisible = contentDialog.ShowCloseButton,
-            CanResize = contentDialog.CanResize
+            IsCloseButtonVisible = contentDialog.ShowCloseButton
         };
 
     private static void ApplyMessageBoxOptions(

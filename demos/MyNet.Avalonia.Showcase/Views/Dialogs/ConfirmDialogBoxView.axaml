@@ -1,0 +1,23 @@
+<my:ContentDialog x:Class="MyNet.Avalonia.Showcase.Views.Dialogs.ConfirmDialogBoxView"
+                  xmlns="https://github.com/avaloniaui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:my="http://mynet.com/avalonia"
+                  xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Dialogs"
+                  d:DesignHeight="220"
+                  d:DesignWidth="420"
+                  x:DataType="vm:ConfirmDialogBoxViewModel"
+                  Header="{Binding Title}"
+                  ShowCloseButton="False"
+                  mc:Ignorable="d">
+    <StackPanel Spacing="{StaticResource MyNet.Spacing.Lg}">
+        <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+        <StackPanel HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Spacing="{StaticResource MyNet.Spacing.Sm}">
+            <Button Command="{Binding CancelCommand}" Content="Cancel" />
+            <Button Command="{Binding ConfirmCommand}" Content="OK" Classes="kind-filled" />
+        </StackPanel>
+    </StackPanel>
+</my:ContentDialog>

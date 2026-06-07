@@ -6,6 +6,8 @@
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 using Avalonia;
+using Avalonia.Automation;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 
@@ -18,7 +20,29 @@ public class ContentDialog : HeaderedContentControl
     {
         PaddingProperty.OverrideDefaultValue<ContentDialog>(new(10));
         MarginProperty.OverrideDefaultValue<ContentDialog>(new(0, 35, 0, 0));
+        AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<ContentDialog>(AutomationControlType.Pane);
+        HeaderProperty.Changed.AddClassHandler<ContentDialog, object?>((dialog, _) => UpdateAutomationName(dialog));
     }
+
+    #region ShowHeader
+
+    /// <summary>
+    /// Provides ShowHeader Property.
+    /// </summary>
+    public static readonly StyledProperty<bool> ShowHeaderProperty =
+        AvaloniaProperty.Register<ContentDialog, bool>(nameof(ShowHeader), true);
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the dialog header is shown in the content template.
+    /// Set to <see langword="false"/> when the overlay shell already displays <see cref="Header"/>.
+    /// </summary>
+    public bool ShowHeader
+    {
+        get => GetValue(ShowHeaderProperty);
+        set => SetValue(ShowHeaderProperty, value);
+    }
+
+    #endregion
 
     #region StartupLocation
 
@@ -100,7 +124,7 @@ public class ContentDialog : HeaderedContentControl
     public static readonly StyledProperty<bool> CanResizeProperty = AvaloniaProperty.Register<ContentDialog, bool>(nameof(CanResize));
 
     /// <summary>
-    /// Gets or sets a value indicating whether gets or sets the CanResize property.
+    /// Gets or sets a value indicating whether the window shell may be resized. Ignored for overlay presentation.
     /// </summary>
     public bool CanResize
     {
@@ -127,4 +151,7 @@ public class ContentDialog : HeaderedContentControl
     }
 
     #endregion
+
+    private static void UpdateAutomationName(ContentDialog dialog)
+        => AutomationProperties.SetName(dialog, dialog.Header?.ToString() ?? string.Empty);
 }

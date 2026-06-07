@@ -17,6 +17,31 @@
         <PackageReference Include="System.Reactive" />
     </ItemGroup>
 
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Globalization\MyNet.Globalization.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Globalization\MyNet.Globalization.csproj" />
+        <PackageReference Remove="MyNet.Globalization" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Primitives\MyNet.Primitives.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Primitives\MyNet.Primitives.csproj" />
+        <PackageReference Remove="MyNet.Primitives" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Humanizer\MyNet.Humanizer.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Humanizer\MyNet.Humanizer.csproj" />
+        <PackageReference Remove="MyNet.Humanizer" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Observable\MyNet.Observable.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Observable\MyNet.Observable.csproj" />
+        <PackageReference Remove="MyNet.Observable" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Utilities\MyNet.Utilities.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Utilities\MyNet.Utilities.csproj" />
+        <PackageReference Remove="MyNet.Utilities" />
+    </ItemGroup>
+
     <ItemGroup>
       <EmbeddedResource Update="Colors\ColorResources.resx">
         <LastGenOutput>ColorResources.Designer.cs</LastGenOutput>

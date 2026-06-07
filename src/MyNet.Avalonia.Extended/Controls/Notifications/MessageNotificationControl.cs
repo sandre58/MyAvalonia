@@ -29,11 +29,7 @@ public sealed class MessageNotificationControl : HeaderedContentControl
         var header = Header?.ToString();
         var content = Content?.ToString();
 
-        AutomationProperties.SetName(this, string.IsNullOrEmpty(header)
-            ? content ?? string.Empty
-            : string.IsNullOrEmpty(content)
-                ? header
-                : $"{header}: {content}");
+        AutomationProperties.SetName(this, string.IsNullOrEmpty(header) ? content ?? string.Empty : string.IsNullOrEmpty(content) ? header : $"{header}: {content}");
     }
 
     #region Severity

@@ -123,4 +123,46 @@
   <data name="OverlayDialogDescription" xml:space="preserve">
     <value>Test des dialogues en overlay sur la page</value>
   </data>
+  <data name="ShowContentDialog" xml:space="preserve">
+    <value>Content dialog</value>
+  </data>
+  <data name="ShowMessageBox" xml:space="preserve">
+    <value>Message box</value>
+  </data>
+  <data name="ShowDialogBox" xml:space="preserve">
+    <value>Dialog box</value>
+  </data>
+  <data name="ShowStackedOverlay" xml:space="preserve">
+    <value>Empiler deux overlays</value>
+  </data>
+  <data name="CloseTopDialog" xml:space="preserve">
+    <value>Fermer le dialogue du dessus</value>
+  </data>
+  <data name="StackedOverlayRequiresOverlayTheme" xml:space="preserve">
+    <value>Sélectionnez le thème Overlay pour empiler des dialogues.</value>
+  </data>
+  <data name="CloseTopRequiresOverlayTheme" xml:space="preserve">
+    <value>Sélectionnez le thème Overlay pour fermer un overlay programmatiquement.</value>
+  </data>
+  <data name="NoOpenDialog" xml:space="preserve">
+    <value>Aucun dialogue ouvert à fermer.</value>
+  </data>
+  <data name="DialogClosedProgrammatically" xml:space="preserve">
+    <value>Dialogue fermé via CloseAsync.</value>
+  </data>
+  <data name="StackedOverlayFirstTitle" xml:space="preserve">
+    <value>Premier niveau</value>
+  </data>
+  <data name="StackedOverlayFirstMessage" xml:space="preserve">
+    <value>Dialogue arrière-plan. Ouvrez-en un second par-dessus.</value>
+  </data>
+  <data name="StackedOverlaySecondTitle" xml:space="preserve">
+    <value>Deuxième niveau</value>
+  </data>
+  <data name="StackedOverlaySecondMessage" xml:space="preserve">
+    <value>Dialogue au premier plan. Fermez celui-ci puis le premier.</value>
+  </data>
+  <data name="StackedOverlayResultFormat" xml:space="preserve">
+    <value>Second: {0} ; Premier: {1}</value>
+  </data>
 </root>

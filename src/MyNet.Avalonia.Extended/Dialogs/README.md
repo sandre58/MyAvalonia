@@ -60,13 +60,14 @@ var result = await contentDialogService.ShowAsync(
 
 ### `OverlayDialogOptions`
 
-Passed through `DialogOptions.ForOverlay` → `DialogHostRequest.OverlayOptions`. Merged with options inferred from `ContentDialog` (title, close button, resize flag).
+Passed through `DialogOptions.ForOverlay` → `DialogHostRequest.OverlayOptions`. Merged with options inferred from `ContentDialog` (title, close button).
 
 | Property | Usage |
 |----------|--------|
 | `TopLevelKey` | Stable key from `GetTopLevelKey` (not `GetHashCode()`). |
 | `FullScreen`, anchors, offsets | Layout on `OverlayDialog` |
 | `CanLightDismiss` | Light dismiss; also OR'd with `CloseOnOverlayClick` on dialog options |
+| `CanDragMove` | Drag the overlay chrome by its title area |
 | `Severity`, `Buttons`, `Title` | Overlay message box chrome (when not left at defaults) |
 
 ## Window dialogs

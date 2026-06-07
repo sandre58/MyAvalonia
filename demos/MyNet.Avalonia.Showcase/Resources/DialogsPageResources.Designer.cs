@@ -82,5 +82,89 @@ namespace MyNet.Avalonia.Showcase.Resources {
                 return ResourceManager.GetString("WindowDialogDescription", resourceCulture);
             }
         }
+
+        internal static string ShowContentDialog {
+            get {
+                return ResourceManager.GetString("ShowContentDialog", resourceCulture);
+            }
+        }
+
+        internal static string ShowMessageBox {
+            get {
+                return ResourceManager.GetString("ShowMessageBox", resourceCulture);
+            }
+        }
+
+        internal static string ShowDialogBox {
+            get {
+                return ResourceManager.GetString("ShowDialogBox", resourceCulture);
+            }
+        }
+
+        internal static string ShowStackedOverlay {
+            get {
+                return ResourceManager.GetString("ShowStackedOverlay", resourceCulture);
+            }
+        }
+
+        internal static string CloseTopDialog {
+            get {
+                return ResourceManager.GetString("CloseTopDialog", resourceCulture);
+            }
+        }
+
+        internal static string StackedOverlayRequiresOverlayTheme {
+            get {
+                return ResourceManager.GetString("StackedOverlayRequiresOverlayTheme", resourceCulture);
+            }
+        }
+
+        internal static string CloseTopRequiresOverlayTheme {
+            get {
+                return ResourceManager.GetString("CloseTopRequiresOverlayTheme", resourceCulture);
+            }
+        }
+
+        internal static string NoOpenDialog {
+            get {
+                return ResourceManager.GetString("NoOpenDialog", resourceCulture);
+            }
+        }
+
+        internal static string DialogClosedProgrammatically {
+            get {
+                return ResourceManager.GetString("DialogClosedProgrammatically", resourceCulture);
+            }
+        }
+
+        internal static string StackedOverlayFirstTitle {
+            get {
+                return ResourceManager.GetString("StackedOverlayFirstTitle", resourceCulture);
+            }
+        }
+
+        internal static string StackedOverlayFirstMessage {
+            get {
+                return ResourceManager.GetString("StackedOverlayFirstMessage", resourceCulture);
+            }
+        }
+
+        internal static string StackedOverlaySecondTitle {
+            get {
+                return ResourceManager.GetString("StackedOverlaySecondTitle", resourceCulture);
+            }
+        }
+
+        internal static string StackedOverlaySecondMessage {
+            get {
+                return ResourceManager.GetString("StackedOverlaySecondMessage", resourceCulture);
+            }
+        }
+
+        internal static string StackedOverlayResultFormat {
+            get {
+                return ResourceManager.GetString("StackedOverlayResultFormat", resourceCulture);
+            }
+        }
     }
 }

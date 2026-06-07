@@ -18,6 +18,16 @@
       <PackageReference Include="MyNet.UI" />
     </ItemGroup>
 
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.UI\MyNet.UI.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.UI\MyNet.UI.csproj" />
+        <PackageReference Remove="MyNet.UI" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Globalization\MyNet.Globalization.csproj')">
+        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Globalization\MyNet.Globalization.csproj" />
+        <PackageReference Remove="MyNet.Globalization" />
+    </ItemGroup>
+
     <ItemGroup>
         <AvaloniaResource Include="**/*.axaml" />
     </ItemGroup>

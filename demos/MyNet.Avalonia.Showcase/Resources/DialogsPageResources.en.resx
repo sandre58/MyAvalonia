@@ -123,4 +123,46 @@
   <data name="OverlayDialogDescription" xml:space="preserve">
     <value>Test of overlay dialogs</value>
   </data>
+  <data name="ShowContentDialog" xml:space="preserve">
+    <value>Content dialog</value>
+  </data>
+  <data name="ShowMessageBox" xml:space="preserve">
+    <value>Message box</value>
+  </data>
+  <data name="ShowDialogBox" xml:space="preserve">
+    <value>Dialog box</value>
+  </data>
+  <data name="ShowStackedOverlay" xml:space="preserve">
+    <value>Stack two overlays</value>
+  </data>
+  <data name="CloseTopDialog" xml:space="preserve">
+    <value>Close top dialog</value>
+  </data>
+  <data name="StackedOverlayRequiresOverlayTheme" xml:space="preserve">
+    <value>Select the Overlay theme to stack dialogs.</value>
+  </data>
+  <data name="CloseTopRequiresOverlayTheme" xml:space="preserve">
+    <value>Select the Overlay theme to close an overlay programmatically.</value>
+  </data>
+  <data name="NoOpenDialog" xml:space="preserve">
+    <value>No open dialog to close.</value>
+  </data>
+  <data name="DialogClosedProgrammatically" xml:space="preserve">
+    <value>Dialog closed via CloseAsync.</value>
+  </data>
+  <data name="StackedOverlayFirstTitle" xml:space="preserve">
+    <value>Back layer</value>
+  </data>
+  <data name="StackedOverlayFirstMessage" xml:space="preserve">
+    <value>Background dialog. Open a second one on top.</value>
+  </data>
+  <data name="StackedOverlaySecondTitle" xml:space="preserve">
+    <value>Front layer</value>
+  </data>
+  <data name="StackedOverlaySecondMessage" xml:space="preserve">
+    <value>Foreground dialog. Close this one, then the first.</value>
+  </data>
+  <data name="StackedOverlayResultFormat" xml:space="preserve">
+    <value>Second: {0} ; First: {1}</value>
+  </data>
 </root>

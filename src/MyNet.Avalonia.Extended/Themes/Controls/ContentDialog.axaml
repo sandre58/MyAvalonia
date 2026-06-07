@@ -1,0 +1,36 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
+
+    <ControlTheme x:Key="{x:Type my:ContentDialog}" TargetType="my:ContentDialog">
+        <Setter Property="my:ThemeAssist.Category" Value="Surface" />
+        <Setter Property="Padding" Value="{my:Thickness Lg}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:ContentDialog">
+                <Grid RowDefinitions="Auto,*">
+                    <ContentPresenter Name="PART_HeaderPresenter"
+                                      Grid.Row="0"
+                                      Margin="{my:Thickness Md, Bottom}"
+                                      Content="{TemplateBinding Header}"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                      FontSize="{StaticResource MyNet.Font.Size.Lg}"
+                                      FontWeight="{StaticResource MyNet.Font.Weight.Caption}"
+                                      IsVisible="{TemplateBinding ShowHeader}"
+                                      RecognizesAccessKey="True" />
+                    <ContentPresenter Name="PART_ContentPresenter"
+                                      Grid.Row="1"
+                                      Padding="{TemplateBinding Padding}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      RecognizesAccessKey="True" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

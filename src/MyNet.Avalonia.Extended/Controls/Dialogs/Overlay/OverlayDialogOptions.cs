@@ -89,7 +89,10 @@ public class OverlayDialogOptions
     /// </summary>
     public int? TopLevelKey { get; set; }
 
-    public bool CanResize { get; set; }
+    /// <summary>
+    /// Gets or sets a value indicating whether the overlay dialog chrome can be dragged by its title area.
+    /// </summary>
+    public bool CanDragMove { get; set; } = true;
 
     public string? StyleClass { get; set; }
 }

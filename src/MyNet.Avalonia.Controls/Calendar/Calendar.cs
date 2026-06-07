@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using Avalonia;
 using Avalonia.Automation;
@@ -115,7 +116,7 @@ public class Calendar : TemplatedControl
 
     private void UpdateAutomationName()
     {
-        var name = SelectedDate?.ToString() ?? DisplayDate.ToString();
+        var name = SelectedDate?.ToString(CultureInfo.CurrentCulture) ?? DisplayDate.ToString(CultureInfo.CurrentCulture);
         AutomationProperties.SetName(this, name);
     }
 
