@@ -40,7 +40,7 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
         _validation = this.UseValidation(new FormViewModelValidator());
         _validation.ErrorsChanged += (_, e) => ErrorsChanged?.Invoke(this, e);
 
-        SubmitCommand = commands.Create(Submit);
+        SubmitCommand = commands.Create(() => Submit());
         ResetCommand = commands.Create(Reset);
 
         Disposables.Add(_validation);
@@ -176,7 +176,7 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
 
     #endregion
 
-    private void Submit()
+    public bool Submit()
     {
         StatusMessage = null;
         IsSubmitSuccessful = false;
@@ -184,7 +184,7 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
         if (!Validate())
         {
             StatusMessage = "ValidationFailed".Translate();
-            return;
+            return false;
         }
 
         IsSubmitSuccessful = true;
@@ -192,6 +192,8 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
 
         if (EnableNotifications && _notificationPublisher is not null)
             _notificationPublisher.PublishSuccess(StatusMessage);
+
+        return true;
     }
 
     private void Reset()

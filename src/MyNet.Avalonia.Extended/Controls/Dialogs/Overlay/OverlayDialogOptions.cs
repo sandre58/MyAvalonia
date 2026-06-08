@@ -11,14 +11,26 @@ using MyNet.UI.Dialogs.MessageBox;
 namespace MyNet.Avalonia.Extended.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
+/// <summary>
+/// Defines options for configuring the appearance and behavior of an overlay dialog, including layout, size, and message box settings.
+/// </summary>
 public class OverlayDialogOptions
 {
     internal static OverlayDialogOptions Default { get; } = new();
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the dialog should be displayed in full screen mode. When set to true, the dialog will cover the entire host area and ignore anchor and offset settings.
+    /// </summary>
     public bool FullScreen { get; set; }
 
+    /// <summary>
+    /// Gets or sets the horizontal anchor position of the dialog. Only used when <see cref="FullScreen"/> is false.
+    /// </summary>
     public HorizontalPosition HorizontalAnchor { get; set; } = HorizontalPosition.Center;
 
+    /// <summary>
+    /// Gets or sets the vertical anchor position of the dialog. Only used when <see cref="FullScreen"/> is false.
+    /// </summary>
     public VerticalPosition VerticalAnchor { get; set; } = VerticalPosition.Center;
 
     /// <summary>
@@ -81,6 +93,9 @@ public class OverlayDialogOptions
     /// </summary>
     public bool? IsCloseButtonVisible { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the dialog can be dismissed by clicking outside of it (light dismiss). When set to true, clicking outside the dialog will close it. Only applicable when <see cref="IsModal"/> is false.
+    /// </summary>
     public bool CanLightDismiss { get; set; }
 
     /// <summary>
@@ -94,5 +109,8 @@ public class OverlayDialogOptions
     /// </summary>
     public bool CanDragMove { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets the style class applied to the dialog's root element, allowing for custom styling of the overlay dialog.
+    /// </summary>
     public string? StyleClass { get; set; }
 }

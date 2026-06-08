@@ -32,6 +32,7 @@
                         </ContentPresenter.IsVisible>
                     </ContentPresenter>
                     <ContentPresenter Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
                                       RecognizesAccessKey="True"
                                       my:IconAssist.Size="{TemplateBinding PrimaryIconSize}"
                                       my:IconAssist.Role="Primary" />

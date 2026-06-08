@@ -6,7 +6,9 @@
 
 using MyNet.Avalonia.Controls;
 
-namespace MyNet.Avalonia.Extended.Dialogs.Internal;
+#pragma warning disable IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.Extended.Controls;
+#pragma warning restore IDE0130 // Namespace does not match folder structure
 
 /// <summary>
 /// Overlay shell that raises a typed close result for content dialogs.

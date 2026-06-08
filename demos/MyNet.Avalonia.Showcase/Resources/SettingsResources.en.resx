@@ -774,4 +774,16 @@
   <data name="LostFocusBehavior" xml:space="preserve">
       <value>Lost focus behavior</value>
   </data>
+  <data name="Modal" xml:space="preserve">
+      <value>Modal</value>
+  </data>
+  <data name="Buttons" xml:space="preserve">
+      <value>Buttons</value>
+  </data>
+  <data name="LightDismiss" xml:space="preserve">
+      <value>Light dismiss</value>
+  </data>
+  <data name="VerticalAnchor" xml:space="preserve">
+      <value>Vertical anchor</value>
+  </data>
 </root>

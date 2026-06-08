@@ -754,4 +754,19 @@
   <data name="LostFocusBehavior" xml:space="preserve">
       <value>Comportement perte focus</value>
   </data>
+  <data name="Modal" xml:space="preserve">
+      <value>Modal</value>
+  </data>
+  <data name="Buttons" xml:space="preserve">
+      <value>Boutons</value>
+  </data>
+  <data name="LightDismiss" xml:space="preserve">
+      <value>Fermer au clic extérieur</value>
+  </data>
+  <data name="HorizontalAnchor" xml:space="preserve">
+      <value>Ancrer horizontalement</value>
+  </data>
+  <data name="VerticalAnchor" xml:space="preserve">
+      <value>Ancrer verticalement</value>
+  </data>
 </root>

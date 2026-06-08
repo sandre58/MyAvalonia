@@ -41,6 +41,5 @@ public class WindowDialog : Window
         Close(result);
     }
 
-    private static void UpdateAutomationName(WindowDialog dialog)
-        => AutomationProperties.SetName(dialog, dialog.Title ?? string.Empty);
+    private static void UpdateAutomationName(WindowDialog dialog) => AutomationProperties.SetName(dialog, dialog.Title ?? string.Empty);
 }

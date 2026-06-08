@@ -6,6 +6,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Material.Icons;
@@ -14,6 +15,7 @@ using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.Avalonia.Showcase.Resources;
+using MyNet.Avalonia.Showcase.ThemeBuilder;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Dialogs;
@@ -25,7 +27,6 @@ using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
 using MyNet.UI.Notifications;
 using MyNet.UI.Notifications.Models;
-using DialogOptions = MyNet.Avalonia.Extended.Dialogs.DialogOptions;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
@@ -66,7 +67,7 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
                     .AddValueAction(
                         (_, y) => _isModal = (bool?)y ?? true,
                         true,
-                        x => x.DisplayName("Modal").Of<ToggleSwitchEditor>())
+                        x => x.DisplayName(nameof(SettingsResources.Modal)).Of<ToggleSwitchEditor>())
                     .AddValueAction(
                         (_, y) => _showCloseButton = (bool?)y ?? true,
                         true,
@@ -78,24 +79,19 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
                     .AddValueAction(
                         (_, y) => _canLightDismiss = (bool?)y ?? false,
                         false,
-                        x => x.DisplayName("LightDismiss").Of<ToggleSwitchEditor>())
+                        x => x.DisplayName(nameof(SettingsResources.LightDismiss)).Of<ToggleSwitchEditor>())
                     .AddValueAction(
                         (_, y) => _fullScreen = (bool?)y ?? false,
                         false,
                         x => x.DisplayName(nameof(SettingsResources.FullScreen)).Of<ToggleSwitchEditor>())
-                    .AddValueAction(
-                        (_, y) => _buttons = (MessageBoxResultOption?)y ?? MessageBoxResultOption.OkCancel,
+                    .AddEnumValue<MessageBoxResultOption, ComboBoxEditor>(
+                        (_, y) => _buttons = y ?? MessageBoxResultOption.OkCancel,
                         MessageBoxResultOption.OkCancel,
-                        x => x.DisplayName("Buttons")
-                            .Of<ListBoxEditor>(editor => editor
-                                .AddChoice(MessageBoxResultOption.Ok, b => b.DisplayName(() => MessageBoxResultOption.Ok.Humanize()))
-                                .AddChoice(MessageBoxResultOption.OkCancel, b => b.DisplayName(() => MessageBoxResultOption.OkCancel.Humanize()))
-                                .AddChoice(MessageBoxResultOption.YesNo, b => b.DisplayName(() => MessageBoxResultOption.YesNo.Humanize()))
-                                .AddChoice(MessageBoxResultOption.YesNoCancel, b => b.DisplayName(() => MessageBoxResultOption.YesNoCancel.Humanize()))))
+                        x => x.DisplayName(nameof(SettingsResources.Buttons)))
                     .AddValueAction(
                         (_, y) => _horizontalAnchor = (HorizontalPosition?)y ?? HorizontalPosition.Center,
                         HorizontalPosition.Center,
-                        x => x.DisplayName("HorizontalAnchor")
+                        x => x.DisplayName(nameof(SettingsResources.HorizontalAnchor))
                             .Of<ListBoxEditor>(editor => editor
                                 .AddChoice(HorizontalPosition.Left, b => b.DisplayName(() => HorizontalPosition.Left.Humanize()).WithIcon(MaterialIconKind.FormatHorizontalAlignLeft))
                                 .AddChoice(HorizontalPosition.Center, b => b.DisplayName(() => HorizontalPosition.Center.Humanize()).WithIcon(MaterialIconKind.FormatHorizontalAlignCenter))
@@ -103,7 +99,7 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
                     .AddValueAction(
                         (_, y) => _verticalAnchor = (VerticalPosition?)y ?? VerticalPosition.Center,
                         VerticalPosition.Center,
-                        x => x.DisplayName("VerticalAnchor")
+                        x => x.DisplayName(nameof(SettingsResources.VerticalAnchor))
                             .Of<ListBoxEditor>(editor => editor
                                 .AddChoice(VerticalPosition.Top, b => b.DisplayName(() => VerticalPosition.Top.Humanize()).WithIcon(MaterialIconKind.FormatVerticalAlignTop))
                                 .AddChoice(VerticalPosition.Center, b => b.DisplayName(() => VerticalPosition.Center.Humanize()).WithIcon(MaterialIconKind.FormatVerticalAlignCenter))
@@ -114,20 +110,15 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
                     .AddValueAction(
                         (_, y) => _isModal = (bool?)y ?? true,
                         true,
-                        x => x.DisplayName("Modal").Of<ToggleSwitchEditor>())
+                        x => x.DisplayName(nameof(SettingsResources.Modal)).Of<ToggleSwitchEditor>())
                     .AddValueAction(
                         (_, y) => _canResize = (bool?)y ?? true,
                         true,
                         x => x.DisplayName(nameof(SettingsResources.CanResize)).Of<ToggleSwitchEditor>())
-                    .AddValueAction(
-                        (_, y) => _buttons = (MessageBoxResultOption?)y ?? MessageBoxResultOption.OkCancel,
+                    .AddEnumValue<MessageBoxResultOption, ComboBoxEditor>(
+                        (_, y) => _buttons = y ?? MessageBoxResultOption.OkCancel,
                         MessageBoxResultOption.OkCancel,
-                        x => x.DisplayName("Buttons")
-                            .Of<ListBoxEditor>(editor => editor
-                                .AddChoice(MessageBoxResultOption.Ok, b => b.DisplayName(() => MessageBoxResultOption.Ok.Humanize()))
-                                .AddChoice(MessageBoxResultOption.OkCancel, b => b.DisplayName(() => MessageBoxResultOption.OkCancel.Humanize()))
-                                .AddChoice(MessageBoxResultOption.YesNo, b => b.DisplayName(() => MessageBoxResultOption.YesNo.Humanize()))
-                                .AddChoice(MessageBoxResultOption.YesNoCancel, b => b.DisplayName(() => MessageBoxResultOption.YesNoCancel.Humanize()))))
+                        x => x.DisplayName(nameof(SettingsResources.Buttons)))
             ])
     {
         _notificationPublisher = notificationPublisher;
@@ -149,8 +140,7 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
     public override MaterialIconKind Icon => MaterialIconKind.DockWindow;
 
     /// <summary>Gets a value indicating whether the overlay theme is selected in the playground.</summary>
-    public bool IsOverlayPresentation =>
-        Playground.SelectedTheme?.Definition.Key?.Contains("Overlay", StringComparison.OrdinalIgnoreCase) == true;
+    public bool IsOverlayPresentation => Playground.SelectedTheme?.Definition.Key?.Contains("Overlay", StringComparison.OrdinalIgnoreCase) == true;
 
     public ICommand ShowContentDialogCommand { get; }
 
@@ -181,14 +171,14 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
 
         var result = IsOverlayPresentation
             ? await _contentDialogService
-                .ShowAsync(vm, DialogOptions.ForOverlay(vm, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId))
+                .ShowAsync(vm, DialogOptionsFactory.ForOverlay(vm, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId))
                 .ConfigureAwait(false)
             : await _contentDialogService
-                .ShowAsync(vm, DialogOptions.ForWindow(vm, _isModal))
+                .ShowAsync(vm, DialogOptionsFactory.ForWindow(vm, _isModal, windowOptions: CreateWindowOptions(false)))
                 .ConfigureAwait(false);
 
         ClearDialog(vm);
-        ShowLoginResult(result, vm);
+        ShowLoginResult(result);
     }
 
     private async Task ShowMessageBoxAsync(MessageSeverity severity)
@@ -202,15 +192,22 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
 
         var result = IsOverlayPresentation
             ? await _contentDialogService
-                .ShowAsync(messageBox, DialogOptions.ForOverlay(messageBox, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId))
+                .ShowAsync(messageBox, DialogOptionsFactory.ForOverlay(messageBox, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId))
                 .ConfigureAwait(false)
             : await _contentDialogService
-                .ShowAsync(messageBox, DialogOptions.ForWindow(messageBox, _isModal))
+                .ShowAsync(messageBox, DialogOptionsFactory.ForWindow(messageBox, _isModal, windowOptions: CreateWindowOptions(true)))
                 .ConfigureAwait(false);
 
         ClearDialog(messageBox);
         var mapped = result.IsSuccess ? result.Value : MessageBoxResult.Cancel;
-        _notificationPublisher.Publish(new MessageNotification($"Result: {mapped}", severity: NotificationSeverity.Information));
+        var resultSeverity = result switch
+        {
+            { IsSuccess: true, Value: MessageBoxResult.Ok or MessageBoxResult.Yes } => NotificationSeverity.Success,
+            { IsSuccess: true, Value: MessageBoxResult.Cancel or MessageBoxResult.No } => NotificationSeverity.Warning,
+            { IsSuccess: true, Value: MessageBoxResult.None } => NotificationSeverity.Information,
+            _ => NotificationSeverity.Error
+        };
+        _notificationPublisher.Publish(new MessageNotification($"Result: {mapped}", severity: resultSeverity));
     }
 
     private async Task ShowDialogBoxAsync(MessageSeverity severity)
@@ -220,17 +217,25 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
 
         var result = IsOverlayPresentation
             ? await _contentDialogService
-                .ShowAsync<bool>(vm, DialogOptions.ForOverlay(vm, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId))
+                .ShowAsync(vm, DialogOptionsFactory.ForOverlay(vm, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId))
                 .ConfigureAwait(false)
             : await _contentDialogService
-                .ShowAsync<bool>(vm, DialogOptions.ForWindow(vm, _isModal))
+                .ShowAsync(vm, DialogOptionsFactory.ForWindow(vm, _isModal, windowOptions: CreateWindowOptions(false)))
                 .ConfigureAwait(false);
 
         ClearDialog(vm);
         var message = result.IsSuccess
             ? $"Result: {result.Value}"
-            : result.IsCancelled ? "Cancelled" : "Dismissed";
-        _notificationPublisher.Publish(new MessageNotification(message, severity: NotificationSeverity.Information));
+            : result.IsCancelled
+                ? "Cancelled"
+                : "Dismissed";
+        var resultSeverity = result switch
+        {
+            { IsSuccess: true, Value: true } => NotificationSeverity.Success,
+            { IsSuccess: true, Value: false } => NotificationSeverity.Warning,
+            _ => NotificationSeverity.Error
+        };
+        _notificationPublisher.Publish(new MessageNotification(message, severity: resultSeverity));
     }
 
     private async Task ShowStackedOverlayAsync()
@@ -245,16 +250,16 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
 
         var first = new ConfirmDialogBoxViewModel(_commands, DialogsPageResources.StackedOverlayFirstMessage, DialogsPageResources.StackedOverlayFirstTitle);
         TrackDialog(first);
-        var firstTask = _contentDialogService.ShowAsync<bool>(
+        var firstTask = _contentDialogService.ShowAsync(
             first,
-            DialogOptions.ForOverlay(first, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId));
+            DialogOptionsFactory.ForOverlay(first, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId));
 
         await Task.Delay(150).ConfigureAwait(false);
 
         var second = new ConfirmDialogBoxViewModel(_commands, DialogsPageResources.StackedOverlaySecondMessage, DialogsPageResources.StackedOverlaySecondTitle);
         TrackDialog(second);
         var secondResult = await _contentDialogService
-            .ShowAsync<bool>(second, DialogOptions.ForOverlay(second, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId))
+            .ShowAsync(second, DialogOptionsFactory.ForOverlay(second, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId))
             .ConfigureAwait(false);
 
         var firstResult = await firstTask.ConfigureAwait(false);
@@ -262,7 +267,9 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
         ClearDialog(first);
 
         _notificationPublisher.Publish(new MessageNotification(
-            string.Format(DialogsPageResources.StackedOverlayResultFormat, secondResult.IsSuccess, firstResult.IsSuccess),
+#pragma warning disable CA1863
+            string.Format(CultureInfo.CurrentCulture, DialogsPageResources.StackedOverlayResultFormat, secondResult.IsSuccess, firstResult.IsSuccess),
+#pragma warning restore CA1863
             severity: NotificationSeverity.Information));
     }
 
@@ -290,16 +297,25 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
             severity: NotificationSeverity.Success));
     }
 
-    private OverlayDialogOptions CreateOverlayOptions() => new()
-    {
-        IsCloseButtonVisible = _showCloseButton,
-        CanLightDismiss = _canLightDismiss,
-        CanDragMove = _canDragMove,
-        FullScreen = _fullScreen,
-        HorizontalAnchor = _horizontalAnchor,
-        VerticalAnchor = _verticalAnchor,
-        TopLevelKey = OverlayDialogHostManager.GetTopLevelKey(_hostOptions.TopLevelProvider())
-    };
+    private OverlayDialogOptions CreateOverlayOptions()
+        => new()
+        {
+            IsCloseButtonVisible = _showCloseButton,
+            CanLightDismiss = _canLightDismiss,
+            CanDragMove = _canDragMove,
+            FullScreen = _fullScreen,
+            HorizontalAnchor = _horizontalAnchor,
+            VerticalAnchor = _verticalAnchor,
+            TopLevelKey = OverlayDialogHostManager.GetTopLevelKey(_hostOptions.TopLevelProvider())
+        };
+
+    private static WindowDialogOptions CreateWindowOptions(bool isMessageBox)
+        => new()
+        {
+            CanResize = _canResize && !isMessageBox,
+            CanDragMove = true,
+            ShowInTaskbar = !isMessageBox
+        };
 
     private void TrackDialog(IDialog dialog) => _lastDialog = dialog;
 
@@ -309,34 +325,33 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
             _lastDialog = null;
     }
 
-    private static MessageSeverity ToSeverity(ThemeRole role) => role switch
-    {
-        ThemeRole.Success => MessageSeverity.Success,
-        ThemeRole.Warning => MessageSeverity.Warning,
-        ThemeRole.Error => MessageSeverity.Error,
-        _ => MessageSeverity.Information
-    };
+    private static MessageSeverity ToSeverity(ThemeRole role)
+        => role switch
+        {
+            ThemeRole.Success => MessageSeverity.Success,
+            ThemeRole.Warning => MessageSeverity.Warning,
+            ThemeRole.Error => MessageSeverity.Error,
+            _ => MessageSeverity.Information
+        };
 
-    private static string GetSampleMessage(MessageSeverity severity) => severity switch
-    {
-        MessageSeverity.Information => "This is an informational message.",
-        MessageSeverity.Success => "Operation completed successfully!",
-        MessageSeverity.Warning => "Are you sure you want to continue? This action may have consequences.",
-        MessageSeverity.Error => "An unexpected error has occurred. Please try again.",
-        _ => "This is a dialog message."
-    };
+    private static string GetSampleMessage(MessageSeverity severity)
+        => severity switch
+        {
+            MessageSeverity.Information => DialogsPageResources.InformationMessage,
+            MessageSeverity.Success => DialogsPageResources.SuccessMessage,
+            MessageSeverity.Warning => DialogsPageResources.WarningMessage,
+            MessageSeverity.Error => DialogsPageResources.ErrorMessage,
+            _ => string.Empty
+        };
 
-    private void ShowLoginResult(DialogResult<bool> result, LoginDialogViewModel viewModel)
+    private void ShowLoginResult(DialogResult<LoginResult> result)
     {
+        var message = $"Login: {result.Value?.Login} ; Password: {result.Value?.Password}";
         if (result.IsDismissed)
-            _notificationPublisher.Publish(new MessageNotification("No result.", severity: NotificationSeverity.Warning));
+            _notificationPublisher.Publish(new MessageNotification(message, "No result.", severity: NotificationSeverity.Warning));
         else if (result.IsSuccess)
-            _notificationPublisher.Publish(new MessageNotification("Dialog has been validated.", severity: NotificationSeverity.Success));
+            _notificationPublisher.Publish(new MessageNotification(message, "Dialog has been validated.", severity: NotificationSeverity.Success));
         else
-            _notificationPublisher.Publish(new MessageNotification("Dialog has been cancelled.", severity: NotificationSeverity.Error));
-
-        _notificationPublisher.Publish(new MessageNotification(
-            $"Login: {viewModel.Form.Login} ; Password: {viewModel.Form.Password}",
-            severity: NotificationSeverity.Information));
+            _notificationPublisher.Publish(new MessageNotification(message, "Dialog has been cancelled.", severity: NotificationSeverity.Error));
     }
 }

@@ -5,18 +5,18 @@
 
     <ControlTheme x:Key="{x:Type my:WindowMessageBox}" TargetType="my:WindowMessageBox"
                   BasedOn="{StaticResource {x:Type my:WindowDialog}}">
-        <Setter Property="Width" Value="400" />
+        <Setter Property="Width" Value="380" />
         <Setter Property="MinWidth" Value="360" />
         <Setter Property="MaxWidth" Value="480" />
-        <Setter Property="MinHeight" Value="140" />
+        <Setter Property="MinHeight" Value="120" />
         <Setter Property="ShowInTaskbar" Value="False" />
         <Setter Property="WindowStartupLocation" Value="CenterOwner" />
         <Setter Property="CanResize" Value="False" />
         <Setter Property="SizeToContent" Value="Height" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="{StaticResource MyNet.Height.TitleBar}" />
+        <Setter Property="my:WindowAssist.IsTitleVisible" Value="False" />
         <Setter Property="my:WindowAssist.ExtendContentIntoTitleBar" Value="True" />
-        <Setter Property="my:WindowAssist.ReserveTitleBarSafeArea" Value="True" />
+        <Setter Property="my:WindowAssist.ReserveTitleBarSafeArea" Value="False" />
         <Setter Property="my:WindowAssist.TitleBarBackground" Value="Transparent" />
         
         <Setter Property="ContentTemplate">
@@ -24,6 +24,7 @@
                 <my:WindowMessageBoxContent Message="{Binding}"
                                             Margin="{my:Thickness Md}"
                                             HorizontalAlignment="Stretch"
+                                            Title="{Binding $parent[my:WindowMessageBox].Title}"
                                             Severity="{Binding $parent[my:WindowMessageBox].Severity}"
                                             Buttons="{Binding $parent[my:WindowMessageBox].Buttons}" />
             </DataTemplate>
@@ -33,23 +34,17 @@
             <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
             <Setter Property="my:VariantAssist.BorderBrush" Value="{my:Theme Success}" />
             <Setter Property="TransparencyBackgroundFallback" Value="{my:Theme Success}" />
-            <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Success, Opacity=Overlay}" />
-            <Setter Property="my:WindowAssist.TitleBarForeground" Value="{my:Theme Success}" />
         </Style>
         <Style Selector="^[Severity=Warning]">
             <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
             <Setter Property="my:VariantAssist.BorderBrush" Value="{my:Theme Warning}" />
             <Setter Property="TransparencyBackgroundFallback" Value="{my:Theme Warning}" />
-            <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Warning, Opacity=Overlay}" />
-            <Setter Property="my:WindowAssist.TitleBarForeground" Value="{my:Theme Warning}" />
         </Style>
 
         <Style Selector="^[Severity=Error]">
             <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
             <Setter Property="my:VariantAssist.BorderBrush" Value="{my:Theme Error}" />
             <Setter Property="TransparencyBackgroundFallback" Value="{my:Theme Error}" />
-            <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Error, Opacity=Overlay}" />
-            <Setter Property="my:WindowAssist.TitleBarForeground" Value="{my:Theme Error}" />
         </Style>
     </ControlTheme>
 

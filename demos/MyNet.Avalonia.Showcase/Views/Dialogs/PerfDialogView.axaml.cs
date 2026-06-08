@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Markup.Xaml;
-using MyNet.Avalonia.Extended.Controls;
+using MyNet.Avalonia.Controls;
 
 namespace MyNet.Avalonia.Showcase.Views.Dialogs;
 

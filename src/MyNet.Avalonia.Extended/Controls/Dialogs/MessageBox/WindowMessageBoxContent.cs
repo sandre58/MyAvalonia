@@ -31,6 +31,9 @@ public class WindowMessageBoxContent : TemplatedControl
     public static readonly StyledProperty<object?> MessageProperty =
         AvaloniaProperty.Register<WindowMessageBoxContent, object?>(nameof(Message));
 
+    public static readonly StyledProperty<object?> TitleProperty =
+        AvaloniaProperty.Register<WindowMessageBoxContent, object?>(nameof(Title));
+
     public static readonly StyledProperty<MessageSeverity> SeverityProperty =
         AvaloniaProperty.Register<WindowMessageBoxContent, MessageSeverity>(nameof(Severity));
 
@@ -49,6 +52,12 @@ public class WindowMessageBoxContent : TemplatedControl
     {
         get => GetValue(MessageProperty);
         set => SetValue(MessageProperty, value);
+    }
+
+    public object? Title
+    {
+        get => GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
     }
 
     public MessageSeverity Severity

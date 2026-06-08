@@ -6,6 +6,7 @@
 
 using System;
 using Avalonia.Controls;
+using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Theme.Controls.Assists;
 using MyNet.UI;
@@ -14,14 +15,21 @@ using MyNet.UI.Dialogs.MessageBox;
 
 namespace MyNet.Avalonia.Extended.Dialogs.Internal;
 
+/// <summary>
+/// Provides methods to create and configure window dialogs based on the specified dialog view models and options.
+/// </summary>
 internal static class WindowDialogBuilder
 {
-    public static WindowDialog Create(
-        IDialog dialog,
-        object view,
-        UI.Dialogs.ContentDialogs.DialogOptions options)
+    /// <summary>
+    /// Creates a new instance of a window dialog based on the specified dialog view model, content view, and dialog options.
+    /// </summary>
+    /// <param name="dialog">The dialog view model.</param>
+    /// <param name="view">The content view for the dialog.</param>
+    /// <param name="options">The dialog options.</param>
+    /// <returns>A configured <see cref="WindowDialog"/> instance.</returns>
+    public static WindowDialog Create(IDialog dialog, object view, DialogOptions options)
     {
-        var request = DialogOptions.Resolve(options);
+        var request = DialogOptionsFactory.Resolve(options);
         var window = new WindowDialog { Content = view, DataContext = dialog };
 
         var windowOptions = MergeWindowOptions(GetWindowOptions(view as ContentDialog), request.WindowOptions);
@@ -34,9 +42,15 @@ internal static class WindowDialogBuilder
         return window;
     }
 
-    public static WindowMessageBox CreateMessageBox(MessageBoxViewModel messageBox, UI.Dialogs.ContentDialogs.DialogOptions options)
+    /// <summary>
+    /// Creates a new instance of a window message box based on the specified message box view model and dialog options.
+    /// </summary>
+    /// <param name="messageBox">The message box view model.</param>
+    /// <param name="options">The dialog options.</param>
+    /// <returns>A configured <see cref="WindowMessageBox"/> instance.</returns>
+    public static WindowMessageBox CreateMessageBox(MessageBoxViewModel messageBox, DialogOptions options)
     {
-        var request = DialogOptions.Resolve(options);
+        var request = DialogOptionsFactory.Resolve(options);
         var windowOptions = request.WindowOptions ?? WindowDialogOptions.Default;
 
         var window = new WindowMessageBox(messageBox.Buttons)
@@ -52,9 +66,13 @@ internal static class WindowDialogBuilder
         return window;
     }
 
-    internal static WindowDialogOptions MergeWindowOptions(
-        WindowDialogOptions baseOptions,
-        WindowDialogOptions? overrideOptions)
+    /// <summary>
+    /// Merges the base window options with the override options, giving precedence to the override options when specified.
+    /// </summary>
+    /// <param name="baseOptions">The base window options.</param>
+    /// <param name="overrideOptions">The override window options.</param>
+    /// <returns>A new <see cref="WindowDialogOptions"/> instance with the merged options.</returns>
+    internal static WindowDialogOptions MergeWindowOptions(WindowDialogOptions baseOptions, WindowDialogOptions? overrideOptions)
         => overrideOptions is null
             ? baseOptions
             : new()
@@ -74,6 +92,11 @@ internal static class WindowDialogBuilder
                 Title = overrideOptions.Title ?? baseOptions.Title
             };
 
+    /// <summary>
+    /// Extracts window options from the given content dialog, if available, to configure the appearance and behavior of the window dialog.
+    /// </summary>
+    /// <param name="content">The content dialog from which to extract window options.</param>
+    /// <returns>A <see cref="WindowDialogOptions"/> instance with the extracted options, or the default options if the content dialog is null.</returns>
     private static WindowDialogOptions GetWindowOptions(ContentDialog? content) => content is null
         ? WindowDialogOptions.Default
         : new()
@@ -91,11 +114,18 @@ internal static class WindowDialogBuilder
             StyleClass = content.ParentClasses
         };
 
+    /// <summary>
+    /// Applies the specified window options to the given window dialog, configuring its properties such as title, size, resize behavior, and startup location based on the provided options and dialog information.
+    /// </summary>
+    /// <param name="window">The window dialog to which the options will be applied.</param>
+    /// <param name="windowOptions">The window options to apply.</param>
+    /// <param name="dialog">The dialog associated with the window.</param>
+    /// <param name="options">The dialog options.</param>
     private static void ApplyWindowOptions(
         Window window,
         WindowDialogOptions windowOptions,
         IDialog dialog,
-        UI.Dialogs.ContentDialogs.DialogOptions options)
+        DialogOptions options)
     {
         window.WindowState = WindowState.Normal;
 

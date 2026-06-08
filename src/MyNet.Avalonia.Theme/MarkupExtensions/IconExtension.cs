@@ -56,6 +56,16 @@ where TIcon : IconElement
     public BindingBase? BorderBrushBinding { get; set; }
 
     /// <summary>
+    /// Gets or sets the icon foreground.
+    /// </summary>
+    public IBrush? Foreground { get; set; }
+
+    /// <summary>
+    /// Gets or sets a binding for the icon foreground. Use this when data binding is required.
+    /// </summary>
+    public BindingBase? ForegroundBinding { get; set; }
+
+    /// <summary>
     /// Gets or sets the vertical alignment of the content.
     /// </summary>
     public VerticalAlignment? VerticalAlignment { get; set; }

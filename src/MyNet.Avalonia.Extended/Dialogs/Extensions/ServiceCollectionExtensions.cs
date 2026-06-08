@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MyNet.Avalonia.Extended.Dialogs.Internal;
 using MyNet.Avalonia.Extended.Dialogs.Presentation;
+using MyNet.Avalonia.Threading;
 using MyNet.UI.Dialogs;
 using MyNet.UI.Locators;
 
@@ -31,7 +32,7 @@ public static class ServiceCollectionExtensions
     /// <remarks>
     /// Requires <see cref="ServiceCollectionExtensions.AddDialogs"/> and
     /// <see cref="MyNet.UI.Locators.ServiceCollectionExtensions.AddViewLocators"/> to be registered first.
-    /// Use <see cref="DialogOptions.ForOverlay"/> or <see cref="DialogOptions.ForWindow"/>
+    /// Use <see cref="DialogOptionsFactory.ForOverlay"/> or <see cref="DialogOptionsFactory.ForWindow"/>
     /// to select the presentation surface.
     /// See <c>Dialogs/README.md</c> in this package for host setup and examples.
     /// </remarks>
@@ -44,6 +45,7 @@ public static class ServiceCollectionExtensions
 
         services.AddViewLocators();
         services.TryAddSingleton(new DialogHostOptions(topLevelProvider));
+        services.TryAddSingleton<IUiThreadDispatcher, AvaloniaUiThreadDispatcher>();
         services.TryAddSingleton<DialogSessionRegistry>();
         services.AddDialogs(builder =>
         {

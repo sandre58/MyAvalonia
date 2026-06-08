@@ -58,7 +58,7 @@
                     <Panel Name="PART_LeadingHost"
                            Grid.Row="0"
                            Grid.Column="0"
-                           VerticalAlignment="Center"
+                           VerticalAlignment="Top"
                            IsVisible="{Binding Leading, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
                         <Border Name="PART_LeadingBackground"
                                 CornerRadius="{StaticResource MyNet.Corners.Md}"
@@ -83,6 +83,7 @@
                                       FontStyle="{TemplateBinding FontStyle}"
                                       FontWeight="{TemplateBinding TitleFontWeight}"
                                       Foreground="{TemplateBinding TitleForeground}"
+                                      IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
                                       />
 
                     <ContentPresenter Name="PART_Subtitle"
@@ -218,7 +219,7 @@
                                       FontStyle="{TemplateBinding FontStyle}"
                                       FontWeight="{TemplateBinding TitleFontWeight}"
                                       Foreground="{TemplateBinding TitleForeground}"
-                                      />
+                                      IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
                     
                     <ContentPresenter Name="PART_Subtitle"
                                       Grid.Row="1"

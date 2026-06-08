@@ -1,128 +1,81 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:my="http://mynet.com/avalonia">
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
 
     <ControlTheme x:Key="{x:Type my:WindowMessageBoxContent}" TargetType="my:WindowMessageBoxContent">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Template">
             <ControlTemplate TargetType="my:WindowMessageBoxContent">
-                <Grid RowDefinitions="*,Auto">
-                    <ScrollViewer Grid.Row="0"
-                                  HorizontalScrollBarVisibility="Disabled"
-                                  VerticalScrollBarVisibility="Auto">
-                        <Grid ColumnDefinitions="Auto,*">
-                            <Panel Name="PART_SeverityHost"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Top"
-                                   Margin="{my:Thickness Md, Right}"
-                                   IsVisible="False">
 
-                                <Border Name="PART_SeverityBackground"
-                                        CornerRadius="{StaticResource MyNet.Corners.Md}"
-                                        Opacity="{DynamicResource MyNet.Opacity.Overlay}" />
-                                <my:MaterialIcon Name="PART_SeverityIcon"
-                                                 HorizontalAlignment="Center"
-                                                 VerticalAlignment="Center"
-                                                 Classes="size-lg"
-                                                 Margin="{my:Thickness Md}"
-                                                 Kind="InformationVariantCircle" />
-                            </Panel>
+                <my:Card Name="PART_Card"
+                         Classes="variant-transparent"
+                         Padding="0"
+                         Subtitle="{TemplateBinding Message}"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         Title="{TemplateBinding Title}"
+                         FooterMargin="{my:Thickness Md, Top}"
+                         FooterPadding="0"
+                         SubtitleOpacity="1"
+                         my:ThemeAssist.Role="Primary">
+                    <my:Card.LeadingTemplate>
+                        <DataTemplate DataType="icons:MaterialIconKind">
+                            <my:MaterialIcon Kind="{Binding}" Classes="size-lg"
+                                             Foreground="{Binding $parent[my:Card].(my:InteractionAssist.ActiveForeground)}" />
+                        </DataTemplate>
+                    </my:Card.LeadingTemplate>
+                    <my:Card.Footer>
+                        <StackPanel HorizontalAlignment="Right"
+                                    Orientation="Horizontal"
+                                    Spacing="{my:Spacing Sm}">
 
-                            <ContentPresenter Name="PART_Message"
-                                              Grid.Column="1"
-                                              VerticalAlignment="Top"
-                                              Content="{TemplateBinding Message}">
-                                <ContentPresenter.Styles>
-                                    <Style Selector="TextBlock, AccessText">
-                                        <Setter Property="TextWrapping" Value="Wrap" />
-                                    </Style>
-                                </ContentPresenter.Styles>
-                            </ContentPresenter>
-                        </Grid>
-                    </ScrollViewer>
+                            <Button Name="PART_CancelButton" Content="{my:Loc Cancel}"
+                                    MinWidth="90"
+                                    Classes="variant-text" />
+                            <Button Name="PART_NoButton" Content="{my:Loc No}"
+                                    MinWidth="90"
+                                    Classes="variant-outlined" />
+                            <Button Name="PART_OKButton" Content="{my:Loc Ok}"
+                                    MinWidth="90"
+                                    my:ThemeAssist.Role="{Binding $parent[my:Card].(my:ThemeAssist.Role)}" />
+                            <Button Name="PART_YesButton" Content="{my:Loc Yes}"
+                                    MinWidth="90"
+                                    my:ThemeAssist.Role="{Binding $parent[my:Card].(my:ThemeAssist.Role)}" />
+                        </StackPanel>
+                    </my:Card.Footer>
+                </my:Card>
 
-                    <UniformGrid Grid.Row="1"
-                                 HorizontalAlignment="Right"
-                                 Rows="1"
-                                 Margin="{my:Thickness Md, Top}"
-                                 ColumnSpacing="{my:Spacing Sm}">
-
-                        <Button Name="PART_CancelButton" Content="{my:Loc Cancel}" HorizontalAlignment="Stretch"
-                                Classes="variant-text" />
-                        <Button Name="PART_NoButton" Content="{my:Loc No}" HorizontalAlignment="Stretch" Classes="variant-outlined" />
-                        <Button Name="PART_OKButton" Content="{my:Loc Ok}" HorizontalAlignment="Stretch"
-                                my:ThemeAssist.Role="Primary" />
-                        <Button Name="PART_YesButton" Content="{my:Loc Yes}" HorizontalAlignment="Stretch"
-                                my:ThemeAssist.Role="Primary" />
-                    </UniformGrid>
-                </Grid>
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^[Severity=Information] /template/ Panel#PART_SeverityHost">
-            <Setter Property="IsVisible" Value="True" />
+        <Style Selector="^[Severity=Information] /template/ my|Card#PART_Card">
+            <Setter Property="LeadingBackground" Value="{my:Theme Information, Opacity=Overlay}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Information}" />
+            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.InformationVariantCircle}" />
         </Style>
 
-        <Style Selector="^[Severity=Information] /template/ Border#PART_SeverityBackground">
-            <Setter Property="Background" Value="{my:Theme Information}" />
-        </Style>
-
-        <Style Selector="^[Severity=Information] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="Kind" Value="InformationVariantCircle" />
-            <Setter Property="Foreground" Value="{my:Theme Information}" />
-        </Style>
-        
-        <Style Selector="^[Severity=Success] /template/ Panel#PART_SeverityHost">
-            <Setter Property="IsVisible" Value="True" />
-        </Style>
-
-        <Style Selector="^[Severity=Success] /template/ Border#PART_SeverityBackground">
-            <Setter Property="Background" Value="{my:Theme Success}" />
-        </Style>
-
-        <Style Selector="^[Severity=Success] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="Kind" Value="CheckCircle" />
-            <Setter Property="Foreground" Value="{my:Theme Success}" />
-        </Style>
-
-        <Style Selector="^[Severity=Success] /template/ Button#PART_OKButton, ^[Severity=Success] /template/ Button#PART_YesButton, ^[Severity=Success] /template/ Button#PART_NoButton">
+        <Style Selector="^[Severity=Success] /template/ my|Card#PART_Card">
+            <Setter Property="LeadingBackground" Value="{my:Theme Success, Opacity=Overlay}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Success}" />
+            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.CheckCircle}" />
             <Setter Property="my:ThemeAssist.Role" Value="Success" />
         </Style>
 
-        <Style Selector="^[Severity=Warning] /template/ Panel#PART_SeverityHost">
-            <Setter Property="IsVisible" Value="True" />
-        </Style>
-
-        <Style Selector="^[Severity=Warning] /template/ Border#PART_SeverityBackground">
-            <Setter Property="Background" Value="{my:Theme Warning}" />
-        </Style>
-
-        <Style Selector="^[Severity=Warning] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="Kind" Value="Alert" />
-            <Setter Property="Foreground" Value="{my:Theme Warning}" />
-        </Style>
-
-        <Style Selector="^[Severity=Warning] /template/ Button#PART_OKButton, ^[Severity=Warning] /template/ Button#PART_YesButton, ^[Severity=Warning] /template/ Button#PART_NoButton">
+        <Style Selector="^[Severity=Warning] /template/ my|Card#PART_Card">
+            <Setter Property="LeadingBackground" Value="{my:Theme Warning, Opacity=Overlay}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Warning}" />
+            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.Alert}" />
             <Setter Property="my:ThemeAssist.Role" Value="Warning" />
         </Style>
-        
-        <Style Selector="^[Severity=Error] /template/ Panel#PART_SeverityHost">
-            <Setter Property="IsVisible" Value="True" />
-        </Style>
 
-        <Style Selector="^[Severity=Error] /template/ Border#PART_SeverityBackground">
-            <Setter Property="Background" Value="{my:Theme Error}" />
-        </Style>
-
-        <Style Selector="^[Severity=Error] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="Kind" Value="AlertCircle" />
-            <Setter Property="Foreground" Value="{my:Theme Error}" />
-        </Style>
-
-        <Style Selector="^[Severity=Error] /template/ Button#PART_OKButton, ^[Severity=Error] /template/ Button#PART_YesButton, ^[Severity=Error] /template/ Button#PART_NoButton">
+        <Style Selector="^[Severity=Error] /template/ my|Card#PART_Card">
+            <Setter Property="LeadingBackground" Value="{my:Theme Error, Opacity=Overlay}" />
+            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Error}" />
+            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.AlertCircle}" />
             <Setter Property="my:ThemeAssist.Role" Value="Error" />
         </Style>
 
     </ControlTheme>
-    
+
 </ResourceDictionary>

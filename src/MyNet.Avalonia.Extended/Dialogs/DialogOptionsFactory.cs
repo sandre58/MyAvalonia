@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="DialogOptions.cs" company="Stéphane ANDRE">
+// <copyright file="DialogOptionsFactory.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -13,12 +13,12 @@ namespace MyNet.Avalonia.Extended.Dialogs;
 /// <summary>
 /// Factory helpers for Avalonia <see cref="UI.Dialogs.ContentDialogs.DialogOptions"/>.
 /// </summary>
-public static class DialogOptions
+public static class DialogOptionsFactory
 {
     /// <summary>
     /// Creates options that present the dialog inside an overlay host.
     /// </summary>
-    public static UI.Dialogs.ContentDialogs.DialogOptions ForOverlay(
+    public static DialogOptions ForOverlay(
         IDialog dialog,
         bool isModal = true,
         OverlayDialogOptions? overlayOptions = null,
@@ -40,7 +40,7 @@ public static class DialogOptions
     /// <summary>
     /// Creates options that present the dialog in a dedicated window.
     /// </summary>
-    public static UI.Dialogs.ContentDialogs.DialogOptions ForWindow(
+    public static DialogOptions ForWindow(
         IDialog dialog,
         bool isModal = true,
         Window? owner = null,
@@ -61,7 +61,7 @@ public static class DialogOptions
     /// <summary>
     /// Resolves the Avalonia host request from <paramref name="options"/>.
     /// </summary>
-    public static DialogHostRequest Resolve(UI.Dialogs.ContentDialogs.DialogOptions? options)
+    public static DialogHostRequest Resolve(DialogOptions? options)
         => options?.Owner as DialogHostRequest
            ?? new DialogHostRequest();
 }

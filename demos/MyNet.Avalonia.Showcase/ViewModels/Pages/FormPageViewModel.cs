@@ -20,10 +20,10 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
 internal sealed class FormPageViewModel(ICommandFactory commands, INotificationPublisher notificationPublisher) : ShowcaseViewModel(nameof(Form), commands, [
     new ControlThemeBuilder()
-        .AddProperty(global::MyNet.Avalonia.Controls.Form.ColumnsProperty, 1, x => x.DisplayName(nameof(SettingsResources.Columns)).Of<IntNumericUpDownEditor>(editor => editor.WithRange(1, 4)))
-        .AddProperty(global::MyNet.Avalonia.Controls.Form.SpacingProperty, 16d, x => x.DisplayName(nameof(SettingsResources.Spacing)).Of<IntNumericUpDownEditor>(editor => editor.WithRange(0, 48)))
-        .AddEnumProperty<Position, ListBoxEditor>(global::MyNet.Avalonia.Controls.Form.LabelPositionProperty, Position.Left, x => x.DisplayName(nameof(SettingsResources.Direction)))
-        .AddEnumProperty<HorizontalAlignment, ListBoxEditor>(global::MyNet.Avalonia.Controls.Form.LabelAlignmentProperty, HorizontalAlignment.Left, x => x.DisplayName(nameof(SettingsResources.LabelAlignment)))
+        .AddProperty(Controls.Form.ColumnsProperty, 1, x => x.DisplayName(nameof(SettingsResources.Columns)).Of<IntNumericUpDownEditor>(editor => editor.WithRange(1, 4)))
+        .AddProperty(Controls.Form.SpacingProperty, 16d, x => x.DisplayName(nameof(SettingsResources.Spacing)).Of<IntNumericUpDownEditor>(editor => editor.WithRange(0, 48)))
+        .AddEnumProperty<Position, ListBoxEditor>(Controls.Form.LabelPositionProperty, Position.Left, x => x.DisplayName(nameof(SettingsResources.Direction)))
+        .AddEnumProperty<HorizontalAlignment, ListBoxEditor>(Controls.Form.LabelAlignmentProperty, HorizontalAlignment.Left, x => x.DisplayName(nameof(SettingsResources.LabelAlignment)))
 ])
 {
     /// <inheritdoc/>

@@ -4,14 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-#pragma warning disable IDE0130 // Namespace does not match folder structure
 using Avalonia;
 using Avalonia.Automation;
 using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 
-namespace MyNet.Avalonia.Extended.Controls;
+#pragma warning disable IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
 public class ContentDialog : HeaderedContentControl
@@ -19,7 +19,7 @@ public class ContentDialog : HeaderedContentControl
     static ContentDialog()
     {
         PaddingProperty.OverrideDefaultValue<ContentDialog>(new(10));
-        MarginProperty.OverrideDefaultValue<ContentDialog>(new(0, 35, 0, 0));
+        MarginProperty.OverrideDefaultValue<ContentDialog>(new(0));
         AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<ContentDialog>(AutomationControlType.Pane);
         HeaderProperty.Changed.AddClassHandler<ContentDialog, object?>((dialog, _) => UpdateAutomationName(dialog));
     }

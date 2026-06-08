@@ -56,7 +56,11 @@ public class OverlayMessageBox : OverlayDialog
 
     private Button? _yesButton;
 
-    static OverlayMessageBox() => ButtonsProperty.Changed.AddClassHandler<OverlayMessageBox>((o, _) => o.SetButtonVisibility());
+    static OverlayMessageBox()
+    {
+        ButtonsProperty.Changed.AddClassHandler<OverlayMessageBox>((o, _) => o.SetButtonVisibility());
+        IsCloseButtonVisibleProperty.Changed.AddClassHandler<OverlayMessageBox>((o, _) => o.SetButtonVisibility());
+    }
 
     public MessageBoxResultOption Buttons
     {
@@ -106,8 +110,10 @@ public class OverlayMessageBox : OverlayDialog
 
     private void SetButtonVisibility()
     {
-        var closeButtonVisible = Buttons != MessageBoxResultOption.YesNo;
-        CloseButton?.SetValue(IsVisibleProperty, closeButtonVisible);
+        var closeButtonVisible = IsCloseButtonVisible && Buttons != MessageBoxResultOption.YesNo;
+        if (CloseButton is not null)
+            CloseButton.IsVisible = closeButtonVisible;
+
         DialogButtonHelper.SetButtonVisibility(Buttons, _okButton, _cancelButton, _yesButton, _noButton);
     }
 

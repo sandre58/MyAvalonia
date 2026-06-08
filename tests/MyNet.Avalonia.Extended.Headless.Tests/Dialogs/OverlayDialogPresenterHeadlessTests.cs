@@ -13,10 +13,10 @@ using Avalonia.VisualTree;
 using FluentAssertions;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extended.Controls;
+using MyNet.Avalonia.Extended.Controls.Dialogs.Overlay;
 using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.Avalonia.Extended.Dialogs.Internal;
 using MyNet.Avalonia.Extended.Dialogs.Presentation;
-using AvaloniaDialogOptions = MyNet.Avalonia.Extended.Dialogs.DialogOptions;
 
 namespace MyNet.Avalonia.Extended.Headless.Tests.Dialogs;
 
@@ -41,7 +41,7 @@ public class OverlayDialogPresenterHeadlessTests
             hostOptions,
             new PassthroughViewFactory(new ContentDialog { Header = "Edit", ShowCloseButton = true }),
             registry);
-        var uiOptions = AvaloniaDialogOptions.ForOverlay(
+        var uiOptions = DialogOptionsFactory.ForOverlay(
             dialog,
             isModal: true,
             new() { TopLevelKey = topLevelKey },

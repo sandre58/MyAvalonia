@@ -304,23 +304,6 @@
                 </Style>
             </my:Banner.Styles>
         </my:Banner>
-
-        <!-- ============================================ -->
-        <!-- SUBMIT BUTTON SECTION -->
-        <!-- ============================================ -->
-        <StackPanel HorizontalAlignment="Right"
-                    my:FormItem.NoLabel="True"
-                    Orientation="Horizontal"
-                    Spacing="10">
-            <Button Content="{my:Loc Reset}"
-                    Command="{Binding ResetCommand}"
-                    my:IconAssist.Icon="{my:MaterialIcon Restore}"
-                    Classes="variant-outlined" />
-            <Button Content="{my:Loc Validate}"
-                    Command="{Binding SubmitCommand}"
-                    my:IconAssist.Icon="{my:MaterialIcon Check}"
-                    my:ThemeAssist.Role="Primary" />
-        </StackPanel>
-
+        
     </my:Form>
 </UserControl>

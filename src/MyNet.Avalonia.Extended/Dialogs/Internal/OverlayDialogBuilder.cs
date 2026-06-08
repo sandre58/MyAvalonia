@@ -5,8 +5,10 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Threading.Tasks;
 using Avalonia.Input;
 using Avalonia.Layout;
+using Avalonia.Threading;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.Extended.Controls;
@@ -16,15 +18,22 @@ using MyNet.UI.Dialogs.MessageBox;
 
 namespace MyNet.Avalonia.Extended.Dialogs.Internal;
 
+/// <summary>
+/// Builder class responsible for creating and configuring overlay dialogs based on the provided dialog view models and options.
+/// </summary>
 internal static class OverlayDialogBuilder
 {
     private static readonly OverlayDialogOptions DefaultOptions = new();
 
-    public static OverlayDialog Create(
-        IDialog dialog,
-        object view,
-        UI.Dialogs.ContentDialogs.DialogOptions options,
-        DialogHostRequest request)
+    /// <summary>
+    /// Creates an instance of <see cref="OverlayDialog"/> based on the provided dialog, view, options, and request.
+    /// </summary>
+    /// <param name="dialog">The dialog view model.</param>
+    /// <param name="view">The content view for the dialog.</param>
+    /// <param name="options">The dialog options.</param>
+    /// <param name="request">The dialog host request containing overlay options.</param>
+    /// <returns>A configured <see cref="OverlayDialog"/> instance.</returns>
+    public static OverlayDialog Create(IDialog dialog, object view, DialogOptions options, DialogHostRequest request)
     {
         if (dialog is MessageBoxViewModel messageBox)
             return CreateMessageBox(messageBox, options, request.OverlayOptions);
@@ -43,10 +52,14 @@ internal static class OverlayDialogBuilder
         return overlay;
     }
 
-    public static OverlayDialog CreateMessageBox(
-        MessageBoxViewModel messageBox,
-        UI.Dialogs.ContentDialogs.DialogOptions options,
-        OverlayDialogOptions? overlayOptions)
+    /// <summary>
+    /// Creates an instance of <see cref="OverlayMessageBox"/> based on the provided message box view model, options, and overlay options.
+    /// </summary>
+    /// <param name="messageBox">The message box view model.</param>
+    /// <param name="options">The dialog options.</param>
+    /// <param name="overlayOptions">The overlay dialog options.</param>
+    /// <returns>A configured <see cref="OverlayMessageBox"/> instance.</returns>
+    public static OverlayDialog CreateMessageBox(MessageBoxViewModel messageBox, DialogOptions options, OverlayDialogOptions? overlayOptions)
     {
         var messageBoxControl = new OverlayMessageBox
         {
@@ -65,10 +78,13 @@ internal static class OverlayDialogBuilder
         return messageBoxControl;
     }
 
-    public static void PrepareOverlayDialog(
-        OverlayDialog control,
-        OverlayDialogOptions options,
-        UI.Dialogs.ContentDialogs.DialogOptions dialogOptions)
+    /// <summary>
+    /// Configures the properties of the provided <see cref="OverlayDialog"/> control based on the specified options and dialog options.
+    /// </summary>
+    /// <param name="control">The overlay dialog control to configure.</param>
+    /// <param name="options">The overlay dialog options.</param>
+    /// <param name="dialogOptions">The dialog options.</param>
+    public static void PrepareOverlayDialog(OverlayDialog control, OverlayDialogOptions options, DialogOptions dialogOptions)
     {
         control.IsFullScreen = options.FullScreen;
         if (options.FullScreen)
@@ -108,12 +124,14 @@ internal static class OverlayDialogBuilder
         overlay.Closed += (_, _) => dialog.CloseRequested -= onCloseRequested;
         return;
 
-        async void onCloseRequested(object? sender, CloseRequestedEventArgs e)
+        void onCloseRequested(object? sender, CloseRequestedEventArgs e) => Dispatcher.UIThread.Post(() => _ = handleCloseRequestedAsync(dialog, close, e));
+
+        static async Task handleCloseRequestedAsync(IDialog target, Action<object?> closeAction, CloseRequestedEventArgs args)
         {
-            if (!await dialog.CanCloseAsync().ConfigureAwait(true))
+            if (!await target.CanCloseAsync().ConfigureAwait(true))
                 return;
 
-            close(e.Force ? true : null);
+            closeAction(args.Force ? true : null);
         }
     }
 
@@ -163,10 +181,7 @@ internal static class OverlayDialogBuilder
             IsCloseButtonVisible = contentDialog.ShowCloseButton
         };
 
-    private static void ApplyMessageBoxOptions(
-        OverlayMessageBox messageBox,
-        OverlayDialogOptions options,
-        UI.Dialogs.ContentDialogs.DialogOptions dialogOptions)
+    private static void ApplyMessageBoxOptions(OverlayMessageBox messageBox, OverlayDialogOptions options, DialogOptions dialogOptions)
     {
         if (options.Severity != MessageSeverity.Custom)
             messageBox.Severity = options.Severity;

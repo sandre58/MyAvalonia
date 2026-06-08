@@ -165,4 +165,28 @@
   <data name="StackedOverlayResultFormat" xml:space="preserve">
     <value>Second: {0} ; First: {1}</value>
   </data>
+  <data name="MessageBoxResultOptionOk" xml:space="preserve">
+      <value>OK</value>
+  </data>
+  <data name="MessageBoxResultOptionOkCancel" xml:space="preserve">
+      <value>OK - Cancel</value>
+  </data>
+  <data name="MessageBoxResultOptionYesNo" xml:space="preserve">
+      <value>Yes - No</value>
+  </data>
+  <data name="MessageBoxResultOptionYesNoCancel" xml:space="preserve">
+      <value>Yes - No - Cancel</value>
+  </data>
+  <data name="InformationMessage" xml:space="preserve">
+      <value>This is an informational message.</value>
+  </data>
+  <data name="SuccessMessage" xml:space="preserve">
+      <value>Operation completed successfully!</value>
+  </data>
+  <data name="WarningMessage" xml:space="preserve">
+      <value>Are you sure you want to continue? This action may have consequences.</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+      <value>An unexpected error has occurred. Please try again.</value>
+  </data>
 </root>

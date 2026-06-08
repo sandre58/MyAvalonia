@@ -87,20 +87,20 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sélection d&apos;une plage.
-        /// </summary>
-        internal static string AllowTapRangeSelection {
-            get {
-                return ResourceManager.GetString("AllowTapRangeSelection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Doublons autorisés.
         /// </summary>
         internal static string AllowDuplicates {
             get {
                 return ResourceManager.GetString("AllowDuplicates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sélection d&apos;une plage.
+        /// </summary>
+        internal static string AllowTapRangeSelection {
+            get {
+                return ResourceManager.GetString("AllowTapRangeSelection", resourceCulture);
             }
         }
         
@@ -128,6 +128,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string Bottom {
             get {
                 return ResourceManager.GetString("Bottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boutons.
+        /// </summary>
+        internal static string Buttons {
+            get {
+                return ResourceManager.GetString("Buttons", resourceCulture);
             }
         }
         
@@ -267,15 +276,6 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Colonnes.
-        /// </summary>
-        internal static string Columns {
-            get {
-                return ResourceManager.GetString("Columns", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Rectangulaire.
         /// </summary>
         internal static string ColorSpectrumShapeBox {
@@ -308,6 +308,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string ColumnHeaderHeight {
             get {
                 return ResourceManager.GetString("ColumnHeaderHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Colonnes.
+        /// </summary>
+        internal static string Columns {
+            get {
+                return ResourceManager.GetString("Columns", resourceCulture);
             }
         }
         
@@ -699,6 +708,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ancrer horizontalement.
+        /// </summary>
+        internal static string HorizontalAnchor {
+            get {
+                return ResourceManager.GetString("HorizontalAnchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Heures.
         /// </summary>
         internal static string Hours {
@@ -749,15 +767,6 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string IsBackButtonVisible {
             get {
                 return ResourceManager.GetString("IsBackButtonVisible", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Alignement libellé.
-        /// </summary>
-        internal static string LabelAlignment {
-            get {
-                return ResourceManager.GetString("LabelAlignment", resourceCulture);
             }
         }
         
@@ -915,6 +924,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alignement libellé.
+        /// </summary>
+        internal static string LabelAlignment {
+            get {
+                return ResourceManager.GetString("LabelAlignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disposition.
         /// </summary>
         internal static string Layout {
@@ -938,6 +956,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string LightColorPalette {
             get {
                 return ResourceManager.GetString("LightColorPalette", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fermer au clic extérieur.
+        /// </summary>
+        internal static string LightDismiss {
+            get {
+                return ResourceManager.GetString("LightDismiss", resourceCulture);
             }
         }
         
@@ -1005,15 +1032,6 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum.
-        /// </summary>
-        internal static string Maximum {
-            get {
-                return ResourceManager.GetString("Maximum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Nombre max..
         /// </summary>
         internal static string MaxCount {
@@ -1028,6 +1046,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string MaxDropDownHeight {
             get {
                 return ResourceManager.GetString("MaxDropDownHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum.
+        /// </summary>
+        internal static string Maximum {
+            get {
+                return ResourceManager.GetString("Maximum", resourceCulture);
             }
         }
         
@@ -1055,6 +1082,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string Minutes {
             get {
                 return ResourceManager.GetString("Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modal.
+        /// </summary>
+        internal static string Modal {
+            get {
+                return ResourceManager.GetString("Modal", resourceCulture);
             }
         }
         
@@ -1482,20 +1518,20 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Afficher la sélection.
-        /// </summary>
-        internal static string ShowSelection {
-            get {
-                return ResourceManager.GetString("ShowSelection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Tout sélectionner.
         /// </summary>
         internal static string ShowSelectAll {
             get {
                 return ResourceManager.GetString("ShowSelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Afficher la sélection.
+        /// </summary>
+        internal static string ShowSelection {
+            get {
+                return ResourceManager.GetString("ShowSelection", resourceCulture);
             }
         }
         
@@ -2009,6 +2045,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string ValuePosition {
             get {
                 return ResourceManager.GetString("ValuePosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ancrer verticalement.
+        /// </summary>
+        internal static string VerticalAnchor {
+            get {
+                return ResourceManager.GetString("VerticalAnchor", resourceCulture);
             }
         }
         

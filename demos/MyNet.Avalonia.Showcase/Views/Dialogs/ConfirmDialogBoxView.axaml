@@ -11,13 +11,21 @@
                   Header="{Binding Title}"
                   ShowCloseButton="False"
                   mc:Ignorable="d">
-    <StackPanel Spacing="{StaticResource MyNet.Spacing.Lg}">
-        <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
-        <StackPanel HorizontalAlignment="Right"
-                    Orientation="Horizontal"
-                    Spacing="{StaticResource MyNet.Spacing.Sm}">
-            <Button Command="{Binding CancelCommand}" Content="Cancel" />
-            <Button Command="{Binding ConfirmCommand}" Content="OK" Classes="kind-filled" />
-        </StackPanel>
-    </StackPanel>
+    <Grid RowDefinitions="*,Auto">
+        <TextBlock Grid.Row="0"
+                   Text="{Binding Message}"
+                   TextWrapping="Wrap"
+                   LineHeight="22"
+                   VerticalAlignment="Center" />
+        <Border Grid.Row="1"
+                Margin="{my:Thickness Lg, Top}"
+                Padding="{my:Thickness Lg, Top}">
+            <StackPanel HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Spacing="{StaticResource MyNet.Spacing.Sm}">
+                <Button Command="{Binding CancelCommand}" Content="Cancel" Classes="kind-text" />
+                <Button Command="{Binding ConfirmCommand}" Content="OK" Classes="kind-filled" />
+            </StackPanel>
+        </Border>
+    </Grid>
 </my:ContentDialog>

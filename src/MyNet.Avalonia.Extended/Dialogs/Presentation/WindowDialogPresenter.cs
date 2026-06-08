@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Threading;
 using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Extended.Dialogs.Internal;
+using MyNet.Avalonia.Threading;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
 using MyNet.UI.Locators.Factories;
@@ -22,27 +22,21 @@ namespace MyNet.Avalonia.Extended.Dialogs.Presentation;
 /// <summary>
 /// Presents dialogs inside a <see cref="WindowDialog"/>.
 /// </summary>
-public sealed class WindowDialogPresenter(
-    DialogHostOptions hostOptions,
-    IViewFactory viewFactory,
-    DialogSessionRegistry sessions) : IDialogPresenter
+internal sealed class WindowDialogPresenter(DialogHostOptions hostOptions, IViewFactory viewFactory, DialogSessionRegistry sessions, IUiThreadDispatcher uiThread) : IDialogPresenter
 {
     /// <inheritdoc />
     public int Priority => 110;
 
     /// <inheritdoc />
-    public bool CanPresent(IDialog dialog, UI.Dialogs.ContentDialogs.DialogOptions? options) => DialogOptions.Resolve(options).Mode == DialogPresentationMode.Window;
+    public bool CanPresent(IDialog dialog, DialogOptions? options) => DialogOptionsFactory.Resolve(options).Mode == DialogPresentationMode.Window;
 
     /// <inheritdoc />
-    public async Task<DialogResult<bool>> PresentAsync(
-        IDialog dialog,
-        UI.Dialogs.ContentDialogs.DialogOptions options,
-        CancellationToken cancellationToken)
+    public async Task<DialogResult<bool>> PresentAsync(IDialog dialog, DialogOptions options, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(dialog);
         ArgumentNullException.ThrowIfNull(options);
 
-        var request = DialogOptions.Resolve(options);
+        var request = DialogOptionsFactory.Resolve(options);
         var owner = request.WindowOwner ?? ResolveOwnerWindow();
 
         var view = dialog is MessageBoxViewModel
@@ -56,7 +50,7 @@ public sealed class WindowDialogPresenter(
         var windowDialog = window as WindowDialog;
         var session = sessions.Register(
             dialog,
-            new(() => sessions.Remove(dialog)) { Window = windowDialog });
+            new(() => sessions.Remove(dialog), uiThread) { Window = windowDialog });
 
         try
         {
@@ -70,6 +64,7 @@ public sealed class WindowDialogPresenter(
                         dialog,
                         owner,
                         session,
+                        uiThread,
                         cancellationToken)
                     .ConfigureAwait(true);
             }
@@ -114,10 +109,11 @@ public sealed class WindowDialogPresenter(
         IDialog dialog,
         Window? owner,
         DialogSession session,
+        IUiThreadDispatcher uiThread,
         CancellationToken cancellationToken)
     {
         var completion = new TaskCompletionSource<DialogResult<bool>>(TaskCreationOptions.RunContinuationsAsynchronously);
-        await using var registration = cancellationToken.Register(() => Dispatcher.UIThread.Post(() =>
+        await using var registration = cancellationToken.Register(() => uiThread.Post(() =>
         {
             if (completion.Task.IsCompleted)
                 return;

@@ -7,10 +7,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Threading;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Extended.Dialogs.Internal;
+using MyNet.Avalonia.Threading;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
 using MyNet.UI.Locators.Factories;
@@ -20,18 +20,15 @@ namespace MyNet.Avalonia.Extended.Dialogs.Presentation;
 /// <summary>
 /// Presents dialogs inside an <see cref="OverlayDialogHost"/>.
 /// </summary>
-public sealed class OverlayDialogPresenter(
-    DialogHostOptions hostOptions,
-    IViewFactory viewFactory,
-    DialogSessionRegistry sessions) : IDialogPresenter
+internal sealed class OverlayDialogPresenter(DialogHostOptions hostOptions, IViewFactory viewFactory, DialogSessionRegistry sessions, IUiThreadDispatcher uiThread) : IDialogPresenter
 {
     /// <inheritdoc />
     public int Priority => 100;
 
     /// <inheritdoc />
-    public bool CanPresent(IDialog dialog, UI.Dialogs.ContentDialogs.DialogOptions? options)
+    public bool CanPresent(IDialog dialog, DialogOptions? options)
     {
-        var request = DialogOptions.Resolve(options);
+        var request = DialogOptionsFactory.Resolve(options);
         if (request.Mode != DialogPresentationMode.Overlay)
             return false;
 
@@ -43,13 +40,13 @@ public sealed class OverlayDialogPresenter(
     /// <inheritdoc />
     public async Task<DialogResult<bool>> PresentAsync(
         IDialog dialog,
-        UI.Dialogs.ContentDialogs.DialogOptions options,
+        DialogOptions options,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(dialog);
         ArgumentNullException.ThrowIfNull(options);
 
-        var request = DialogOptions.Resolve(options);
+        var request = DialogOptionsFactory.Resolve(options);
         var topLevelKey = request.OverlayOptions?.TopLevelKey
                           ?? OverlayDialogHostManager.GetTopLevelKey(hostOptions.TopLevelProvider());
         var host = OverlayDialogHostManager.GetHost(request.OverlayHostId, topLevelKey)
@@ -60,9 +57,7 @@ public sealed class OverlayDialogPresenter(
             : viewFactory.CreateView(dialog.GetType());
 
         var overlay = OverlayDialogBuilder.Create(dialog, view, options, request);
-        var session = sessions.Register(
-            dialog,
-            new(() => sessions.Remove(dialog)) { Overlay = overlay });
+        var session = sessions.Register(dialog, new(() => sessions.Remove(dialog), uiThread) { Overlay = overlay });
 
         try
         {
@@ -79,7 +74,7 @@ public sealed class OverlayDialogPresenter(
 
             host.AddDialog(overlay);
             var completion = new TaskCompletionSource<DialogResult<bool>>(TaskCreationOptions.RunContinuationsAsynchronously);
-            await using var registration = cancellationToken.Register(() => Dispatcher.UIThread.Post(() =>
+            await using var registration = cancellationToken.Register(() => uiThread.Post(() =>
                 {
                     if (completion.Task.IsCompleted)
                         return;

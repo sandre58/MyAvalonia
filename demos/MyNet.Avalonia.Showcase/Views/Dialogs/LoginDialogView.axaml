@@ -12,7 +12,29 @@
                   CanResize="{Binding CanResize}"
                   Header="User Registration"
                   mc:Ignorable="d">
-    <ScrollViewer MaxHeight="500">
-        <samples:FormContent DataContext="{Binding Form}" />
-    </ScrollViewer>
+    <DockPanel>
+        
+        <!-- ============================================ -->
+        <!-- SUBMIT BUTTON SECTION -->
+        <!-- ============================================ -->
+        <StackPanel HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    DockPanel.Dock="Bottom"
+                    Margin="{my:Thickness Md, Top}"
+                    Spacing="10">
+            <Button Content="{my:Loc Reset}"
+                    Command="{Binding Form.ResetCommand}"
+                    my:IconAssist.Icon="{my:MaterialIcon Restore}"
+                    Classes="variant-outlined" />
+            <Button Content="{my:Loc Validate}"
+                    Command="{Binding ValidateCommand}"
+                    my:IconAssist.Icon="{my:MaterialIcon Check}"
+                    my:ThemeAssist.Role="Primary" />
+        </StackPanel>
+        
+        
+        <ScrollViewer MaxHeight="500">
+            <samples:FormContent DataContext="{Binding Form}" />
+        </ScrollViewer>
+    </DockPanel>
 </my:ContentDialog>

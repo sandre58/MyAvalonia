@@ -1,85 +1,179 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
+
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
                     xmlns:my="http://mynet.com/avalonia">
 
+
+
     <ControlTheme x:Key="{x:Type my:OverlayDialog}" TargetType="my:OverlayDialog">
+
         <Setter Property="my:ThemeAssist.Category" Value="Surface" />
+
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
+
         <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />
-        <Setter Property="MinWidth" Value="200" />
-        <Setter Property="MinHeight" Value="100" />
-        <Setter Property="CornerRadius" Value="10 10 10 10" />
+
+        <Setter Property="MinWidth" Value="320" />
+
+        <Setter Property="MinHeight" Value="120" />
+
+        <Setter Property="CornerRadius" Value="12" />
+
         <Setter Property="Padding" Value="0" />
 
+
+
         <!-- Default colors -->
+
         <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:Theme Surface.Level1}" />
+
         <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:Theme Foreground.Primary}" />
 
+
+
         <!-- Variant -->
-        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background, IgnoreForegroundParent=True}" />
-        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush, IgnoreForegroundParent=True}" />
-        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True, IgnoreForegroundParent=True}" />
+
+        <Setter Property="my:VariantAssist.Background" Value="{my:Theme Surface.Level1}" />
+
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:Theme Surface.Border}" />
+
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:Theme Foreground.Primary}" />
+
         <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
+
+
         <!-- Theme -->
+
         <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+
         <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+
         <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+
         <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
 
+
+
         <Setter Property="Template">
+
             <ControlTemplate TargetType="my:OverlayDialog">
+
                 <Border Background="{TemplateBinding Background}"
+
                         BorderBrush="{TemplateBinding BorderBrush}"
+
                         BorderThickness="{TemplateBinding BorderThickness}"
+
                         CornerRadius="{TemplateBinding CornerRadius}"
-                        BoxShadow="0 8 24 0 #40000000"
-                        ClipToBounds="False">
+
+                        BoxShadow="0 12 32 0 #26000000"
+
+                        ClipToBounds="True">
+
                     <Grid RowDefinitions="Auto,*">
+
                         <!-- Title Area -->
-                        <Panel Name="PART_TitleArea"
-                               Grid.Row="0"
-                               Background="Transparent"
-                               MinHeight="36">
-                            <Grid ColumnDefinitions="*,Auto" Margin="{my:Thickness Md, Horizontal}">
-                                <TextBlock Grid.Column="0"
-                                           Classes="truncate"
-                                           Text="{TemplateBinding Title}"
-                                           VerticalAlignment="Center"
-                                           FontSize="{StaticResource MyNet.Font.Size.Lg}"
-                                           FontWeight="{StaticResource MyNet.Font.Weight.Caption}" />
-                                <Button Name="PART_CloseButton"
-                                        Grid.Column="1"
-                                        Classes="kind-tool"
-                                        Content="{my:MaterialIcon Close}" />
-                            </Grid>
-                        </Panel>
+
+                        <Border Grid.Row="0"
+
+                                BorderBrush="{my:Theme Surface.Border}"
+
+                                BorderThickness="0 0 0 1">
+
+                            <Panel Name="PART_TitleArea"
+
+                                   MinHeight="52"
+
+                                   Background="Transparent">
+
+                                <Grid ColumnDefinitions="*,Auto"
+
+                                      Margin="{my:Thickness Lg, Horizontal}"
+
+                                      VerticalAlignment="Center">
+
+                                    <TextBlock Grid.Column="0"
+
+                                               Classes="truncate"
+
+                                               Text="{TemplateBinding Title}"
+
+                                               VerticalAlignment="Center"
+
+                                               FontSize="{StaticResource MyNet.Font.Size.Lg}"
+
+                                               FontWeight="{StaticResource MyNet.Font.Weight.Caption}" />
+
+                                    <Button Name="PART_CloseButton"
+
+                                            Grid.Column="1"
+
+                                            Classes="kind-tool"
+
+                                            Content="{my:MaterialIcon Close}" />
+
+                                </Grid>
+
+                            </Panel>
+
+                        </Border>
+
+
 
                         <!-- Content -->
-                        <ContentPresenter Name="PART_ContentPresenter"
-                                          Grid.Row="1"
-                                          Padding="{TemplateBinding Padding}"
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                        <Border Grid.Row="1"
+
+                                Background="{TemplateBinding Background}">
+
+                            <ContentPresenter Name="PART_ContentPresenter"
+
+                                              Padding="{TemplateBinding Padding}"
+
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+
+                                              Content="{TemplateBinding Content}"
+
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                        </Border>
+
                     </Grid>
+
                 </Border>
+
             </ControlTemplate>
+
         </Setter>
 
+
+
         <Style Selector="^[IsCloseButtonVisible=False] /template/ Button#PART_CloseButton">
+
             <Setter Property="IsVisible" Value="False" />
+
         </Style>
 
+
+
         <!-- Full Screen state -->
+
         <Style Selector="^:full-screen">
+
             <Setter Property="CornerRadius" Value="0" />
+
         </Style>
+
+
 
     </ControlTheme>
 
-</ResourceDictionary>
 
+
+</ResourceDictionary>
 
 
