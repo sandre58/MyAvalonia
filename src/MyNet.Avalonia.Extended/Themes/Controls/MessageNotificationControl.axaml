@@ -1,64 +1,49 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:my="http://mynet.com/avalonia">
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
     <ControlTheme x:Key="{x:Type my:MessageNotificationControl}" TargetType="{x:Type my:MessageNotificationControl}">
         <Setter Property="Template">
             <ControlTemplate TargetType="my:MessageNotificationControl">
-                <Grid Name="PART_Grid" ColumnDefinitions="Auto,*" RowDefinitions="Auto,*">
-                    <my:MaterialIcon Name="PART_Icon"
-                                     Grid.RowSpan="2"
-                                     Margin="{my:Thickness Md, Right}"
-                                     VerticalAlignment="Top"
-                                     Classes="size-md"
-                                     Kind="Alert" />
-                    <ContentPresenter Name="PART_HeaderPresenter"
-                                      Grid.Row="0"
-                                      Grid.Column="1"
-                                      Margin="{my:Thickness Md, Bottom}"
-                                      Content="{TemplateBinding Header}"
-                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                      FontSize="{StaticResource MyNet.Font.Size.Lg}"
-                                      FontWeight="{StaticResource MyNet.Font.Weight.Caption}"
-                                      IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
-                                      RecognizesAccessKey="True" />
-                    <ContentPresenter Name="PART_ContentPresenter"
-                                      Grid.Row="1"
-                                      Grid.Column="1"
-                                      Padding="{TemplateBinding Padding}"
-                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      FontFamily="{TemplateBinding FontFamily}"
-                                      FontSize="{TemplateBinding FontSize}"
-                                      FontStyle="{TemplateBinding FontStyle}"
-                                      FontWeight="{TemplateBinding FontWeight}"
-                                      RecognizesAccessKey="True">
-                        <ContentPresenter.Styles>
-                            <Style Selector="AccessText">
-                                <Setter Property="TextWrapping" Value="Wrap" />
-                            </Style>
-                        </ContentPresenter.Styles>
-                    </ContentPresenter>
-                </Grid>
+                <my:Card Name="PART_Card"
+                         Classes="variant-transparent"
+                         Padding="0"
+                         Subtitle="{TemplateBinding Content}"
+                         SubtitleTemplate="{TemplateBinding ContentTemplate}"
+                         SubtitleForeground="{TemplateBinding Foreground}"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         Title="{TemplateBinding Header}"
+                         TitleTemplate="{TemplateBinding HeaderTemplate}"
+                         TitleForeground="{TemplateBinding Foreground}"
+                         TitleFontSize="{StaticResource MyNet.Font.Size.Lg}"
+                         FooterMargin="{my:Thickness Md, Top}"
+                         FooterPadding="0"
+                         SubtitleOpacity="1"
+                         my:ThemeAssist.Role="Primary">
+                    <my:Card.LeadingTemplate>
+                        <DataTemplate DataType="icons:MaterialIconKind">
+                            <my:MaterialIcon Kind="{Binding}" />
+                        </DataTemplate>
+                    </my:Card.LeadingTemplate>
+                </my:Card>
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^[Severity=None] /template/ my|MaterialIcon#PART_Icon">
-            <Setter Property="IsVisible" Value="False" />
+        <Style Selector="^[Severity=Information] /template/ my|Card#PART_Card">
+            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.InformationVariantCircle}" />
         </Style>
-        <Style Selector="^[Severity=Success] /template/ my|MaterialIcon#PART_Icon">
-            <Setter Property="Kind" Value="CheckCircle" />
+
+        <Style Selector="^[Severity=Success] /template/ my|Card#PART_Card">
+            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.CheckCircle}" />
         </Style>
-        <Style Selector="^[Severity=Error] /template/ my|MaterialIcon#PART_Icon">
-            <Setter Property="Kind" Value="AlertCircle" />
+
+        <Style Selector="^[Severity=Warning] /template/ my|Card#PART_Card">
+            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.Alert}" />
         </Style>
-        <Style Selector="^[Severity=Warning] /template/ my|MaterialIcon#PART_Icon">
-            <Setter Property="Kind" Value="Alert" />
-        </Style>
-        <Style Selector="^[Severity=Information] /template/ my|MaterialIcon#PART_Icon">
-            <Setter Property="Kind" Value="InformationVariantCircle" />
-            <Setter Property="Foreground" Value="{my:Theme Information}" />
+
+        <Style Selector="^[Severity=Error] /template/ my|Card#PART_Card">
+            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.AlertCircle}" />
         </Style>
     </ControlTheme>
 

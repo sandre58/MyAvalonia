@@ -22,9 +22,9 @@
 
     <ControlTheme x:Key="{x:Type controls:OverlayDialogHost}" TargetType="controls:OverlayDialogHost" />
 
-    <ControlTheme x:Key="{x:Type extended:WindowMessageBoxContent}" TargetType="extended:WindowMessageBoxContent">
+    <ControlTheme x:Key="{x:Type extended:MessageBoxContent}" TargetType="extended:MessageBoxContent">
         <Setter Property="Template">
-            <ControlTemplate TargetType="extended:WindowMessageBoxContent">
+            <ControlTemplate TargetType="extended:MessageBoxContent">
                 <Grid RowDefinitions="*,Auto">
                     <ContentPresenter Grid.Row="0" Content="{TemplateBinding Message}" />
                     <StackPanel Grid.Row="1"
@@ -45,9 +45,22 @@
     <ControlTheme x:Key="{x:Type extended:WindowMessageBox}" TargetType="extended:WindowMessageBox">
         <Setter Property="ContentTemplate">
             <DataTemplate DataType="{x:Type system:Object}">
-                <extended:WindowMessageBoxContent Message="{Binding}"
-                                                  Severity="{Binding $parent[extended:WindowMessageBox].Severity}"
-                                                  Buttons="{Binding $parent[extended:WindowMessageBox].Buttons}" />
+                <extended:MessageBoxContent Message="{Binding}"
+                                            Title="{Binding $parent[extended:WindowMessageBox].Title}"
+                                            Severity="{Binding $parent[extended:WindowMessageBox].Severity}"
+                                            Buttons="{Binding $parent[extended:WindowMessageBox].Buttons}" />
+            </DataTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type extended:OverlayMessageBox}" TargetType="extended:OverlayMessageBox"
+                  BasedOn="{StaticResource {x:Type controls:OverlayDialog}}">
+        <Setter Property="ContentTemplate">
+            <DataTemplate DataType="{x:Type system:Object}">
+                <extended:MessageBoxContent Message="{Binding}"
+                                            Title="{Binding $parent[extended:OverlayMessageBox].Title}"
+                                            Severity="{Binding $parent[extended:OverlayMessageBox].Severity}"
+                                            Buttons="{Binding $parent[extended:OverlayMessageBox].Buttons}" />
             </DataTemplate>
         </Setter>
     </ControlTheme>

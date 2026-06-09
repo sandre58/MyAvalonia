@@ -24,7 +24,7 @@
                         Orientation="Horizontal"
                         Spacing="{StaticResource MyNet.Spacing.Sm}">
                 <Button Command="{Binding CancelCommand}" Content="Cancel" Classes="kind-text" />
-                <Button Command="{Binding ConfirmCommand}" Content="OK" Classes="kind-filled" />
+                <Button Command="{Binding ConfirmCommand}" Content="OK" Classes="kind-filled" IsDefault="True" />
             </StackPanel>
         </Border>
     </Grid>

@@ -1,131 +1,26 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:my="http://mynet.com/avalonia">
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <ControlTheme x:Key="{x:Type my:OverlayMessageBox}" TargetType="my:OverlayMessageBox"
                   BasedOn="{StaticResource {x:Type my:OverlayDialog}}">
         <Setter Property="MinWidth" Value="360" />
         <Setter Property="MaxWidth" Value="480" />
         <Setter Property="MinHeight" Value="140" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
 
-        <Setter Property="Template">
-            <ControlTemplate TargetType="my:OverlayMessageBox">
-                <Border Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        BoxShadow="0 12 32 0 #26000000"
-                        ClipToBounds="True">
-                    <Grid RowDefinitions="Auto,*,Auto">
-                        <Border Grid.Row="0"
-                                BorderBrush="{my:Theme Surface.Border}"
-                                BorderThickness="0 0 0 1">
-                            <Panel Name="PART_TitleArea"
-                                   MinHeight="52"
-                                   Background="Transparent">
-                                <Grid ColumnDefinitions="Auto,*,Auto"
-                                      Margin="{my:Thickness Lg, Horizontal}"
-                                      VerticalAlignment="Center">
-                                    <my:MaterialIcon Name="PART_SeverityIcon"
-                                                     Grid.Column="0"
-                                                     Margin="{my:Thickness Sm, Right}"
-                                                     VerticalAlignment="Center"
-                                                     Classes="size-lg"
-                                                     IsVisible="False"
-                                                     Kind="InformationVariantCircle" />
-                                    <TextBlock Grid.Column="1"
-                                               Classes="truncate"
-                                               Text="{TemplateBinding Title}"
-                                               VerticalAlignment="Center"
-                                               FontSize="{StaticResource MyNet.Font.Size.Lg}"
-                                               FontWeight="{StaticResource MyNet.Font.Weight.Caption}" />
-                                    <Button Name="PART_CloseButton"
-                                            Grid.Column="2"
-                                            Classes="kind-tool"
-                                            Content="{my:MaterialIcon Close}" />
-                                </Grid>
-                            </Panel>
-                        </Border>
-
-                        <ScrollViewer Grid.Row="1"
-                                      HorizontalScrollBarVisibility="Disabled"
-                                      VerticalScrollBarVisibility="Auto">
-                            <ContentPresenter Name="PART_ContentPresenter"
-                                              Margin="{my:Thickness Lg}"
-                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}">
-                                <ContentPresenter.Styles>
-                                    <Style Selector="TextBlock, AccessText">
-                                        <Setter Property="TextWrapping" Value="Wrap" />
-                                        <Setter Property="LineHeight" Value="22" />
-                                    </Style>
-                                </ContentPresenter.Styles>
-                            </ContentPresenter>
-                        </ScrollViewer>
-
-                        <Border Grid.Row="2"
-                                Padding="{my:Thickness Lg}"
-                                Background="{my:Theme Surface.Level2}"
-                                BorderBrush="{my:Theme Surface.Border}"
-                                BorderThickness="0 1 0 0">
-                            <StackPanel HorizontalAlignment="Right"
-                                        Orientation="Horizontal"
-                                        Spacing="8">
-                                <Button Name="PART_YesButton" Content="{my:Loc Yes}" Classes="kind-filled" />
-                                <Button Name="PART_NoButton" Content="{my:Loc No}" Classes="kind-text" />
-                                <Button Name="PART_OKButton" Content="{my:Loc OK}" Classes="kind-filled" />
-                                <Button Name="PART_CancelButton" Content="{my:Loc Cancel}" Classes="kind-text" />
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-                </Border>
-            </ControlTemplate>
+        <Setter Property="ContentTemplate">
+            <DataTemplate DataType="{x:Type system:Object}">
+                <my:MessageBoxContent Message="{Binding}"
+                                      Margin="{my:Thickness Md}"
+                                      HorizontalAlignment="Stretch"
+                                      Title="{Binding $parent[my:OverlayMessageBox].Title}"
+                                      Severity="{Binding $parent[my:OverlayMessageBox].Severity}"
+                                      Buttons="{Binding $parent[my:OverlayMessageBox].Buttons}" />
+            </DataTemplate>
         </Setter>
-
-        <Style Selector="^[Severity=Information]">
-            <Setter Property="BorderBrush" Value="{my:Theme Information}" />
-            <Setter Property="BorderThickness" Value="2" />
-        </Style>
-        <Style Selector="^[Severity=Success]">
-            <Setter Property="BorderBrush" Value="{my:Theme Success}" />
-            <Setter Property="BorderThickness" Value="2" />
-        </Style>
-        <Style Selector="^[Severity=Warning]">
-            <Setter Property="BorderBrush" Value="{my:Theme Warning}" />
-            <Setter Property="BorderThickness" Value="2" />
-        </Style>
-        <Style Selector="^[Severity=Error]">
-            <Setter Property="BorderBrush" Value="{my:Theme Error}" />
-            <Setter Property="BorderThickness" Value="2" />
-        </Style>
-
-        <Style Selector="^[Severity=Information] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Kind" Value="InformationVariantCircle" />
-            <Setter Property="Foreground" Value="{my:Theme Information}" />
-        </Style>
-        <Style Selector="^[Severity=Success] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Kind" Value="CheckCircle" />
-            <Setter Property="Foreground" Value="{my:Theme Success}" />
-        </Style>
-        <Style Selector="^[Severity=Warning] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Kind" Value="Alert" />
-            <Setter Property="Foreground" Value="{my:Theme Warning}" />
-        </Style>
-        <Style Selector="^[Severity=Error] /template/ my|MaterialIcon#PART_SeverityIcon">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Kind" Value="AlertCircle" />
-            <Setter Property="Foreground" Value="{my:Theme Error}" />
-        </Style>
-
-        <Style Selector="^[IsCloseButtonVisible=False] /template/ Button#PART_CloseButton">
-            <Setter Property="IsVisible" Value="False" />
-        </Style>
-
     </ControlTheme>
 
 </ResourceDictionary>

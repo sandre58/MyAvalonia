@@ -4,11 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
-using Avalonia.Interactivity;
+using Avalonia.Input;
 using MyNet.Avalonia.Controls;
 using MyNet.UI.Dialogs.MessageBox;
 
@@ -17,49 +16,35 @@ namespace MyNet.Avalonia.Extended.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
 /// <summary>
-///     The messageBox used to display in OverlayDialogHost.
+/// Overlay message box shell. Content is rendered via <see cref="MessageBoxContent"/> in <c>ContentTemplate</c>.
 /// </summary>
-[TemplatePart(PartNoButton, typeof(Button))]
-[TemplatePart(PartOkButton, typeof(Button))]
-[TemplatePart(PartCancelButton, typeof(Button))]
-[TemplatePart(PartYesButton, typeof(Button))]
 public class OverlayMessageBox : OverlayDialog
 {
-    public const string PartYesButton = "PART_YesButton";
-    public const string PartNoButton = "PART_NoButton";
-    public const string PartOkButton = "PART_OKButton";
-    public const string PartCancelButton = "PART_CancelButton";
+    public const string PartYesButton = MessageBoxContent.PartYesButton;
+    public const string PartNoButton = MessageBoxContent.PartNoButton;
+    public const string PartOkButton = MessageBoxContent.PartOkButton;
+    public const string PartCancelButton = MessageBoxContent.PartCancelButton;
 
-    #region Severity
+    public static readonly StyledProperty<MessageSeverity> SeverityProperty =
+        AvaloniaProperty.Register<OverlayMessageBox, MessageSeverity>(nameof(Severity));
 
-    /// <summary>
-    /// Provides Severity Property.
-    /// </summary>
-    public static readonly StyledProperty<MessageSeverity> SeverityProperty = AvaloniaProperty.Register<OverlayMessageBox, MessageSeverity>(nameof(Severity));
+    public static readonly StyledProperty<MessageBoxResultOption> ButtonsProperty =
+        AvaloniaProperty.Register<OverlayMessageBox, MessageBoxResultOption>(nameof(Buttons));
 
-    /// <summary>
-    /// Gets or sets the Severity property.
-    /// </summary>
+    public static readonly StyledProperty<object?> MessageProperty =
+        AvaloniaProperty.Register<OverlayMessageBox, object?>(nameof(Message));
+
+    static OverlayMessageBox()
+    {
+        MessageProperty.Changed.AddClassHandler<OverlayMessageBox>((messageBox, e) => messageBox.SetCurrentValue(ContentProperty, e.NewValue));
+        ButtonsProperty.Changed.AddClassHandler<OverlayMessageBox>((messageBox, _) => messageBox.UpdateCloseButtonVisibility());
+        IsCloseButtonVisibleProperty.Changed.AddClassHandler<OverlayMessageBox>((messageBox, _) => messageBox.UpdateCloseButtonVisibility());
+    }
+
     public MessageSeverity Severity
     {
         get => GetValue(SeverityProperty);
         set => SetValue(SeverityProperty, value);
-    }
-
-    #endregion
-
-    public static readonly StyledProperty<MessageBoxResultOption> ButtonsProperty = AvaloniaProperty.Register<OverlayMessageBox, MessageBoxResultOption>(nameof(Buttons));
-
-    private Button? _cancelButton;
-    private Button? _noButton;
-    private Button? _okButton;
-
-    private Button? _yesButton;
-
-    static OverlayMessageBox()
-    {
-        ButtonsProperty.Changed.AddClassHandler<OverlayMessageBox>((o, _) => o.SetButtonVisibility());
-        IsCloseButtonVisibleProperty.Changed.AddClassHandler<OverlayMessageBox>((o, _) => o.SetButtonVisibility());
     }
 
     public MessageBoxResultOption Buttons
@@ -68,54 +53,32 @@ public class OverlayMessageBox : OverlayDialog
         set => SetValue(ButtonsProperty, value);
     }
 
+    public object? Message
+    {
+        get => GetValue(MessageProperty);
+        set => SetValue(MessageProperty, value);
+    }
+
+    internal void CloseWithResult(MessageBoxResult result) => OnElementClosing(this, result);
+
+    public override void Close() => CloseWithResult(DialogButtonHelper.GetDefaultCloseResult(Buttons));
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-        Button.ClickEvent.RemoveHandler(DefaultButtonsClose, _okButton, _cancelButton, _yesButton, _noButton);
-        _okButton = e.NameScope.Find<Button>(PartOkButton);
-        _cancelButton = e.NameScope.Find<Button>(PartCancelButton);
-        _yesButton = e.NameScope.Find<Button>(PartYesButton);
-        _noButton = e.NameScope.Find<Button>(PartNoButton);
-        Button.ClickEvent.AddHandler(DefaultButtonsClose, _okButton, _cancelButton, _yesButton, _noButton);
-        SetButtonVisibility();
+        UpdateCloseButtonVisibility();
     }
 
-    protected override void OnLoaded(RoutedEventArgs e)
+    protected override void OnKeyDown(KeyEventArgs e)
     {
-        base.OnLoaded(e);
-        var defaultButton = Buttons switch
-        {
-            MessageBoxResultOption.Ok => _okButton,
-            MessageBoxResultOption.OkCancel => _cancelButton,
-            MessageBoxResultOption.YesNo => _yesButton,
-            MessageBoxResultOption.YesNoCancel => _cancelButton,
-            _ => null
-        };
-        _ = defaultButton?.Focus();
+        base.OnKeyDown(e);
+        DialogKeyboardHelper.TryHandleMessageBoxKey(e, Buttons, CloseWithResult);
     }
 
-    private void DefaultButtonsClose(object? sender, RoutedEventArgs e)
-    {
-        if (sender is not Button button) return;
-        var result = button switch
-        {
-            _ when button == _okButton => MessageBoxResult.Ok,
-            _ when button == _cancelButton => MessageBoxResult.Cancel,
-            _ when button == _yesButton => MessageBoxResult.Yes,
-            _ when button == _noButton => MessageBoxResult.No,
-            _ => MessageBoxResult.None
-        };
-        OnElementClosing(this, result);
-    }
-
-    private void SetButtonVisibility()
+    private void UpdateCloseButtonVisibility()
     {
         var closeButtonVisible = IsCloseButtonVisible && Buttons != MessageBoxResultOption.YesNo;
         if (CloseButton is not null)
             CloseButton.IsVisible = closeButtonVisible;
-
-        DialogButtonHelper.SetButtonVisibility(Buttons, _okButton, _cancelButton, _yesButton, _noButton);
     }
-
-    public override void Close() => OnElementClosing(this, DialogButtonHelper.GetDefaultCloseResult(Buttons));
 }

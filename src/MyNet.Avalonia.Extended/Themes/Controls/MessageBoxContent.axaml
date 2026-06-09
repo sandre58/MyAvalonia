@@ -3,10 +3,10 @@
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
 
-    <ControlTheme x:Key="{x:Type my:WindowMessageBoxContent}" TargetType="my:WindowMessageBoxContent">
+    <ControlTheme x:Key="{x:Type my:MessageBoxContent}" TargetType="my:MessageBoxContent">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="my:WindowMessageBoxContent">
+            <ControlTemplate TargetType="my:MessageBoxContent">
 
                 <my:Card Name="PART_Card"
                          Classes="variant-transparent"

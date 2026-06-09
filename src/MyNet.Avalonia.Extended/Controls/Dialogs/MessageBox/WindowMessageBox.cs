@@ -15,10 +15,10 @@ namespace MyNet.Avalonia.Extended.Controls;
 
 public class WindowMessageBox : WindowDialog
 {
-    public const string PartYesButton = WindowMessageBoxContent.PartYesButton;
-    public const string PartNoButton = WindowMessageBoxContent.PartNoButton;
-    public const string PartOkButton = WindowMessageBoxContent.PartOkButton;
-    public const string PartCancelButton = WindowMessageBoxContent.PartCancelButton;
+    public const string PartYesButton = MessageBoxContent.PartYesButton;
+    public const string PartNoButton = MessageBoxContent.PartNoButton;
+    public const string PartOkButton = MessageBoxContent.PartOkButton;
+    public const string PartCancelButton = MessageBoxContent.PartCancelButton;
 
     #region Severity
 
@@ -66,12 +66,9 @@ public class WindowMessageBox : WindowDialog
 
     protected override Type StyleKeyOverride => typeof(WindowMessageBox);
 
-    protected override void OnKeyUp(KeyEventArgs e)
+    protected override void OnKeyDown(KeyEventArgs e)
     {
-        base.OnKeyUp(e);
-
-        if (e.Key is not Key.Escape) return;
-
-        CloseWithResult(DialogButtonHelper.GetDefaultCloseResult(Buttons));
+        base.OnKeyDown(e);
+        DialogKeyboardHelper.TryHandleMessageBoxKey(e, Buttons, result => CloseWithResult(result));
     }
 }

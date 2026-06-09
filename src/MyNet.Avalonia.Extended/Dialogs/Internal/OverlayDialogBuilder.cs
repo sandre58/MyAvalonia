@@ -63,7 +63,7 @@ internal static class OverlayDialogBuilder
     {
         var messageBoxControl = new OverlayMessageBox
         {
-            Content = messageBox.Message,
+            Message = messageBox.Message,
             Title = options.Title ?? messageBox.Title,
             Buttons = messageBox.Buttons,
             Severity = messageBox.Severity,

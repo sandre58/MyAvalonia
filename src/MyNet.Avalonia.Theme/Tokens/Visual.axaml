@@ -30,6 +30,7 @@
     <my:ShadowDepth x:Key="MyNet.Shadow.Control">Depth2</my:ShadowDepth>
     <my:ShadowDepth x:Key="MyNet.Shadow.Popup">Depth2</my:ShadowDepth>
     <my:ShadowDepth x:Key="MyNet.Shadow.ToolTip">Depth2</my:ShadowDepth>
+    <my:ShadowDepth x:Key="MyNet.Shadow.Dialog">Depth3</my:ShadowDepth>
 
     <!-- ===================================================================== -->
     <!-- Animation Duration Tokens                                             -->

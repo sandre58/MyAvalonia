@@ -18,6 +18,7 @@
     <CornerRadius x:Key="MyNet.Corners.Popup">4</CornerRadius>
     <CornerRadius x:Key="MyNet.Corners.ToolTip">4</CornerRadius>
     <CornerRadius x:Key="MyNet.Corners.Surface">4</CornerRadius>
+    <CornerRadius x:Key="MyNet.Corners.Dialog">8</CornerRadius>
 
     <!-- ToggleSwitch Corner Radii -->
     <CornerRadius x:Key="MyNet.Corners.ToggleSwitch.Sm">8</CornerRadius>

@@ -4,17 +4,20 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using Avalonia;
 using Avalonia.Automation;
 using Avalonia.Automation.Peers;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
+using Avalonia.Input;
+using Avalonia.VisualTree;
+using MyNet.Avalonia.Controls.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-public class ContentDialog : HeaderedContentControl
+public class ContentDialog : FullContentControl
 {
     static ContentDialog()
     {
@@ -152,6 +155,77 @@ public class ContentDialog : HeaderedContentControl
 
     #endregion
 
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+        DialogKeyboardNavigation.HandleKeyDown(this, e);
+    }
+
     private static void UpdateAutomationName(ContentDialog dialog)
         => AutomationProperties.SetName(dialog, dialog.Header?.ToString() ?? string.Empty);
+}
+
+/// <summary>
+/// Keyboard shortcuts for confirmation-style content dialogs.
+/// </summary>
+internal static class DialogKeyboardNavigation
+{
+    public static void HandleKeyDown(Control scope, KeyEventArgs e)
+    {
+        if (e.Handled)
+            return;
+
+        if (e.Key == Key.Escape)
+        {
+            if (TryExecuteButton(FindDismissButton(scope)))
+                e.Handled = true;
+
+            return;
+        }
+
+        if (e.Key is not Key.Enter || e.KeyModifiers != KeyModifiers.None || ShouldIgnoreEnter(e.Source))
+            return;
+
+        if (TryExecuteButton(FindAffirmativeButton(scope)))
+            e.Handled = true;
+    }
+
+    private static bool ShouldIgnoreEnter(object? source)
+        => source is TextBox textBox && (textBox.AcceptsReturn || textBox.AcceptsTab);
+
+    private static Button? FindAffirmativeButton(Control scope)
+        => FindButton(scope, static button => button.IsDefault)
+           ?? FindButton(scope, static button => button.Classes.Contains("variant-filled"));
+
+    private static Button? FindDismissButton(Control scope)
+        => FindButton(scope, static button => button.Classes.Contains("variant-text"));
+
+    private static Button? FindButton(Control scope, Func<Button, bool> predicate)
+    {
+        foreach (var element in scope.GetVisualDescendants())
+        {
+            if (element is not Button { IsVisible: true, IsEffectivelyEnabled: true } candidate)
+                continue;
+
+            if (predicate(candidate))
+                return candidate;
+        }
+
+        return null;
+    }
+
+    private static bool TryExecuteButton(Button? button)
+    {
+        if (button is not { IsVisible: true, IsEffectivelyEnabled: true })
+            return false;
+
+        if (button.Command?.CanExecute(button.CommandParameter) == true)
+        {
+            button.Command.Execute(button.CommandParameter);
+            return true;
+        }
+
+        button.RaiseEvent(new(Button.ClickEvent));
+        return true;
+    }
 }

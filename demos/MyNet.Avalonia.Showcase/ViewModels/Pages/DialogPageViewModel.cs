@@ -161,7 +161,7 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
     private void OnPlaygroundPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(PlaygroundViewModel.SelectedTheme))
-            OnPropertyChanged(nameof(IsOverlayPresentation), null, IsOverlayPresentation);
+            NotifyPropertyChanged(nameof(IsOverlayPresentation));
     }
 
     private async Task ShowContentDialogAsync()

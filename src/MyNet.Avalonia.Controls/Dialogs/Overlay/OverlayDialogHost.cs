@@ -186,7 +186,7 @@ public class OverlayDialogHost : Canvas
         OverlayDialogHostManager.Register(this, HostId, _topLevelKey);
     }
 
-    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs? e)
     {
         while (_layers.Count > 0)
         {

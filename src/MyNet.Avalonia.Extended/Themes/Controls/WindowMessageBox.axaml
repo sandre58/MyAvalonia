@@ -21,7 +21,7 @@
         
         <Setter Property="ContentTemplate">
             <DataTemplate DataType="{x:Type system:Object}">
-                <my:WindowMessageBoxContent Message="{Binding}"
+                <my:MessageBoxContent Message="{Binding}"
                                             Margin="{my:Thickness Md}"
                                             HorizontalAlignment="Stretch"
                                             Title="{Binding $parent[my:WindowMessageBox].Title}"

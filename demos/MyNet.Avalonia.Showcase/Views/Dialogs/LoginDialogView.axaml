@@ -29,7 +29,8 @@
             <Button Content="{my:Loc Validate}"
                     Command="{Binding ValidateCommand}"
                     my:IconAssist.Icon="{my:MaterialIcon Check}"
-                    my:ThemeAssist.Role="Primary" />
+                    my:ThemeAssist.Role="Primary"
+                    IsDefault="True" />
         </StackPanel>
         
         

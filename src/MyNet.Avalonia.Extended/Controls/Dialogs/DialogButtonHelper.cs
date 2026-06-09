@@ -58,6 +58,32 @@ internal static class DialogButtonHelper
     }
 
     /// <summary>
+    /// Gets the button that should receive the default action (Enter key).
+    /// </summary>
+    public static Button? GetAffirmativeButton(
+        MessageBoxResultOption buttons,
+        Button? okButton,
+        Button? cancelButton,
+        Button? yesButton,
+        Button? noButton)
+        => buttons switch
+        {
+            MessageBoxResultOption.Ok or MessageBoxResultOption.OkCancel => okButton,
+            MessageBoxResultOption.YesNo or MessageBoxResultOption.YesNoCancel => yesButton,
+            _ => okButton
+        };
+
+    /// <summary>
+    /// Gets the result produced by the affirmative (default) action.
+    /// </summary>
+    public static MessageBoxResult GetAffirmativeResult(MessageBoxResultOption buttons) => buttons switch
+    {
+        MessageBoxResultOption.Ok or MessageBoxResultOption.OkCancel => MessageBoxResult.Ok,
+        MessageBoxResultOption.YesNo or MessageBoxResultOption.YesNoCancel => MessageBoxResult.Yes,
+        _ => MessageBoxResult.None
+    };
+
+    /// <summary>
     /// Gets the default close result for when the dialog is dismissed (close button or escape key).
     /// </summary>
     public static MessageBoxResult GetDefaultCloseResult(MessageBoxResultOption buttons) => buttons switch

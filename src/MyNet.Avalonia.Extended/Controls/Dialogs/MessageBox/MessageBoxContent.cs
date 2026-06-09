@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="WindowMessageBoxContent.cs" company="Stéphane ANDRE">
+// <copyright file="MessageBoxContent.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -9,6 +9,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
 using MyNet.UI.Dialogs.MessageBox;
@@ -21,7 +22,7 @@ namespace MyNet.Avalonia.Extended.Controls;
 [TemplatePart(PartCancelButton, typeof(Button))]
 [TemplatePart(PartYesButton, typeof(Button))]
 [TemplatePart(PartNoButton, typeof(Button))]
-public class WindowMessageBoxContent : TemplatedControl
+public class MessageBoxContent : TemplatedControl
 {
     public const string PartYesButton = "PART_YesButton";
     public const string PartNoButton = "PART_NoButton";
@@ -29,24 +30,27 @@ public class WindowMessageBoxContent : TemplatedControl
     public const string PartCancelButton = "PART_CancelButton";
 
     public static readonly StyledProperty<object?> MessageProperty =
-        AvaloniaProperty.Register<WindowMessageBoxContent, object?>(nameof(Message));
+        AvaloniaProperty.Register<MessageBoxContent, object?>(nameof(Message));
 
     public static readonly StyledProperty<object?> TitleProperty =
-        AvaloniaProperty.Register<WindowMessageBoxContent, object?>(nameof(Title));
+        AvaloniaProperty.Register<MessageBoxContent, object?>(nameof(Title));
 
     public static readonly StyledProperty<MessageSeverity> SeverityProperty =
-        AvaloniaProperty.Register<WindowMessageBoxContent, MessageSeverity>(nameof(Severity));
+        AvaloniaProperty.Register<MessageBoxContent, MessageSeverity>(nameof(Severity));
 
     public static readonly StyledProperty<MessageBoxResultOption> ButtonsProperty =
-        AvaloniaProperty.Register<WindowMessageBoxContent, MessageBoxResultOption>(nameof(Buttons));
+        AvaloniaProperty.Register<MessageBoxContent, MessageBoxResultOption>(nameof(Buttons));
 
     private Button? _cancelButton;
-    private WindowMessageBox? _host;
     private Button? _noButton;
     private Button? _okButton;
     private Button? _yesButton;
 
-    static WindowMessageBoxContent() => ButtonsProperty.Changed.AddClassHandler<WindowMessageBoxContent>((content, _) => content.SetButtonVisibility());
+    static MessageBoxContent()
+    {
+        FocusableProperty.OverrideDefaultValue<MessageBoxContent>(true);
+        ButtonsProperty.Changed.AddClassHandler<MessageBoxContent>((content, _) => content.SetButtonVisibility());
+    }
 
     public object? Message
     {
@@ -72,19 +76,7 @@ public class WindowMessageBoxContent : TemplatedControl
         set => SetValue(ButtonsProperty, value);
     }
 
-    protected override Type StyleKeyOverride => typeof(WindowMessageBoxContent);
-
-    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
-    {
-        base.OnAttachedToVisualTree(e);
-        _host = this.FindAncestorOfType<WindowMessageBox>();
-    }
-
-    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
-    {
-        _host = null;
-        base.OnDetachedFromVisualTree(e);
-    }
+    protected override Type StyleKeyOverride => typeof(MessageBoxContent);
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
@@ -96,42 +88,53 @@ public class WindowMessageBoxContent : TemplatedControl
         _noButton = e.NameScope.Find<Button>(PartNoButton);
         Button.ClickEvent.AddHandler(OnButtonClick, _okButton, _cancelButton, _yesButton, _noButton);
         SetButtonVisibility();
+        ConfigureDefaultButtons();
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
-        FocusDefaultButton();
+        ConfigureDefaultButtons();
+        _ = DialogButtonHelper.GetAffirmativeButton(Buttons, _okButton, _cancelButton, _yesButton, _noButton)?.Focus();
     }
 
-    private void FocusDefaultButton()
+    protected override void OnKeyDown(KeyEventArgs e)
     {
-        var defaultButton = Buttons switch
-        {
-            MessageBoxResultOption.Ok => _okButton,
-            MessageBoxResultOption.OkCancel => _cancelButton,
-            MessageBoxResultOption.YesNo => _yesButton,
-            MessageBoxResultOption.YesNoCancel => _cancelButton,
-            _ => null
-        };
-        Button.IsDefaultProperty.SetValue(true, defaultButton);
-        _ = defaultButton?.Focus();
+        base.OnKeyDown(e);
+        DialogKeyboardHelper.TryHandleMessageBoxKey(e, Buttons, CloseWithResult);
+    }
+
+    private void ConfigureDefaultButtons()
+    {
+        foreach (var button in new[] { _okButton, _cancelButton, _yesButton, _noButton })
+            Button.IsDefaultProperty.SetValue(false, button);
+
+        var affirmative = DialogButtonHelper.GetAffirmativeButton(Buttons, _okButton, _cancelButton, _yesButton, _noButton);
+        Button.IsDefaultProperty.SetValue(true, affirmative);
     }
 
     private void OnButtonClick(object? sender, RoutedEventArgs e)
     {
-        var window = _host ?? this.FindAncestorOfType<WindowMessageBox>();
-        if (window is null)
-            return;
-
         if (Equals(sender, _okButton))
-            window.CloseWithResult(MessageBoxResult.Ok);
+            CloseWithResult(MessageBoxResult.Ok);
         else if (Equals(sender, _cancelButton))
-            window.CloseWithResult(MessageBoxResult.Cancel);
+            CloseWithResult(MessageBoxResult.Cancel);
         else if (Equals(sender, _yesButton))
-            window.CloseWithResult(MessageBoxResult.Yes);
+            CloseWithResult(MessageBoxResult.Yes);
         else if (Equals(sender, _noButton))
-            window.CloseWithResult(MessageBoxResult.No);
+            CloseWithResult(MessageBoxResult.No);
+    }
+
+    private void CloseWithResult(MessageBoxResult result)
+    {
+        if (this.FindAncestorOfType<WindowMessageBox>() is { } window)
+        {
+            window.CloseWithResult(result);
+            return;
+        }
+
+        if (this.FindAncestorOfType<OverlayMessageBox>() is { } overlay)
+            overlay.CloseWithResult(result);
     }
 
     private void SetButtonVisibility()
