@@ -14,7 +14,6 @@ using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
-using Avalonia.Styling;
 using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Behaviors;
 using MyNet.Avalonia.Controls.Enums;
@@ -35,8 +34,12 @@ namespace MyNet.Avalonia.Controls;
 /// </remarks>
 public class OverlayDialogHost : Canvas
 {
-    private static readonly Animation MaskAppearAnimation = CreateOpacityAnimation(true);
-    private static readonly Animation MaskDisappearAnimation = CreateOpacityAnimation(false);
+    private const int DialogDisappearDurationMs = 150;
+
+    // Dialog animations are driven by XAML Transitions on [IsClosed=True]/[IsClosed=False] styles.
+    // Mask animations use programmatic Transitions so the continuation always runs on the UI thread.
+    private static readonly TimeSpan MaskAppearDuration = TimeSpan.FromSeconds(0.2);
+    private static readonly TimeSpan MaskDisappearDuration = TimeSpan.FromSeconds(0.15);
 
     private readonly List<DialogPair> _layers = new(10);
 
@@ -79,30 +82,13 @@ public class OverlayDialogHost : Canvas
     /// </summary>
     public bool IsTopLevel { get; set; }
 
-    private static Animation CreateOpacityAnimation(bool appear)
-    {
-        var animation = new Animation
-        {
-            FillMode = FillMode.Forward
-        };
-        var keyFrame1 = new KeyFrame { Cue = new(0.0) };
-        keyFrame1.Setters.Add(new Setter { Property = OpacityProperty, Value = appear ? 0.0 : 1.0 });
-        var keyFrame2 = new KeyFrame { Cue = new(1.0) };
-        keyFrame2.Setters.Add(new Setter { Property = OpacityProperty, Value = appear ? 1.0 : 0.0 });
-        animation.Children.Add(keyFrame1);
-        animation.Children.Add(keyFrame2);
-        animation.Duration = TimeSpan.FromSeconds(0.2);
-        return animation;
-    }
-
     /// <summary>
     /// Gets or sets the logical host identifier used with <see cref="OverlayDialogHostManager.GetHost"/>.
     /// </summary>
     public string? HostId { get; set; }
 
     public static readonly StyledProperty<IBrush?> OverlayMaskBrushProperty =
-        AvaloniaProperty.Register<OverlayDialogHost, IBrush?>(
-            nameof(OverlayMaskBrush));
+        AvaloniaProperty.Register<OverlayDialogHost, IBrush?>(nameof(OverlayMaskBrush));
 
     public IBrush? OverlayMaskBrush
     {
@@ -116,8 +102,12 @@ public class OverlayDialogHost : Canvas
         {
             Width = Bounds.Width,
             Height = Bounds.Height,
-            IsVisible = true
+            IsVisible = true,
+
+            // Start transparent so the appear transition animates from 0 → 1.
+            Opacity = 0,
         };
+
         if (modal)
         {
             rec[!PureRectangle.BackgroundProperty] = this[!OverlayMaskBrushProperty];
@@ -137,6 +127,18 @@ public class OverlayDialogHost : Canvas
         }
 
         return rec;
+    }
+
+    private static void TriggerMaskAppear(PureRectangle mask, TimeSpan duration)
+    {
+        mask.Transitions = [new DoubleTransition { Property = OpacityProperty, Duration = duration }];
+        mask.Opacity = 1.0;
+    }
+
+    private static void TriggerMaskDisappear(PureRectangle mask, TimeSpan duration)
+    {
+        mask.Transitions = [new DoubleTransition { Property = OpacityProperty, Duration = duration }];
+        mask.Opacity = 0.0;
     }
 
     private void DragMaskToMoveWindow(object? sender, PointerPressedEventArgs e)
@@ -315,6 +317,11 @@ public class OverlayDialogHost : Canvas
         control.AddHandler(OverlayFeedbackElement.ClosedEvent, OnDialogControlClosingAsync);
         control.AddHandler(OverlayDialog.LayerChangedEvent, OnDialogLayerChanged);
         ResetZIndices();
+
+        // Trigger mask appear transition and dialog XAML appear transition (IsClosed true → false).
+        if (mask is not null && !IsAnimationDisabled) TriggerMaskAppear(mask, MaskAppearDuration);
+        else if (mask is not null) mask.Opacity = 1.0;
+        control.IsClosed = false;
     }
 
     [SuppressMessage("Roslynator", "RCS1163:Unused parameter", Justification = "Used by AddHandler")]
@@ -328,6 +335,16 @@ public class OverlayDialogHost : Canvas
         control.RemoveHandler(OverlayFeedbackElement.ClosedEvent, OnDialogControlClosingAsync);
         control.RemoveHandler(OverlayDialog.LayerChangedEvent, OnDialogLayerChanged);
         layer.Mask?.RemoveHandler(PointerPressedEvent, DragMaskToMoveWindow);
+        layer.Mask?.RemoveHandler(PointerReleasedEvent, ClickMaskToCloseDialog);
+
+        // Trigger disappear animations while elements are still in the visual tree, then wait.
+        // The dialog XAML transition fires automatically (IsClosed → true via OnClosed class handler).
+        // No ConfigureAwait(false): the continuation must run on the UI thread to safely remove Children.
+        if (!IsAnimationDisabled)
+        {
+            if (layer.Mask is not null) TriggerMaskDisappear(layer.Mask, MaskDisappearDuration);
+            await Task.Delay(DialogDisappearDurationMs).ConfigureAwait(true);
+        }
 
         _ = Children.Remove(control);
 
@@ -338,7 +355,6 @@ public class OverlayDialogHost : Canvas
             {
                 _modalCount--;
                 IsInModalStatus = _modalCount > 0;
-                if (!IsAnimationDisabled) await MaskDisappearAnimation.RunAsync(layer.Mask).ConfigureAwait(false);
             }
         }
 
@@ -371,8 +387,9 @@ public class OverlayDialogHost : Canvas
         control.AddHandler(OverlayFeedbackElement.ClosedEvent, OnDialogControlClosingAsync);
         control.AddHandler(OverlayDialog.LayerChangedEvent, OnDialogLayerChanged);
 
-        // Notice: mask animation here is not really awaited, because currently dialogs appears immediately.
-        if (!IsAnimationDisabled) _ = MaskAppearAnimation.RunAsync(mask);
+        // Trigger mask appear transition (opacity 0 → 1 over 200ms).
+        if (!IsAnimationDisabled) TriggerMaskAppear(mask, MaskAppearDuration);
+        else mask.Opacity = 1.0;
 
         var element = control.GetVisualDescendants().OfType<InputElement>()
                              .FirstOrDefault(FocusBehavior.GetDialogFocusHint);
@@ -380,6 +397,8 @@ public class OverlayDialogHost : Canvas
         _ = element?.Focus();
         _modalCount++;
         IsInModalStatus = _modalCount > 0;
+
+        // IsClosed = false triggers the XAML appear transition (opacity 0 → 1, scale 0.95 → 1 over 200ms).
         control.IsClosed = false;
     }
 

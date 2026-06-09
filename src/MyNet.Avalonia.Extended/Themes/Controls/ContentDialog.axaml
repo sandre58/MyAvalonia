@@ -1,83 +1,44 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-
                     xmlns:my="http://mynet.com/avalonia">
 
-
-
     <ControlTheme x:Key="{x:Type my:ContentDialog}" TargetType="my:ContentDialog">
-
         <Setter Property="my:ThemeAssist.Category" Value="Surface" />
-
         <Setter Property="Background" Value="{my:Theme Surface.Level1}" />
-
         <Setter Property="Padding" Value="0" />
-
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-
         <Setter Property="VerticalContentAlignment" Value="Top" />
 
-
-
         <Setter Property="Template">
-
             <ControlTemplate TargetType="my:ContentDialog">
-
                 <Border Background="{TemplateBinding Background}">
-
                     <Grid RowDefinitions="Auto,*">
-
                         <Border Grid.Row="0"
-
                                 BorderBrush="{my:Theme Surface.Border}"
-
                                 BorderThickness="0 0 0 1"
-
                                 IsVisible="{TemplateBinding ShowHeader}">
-
                             <ContentPresenter Name="PART_HeaderPresenter"
-
                                               Margin="{my:Thickness Lg, Horizontal}"
-
                                               Padding="{my:Thickness Md, Bottom}"
-
                                               Content="{TemplateBinding Header}"
-
                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
-
                                               FontSize="{StaticResource MyNet.Font.Size.Lg}"
-
                                               FontWeight="{StaticResource MyNet.Font.Weight.Caption}"
-
                                               RecognizesAccessKey="True" />
-
                         </Border>
 
                         <ContentPresenter Name="PART_ContentPresenter"
-
                                           Grid.Row="1"
-
                                           Margin="{my:Thickness Lg}"
-
                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-
                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-
                                           Content="{TemplateBinding Content}"
-
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
-
                                           RecognizesAccessKey="True" />
-
                     </Grid>
-
                 </Border>
-
             </ControlTemplate>
-
         </Setter>
-
     </ControlTheme>
 
 

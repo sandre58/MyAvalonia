@@ -42,7 +42,7 @@ internal sealed class DialogSession(Action cleanup, IUiThreadDispatcher uiThread
     {
         switch (Overlay)
         {
-            case ContentOverlayDialog contentOverlay:
+            case OverlayContentDialog contentOverlay:
                 contentOverlay.CloseWithResult(result);
                 return;
             case OverlayMessageBox messageBox:

@@ -5,6 +5,7 @@
 
     <ControlTheme x:Key="{x:Type my:MessageBoxContent}" TargetType="my:MessageBoxContent">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <ControlTemplate TargetType="my:MessageBoxContent">
 

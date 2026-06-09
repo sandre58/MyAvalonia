@@ -1,0 +1,9 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+    <ControlTheme x:Key="{x:Type my:OverlayContentDialog}" TargetType="my:OverlayContentDialog"
+                  BasedOn="{StaticResource {x:Type my:OverlayDialog}}" />
+
+</ResourceDictionary>

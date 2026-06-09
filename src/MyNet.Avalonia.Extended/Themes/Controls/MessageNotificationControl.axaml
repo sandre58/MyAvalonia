@@ -3,6 +3,7 @@
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
     <ControlTheme x:Key="{x:Type my:MessageNotificationControl}" TargetType="{x:Type my:MessageNotificationControl}">
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <ControlTemplate TargetType="my:MessageNotificationControl">
                 <my:Card Name="PART_Card"

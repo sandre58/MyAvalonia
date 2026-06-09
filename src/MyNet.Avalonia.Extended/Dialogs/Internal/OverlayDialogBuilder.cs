@@ -38,7 +38,7 @@ internal static class OverlayDialogBuilder
         if (dialog is MessageBoxViewModel messageBox)
             return CreateMessageBox(messageBox, options, request.OverlayOptions);
 
-        var overlay = new ContentOverlayDialog();
+        var overlay = new OverlayContentDialog();
         var overlayOptions = MergeOptions(GetOptions(view), request.OverlayOptions);
         PrepareOverlayDialog(overlay, overlayOptions, options);
 

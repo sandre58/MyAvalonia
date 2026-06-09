@@ -17,7 +17,7 @@ public class OverlayDialogBuilderHeadlessTests
     [AvaloniaFact]
     public void PrepareOverlayDialog_AppliesCanDragMoveToShell()
     {
-        var shell = new ContentOverlayDialog();
+        var shell = new OverlayContentDialog();
         var content = new ContentDialog { Header = "Sample" };
 
         OverlayDialogBuilder.PrepareOverlayDialog(

@@ -11,6 +11,7 @@
                 <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/MessageNotificationControl.axaml" />
                 <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/ContentDialog.axaml" />
                 <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/BusyServiceIndicator.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/OverlayContentDialog.axaml" />
                 <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/OverlayMessageBox.axaml" />
                 <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowDialog.axaml" />
                 <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/MessageBoxContent.axaml" />
