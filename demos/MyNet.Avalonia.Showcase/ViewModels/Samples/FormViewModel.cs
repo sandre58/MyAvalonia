@@ -12,16 +12,12 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-using System.Windows.Input;
 using MyNet.Collections;
 using MyNet.Geography;
-using MyNet.Globalization.Facade;
 using MyNet.Observable;
 using MyNet.Observable.Behaviors;
 using MyNet.Observable.Behaviors.Metadata.Attributes;
 using MyNet.Primitives;
-using MyNet.UI.Commands;
-using MyNet.UI.Notifications;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Samples;
 
@@ -32,16 +28,11 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
 {
     [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Disposed in Cleanup method")]
     private readonly ValidationBehavior<FormViewModel> _validation;
-    private readonly INotificationPublisher? _notificationPublisher;
 
-    public FormViewModel(ICommandFactory commands, INotificationPublisher? notificationPublisher = null)
+    public FormViewModel()
     {
-        _notificationPublisher = notificationPublisher;
         _validation = this.UseValidation(new FormViewModelValidator());
         _validation.ErrorsChanged += (_, e) => ErrorsChanged?.Invoke(this, e);
-
-        SubmitCommand = commands.Create(() => Submit());
-        ResetCommand = commands.Create(Reset);
 
         Disposables.Add(_validation);
     }
@@ -68,26 +59,6 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
 
     /// <inheritdoc/>
     public void ResetValidation() => _validation.ResetValidation();
-
-    #endregion
-
-    #region Commands & status
-
-    public ICommand SubmitCommand { get; }
-
-    public ICommand ResetCommand { get; }
-
-    public string? StatusMessage
-    {
-        get;
-        private set => SetProperty(ref field, value);
-    }
-
-    public bool IsSubmitSuccessful
-    {
-        get;
-        private set => SetProperty(ref field, value);
-    }
 
     #endregion
 
@@ -176,27 +147,7 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
 
     #endregion
 
-    public bool Submit()
-    {
-        StatusMessage = null;
-        IsSubmitSuccessful = false;
-
-        if (!Validate())
-        {
-            StatusMessage = "ValidationFailed".Translate();
-            return false;
-        }
-
-        IsSubmitSuccessful = true;
-        StatusMessage = "SubmitSuccess".Translate();
-
-        if (EnableNotifications && _notificationPublisher is not null)
-            _notificationPublisher.PublishSuccess(StatusMessage);
-
-        return true;
-    }
-
-    private void Reset()
+    public void Reset()
     {
         Login = string.Empty;
         Password = string.Empty;
@@ -234,8 +185,6 @@ internal sealed class FormViewModel : ObservableObject, IValidationAware
         FridayAvailable = false;
         Gender = GenderType.Male;
 
-        StatusMessage = null;
-        IsSubmitSuccessful = false;
         ResetValidation();
     }
 }

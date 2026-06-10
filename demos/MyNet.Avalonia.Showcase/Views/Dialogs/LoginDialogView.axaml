@@ -11,28 +11,41 @@
                   x:DataType="vm:LoginDialogViewModel"
                   CanResize="{Binding CanResize}"
                   Header="User Registration"
+                  Theme="{StaticResource {x:Type my:ContentDialog}}"
                   mc:Ignorable="d">
-    <DockPanel>
-        
-        <!-- ============================================ -->
-        <!-- SUBMIT BUTTON SECTION -->
-        <!-- ============================================ -->
+    <my:ContentDialog.Footer>
         <StackPanel HorizontalAlignment="Right"
                     Orientation="Horizontal"
                     DockPanel.Dock="Bottom"
                     Margin="{my:Thickness Md, Top}"
                     Spacing="10">
             <Button Content="{my:Loc Reset}"
-                    Command="{Binding Form.ResetCommand}"
+                    Command="{Binding ResetCommand}"
                     my:IconAssist.Icon="{my:MaterialIcon Restore}"
                     Classes="variant-outlined" />
             <Button Content="{my:Loc Validate}"
-                    Command="{Binding ValidateCommand}"
+                    Command="{Binding SubmitCommand}"
                     my:IconAssist.Icon="{my:MaterialIcon Check}"
                     my:ThemeAssist.Role="Primary"
                     IsDefault="True" />
         </StackPanel>
+    </my:ContentDialog.Footer>
+    <DockPanel>
         
+        <!-- Status -->
+        <my:Banner DockPanel.Dock="Top"
+                   Classes.success="{Binding IsSubmitSuccessful}"
+                   IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                   my:ThemeAssist.Role="Error"
+                   Header="{Binding StatusMessage}"
+                   Margin="{my:Thickness Md, Bottom}"
+                   CanClose="False">
+            <my:Banner.Styles>
+                <Style Selector="my|Banner.success">
+                    <Setter Property="my:ThemeAssist.Role" Value="Success" />
+                </Style>
+            </my:Banner.Styles>
+        </my:Banner>
         
         <ScrollViewer MaxHeight="500">
             <samples:FormContent DataContext="{Binding Form}" />

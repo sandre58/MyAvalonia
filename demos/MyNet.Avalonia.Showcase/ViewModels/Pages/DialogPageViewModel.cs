@@ -6,7 +6,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Material.Icons;
@@ -130,8 +129,6 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
         ShowContentDialogCommand = commands.Create(async () => await ShowContentDialogAsync().ConfigureAwait(false));
         ShowMessageBoxCommand = commands.CreateRequired<ThemeRole>(async role => await ShowMessageBoxAsync(ToSeverity(role)).ConfigureAwait(false));
         ShowDialogBoxCommand = commands.CreateRequired<ThemeRole>(async role => await ShowDialogBoxAsync(ToSeverity(role)).ConfigureAwait(false));
-        ShowStackedOverlayCommand = commands.Create(async () => await ShowStackedOverlayAsync().ConfigureAwait(false));
-        CloseTopDialogCommand = commands.Create(async () => await CloseTopDialogAsync().ConfigureAwait(false));
 
         Playground.PropertyChanged += OnPlaygroundPropertyChanged;
     }
@@ -148,10 +145,6 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
 
     public ICommand ShowDialogBoxCommand { get; }
 
-    public ICommand ShowStackedOverlayCommand { get; }
-
-    public ICommand CloseTopDialogCommand { get; }
-
     protected override void DisposeManagedResources()
     {
         Playground.PropertyChanged -= OnPlaygroundPropertyChanged;
@@ -166,7 +159,7 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
 
     private async Task ShowContentDialogAsync()
     {
-        var vm = new LoginDialogViewModel(_commands) { CanResize = _canResize };
+        var vm = new LoginDialogViewModel(_commands, _notificationPublisher) { CanResize = _canResize };
         TrackDialog(vm);
 
         var result = IsOverlayPresentation
@@ -236,65 +229,6 @@ internal sealed class DialogPageViewModel : ShowcaseViewModel
             _ => NotificationSeverity.Error
         };
         _notificationPublisher.Publish(new MessageNotification(message, severity: resultSeverity));
-    }
-
-    private async Task ShowStackedOverlayAsync()
-    {
-        if (!IsOverlayPresentation)
-        {
-            _notificationPublisher.Publish(new MessageNotification(
-                DialogsPageResources.StackedOverlayRequiresOverlayTheme,
-                severity: NotificationSeverity.Warning));
-            return;
-        }
-
-        var first = new ConfirmDialogBoxViewModel(_commands, DialogsPageResources.StackedOverlayFirstMessage, DialogsPageResources.StackedOverlayFirstTitle);
-        TrackDialog(first);
-        var firstTask = _contentDialogService.ShowAsync(
-            first,
-            DialogOptionsFactory.ForOverlay(first, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId));
-
-        await Task.Delay(150).ConfigureAwait(false);
-
-        var second = new ConfirmDialogBoxViewModel(_commands, DialogsPageResources.StackedOverlaySecondMessage, DialogsPageResources.StackedOverlaySecondTitle);
-        TrackDialog(second);
-        var secondResult = await _contentDialogService
-            .ShowAsync(second, DialogOptionsFactory.ForOverlay(second, _isModal, CreateOverlayOptions(), OverlayDialogHostManager.MainHostId))
-            .ConfigureAwait(false);
-
-        var firstResult = await firstTask.ConfigureAwait(false);
-        ClearDialog(second);
-        ClearDialog(first);
-
-        _notificationPublisher.Publish(new MessageNotification(
-#pragma warning disable CA1863
-            string.Format(CultureInfo.CurrentCulture, DialogsPageResources.StackedOverlayResultFormat, secondResult.IsSuccess, firstResult.IsSuccess),
-#pragma warning restore CA1863
-            severity: NotificationSeverity.Information));
-    }
-
-    private async Task CloseTopDialogAsync()
-    {
-        if (!IsOverlayPresentation)
-        {
-            _notificationPublisher.Publish(new MessageNotification(
-                DialogsPageResources.CloseTopRequiresOverlayTheme,
-                severity: NotificationSeverity.Warning));
-            return;
-        }
-
-        if (_lastDialog is null)
-        {
-            _notificationPublisher.Publish(new MessageNotification(
-                DialogsPageResources.NoOpenDialog,
-                severity: NotificationSeverity.Warning));
-            return;
-        }
-
-        await _contentDialogService.CloseAsync(_lastDialog).ConfigureAwait(false);
-        _notificationPublisher.Publish(new MessageNotification(
-            DialogsPageResources.DialogClosedProgrammatically,
-            severity: NotificationSeverity.Success));
     }
 
     private OverlayDialogOptions CreateOverlayOptions()

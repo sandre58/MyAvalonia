@@ -14,11 +14,10 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Showcase.ViewModels.Samples;
 using MyNet.UI.Commands;
-using MyNet.UI.Notifications;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
-internal sealed class FormPageViewModel(ICommandFactory commands, INotificationPublisher notificationPublisher) : ShowcaseViewModel(nameof(Form), commands, [
+internal sealed class FormPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Form), commands, [
     new ControlThemeBuilder()
         .AddProperty(Controls.Form.ColumnsProperty, 1, x => x.DisplayName(nameof(SettingsResources.Columns)).Of<IntNumericUpDownEditor>(editor => editor.WithRange(1, 4)))
         .AddProperty(Controls.Form.SpacingProperty, 16d, x => x.DisplayName(nameof(SettingsResources.Spacing)).Of<IntNumericUpDownEditor>(editor => editor.WithRange(0, 48)))
@@ -29,5 +28,5 @@ internal sealed class FormPageViewModel(ICommandFactory commands, INotificationP
     /// <inheritdoc/>
     public override MaterialIconKind Icon => MaterialIconKind.FormatLineStyle;
 
-    public FormViewModel Form { get; } = new(commands, notificationPublisher);
+    public FormViewModel Form { get; } = new();
 }

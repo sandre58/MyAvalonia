@@ -24,7 +24,7 @@ namespace MyNet.Avalonia.Controls;
 [PseudoClasses(PseudoClassName.Horizontal, PseudoClassName.Vertical, ":title-empty", ":subtitle-empty")]
 [TemplatePart(PartRoot, typeof(Border))]
 [TemplatePart(PartActionButton, typeof(Button))]
-public class Card : FullContentControl
+public class Card : SurfaceControl
 {
     public const string PartRoot = "PART_Root";
     public const string PartActionButton = "PART_ActionButton";
@@ -42,37 +42,6 @@ public class Card : FullContentControl
         UpdateTitleState();
         UpdateSubtitleState();
     }
-
-    #region Leading
-
-    public static readonly StyledProperty<object?> LeadingProperty =
-        AvaloniaProperty.Register<Card, object?>(nameof(Leading));
-
-    public object? Leading
-    {
-        get => GetValue(LeadingProperty);
-        set => SetValue(LeadingProperty, value);
-    }
-
-    public static readonly StyledProperty<IDataTemplate?> LeadingTemplateProperty =
-        AvaloniaProperty.Register<Card, IDataTemplate?>(nameof(LeadingTemplate));
-
-    public IDataTemplate? LeadingTemplate
-    {
-        get => GetValue(LeadingTemplateProperty);
-        set => SetValue(LeadingTemplateProperty, value);
-    }
-
-    public static readonly StyledProperty<IBrush?> LeadingBackgroundProperty =
-        AvaloniaProperty.Register<Card, IBrush?>(nameof(LeadingBackground));
-
-    public IBrush? LeadingBackground
-    {
-        get => GetValue(LeadingBackgroundProperty);
-        set => SetValue(LeadingBackgroundProperty, value);
-    }
-
-    #endregion
 
     #region Title / Subtitle
 
@@ -164,37 +133,6 @@ public class Card : FullContentControl
     {
         get => GetValue(SubtitleOpacityProperty);
         set => SetValue(SubtitleOpacityProperty, value);
-    }
-
-    #endregion
-
-    #region Trailing
-
-    public static readonly StyledProperty<object?> TrailingProperty =
-        AvaloniaProperty.Register<Card, object?>(nameof(Trailing));
-
-    public object? Trailing
-    {
-        get => GetValue(TrailingProperty);
-        set => SetValue(TrailingProperty, value);
-    }
-
-    public static readonly StyledProperty<IDataTemplate?> TrailingTemplateProperty =
-        AvaloniaProperty.Register<Card, IDataTemplate?>(nameof(TrailingTemplate));
-
-    public IDataTemplate? TrailingTemplate
-    {
-        get => GetValue(TrailingTemplateProperty);
-        set => SetValue(TrailingTemplateProperty, value);
-    }
-
-    public static readonly StyledProperty<bool> ShowTrailingProperty =
-        AvaloniaProperty.Register<Card, bool>(nameof(ShowTrailing));
-
-    public bool ShowTrailing
-    {
-        get => GetValue(ShowTrailingProperty);
-        set => SetValue(ShowTrailingProperty, value);
     }
 
     #endregion
