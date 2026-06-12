@@ -54,4 +54,15 @@ public static class TrailingAssist
     public static VerticalAlignment GetVerticalAlignment(StyledElement obj) => obj.GetValue(VerticalAlignmentProperty);
 
     #endregion VerticalAlignment
+
+    #region IsVisible
+
+    public static readonly AttachedProperty<bool> IsVisibleProperty =
+        AvaloniaProperty.RegisterAttached<StyledElement, bool>("IsVisible", typeof(TrailingAssist), false);
+
+    public static void SetIsVisible(StyledElement obj, bool value) => obj.SetValue(IsVisibleProperty, value);
+
+    public static bool GetIsVisible(StyledElement obj) => obj.GetValue(IsVisibleProperty);
+
+    #endregion IsVisible
 }

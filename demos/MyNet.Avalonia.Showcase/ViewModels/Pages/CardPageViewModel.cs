@@ -15,6 +15,7 @@ using MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Definitions;
 using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Showcase.ViewModels.Playground.Options;
+using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.UI.Commands;
 using MyNet.UI.Notifications;
@@ -34,7 +35,8 @@ internal sealed class CardPageViewModel(ICommandFactory commands, INotificationP
         .AddEnumProperty<CardLayout, ListBoxEditor>(Card.CardLayoutProperty, configure: x => x.DisplayName(nameof(SettingsResources.Layout)))
         .AddProperty(Card.SubtitleProperty, configure: x => x.DisplayName(nameof(CardPageResources.Subtitle)).Of<TextBoxEditor>(y => y.WithValue("Subtitle with a very long text must be wrapped").WithRandomizeText(RandomizeText.Sentence)))
         .AddProperty(Card.HeaderProperty, configure: x => x.DisplayName(nameof(CardPageResources.Header)).Of<TextBoxEditor>())
-        .AddProperty(Card.ActionsProperty, configure: x => x.DisplayName(nameof(CardPageResources.Footer)).Of<TextBoxEditor>()),
+        .AddProperty(Card.ActionsProperty, configure: x => x.DisplayName(nameof(CardPageResources.Footer)).Of<TextBoxEditor>())
+        .AddProperty(TrailingAssist.IsVisibleProperty, configure: x => x.DisplayName(nameof(CardPageResources.ShowTrailing)).Of<ToggleSwitchEditor>()),
 
     new ControlThemeBuilder("Interactive")
         .WithContent(Card.TitleProperty, ContentProviderType.Text)
@@ -46,6 +48,7 @@ internal sealed class CardPageViewModel(ICommandFactory commands, INotificationP
         .AddProperty(Card.SubtitleProperty, configure: x => x.DisplayName(nameof(CardPageResources.Subtitle)).Of<TextBoxEditor>(y => y.WithValue("Subtitle with a very long text must be wrapped").WithRandomizeText(RandomizeText.Sentence)))
         .AddProperty(Card.HeaderProperty, configure: x => x.DisplayName(nameof(CardPageResources.Header)).Of<TextBoxEditor>())
         .AddProperty(Card.ActionsProperty, configure: x => x.DisplayName(nameof(CardPageResources.Footer)).Of<TextBoxEditor>())
+        .AddProperty(TrailingAssist.IsVisibleProperty, defaultValue: true, configure: x => x.DisplayName(nameof(CardPageResources.ShowTrailing)).Of<ToggleSwitchEditor>())
 ])
 {
     public ICommand SampleCommand { get; } = commands.Create(() => notificationPublisher.Publish(new MessageNotification(CardPageResources.ClickTitle, CardPageResources.ClickMessage, NotificationSeverity.Success)));

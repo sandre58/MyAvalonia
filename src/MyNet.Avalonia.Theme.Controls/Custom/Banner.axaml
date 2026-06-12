@@ -19,6 +19,7 @@
         <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
         <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Md}" />
         <Setter Property="my:LeadingAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Md}" />
+        <Setter Property="my:TrailingAssist.IsVisible" Value="True" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="LeadingTemplate">
             <Template>
@@ -60,7 +61,8 @@
                                     <Panel Name="PART_LeadingHost"
                                            Grid.Row="0"
                                            Grid.Column="0"
-                                           VerticalAlignment="Top"
+                                           Margin="{TemplateBinding (my:LeadingAssist.Margin)}"
+                                           VerticalAlignment="{TemplateBinding (my:LeadingAssist.VerticalAlignment)}"
                                            IsVisible="{Binding Leading, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
                                         <Border Name="PART_LeadingBackground"
                                                 CornerRadius="{TemplateBinding (my:LeadingAssist.CornerRadius)}"
@@ -68,8 +70,9 @@
                                         <ContentPresenter Name="PART_Leading"
                                                           Content="{TemplateBinding Leading}"
                                                           ContentTemplate="{TemplateBinding LeadingTemplate}"
-                                                          HorizontalAlignment="Center"
-                                                          VerticalAlignment="Center"
+                                                          Padding="{TemplateBinding (my:LeadingAssist.Padding)}"
+                                                          HorizontalAlignment="{TemplateBinding (my:LeadingAssist.HorizontalAlignment)}"
+                                                          VerticalAlignment="{TemplateBinding (my:LeadingAssist.VerticalAlignment)}"
                                                           my:IconAssist.PrimarySize="{TemplateBinding (my:IconAssist.PrimarySize)}" />
                                     </Panel>
 
@@ -94,13 +97,6 @@
                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
                                                       IsVisible="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
 
-                                    <ContentPresenter Grid.Row="1"
-                                                      Grid.Column="1"
-                                                      Content="{TemplateBinding Trailing}"
-                                                      ContentTemplate="{TemplateBinding TrailingTemplate}"
-                                                      VerticalAlignment="Top"
-                                                      IsVisible="False" />
-
                                     <ContentPresenter Name="PART_Trailing"
                                                       Grid.Row="0"
                                                       Grid.Column="2"
@@ -110,8 +106,17 @@
                                                       VerticalAlignment="{TemplateBinding (my:TrailingAssist.VerticalAlignment)}"
                                                       HorizontalAlignment="{TemplateBinding (my:TrailingAssist.HorizontalAlignment)}"
                                                       Content="{TemplateBinding Trailing}"
-                                                      ContentTemplate="{TemplateBinding TrailingTemplate}"
-                                                      IsVisible="{Binding Trailing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+                                                      ContentTemplate="{TemplateBinding TrailingTemplate}">
+                                        <ContentPresenter.IsVisible>
+                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                                <Binding Path="Trailing"
+                                                         RelativeSource="{RelativeSource TemplatedParent}"
+                                                         Converter="{x:Static my:NullConverter.IsPresent}" />
+                                                <Binding Path="(my:TrailingAssist.IsVisible)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </ContentPresenter.IsVisible>
+                                    </ContentPresenter>
                                 </Grid>
                             </DockPanel>
 
