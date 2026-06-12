@@ -5,7 +5,10 @@
 // -----------------------------------------------------------------------
 
 using System.Diagnostics.CodeAnalysis;
+using MyNet.Avalonia.Controls;
+using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.Extended.Controls;
+using MyNet.Avalonia.Theme.Assists;
 using MyNet.UI.Notifications.Models;
 
 namespace MyNet.Avalonia.Extended.Toasting;
@@ -31,7 +34,7 @@ public sealed class MessageNotificationToastContentContributor : IAvaloniaToastC
         {
             Header = message.Title,
             Content = message.Message,
-            Severity = message.Severity
+            Severity = MapSeverity(message.Severity)
         };
 
         if (width is > 0)
@@ -40,4 +43,13 @@ public sealed class MessageNotificationToastContentContributor : IAvaloniaToastC
         content = control;
         return true;
     }
+
+    private static Severity MapSeverity(NotificationSeverity severity) => severity switch
+    {
+        NotificationSeverity.Success => Severity.Success,
+        NotificationSeverity.Warning => Severity.Warning,
+        NotificationSeverity.Error => Severity.Error,
+        NotificationSeverity.Information => Severity.Information,
+        _ => Severity.Custom
+    };
 }

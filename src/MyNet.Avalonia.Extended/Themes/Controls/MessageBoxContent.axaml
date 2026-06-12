@@ -8,46 +8,46 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <ControlTemplate TargetType="my:MessageBoxContent">
-                <my:DialogContent Name="PART_Dialog"
-                                  HorizontalAlignment="Stretch"
-                                  VerticalAlignment="Stretch"
-                                  Header="{TemplateBinding Title}"
-                                  Content="{TemplateBinding Message}"
-                                  my:ThemeAssist.Role="Primary">
-                    <my:DialogContent.LeadingTemplate>
+                <my:DialogPanel Name="PART_Dialog"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Header="{TemplateBinding Title}"
+                                Content="{TemplateBinding Message}"
+                                my:ThemeAssist.Role="Primary">
+                    <my:DialogPanel.LeadingTemplate>
                         <DataTemplate DataType="icons:MaterialIconKind">
                             <my:MaterialIcon Kind="{Binding}" Classes="size-lg"
-                                             Foreground="{Binding $parent[my:DialogContent].(my:InteractionAssist.ActiveForeground)}" />
+                                             Foreground="{Binding $parent[my:DialogPanel].(my:InteractionAssist.ActiveForeground)}" />
                         </DataTemplate>
-                    </my:DialogContent.LeadingTemplate>
-                    <my:DialogContent.Actions>
+                    </my:DialogPanel.LeadingTemplate>
+                    <my:DialogPanel.Actions>
                         <StackPanel HorizontalAlignment="Right"
                                     Orientation="Horizontal"
                                     Spacing="{my:Spacing Sm}">
                             <Button Name="PART_CancelButton" Content="{my:Loc Cancel}" MinWidth="90" Classes="variant-text" />
                             <Button Name="PART_NoButton" Content="{my:Loc No}" MinWidth="90" Classes="variant-outlined" />
                             <Button Name="PART_OKButton" Content="{my:Loc Ok}" MinWidth="90"
-                                    my:ThemeAssist.Role="{Binding $parent[my:DialogContent].(my:ThemeAssist.Role)}" />
+                                    my:ThemeAssist.Role="{Binding $parent[my:DialogPanel].(my:ThemeAssist.Role)}" />
                             <Button Name="PART_YesButton" Content="{my:Loc Yes}" MinWidth="90"
-                                    my:ThemeAssist.Role="{Binding $parent[my:DialogContent].(my:ThemeAssist.Role)}" />
+                                    my:ThemeAssist.Role="{Binding $parent[my:DialogPanel].(my:ThemeAssist.Role)}" />
                         </StackPanel>
-                    </my:DialogContent.Actions>
-                </my:DialogContent>
+                    </my:DialogPanel.Actions>
+                </my:DialogPanel>
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^[Severity=Information] /template/ my|DialogContent#PART_Dialog">
+        <Style Selector="^[Severity=Information] /template/ my|DialogPanel#PART_Dialog">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.InformationVariantCircle}" />
         </Style>
-        <Style Selector="^[Severity=Success] /template/ my|DialogContent#PART_Dialog">
+        <Style Selector="^[Severity=Success] /template/ my|DialogPanel#PART_Dialog">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.CheckCircle}" />
             <Setter Property="my:ThemeAssist.Role" Value="Success" />
         </Style>
-        <Style Selector="^[Severity=Warning] /template/ my|DialogContent#PART_Dialog">
+        <Style Selector="^[Severity=Warning] /template/ my|DialogPanel#PART_Dialog">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.Alert}" />
             <Setter Property="my:ThemeAssist.Role" Value="Warning" />
         </Style>
-        <Style Selector="^[Severity=Error] /template/ my|DialogContent#PART_Dialog">
+        <Style Selector="^[Severity=Error] /template/ my|DialogPanel#PART_Dialog">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.AlertCircle}" />
             <Setter Property="my:ThemeAssist.Role" Value="Error" />
         </Style>

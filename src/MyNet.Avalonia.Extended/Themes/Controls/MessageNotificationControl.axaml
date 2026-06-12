@@ -1,52 +1,14 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:my="http://mynet.com/avalonia"
-                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
-    <ControlTheme x:Key="{x:Type my:MessageNotificationControl}" TargetType="{x:Type my:MessageNotificationControl}">
+                    xmlns:my="http://mynet.com/avalonia">
+
+    <ControlTheme x:Key="{x:Type my:MessageNotificationControl}"
+                  TargetType="{x:Type my:MessageNotificationControl}"
+                  BasedOn="{StaticResource {x:Type my:Banner}}">
+        <Setter Property="CanClose" Value="False" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Template">
-            <ControlTemplate TargetType="my:MessageNotificationControl">
-                <my:Card Name="PART_Card"
-                         Classes="variant-transparent"
-                         Padding="0"
-                         Subtitle="{TemplateBinding Content}"
-                         SubtitleTemplate="{TemplateBinding ContentTemplate}"
-                         SubtitleForeground="{TemplateBinding Foreground}"
-                         HorizontalAlignment="Stretch"
-                         VerticalAlignment="Stretch"
-                         Title="{TemplateBinding Header}"
-                         TitleTemplate="{TemplateBinding HeaderTemplate}"
-                         TitleForeground="{TemplateBinding Foreground}"
-                         TitleFontSize="{StaticResource MyNet.Font.Size.Lg}"
-                         FooterMargin="{my:Thickness Md, Top}"
-                         FooterPadding="0"
-                         SubtitleOpacity="1"
-                         my:ThemeAssist.Role="Primary">
-                    <my:Card.LeadingTemplate>
-                        <DataTemplate DataType="icons:MaterialIconKind">
-                            <my:MaterialIcon Kind="{Binding}" />
-                        </DataTemplate>
-                    </my:Card.LeadingTemplate>
-                </my:Card>
-            </ControlTemplate>
-        </Setter>
-
-        <Style Selector="^[Severity=Information] /template/ my|Card#PART_Card">
-            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.InformationVariantCircle}" />
-        </Style>
-
-        <Style Selector="^[Severity=Success] /template/ my|Card#PART_Card">
-            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.CheckCircle}" />
-        </Style>
-
-        <Style Selector="^[Severity=Warning] /template/ my|Card#PART_Card">
-            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.Alert}" />
-        </Style>
-
-        <Style Selector="^[Severity=Error] /template/ my|Card#PART_Card">
-            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.AlertCircle}" />
-        </Style>
+        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
     </ControlTheme>
-
 
 </ResourceDictionary>

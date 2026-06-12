@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <ControlTemplate x:Key="MyNet.DialogContent.Template" TargetType="my:DialogContent">
+    <ControlTemplate x:Key="MyNet.DialogPanel.Template" TargetType="my:DialogPanel">
         <Border Name="PART_Root"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -13,8 +13,16 @@
                         DockPanel.Dock="Top"
                         Padding="{TemplateBinding (my:HeaderAssist.Padding)}"
                         Margin="{TemplateBinding (my:HeaderAssist.Margin)}"
-                        Background="{TemplateBinding (my:HeaderAssist.Background)}"
-                        IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
+                        Background="{TemplateBinding (my:HeaderAssist.Background)}">
+                    <Border.IsVisible>
+                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                            <Binding Path="Header"
+                                     RelativeSource="{RelativeSource TemplatedParent}"
+                                     Converter="{x:Static my:NullConverter.IsPresent}" />
+                            <Binding Path="(my:HeaderAssist.IsVisible)"
+                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                        </MultiBinding>
+                    </Border.IsVisible>
                     <ContentPresenter Content="{TemplateBinding Header}"
                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
                                       FontFamily="{TemplateBinding FontFamily}"
@@ -28,7 +36,6 @@
                         DockPanel.Dock="Bottom"
                         Padding="{TemplateBinding (my:ActionsAssist.Padding)}"
                         Margin="{TemplateBinding (my:ActionsAssist.Margin)}"
-                        Background="{TemplateBinding (my:ActionsAssist.Background)}"
                         IsVisible="{Binding Actions, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
                     <ContentPresenter Content="{TemplateBinding Actions}"
                                       ContentTemplate="{TemplateBinding ActionsTemplate}"
@@ -52,7 +59,7 @@
         </Border>
     </ControlTemplate>
 
-    <ControlTheme x:Key="{x:Type my:DialogContent}" TargetType="my:DialogContent">
+    <ControlTheme x:Key="{x:Type my:DialogPanel}" TargetType="my:DialogPanel">
         <Setter Property="my:ThemeAssist.Category" Value="Surface" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
@@ -63,7 +70,6 @@
         <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
         <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
         <Setter Property="my:ActionsAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
-        <Setter Property="my:ActionsAssist.Background" Value="Transparent" />
         <Setter Property="my:ActionsAssist.HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
         <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
@@ -71,12 +77,12 @@
         <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
         <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
-        <Setter Property="Template" Value="{StaticResource MyNet.DialogContent.Template}" />
+        <Setter Property="Template" Value="{StaticResource MyNet.DialogPanel.Template}" />
         <Style Selector="^ /template/ ContentPresenter">
             <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type my:ContentDialog}" TargetType="my:ContentDialog" BasedOn="{StaticResource {x:Type my:DialogContent}}" />
+    <ControlTheme x:Key="{x:Type my:ContentDialog}" TargetType="my:ContentDialog" BasedOn="{StaticResource {x:Type my:DialogPanel}}" />
 
 </ResourceDictionary>

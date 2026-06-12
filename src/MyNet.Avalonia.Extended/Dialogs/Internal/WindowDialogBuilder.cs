@@ -8,6 +8,7 @@ using System;
 using Avalonia.Controls;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extended.Controls;
+using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Theme.Controls.Assists;
 using MyNet.UI;
 using MyNet.UI.Dialogs.ContentDialogs;
@@ -34,7 +35,7 @@ internal static class WindowDialogBuilder
 
         var windowOptions = MergeWindowOptions(GetWindowOptions(view as ContentDialog), request.WindowOptions);
         if (view is ContentDialog contentDialog)
-            contentDialog.ShowHeader = false;
+            HeaderAssist.SetIsVisible(contentDialog, false);
 
         ApplyWindowOptions(window, windowOptions, dialog, options);
 

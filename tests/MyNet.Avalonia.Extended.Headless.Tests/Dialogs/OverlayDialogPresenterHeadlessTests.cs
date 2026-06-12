@@ -13,10 +13,10 @@ using Avalonia.VisualTree;
 using FluentAssertions;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Extended.Controls;
-using MyNet.Avalonia.Extended.Controls.Dialogs.Overlay;
 using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.Avalonia.Extended.Dialogs.Internal;
 using MyNet.Avalonia.Extended.Dialogs.Presentation;
+using MyNet.Avalonia.Theme.Assists;
 
 namespace MyNet.Avalonia.Extended.Headless.Tests.Dialogs;
 
@@ -51,7 +51,7 @@ public class OverlayDialogPresenterHeadlessTests
 
         var shell = host.GetVisualDescendants().OfType<OverlayContentDialog>().Single();
         var content = host.GetVisualDescendants().OfType<ContentDialog>().Single();
-        content.ShowHeader.Should().BeFalse();
+        HeaderAssist.GetIsVisible(content).Should().BeFalse();
         await Dispatcher.UIThread.InvokeAsync(() => shell.CloseWithResult(true));
 
         var result = await presentTask.ConfigureAwait(true);
