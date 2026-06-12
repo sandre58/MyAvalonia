@@ -103,7 +103,7 @@
             <ContentPresenter Name="PART_Subtitle" Grid.Row="1" Grid.Column="1" Content="{Binding Subtitle}" />
             <Panel Name="PART_Trailing" Grid.Row="0" Grid.Column="2" />
             <Border Grid.Row="0" Grid.Column="0" Name="PART_Header" IsVisible="{Binding Header, Converter={x:Static ObjectConverters.IsNotNull}}" />
-            <Border Grid.Row="0" Grid.Column="0" Name="PART_Footer" IsVisible="{Binding Footer, Converter={x:Static ObjectConverters.IsNotNull}}" />
+            <Border Grid.Row="0" Grid.Column="0" Name="PART_Actions" IsVisible="{Binding Actions, Converter={x:Static ObjectConverters.IsNotNull}}" />
         </Grid>
     </DataTemplate>
 

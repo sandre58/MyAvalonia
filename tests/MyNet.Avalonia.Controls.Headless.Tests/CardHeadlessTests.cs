@@ -100,19 +100,19 @@ public class CardHeadlessTests
 
         var header = card.GetVisualDescendants().OfType<Border>().FirstOrDefault(b => b.Name == "PART_Header");
         header.Should().NotBeNull();
-        header.IsVisible.Should().BeFalse();
+        header!.IsVisible.Should().BeFalse();
     }
 
     [AvaloniaFact]
-    public void Footer_IsHiddenWhenNull()
+    public void Actions_IsHiddenWhenNull()
     {
         var card = new Card { Title = "Test" };
 
         HeadlessControlHost.Show(card, new(240, 80));
 
-        var footer = card.GetVisualDescendants().OfType<Border>().FirstOrDefault(b => b.Name == "PART_Footer");
-        footer.Should().NotBeNull();
-        footer.IsVisible.Should().BeFalse();
+        var actions = card.GetVisualDescendants().OfType<Border>().FirstOrDefault(b => b.Name == "PART_Actions");
+        actions.Should().NotBeNull();
+        actions!.IsVisible.Should().BeFalse();
     }
 
     private sealed class HeadlessCommand : System.Windows.Input.ICommand

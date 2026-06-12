@@ -66,7 +66,6 @@
                          Theme="{StaticResource MyNet.Theme.Card.Interactive}"
                          Title="Theme playground"
                          Subtitle="Open the theme page and tweak control classes live."
-                         ShowTrailing="True"
                          Command="{Binding SampleCommand}"
                          Leading="{my:MaterialIcon Kind=Palette}" />
                 
@@ -82,13 +81,13 @@
                 <my:Card Padding="{my:Thickness Lg}"
                          Title="With footer band"
                          Subtitle="Any content can appear in the footer zone.">
-                    <my:Card.Footer>
+                    <my:Card.Actions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                                     Spacing="{my:Spacing Sm}" Margin="{my:Thickness Sm}">
                             <Button Content="Cancel" Classes="kind-flat" />
                             <Button Content="Confirm" Classes="variant-solid" />
                         </StackPanel>
-                    </my:Card.Footer>
+                    </my:Card.Actions>
                 </my:Card>
                 
             </StackPanel>

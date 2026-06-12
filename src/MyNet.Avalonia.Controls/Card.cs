@@ -24,7 +24,7 @@ namespace MyNet.Avalonia.Controls;
 [PseudoClasses(PseudoClassName.Horizontal, PseudoClassName.Vertical, ":title-empty", ":subtitle-empty")]
 [TemplatePart(PartRoot, typeof(Border))]
 [TemplatePart(PartActionButton, typeof(Button))]
-public class Card : SurfaceControl
+public class Card : RegionControl
 {
     public const string PartRoot = "PART_Root";
     public const string PartActionButton = "PART_ActionButton";
