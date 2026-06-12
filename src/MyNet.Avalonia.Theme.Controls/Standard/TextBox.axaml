@@ -105,7 +105,7 @@
                                       ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto">
 
                                     <!-- Icon -->
-                                    <ContentControl x:Name="PART_Icon"
+                                    <ContentControl x:Name="PART_Adornment"
                                                     Grid.Column="0"
                                                     Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:ThicknessFromDoubleConverter.Right}}"
                                                     VerticalAlignment="Stretch"
@@ -229,12 +229,12 @@
         </Setter>
 
         <!-- Layout -->
-        <Style Selector="^ /template/ ContentControl#PART_Icon">
+        <Style Selector="^ /template/ ContentControl#PART_Adornment">
             <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Sm}" />
         </Style>
 
         <Style Selector="^.icon-right, ^.button-right">
-            <Style Selector="^ /template/ ContentControl#PART_Icon">
+            <Style Selector="^ /template/ ContentControl#PART_Adornment">
                 <Setter Property="Grid.Column" Value="5" />
                 <Setter Property="my:IconAssist.Spacing" Value="5" />
             </Style>
@@ -245,12 +245,12 @@
                     Value="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessAdjustConverter.AddLeftToRight}}" />
         </Style>
 
-        <Style Selector="^.icon-right /template/ ContentControl#PART_Icon">
+        <Style Selector="^.icon-right /template/ ContentControl#PART_Adornment">
             <Setter Property="Margin"
                     Value="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Left}}" />
         </Style>
 
-        <Style Selector="^.button-right /template/ ContentControl#PART_Icon">
+        <Style Selector="^.button-right /template/ ContentControl#PART_Adornment">
             <Setter Property="Margin" Value="0" />
         </Style>
 
@@ -336,7 +336,7 @@
         <Style Selector="^.size-sm">
             <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Sm}" />
 
-            <Style Selector="^ /template/ ContentControl#PART_Icon">
+            <Style Selector="^ /template/ ContentControl#PART_Adornment">
                 <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xs}" />
             </Style>
         </Style>
@@ -344,7 +344,7 @@
         <Style Selector="^.size-lg">
             <Setter Property="MinHeight" Value="{StaticResource MyNet.Height.Input.Lg}" />
 
-            <Style Selector="^ /template/ ContentControl#PART_Icon">
+            <Style Selector="^ /template/ ContentControl#PART_Adornment">
                 <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Lg}" />
             </Style>
         </Style>
@@ -390,7 +390,7 @@
                             <Grid Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto">
 
                                 <!-- Icon -->
-                                <ContentControl x:Name="PART_Icon"
+                                <ContentControl x:Name="PART_Adornment"
                                                 Grid.Column="0"
                                                 Margin="{TemplateBinding (my:IconAssist.Spacing), Converter={x:Static my:ThicknessFromDoubleConverter.Right}}"
                                                 VerticalAlignment="Center"

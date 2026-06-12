@@ -43,7 +43,7 @@
         <Setter Property="BorderBrush" Value="{my:ThemeRole BorderBrush}" />
         <Setter Property="Content">
             <Template>
-                <Arc Name="PART_Icon"
+                <Arc Name="PART_Adornment"
                      Width="24"
                      Height="24"
                      StartAngle="0"

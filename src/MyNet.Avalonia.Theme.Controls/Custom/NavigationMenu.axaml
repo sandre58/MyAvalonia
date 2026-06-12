@@ -202,7 +202,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!-- Icon -->
-                                <ContentPresenter Name="PART_IconPresenter"
+                                <ContentPresenter Name="PART_AdornmentPresenter"
                                                   HorizontalContentAlignment="Center"
                                                   Content="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                                   ContentTemplate="{Binding IconTemplate, RelativeSource={RelativeSource TemplatedParent}}">
@@ -355,7 +355,7 @@
                     <Setter Property="Foreground"
                             Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
-                <Style Selector="^ /template/ ContentPresenter#PART_IconPresenter">
+                <Style Selector="^ /template/ ContentPresenter#PART_AdornmentPresenter">
                     <Setter Property="Foreground"
                             Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
@@ -373,7 +373,7 @@
                     <Setter Property="Foreground"
                             Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
-                <Style Selector="^ /template/ ContentPresenter#PART_IconPresenter">
+                <Style Selector="^ /template/ ContentPresenter#PART_AdornmentPresenter">
                     <Setter Property="Foreground"
                             Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
@@ -496,7 +496,7 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Icon (aligned with menu items) -->
-                            <ContentPresenter Name="PART_IconPresenter"
+                            <ContentPresenter Name="PART_AdornmentPresenter"
                                               HorizontalContentAlignment="Center"
                                               VerticalContentAlignment="Center"
                                               Content="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"

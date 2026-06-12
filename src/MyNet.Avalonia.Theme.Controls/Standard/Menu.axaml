@@ -89,7 +89,7 @@
                                             Foreground="{TemplateBinding my:InteractionAssist.ActiveForeground}"
                                             IsVisible="False" />
 
-                            <Viewbox Name="PART_IconPresenter"
+                            <Viewbox Name="PART_AdornmentPresenter"
                                      Grid.Column="1"
                                      Margin="{my:Thickness Md, Horizontal}"
                                      HorizontalAlignment="Center"
@@ -169,7 +169,7 @@
             <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
         </Style>
 
-        <Style Selector="^:icon /template/ Viewbox#PART_IconPresenter">
+        <Style Selector="^:icon /template/ Viewbox#PART_AdornmentPresenter">
             <Setter Property="IsVisible" Value="True" />
         </Style>
         <Style Selector="^:empty /template/ PathIcon#PART_ExpandIcon">
