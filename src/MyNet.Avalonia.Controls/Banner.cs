@@ -14,6 +14,13 @@ using MyNet.Avalonia.Controls.Primitives;
 
 namespace MyNet.Avalonia.Controls;
 
+/// <summary>
+/// Inline contextual message (info, warning, success). Non-blocking and optionally dismissable.
+/// </summary>
+/// <remarks>
+/// <see cref="RegionControl.Header"/> is the primary heading; <see cref="ContentControl.Content"/> is the optional detail body.
+/// For page sections, use <see cref="HeaderedContentControl"/> instead.
+/// </remarks>
 [PseudoClasses(PseudoClassName.Error, PseudoClassName.Warning, PseudoClassName.Information, PseudoClassName.Success)]
 [TemplatePart(PartCloseButton, typeof(Button))]
 public class Banner : RegionControl

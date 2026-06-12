@@ -21,6 +21,11 @@ namespace MyNet.Avalonia.Controls;
 /// Supports horizontal and vertical layouts and full MyNet theming.
 /// Use the interactive control theme for command-driven cards.
 /// </summary>
+/// <remarks>
+/// <para><see cref="RegionControl.Header"/> on <see cref="Card"/> is an optional <strong>top chrome band</strong>,
+/// not the tile title. Use <see cref="Title"/> and <see cref="Subtitle"/> for the primary heading in the body grid
+/// (rendered via <see cref="TitleBlock"/> in the default theme).</para>
+/// </remarks>
 [PseudoClasses(PseudoClassName.Horizontal, PseudoClassName.Vertical, ":title-empty", ":subtitle-empty")]
 [TemplatePart(PartRoot, typeof(Border))]
 [TemplatePart(PartActionButton, typeof(Button))]
@@ -124,15 +129,6 @@ public class Card : RegionControl
     {
         get => GetValue(SubtitleForegroundProperty);
         set => SetValue(SubtitleForegroundProperty, value);
-    }
-
-    public static readonly StyledProperty<double> SubtitleOpacityProperty =
-        AvaloniaProperty.Register<Card, double>(nameof(SubtitleOpacity), 1);
-
-    public double SubtitleOpacity
-    {
-        get => GetValue(SubtitleOpacityProperty);
-        set => SetValue(SubtitleOpacityProperty, value);
     }
 
     #endregion

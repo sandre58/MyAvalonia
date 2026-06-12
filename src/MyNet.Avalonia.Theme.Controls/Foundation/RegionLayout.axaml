@@ -1,0 +1,42 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
+
+    <!-- Shared header band for RegionControl derivatives (Card, DialogPanel, …). -->
+    <ControlTemplate x:Key="MyNet.RegionLayout.HeaderBand" TargetType="ContentControl">
+        <Border Name="PART_Header"
+                Padding="{Binding (my:HeaderAssist.Padding), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                Margin="{Binding (my:HeaderAssist.Margin), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                Background="{Binding (my:HeaderAssist.Background), RelativeSource={RelativeSource AncestorType=my:RegionControl}}">
+            <Border.IsVisible>
+                <MultiBinding Converter="{x:Static BoolConverters.And}">
+                    <Binding Path="Header"
+                             RelativeSource="{RelativeSource AncestorType=my:RegionControl}"
+                             Converter="{x:Static my:NullConverter.IsPresent}" />
+                    <Binding Path="(my:HeaderAssist.IsVisible)"
+                             RelativeSource="{RelativeSource AncestorType=my:RegionControl}" />
+                </MultiBinding>
+            </Border.IsVisible>
+            <ContentPresenter Content="{Binding Header, RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              ContentTemplate="{Binding HeaderTemplate, RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              FontFamily="{Binding FontFamily, RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              FontSize="{Binding (my:HeaderAssist.FontSize), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              FontStyle="{Binding FontStyle, RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              FontWeight="{Binding (my:HeaderAssist.FontWeight), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              Foreground="{Binding (my:HeaderAssist.Foreground), RelativeSource={RelativeSource AncestorType=my:RegionControl}}" />
+        </Border>
+    </ControlTemplate>
+
+    <!-- Shared actions band for RegionControl derivatives. -->
+    <ControlTemplate x:Key="MyNet.RegionLayout.ActionsBand" TargetType="ContentControl">
+        <Border Name="PART_Actions"
+                Padding="{Binding (my:ActionsAssist.Padding), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                Margin="{Binding (my:ActionsAssist.Margin), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                IsVisible="{Binding Actions, RelativeSource={RelativeSource AncestorType=my:RegionControl}, Converter={x:Static my:NullConverter.IsPresent}}">
+            <ContentPresenter Content="{Binding Actions, RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              ContentTemplate="{Binding ActionsTemplate, RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              HorizontalContentAlignment="{Binding (my:ActionsAssist.HorizontalAlignment), RelativeSource={RelativeSource AncestorType=my:RegionControl}}" />
+        </Border>
+    </ControlTemplate>
+
+</ResourceDictionary>

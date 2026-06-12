@@ -13,10 +13,24 @@ namespace MyNet.Avalonia.Controls.Primitives;
 /// <summary>
 /// Base for content controls that expose semantic layout regions.
 /// </summary>
+/// <remarks>
+/// <para>Region semantics by derived control:</para>
+/// <list type="bullet">
+/// <item><description><see cref="Card"/>: <see cref="Header"/> = optional top chrome band;
+/// use <see cref="Card.Title"/> / <see cref="Card.Subtitle"/> for the tile heading in the body.</description></item>
+/// <item><description><see cref="Banner"/>, <see cref="DialogPanel"/>, <see cref="ContentDialog"/>:
+/// <see cref="Header"/> = primary heading text.</description></item>
+/// </list>
+/// <para>Style regions with attached assists (<c>HeaderAssist</c>, <c>LeadingAssist</c>, …).
+/// Toggle the header band with <c>HeaderAssist.IsVisible</c> (for example when an overlay shell shows the title).</para>
+/// </remarks>
 public abstract class RegionControl : ContentControl
 {
     #region Leading
 
+    /// <summary>
+    /// Gets or sets the leading region (icon, avatar, indicator).
+    /// </summary>
     public static readonly StyledProperty<object?> LeadingProperty =
         AvaloniaProperty.Register<RegionControl, object?>(nameof(Leading));
 
@@ -39,6 +53,9 @@ public abstract class RegionControl : ContentControl
 
     #region Header
 
+    /// <summary>
+    /// Gets or sets the header region. Meaning depends on the derived control — see <see cref="RegionControl"/> remarks.
+    /// </summary>
     public static readonly StyledProperty<object?> HeaderProperty =
         AvaloniaProperty.Register<RegionControl, object?>(nameof(Header));
 
@@ -61,6 +78,9 @@ public abstract class RegionControl : ContentControl
 
     #region Trailing
 
+    /// <summary>
+    /// Gets or sets the trailing region (chevron, menu, secondary action).
+    /// </summary>
     public static readonly StyledProperty<object?> TrailingProperty =
         AvaloniaProperty.Register<RegionControl, object?>(nameof(Trailing));
 
@@ -83,6 +103,9 @@ public abstract class RegionControl : ContentControl
 
     #region Actions
 
+    /// <summary>
+    /// Gets or sets the actions region (button row, toolbar).
+    /// </summary>
     public static readonly StyledProperty<object?> ActionsProperty =
         AvaloniaProperty.Register<RegionControl, object?>(nameof(Actions));
 

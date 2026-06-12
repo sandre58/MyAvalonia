@@ -11,30 +11,13 @@
                 my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}">
             <DockPanel>
 
-                <Border Name="PART_Header"
-                        DockPanel.Dock="Top"
-                        Padding="{TemplateBinding (my:HeaderAssist.Padding)}"
-                        Margin="{TemplateBinding (my:HeaderAssist.Margin)}"
-                        Background="{TemplateBinding (my:HeaderAssist.Background)}"
-                        IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
-                    <ContentPresenter Content="{TemplateBinding Header}"
-                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                      FontFamily="{TemplateBinding (my:HeaderAssist.FontFamily)}"
-                                      FontSize="{TemplateBinding (my:HeaderAssist.FontSize)}"
-                                      FontStyle="{TemplateBinding (my:HeaderAssist.FontStyle)}"
-                                      FontWeight="{TemplateBinding (my:HeaderAssist.FontWeight)}"
-                                      Foreground="{TemplateBinding (my:HeaderAssist.Foreground)}" />
-                </Border>
+                <ContentControl DockPanel.Dock="Top"
+                                Focusable="False"
+                                Template="{StaticResource MyNet.RegionLayout.HeaderBand}" />
 
-                <Border Name="PART_Actions"
-                        DockPanel.Dock="Bottom"
-                        Padding="{TemplateBinding (my:ActionsAssist.Padding)}"
-                        Margin="{TemplateBinding (my:ActionsAssist.Margin)}"
-                        IsVisible="{Binding Actions, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
-                    <ContentPresenter Content="{TemplateBinding Actions}"
-                                      ContentTemplate="{TemplateBinding ActionsTemplate}"
-                                      HorizontalContentAlignment="{TemplateBinding (my:ActionsAssist.HorizontalAlignment)}" />
-                </Border>
+                <ContentControl DockPanel.Dock="Bottom"
+                                Focusable="False"
+                                Template="{StaticResource MyNet.RegionLayout.ActionsBand}" />
 
                 <Grid Name="PART_BodyGrid"
                       Margin="{TemplateBinding Padding}"
@@ -57,32 +40,20 @@
                                           my:IconAssist.PrimarySize="{TemplateBinding (my:IconAssist.PrimarySize)}" />
                     </Panel>
 
-                    <ContentPresenter Name="PART_Title"
-                                      Grid.Row="0"
-                                      Grid.Column="1"
-                                      VerticalAlignment="Center"
-                                      Content="{TemplateBinding Title}"
-                                      ContentTemplate="{TemplateBinding TitleTemplate}"
-                                      FontFamily="{TemplateBinding FontFamily}"
-                                      FontSize="{TemplateBinding TitleFontSize}"
-                                      FontStyle="{TemplateBinding FontStyle}"
-                                      FontWeight="{TemplateBinding TitleFontWeight}"
-                                      Foreground="{TemplateBinding TitleForeground}"
-                                      IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
-
-                    <ContentPresenter Name="PART_Subtitle"
-                                      Grid.Row="1"
-                                      Grid.Column="1"
-                                      VerticalAlignment="Top"
-                                      Content="{TemplateBinding Subtitle}"
-                                      ContentTemplate="{TemplateBinding SubtitleTemplate}"
-                                      FontFamily="{TemplateBinding FontFamily}"
-                                      FontSize="{TemplateBinding SubtitleFontSize}"
-                                      FontStyle="{TemplateBinding FontStyle}"
-                                      FontWeight="{TemplateBinding FontWeight}"
-                                      Foreground="{TemplateBinding SubtitleForeground}"
-                                      Opacity="{TemplateBinding SubtitleOpacity}"
-                                      IsVisible="{Binding Subtitle, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+                    <my:TitleBlock Name="PART_TitleBlock"
+                                   Grid.Row="0"
+                                   Grid.Column="1"
+                                   Grid.RowSpan="2"
+                                   VerticalAlignment="Center"
+                                   Title="{TemplateBinding Title}"
+                                   TitleTemplate="{TemplateBinding TitleTemplate}"
+                                   TitleFontSize="{TemplateBinding TitleFontSize}"
+                                   TitleFontWeight="{TemplateBinding TitleFontWeight}"
+                                   TitleForeground="{TemplateBinding TitleForeground}"
+                                   Subtitle="{TemplateBinding Subtitle}"
+                                   SubtitleTemplate="{TemplateBinding SubtitleTemplate}"
+                                   SubtitleFontSize="{TemplateBinding SubtitleFontSize}"
+                                   SubtitleForeground="{TemplateBinding SubtitleForeground}" />
 
                     <ContentPresenter Name="PART_Content"
                                       Grid.Row="2"
@@ -138,30 +109,13 @@
                 Theme="{StaticResource {x:Type Button}}">
             <DockPanel>
 
-                <Border Name="PART_Header"
-                        DockPanel.Dock="Top"
-                        Padding="{TemplateBinding (my:HeaderAssist.Padding)}"
-                        Margin="{TemplateBinding (my:HeaderAssist.Margin)}"
-                        Background="{TemplateBinding (my:HeaderAssist.Background)}"
-                        IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
-                    <ContentPresenter Content="{TemplateBinding Header}"
-                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                      FontFamily="{TemplateBinding (my:HeaderAssist.FontFamily)}"
-                                      FontSize="{TemplateBinding (my:HeaderAssist.FontSize)}"
-                                      FontStyle="{TemplateBinding (my:HeaderAssist.FontStyle)}"
-                                      FontWeight="{TemplateBinding (my:HeaderAssist.FontWeight)}"
-                                      Foreground="{TemplateBinding (my:HeaderAssist.Foreground)}" />
-                </Border>
+                <ContentControl DockPanel.Dock="Top"
+                                Focusable="False"
+                                Template="{StaticResource MyNet.RegionLayout.HeaderBand}" />
 
-                <Border Name="PART_Actions"
-                        DockPanel.Dock="Bottom"
-                        Padding="{TemplateBinding (my:ActionsAssist.Padding)}"
-                        Margin="{TemplateBinding (my:ActionsAssist.Margin)}"
-                        IsVisible="{Binding Actions, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
-                    <ContentPresenter Content="{TemplateBinding Actions}"
-                                      ContentTemplate="{TemplateBinding ActionsTemplate}"
-                                      HorizontalContentAlignment="{TemplateBinding (my:ActionsAssist.HorizontalAlignment)}" />
-                </Border>
+                <ContentControl DockPanel.Dock="Bottom"
+                                Focusable="False"
+                                Template="{StaticResource MyNet.RegionLayout.ActionsBand}" />
 
                 <Grid Name="PART_BodyGrid"
                       Margin="{TemplateBinding Padding}"
@@ -186,32 +140,20 @@
                                           my:IconAssist.PrimarySize="{TemplateBinding (my:IconAssist.PrimarySize)}" />
                     </Panel>
 
-                    <ContentPresenter Name="PART_Title"
-                                      Grid.Row="0"
-                                      Grid.Column="1"
-                                      VerticalAlignment="Center"
-                                      Content="{TemplateBinding Title}"
-                                      ContentTemplate="{TemplateBinding TitleTemplate}"
-                                      FontFamily="{TemplateBinding FontFamily}"
-                                      FontSize="{TemplateBinding TitleFontSize}"
-                                      FontStyle="{TemplateBinding FontStyle}"
-                                      FontWeight="{TemplateBinding TitleFontWeight}"
-                                      Foreground="{TemplateBinding TitleForeground}"
-                                      IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
-
-                    <ContentPresenter Name="PART_Subtitle"
-                                      Grid.Row="1"
-                                      Grid.Column="1"
-                                      VerticalAlignment="Top"
-                                      Content="{TemplateBinding Subtitle}"
-                                      ContentTemplate="{TemplateBinding SubtitleTemplate}"
-                                      FontFamily="{TemplateBinding FontFamily}"
-                                      FontSize="{TemplateBinding SubtitleFontSize}"
-                                      FontStyle="{TemplateBinding FontStyle}"
-                                      FontWeight="{TemplateBinding FontWeight}"
-                                      Foreground="{TemplateBinding SubtitleForeground}"
-                                      Opacity="{TemplateBinding SubtitleOpacity}"
-                                      IsVisible="{Binding Subtitle, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+                    <my:TitleBlock Name="PART_TitleBlock"
+                                   Grid.Row="0"
+                                   Grid.Column="1"
+                                   Grid.RowSpan="2"
+                                   VerticalAlignment="Center"
+                                   Title="{TemplateBinding Title}"
+                                   TitleTemplate="{TemplateBinding TitleTemplate}"
+                                   TitleFontSize="{TemplateBinding TitleFontSize}"
+                                   TitleFontWeight="{TemplateBinding TitleFontWeight}"
+                                   TitleForeground="{TemplateBinding TitleForeground}"
+                                   Subtitle="{TemplateBinding Subtitle}"
+                                   SubtitleTemplate="{TemplateBinding SubtitleTemplate}"
+                                   SubtitleFontSize="{TemplateBinding SubtitleFontSize}"
+                                   SubtitleForeground="{TemplateBinding SubtitleForeground}" />
 
                     <ContentPresenter Name="PART_Content"
                                       Grid.Row="2"
@@ -274,8 +216,7 @@
         <Setter Property="TitleFontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
         <Setter Property="TitleForeground" Value="{my:Foreground}" />
         <Setter Property="SubtitleFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
-        <Setter Property="SubtitleForeground" Value="{my:Foreground}" />
-        <Setter Property="SubtitleOpacity" Value="{DynamicResource MyNet.Opacity.High}" />
+        <Setter Property="SubtitleForeground" Value="{my:Foreground Opacity=High}" />
 
         <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
         <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
@@ -294,11 +235,10 @@
         <Style Selector="^ /template/ ContentPresenter">
             <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
         </Style>
-        <Style Selector="^ /template/ ContentPresenter#PART_Subtitle">
+        <Style Selector="^ /template/ my|TitleBlock#PART_TitleBlock /template/ ContentPresenter#PART_Subtitle">
             <Setter Property="Margin" Value="{my:Thickness Xs, Top}" />
         </Style>
-        <Style Selector="^:title-empty /template/ ContentPresenter#PART_Subtitle">
-            <Setter Property="Grid.Row" Value="0" />
+        <Style Selector="^:title-empty /template/ my|TitleBlock#PART_TitleBlock /template/ ContentPresenter#PART_Subtitle">
             <Setter Property="Margin" Value="0" />
         </Style>
         <Style Selector="^ /template/ ContentPresenter#PART_Content">
@@ -320,9 +260,11 @@
         <Style Selector="^:vertical /template/ Border#PART_LeadingBackground">
             <Setter Property="IsVisible" Value="False" />
         </Style>
-        <Style Selector="^:vertical /template/ ContentPresenter#PART_Subtitle">
-            <Setter Property="Grid.Column" Value="0" />
-            <Setter Property="Grid.ColumnSpan" Value="2" />
+        <Style Selector="^:title-empty:subtitle-empty /template/ my|TitleBlock#PART_TitleBlock">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:vertical /template/ my|TitleBlock#PART_TitleBlock">
+            <Setter Property="Grid.RowSpan" Value="1" />
         </Style>
         <Style Selector="^ /template/ Panel#PART_LeadingHost ContentPresenter#PART_Leading">
             <Setter Property="Margin" Value="{my:Thickness Sm}" />

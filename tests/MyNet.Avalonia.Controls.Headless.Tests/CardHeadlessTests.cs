@@ -34,11 +34,10 @@ public class CardHeadlessTests
 
         HeadlessControlHost.Show(card, new(320, 120));
 
-        var title = card.GetVisualDescendants().OfType<ContentPresenter>().FirstOrDefault(x => x.Name == "PART_Title");
-        var subtitle = card.GetVisualDescendants().OfType<ContentPresenter>().FirstOrDefault(x => x.Name == "PART_Subtitle");
-
-        title.Should().NotBeNull();
-        subtitle.Should().NotBeNull();
+        var titleBlock = card.GetVisualDescendants().OfType<TitleBlock>().FirstOrDefault();
+        titleBlock.Should().NotBeNull();
+        titleBlock!.Title.Should().Be("Title");
+        titleBlock.Subtitle.Should().Be("Subtitle");
     }
 
     [AvaloniaFact]
@@ -68,11 +67,8 @@ public class CardHeadlessTests
         var leadingBackground = card.GetVisualDescendants().OfType<Border>().FirstOrDefault(b => b.Name == "PART_LeadingBackground");
         leadingBackground.Should().NotBeNull();
 
-        var title = card.GetVisualDescendants().OfType<ContentPresenter>().FirstOrDefault(x => x.Name == "PART_Title");
-        var subtitle = card.GetVisualDescendants().OfType<ContentPresenter>().FirstOrDefault(x => x.Name == "PART_Subtitle");
-
-        title.Should().NotBeNull();
-        subtitle.Should().NotBeNull();
+        var titleBlock = card.GetVisualDescendants().OfType<TitleBlock>().FirstOrDefault();
+        titleBlock.Should().NotBeNull();
     }
 
     [AvaloniaFact]
