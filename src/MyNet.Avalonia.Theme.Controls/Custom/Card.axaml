@@ -364,11 +364,15 @@
         <Setter Property="Focusable" Value="True" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="my:TrailingAssist.IsVisible" Value="True" />
         <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
         <Setter Property="Template" Value="{StaticResource MyNet.Card.Template.Interactive}" />
+        <Setter Property="Trailing">
+            <Template>
+                <my:MaterialIcon Classes="king-glyph" Kind="ChevronRight" />
+            </Template>
+        </Setter>
     </ControlTheme>
 
 </ResourceDictionary>

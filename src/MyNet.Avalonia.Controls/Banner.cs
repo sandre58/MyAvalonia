@@ -10,18 +10,20 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Controls.Enums;
+using MyNet.Avalonia.Controls.Primitives;
 
 namespace MyNet.Avalonia.Controls;
 
 [PseudoClasses(PseudoClassName.Error, PseudoClassName.Warning, PseudoClassName.Information, PseudoClassName.Success)]
 [TemplatePart(PartCloseButton, typeof(Button))]
-public class Banner : HeaderedContentControl
+public class Banner : RegionControl
 {
     public const string PartCloseButton = "PART_CloseButton";
 
     private Button? _closeButton;
 
-    public static readonly StyledProperty<bool> CanCloseProperty = AvaloniaProperty.Register<Banner, bool>(nameof(CanClose), true);
+    public static readonly StyledProperty<bool> CanCloseProperty =
+        AvaloniaProperty.Register<Banner, bool>(nameof(CanClose), true);
 
     public bool CanClose
     {
@@ -31,14 +33,9 @@ public class Banner : HeaderedContentControl
 
     #region Severity
 
-    /// <summary>
-    /// Provides Severity Property.
-    /// </summary>
-    public static readonly StyledProperty<Severity> SeverityProperty = AvaloniaProperty.Register<Banner, Severity>(nameof(Severity));
+    public static readonly StyledProperty<Severity> SeverityProperty =
+        AvaloniaProperty.Register<Banner, Severity>(nameof(Severity));
 
-    /// <summary>
-    /// Gets or sets the Severity property.
-    /// </summary>
     public Severity Severity
     {
         get => GetValue(SeverityProperty);
@@ -60,35 +57,16 @@ public class Banner : HeaderedContentControl
         base.OnPropertyChanged(change);
 
         if (change.Property == SeverityProperty)
-        {
             UpdateSeverity();
-        }
     }
 
     private void OnCloseClick(object? sender, RoutedEventArgs args) => IsVisible = false;
 
     private void UpdateSeverity()
     {
-        switch (Severity)
-        {
-            case Severity.Error:
-                PseudoClasses.Add(PseudoClassName.Error);
-                break;
-
-            case Severity.Information:
-                PseudoClasses.Add(PseudoClassName.Information);
-                break;
-
-            case Severity.Success:
-                PseudoClasses.Add(PseudoClassName.Success);
-                break;
-
-            case Severity.Warning:
-                PseudoClasses.Add(PseudoClassName.Warning);
-                break;
-            case Severity.Custom:
-            default:
-                break;
-        }
+        PseudoClasses.Set(PseudoClassName.Error, Severity == Severity.Error);
+        PseudoClasses.Set(PseudoClassName.Information, Severity == Severity.Information);
+        PseudoClasses.Set(PseudoClassName.Success, Severity == Severity.Success);
+        PseudoClasses.Set(PseudoClassName.Warning, Severity == Severity.Warning);
     }
 }

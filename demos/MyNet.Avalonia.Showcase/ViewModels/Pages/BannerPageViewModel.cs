@@ -25,7 +25,7 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
 internal sealed class BannerPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Banner), commands, [
     new ControlThemeBuilder()
-        .WithContent(HeaderedContentControl.HeaderProperty, ContentProviderType.Text)
+        .WithContent(Banner.HeaderProperty, ContentProviderType.Text)
         .AddShapes(CssClass.ShapeCircle)
         .AddStandardVariants()
         .AddVariants(CssClass.ShadowSurface)
