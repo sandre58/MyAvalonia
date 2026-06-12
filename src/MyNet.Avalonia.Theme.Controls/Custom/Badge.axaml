@@ -59,14 +59,14 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding CornerRadius}">
-                            <my:IconContentControl Name="IconContent"
+                            <my:AdornedContentControl Name="IconContent"
                                                    Padding="{TemplateBinding Padding}"
-                                                   Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                   IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                   IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                   IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                                   Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                                   AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                   AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                   AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                   ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                    HorizontalAlignment="Stretch"
                                                    VerticalAlignment="Stretch"
@@ -79,7 +79,7 @@
                                                    FontStyle="{TemplateBinding my:HeaderAssist.FontStyle}"
                                                    UseLayoutRounding="False">
                                 <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
-                            </my:IconContentControl>
+                            </my:AdornedContentControl>
                         </Border>
                     </Panel>
                 </Grid>
@@ -113,14 +113,14 @@
                                      Stroke="{TemplateBinding BorderBrush}"
                                      StrokeThickness="{TemplateBinding BorderThickness, Converter={x:Static my:ThicknessToDoubleConverter.Left}}" />
                             <Border Name="PART_Header">
-                                <my:IconContentControl Name="IconContent"
+                                <my:AdornedContentControl Name="IconContent"
                                                        Padding="{TemplateBinding Padding}"
-                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                                       Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                                       AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                       AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                       AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                       ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                        Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                        HorizontalAlignment="Stretch"
                                                        VerticalAlignment="Stretch"
@@ -133,7 +133,7 @@
                                                        FontStyle="{TemplateBinding my:HeaderAssist.FontStyle}"
                                                        UseLayoutRounding="False">
                                     <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
-                                </my:IconContentControl>
+                                </my:AdornedContentControl>
                             </Border>
                         </Panel>
                     </Grid>

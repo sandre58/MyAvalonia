@@ -97,14 +97,14 @@
                                                       Foreground="{TemplateBinding Foreground}"
                                                       IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}"
                                                       Theme="{StaticResource MyNet.Theme.ToggleButton.Embedded.TreeViewItem}" />
-                                        <my:IconContentControl Name="IconContent"
+                                        <my:AdornedContentControl Name="IconContent"
                                                                Grid.Column="1"
-                                                               Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                               IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                               IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                               IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                               LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                               PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                                               Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                                               AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                               AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                               AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                               AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                               ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                                Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
@@ -116,7 +116,7 @@
                                                                TextElement.FontWeight="{TemplateBinding FontWeight}"
                                                                UseLayoutRounding="False">
                                             <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
-                                        </my:IconContentControl>
+                                        </my:AdornedContentControl>
                                     </Grid>
                                 </my:Ripple>
                             </Border>
@@ -136,7 +136,7 @@
                 <Style Selector="^ /template/ ToggleButton#PART_ExpandCollapseChevron">
                     <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
-                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                <Style Selector="^ /template/ my|AdornedContentControl#IconContent">
                     <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
 
@@ -150,7 +150,7 @@
                 <Style Selector="^ /template/ ToggleButton#PART_ExpandCollapseChevron">
                     <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
-                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                <Style Selector="^ /template/ my|AdornedContentControl#IconContent">
                     <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
 

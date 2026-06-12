@@ -1,4 +1,4 @@
-<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.IconContentControlPage"
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.AdornedContentControlPage"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,7 @@
              xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
              xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
              xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
-             x:DataType="vm:IconContentControlPageViewModel"
+             x:DataType="vm:AdornedContentControlPageViewModel"
              x:Name="Root"
              Theme="{StaticResource {x:Type ContentPage}}"
              Header="{my:Display Title}"
@@ -21,16 +21,16 @@
 
         <v:ShowcaseView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
-                <my:IconContentControl behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
-                                       Content="Sample text"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
+                <my:AdornedContentControl behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                                          Content="Sample text"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
             </DataTemplate>
         </v:ShowcaseView.PlaygroundControlTemplate>
 
         <v:ShowcaseView.ThemeControlTemplate>
             <DataTemplate x:DataType="rendering:ControlStyle">
-                <my:IconContentControl behavior:PlaygroundBehavior.AttachStyle="{Binding}" Content="Sample text" />
+                <my:AdornedContentControl behavior:PlaygroundBehavior.AttachStyle="{Binding}" Content="Sample text" />
             </DataTemplate>
         </v:ShowcaseView.ThemeControlTemplate>
 

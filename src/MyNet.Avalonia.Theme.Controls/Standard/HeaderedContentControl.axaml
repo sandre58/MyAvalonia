@@ -72,13 +72,13 @@
                                     CornerRadius="{TemplateBinding my:HeaderAssist.CornerRadius}"
                                     IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
                                     Opacity="{TemplateBinding my:HeaderAssist.Opacity}">
-                                <my:IconContentControl Name="IconContent"
-                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                <my:AdornedContentControl Name="IconContent"
+                                                       Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                                       AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                       AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                       AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                       ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                        Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                        HorizontalAlignment="Stretch"
                                                        VerticalAlignment="Stretch"
@@ -92,7 +92,7 @@
                                                        UseLayoutRounding="False">
                                     <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}"
                                                       ContentTemplate="{TemplateBinding HeaderTemplate}" />
-                                </my:IconContentControl>
+                                </my:AdornedContentControl>
                             </Border>
                             <ContentPresenter Name="PART_ContentPresenter"
                                               Padding="{TemplateBinding Padding}"

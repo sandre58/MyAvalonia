@@ -1,0 +1,41 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
+
+    <ControlTheme x:Key="{x:Type my:TitleBlock}" TargetType="my:TitleBlock">
+        <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
+        <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H5}" />
+        <Setter Property="TitleFontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+        <Setter Property="TitleForeground" Value="{my:Foreground}" />
+        <Setter Property="SubtitleFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+        <Setter Property="SubtitleForeground" Value="{my:Foreground Opacity=High}" />
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:TitleBlock">
+                <StackPanel Spacing="{TemplateBinding Spacing}">
+                    <ContentPresenter Name="PART_Title"
+                                      Content="{TemplateBinding Title}"
+                                      ContentTemplate="{TemplateBinding TitleTemplate}"
+                                      FontSize="{TemplateBinding TitleFontSize}"
+                                      FontWeight="{TemplateBinding TitleFontWeight}"
+                                      Foreground="{TemplateBinding TitleForeground}"
+                                      IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+                    <ContentPresenter Name="PART_Subtitle"
+                                      Content="{TemplateBinding Subtitle}"
+                                      ContentTemplate="{TemplateBinding SubtitleTemplate}"
+                                      FontSize="{TemplateBinding SubtitleFontSize}"
+                                      Foreground="{TemplateBinding SubtitleForeground}"
+                                      IsVisible="{Binding Subtitle, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ /template/ ContentPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+        </Style>
+
+        <Style Selector="^:title-empty /template/ ContentPresenter#PART_Subtitle">
+            <Setter Property="Margin" Value="0" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

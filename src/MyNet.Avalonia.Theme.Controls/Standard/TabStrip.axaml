@@ -65,13 +65,13 @@
 
                         <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
                             <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
-                                <my:IconContentControl Name="IconContent"
-                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                <my:AdornedContentControl Name="IconContent"
+                                                       Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                                       AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                       AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                       AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                   ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                        Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                        Padding="{TemplateBinding Padding}"
                                                        HorizontalAlignment="Stretch"
@@ -86,7 +86,7 @@
                                                        TextElement.FontWeight="{TemplateBinding FontWeight}"
                                                        UseLayoutRounding="False">
                                     <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                                </my:IconContentControl>
+                                </my:AdornedContentControl>
                             </my:Ripple>
                         </Border>
                     </Panel>
@@ -108,7 +108,7 @@
 
             <!-- Hover -->
             <Style Selector="^:not(:disabled):pointerover">
-                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                <Style Selector="^ /template/ my|AdornedContentControl#IconContent">
                     <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.HoverForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
                 <Style Selector="^ /template/ Border#PART_MainBorder">
@@ -120,7 +120,7 @@
             </Style>
 
             <Style Selector="^:selected">
-                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                <Style Selector="^ /template/ my|AdornedContentControl#IconContent">
                     <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
                 <Style Selector="^ /template/ Border#PART_MainBorder">
@@ -493,13 +493,13 @@
                                    IsCentered="True"
                                    RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}"
                                    SizeMultiplier="2">
-                            <my:IconContentControl Name="IconContent"
-                                                   Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                   IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                   IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                   IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                            <my:AdornedContentControl Name="IconContent"
+                                                   Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                                   AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                   AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                   AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                   ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalAlignment="Stretch"
@@ -515,7 +515,7 @@
                                                    TextElement.FontWeight="{TemplateBinding FontWeight}"
                                                    UseLayoutRounding="False">
                                 <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                            </my:IconContentControl>
+                            </my:AdornedContentControl>
                         </my:Ripple>
                     </Border>
                 </ControlTemplate>
@@ -528,7 +528,7 @@
 
             <!-- Active -->
             <Style Selector="^:selected">
-                <Style Selector="^ /template/ my|IconContentControl#IconContent">
+                <Style Selector="^ /template/ my|AdornedContentControl#IconContent">
                     <Setter Property="Foreground" Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                 </Style>
                 <Setter Property="Opacity" Value="1" />

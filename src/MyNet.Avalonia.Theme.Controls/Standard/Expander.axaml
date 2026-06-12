@@ -43,13 +43,13 @@
                                             Opacity="{TemplateBinding my:HeaderAssist.Opacity}">
 
                                         <Grid ColumnDefinitions="*, Auto">
-                                            <my:IconContentControl Name="IconContent"
-                                                                   Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                                   IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                                   IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                                   IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                            <my:AdornedContentControl Name="IconContent"
+                                                                   Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                                                   AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                                   AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                                   AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                                   AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                                   ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                                    HorizontalAlignment="Stretch"
                                                                    VerticalAlignment="Stretch"
@@ -64,7 +64,7 @@
                                                 <ContentPresenter Name="PART_HeaderPresenter"
                                                                   Content="{TemplateBinding Header}"
                                                                   ContentTemplate="{TemplateBinding HeaderTemplate}" />
-                                            </my:IconContentControl>
+                                            </my:AdornedContentControl>
 
                                             <PathIcon Name="PART_ExpanderIcon"
                                                       Grid.Column="1"
@@ -248,13 +248,13 @@
                                       my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}">
 
                             <Grid ColumnDefinitions="*, Auto">
-                                <my:IconContentControl Name="IconContent"
-                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                <my:AdornedContentControl Name="IconContent"
+                                                       Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                                       AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                       AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                       AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                       ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                        Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                        HorizontalAlignment="Stretch"
                                                        VerticalAlignment="Stretch"
@@ -267,7 +267,7 @@
                                                        UseLayoutRounding="False">
                                     <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}"
                                                       ContentTemplate="{TemplateBinding HeaderTemplate}" />
-                                </my:IconContentControl>
+                                </my:AdornedContentControl>
 
                                 <PathIcon Name="PART_ExpanderIcon"
                                           Grid.Column="1"

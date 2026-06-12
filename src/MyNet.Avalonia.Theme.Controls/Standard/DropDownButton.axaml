@@ -39,13 +39,13 @@
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
                         <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
                             <Grid Name="PART_Grid" ColumnDefinitions="*,Auto">
-                                <my:IconContentControl Name="IconContent"
-                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                <my:AdornedContentControl Name="IconContent"
+                                                       Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                                       AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                       AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                       AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                       ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                        Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                        Padding="{TemplateBinding Padding}"
                                                        HorizontalAlignment="Stretch"
@@ -61,7 +61,7 @@
                                                        UseLayoutRounding="False">
                                     <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
                                                       ContentTemplate="{TemplateBinding ContentTemplate}" />
-                                </my:IconContentControl>
+                                </my:AdornedContentControl>
                                 <PathIcon Name="PART_ExpanderIcon"
                                           Grid.Column="1"
                                           Margin="4 0 8 0"
@@ -105,7 +105,7 @@
 
         <!-- IsOpen -->
         <Style Selector="^:flyout-open">
-            <Style Selector="^ /template/ my|IconContentControl#IconContent">
+            <Style Selector="^ /template/ my|AdornedContentControl#IconContent">
                 <Setter Property="Foreground"
                         Value="{my:ThemeBrush (my:InteractionAssist.ActiveForeground), RelativeSource={RelativeSource Mode=TemplatedParent}}" />
             </Style>
@@ -139,7 +139,7 @@
                 <Setter Property="Grid.Column" Value="0" />
                 <Setter Property="Margin" Value="8 0 4 0" />
             </Style>
-            <Style Selector="^ /template/ my|IconContentControl#IconContent">
+            <Style Selector="^ /template/ my|AdornedContentControl#IconContent">
                 <Setter Property="Grid.Row" Value="0" />
                 <Setter Property="Grid.Column" Value="1" />
             </Style>
@@ -154,7 +154,7 @@
                 <Setter Property="Grid.Column" Value="1" />
                 <Setter Property="Margin" Value="4 0 8 0" />
             </Style>
-            <Style Selector="^ /template/ my|IconContentControl#IconContent">
+            <Style Selector="^ /template/ my|AdornedContentControl#IconContent">
                 <Setter Property="Grid.Row" Value="0" />
                 <Setter Property="Grid.Column" Value="0" />
             </Style>
@@ -169,7 +169,7 @@
                 <Setter Property="Grid.Column" Value="0" />
                 <Setter Property="Margin" Value="0 4 0 4" />
             </Style>
-            <Style Selector="^ /template/ my|IconContentControl#IconContent">
+            <Style Selector="^ /template/ my|AdornedContentControl#IconContent">
                 <Setter Property="Grid.Row" Value="1" />
                 <Setter Property="Grid.Column" Value="0" />
             </Style>
@@ -184,7 +184,7 @@
                 <Setter Property="Grid.Column" Value="0" />
                 <Setter Property="Margin" Value="0 4 0 4" />
             </Style>
-            <Style Selector="^ /template/ my|IconContentControl#IconContent">
+            <Style Selector="^ /template/ my|AdornedContentControl#IconContent">
                 <Setter Property="Grid.Row" Value="0" />
                 <Setter Property="Grid.Column" Value="0" />
             </Style>
@@ -252,13 +252,13 @@
                     <Border ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Round}">
                         <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
                             <Grid Name="PART_Grid" ColumnDefinitions="*,Auto">
-                                <my:IconContentControl Name="IconContent"
-                                                       Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                       IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                       IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                       IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                       LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                       PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                <my:AdornedContentControl Name="IconContent"
+                                                       Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                                       AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                       AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                       AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                       AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                       ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                        Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                        Padding="{TemplateBinding Padding}"
                                                        HorizontalAlignment="Stretch"
@@ -274,7 +274,7 @@
                                                        UseLayoutRounding="False">
                                     <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
                                                       ContentTemplate="{TemplateBinding ContentTemplate}" />
-                                </my:IconContentControl>
+                                </my:AdornedContentControl>
                                 <PathIcon Name="PART_ExpanderIcon"
                                           Grid.Column="1"
                                           HorizontalAlignment="Center"

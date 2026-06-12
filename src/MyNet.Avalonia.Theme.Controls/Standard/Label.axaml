@@ -30,13 +30,13 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
-                    <my:IconContentControl Name="IconContent"
-                                           Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                           IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                           IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                           IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                           LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                           PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                    <my:AdornedContentControl Name="IconContent"
+                                           Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                           AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                           AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                           AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                           AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                           ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                            Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                            Padding="{TemplateBinding Padding}"
                                            HorizontalAlignment="Stretch"
@@ -51,7 +51,7 @@
                                            TextElement.FontWeight="{TemplateBinding FontWeight}"
                                            UseLayoutRounding="False">
                         <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                    </my:IconContentControl>
+                    </my:AdornedContentControl>
                 </Border>
             </ControlTemplate>
         </Setter>

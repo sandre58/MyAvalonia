@@ -1,56 +1,56 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
-    <ControlTheme x:Key="{x:Type my:IconContentControl}" TargetType="my:IconContentControl">
+
+    <ControlTheme x:Key="{x:Type my:AdornedContentControl}" TargetType="my:AdornedContentControl">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Icon}" />
 
         <Setter Property="Template">
-            <ControlTemplate TargetType="my:IconContentControl">
+            <ControlTemplate TargetType="my:AdornedContentControl">
 
                 <DockPanel LastChildFill="True"
                            Margin="{TemplateBinding Padding}"
                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                    <ContentPresenter Name="PART_Icon"
-                                      DockPanel.Dock="{TemplateBinding IconPosition, Converter={x:Static my:PositionToDockConverter.Default}}"
+                    <ContentPresenter Name="PART_Adornment"
+                                      DockPanel.Dock="{TemplateBinding AdornmentPosition, Converter={x:Static my:PositionToDockConverter.Default}}"
                                       my:IconAssist.Role="Label"
-                                      my:IconAssist.Size="{TemplateBinding LabelIconSize}"
-                                      Height="{TemplateBinding LabelIconSize}"
-                                      Width="{TemplateBinding LabelIconSize}"
+                                      my:IconAssist.Size="{TemplateBinding AdornmentSize}"
+                                      Height="{TemplateBinding AdornmentSize}"
+                                      Width="{TemplateBinding AdornmentSize}"
                                       HorizontalContentAlignment="Center"
                                       VerticalContentAlignment="Center"
-                                      Content="{TemplateBinding Icon}"
-                                      ContentTemplate="{TemplateBinding IconTemplate}"
-                                      Opacity="{TemplateBinding IconOpacity}"
+                                      Content="{TemplateBinding Adornment}"
+                                      ContentTemplate="{TemplateBinding AdornmentTemplate}"
+                                      Opacity="{TemplateBinding AdornmentOpacity}"
                                       RecognizesAccessKey="True">
                         <ContentPresenter.IsVisible>
                             <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="Icon" RelativeSource="{RelativeSource TemplatedParent}" />
-                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="IconTemplate" RelativeSource="{RelativeSource TemplatedParent}" />
+                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="Adornment" RelativeSource="{RelativeSource TemplatedParent}" />
+                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="AdornmentTemplate" RelativeSource="{RelativeSource TemplatedParent}" />
                             </MultiBinding>
                         </ContentPresenter.IsVisible>
                     </ContentPresenter>
                     <ContentPresenter Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
                                       RecognizesAccessKey="True"
-                                      my:IconAssist.Size="{TemplateBinding PrimaryIconSize}"
+                                      my:IconAssist.Size="{TemplateBinding ContentIconSize}"
                                       my:IconAssist.Role="Primary" />
                 </DockPanel>
             </ControlTemplate>
         </Setter>
 
-        <!-- Layout -->
-        <Style Selector="^[IconPosition=Left] /template/ ContentPresenter#PART_Icon">
+        <Style Selector="^[AdornmentPosition=Left] /template/ ContentPresenter#PART_Adornment">
             <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Right}}"/>
         </Style>
-        <Style Selector="^[IconPosition=Right] /template/ ContentPresenter#PART_Icon">
+        <Style Selector="^[AdornmentPosition=Right] /template/ ContentPresenter#PART_Adornment">
             <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Left}}"/>
         </Style>
-        <Style Selector="^[IconPosition=Bottom] /template/ ContentPresenter#PART_Icon">
+        <Style Selector="^[AdornmentPosition=Bottom] /template/ ContentPresenter#PART_Adornment">
             <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Top}}"/>
         </Style>
-        <Style Selector="^[IconPosition=Top] /template/ ContentPresenter#PART_Icon">
+        <Style Selector="^[AdornmentPosition=Top] /template/ ContentPresenter#PART_Adornment">
             <Setter Property="Margin" Value="{Binding Spacing, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:ThicknessFromDoubleConverter.Bottom}}"/>
         </Style>
     </ControlTheme>

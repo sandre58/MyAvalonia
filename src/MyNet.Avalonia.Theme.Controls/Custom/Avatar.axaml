@@ -54,12 +54,12 @@
                     </Border>
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
                         <Panel>
-                            <my:IconContentControl Name="IconContent"
-                                                   Icon="{TemplateBinding (my:IconAssist.Icon)}"
-                                                   IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                   IconTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
-                                                   IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                            <my:AdornedContentControl Name="IconContent"
+                                                   Adornment="{TemplateBinding (my:IconAssist.Icon)}"
+                                                   AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                   AdornmentTemplate="{TemplateBinding (my:IconAssist.IconTemplate)}"
+                                                   AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalAlignment="Stretch"
@@ -75,7 +75,7 @@
                                                    UseLayoutRounding="False"
                                                    IsVisible="{TemplateBinding Source, Converter={x:Static ObjectConverters.IsNull}}">
                                 <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                            </my:IconContentControl>
+                            </my:AdornedContentControl>
                             <Image Source="{TemplateBinding Source}" Stretch="{TemplateBinding Stretch}" />
                         </Panel>
                     </Border>

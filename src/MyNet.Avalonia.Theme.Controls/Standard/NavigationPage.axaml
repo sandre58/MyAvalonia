@@ -86,15 +86,15 @@
                                     Classes="variant-outlined"
                                     Theme="{StaticResource MyNet.Theme.Button.Rounded}" />
 
-                            <my:IconContentControl Name="IconContent"
+                            <my:AdornedContentControl Name="IconContent"
                                                    Grid.Column="1"
                                                    Margin="{my:Thickness Md, Right}"
-                                                   Icon="{Binding CurrentPage.(my:IconAssist.Icon), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}"
-                                                   IconOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
-                                                   IconTemplate="{Binding (my:IconAssist.IconTemplate), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}"
-                                                   IconPosition="{TemplateBinding (my:IconAssist.Alignment)}"
-                                                   LabelIconSize="{TemplateBinding (my:IconAssist.LabelSize)}"
-                                                   PrimaryIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
+                                                   Adornment="{Binding CurrentPage.(my:IconAssist.Icon), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}"
+                                                   AdornmentOpacity="{TemplateBinding (my:IconAssist.Opacity)}"
+                                                   AdornmentTemplate="{Binding (my:IconAssist.IconTemplate), RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}"
+                                                   AdornmentPosition="{TemplateBinding (my:IconAssist.Alignment)}"
+                                                   AdornmentSize="{TemplateBinding (my:IconAssist.LabelSize)}"
+                                                   ContentIconSize="{TemplateBinding (my:IconAssist.PrimarySize)}"
                                                    Spacing="{TemplateBinding (my:IconAssist.Spacing)}"
                                                    HorizontalAlignment="Stretch"
                                                    VerticalAlignment="Center"
@@ -107,7 +107,7 @@
                                                    Foreground="{TemplateBinding my:HeaderAssist.Foreground}"
                                                    UseLayoutRounding="False">
                                 <ContentPresenter Name="PART_Header" Content="{Binding CurrentPage.Header, RelativeSource={RelativeSource TemplatedParent}, FallbackValue={x:Null}}" />
-                            </my:IconContentControl>
+                            </my:AdornedContentControl>
 
                             <ContentPresenter Name="PART_TopCommandBar"
                                               Grid.Column="2"

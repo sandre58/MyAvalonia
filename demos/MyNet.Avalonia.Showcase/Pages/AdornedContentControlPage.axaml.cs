@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="IconContentControlPage.axaml.cs" company="Stéphane ANDRE">
+// <copyright file="AdornedContentControlPage.axaml.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -8,7 +8,7 @@ using Avalonia.Controls;
 
 namespace MyNet.Avalonia.Showcase.Pages;
 
-internal sealed partial class IconContentControlPage : ContentPage
+internal sealed partial class AdornedContentControlPage : ContentPage
 {
-    public IconContentControlPage() => InitializeComponent();
+    public AdornedContentControlPage() => InitializeComponent();
 }
