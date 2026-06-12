@@ -17,7 +17,7 @@ using MyNet.Avalonia.Controls.Primitives;
 namespace MyNet.Avalonia.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-public class ContentDialog : FullContentControl
+public class ContentDialog : RegionControl
 {
     static ContentDialog()
     {

@@ -256,7 +256,7 @@
         <my:Banner my:FormItem.NoLabel="True"
                 my:ThemeAssist.Role="Information"
                 Header="{my:Loc ImportantInformation}"
-                my:IconAssist.Icon="📌"
+                Leading="📌"
                 CanClose="False">
             <StackPanel Spacing="10">
                 <TextBlock TextWrapping="Wrap">

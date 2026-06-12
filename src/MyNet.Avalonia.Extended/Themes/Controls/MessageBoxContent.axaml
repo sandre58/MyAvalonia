@@ -8,75 +8,49 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <ControlTemplate TargetType="my:MessageBoxContent">
-
-                <my:Card Name="PART_Card"
-                         Classes="variant-transparent"
-                         Padding="0"
-                         Subtitle="{TemplateBinding Message}"
-                         HorizontalAlignment="Stretch"
-                         VerticalAlignment="Stretch"
-                         Title="{TemplateBinding Title}"
-                         FooterMargin="{my:Thickness Md, Top}"
-                         FooterPadding="0"
-                         SubtitleOpacity="1"
-                         my:ThemeAssist.Role="Primary">
-                    <my:Card.LeadingTemplate>
+                <my:DialogContent Name="PART_Dialog"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  Header="{TemplateBinding Title}"
+                                  Content="{TemplateBinding Message}"
+                                  my:ThemeAssist.Role="Primary">
+                    <my:DialogContent.LeadingTemplate>
                         <DataTemplate DataType="icons:MaterialIconKind">
                             <my:MaterialIcon Kind="{Binding}" Classes="size-lg"
-                                             Foreground="{Binding $parent[my:Card].(my:InteractionAssist.ActiveForeground)}" />
+                                             Foreground="{Binding $parent[my:DialogContent].(my:InteractionAssist.ActiveForeground)}" />
                         </DataTemplate>
-                    </my:Card.LeadingTemplate>
-                    <my:Card.Footer>
+                    </my:DialogContent.LeadingTemplate>
+                    <my:DialogContent.Actions>
                         <StackPanel HorizontalAlignment="Right"
                                     Orientation="Horizontal"
                                     Spacing="{my:Spacing Sm}">
-
-                            <Button Name="PART_CancelButton" Content="{my:Loc Cancel}"
-                                    MinWidth="90"
-                                    Classes="variant-text" />
-                            <Button Name="PART_NoButton" Content="{my:Loc No}"
-                                    MinWidth="90"
-                                    Classes="variant-outlined" />
-                            <Button Name="PART_OKButton" Content="{my:Loc Ok}"
-                                    MinWidth="90"
-                                    my:ThemeAssist.Role="{Binding $parent[my:Card].(my:ThemeAssist.Role)}" />
-                            <Button Name="PART_YesButton" Content="{my:Loc Yes}"
-                                    MinWidth="90"
-                                    my:ThemeAssist.Role="{Binding $parent[my:Card].(my:ThemeAssist.Role)}" />
+                            <Button Name="PART_CancelButton" Content="{my:Loc Cancel}" MinWidth="90" Classes="variant-text" />
+                            <Button Name="PART_NoButton" Content="{my:Loc No}" MinWidth="90" Classes="variant-outlined" />
+                            <Button Name="PART_OKButton" Content="{my:Loc Ok}" MinWidth="90"
+                                    my:ThemeAssist.Role="{Binding $parent[my:DialogContent].(my:ThemeAssist.Role)}" />
+                            <Button Name="PART_YesButton" Content="{my:Loc Yes}" MinWidth="90"
+                                    my:ThemeAssist.Role="{Binding $parent[my:DialogContent].(my:ThemeAssist.Role)}" />
                         </StackPanel>
-                    </my:Card.Footer>
-                </my:Card>
-
+                    </my:DialogContent.Actions>
+                </my:DialogContent>
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^[Severity=Information] /template/ my|Card#PART_Card">
-            <Setter Property="LeadingBackground" Value="{my:Theme Information, Opacity=Overlay}" />
-            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Information}" />
+        <Style Selector="^[Severity=Information] /template/ my|DialogContent#PART_Dialog">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.InformationVariantCircle}" />
         </Style>
-
-        <Style Selector="^[Severity=Success] /template/ my|Card#PART_Card">
-            <Setter Property="LeadingBackground" Value="{my:Theme Success, Opacity=Overlay}" />
-            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Success}" />
+        <Style Selector="^[Severity=Success] /template/ my|DialogContent#PART_Dialog">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.CheckCircle}" />
             <Setter Property="my:ThemeAssist.Role" Value="Success" />
         </Style>
-
-        <Style Selector="^[Severity=Warning] /template/ my|Card#PART_Card">
-            <Setter Property="LeadingBackground" Value="{my:Theme Warning, Opacity=Overlay}" />
-            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Warning}" />
+        <Style Selector="^[Severity=Warning] /template/ my|DialogContent#PART_Dialog">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.Alert}" />
             <Setter Property="my:ThemeAssist.Role" Value="Warning" />
         </Style>
-
-        <Style Selector="^[Severity=Error] /template/ my|Card#PART_Card">
-            <Setter Property="LeadingBackground" Value="{my:Theme Error, Opacity=Overlay}" />
-            <Setter Property="my:InteractionAssist.ActiveForeground" Value="{my:Theme Error}" />
+        <Style Selector="^[Severity=Error] /template/ my|DialogContent#PART_Dialog">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.AlertCircle}" />
             <Setter Property="my:ThemeAssist.Role" Value="Error" />
         </Style>
-
     </ControlTheme>
 
 </ResourceDictionary>

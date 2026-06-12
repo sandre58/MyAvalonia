@@ -13,7 +13,7 @@
                   Header="User Registration"
                   Theme="{StaticResource {x:Type my:ContentDialog}}"
                   mc:Ignorable="d">
-    <my:ContentDialog.Footer>
+    <my:ContentDialog.Actions>
         <StackPanel HorizontalAlignment="Right"
                     Orientation="Horizontal"
                     DockPanel.Dock="Bottom"
@@ -29,7 +29,7 @@
                     my:ThemeAssist.Role="Primary"
                     IsDefault="True" />
         </StackPanel>
-    </my:ContentDialog.Footer>
+    </my:ContentDialog.Actions>
     <DockPanel>
         
         <!-- Status -->

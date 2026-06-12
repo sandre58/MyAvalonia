@@ -2,107 +2,81 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <ControlTheme x:Key="{x:Type my:ContentDialog}" TargetType="my:ContentDialog">
+    <ControlTemplate x:Key="MyNet.DialogContent.Template" TargetType="my:DialogContent">
+        <Border Name="PART_Root"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}">
+            <DockPanel>
+                <Border Name="PART_Header"
+                        DockPanel.Dock="Top"
+                        Padding="{TemplateBinding (my:HeaderAssist.Padding)}"
+                        Margin="{TemplateBinding (my:HeaderAssist.Margin)}"
+                        Background="{TemplateBinding (my:HeaderAssist.Background)}"
+                        IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
+                    <ContentPresenter Content="{TemplateBinding Header}"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                      FontFamily="{TemplateBinding FontFamily}"
+                                      FontSize="{TemplateBinding (my:HeaderAssist.FontSize)}"
+                                      FontStyle="{TemplateBinding FontStyle}"
+                                      FontWeight="{TemplateBinding (my:HeaderAssist.FontWeight)}"
+                                      Foreground="{TemplateBinding (my:HeaderAssist.Foreground)}" />
+                </Border>
 
+                <Border Name="PART_Actions"
+                        DockPanel.Dock="Bottom"
+                        Padding="{TemplateBinding (my:ActionsAssist.Padding)}"
+                        Margin="{TemplateBinding (my:ActionsAssist.Margin)}"
+                        Background="{TemplateBinding (my:ActionsAssist.Background)}"
+                        IsVisible="{Binding Actions, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
+                    <ContentPresenter Content="{TemplateBinding Actions}"
+                                      ContentTemplate="{TemplateBinding ActionsTemplate}"
+                                      HorizontalContentAlignment="{TemplateBinding (my:ActionsAssist.HorizontalAlignment)}" />
+                </Border>
+
+                <Grid ColumnDefinitions="Auto,*">
+                    <ContentPresenter Grid.Column="0"
+                                      Content="{TemplateBinding Leading}"
+                                      ContentTemplate="{TemplateBinding LeadingTemplate}"
+                                      VerticalAlignment="Top"
+                                      Margin="{my:Thickness Md, Right}"
+                                      IsVisible="{Binding Leading, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+                    <ContentPresenter Name="PART_Content"
+                                      Grid.Column="1"
+                                      Content="{TemplateBinding Content}"
+                                      Padding="{TemplateBinding Padding}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                </Grid>
+            </DockPanel>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTheme x:Key="{x:Type my:DialogContent}" TargetType="my:DialogContent">
         <Setter Property="my:ThemeAssist.Category" Value="Surface" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
         <Setter Property="Focusable" Value="False" />
-
-        <Setter Property="HeaderPadding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
-        <Setter Property="HeaderMargin" Value="0" />
-        <Setter Property="HeaderBackground" Value="{my:ThemeContext Surface.Level0}" />
-        <Setter Property="HeaderFontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
-        <Setter Property="HeaderFontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
-        <Setter Property="HeaderForeground" Value="{my:Foreground}" />
-
-        <Setter Property="FooterPadding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
-        <Setter Property="FooterMargin" Value="0" />
-        <Setter Property="FooterBackground" Value="Transparent" />
-        <Setter Property="FooterFontSize" Value="{StaticResource MyNet.Font.Size}" />
-        <Setter Property="FooterFontWeight" Value="{StaticResource MyNet.Font.Weight}" />
-        <Setter Property="FooterForeground" Value="{my:Foreground}" />
-
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="Transparent" />
-        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="Transparent" />
-        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
+        <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeContext Surface.Level0}" />
+        <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
+        <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
+        <Setter Property="my:ActionsAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
+        <Setter Property="my:ActionsAssist.Background" Value="Transparent" />
+        <Setter Property="my:ActionsAssist.HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
         <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
         <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-        <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
-        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
         <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
         <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
-
-        <Setter Property="Template">
-            <ControlTemplate TargetType="my:ContentDialog">
-                <Border Name="PART_Root"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
-                    <DockPanel>
-
-                        <Border Name="PART_Header"
-                                DockPanel.Dock="Top"
-                                Padding="{TemplateBinding HeaderPadding}"
-                                Margin="{TemplateBinding HeaderMargin}"
-                                Background="{TemplateBinding HeaderBackground}"
-                                IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
-                            <ContentPresenter Content="{TemplateBinding Header}"
-                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                              FontFamily="{TemplateBinding FontFamily}"
-                                              FontSize="{TemplateBinding HeaderFontSize}"
-                                              FontStyle="{TemplateBinding FontStyle}"
-                                              FontWeight="{TemplateBinding HeaderFontWeight}"
-                                              Foreground="{TemplateBinding HeaderForeground}" />
-                        </Border>
-
-                        <Border Name="PART_Footer"
-                                DockPanel.Dock="Bottom"
-                                Padding="{TemplateBinding FooterPadding}"
-                                Margin="{TemplateBinding FooterMargin}"
-                                Background="{TemplateBinding FooterBackground}"
-                                IsVisible="{Binding Footer, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
-                            <ContentPresenter Content="{TemplateBinding Footer}"
-                                              ContentTemplate="{TemplateBinding FooterTemplate}"
-                                              FontFamily="{TemplateBinding FontFamily}"
-                                              FontSize="{TemplateBinding FooterFontSize}"
-                                              FontStyle="{TemplateBinding FontStyle}"
-                                              FontWeight="{TemplateBinding FooterFontWeight}"
-                                              Foreground="{TemplateBinding FooterForeground}" />
-                        </Border>
-
-                        <ContentPresenter Name="PART_Content"
-                                          Content="{TemplateBinding Content}"
-                                          Padding="{TemplateBinding Padding}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
-
-                    </DockPanel>
-                </Border>
-            </ControlTemplate>
-        </Setter>
-
+        <Setter Property="Template" Value="{StaticResource MyNet.DialogContent.Template}" />
         <Style Selector="^ /template/ ContentPresenter">
             <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
         </Style>
-
-        <Style Selector="^.size-sm">
-            <Setter Property="Padding" Value="{my:Thickness Sm}" />
-            <Setter Property="HeaderFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
-        </Style>
-
-        <Style Selector="^.size-md">
-            <Setter Property="Padding" Value="{my:Thickness Md}" />
-            <Setter Property="HeaderFontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
-        </Style>
-
-        <Style Selector="^.size-lg">
-            <Setter Property="Padding" Value="{my:Thickness Lg}" />
-            <Setter Property="HeaderFontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
-        </Style>
     </ControlTheme>
 
+    <ControlTheme x:Key="{x:Type my:ContentDialog}" TargetType="my:ContentDialog" BasedOn="{StaticResource {x:Type my:DialogContent}}" />
 
 </ResourceDictionary>
