@@ -40,7 +40,7 @@
         </v:ShowcaseView.ThemeControlTemplate>
 
         <v:ShowcaseView.CustomContent>
-            <StackPanel>
+            <StackPanel Spacing="{my:Spacing Md}">
                 <my:Banner MaxWidth="500" Severity="Custom">
                     <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
                 </my:Banner>

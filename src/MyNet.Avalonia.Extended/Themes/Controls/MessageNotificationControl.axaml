@@ -4,11 +4,10 @@
 
     <ControlTheme x:Key="{x:Type my:MessageNotificationControl}"
                   TargetType="{x:Type my:MessageNotificationControl}"
-                  BasedOn="{StaticResource {x:Type my:Banner}}">
+                  BasedOn="{StaticResource MyNet.Theme.Banner.Toast}">
         <Setter Property="CanClose" Value="False" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="my:ThemeAssist.Role" Value="Primary" />
     </ControlTheme>
 
 </ResourceDictionary>

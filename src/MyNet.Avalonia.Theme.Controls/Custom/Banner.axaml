@@ -15,6 +15,7 @@
         <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Sm}" />
         <Setter Property="my:LeadingAssist.Background" Value="{my:Foreground Opacity=Overlay}" />
         <Setter Property="my:LeadingAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Md}" />
+        <Setter Property="my:LeadingAssist.Margin" Value="{my:Thickness Sm, Right}" />
         <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Sm}" />
 
         <Setter Property="my:TrailingAssist.IsVisible" Value="False" />
@@ -91,7 +92,8 @@
 
                                     <ContentPresenter Grid.Row="0"
                                                       Grid.Column="1"
-                                                      VerticalAlignment="Center"
+                                                      VerticalAlignment="{TemplateBinding (my:HeaderAssist.VerticalAlignment)}"
+                                                      HorizontalAlignment="{TemplateBinding (my:HeaderAssist.HorizontalAlignment)}"
                                                       Content="{TemplateBinding Header}"
                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                       FontFamily="{TemplateBinding (my:HeaderAssist.FontFamily)}"
@@ -103,8 +105,9 @@
 
                                     <ContentPresenter Name="PART_Content"
                                                       Grid.Row="1"
-                                                      Grid.Column="0"
-                                                      Grid.ColumnSpan="3"
+                                                      Grid.Column="1"
+                                                      Grid.ColumnSpan="2"
+                                                      Margin="{my:Thickness Xs, Top}"
                                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                       Content="{TemplateBinding Content}"
@@ -196,7 +199,7 @@
         </Style>
 
         <Style Selector="^.size-sm">
-            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Sm}" />
+            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Xs}" />
             <Setter Property="Padding" Value="{my:Thickness Sm}" />
             <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
             <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
@@ -210,11 +213,39 @@
             <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Sm}" />
         </Style>
         <Style Selector="^.size-lg">
-            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Md}" />
+            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Sm}" />
             <Setter Property="Padding" Value="{my:Thickness Md}" />
             <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H5}" />
             <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
-            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        </Style>
+    </ControlTheme>
+
+    <!-- Chromeless body for toast hosts (NotificationCard owns the surface). -->
+    <ControlTheme x:Key="MyNet.Theme.Banner.Toast" TargetType="my:Banner" BasedOn="{StaticResource {x:Type my:Banner}}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+        <Setter Property="ClipToBounds" Value="True" />
+
+        <Style Selector="^:success, ^:warning, ^:error, ^:information">
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="my:LeadingAssist.Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="^.size-sm">
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="Padding" Value="0" />
         </Style>
     </ControlTheme>
 
