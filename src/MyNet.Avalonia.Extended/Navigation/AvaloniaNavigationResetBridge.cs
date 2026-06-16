@@ -18,14 +18,22 @@ public sealed class AvaloniaNavigationResetBridge
     /// </summary>
     /// <param name="navigationService">The application navigation service.</param>
     /// <param name="host">The Avalonia navigation page host.</param>
+    /// <param name="pageFactory">The Avalonia page factory.</param>
     public AvaloniaNavigationResetBridge(
         INavigationService navigationService,
-        IAvaloniaNavigationPageHost host)
-        => navigationService.StateChanged += (_, e) => OnNavigationStateChanged(e, host);
+        IAvaloniaNavigationPageHost host,
+        IAvaloniaPageFactory pageFactory)
+        => navigationService.StateChanged += (_, e) => OnNavigationStateChanged(e, host, pageFactory);
 
-    private static void OnNavigationStateChanged(NavigationStateChangedEventArgs e, IAvaloniaNavigationPageHost host)
+    private static void OnNavigationStateChanged(
+        NavigationStateChangedEventArgs e,
+        IAvaloniaNavigationPageHost host,
+        IAvaloniaPageFactory pageFactory)
     {
         if (e.CurrentContext is null)
+        {
             host.Clear();
+            pageFactory.Clear();
+        }
     }
 }

@@ -36,6 +36,9 @@ public static class ServiceCollectionExtensions
 
         services.AddViewLocators();
         services.AddNavigation();
+        services.RemoveAll<INavigationService>();
+        services.AddSingleton<NavigationService>();
+        services.AddSingleton<INavigationService, SingletonNavigationService>();
         services.TryAddSingleton<IAvaloniaPageFactory, AvaloniaPageFactory>();
         services.TryAddSingleton<IAvaloniaNavigationPageHost, AvaloniaNavigationPageHost>();
         services.TryAddSingleton<AvaloniaNavigationGestureBridge>();

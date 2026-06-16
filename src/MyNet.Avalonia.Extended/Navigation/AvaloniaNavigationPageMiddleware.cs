@@ -37,8 +37,13 @@ public sealed class AvaloniaNavigationPageMiddleware(
 
                 case NavigationMode.Normal:
                 case NavigationMode.Forward:
-                    host.Push(pageFactory.Create(to.To));
-                    break;
+                    {
+                        var view = pageFactory.Create(to.To);
+                        if (!host.Contains(view))
+                            host.Push(view);
+
+                        break;
+                    }
             }
         }
         catch (ViewResolutionException ex)

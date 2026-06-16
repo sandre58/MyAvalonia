@@ -20,4 +20,9 @@ public interface IAvaloniaPageFactory
     /// <param name="page">The navigation page.</param>
     /// <returns>The Avalonia page bound to <paramref name="page"/>.</returns>
     Page Create(INavigationPage page);
+
+    /// <summary>
+    /// Clears cached page instances.
+    /// </summary>
+    void Clear();
 }

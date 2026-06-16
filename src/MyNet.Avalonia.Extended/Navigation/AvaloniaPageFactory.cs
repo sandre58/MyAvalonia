@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using Avalonia.Controls;
 using MyNet.UI.Locators.Factories;
 using MyNet.UI.Navigation.Models;
@@ -17,23 +18,37 @@ namespace MyNet.Avalonia.Extended.Navigation;
 /// <param name="viewFactory">The view factory used to resolve views from page types.</param>
 public sealed class AvaloniaPageFactory(IViewFactory viewFactory) : IAvaloniaPageFactory
 {
+    private readonly Dictionary<INavigationPage, Page> _pages = new(ReferenceEqualityComparer.Instance);
+
     /// <inheritdoc />
     public Page Create(INavigationPage page)
     {
         ArgumentNullException.ThrowIfNull(page);
 
+        if (_pages.TryGetValue(page, out var cached))
+            return cached;
+
         var view = viewFactory.CreateView(page.GetType());
 
-        if (view is Page avaloniaPage)
+        Page avaloniaPage;
+        if (view is Page pageView)
         {
-            avaloniaPage.DataContext = page;
-            return avaloniaPage;
+            pageView.DataContext = page;
+            avaloniaPage = pageView;
+        }
+        else
+        {
+            avaloniaPage = new ContentPage
+            {
+                Content = view,
+                DataContext = page
+            };
         }
 
-        return new ContentPage
-        {
-            Content = view,
-            DataContext = page
-        };
+        _pages[page] = avaloniaPage;
+        return avaloniaPage;
     }
+
+    /// <inheritdoc />
+    public void Clear() => _pages.Clear();
 }
