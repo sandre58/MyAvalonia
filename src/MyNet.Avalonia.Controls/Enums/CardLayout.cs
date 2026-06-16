@@ -12,14 +12,12 @@ namespace MyNet.Avalonia.Controls.Enums;
 public enum CardLayout
 {
     /// <summary>
-    /// Leading element on the left, title and subtitle stacked on the right.
-    /// Suitable for compact stat tiles and settings entries.
+    /// Leading with background, title spanning two rows — dense stat or settings tile.
     /// </summary>
-    Horizontal,
+    Compact,
 
     /// <summary>
-    /// Leading element and title on the first row, subtitle and content below.
-    /// Suitable for feature tiles and capability cards.
+    /// Leading without background, title on a single row — feature or capability tile.
     /// </summary>
-    Vertical
+    Tile
 }

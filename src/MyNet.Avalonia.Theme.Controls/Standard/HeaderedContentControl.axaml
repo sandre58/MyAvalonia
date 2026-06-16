@@ -35,21 +35,21 @@
         <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
 
         <!-- Variant -->
-        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
-        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
-        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-        <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
+        <Setter Property="my:VariantAssist.Background" Value="Transparent" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="Transparent" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
 
         <!-- Section (default) -->
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Foreground" Value="{my:Foreground AncestorType=Control}" />
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
         <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground AncestorType=Control}" />
         <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
         <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
         <Setter Property="my:HeaderAssist.BorderBrush" Value="Transparent" />
-
+        
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="PART_Root"
@@ -213,10 +213,6 @@
             <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
             <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
             <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
-            <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
-            <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
-            <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
-            <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
             <Setter Property="my:HeaderAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
             <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
         </Style>
@@ -275,6 +271,7 @@
 
         <Style Selector="^.size-sm">
             <Setter Property="Padding" Value="{my:Thickness Sm}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H6}" />
             <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Sm}" />
             <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
             <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
@@ -282,6 +279,7 @@
 
         <Style Selector="^.size-lg">
             <Setter Property="Padding" Value="{my:Thickness Lg}" />
+            <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H3}" />
             <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Lg}" />
             <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Lg}" />
             <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Lg}" />

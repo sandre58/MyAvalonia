@@ -4,12 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
 using Material.Icons;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Enums;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Showcase.Resources;
 using MyNet.Avalonia.Showcase.ThemeBuilder;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Builders;
@@ -25,14 +24,14 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
 internal sealed class BannerPageViewModel(ICommandFactory commands) : ShowcaseViewModel(nameof(Banner), commands, [
     new ControlThemeBuilder()
-        .WithContent(Banner.HeaderProperty, ContentProviderType.Text)
+        .WithContent(RegionControl.HeaderProperty, ContentProviderType.Text)
+        .WithIcon(RegionControl.LeadingProperty)
         .AddShapes(CssClass.ShapeCircle)
         .AddStandardVariants()
         .AddVariants(CssClass.ShadowSurface)
         .AddDefaultRoles()
         .AddDefaultSizes()
         .AddProperty(Banner.CanCloseProperty, true, x => x.DisplayName(nameof(SettingsResources.ShowCloseButton)))
-        .AddEnumClass<Position, ListBoxEditor>(Position.Top, x => x.DisplayName(nameof(SettingsResources.Layout)), configureChoice: (x, y) => y.WithIcon(Enum.Parse<MaterialIconKind>($"Dock{x}")))
         .AddClass(CssClass.HeaderAlignment(nameof(Position.Left)),
             x => x.DisplayName(nameof(SettingsResources.HeaderPosition))
                 .Of<ListBoxEditor>(editor => editor.AddChoice(CssClass.HeaderAlignment(nameof(Position.Left)), builder => builder.DisplayName(() => Position.Left.Humanize()).WithIcon(MaterialIconKind.GamepadCircleLeft))

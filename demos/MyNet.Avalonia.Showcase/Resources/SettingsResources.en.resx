@@ -264,6 +264,12 @@
   <data name="SpinnerLayoutVertical" xml:space="preserve">
     <value>Vertical</value>
   </data>
+  <data name="CardLayoutCompact" xml:space="preserve">
+    <value>Compact</value>
+  </data>
+  <data name="CardLayoutTile" xml:space="preserve">
+    <value>Tile</value>
+  </data>
   <data name="ShowBackground" xml:space="preserve">
     <value>Show background</value>
   </data>

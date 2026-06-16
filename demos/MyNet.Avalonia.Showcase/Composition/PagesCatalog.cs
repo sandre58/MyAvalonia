@@ -71,6 +71,7 @@ internal static class PagesCatalog
                 new(typeof(FormPageViewModel), typeof(FormPage), MaterialIconKind.FormatLineStyle),
                 new(typeof(BannerPageViewModel), typeof(BannerPage), MaterialIconKind.InformationBox),
                 new(typeof(CardPageViewModel), typeof(CardPage), MaterialIconKind.CardOutline),
+                new(typeof(EmptyStatePageViewModel), typeof(EmptyStatePage), MaterialIconKind.InboxOutline),
                 new(typeof(BadgePageViewModel), typeof(BadgePage), MaterialIconKind.CheckboxBlankBadge),
                 new(typeof(AvatarPageViewModel), typeof(AvatarPage), MaterialIconKind.AccountBox),
                 new(typeof(CarouselPageViewModel), typeof(CarouselPage), MaterialIconKind.ViewCarousel)

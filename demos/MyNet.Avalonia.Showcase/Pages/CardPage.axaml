@@ -46,15 +46,15 @@
         <!-- Custom examples -->
         <v:ShowcaseView.CustomContent>
             <StackPanel Spacing="{my:Spacing Lg}">
-                <!-- Horizontal + Vertical -->
+                <!-- Compact + Tile -->
                 <UniformGrid Columns="2" ColumnSpacing="{my:Spacing Md}" RowSpacing="{my:Spacing Md}">
                     <my:Card Padding="{my:Thickness Lg}"
-                             Layout="Horizontal"
+                             Layout="Compact"
                              Title="6"
                              Subtitle="Packages"
                              Leading="{my:MaterialIcon Kind=PackageVariantClosed}" />
                     <my:Card Padding="{my:Thickness Lg}"
-                             Layout="Vertical"
+                             Layout="Tile"
                              Title="Theming"
                              Subtitle="Variants, roles, shadows and density tokens."
                              Leading="{my:MaterialIcon Kind=PaletteOutline}" />
@@ -71,7 +71,7 @@
                 
                 <!-- With Header band -->
                 <my:Card Padding="{my:Thickness Lg}"
-                         Layout="Horizontal"
+                         Layout="Compact"
                          Title="With header band"
                          Subtitle="The header band is styleable via card properties."
                          Leading="{my:MaterialIcon Kind=CheckCircleOutline}"

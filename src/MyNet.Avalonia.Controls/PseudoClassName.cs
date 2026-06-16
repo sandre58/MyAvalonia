@@ -13,6 +13,7 @@ public static class PseudoClassName
     public const string Bottom = ":bottom";
     public const string Century = ":century";
     public const string Checked = ":checked";
+    public const string Compact = ":compact";
     public const string Day = ":day";
     public const string Decade = ":decade";
     public const string Disabled = ":disabled";
@@ -50,6 +51,7 @@ public static class PseudoClassName
     public const string Selector = ":selector";
     public const string StartDate = ":start-date";
     public const string Success = ":success";
+    public const string Tile = ":tile";
     public const string Today = ":today";
     public const string Top = ":top";
     public const string Vertical = ":vertical";

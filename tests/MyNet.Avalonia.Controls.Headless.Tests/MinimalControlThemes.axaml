@@ -108,7 +108,7 @@
     </DataTemplate>
 
     <ControlTheme x:Key="{x:Type controls:Card}" TargetType="controls:Card">
-        <Style Selector="^:vertical /template/ Border#PART_LeadingBackground">
+        <Style Selector="^:tile /template/ Border#PART_LeadingBackground">
             <Setter Property="IsVisible" Value="False" />
         </Style>
         <Setter Property="Template">

@@ -1608,6 +1608,24 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compact.
+        /// </summary>
+        internal static string CardLayoutCompact {
+            get {
+                return ResourceManager.GetString("CardLayoutCompact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tuile.
+        /// </summary>
+        internal static string CardLayoutTile {
+            get {
+                return ResourceManager.GetString("CardLayoutTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Horizontal.
         /// </summary>
         internal static string SpinnerLayoutHorizontal {

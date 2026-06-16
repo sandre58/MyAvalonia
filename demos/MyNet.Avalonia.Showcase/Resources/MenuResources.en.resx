@@ -211,4 +211,7 @@
   <data name="ToggleSplitButton" xml:space="preserve"><value>Toggle split button</value></data>
   <data name="ToggleSwitch" xml:space="preserve"><value>Toggle switch</value></data>
   <data name="TreeView" xml:space="preserve"><value>Tree view</value></data>
+  <data name="EmptyState" xml:space="preserve">
+      <value>Empty state</value>
+  </data>
 </root>

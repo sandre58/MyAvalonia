@@ -1,0 +1,53 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.EmptyStatePage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+             x:DataType="vm:EmptyStatePageViewModel"
+             x:Name="Root"
+             Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Display Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             mc:Ignorable="d">
+
+    <v:ShowcaseView>
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <my:EmptyState behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                               Title="No items yet"
+                               Subtitle="Add your first item to get started."
+                               MaxWidth="420"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center">
+                    <my:EmptyState.Actions>
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Sm}">
+                            <Button Content="Create item" Classes="variant-solid" />
+                            <Button Content="Learn more" Classes="variant-light" />
+                        </StackPanel>
+                    </my:EmptyState.Actions>
+                </my:EmptyState>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <my:EmptyState behavior:PlaygroundBehavior.AttachStyle="{Binding}"
+                               Title="No items yet"
+                               Subtitle="Add your first item to get started."
+                               MaxWidth="420">
+                    <my:EmptyState.Actions>
+                        <Button Content="Create item" Classes="variant-solid" />
+                    </my:EmptyState.Actions>
+                </my:EmptyState>
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+    </v:ShowcaseView>
+</ContentPage>

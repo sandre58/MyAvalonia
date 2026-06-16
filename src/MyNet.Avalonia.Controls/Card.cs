@@ -18,7 +18,7 @@ namespace MyNet.Avalonia.Controls;
 
 /// <summary>
 /// A flexible surface control that displays related information across multiple configurable regions.
-/// Supports horizontal and vertical layouts and full MyNet theming.
+/// Supports compact and tile layouts and full MyNet theming.
 /// Use the interactive control theme for command-driven cards.
 /// </summary>
 /// <remarks>
@@ -26,7 +26,7 @@ namespace MyNet.Avalonia.Controls;
 /// not the tile title. Use <see cref="Title"/> and <see cref="Subtitle"/> for the primary heading in the body grid
 /// (rendered via <see cref="TitleBlock"/> in the default theme).</para>
 /// </remarks>
-[PseudoClasses(PseudoClassName.Horizontal, PseudoClassName.Vertical, ":title-empty", ":subtitle-empty")]
+[PseudoClasses(PseudoClassName.Compact, PseudoClassName.Tile, ":title-empty", ":subtitle-empty")]
 [TemplatePart(PartRoot, typeof(Border))]
 [TemplatePart(PartActionButton, typeof(Button))]
 public class Card : RegionControl
@@ -171,8 +171,8 @@ public class Card : RegionControl
     private void UpdateLayoutState()
     {
         var layout = Layout;
-        PseudoClasses.Set(PseudoClassName.Horizontal, layout == CardLayout.Horizontal);
-        PseudoClasses.Set(PseudoClassName.Vertical, layout == CardLayout.Vertical);
+        PseudoClasses.Set(PseudoClassName.Compact, layout == CardLayout.Compact);
+        PseudoClasses.Set(PseudoClassName.Tile, layout == CardLayout.Tile);
     }
 
     private void UpdateTitleState() => PseudoClasses.Set(":title-empty", IsEmptyLike(Title));

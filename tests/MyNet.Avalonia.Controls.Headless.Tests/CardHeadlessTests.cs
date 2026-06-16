@@ -21,11 +21,11 @@ namespace MyNet.Avalonia.Controls.Headless.Tests;
 public class CardHeadlessTests
 {
     [AvaloniaFact]
-    public void HorizontalLayout_RendersTitleAndSubtitle()
+    public void CompactLayout_RendersTitleAndSubtitle()
     {
         var card = new Card
         {
-            Layout = CardLayout.Horizontal,
+            Layout = CardLayout.Compact,
             Leading = new MaterialIcon { Kind = MaterialIconKind.Home },
             Title = "Title",
             Subtitle = "Subtitle",
@@ -41,22 +41,22 @@ public class CardHeadlessTests
     }
 
     [AvaloniaFact]
-    public void VerticalLayout_SetsVerticalPseudoClass()
+    public void TileLayout_SetsTilePseudoClass()
     {
-        var card = new Card { Layout = CardLayout.Vertical };
+        var card = new Card { Layout = CardLayout.Tile };
 
         HeadlessControlHost.Show(card, new(240, 120));
 
-        card.Classes.Should().Contain(":vertical");
-        card.Classes.Should().NotContain(":horizontal");
+        card.Classes.Should().Contain(":tile");
+        card.Classes.Should().NotContain(":compact");
     }
 
     [AvaloniaFact]
-    public void VerticalLayout_HidesLeadingBackground()
+    public void TileLayout_HidesLeadingBackground()
     {
         var card = new Card
         {
-            Layout = CardLayout.Vertical,
+            Layout = CardLayout.Tile,
             Leading = new MaterialIcon { Kind = MaterialIconKind.Palette },
             Title = "Theme",
             Subtitle = "Open the theme page."

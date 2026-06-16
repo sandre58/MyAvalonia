@@ -191,4 +191,7 @@
   <data name="ToggleSplitButton" xml:space="preserve"><value>Bouton partagé basculant</value></data>
   <data name="ToggleSwitch" xml:space="preserve"><value>Interrupteur</value></data>
   <data name="TreeView" xml:space="preserve"><value>Arborescence</value></data>
+  <data name="EmptyState" xml:space="preserve">
+      <value>Etat vide</value>
+  </data>
 </root>

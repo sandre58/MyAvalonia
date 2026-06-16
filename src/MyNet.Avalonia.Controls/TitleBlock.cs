@@ -10,6 +10,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
+using Avalonia.Layout;
 using Avalonia.Media;
 
 namespace MyNet.Avalonia.Controls;
@@ -117,6 +118,32 @@ public class TitleBlock : TemplatedControl
     {
         get => GetValue(SubtitleForegroundProperty);
         set => SetValue(SubtitleForegroundProperty, value);
+    }
+
+    #endregion
+
+    #region Text Alignment
+
+    public static readonly StyledProperty<TextAlignment> TextAlignmentProperty =
+        AvaloniaProperty.Register<TitleBlock, TextAlignment>(nameof(TextAlignment));
+
+    public TextAlignment TextAlignment
+    {
+        get => GetValue(TextAlignmentProperty);
+        set => SetValue(TextAlignmentProperty, value);
+    }
+
+    #endregion
+
+    #region Horizontal Text Alignment
+
+    public static readonly StyledProperty<HorizontalAlignment> HorizontalTextAlignmentProperty =
+        AvaloniaProperty.Register<TitleBlock, HorizontalAlignment>(nameof(HorizontalTextAlignment));
+
+    public HorizontalAlignment HorizontalTextAlignment
+    {
+        get => GetValue(HorizontalTextAlignmentProperty);
+        set => SetValue(HorizontalTextAlignmentProperty, value);
     }
 
     #endregion

@@ -1,0 +1,106 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
+
+    <ControlTheme x:Key="{x:Type my:EmptyState}" TargetType="my:EmptyState">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xl}" />
+        <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Lg, Bottom}" />
+        <Setter Property="my:ActionsAssist.HorizontalAlignment" Value="Center" />
+        <Setter Property="my:ActionsAssist.Padding" Value="{my:Thickness Md, Top}" />
+        <Setter Property="Leading">
+            <Template>
+                <my:MaterialIcon Kind="{x:Static icons:MaterialIconKind.InboxOutline}" />
+            </Template>
+        </Setter>
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:EmptyState">
+                <Border Name="PART_Root"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}">
+                    <Grid RowDefinitions="Auto,Auto,*,Auto">
+                        <ContentPresenter Content="{TemplateBinding Leading}"
+                                          ContentTemplate="{TemplateBinding LeadingTemplate}"
+                                          Padding="{TemplateBinding (my:LeadingAssist.Padding)}"
+                                          HorizontalAlignment="Center"
+                                          my:IconAssist.Size="{TemplateBinding (my:IconAssist.Size)}"
+                                          my:IconAssist.Role="Primary"
+                                          IsVisible="{Binding Leading, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+
+                        <my:TitleBlock Name="PART_TitleBlock"
+                                       Grid.Row="1"
+                                       HorizontalAlignment="Stretch"
+                                       Title="{TemplateBinding Title}"
+                                       TitleTemplate="{TemplateBinding TitleTemplate}"
+                                       Subtitle="{TemplateBinding Subtitle}"
+                                       SubtitleTemplate="{TemplateBinding SubtitleTemplate}" />
+
+                        <ContentPresenter Name="PART_Content"
+                                          Grid.Row="2"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          IsVisible="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+
+                        <ContentControl Grid.Row="3"
+                                        Focusable="False"
+                                        Template="{StaticResource MyNet.RegionLayout.ActionsBand}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ /template/ ContentPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        </Style>
+        <Style Selector="^ /template/ my|TitleBlock#PART_TitleBlock">
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
+            <Setter Property="TitleFontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="TitleForeground" Value="{my:Foreground}" />
+            <Setter Property="SubtitleFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+            <Setter Property="SubtitleForeground" Value="{my:Foreground Opacity=High}" />
+        </Style>
+        <Style Selector="^:title-empty:subtitle-empty /template/ my|TitleBlock#PART_TitleBlock">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        
+        <Style Selector="^.size-sm">
+            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Md, Bottom}" />
+            <Style Selector="^ /template/ my|TitleBlock#PART_TitleBlock">
+                <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+                <Setter Property="SubtitleFontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+            </Style>
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xl}" />
+            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Lg, Bottom}" />
+            <Style Selector="^ /template/ my|TitleBlock#PART_TitleBlock">
+                <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
+                <Setter Property="SubtitleFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+            </Style>
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xxl}" />
+            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Xl, Bottom}" />
+            <Style Selector="^ /template/ my|TitleBlock#PART_TitleBlock">
+                <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H3}" />
+                <Setter Property="SubtitleFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

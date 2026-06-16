@@ -28,6 +28,7 @@
                            Grid.Row="0"
                            Grid.Column="0"
                            Margin="{TemplateBinding (my:LeadingAssist.Margin)}"
+                           HorizontalAlignment="{TemplateBinding (my:LeadingAssist.HorizontalAlignment)}"
                            VerticalAlignment="{TemplateBinding (my:LeadingAssist.VerticalAlignment)}"
                            IsVisible="{Binding Leading, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
                         <Border Name="PART_LeadingBackground"
@@ -37,9 +38,10 @@
                                           Content="{TemplateBinding Leading}"
                                           ContentTemplate="{TemplateBinding LeadingTemplate}"
                                           Padding="{TemplateBinding (my:LeadingAssist.Padding)}"
-                                          HorizontalAlignment="{TemplateBinding (my:LeadingAssist.HorizontalAlignment)}"
-                                          VerticalAlignment="{TemplateBinding (my:LeadingAssist.VerticalAlignment)}"
-                                          my:IconAssist.PrimarySize="{TemplateBinding (my:IconAssist.PrimarySize)}" />
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          my:IconAssist.Size="{TemplateBinding (my:IconAssist.Size)}"
+                                          my:IconAssist.Role="Label" />
                     </Panel>
 
                     <my:TitleBlock Name="PART_TitleBlock"
@@ -131,14 +133,13 @@
                 <Grid Name="PART_BodyGrid"
                       Margin="{TemplateBinding Padding}"
                       ColumnDefinitions="Auto,*,Auto"
-                      RowDefinitions="Auto,Auto,Auto"
-                      ColumnSpacing="{StaticResource MyNet.Spacing.Md}"
-                      RowSpacing="{StaticResource MyNet.Spacing.Xs}">
+                      RowDefinitions="Auto,Auto,Auto">
 
                     <Panel Name="PART_LeadingHost"
                            Grid.Row="0"
                            Grid.Column="0"
                            Margin="{TemplateBinding (my:LeadingAssist.Margin)}"
+                           HorizontalAlignment="{TemplateBinding (my:LeadingAssist.HorizontalAlignment)}"
                            VerticalAlignment="{TemplateBinding (my:LeadingAssist.VerticalAlignment)}"
                            IsVisible="{Binding Leading, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
                         <Border Name="PART_LeadingBackground"
@@ -148,9 +149,10 @@
                                           Content="{TemplateBinding Leading}"
                                           ContentTemplate="{TemplateBinding LeadingTemplate}"
                                           Padding="{TemplateBinding (my:LeadingAssist.Padding)}"
-                                          HorizontalAlignment="{TemplateBinding (my:LeadingAssist.HorizontalAlignment)}"
-                                          VerticalAlignment="{TemplateBinding (my:LeadingAssist.VerticalAlignment)}"
-                                          my:IconAssist.PrimarySize="{TemplateBinding (my:IconAssist.PrimarySize)}" />
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          my:IconAssist.Size="{TemplateBinding (my:IconAssist.Size)}"
+                                          my:IconAssist.Role="Label" />
                     </Panel>
 
                     <my:TitleBlock Name="PART_TitleBlock"
@@ -214,7 +216,7 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="ClipToBounds" Value="True" />
-        <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Md}" />
         <Setter Property="Trailing">
             <Template>
                 <my:MaterialIcon Classes="kind-glyph is-dropdown position-right size-xl" />
@@ -259,11 +261,11 @@
         <Style Selector="^ /template/ ContentPresenter">
             <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
         </Style>
-        <Style Selector="^ /template/ my|TitleBlock#PART_TitleBlock /template/ ContentPresenter#PART_Subtitle">
-            <Setter Property="Margin" Value="{my:Thickness Xs, Top}" />
+        <Style Selector="^ /template/ my|TitleBlock#PART_TitleBlock">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
         </Style>
-        <Style Selector="^:title-empty /template/ my|TitleBlock#PART_TitleBlock /template/ ContentPresenter#PART_Subtitle">
-            <Setter Property="Margin" Value="0" />
+        <Style Selector="^:title-empty /template/ my|TitleBlock#PART_TitleBlock">
+            <Setter Property="Spacing" Value="0" />
         </Style>
         <Style Selector="^:title-empty /template/ Grid#PART_BodyGrid">
             <Setter Property="RowSpacing" Value="0" />
@@ -274,23 +276,23 @@
         <Style Selector="^:title-empty:subtitle-empty /template/ ContentPresenter#PART_Content">
             <Setter Property="Margin" Value="0" />
         </Style>
-        <Style Selector="^:horizontal">
+        <Style Selector="^:compact">
             <Setter Property="my:LeadingAssist.Margin" Value="{my:Thickness Md, Right}" />
             <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Md}" />
         </Style>
-        <Style Selector="^:horizontal /template/ Panel#PART_LeadingHost">
+        <Style Selector="^:compact /template/ Panel#PART_LeadingHost">
             <Setter Property="Grid.RowSpan" Value="2" />
         </Style>
-        <Style Selector="^:vertical">
+        <Style Selector="^:tile">
             <Setter Property="my:LeadingAssist.Margin" Value="{my:Thickness Sm, Right}" />
         </Style>
-        <Style Selector="^:vertical /template/ Border#PART_LeadingBackground">
+        <Style Selector="^:tile /template/ Border#PART_LeadingBackground">
             <Setter Property="IsVisible" Value="False" />
         </Style>
         <Style Selector="^:title-empty:subtitle-empty /template/ my|TitleBlock#PART_TitleBlock">
             <Setter Property="IsVisible" Value="False" />
         </Style>
-        <Style Selector="^:vertical /template/ my|TitleBlock#PART_TitleBlock">
+        <Style Selector="^:tile /template/ my|TitleBlock#PART_TitleBlock">
             <Setter Property="Grid.RowSpan" Value="1" />
         </Style>
         <Style Selector="^.is-hover:pointerover /template/ Border#PART_Root">
@@ -299,25 +301,28 @@
         </Style>
 
         <Style Selector="^.size-sm">
+            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Sm}" />
             <Setter Property="Padding" Value="{my:Thickness Sm}" />
             <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
             <Setter Property="SubtitleFontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
             <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
-            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Sm}" />
         </Style>
         <Style Selector="^.size-md">
+            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Md}" />
             <Setter Property="Padding" Value="{my:Thickness Md}" />
             <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H5}" />
             <Setter Property="SubtitleFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
             <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
-            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Md}" />
         </Style>
         <Style Selector="^.size-lg">
+            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Md}" />
             <Setter Property="Padding" Value="{my:Thickness Lg}" />
             <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H3}" />
             <Setter Property="SubtitleFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
             <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
-            <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Lg}" />
         </Style>
     </ControlTheme>
 
@@ -332,11 +337,6 @@
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
         <Setter Property="my:TrailingAssist.IsVisible" Value="True" />
         <Setter Property="Template" Value="{StaticResource MyNet.Card.Template.Interactive}" />
-        <Setter Property="Trailing">
-            <Template>
-                <my:MaterialIcon Classes="kind-glyph" Kind="ChevronRight" />
-            </Template>
-        </Setter>
     </ControlTheme>
 
 </ResourceDictionary>

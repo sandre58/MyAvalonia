@@ -20,6 +20,8 @@ namespace MyNet.Avalonia.Controls.Primitives;
 /// use <see cref="Card.Title"/> / <see cref="Card.Subtitle"/> for the tile heading in the body.</description></item>
 /// <item><description><see cref="Banner"/>, <see cref="DialogPanel"/>, <see cref="ContentDialog"/>:
 /// <see cref="Header"/> = primary heading text.</description></item>
+/// <item><description><see cref="EmptyState"/>: <see cref="EmptyState.Title"/> / <see cref="EmptyState.Subtitle"/> convenience for
+/// the centered heading; <see cref="Leading"/> = illustration; <see cref="Actions"/> = call-to-action buttons.</description></item>
 /// </list>
 /// <para>Style regions with attached assists (<c>HeaderAssist</c>, <c>LeadingAssist</c>, …).
 /// Toggle the header band with <c>HeaderAssist.IsVisible</c> (for example when an overlay shell shows the title).</para>

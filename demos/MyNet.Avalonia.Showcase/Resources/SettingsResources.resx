@@ -244,6 +244,12 @@
   <data name="SpinnerLayoutOpposite" xml:space="preserve">
     <value>Opposé</value>
   </data>
+  <data name="CardLayoutCompact" xml:space="preserve">
+    <value>Compact</value>
+  </data>
+  <data name="CardLayoutTile" xml:space="preserve">
+    <value>Tuile</value>
+  </data>
   <data name="ShowBackground" xml:space="preserve">
     <value>Afficher le fond</value>
   </data>

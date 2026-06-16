@@ -267,6 +267,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Etat vide.
+        /// </summary>
+        internal static string EmptyState {
+            get {
+                return ResourceManager.GetString("EmptyState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expander.
         /// </summary>
         internal static string Expander {
