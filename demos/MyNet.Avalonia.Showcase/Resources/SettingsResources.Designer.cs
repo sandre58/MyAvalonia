@@ -931,7 +931,16 @@ namespace MyNet.Avalonia.Showcase.Resources {
                 return ResourceManager.GetString("LabelAlignment", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Largeur libellé.
+        /// </summary>
+        internal static string LabelWidth {
+            get {
+                return ResourceManager.GetString("LabelWidth", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Disposition.
         /// </summary>

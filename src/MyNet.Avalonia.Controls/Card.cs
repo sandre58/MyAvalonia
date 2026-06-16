@@ -178,13 +178,4 @@ public class Card : RegionControl
     private void UpdateTitleState() => PseudoClasses.Set(":title-empty", IsEmptyLike(Title));
 
     private void UpdateSubtitleState() => PseudoClasses.Set(":subtitle-empty", IsEmptyLike(Subtitle));
-
-    private static bool IsEmptyLike(object? value) => value is null || value switch
-    {
-        string str => string.IsNullOrEmpty(str),
-        double dbl => double.IsNaN(dbl),
-        Array arr => arr.Length == 0,
-        DateTime date => date == DateTime.MinValue,
-        _ => false,
-    };
 }

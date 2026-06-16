@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using Avalonia.Controls;
 using Avalonia.Layout;
 using Material.Icons;
 using MyNet.Avalonia.Controls.Enums;
@@ -21,8 +23,29 @@ internal sealed class FormPageViewModel(ICommandFactory commands) : ShowcaseView
     new ControlThemeBuilder()
         .AddProperty(Controls.Form.ColumnsProperty, 1, x => x.DisplayName(nameof(SettingsResources.Columns)).Of<IntNumericUpDownEditor>(editor => editor.WithRange(1, 4)))
         .AddProperty(Controls.Form.SpacingProperty, 16d, x => x.DisplayName(nameof(SettingsResources.Spacing)).Of<IntNumericUpDownEditor>(editor => editor.WithRange(0, 48)))
-        .AddEnumProperty<Position, ListBoxEditor>(Controls.Form.LabelPositionProperty, Position.Left, x => x.DisplayName(nameof(SettingsResources.Direction)))
-        .AddEnumProperty<HorizontalAlignment, ListBoxEditor>(Controls.Form.LabelAlignmentProperty, HorizontalAlignment.Left, x => x.DisplayName(nameof(SettingsResources.LabelAlignment)))
+        .AddValueAction((control, value) =>
+            {
+                var pixels = Convert.ToDouble(value);
+                control.SetValue(Controls.Form.LabelWidthProperty, pixels <= 0 ? GridLength.Auto : new GridLength(pixels));
+            },
+            120d,
+            x => x.DisplayName(nameof(SettingsResources.LabelWidth)).Of<IntNumericUpDownEditor>(editor => editor.WithRange(0, 240)))
+        .AddEnumProperty<Position, ListBoxEditor>(Controls.Form.LabelPositionProperty, Position.Left, x => x.DisplayName(nameof(SettingsResources.Direction)), configureChoice: (position, choice) => choice.WithIcon(position switch
+        {
+            Position.Left => MaterialIconKind.ArrowLeft,
+            Position.Top => MaterialIconKind.ArrowUp,
+            Position.Right => MaterialIconKind.ArrowRight,
+            Position.Bottom => MaterialIconKind.ArrowDown,
+            _ => MaterialIconKind.ArrowLeft
+        }))
+        .AddEnumProperty<HorizontalAlignment, ListBoxEditor>(Controls.Form.LabelAlignmentProperty, HorizontalAlignment.Left, x => x.DisplayName(nameof(SettingsResources.LabelAlignment)), configureChoice: (alignment, choice) => choice.WithIcon(alignment switch
+        {
+            HorizontalAlignment.Left => MaterialIconKind.FormatAlignLeft,
+            HorizontalAlignment.Center => MaterialIconKind.FormatAlignCenter,
+            HorizontalAlignment.Right => MaterialIconKind.FormatAlignRight,
+            HorizontalAlignment.Stretch => MaterialIconKind.ArrowExpandHorizontal,
+            _ => MaterialIconKind.FormatAlignLeft
+        }))
 ])
 {
     /// <inheritdoc/>

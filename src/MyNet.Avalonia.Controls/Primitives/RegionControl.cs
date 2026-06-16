@@ -4,9 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using MyNet.Avalonia.Controls;
 
 namespace MyNet.Avalonia.Controls.Primitives;
 
@@ -127,4 +129,22 @@ public abstract class RegionControl : ContentControl
     }
 
     #endregion
+
+    /// <summary>
+    /// Returns whether a region value should be treated as empty for layout pseudo-classes.
+    /// </summary>
+    protected static bool IsEmptyLike(object? value) => value is null || value switch
+    {
+        string str => string.IsNullOrEmpty(str),
+        double dbl => double.IsNaN(dbl),
+        Array arr => arr.Length == 0,
+        DateTime date => date == DateTime.MinValue,
+        _ => false,
+    };
+
+    /// <summary>
+    /// Updates the <see cref="PseudoClassName.HeaderEmpty"/> pseudo-class from <see cref="Header"/>.
+    /// </summary>
+    protected void UpdateHeaderEmptyPseudoClass()
+        => PseudoClasses.Set(PseudoClassName.HeaderEmpty, IsEmptyLike(Header));
 }

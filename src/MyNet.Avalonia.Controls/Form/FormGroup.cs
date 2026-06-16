@@ -24,13 +24,13 @@ public class FormGroup : HeaderedItemsControl
         ItemsPanelProperty.OverrideDefaultValue<FormGroup>(new FuncTemplate<Panel?>(() => new FormItemsPanel()));
 
         // Propagate properties to panel when they change
-        ColumnsProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.UpdatePanelProperties());
-        SpacingProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.UpdatePanelProperties());
-        LabelPositionProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.UpdatePanelProperties());
-        LabelWidthProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.UpdatePanelProperties());
-        LabelMarginProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.UpdatePanelProperties());
-        LabelAlignmentProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.UpdatePanelProperties());
-        RequiredIndicatorTemplateProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.UpdatePanelProperties());
+        ColumnsProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.OnItemLayoutChanged());
+        SpacingProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.OnItemLayoutChanged());
+        LabelPositionProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.OnItemLayoutChanged());
+        LabelWidthProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.OnItemLayoutChanged());
+        LabelMarginProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.OnItemLayoutChanged());
+        LabelAlignmentProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.OnItemLayoutChanged());
+        RequiredIndicatorTemplateProperty.Changed.AddClassHandler<FormGroup>((x, _) => x.OnItemLayoutChanged());
     }
     #region Styled Properties
 
@@ -130,6 +130,12 @@ public class FormGroup : HeaderedItemsControl
         UpdatePanelProperties();
     }
 
+    private void OnItemLayoutChanged()
+    {
+        UpdatePanelProperties();
+        RefreshItemContainers();
+    }
+
     private void UpdatePanelProperties()
     {
         var panel = this.GetLogicalDescendants().OfType<FormItemsPanel>().FirstOrDefault();
@@ -140,6 +146,23 @@ public class FormGroup : HeaderedItemsControl
             panel.LabelPosition = LabelPosition;
             panel.LabelWidth = LabelWidth;
         }
+    }
+
+    internal void RefreshItemContainers()
+    {
+        for (var i = 0; i < ItemCount; i++)
+        {
+            if (ContainerFromIndex(i) is FormItemContainer fic)
+                RefreshItemContainer(fic);
+        }
+    }
+
+    private void RefreshItemContainer(FormItemContainer fic)
+    {
+        if (fic.Content is Control c)
+            ApplyItemLayout(fic, c);
+        else
+            ApplyItemLayoutDefaults(fic);
     }
 
     protected override bool NeedsContainerOverride(object? item, int index, out object? recycleKey) => NeedsContainer<FormItemContainer>(item, out recycleKey);
@@ -153,38 +176,50 @@ public class FormGroup : HeaderedItemsControl
         switch (container)
         {
             case FormItemContainer fic when item is Control c:
-                fic.Label = FormItem.GetLabel(c);
-                fic.LabelTemplate = FormItem.GetLabelTemplate(c);
-                fic.ShowLabel = !FormItem.GetNoLabel(c) && fic.Label != null;
-                fic.LabelPosition = FormItem.GetLabelPosition(c) ?? LabelPosition;
-                fic.LabelWidth = FormItem.GetLabelWidth(c) ?? LabelWidth;
-                fic.LabelAlignment = FormItem.GetLabelAlignment(c) ?? LabelAlignment;
-                fic.LabelMargin = FormItem.GetLabelMargin(c) ?? LabelMargin;
-                fic.IsRequired = FormItem.GetIsRequired(c);
-                var requiredIndicatorTemplate = FormItem.GetRequiredIndicatorTemplate(c) ?? RequiredIndicatorTemplate;
-                if (requiredIndicatorTemplate != null)
-                    fic.RequiredIndicatorTemplate = requiredIndicatorTemplate;
-                else
-                    fic.ClearValue(FormItemContainer.RequiredIndicatorTemplateProperty);
-                fic.HelpText = FormItem.GetHelpText(c);
-                fic.TextWrapping = FormItem.GetTextWrapping(c);
-
-                // Bind container visibility to content visibility
+                ApplyItemMetadata(fic, c);
                 fic.Bind(IsVisibleProperty, c.GetObservable(IsVisibleProperty));
                 break;
 
             case FormItemContainer fic:
-                // Item is not a Control (e.g., ViewModel): apply Form-level defaults.
-                // FormItem properties will be applied later when the DataTemplate materializes.
-                fic.LabelPosition = LabelPosition;
-                fic.LabelWidth = LabelWidth;
-                fic.LabelAlignment = LabelAlignment;
-                fic.LabelMargin = LabelMargin;
-                if (RequiredIndicatorTemplate != null)
-                    fic.RequiredIndicatorTemplate = RequiredIndicatorTemplate;
-                else
-                    fic.ClearValue(FormItemContainer.RequiredIndicatorTemplateProperty);
+                ApplyItemLayoutDefaults(fic);
                 break;
         }
+    }
+
+    private void ApplyItemMetadata(FormItemContainer fic, Control c)
+    {
+        fic.Label = FormItem.GetLabel(c);
+        fic.LabelTemplate = FormItem.GetLabelTemplate(c);
+        fic.ShowLabel = !FormItem.GetNoLabel(c) && fic.Label != null;
+        ApplyItemLayout(fic, c);
+        fic.IsRequired = FormItem.GetIsRequired(c);
+        fic.HelpText = FormItem.GetHelpText(c);
+        fic.TextWrapping = FormItem.GetTextWrapping(c);
+    }
+
+    private void ApplyItemLayout(FormItemContainer fic, Control c)
+    {
+        fic.LabelPosition = FormItem.GetLabelPosition(c) ?? LabelPosition;
+        fic.LabelWidth = FormItem.GetLabelWidth(c) ?? LabelWidth;
+        fic.LabelAlignment = FormItem.GetLabelAlignment(c) ?? LabelAlignment;
+        fic.LabelMargin = FormItem.GetLabelMargin(c) ?? LabelMargin;
+        ApplyRequiredIndicatorTemplate(fic, FormItem.GetRequiredIndicatorTemplate(c) ?? RequiredIndicatorTemplate);
+    }
+
+    private void ApplyItemLayoutDefaults(FormItemContainer fic)
+    {
+        fic.LabelPosition = LabelPosition;
+        fic.LabelWidth = LabelWidth;
+        fic.LabelAlignment = LabelAlignment;
+        fic.LabelMargin = LabelMargin;
+        ApplyRequiredIndicatorTemplate(fic, RequiredIndicatorTemplate);
+    }
+
+    private static void ApplyRequiredIndicatorTemplate(FormItemContainer fic, IDataTemplate? template)
+    {
+        if (template != null)
+            fic.RequiredIndicatorTemplate = template;
+        else
+            fic.ClearValue(FormItemContainer.RequiredIndicatorTemplateProperty);
     }
 }

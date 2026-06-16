@@ -253,4 +253,58 @@
   <data name="TermsMustBeAccepted" xml:space="preserve">
       <value>Vous devez accepter les termes et conditions.</value>
   </data>
+  <data name="LayoutShowcase" xml:space="preserve">
+      <value>Agencement</value>
+  </data>
+  <data name="LabelPositions" xml:space="preserve">
+      <value>Positions des libellés</value>
+  </data>
+  <data name="MultiColumnLayout" xml:space="preserve">
+      <value>Grille multi-colonnes</value>
+  </data>
+  <data name="FieldAnnotations" xml:space="preserve">
+      <value>Annotations de champ</value>
+  </data>
+  <data name="AdvancedOptions" xml:space="preserve">
+      <value>Options avancées</value>
+  </data>
+  <data name="RegistrationForm" xml:space="preserve">
+      <value>Formulaire d'inscription</value>
+  </data>
+  <data name="PositionLeft" xml:space="preserve">
+      <value>Gauche</value>
+  </data>
+  <data name="PositionTop" xml:space="preserve">
+      <value>Haut</value>
+  </data>
+  <data name="PositionRight" xml:space="preserve">
+      <value>Droite</value>
+  </data>
+  <data name="PositionBottom" xml:space="preserve">
+      <value>Bas</value>
+  </data>
+  <data name="HelpTextSample" xml:space="preserve">
+      <value>Texte d'aide affiché sous le champ.</value>
+  </data>
+  <data name="FullWidthField" xml:space="preserve">
+      <value>Champ pleine largeur (ColumnSpan)</value>
+  </data>
+  <data name="ProfessionalInformation" xml:space="preserve">
+      <value>Informations professionnelles</value>
+  </data>
+  <data name="State" xml:space="preserve">
+      <value>Région</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+      <value>Heure de début</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+      <value>Heure de fin</value>
+  </data>
+  <data name="To" xml:space="preserve">
+      <value>à</value>
+  </data>
+  <data name="MakeProfilePublic" xml:space="preserve">
+      <value>Rendre le profil public</value>
+  </data>
 </root>

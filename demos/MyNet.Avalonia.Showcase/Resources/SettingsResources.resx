@@ -742,6 +742,9 @@
   <data name="LabelAlignment" xml:space="preserve">
       <value>Alignement libellé</value>
   </data>
+  <data name="LabelWidth" xml:space="preserve">
+      <value>Largeur libellé</value>
+  </data>
   <data name="ShowSelectAll" xml:space="preserve">
       <value>Tout sélectionner</value>
   </data>

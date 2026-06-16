@@ -21,8 +21,9 @@
                                 Focusable="False"
                                 Template="{StaticResource MyNet.RegionLayout.ActionsBand}" />
 
-                <Grid ColumnDefinitions="Auto,*">
-                    <ContentPresenter Grid.Column="0"
+                <Grid Name="PART_BodyGrid" ColumnDefinitions="Auto,*">
+                    <ContentPresenter Name="PART_Leading"
+                                      Grid.Column="0"
                                       Content="{TemplateBinding Leading}"
                                       ContentTemplate="{TemplateBinding LeadingTemplate}"
                                       Margin="{TemplateBinding (my:LeadingAssist.Margin)}"
@@ -33,6 +34,7 @@
                     <ContentPresenter Name="PART_Content"
                                       Grid.Column="1"
                                       Padding="{TemplateBinding Padding}"
+                                      VerticalAlignment="Top"
                                       Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}" />
                 </Grid>
@@ -62,6 +64,12 @@
         <Setter Property="Template" Value="{StaticResource MyNet.DialogPanel.Template}" />
         <Style Selector="^ /template/ ContentPresenter">
             <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector="^:header-empty /template/ ContentPresenter#PART_Leading">
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <Style Selector="^:header-empty /template/ ContentPresenter#PART_Content">
+            <Setter Property="VerticalAlignment" Value="Top" />
         </Style>
     </ControlTheme>
 

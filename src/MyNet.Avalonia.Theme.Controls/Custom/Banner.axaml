@@ -90,7 +90,8 @@
                                                           my:IconAssist.Role="Label" />
                                     </Panel>
 
-                                    <ContentPresenter Grid.Row="0"
+                                    <ContentPresenter Name="PART_Header"
+                                                      Grid.Row="0"
                                                       Grid.Column="1"
                                                       VerticalAlignment="{TemplateBinding (my:HeaderAssist.VerticalAlignment)}"
                                                       HorizontalAlignment="{TemplateBinding (my:HeaderAssist.HorizontalAlignment)}"
@@ -155,6 +156,14 @@
         </Style>
         <Style Selector="^[CanClose=True] /template/ Button#PART_CloseButton">
             <Setter Property="IsVisible" Value="True" />
+        </Style>
+
+        <Style Selector="^:header-empty /template/ ContentPresenter#PART_Content">
+            <Setter Property="Grid.Row" Value="0" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style Selector="^:header-empty /template/ Panel#PART_LeadingHost">
+            <Setter Property="VerticalAlignment" Value="Top" />
         </Style>
 
         <Style Selector="^:success">

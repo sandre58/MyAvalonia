@@ -21,11 +21,18 @@ namespace MyNet.Avalonia.Controls;
 /// <see cref="RegionControl.Header"/> is the primary heading; <see cref="ContentControl.Content"/> is the optional detail body.
 /// For page sections, use <see cref="HeaderedContentControl"/> instead.
 /// </remarks>
-[PseudoClasses(PseudoClassName.Error, PseudoClassName.Warning, PseudoClassName.Information, PseudoClassName.Success)]
+[PseudoClasses(PseudoClassName.Error, PseudoClassName.Warning, PseudoClassName.Information, PseudoClassName.Success, PseudoClassName.HeaderEmpty)]
 [TemplatePart(PartCloseButton, typeof(Button))]
 public class Banner : RegionControl
 {
     public const string PartCloseButton = "PART_CloseButton";
+
+    static Banner()
+    {
+        HeaderProperty.Changed.AddClassHandler<Banner, object?>((banner, _) => banner.UpdateHeaderEmptyPseudoClass());
+    }
+
+    public Banner() => UpdateHeaderEmptyPseudoClass();
 
     private Button? _closeButton;
 

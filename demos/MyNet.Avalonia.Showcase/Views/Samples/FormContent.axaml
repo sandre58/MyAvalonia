@@ -31,6 +31,79 @@
         </my:Form.Styles>
 
         <!-- ============================================ -->
+        <!-- LAYOUT SHOWCASE -->
+        <!-- ============================================ -->
+        <my:FormGroup Header="{my:Loc LabelPositions}" LabelWidth="100">
+            <TextBox my:FormItem.Label="{my:Loc PositionLeft}"
+                     PlaceholderText="{my:Loc PositionLeft}" />
+            <TextBox my:FormItem.Label="{my:Loc PositionTop}"
+                     my:FormItem.LabelPosition="Top"
+                     PlaceholderText="{my:Loc PositionTop}" />
+            <TextBox my:FormItem.Label="{my:Loc PositionRight}"
+                     my:FormItem.LabelPosition="Right"
+                     PlaceholderText="{my:Loc PositionRight}" />
+            <TextBox my:FormItem.Label="{my:Loc PositionBottom}"
+                     my:FormItem.LabelPosition="Bottom"
+                     PlaceholderText="{my:Loc PositionBottom}" />
+        </my:FormGroup>
+
+        <my:FormGroup Header="{my:Loc MultiColumnLayout}" Columns="2">
+            <TextBox my:FormItem.Label="{my:Loc FirstName}"
+                     Text="{Binding FirstName}"
+                     PlaceholderText="{my:Loc FirstName}" />
+            <TextBox my:FormItem.Label="{my:Loc LastName}"
+                     Text="{Binding LastName}"
+                     PlaceholderText="{my:Loc LastName}" />
+            <TextBox my:FormItem.ColumnSpan="2"
+                     my:FormItem.Label="{my:Loc FullWidthField}"
+                     Text="{Binding Email}"
+                     PlaceholderText="{my:Loc Email}" />
+            <ComboBox my:FormItem.Label="{my:Loc ChooseCountry}"
+                      ItemsSource="{geo:Countries}"
+                      PlaceholderText="{my:Loc ChooseCountry}"
+                      SelectedItem="{Binding Country}"
+                      ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}" />
+            <TextBox my:FormItem.Label="{my:Loc PhoneNumber}"
+                     Text="{Binding PhoneNumber}"
+                     PlaceholderText="{my:Loc PhoneNumber}" />
+        </my:FormGroup>
+
+        <my:FormGroup Header="{my:Loc FieldAnnotations}">
+            <TextBox my:FormItem.IsRequired="True"
+                     my:FormItem.Label="{my:Loc Username}"
+                     my:FormItem.HelpText="{my:Loc HelpTextSample}"
+                     Text="{Binding Login}"
+                     PlaceholderText="{my:Loc Username}" />
+            <TextBox my:FormItem.Label="{my:Loc Bio}"
+                     my:FormItem.TextWrapping="True"
+                     my:FormItem.HelpText="{my:Loc HelpTextSample}"
+                     AcceptsReturn="True"
+                     Height="80"
+                     Text="{Binding Bio}"
+                     TextWrapping="Wrap"
+                     PlaceholderText="{my:Loc Bio}" />
+            <my:Banner my:FormItem.NoLabel="True"
+                        my:ThemeAssist.Role="Information"
+                        Header="{my:Loc ImportantInformation}"
+                        Leading="ℹ️"
+                        CanClose="False">
+                <TextBlock Text="{my:Loc HelpTextSample}" TextWrapping="Wrap" />
+            </my:Banner>
+        </my:FormGroup>
+
+        <my:FormGroup Header="{my:Loc AdvancedOptions}"
+                      IsExpandable="True"
+                      LabelWidth="*"
+                      LabelAlignment="Left">
+            <ToggleSwitch my:FormItem.Label="{my:Loc EnableNotifications}"
+                          HorizontalAlignment="Right"
+                          IsChecked="{Binding EnableNotifications}" />
+            <ToggleSwitch my:FormItem.Label="{my:Loc MakeProfilePublic}"
+                          HorizontalAlignment="Right"
+                          IsChecked="{Binding MakeProfilePublic}" />
+        </my:FormGroup>
+
+        <!-- ============================================ -->
         <!-- ACCOUNT INFORMATION SECTION -->
         <!-- ============================================ -->
         <my:FormGroup Header="{my:Loc AccountInformation}">

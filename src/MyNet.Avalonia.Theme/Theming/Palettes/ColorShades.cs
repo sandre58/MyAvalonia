@@ -171,14 +171,14 @@ public class ColorShades
     public IReadOnlyDictionary<string, Color> ToResourceDictionary(string paletteName) => new Dictionary<string, Color>
         {
             { paletteName, Base },
-            { nameof(Dark).WithPrefix(paletteName, "."), Dark },
-            { nameof(Light).WithPrefix(paletteName, "."), Light },
-            { nameof(Foreground).WithPrefix(paletteName, "."), Foreground },
-            { nameof(Lightest).WithPrefix(paletteName, "."), Lightest },
-            { nameof(Lighter).WithPrefix(paletteName, "."), Lighter },
-            { nameof(Default).WithPrefix(paletteName, "."), Default },
+            { nameof(Darkest).WithPrefix(paletteName, "."), Darkest },
             { nameof(Darker).WithPrefix(paletteName, "."), Darker },
-            { nameof(Darkest).WithPrefix(paletteName, "."), Darkest }
+            { nameof(Dark).WithPrefix(paletteName, "."), Dark },
+            { nameof(Default).WithPrefix(paletteName, "."), Default },
+            { nameof(Light).WithPrefix(paletteName, "."), Light },
+            { nameof(Lighter).WithPrefix(paletteName, "."), Lighter },
+            { nameof(Lightest).WithPrefix(paletteName, "."), Lightest },
+            { nameof(Foreground).WithPrefix(paletteName, "."), Foreground }
 
             // The following lines are commented out to reduce redundancy, as the shades can be accessed via GetShade method or aliases.
             // { nameof(Shade50).WithPrefix(paletteName), Shade50 },

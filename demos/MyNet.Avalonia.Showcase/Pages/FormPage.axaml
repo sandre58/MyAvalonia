@@ -17,27 +17,32 @@
              my:IconAssist.Icon="{Binding Icon}"
              mc:Ignorable="d">
 
-    <v:ShowcaseView ShowThemes="False">
+    <v:ShowcaseView ShowThemes="False" ShowAppearance="False" ShowContent="False" ShowIcon="False">
 
         <v:ShowcaseView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
                 <my:Form behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
-                         MaxWidth="640"
+                         LabelWidth="120"
+                         MaxWidth="720"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center">
                     <TextBox my:FormItem.Label="{my:Loc FirstName}" PlaceholderText="{my:Loc FirstName}" />
                     <TextBox my:FormItem.Label="{my:Loc LastName}" PlaceholderText="{my:Loc LastName}" />
+                    <TextBox my:FormItem.Label="{my:Loc Email}" PlaceholderText="{my:Loc Email}" />
                     <ComboBox my:FormItem.Label="{my:Loc ChooseCountry}"
                               PlaceholderText="{my:Loc ChooseCountry}"
                               ItemsSource="{my:Countries}"
                               ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}" />
+                    <TextBox my:FormItem.ColumnSpan="2"
+                             my:FormItem.Label="{my:Loc FullWidthField}"
+                             PlaceholderText="{my:Loc Street}" />
                 </my:Form>
             </DataTemplate>
         </v:ShowcaseView.PlaygroundControlTemplate>
 
         <v:ShowcaseView.CustomContent>
             <ScrollViewer ClipToBounds="False">
-                <Border MaxWidth="720"
+                <Border MaxWidth="800"
                         Margin="{my:Thickness Xl}"
                         Padding="{my:Thickness Xl}"
                         HorizontalAlignment="Center"

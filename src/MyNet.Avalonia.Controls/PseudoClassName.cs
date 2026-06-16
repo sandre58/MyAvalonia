@@ -29,6 +29,7 @@ public static class PseudoClassName
     public const string Focus = ":focus";
     public const string FocusWithin = ":focus-within";
     public const string FullScreen = ":full-screen";
+    public const string HeaderEmpty = ":header-empty";
     public const string Horizontal = ":horizontal";
     public const string HorizontalCollapsed = ":horizontal-collapsed";
     public const string Inactive = ":inactive";
