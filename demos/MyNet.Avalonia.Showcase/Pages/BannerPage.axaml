@@ -41,6 +41,14 @@
 
         <v:ShowcaseView.CustomContent>
             <StackPanel Spacing="{my:Spacing Md}">
+                <my:Banner MaxWidth="500"
+                           Classes="leading-badge"
+                           Severity="Custom"
+                           Header="Custom with badge"
+                           Leading="{my:MaterialIcon Kind=PaletteOutline}">
+                    <TextBlock Text="Plain leading is the default; add class leading-badge for a tonal icon background on neutral surfaces."
+                               TextWrapping="Wrap" />
+                </my:Banner>
                 <my:Banner MaxWidth="500" Severity="Custom">
                     <TextBlock Text="{m:RandomText}" TextWrapping="Wrap" />
                 </my:Banner>

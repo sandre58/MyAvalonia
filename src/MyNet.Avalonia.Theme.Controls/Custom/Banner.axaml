@@ -13,13 +13,14 @@
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Sm}" />
-        <Setter Property="my:LeadingAssist.Background" Value="{my:Foreground Opacity=Overlay}" />
-        <Setter Property="my:LeadingAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Md}" />
+        <Setter Property="my:LeadingAssist.Background" Value="Transparent" />
+        <Setter Property="my:LeadingAssist.Padding" Value="0" />
         <Setter Property="my:LeadingAssist.Margin" Value="{my:Thickness Sm, Right}" />
-        <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Sm}" />
+        <Setter Property="my:LeadingAssist.VerticalAlignment" Value="Top" />
 
         <Setter Property="my:TrailingAssist.IsVisible" Value="False" />
 
+        <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Top" />
         <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
         <Setter Property="my:HeaderAssist.Margin" Value="0" />
         <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
@@ -72,7 +73,10 @@
 
                                     <ContentControl Grid.Row="0"
                                                     Grid.Column="0"
+                                                    Grid.RowSpan="2"
+                                                    VerticalAlignment="Top"
                                                     Focusable="False"
+                                                    Margin="0 2 0 0"
                                                     Template="{StaticResource MyNet.RegionLayout.LeadingHost}" />
 
                                     <ContentPresenter Name="PART_Header"
@@ -147,8 +151,21 @@
             <Setter Property="Grid.Row" Value="0" />
             <Setter Property="Margin" Value="0" />
         </Style>
-        <Style Selector="^:header-empty /template/ Panel#PART_LeadingHost">
+
+        <!-- Plain leading by default; opt in to badge with class leading-badge. -->
+        <Style Selector="^ /template/ Border#PART_LeadingBackground">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^ /template/ Panel#PART_LeadingHost">
             <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <Style Selector="^.leading-badge">
+            <Setter Property="my:LeadingAssist.Background" Value="{my:Foreground Opacity=Overlay}" />
+            <Setter Property="my:LeadingAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Md}" />
+            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Sm}" />
+        </Style>
+        <Style Selector="^.leading-badge /template/ Border#PART_LeadingBackground">
+            <Setter Property="IsVisible" Value="True" />
         </Style>
 
         <Style Selector="^:success">
@@ -161,6 +178,9 @@
                 </Template>
             </Setter>
         </Style>
+        <Style Selector="^:success /template/ ContentPresenter#PART_Leading">
+            <Setter Property="my:IconAssist.Role" Value="Primary" />
+        </Style>
         <Style Selector="^:warning">
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="my:ThemeAssist.Role" Value="Warning" />
@@ -170,6 +190,9 @@
                     <my:MaterialIcon Kind="AlertCircle" />
                 </Template>
             </Setter>
+        </Style>
+        <Style Selector="^:warning /template/ ContentPresenter#PART_Leading">
+            <Setter Property="my:IconAssist.Role" Value="Primary" />
         </Style>
         <Style Selector="^:error">
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
@@ -181,6 +204,9 @@
                 </Template>
             </Setter>
         </Style>
+        <Style Selector="^:error /template/ ContentPresenter#PART_Leading">
+            <Setter Property="my:IconAssist.Role" Value="Primary" />
+        </Style>
         <Style Selector="^:information">
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="my:ThemeAssist.Role" Value="Information" />
@@ -191,23 +217,23 @@
                 </Template>
             </Setter>
         </Style>
+        <Style Selector="^:information /template/ ContentPresenter#PART_Leading">
+            <Setter Property="my:IconAssist.Role" Value="Primary" />
+        </Style>
 
         <Style Selector="^.size-sm">
-            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Xs}" />
             <Setter Property="Padding" Value="{my:Thickness Sm}" />
             <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
             <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
             <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xs}" />
         </Style>
         <Style Selector="^.size-md">
-            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Sm}" />
             <Setter Property="Padding" Value="{my:Thickness Md}" />
             <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
             <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
             <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Sm}" />
         </Style>
         <Style Selector="^.size-lg">
-            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Sm}" />
             <Setter Property="Padding" Value="{my:Thickness Md}" />
             <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H5}" />
             <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />

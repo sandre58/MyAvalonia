@@ -18,8 +18,10 @@ namespace MyNet.Avalonia.Controls;
 /// Inline contextual message (info, warning, success). Non-blocking and optionally dismissable.
 /// </summary>
 /// <remarks>
-/// <see cref="RegionControl.Header"/> is the primary heading; <see cref="ContentControl.Content"/> is the optional detail body.
-/// For page sections, use <see cref="HeaderedContentControl"/> instead.
+/// <para><see cref="RegionControl.Header"/> is the primary heading; <see cref="ContentControl.Content"/> is the optional detail body.
+/// For page sections, use <see cref="HeaderedContentControl"/> instead.</para>
+/// <para>Leading icons use a <strong>plain</strong> presentation by default (no badge). Add the <c>leading-badge</c> style class
+/// for a tonal rounded background behind custom leading content on neutral surfaces.</para>
 /// </remarks>
 [PseudoClasses(PseudoClassName.Error, PseudoClassName.Warning, PseudoClassName.Information, PseudoClassName.Success, PseudoClassName.HeaderEmpty)]
 [TemplatePart(PartCloseButton, typeof(Button))]
