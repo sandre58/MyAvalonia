@@ -44,8 +44,16 @@
         <Panel Name="PART_LeadingHost"
                Margin="{Binding (my:LeadingAssist.Margin), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
                HorizontalAlignment="{Binding (my:LeadingAssist.HorizontalAlignment), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
-               VerticalAlignment="{Binding (my:LeadingAssist.VerticalAlignment), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
-               IsVisible="{Binding Leading, RelativeSource={RelativeSource AncestorType=my:RegionControl}, Converter={x:Static my:NullConverter.IsPresent}}">
+               VerticalAlignment="{Binding (my:LeadingAssist.VerticalAlignment), RelativeSource={RelativeSource AncestorType=my:RegionControl}}">
+            <Panel.IsVisible>
+                <MultiBinding Converter="{x:Static BoolConverters.And}">
+                    <Binding Path="Leading"
+                             RelativeSource="{RelativeSource AncestorType=my:RegionControl}"
+                             Converter="{x:Static my:NullConverter.IsPresent}" />
+                    <Binding Path="IsLeadingSlotVisible"
+                             RelativeSource="{RelativeSource AncestorType=my:RegionControl}" />
+                </MultiBinding>
+            </Panel.IsVisible>
             <Border Name="PART_LeadingBackground"
                     CornerRadius="{Binding (my:LeadingAssist.CornerRadius), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
                     Background="{Binding (my:LeadingAssist.Background), RelativeSource={RelativeSource AncestorType=my:RegionControl}}" />

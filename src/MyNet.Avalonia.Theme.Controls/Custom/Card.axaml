@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-    <ControlTemplate x:Key="MyNet.Card.Template.BodyGrid" TargetType="ContentControl">
+    <!-- Horizontal + Stat share the same body grid. -->
+    <ControlTemplate x:Key="MyNet.Card.Template.Body.Horizontal" TargetType="ContentControl">
         <Grid Name="PART_BodyGrid"
               Margin="{Binding Padding, RelativeSource={RelativeSource AncestorType=my:Card}}"
               ColumnDefinitions="Auto,*,Auto"
@@ -60,6 +61,213 @@
         </Grid>
     </ControlTemplate>
 
+    <ControlTemplate x:Key="MyNet.Card.Template.Body.Vertical" TargetType="ContentControl">
+        <Grid Name="PART_BodyGrid"
+              Margin="{Binding Padding, RelativeSource={RelativeSource AncestorType=my:Card}}"
+              ColumnDefinitions="*,Auto"
+              RowDefinitions="Auto,Auto,*"
+              RowSpacing="{StaticResource MyNet.Spacing.Sm}">
+            <ContentControl Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            HorizontalAlignment="Center"
+                            Focusable="False"
+                            Template="{StaticResource MyNet.RegionLayout.LeadingHost}" />
+
+            <my:TitleBlock Name="PART_TitleBlock"
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           HorizontalAlignment="Stretch"
+                           HorizontalTextAlignment="Center"
+                           TextAlignment="Center"
+                           Title="{Binding Title, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           TitleTemplate="{Binding TitleTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           TitleFontSize="{Binding TitleFontSize, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           TitleFontWeight="{Binding TitleFontWeight, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           TitleForeground="{Binding TitleForeground, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           Subtitle="{Binding Subtitle, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           SubtitleTemplate="{Binding SubtitleTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           SubtitleFontSize="{Binding SubtitleFontSize, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           SubtitleForeground="{Binding SubtitleForeground, RelativeSource={RelativeSource AncestorType=my:Card}}" />
+
+            <ContentPresenter Name="PART_Content"
+                              Grid.Row="2"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              Content="{Binding Content, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              ContentTemplate="{Binding ContentTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              IsVisible="{Binding Content, RelativeSource={RelativeSource AncestorType=my:Card}, Converter={x:Static my:NullConverter.IsPresent}}" />
+
+            <ContentPresenter Name="PART_Trailing"
+                              Grid.Row="0"
+                              Grid.Column="1"
+                              Padding="{Binding (my:TrailingAssist.Padding), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              Margin="{Binding (my:TrailingAssist.Margin), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              VerticalAlignment="{Binding (my:TrailingAssist.VerticalAlignment), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              HorizontalAlignment="{Binding (my:TrailingAssist.HorizontalAlignment), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              Content="{Binding Trailing, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              ContentTemplate="{Binding TrailingTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}">
+                <ContentPresenter.IsVisible>
+                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                        <Binding Path="Trailing"
+                                 RelativeSource="{RelativeSource AncestorType=my:Card}"
+                                 Converter="{x:Static my:NullConverter.IsPresent}" />
+                        <Binding Path="(my:TrailingAssist.IsVisible)"
+                                 RelativeSource="{RelativeSource AncestorType=my:Card}" />
+                    </MultiBinding>
+                </ContentPresenter.IsVisible>
+            </ContentPresenter>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MyNet.Card.Template.Body.MediaTop" TargetType="ContentControl">
+        <Grid Name="PART_BodyGrid"
+              Margin="{Binding Padding, RelativeSource={RelativeSource AncestorType=my:Card}}"
+              ColumnDefinitions="*,Auto"
+              RowDefinitions="Auto,*">
+            <ContentControl Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Focusable="False"
+                            Template="{StaticResource MyNet.RegionLayout.LeadingHost}" />
+
+            <Border Name="PART_TextHost"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Padding="{StaticResource MyNet.Padding.Surface}">
+                <Grid RowDefinitions="Auto,*"
+                      ColumnDefinitions="*,Auto"
+                      RowSpacing="{StaticResource MyNet.Spacing.Xs}">
+                    <my:TitleBlock Name="PART_TitleBlock"
+                                   Grid.Row="0"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Title="{Binding Title, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   TitleTemplate="{Binding TitleTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   TitleFontSize="{Binding TitleFontSize, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   TitleFontWeight="{Binding TitleFontWeight, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   TitleForeground="{Binding TitleForeground, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   Subtitle="{Binding Subtitle, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   SubtitleTemplate="{Binding SubtitleTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   SubtitleFontSize="{Binding SubtitleFontSize, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   SubtitleForeground="{Binding SubtitleForeground, RelativeSource={RelativeSource AncestorType=my:Card}}" />
+
+                    <ContentPresenter Name="PART_Content"
+                                      Grid.Row="1"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="2"
+                                      VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      Content="{Binding Content, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      ContentTemplate="{Binding ContentTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      IsVisible="{Binding Content, RelativeSource={RelativeSource AncestorType=my:Card}, Converter={x:Static my:NullConverter.IsPresent}}" />
+
+                    <ContentPresenter Name="PART_Trailing"
+                                      Grid.Row="0"
+                                      Grid.Column="1"
+                                      Padding="{Binding (my:TrailingAssist.Padding), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      Margin="{Binding (my:TrailingAssist.Margin), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      VerticalAlignment="{Binding (my:TrailingAssist.VerticalAlignment), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      HorizontalAlignment="{Binding (my:TrailingAssist.HorizontalAlignment), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      Content="{Binding Trailing, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      ContentTemplate="{Binding TrailingTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}">
+                        <ContentPresenter.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="Trailing"
+                                         RelativeSource="{RelativeSource AncestorType=my:Card}"
+                                         Converter="{x:Static my:NullConverter.IsPresent}" />
+                                <Binding Path="(my:TrailingAssist.IsVisible)"
+                                         RelativeSource="{RelativeSource AncestorType=my:Card}" />
+                            </MultiBinding>
+                        </ContentPresenter.IsVisible>
+                    </ContentPresenter>
+                </Grid>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MyNet.Card.Template.Body.MediaLeft" TargetType="ContentControl">
+        <Grid Name="PART_BodyGrid"
+              Margin="{Binding Padding, RelativeSource={RelativeSource AncestorType=my:Card}}"
+              ColumnDefinitions="Auto,*"
+              RowDefinitions="Auto,*"
+              ColumnSpacing="0">
+            <ContentControl Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.RowSpan="2"
+                            VerticalAlignment="Stretch"
+                            Focusable="False"
+                            Template="{StaticResource MyNet.RegionLayout.LeadingHost}" />
+
+            <Border Name="PART_TextHost"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.RowSpan="2"
+                    Padding="{StaticResource MyNet.Padding.Surface}">
+                <Grid RowDefinitions="Auto,*"
+                      ColumnDefinitions="*,Auto"
+                      RowSpacing="{StaticResource MyNet.Spacing.Xs}">
+                    <my:TitleBlock Name="PART_TitleBlock"
+                                   Grid.Row="0"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Title="{Binding Title, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   TitleTemplate="{Binding TitleTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   TitleFontSize="{Binding TitleFontSize, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   TitleFontWeight="{Binding TitleFontWeight, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   TitleForeground="{Binding TitleForeground, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   Subtitle="{Binding Subtitle, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   SubtitleTemplate="{Binding SubtitleTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   SubtitleFontSize="{Binding SubtitleFontSize, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                   SubtitleForeground="{Binding SubtitleForeground, RelativeSource={RelativeSource AncestorType=my:Card}}" />
+
+                    <ContentPresenter Name="PART_Content"
+                                      Grid.Row="1"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="2"
+                                      VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      Content="{Binding Content, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      ContentTemplate="{Binding ContentTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      IsVisible="{Binding Content, RelativeSource={RelativeSource AncestorType=my:Card}, Converter={x:Static my:NullConverter.IsPresent}}" />
+
+                    <ContentPresenter Name="PART_Trailing"
+                                      Grid.Row="0"
+                                      Grid.Column="1"
+                                      Padding="{Binding (my:TrailingAssist.Padding), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      Margin="{Binding (my:TrailingAssist.Margin), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      VerticalAlignment="{Binding (my:TrailingAssist.VerticalAlignment), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      HorizontalAlignment="{Binding (my:TrailingAssist.HorizontalAlignment), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      Content="{Binding Trailing, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                                      ContentTemplate="{Binding TrailingTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}">
+                        <ContentPresenter.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="Trailing"
+                                         RelativeSource="{RelativeSource AncestorType=my:Card}"
+                                         Converter="{x:Static my:NullConverter.IsPresent}" />
+                                <Binding Path="(my:TrailingAssist.IsVisible)"
+                                         RelativeSource="{RelativeSource AncestorType=my:Card}" />
+                            </MultiBinding>
+                        </ContentPresenter.IsVisible>
+                    </ContentPresenter>
+                </Grid>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MyNet.Card.Template.Body.ContentOnly" TargetType="ContentControl">
+        <ContentPresenter Name="PART_Content"
+                          Margin="{Binding Padding, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                          VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                          HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                          Content="{Binding Content, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                          ContentTemplate="{Binding ContentTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}" />
+    </ControlTemplate>
+
     <ControlTemplate x:Key="MyNet.Card.Template.Default" TargetType="my:Card">
         <Border Name="PART_Root"
                 Background="{TemplateBinding Background}"
@@ -74,8 +282,9 @@
                 <ContentControl DockPanel.Dock="Bottom"
                                 Focusable="False"
                                 Template="{StaticResource MyNet.RegionLayout.ActionsBand}" />
-                <ContentControl Focusable="False"
-                                Template="{StaticResource MyNet.Card.Template.BodyGrid}" />
+                <ContentControl Name="PART_Body"
+                                Focusable="False"
+                                Template="{StaticResource MyNet.Card.Template.Body.Horizontal}" />
             </DockPanel>
         </Border>
     </ControlTemplate>
@@ -112,8 +321,9 @@
                 <ContentControl DockPanel.Dock="Bottom"
                                 Focusable="False"
                                 Template="{StaticResource MyNet.RegionLayout.ActionsBand}" />
-                <ContentControl Focusable="False"
-                                Template="{StaticResource MyNet.Card.Template.BodyGrid}" />
+                <ContentControl Name="PART_Body"
+                                Focusable="False"
+                                Template="{StaticResource MyNet.Card.Template.Body.Horizontal}" />
             </DockPanel>
         </Button>
     </ControlTemplate>
@@ -134,11 +344,10 @@
                 <my:MaterialIcon Classes="kind-glyph is-dropdown position-right size-xl" />
             </Template>
         </Setter>
-        <Setter Property="my:LeadingAssist.Background" Value="{my:Foreground Opacity=Overlay}" />
-        <Setter Property="my:LeadingAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Md}" />
-        <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Sm}" />
+        <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Md}" />
+        <Setter Property="my:LeadingAssist.Margin" Value="{my:Thickness Sm, Right}" />
         <Setter Property="my:TrailingAssist.IsVisible" Value="False" />
-
+        
         <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Surface.Header.Md}" />
         <Setter Property="my:HeaderAssist.Margin" Value="0" />
         <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
@@ -170,6 +379,24 @@
 
         <Setter Property="Template" Value="{StaticResource MyNet.Card.Template.Default}" />
 
+        <!-- Body template switching -->
+        <Style Selector="^:content-only /template/ ContentControl#PART_Body">
+            <Setter Property="Template" Value="{StaticResource MyNet.Card.Template.Body.ContentOnly}" />
+        </Style>
+        <Style Selector="^:vertical:not(:content-only) /template/ ContentControl#PART_Body">
+            <Setter Property="Template" Value="{StaticResource MyNet.Card.Template.Body.Vertical}" />
+        </Style>
+        <Style Selector="^:layout-stat:not(:content-only) /template/ ContentControl#PART_Body">
+            <Setter Property="Template" Value="{StaticResource MyNet.Card.Template.Body.Horizontal}" />
+        </Style>
+        <Style Selector="^:layout-media-top:not(:content-only) /template/ ContentControl#PART_Body">
+            <Setter Property="Template" Value="{StaticResource MyNet.Card.Template.Body.MediaTop}" />
+        </Style>
+        <Style Selector="^:layout-media-left:not(:content-only) /template/ ContentControl#PART_Body">
+            <Setter Property="Template" Value="{StaticResource MyNet.Card.Template.Body.MediaLeft}" />
+        </Style>
+
+        <!-- Shared body styles -->
         <Style Selector="^ /template/ ContentPresenter">
             <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
         </Style>
@@ -188,25 +415,97 @@
         <Style Selector="^:title-empty:subtitle-empty /template/ ContentPresenter#PART_Content">
             <Setter Property="Margin" Value="0" />
         </Style>
-        <Style Selector="^:compact">
-            <Setter Property="my:LeadingAssist.Margin" Value="{my:Thickness Md, Right}" />
-            <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Md}" />
-        </Style>
-        <Style Selector="^:compact /template/ Panel#PART_LeadingHost">
-            <Setter Property="Grid.RowSpan" Value="2" />
-        </Style>
-        <Style Selector="^:tile">
-            <Setter Property="my:LeadingAssist.Margin" Value="{my:Thickness Sm, Right}" />
-        </Style>
-        <Style Selector="^:tile /template/ Border#PART_LeadingBackground">
-            <Setter Property="IsVisible" Value="False" />
-        </Style>
         <Style Selector="^:title-empty:subtitle-empty /template/ my|TitleBlock#PART_TitleBlock">
             <Setter Property="IsVisible" Value="False" />
         </Style>
-        <Style Selector="^:tile /template/ my|TitleBlock#PART_TitleBlock">
-            <Setter Property="Grid.RowSpan" Value="1" />
+
+        <!-- Horizontal layout -->
+        <Style Selector="^:horizontal:not(:content-only)">
+            <Setter Property="my:LeadingAssist.Margin" Value="{my:Thickness Md, Right}" />
         </Style>
+        <Style Selector="^:horizontal:not(:content-only) /template/ Panel#PART_LeadingHost">
+            <Setter Property="Grid.RowSpan" Value="2" />
+        </Style>
+
+        <!-- Vertical layout -->
+        <Style Selector="^:vertical:not(:content-only) /template/ my|TitleBlock#PART_TitleBlock">
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+        <Style Selector="^:vertical:not(:content-only) /template/ Panel#PART_LeadingHost">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <!-- Stat layout -->
+        <Style Selector="^:layout-stat:not(:content-only) /template/ my|TitleBlock#PART_TitleBlock">
+            <Setter Property="Spacing" Value="{StaticResource MyNet.Spacing.Xxs}" />
+        </Style>
+        <Style Selector="^:layout-stat:not(:content-only) /template/ Panel#PART_LeadingHost">
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <Style Selector="^:layout-stat:not(:content-only) /template/ my|TitleBlock#PART_TitleBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <!-- Media layouts with hero leading -->
+        <Style Selector="^:layout-media-top:not(:content-only)">
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="^:layout-media-top:not(:content-only) /template/ Grid#PART_BodyGrid">
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style Selector="^:layout-media-top:not(:content-only) /template/ ContentPresenter#PART_Content">
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style Selector="^:layout-media-top:leading-hero:not(:content-only) /template/ Panel#PART_LeadingHost">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Height" Value="160" />
+            <Setter Property="ClipToBounds" Value="True" />
+        </Style>
+        <Style Selector="^:layout-media-top:leading-hero:not(:content-only) /template/ ContentPresenter#PART_Leading">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+
+        <Style Selector="^:layout-media-left:not(:content-only)">
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="^:layout-media-left:not(:content-only) /template/ Grid#PART_BodyGrid">
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style Selector="^:layout-media-left:not(:content-only) /template/ ContentPresenter#PART_Content">
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style Selector="^:layout-media-left:leading-hero:not(:content-only) /template/ Panel#PART_LeadingHost">
+            <Setter Property="Width" Value="120" />
+            <Setter Property="MinHeight" Value="120" />
+            <Setter Property="ClipToBounds" Value="True" />
+        </Style>
+        <Style Selector="^:layout-media-left:leading-hero:not(:content-only) /template/ ContentPresenter#PART_Leading">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+
+        <!-- Leading presentation -->
+        <Style Selector="^:leading-badge">
+            <Setter Property="my:LeadingAssist.Background" Value="{my:Foreground Opacity=Overlay}" />
+            <Setter Property="my:LeadingAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Md}" />
+        </Style>
+        <Style Selector="^:leading-plain /template/ Border#PART_LeadingBackground">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:leading-hero /template/ Border#PART_LeadingBackground">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:leading-hero">
+            <Setter Property="my:LeadingAssist.Padding" Value="0" />
+            <Setter Property="my:LeadingAssist.Margin" Value="0" />
+        </Style>
+        <Style Selector="^:leading-hero /template/ ContentPresenter#PART_Leading Image">
+            <Setter Property="Stretch" Value="UniformToFill" />
+        </Style>
+
         <Style Selector="^.is-hover:pointerover /template/ Border#PART_Root">
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="my:ShadowAssist.Darken" Value="True" />
@@ -234,7 +533,24 @@
             <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H3}" />
             <Setter Property="SubtitleFontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
             <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
-            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+            <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xl}" />
+        </Style>
+
+        <!-- Stat typography overrides size presets -->
+        <Style Selector="^:layout-stat:not(:content-only)">
+            <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H3}" />
+            <Setter Property="TitleFontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+            <Setter Property="SubtitleFontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+            <Setter Property="SubtitleForeground" Value="{my:Foreground Opacity=High}" />
+        </Style>
+        <Style Selector="^.size-sm:layout-stat:not(:content-only)">
+            <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H6}" />
+        </Style>
+        <Style Selector="^.size-md:layout-stat:not(:content-only)">
+            <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H3}" />
+        </Style>
+        <Style Selector="^.size-lg:layout-stat:not(:content-only)">
+            <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H1}" />
         </Style>
     </ControlTheme>
 

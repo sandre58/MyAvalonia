@@ -36,4 +36,19 @@
     <data name="Footer" xml:space="preserve">
         <value>Pied de page</value>
     </data>
+    <data name="LayoutGallerySection" xml:space="preserve">
+        <value>Layouts</value>
+    </data>
+    <data name="LayoutGalleryDescription" xml:space="preserve">
+        <value>Chaque layout réorganise le corps de la carte. Le bandeau Header et la zone Actions restent indépendants.</value>
+    </data>
+    <data name="LeadingPresentationSection" xml:space="preserve">
+        <value>Présentation du leading</value>
+    </data>
+    <data name="UseCasesSection" xml:space="preserve">
+        <value>Cas d'utilisation</value>
+    </data>
+    <data name="ContentOnlyExample" xml:space="preserve">
+        <value>Contenu seul — aucun titre ni leading</value>
+    </data>
 </root>

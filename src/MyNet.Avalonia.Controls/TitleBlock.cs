@@ -8,6 +8,7 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
+using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Layout;
@@ -23,8 +24,17 @@ public class TitleBlock : TemplatedControl
 {
     static TitleBlock()
     {
-        TitleProperty.Changed.AddClassHandler<TitleBlock>((c, _) => c.UpdateTitleState());
-        SubtitleProperty.Changed.AddClassHandler<TitleBlock>((c, _) => c.UpdateSubtitleState());
+        TitleProperty.Changed.AddClassHandler<TitleBlock>((c, _) =>
+        {
+            c.UpdateTitleState();
+            c.ApplyTextAlignmentToPresenters();
+        });
+        SubtitleProperty.Changed.AddClassHandler<TitleBlock>((c, _) =>
+        {
+            c.UpdateSubtitleState();
+            c.ApplyTextAlignmentToPresenters();
+        });
+        TextAlignmentProperty.Changed.AddClassHandler<TitleBlock>((c, _) => c.ApplyTextAlignmentToPresenters());
     }
 
     public TitleBlock()
@@ -124,8 +134,11 @@ public class TitleBlock : TemplatedControl
 
     #region Text Alignment
 
+    /// <summary>
+    /// Gets or sets the horizontal alignment of title and subtitle text within the block.
+    /// </summary>
     public static readonly StyledProperty<TextAlignment> TextAlignmentProperty =
-        AvaloniaProperty.Register<TitleBlock, TextAlignment>(nameof(TextAlignment));
+        AvaloniaProperty.Register<TitleBlock, TextAlignment>(nameof(TextAlignment), TextAlignment.Left);
 
     public TextAlignment TextAlignment
     {
@@ -137,8 +150,11 @@ public class TitleBlock : TemplatedControl
 
     #region Horizontal Text Alignment
 
+    /// <summary>
+    /// Obsolete layout helper — title presenters always stretch; use <see cref="TextAlignment"/> instead.
+    /// </summary>
     public static readonly StyledProperty<HorizontalAlignment> HorizontalTextAlignmentProperty =
-        AvaloniaProperty.Register<TitleBlock, HorizontalAlignment>(nameof(HorizontalTextAlignment));
+        AvaloniaProperty.Register<TitleBlock, HorizontalAlignment>(nameof(HorizontalTextAlignment), HorizontalAlignment.Stretch);
 
     public HorizontalAlignment HorizontalTextAlignment
     {
@@ -160,6 +176,41 @@ public class TitleBlock : TemplatedControl
     }
 
     #endregion
+
+    private ContentPresenter? _titlePresenter;
+    private ContentPresenter? _subtitlePresenter;
+
+    /// <inheritdoc />
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    {
+        base.OnApplyTemplate(e);
+        _titlePresenter = e.NameScope.Find<ContentPresenter>("PART_Title");
+        _subtitlePresenter = e.NameScope.Find<ContentPresenter>("PART_Subtitle");
+        ApplyTextAlignmentToPresenters();
+    }
+
+    private void ApplyTextAlignmentToPresenters()
+    {
+        ApplyTextAlignment(_titlePresenter);
+        ApplyTextAlignment(_subtitlePresenter);
+    }
+
+    private void ApplyTextAlignment(ContentPresenter? presenter)
+    {
+        if (presenter is null)
+        {
+            return;
+        }
+
+        var alignment = TextAlignment;
+        presenter.SetValue(TextBlock.TextAlignmentProperty, alignment);
+
+        if (presenter.Child is TextBlock textBlock)
+        {
+            textBlock.TextAlignment = alignment;
+            textBlock.HorizontalAlignment = HorizontalAlignment.Stretch;
+        }
+    }
 
     private void UpdateTitleState() => PseudoClasses.Set(":title-empty", IsEmptyLike(Title));
 

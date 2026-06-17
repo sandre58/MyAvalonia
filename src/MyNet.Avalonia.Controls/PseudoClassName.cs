@@ -29,8 +29,16 @@ public static class PseudoClassName
     public const string Focus = ":focus";
     public const string FocusWithin = ":focus-within";
     public const string FullScreen = ":full-screen";
+    public const string ContentOnly = ":content-only";
     public const string HeaderEmpty = ":header-empty";
     public const string Horizontal = ":horizontal";
+    public const string LayoutMediaLeft = ":layout-media-left";
+    public const string LayoutMediaTop = ":layout-media-top";
+    public const string LayoutStat = ":layout-stat";
+    public const string LeadingBadge = ":leading-badge";
+    public const string LeadingHero = ":leading-hero";
+    public const string LeadingNone = ":leading-none";
+    public const string LeadingPlain = ":leading-plain";
     public const string HorizontalCollapsed = ":horizontal-collapsed";
     public const string Inactive = ":inactive";
     public const string Indeterminate = ":indeterminate";

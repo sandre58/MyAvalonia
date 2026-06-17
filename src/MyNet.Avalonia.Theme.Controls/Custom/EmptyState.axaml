@@ -65,7 +65,6 @@
             <Setter Property="TextBlock.TextAlignment" Value="Center" />
         </Style>
         <Style Selector="^ /template/ my|TitleBlock#PART_TitleBlock">
-            <Setter Property="HorizontalTextAlignment" Value="Center" />
             <Setter Property="TextAlignment" Value="Center" />
             <Setter Property="TitleFontSize" Value="{StaticResource MyNet.Font.Size.H4}" />
             <Setter Property="TitleFontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />

@@ -10,6 +10,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
 using Avalonia.Headless.XUnit;
+using Avalonia.Layout;
+using Avalonia.Media;
 using Avalonia.Styling;
 using Avalonia.VisualTree;
 using FluentAssertions;
@@ -21,11 +23,11 @@ namespace MyNet.Avalonia.Controls.Headless.Tests;
 public class CardHeadlessTests
 {
     [AvaloniaFact]
-    public void CompactLayout_RendersTitleAndSubtitle()
+    public void HorizontalLayout_RendersTitleAndSubtitle()
     {
         var card = new Card
         {
-            Layout = CardLayout.Compact,
+            Layout = CardLayout.Horizontal,
             Leading = new MaterialIcon { Kind = MaterialIconKind.Home },
             Title = "Title",
             Subtitle = "Subtitle",
@@ -41,22 +43,71 @@ public class CardHeadlessTests
     }
 
     [AvaloniaFact]
-    public void TileLayout_SetsTilePseudoClass()
+    public void VerticalLayout_SetsVerticalPseudoClass()
     {
-        var card = new Card { Layout = CardLayout.Tile };
+        var card = new Card { Layout = CardLayout.Vertical };
 
         HeadlessControlHost.Show(card, new(240, 120));
 
-        card.Classes.Should().Contain(":tile");
-        card.Classes.Should().NotContain(":compact");
+        card.Classes.Should().Contain(":vertical");
+        card.Classes.Should().NotContain(":horizontal");
     }
 
     [AvaloniaFact]
-    public void TileLayout_HidesLeadingBackground()
+    public void VerticalLayout_CentersTitlePresenters()
     {
         var card = new Card
         {
-            Layout = CardLayout.Tile,
+            Layout = CardLayout.Vertical,
+            Title = "Title",
+            Subtitle = "Subtitle with enough text to wrap on narrow cards.",
+            Padding = new(16),
+        };
+
+        HeadlessControlHost.Show(card, new(200, 160));
+
+        var titlePresenters = card.GetVisualDescendants()
+            .OfType<ContentPresenter>()
+            .Where(p => p.Name is "PART_Title" or "PART_Subtitle")
+            .ToList();
+
+        titlePresenters.Should().HaveCount(2);
+        titlePresenters.Should().OnlyContain(p => p.GetValue(TextBlock.TextAlignmentProperty) == TextAlignment.Center);
+        titlePresenters.Should().OnlyContain(p => p.HorizontalAlignment == HorizontalAlignment.Stretch);
+
+        var textBlocks = titlePresenters
+            .Select(p => p.Child)
+            .OfType<TextBlock>()
+            .ToList();
+
+        textBlocks.Should().HaveCount(2);
+        textBlocks.Should().OnlyContain(tb => tb.TextAlignment == TextAlignment.Center);
+        textBlocks.Should().OnlyContain(tb => tb.HorizontalAlignment == HorizontalAlignment.Stretch);
+    }
+
+    [AvaloniaFact]
+    public void LeadingNone_HidesLeadingHost()
+    {
+        var card = new Card
+        {
+            LeadingPresentation = LeadingPresentation.None,
+            Leading = new MaterialIcon { Kind = MaterialIconKind.EyeOffOutline },
+            Title = "Hidden leading",
+        };
+
+        HeadlessControlHost.Show(card, new(320, 120));
+
+        var leadingHost = card.GetVisualDescendants().OfType<Panel>().FirstOrDefault(b => b.Name == "PART_LeadingHost");
+        leadingHost.Should().NotBeNull();
+        leadingHost!.IsVisible.Should().BeFalse();
+    }
+
+    [AvaloniaFact]
+    public void PlainLeading_HidesLeadingBackground()
+    {
+        var card = new Card
+        {
+            LeadingPresentation = LeadingPresentation.Plain,
             Leading = new MaterialIcon { Kind = MaterialIconKind.Palette },
             Title = "Theme",
             Subtitle = "Open the theme page."
@@ -66,9 +117,27 @@ public class CardHeadlessTests
 
         var leadingBackground = card.GetVisualDescendants().OfType<Border>().FirstOrDefault(b => b.Name == "PART_LeadingBackground");
         leadingBackground.Should().NotBeNull();
+        leadingBackground!.IsVisible.Should().BeFalse();
+    }
 
-        var titleBlock = card.GetVisualDescendants().OfType<TitleBlock>().FirstOrDefault();
-        titleBlock.Should().NotBeNull();
+    [AvaloniaFact]
+    public void ContentOnly_SetsPseudoClassWhenOnlyContentIsSet()
+    {
+        var card = new Card { Content = "Widget body" };
+
+        HeadlessControlHost.Show(card, new(240, 120));
+
+        card.Classes.Should().Contain(":content-only");
+    }
+
+    [AvaloniaFact]
+    public void ContentOnly_ClearsWhenTitleIsSet()
+    {
+        var card = new Card { Content = "Widget body", Title = "Title" };
+
+        HeadlessControlHost.Show(card, new(240, 120));
+
+        card.Classes.Should().NotContain(":content-only");
     }
 
     [AvaloniaFact]

@@ -112,5 +112,35 @@ namespace MyNet.Avalonia.Showcase.Resources {
                 return ResourceManager.GetString("Subtitle", resourceCulture);
             }
         }
+        
+        internal static string LayoutGallerySection {
+            get {
+                return ResourceManager.GetString("LayoutGallerySection", resourceCulture);
+            }
+        }
+        
+        internal static string LayoutGalleryDescription {
+            get {
+                return ResourceManager.GetString("LayoutGalleryDescription", resourceCulture);
+            }
+        }
+        
+        internal static string LeadingPresentationSection {
+            get {
+                return ResourceManager.GetString("LeadingPresentationSection", resourceCulture);
+            }
+        }
+        
+        internal static string UseCasesSection {
+            get {
+                return ResourceManager.GetString("UseCasesSection", resourceCulture);
+            }
+        }
+        
+        internal static string ContentOnlyExample {
+            get {
+                return ResourceManager.GetString("ContentOnlyExample", resourceCulture);
+            }
+        }
     }
 }

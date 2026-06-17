@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.CardPage"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -20,17 +22,15 @@
 
     <v:ShowcaseView>
 
-        <!-- Playground: shows one card with all options controllable -->
         <v:ShowcaseView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
                 <my:Card behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
-                         MaxWidth="360"
+                         MaxWidth="420"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center" />
             </DataTemplate>
         </v:ShowcaseView.PlaygroundControlTemplate>
 
-        <!-- Theme gallery: all variants side by side -->
         <v:ShowcaseView.ThemeControlTemplate>
             <DataTemplate x:DataType="rendering:ControlStyle">
                 <my:Card behavior:PlaygroundBehavior.AttachStyle="{Binding}"
@@ -38,58 +38,149 @@
                          Padding="{my:Thickness Lg}"
                          Title="{m:RandomText}"
                          Subtitle="{m:RandomText}"
-                         Leading="{m:RandomIcon}">
-                </my:Card>
+                         Leading="{m:RandomIcon}" />
             </DataTemplate>
         </v:ShowcaseView.ThemeControlTemplate>
 
-        <!-- Custom examples -->
         <v:ShowcaseView.CustomContent>
-            <StackPanel Spacing="{my:Spacing Lg}">
-                <!-- Compact + Tile -->
-                <UniformGrid Columns="2" ColumnSpacing="{my:Spacing Md}" RowSpacing="{my:Spacing Md}">
-                    <my:Card Padding="{my:Thickness Lg}"
-                             Layout="Compact"
-                             Title="6"
-                             Subtitle="Packages"
-                             Leading="{my:MaterialIcon Kind=PackageVariantClosed}" />
-                    <my:Card Padding="{my:Thickness Lg}"
-                             Layout="Tile"
-                             Title="Theming"
-                             Subtitle="Variants, roles, shadows and density tokens."
-                             Leading="{my:MaterialIcon Kind=PaletteOutline}" />
+            <StackPanel Spacing="{my:Spacing Xl}">
 
-                </UniformGrid>
-                
-                <!-- Interactive theme -->
-                <my:Card Padding="{my:Thickness Lg}"
-                         Theme="{StaticResource MyNet.Theme.Card.Interactive}"
-                         Title="Theme playground"
-                         Subtitle="Open the theme page and tweak control classes live."
-                         Command="{Binding SampleCommand}"
-                         Leading="{my:MaterialIcon Kind=Palette}" />
-                
-                <!-- With Header band -->
-                <my:Card Padding="{my:Thickness Lg}"
-                         Layout="Compact"
-                         Title="With header band"
-                         Subtitle="The header band is styleable via card properties."
-                         Leading="{my:MaterialIcon Kind=CheckCircleOutline}"
-                         Header="Status" />
+                <!-- Layout gallery -->
+                <HeaderedContentControl Header="{my:Loc LayoutGallerySection}"
+                                        HorizontalContentAlignment="Stretch">
+                    <StackPanel Spacing="{my:Spacing Md}">
+                        <TextBlock Classes="font-sm opacity-high"
+                                   Text="{my:Loc LayoutGalleryDescription}"
+                                   TextWrapping="Wrap" />
 
-                <!-- With Footer band -->
-                <my:Card Padding="{my:Thickness Lg}"
-                         Title="With footer band"
-                         Subtitle="Any content can appear in the footer zone.">
-                    <my:Card.Actions>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
-                                    Spacing="{my:Spacing Sm}" Margin="{my:Thickness Sm}">
-                            <Button Content="Cancel" Classes="kind-flat" />
-                            <Button Content="Confirm" Classes="variant-solid" />
-                        </StackPanel>
-                    </my:Card.Actions>
-                </my:Card>
-                
+                        <UniformGrid Columns="2" ColumnSpacing="{my:Spacing Md}" RowSpacing="{my:Spacing Md}">
+                            <my:Card Padding="{my:Thickness Lg}"
+                                     Layout="Horizontal"
+                                     LeadingPresentation="Badge"
+                                     Title="Settings row"
+                                     Subtitle="Icon on the left with a tonal badge — navigation and settings."
+                                     Leading="{my:MaterialIcon Kind=CogOutline}" />
+                            <my:Card Padding="{my:Thickness Lg}"
+                                     Layout="Vertical"
+                                     LeadingPresentation="Plain"
+                                     Title="Shortcut tile"
+                                     Subtitle="Centered icon above the title — dashboard shortcuts."
+                                     Leading="{my:MaterialIcon Kind=ViewDashboardOutline}" />
+                        </UniformGrid>
+
+                        <UniformGrid Columns="3" ColumnSpacing="{my:Spacing Md}" RowSpacing="{my:Spacing Md}">
+                            <my:Card Padding="{my:Thickness Lg}"
+                                     Layout="Stat"
+                                     LeadingPresentation="Plain"
+                                     Title="128"
+                                     Subtitle="Active users"
+                                     Leading="{my:MaterialIcon Kind=AccountGroupOutline}" />
+                            <my:Card MaxWidth="280"
+                                     Layout="MediaTop"
+                                     LeadingPresentation="Hero"
+                                     Title="Mountain trail"
+                                     Subtitle="A weekend hike in the Alps."
+                                     HorizontalAlignment="Stretch">
+                                <my:Card.Leading>
+                                    <Image Source="avares://MyNet.Avalonia.Showcase/Assets/Images/avatar_1.png"
+                                           Height="160" />
+                                </my:Card.Leading>
+                            </my:Card>
+                            <my:Card MaxWidth="360"
+                                     Layout="MediaLeft"
+                                     LeadingPresentation="Hero"
+                                     Title="Alex Martin"
+                                     Subtitle="Product designer · Paris"
+                                     Content="Available for freelance projects this quarter."
+                                     HorizontalAlignment="Stretch">
+                                <my:Card.Leading>
+                                    <Image Source="avares://MyNet.Avalonia.Showcase/Assets/Images/avatar_2.png" />
+                                </my:Card.Leading>
+                            </my:Card>
+                        </UniformGrid>
+                    </StackPanel>
+                </HeaderedContentControl>
+
+                <!-- Leading presentation -->
+                <HeaderedContentControl Header="{my:Loc LeadingPresentationSection}"
+                                        HorizontalContentAlignment="Stretch">
+                    <UniformGrid Columns="4" ColumnSpacing="{my:Spacing Md}" RowSpacing="{my:Spacing Md}">
+                        <my:Card Padding="{my:Thickness Md}"
+                                 Layout="Horizontal"
+                                 LeadingPresentation="Badge"
+                                 Title="Badge"
+                                 Subtitle="Tonal rounded background."
+                                 Leading="{my:MaterialIcon Kind=ShieldCheckOutline}" />
+                        <my:Card Padding="{my:Thickness Md}"
+                                 Layout="Horizontal"
+                                 LeadingPresentation="Plain"
+                                 Title="Plain"
+                                 Subtitle="Icon without badge."
+                                 Leading="{my:MaterialIcon Kind=PaletteOutline}" />
+                        <my:Card Padding="{my:Thickness Md}"
+                                 Layout="Horizontal"
+                                 LeadingPresentation="None"
+                                 Title="None"
+                                 Subtitle="Leading slot hidden."
+                                 Leading="{my:MaterialIcon Kind=EyeOffOutline}" />
+                        <my:Card Padding="{my:Thickness Md}"
+                                 Layout="Horizontal"
+                                 LeadingPresentation="Hero"
+                                 Title="Hero"
+                                 Subtitle="Media fills the slot."
+                                 Leading="{my:MaterialIcon Kind=ImageOutline}"
+                                 Classes="size-sm" />
+                    </UniformGrid>
+                </HeaderedContentControl>
+
+                <!-- Use cases -->
+                <HeaderedContentControl Header="{my:Loc UseCasesSection}"
+                                        HorizontalContentAlignment="Stretch">
+                    <StackPanel Spacing="{my:Spacing Md}">
+
+                        <my:Card Padding="{my:Thickness Lg}"
+                                 Layout="Horizontal"
+                                 Theme="{StaticResource MyNet.Theme.Card.Interactive}"
+                                 Title="Theme playground"
+                                 Subtitle="Open the theme page and tweak control classes live."
+                                 Command="{Binding SampleCommand}"
+                                 Leading="{my:MaterialIcon Kind=Palette}" />
+
+                        <my:Card Padding="{my:Thickness Lg}"
+                                 Layout="Horizontal"
+                                 Header="Status"
+                                 Title="Deployment"
+                                 Subtitle="Production environment is healthy."
+                                 Leading="{my:MaterialIcon Kind=CheckCircleOutline}" />
+
+                        <my:Card Padding="{my:Thickness Lg}"
+                                 Layout="Horizontal"
+                                 Title="Confirm changes"
+                                 Subtitle="Review the summary before saving.">
+                            <my:Card.Actions>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                            Spacing="{my:Spacing Sm}" Margin="{my:Thickness Sm}">
+                                    <Button Content="Cancel" Classes="kind-flat" />
+                                    <Button Content="Confirm" Classes="variant-solid" />
+                                </StackPanel>
+                            </my:Card.Actions>
+                        </my:Card>
+
+                        <my:Card Layout="Horizontal"
+                                 LeadingPresentation="None"
+                                 Padding="{my:Thickness Md}">
+                            <Border Height="120"
+                                    CornerRadius="{StaticResource MyNet.Corners.Md}"
+                                    Background="{my:ThemeContext Surface.Level2}">
+                                <TextBlock Text="{my:Loc ContentOnlyExample}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Classes="opacity-high" />
+                            </Border>
+                        </my:Card>
+                    </StackPanel>
+                </HeaderedContentControl>
+
             </StackPanel>
         </v:ShowcaseView.CustomContent>
     </v:ShowcaseView>

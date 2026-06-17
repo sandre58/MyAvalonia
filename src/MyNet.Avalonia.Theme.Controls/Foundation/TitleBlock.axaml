@@ -14,32 +14,34 @@
 
         <Setter Property="Template">
             <ControlTemplate TargetType="my:TitleBlock">
-                <Grid RowSpacing="{TemplateBinding Spacing}" RowDefinitions="Auto,Auto">
+                <Grid RowSpacing="{TemplateBinding Spacing}"
+                      RowDefinitions="Auto,Auto"
+                      HorizontalAlignment="Stretch">
                     <ContentPresenter Name="PART_Title"
+                                      HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalTextAlignment}"
                                       Content="{TemplateBinding Title}"
                                       ContentTemplate="{TemplateBinding TitleTemplate}"
                                       FontSize="{TemplateBinding TitleFontSize}"
                                       FontWeight="{TemplateBinding TitleFontWeight}"
                                       Foreground="{TemplateBinding TitleForeground}"
-                                      HorizontalAlignment="{TemplateBinding HorizontalTextAlignment}"
                                       TextBlock.TextAlignment="{TemplateBinding TextAlignment}"
+                                      TextBlock.TextWrapping="Wrap"
                                       IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
                     <ContentPresenter Name="PART_Subtitle"
                                       Grid.Row="1"
+                                      HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalTextAlignment}"
                                       Content="{TemplateBinding Subtitle}"
                                       ContentTemplate="{TemplateBinding SubtitleTemplate}"
                                       FontSize="{TemplateBinding SubtitleFontSize}"
                                       Foreground="{TemplateBinding SubtitleForeground}"
-                                      HorizontalAlignment="{TemplateBinding HorizontalTextAlignment}"
                                       TextBlock.TextAlignment="{TemplateBinding TextAlignment}"
+                                      TextBlock.TextWrapping="Wrap"
                                       IsVisible="{Binding Subtitle, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
                 </Grid>
             </ControlTemplate>
         </Setter>
-
-        <Style Selector="^ /template/ ContentPresenter">
-            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-        </Style>
 
         <Style Selector="^:title-empty /template/ ContentPresenter#PART_Subtitle">
             <Setter Property="Margin" Value="0" />

@@ -244,11 +244,35 @@
   <data name="SpinnerLayoutOpposite" xml:space="preserve">
     <value>Opposé</value>
   </data>
-  <data name="CardLayoutCompact" xml:space="preserve">
-    <value>Compact</value>
+  <data name="CardLayoutHorizontal" xml:space="preserve">
+    <value>Horizontal</value>
   </data>
-  <data name="CardLayoutTile" xml:space="preserve">
-    <value>Tuile</value>
+  <data name="CardLayoutVertical" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="CardLayoutStat" xml:space="preserve">
+    <value>Statistique</value>
+  </data>
+  <data name="CardLayoutMediaTop" xml:space="preserve">
+    <value>Média haut</value>
+  </data>
+  <data name="CardLayoutMediaLeft" xml:space="preserve">
+    <value>Média gauche</value>
+  </data>
+  <data name="LeadingPresentation" xml:space="preserve">
+    <value>Présentation du leading</value>
+  </data>
+  <data name="LeadingPresentationBadge" xml:space="preserve">
+    <value>Badge</value>
+  </data>
+  <data name="LeadingPresentationPlain" xml:space="preserve">
+    <value>Plat</value>
+  </data>
+  <data name="LeadingPresentationHero" xml:space="preserve">
+    <value>Héro</value>
+  </data>
+  <data name="LeadingPresentationNone" xml:space="preserve">
+    <value>Aucun</value>
   </data>
   <data name="ShowBackground" xml:space="preserve">
     <value>Afficher le fond</value>

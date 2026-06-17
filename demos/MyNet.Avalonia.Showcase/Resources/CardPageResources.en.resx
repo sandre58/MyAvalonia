@@ -29,4 +29,19 @@
     <data name="Footer" xml:space="preserve">
         <value>Footer</value>
     </data>
+    <data name="LayoutGallerySection" xml:space="preserve">
+        <value>Layouts</value>
+    </data>
+    <data name="LayoutGalleryDescription" xml:space="preserve">
+        <value>Each layout rearranges the card body. Header band and Actions footer stay independent.</value>
+    </data>
+    <data name="LeadingPresentationSection" xml:space="preserve">
+        <value>Leading presentation</value>
+    </data>
+    <data name="UseCasesSection" xml:space="preserve">
+        <value>Use cases</value>
+    </data>
+    <data name="ContentOnlyExample" xml:space="preserve">
+        <value>Content only — no title or leading</value>
+    </data>
 </root>

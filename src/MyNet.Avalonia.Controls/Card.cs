@@ -18,15 +18,28 @@ namespace MyNet.Avalonia.Controls;
 
 /// <summary>
 /// A flexible surface control that displays related information across multiple configurable regions.
-/// Supports compact and tile layouts and full MyNet theming.
+/// Supports multiple body layouts, leading presentations, and full MyNet theming.
 /// Use the interactive control theme for command-driven cards.
 /// </summary>
 /// <remarks>
 /// <para><see cref="RegionControl.Header"/> on <see cref="Card"/> is an optional <strong>top chrome band</strong>,
 /// not the tile title. Use <see cref="Title"/> and <see cref="Subtitle"/> for the primary heading in the body grid
 /// (rendered via <see cref="TitleBlock"/> in the default theme).</para>
+/// <para>When only <see cref="ContentControl.Content"/> is set, the card automatically collapses to a content-only body.</para>
 /// </remarks>
-[PseudoClasses(PseudoClassName.Compact, PseudoClassName.Tile, ":title-empty", ":subtitle-empty")]
+[PseudoClasses(
+    PseudoClassName.Horizontal,
+    PseudoClassName.Vertical,
+    PseudoClassName.LayoutStat,
+    PseudoClassName.LayoutMediaTop,
+    PseudoClassName.LayoutMediaLeft,
+    PseudoClassName.ContentOnly,
+    PseudoClassName.LeadingBadge,
+    PseudoClassName.LeadingPlain,
+    PseudoClassName.LeadingHero,
+    PseudoClassName.LeadingNone,
+    ":title-empty",
+    ":subtitle-empty")]
 [TemplatePart(PartRoot, typeof(Border))]
 [TemplatePart(PartActionButton, typeof(Button))]
 public class Card : RegionControl
@@ -37,15 +50,20 @@ public class Card : RegionControl
     static Card()
     {
         CardLayoutProperty.Changed.AddClassHandler<Card>((c, _) => c.UpdateLayoutState());
+        LeadingPresentationProperty.Changed.AddClassHandler<Card>((c, _) => c.UpdateLeadingPresentationState());
         TitleProperty.Changed.AddClassHandler<Card>((c, _) => c.UpdateTitleState());
         SubtitleProperty.Changed.AddClassHandler<Card>((c, _) => c.UpdateSubtitleState());
+        ContentProperty.Changed.AddClassHandler<Card>((c, _) => c.UpdateContentOnlyState());
+        LeadingProperty.Changed.AddClassHandler<Card>((c, _) => c.UpdateContentOnlyState());
     }
 
     public Card()
     {
         UpdateLayoutState();
+        UpdateLeadingPresentationState();
         UpdateTitleState();
         UpdateSubtitleState();
+        UpdateContentOnlyState();
     }
 
     #region Title / Subtitle
@@ -158,7 +176,7 @@ public class Card : RegionControl
     #region Layout
 
     public static readonly StyledProperty<CardLayout> CardLayoutProperty =
-        AvaloniaProperty.Register<Card, CardLayout>(nameof(Layout));
+        AvaloniaProperty.Register<Card, CardLayout>(nameof(Layout), CardLayout.Horizontal);
 
     public CardLayout Layout
     {
@@ -166,16 +184,55 @@ public class Card : RegionControl
         set => SetValue(CardLayoutProperty, value);
     }
 
+    public static readonly StyledProperty<LeadingPresentation> LeadingPresentationProperty =
+        AvaloniaProperty.Register<Card, LeadingPresentation>(nameof(LeadingPresentation), LeadingPresentation.Badge);
+
+    public LeadingPresentation LeadingPresentation
+    {
+        get => GetValue(LeadingPresentationProperty);
+        set => SetValue(LeadingPresentationProperty, value);
+    }
+
     #endregion
 
     private void UpdateLayoutState()
     {
         var layout = Layout;
-        PseudoClasses.Set(PseudoClassName.Compact, layout == CardLayout.Compact);
-        PseudoClasses.Set(PseudoClassName.Tile, layout == CardLayout.Tile);
+        PseudoClasses.Set(PseudoClassName.Horizontal, layout == CardLayout.Horizontal);
+        PseudoClasses.Set(PseudoClassName.Vertical, layout == CardLayout.Vertical);
+        PseudoClasses.Set(PseudoClassName.LayoutStat, layout == CardLayout.Stat);
+        PseudoClasses.Set(PseudoClassName.LayoutMediaTop, layout == CardLayout.MediaTop);
+        PseudoClasses.Set(PseudoClassName.LayoutMediaLeft, layout == CardLayout.MediaLeft);
     }
 
-    private void UpdateTitleState() => PseudoClasses.Set(":title-empty", IsEmptyLike(Title));
+    private void UpdateLeadingPresentationState()
+    {
+        var presentation = LeadingPresentation;
+        PseudoClasses.Set(PseudoClassName.LeadingBadge, presentation == LeadingPresentation.Badge);
+        PseudoClasses.Set(PseudoClassName.LeadingPlain, presentation == LeadingPresentation.Plain);
+        PseudoClasses.Set(PseudoClassName.LeadingHero, presentation == LeadingPresentation.Hero);
+        PseudoClasses.Set(PseudoClassName.LeadingNone, presentation == LeadingPresentation.None);
+        IsLeadingSlotVisible = presentation != LeadingPresentation.None;
+    }
 
-    private void UpdateSubtitleState() => PseudoClasses.Set(":subtitle-empty", IsEmptyLike(Subtitle));
+    private void UpdateContentOnlyState()
+    {
+        var contentOnly = !IsEmptyLike(Content)
+                          && IsEmptyLike(Title)
+                          && IsEmptyLike(Subtitle)
+                          && IsEmptyLike(Leading);
+        PseudoClasses.Set(PseudoClassName.ContentOnly, contentOnly);
+    }
+
+    private void UpdateTitleState()
+    {
+        PseudoClasses.Set(":title-empty", IsEmptyLike(Title));
+        UpdateContentOnlyState();
+    }
+
+    private void UpdateSubtitleState()
+    {
+        PseudoClasses.Set(":subtitle-empty", IsEmptyLike(Subtitle));
+        UpdateContentOnlyState();
+    }
 }

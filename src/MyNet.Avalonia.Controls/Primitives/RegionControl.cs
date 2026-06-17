@@ -53,6 +53,18 @@ public abstract class RegionControl : ContentControl
         set => SetValue(LeadingTemplateProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets whether the leading slot is shown when <see cref="Leading"/> is set.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsLeadingSlotVisibleProperty =
+        AvaloniaProperty.Register<RegionControl, bool>(nameof(IsLeadingSlotVisible), true);
+
+    public bool IsLeadingSlotVisible
+    {
+        get => GetValue(IsLeadingSlotVisibleProperty);
+        set => SetValue(IsLeadingSlotVisibleProperty, value);
+    }
+
     #endregion
 
     #region Header

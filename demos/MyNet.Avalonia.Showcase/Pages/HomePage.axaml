@@ -52,8 +52,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="vm:HomeStatViewModel">
                             <my:Card Padding="{my:Thickness Lg}"
-                                     Classes="header-h4"
-                                     Layout="Compact"
+                                     Classes="size-lg"
+                                     Layout="Stat"
                                      Title="{Binding Value}"
                                      Subtitle="{my:Display Label}"
                                      HorizontalAlignment="Stretch"
@@ -83,7 +83,7 @@
                                     <my:Card Margin="{my:Thickness Sm}"
                                              Padding="{my:Thickness Lg}"
                                              Classes="header-h6"
-                                             Layout="Compact"
+                                             Layout="Horizontal"
                                              Theme="{StaticResource MyNet.Theme.Card.Interactive}"
                                              Title="{my:Display Title}"
                                              Subtitle="{my:Display Description}"
@@ -118,7 +118,7 @@
                                     <my:Card Margin="{my:Thickness Sm}"
                                              Padding="{my:Thickness Lg}"
                                              Classes="header-h6"
-                                             Layout="Tile"
+                                             Layout="Horizontal"
                                              Title="{my:Display Title}"
                                              Subtitle="{my:Display Description}"
                                              HorizontalAlignment="Stretch"
@@ -149,7 +149,8 @@
                                 <DataTemplate x:DataType="vm:HomeLinkViewModel">
                                     <my:Card Margin="{my:Thickness Sm}"
                                              Classes="size-sm"
-                                             Layout="Tile"
+                                             Layout="Horizontal"
+                                             LeadingPresentation="Plain"
                                              Theme="{StaticResource MyNet.Theme.Card.Interactive}"
                                              Title="{my:Display Title}"
                                              Subtitle="{my:Display Description}"

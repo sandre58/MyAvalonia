@@ -1617,20 +1617,92 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Compact.
+        ///   Looks up a localized string similar to Horizontal.
         /// </summary>
-        internal static string CardLayoutCompact {
+        internal static string CardLayoutHorizontal {
             get {
-                return ResourceManager.GetString("CardLayoutCompact", resourceCulture);
+                return ResourceManager.GetString("CardLayoutHorizontal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tuile.
+        ///   Looks up a localized string similar to Vertical.
         /// </summary>
-        internal static string CardLayoutTile {
+        internal static string CardLayoutVertical {
             get {
-                return ResourceManager.GetString("CardLayoutTile", resourceCulture);
+                return ResourceManager.GetString("CardLayoutVertical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Statistique.
+        /// </summary>
+        internal static string CardLayoutStat {
+            get {
+                return ResourceManager.GetString("CardLayoutStat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Média haut.
+        /// </summary>
+        internal static string CardLayoutMediaTop {
+            get {
+                return ResourceManager.GetString("CardLayoutMediaTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Média gauche.
+        /// </summary>
+        internal static string CardLayoutMediaLeft {
+            get {
+                return ResourceManager.GetString("CardLayoutMediaLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Présentation du leading.
+        /// </summary>
+        internal static string LeadingPresentation {
+            get {
+                return ResourceManager.GetString("LeadingPresentation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Badge.
+        /// </summary>
+        internal static string LeadingPresentationBadge {
+            get {
+                return ResourceManager.GetString("LeadingPresentationBadge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plat.
+        /// </summary>
+        internal static string LeadingPresentationPlain {
+            get {
+                return ResourceManager.GetString("LeadingPresentationPlain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Héro.
+        /// </summary>
+        internal static string LeadingPresentationHero {
+            get {
+                return ResourceManager.GetString("LeadingPresentationHero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aucun.
+        /// </summary>
+        internal static string LeadingPresentationNone {
+            get {
+                return ResourceManager.GetString("LeadingPresentationNone", resourceCulture);
             }
         }
         

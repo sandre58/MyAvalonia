@@ -7,17 +7,32 @@
 namespace MyNet.Avalonia.Controls.Enums;
 
 /// <summary>
-/// Defines the content layout of a <see cref="Card"/>.
+/// Defines the body arrangement of a <see cref="Card"/>.
 /// </summary>
 public enum CardLayout
 {
     /// <summary>
-    /// Leading with background, title spanning two rows — dense stat or settings tile.
+    /// Icon or avatar on the left, title stack and optional content on the right.
     /// </summary>
-    Compact,
+    Horizontal,
 
     /// <summary>
-    /// Leading without background, title on a single row — feature or capability tile.
+    /// Leading centered above a centered title stack — shortcut tiles and feature grids.
     /// </summary>
-    Tile
+    Vertical,
+
+    /// <summary>
+    /// Emphasizes <see cref="Card.Title"/> as a primary metric with a muted subtitle.
+    /// </summary>
+    Stat,
+
+    /// <summary>
+    /// <see cref="RegionControl.Leading"/> spans the full width on top — articles, products, previews.
+    /// </summary>
+    MediaTop,
+
+    /// <summary>
+    /// <see cref="RegionControl.Leading"/> in a fixed left column — contacts, files, rich list rows.
+    /// </summary>
+    MediaLeft,
 }

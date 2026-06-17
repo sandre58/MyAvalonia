@@ -264,11 +264,35 @@
   <data name="SpinnerLayoutVertical" xml:space="preserve">
     <value>Vertical</value>
   </data>
-  <data name="CardLayoutCompact" xml:space="preserve">
-    <value>Compact</value>
+  <data name="CardLayoutHorizontal" xml:space="preserve">
+    <value>Horizontal</value>
   </data>
-  <data name="CardLayoutTile" xml:space="preserve">
-    <value>Tile</value>
+  <data name="CardLayoutVertical" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="CardLayoutStat" xml:space="preserve">
+    <value>Stat</value>
+  </data>
+  <data name="CardLayoutMediaTop" xml:space="preserve">
+    <value>Media top</value>
+  </data>
+  <data name="CardLayoutMediaLeft" xml:space="preserve">
+    <value>Media left</value>
+  </data>
+  <data name="LeadingPresentation" xml:space="preserve">
+    <value>Leading presentation</value>
+  </data>
+  <data name="LeadingPresentationBadge" xml:space="preserve">
+    <value>Badge</value>
+  </data>
+  <data name="LeadingPresentationPlain" xml:space="preserve">
+    <value>Plain</value>
+  </data>
+  <data name="LeadingPresentationHero" xml:space="preserve">
+    <value>Hero</value>
+  </data>
+  <data name="LeadingPresentationNone" xml:space="preserve">
+    <value>None</value>
   </data>
   <data name="ShowBackground" xml:space="preserve">
     <value>Show background</value>
