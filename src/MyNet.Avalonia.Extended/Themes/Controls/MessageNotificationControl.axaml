@@ -1,21 +1,92 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:my="http://mynet.com/avalonia">
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
 
     <ControlTheme x:Key="{x:Type my:MessageNotificationControl}"
-                  TargetType="{x:Type my:MessageNotificationControl}"
-                  BasedOn="{StaticResource {x:Type my:Banner}}">
-        <Setter Property="CanClose" Value="False" />
+                  TargetType="{x:Type my:MessageNotificationControl}">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+        <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Sm}" />
         <Setter Property="my:LeadingAssist.Background" Value="Transparent" />
+        <Setter Property="my:LeadingAssist.Margin" Value="{my:Thickness Sm, Right}" />
+        <Setter Property="my:LeadingAssist.Padding" Value="0" />
+        <Setter Property="my:LeadingAssist.VerticalAlignment" Value="Top" />
+        <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+        <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+        <Setter Property="my:TrailingAssist.IsVisible" Value="False" />
+        <Setter Property="LeadingTemplate">
+            <DataTemplate DataType="icons:MaterialIconKind">
+                <my:MaterialIcon Kind="{Binding}" />
+            </DataTemplate>
+        </Setter>
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="{x:Type my:MessageNotificationControl}">
+                <Grid ColumnDefinitions="Auto,*"
+                      RowDefinitions="Auto,Auto"
+                      RowSpacing="{StaticResource MyNet.Spacing.Xxs}">
+                    <ContentControl Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.RowSpan="2"
+                                    VerticalAlignment="Top"
+                                    Focusable="False"
+                                    Template="{StaticResource MyNet.RegionLayout.LeadingHost}" />
+
+                    <ContentPresenter Name="PART_Header"
+                                      Grid.Row="0"
+                                      Grid.Column="1"
+                                      VerticalAlignment="{TemplateBinding (my:HeaderAssist.VerticalAlignment)}"
+                                      HorizontalAlignment="{TemplateBinding (my:HeaderAssist.HorizontalAlignment)}"
+                                      Content="{TemplateBinding Header}"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                      FontFamily="{TemplateBinding (my:HeaderAssist.FontFamily)}"
+                                      FontSize="{TemplateBinding (my:HeaderAssist.FontSize)}"
+                                      FontStyle="{TemplateBinding (my:HeaderAssist.FontStyle)}"
+                                      FontWeight="{TemplateBinding (my:HeaderAssist.FontWeight)}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      TextBlock.TextWrapping="Wrap"
+                                      IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+
+                    <ContentPresenter Name="PART_Content"
+                                      Grid.Row="1"
+                                      Grid.Column="1"
+                                      Margin="{my:Thickness Xxs, Top}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      FontFamily="{TemplateBinding FontFamily}"
+                                      FontSize="{TemplateBinding FontSize}"
+                                      FontStyle="{TemplateBinding FontStyle}"
+                                      FontWeight="{TemplateBinding FontWeight}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      TextBlock.TextWrapping="Wrap"
+                                      IsVisible="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ /template/ Border#PART_LeadingBackground">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^ /template/ Panel#PART_LeadingHost">
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <Style Selector="^ /template/ ContentPresenter#PART_Leading">
+            <Setter Property="my:IconAssist.Role" Value="Primary" />
+        </Style>
+        <Style Selector="^:header-empty /template/ ContentPresenter#PART_Content">
+            <Setter Property="Grid.Row" Value="0" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
     </ControlTheme>
 
 </ResourceDictionary>

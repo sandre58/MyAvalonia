@@ -178,9 +178,6 @@
                 </Template>
             </Setter>
         </Style>
-        <Style Selector="^:success /template/ ContentPresenter#PART_Leading">
-            <Setter Property="my:IconAssist.Role" Value="Primary" />
-        </Style>
         <Style Selector="^:warning">
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="my:ThemeAssist.Role" Value="Warning" />
@@ -190,9 +187,6 @@
                     <my:MaterialIcon Kind="AlertCircle" />
                 </Template>
             </Setter>
-        </Style>
-        <Style Selector="^:warning /template/ ContentPresenter#PART_Leading">
-            <Setter Property="my:IconAssist.Role" Value="Primary" />
         </Style>
         <Style Selector="^:error">
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
@@ -204,9 +198,6 @@
                 </Template>
             </Setter>
         </Style>
-        <Style Selector="^:error /template/ ContentPresenter#PART_Leading">
-            <Setter Property="my:IconAssist.Role" Value="Primary" />
-        </Style>
         <Style Selector="^:information">
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Surface}" />
             <Setter Property="my:ThemeAssist.Role" Value="Information" />
@@ -216,9 +207,6 @@
                     <my:MaterialIcon Kind="InformationVariantCircle" />
                 </Template>
             </Setter>
-        </Style>
-        <Style Selector="^:information /template/ ContentPresenter#PART_Leading">
-            <Setter Property="my:IconAssist.Role" Value="Primary" />
         </Style>
 
         <Style Selector="^.size-sm">
@@ -239,33 +227,9 @@
             <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
             <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Md}" />
         </Style>
-    </ControlTheme>
-
-    <!-- Chromeless body for toast hosts (NotificationCard owns the surface). -->
-    <ControlTheme x:Key="MyNet.Theme.Banner.Toast" TargetType="my:Banner" BasedOn="{StaticResource {x:Type my:Banner}}">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="0" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
-        <Setter Property="ClipToBounds" Value="True" />
-
-        <Style Selector="^:success, ^:warning, ^:error, ^:information">
-            <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="my:LeadingAssist.Background" Value="Transparent" />
-        </Style>
-
-        <Style Selector="^.size-sm">
-            <Setter Property="Padding" Value="0" />
-        </Style>
-        <Style Selector="^.size-md">
-            <Setter Property="Padding" Value="0" />
-        </Style>
-        <Style Selector="^.size-lg">
-            <Setter Property="Padding" Value="0" />
+        
+        <Style Selector="^.variant-light /template/ ContentPresenter#PART_Leading, ^.variant-outlined /template/ ContentPresenter#PART_Leading">
+            <Setter Property="Foreground" Value="{my:ThemeRole Foreground}" />
         </Style>
     </ControlTheme>
 
