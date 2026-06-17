@@ -22,11 +22,10 @@
         <Setter Property="ContentTemplate">
             <DataTemplate DataType="{x:Type system:Object}">
                 <my:MessageBoxContent Message="{Binding}"
-                                            Margin="{my:Thickness Md}"
-                                            HorizontalAlignment="Stretch"
-                                            Title="{Binding $parent[my:WindowMessageBox].Title}"
-                                            Severity="{Binding $parent[my:WindowMessageBox].Severity}"
-                                            Buttons="{Binding $parent[my:WindowMessageBox].Buttons}" />
+                                      HorizontalAlignment="Stretch"
+                                      Title="{Binding $parent[my:WindowMessageBox].Title}"
+                                      Severity="{Binding $parent[my:WindowMessageBox].Severity}"
+                                      Buttons="{Binding $parent[my:WindowMessageBox].Buttons}" />
             </DataTemplate>
         </Setter>
         

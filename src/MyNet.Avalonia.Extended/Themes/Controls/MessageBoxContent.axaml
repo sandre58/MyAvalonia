@@ -9,15 +9,17 @@
         <Setter Property="Template">
             <ControlTemplate TargetType="my:MessageBoxContent">
                 <my:DialogPanel Name="PART_Dialog"
+                                Theme="{StaticResource MyNet.Theme.DialogPanel.MessageBox}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 Header="{TemplateBinding Title}"
                                 Content="{TemplateBinding Message}"
-                                my:ThemeAssist.Role="Primary">
+                                my:ThemeAssist.Role="Information">
                     <my:DialogPanel.LeadingTemplate>
                         <DataTemplate DataType="icons:MaterialIconKind">
-                            <my:MaterialIcon Kind="{Binding}" Classes="size-lg"
-                                             Foreground="{Binding $parent[my:DialogPanel].(my:InteractionAssist.ActiveForeground)}" />
+                            <my:MaterialIcon Kind="{Binding}"
+                                             Classes="size-lg"
+                                             Foreground="{my:ThemeRole Foreground, Contrast=True}" />
                         </DataTemplate>
                     </my:DialogPanel.LeadingTemplate>
                     <my:DialogPanel.Actions>
@@ -38,6 +40,7 @@
 
         <Style Selector="^[Severity=Information] /template/ my|DialogPanel#PART_Dialog">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.InformationVariantCircle}" />
+            <Setter Property="my:ThemeAssist.Role" Value="Information" />
         </Style>
         <Style Selector="^[Severity=Success] /template/ my|DialogPanel#PART_Dialog">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.CheckCircle}" />

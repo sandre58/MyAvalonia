@@ -73,6 +73,36 @@
         </Style>
     </ControlTheme>
 
+    <!-- Message box body: chromeless inside window/overlay shell, tile leading, single padding layer. -->
+    <ControlTheme x:Key="MyNet.Theme.DialogPanel.MessageBox"
+                  TargetType="my:DialogPanel"
+                  BasedOn="{StaticResource {x:Type my:DialogPanel}}">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="my:VariantAssist.Background" Value="Transparent" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="Transparent" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
+        <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
+        <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Md}" />
+        <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.H5}" />
+        <Setter Property="my:ActionsAssist.Padding" Value="{my:Thickness Md}" />
+        <Setter Property="my:LeadingAssist.Margin" Value="{my:Thickness Md, Right}" />
+        <Setter Property="my:LeadingAssist.Padding" Value="0" />
+        <Setter Property="my:LeadingAssist.VerticalAlignment" Value="Top" />
+        <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+
+        <Style Selector="^ /template/ Grid#PART_BodyGrid">
+            <Setter Property="Margin" Value="{my:Thickness Md}" />
+        </Style>
+        <Style Selector="^ /template/ ContentPresenter#PART_Content">
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="^:header-empty /template/ ContentPresenter#PART_Leading">
+            <Setter Property="Margin" Value="{my:Thickness Xs, Top}" />
+        </Style>
+    </ControlTheme>
+
     <ControlTheme x:Key="{x:Type my:ContentDialog}" TargetType="my:ContentDialog" BasedOn="{StaticResource {x:Type my:DialogPanel}}" />
 
 </ResourceDictionary>

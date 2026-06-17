@@ -120,6 +120,9 @@
             <Setter Property="IsVisible" Value="True" />
         </Style>
 
+        <Style Selector="^:information">
+            <Setter Property="my:ThemeAssist.Role" Value="Information" />
+        </Style>
         <Style Selector="^:success">
             <Setter Property="my:ThemeAssist.Role" Value="Success" />
         </Style>

@@ -14,7 +14,6 @@
         <Setter Property="ContentTemplate">
             <DataTemplate DataType="{x:Type system:Object}">
                 <my:MessageBoxContent Message="{Binding}"
-                                      Margin="{my:Thickness Md}"
                                       HorizontalAlignment="Stretch"
                                       Title="{Binding $parent[my:OverlayMessageBox].Title}"
                                       Severity="{Binding $parent[my:OverlayMessageBox].Severity}"

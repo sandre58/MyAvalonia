@@ -27,17 +27,13 @@ public class Banner : RegionControl
 {
     public const string PartCloseButton = "PART_CloseButton";
 
-    static Banner()
-    {
-        HeaderProperty.Changed.AddClassHandler<Banner, object?>((banner, _) => banner.UpdateHeaderEmptyPseudoClass());
-    }
+    static Banner() => HeaderProperty.Changed.AddClassHandler<Banner, object?>((banner, _) => banner.UpdateHeaderEmptyPseudoClass());
 
     public Banner() => UpdateHeaderEmptyPseudoClass();
 
     private Button? _closeButton;
 
-    public static readonly StyledProperty<bool> CanCloseProperty =
-        AvaloniaProperty.Register<Banner, bool>(nameof(CanClose), true);
+    public static readonly StyledProperty<bool> CanCloseProperty = AvaloniaProperty.Register<Banner, bool>(nameof(CanClose), true);
 
     public bool CanClose
     {

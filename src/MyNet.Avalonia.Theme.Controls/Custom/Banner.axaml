@@ -70,25 +70,10 @@
                                       ColumnDefinitions="Auto,*,Auto"
                                       RowDefinitions="Auto,Auto">
 
-                                    <Panel Name="PART_LeadingHost"
-                                           Grid.Row="0"
-                                           Grid.Column="0"
-                                           Margin="{TemplateBinding (my:LeadingAssist.Margin)}"
-                                           HorizontalAlignment="{TemplateBinding (my:LeadingAssist.HorizontalAlignment)}"
-                                           VerticalAlignment="{TemplateBinding (my:LeadingAssist.VerticalAlignment)}"
-                                           IsVisible="{Binding Leading, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
-                                        <Border Name="PART_LeadingBackground"
-                                                CornerRadius="{TemplateBinding (my:LeadingAssist.CornerRadius)}"
-                                                Background="{TemplateBinding (my:LeadingAssist.Background)}" />
-                                        <ContentPresenter Name="PART_Leading"
-                                                          Content="{TemplateBinding Leading}"
-                                                          ContentTemplate="{TemplateBinding LeadingTemplate}"
-                                                          Padding="{TemplateBinding (my:LeadingAssist.Padding)}"
-                                                          VerticalAlignment="Center"
-                                                          HorizontalAlignment="Center"
-                                                          my:IconAssist.Size="{TemplateBinding (my:IconAssist.Size)}"
-                                                          my:IconAssist.Role="Label" />
-                                    </Panel>
+                                    <ContentControl Grid.Row="0"
+                                                    Grid.Column="0"
+                                                    Focusable="False"
+                                                    Template="{StaticResource MyNet.RegionLayout.LeadingHost}" />
 
                                     <ContentPresenter Name="PART_Header"
                                                       Grid.Row="0"

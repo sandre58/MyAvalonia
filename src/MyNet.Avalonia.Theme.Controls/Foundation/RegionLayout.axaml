@@ -39,4 +39,25 @@
         </Border>
     </ControlTemplate>
 
+    <!-- Shared leading slot: icon/avatar on optional rounded background (compact). -->
+    <ControlTemplate x:Key="MyNet.RegionLayout.LeadingHost" TargetType="ContentControl">
+        <Panel Name="PART_LeadingHost"
+               Margin="{Binding (my:LeadingAssist.Margin), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+               HorizontalAlignment="{Binding (my:LeadingAssist.HorizontalAlignment), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+               VerticalAlignment="{Binding (my:LeadingAssist.VerticalAlignment), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+               IsVisible="{Binding Leading, RelativeSource={RelativeSource AncestorType=my:RegionControl}, Converter={x:Static my:NullConverter.IsPresent}}">
+            <Border Name="PART_LeadingBackground"
+                    CornerRadius="{Binding (my:LeadingAssist.CornerRadius), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                    Background="{Binding (my:LeadingAssist.Background), RelativeSource={RelativeSource AncestorType=my:RegionControl}}" />
+            <ContentPresenter Name="PART_Leading"
+                              Content="{Binding Leading, RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              ContentTemplate="{Binding LeadingTemplate, RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              Padding="{Binding (my:LeadingAssist.Padding), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              my:IconAssist.Size="{Binding (my:IconAssist.Size), RelativeSource={RelativeSource AncestorType=my:RegionControl}}"
+                              my:IconAssist.Role="Label" />
+        </Panel>
+    </ControlTemplate>
+
 </ResourceDictionary>

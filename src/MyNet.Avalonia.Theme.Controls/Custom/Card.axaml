@@ -2,6 +2,64 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
+    <ControlTemplate x:Key="MyNet.Card.Template.BodyGrid" TargetType="ContentControl">
+        <Grid Name="PART_BodyGrid"
+              Margin="{Binding Padding, RelativeSource={RelativeSource AncestorType=my:Card}}"
+              ColumnDefinitions="Auto,*,Auto"
+              RowDefinitions="Auto,Auto,*">
+            <ContentControl Grid.Row="0"
+                            Grid.Column="0"
+                            Focusable="False"
+                            Template="{StaticResource MyNet.RegionLayout.LeadingHost}" />
+
+            <my:TitleBlock Name="PART_TitleBlock"
+                           Grid.Row="0"
+                           Grid.Column="1"
+                           Grid.RowSpan="2"
+                           VerticalAlignment="Center"
+                           Title="{Binding Title, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           TitleTemplate="{Binding TitleTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           TitleFontSize="{Binding TitleFontSize, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           TitleFontWeight="{Binding TitleFontWeight, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           TitleForeground="{Binding TitleForeground, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           Subtitle="{Binding Subtitle, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           SubtitleTemplate="{Binding SubtitleTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           SubtitleFontSize="{Binding SubtitleFontSize, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                           SubtitleForeground="{Binding SubtitleForeground, RelativeSource={RelativeSource AncestorType=my:Card}}" />
+
+            <ContentPresenter Name="PART_Content"
+                              Grid.Row="2"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              Content="{Binding Content, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              ContentTemplate="{Binding ContentTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              IsVisible="{Binding Content, RelativeSource={RelativeSource AncestorType=my:Card}, Converter={x:Static my:NullConverter.IsPresent}}" />
+
+            <ContentPresenter Name="PART_Trailing"
+                              Grid.Row="0"
+                              Grid.Column="2"
+                              Grid.RowSpan="3"
+                              Padding="{Binding (my:TrailingAssist.Padding), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              Margin="{Binding (my:TrailingAssist.Margin), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              VerticalAlignment="{Binding (my:TrailingAssist.VerticalAlignment), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              HorizontalAlignment="{Binding (my:TrailingAssist.HorizontalAlignment), RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              Content="{Binding Trailing, RelativeSource={RelativeSource AncestorType=my:Card}}"
+                              ContentTemplate="{Binding TrailingTemplate, RelativeSource={RelativeSource AncestorType=my:Card}}">
+                <ContentPresenter.IsVisible>
+                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                        <Binding Path="Trailing"
+                                 RelativeSource="{RelativeSource AncestorType=my:Card}"
+                                 Converter="{x:Static my:NullConverter.IsPresent}" />
+                        <Binding Path="(my:TrailingAssist.IsVisible)"
+                                 RelativeSource="{RelativeSource AncestorType=my:Card}" />
+                    </MultiBinding>
+                </ContentPresenter.IsVisible>
+            </ContentPresenter>
+        </Grid>
+    </ControlTemplate>
+
     <ControlTemplate x:Key="MyNet.Card.Template.Default" TargetType="my:Card">
         <Border Name="PART_Root"
                 Background="{TemplateBinding Background}"
@@ -10,87 +68,14 @@
                 CornerRadius="{TemplateBinding CornerRadius}"
                 my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}">
             <DockPanel>
-
                 <ContentControl DockPanel.Dock="Top"
                                 Focusable="False"
                                 Template="{StaticResource MyNet.RegionLayout.HeaderBand}" />
-
                 <ContentControl DockPanel.Dock="Bottom"
                                 Focusable="False"
                                 Template="{StaticResource MyNet.RegionLayout.ActionsBand}" />
-
-                <Grid Name="PART_BodyGrid"
-                      Margin="{TemplateBinding Padding}"
-                      ColumnDefinitions="Auto,*,Auto"
-                      RowDefinitions="Auto,Auto,*">
-
-                    <Panel Name="PART_LeadingHost"
-                           Grid.Row="0"
-                           Grid.Column="0"
-                           Margin="{TemplateBinding (my:LeadingAssist.Margin)}"
-                           HorizontalAlignment="{TemplateBinding (my:LeadingAssist.HorizontalAlignment)}"
-                           VerticalAlignment="{TemplateBinding (my:LeadingAssist.VerticalAlignment)}"
-                           IsVisible="{Binding Leading, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
-                        <Border Name="PART_LeadingBackground"
-                                CornerRadius="{TemplateBinding (my:LeadingAssist.CornerRadius)}"
-                                Background="{TemplateBinding (my:LeadingAssist.Background)}" />
-                        <ContentPresenter Name="PART_Leading"
-                                          Content="{TemplateBinding Leading}"
-                                          ContentTemplate="{TemplateBinding LeadingTemplate}"
-                                          Padding="{TemplateBinding (my:LeadingAssist.Padding)}"
-                                          VerticalAlignment="Center"
-                                          HorizontalAlignment="Center"
-                                          my:IconAssist.Size="{TemplateBinding (my:IconAssist.Size)}"
-                                          my:IconAssist.Role="Label" />
-                    </Panel>
-
-                    <my:TitleBlock Name="PART_TitleBlock"
-                                   Grid.Row="0"
-                                   Grid.Column="1"
-                                   Grid.RowSpan="2"
-                                   VerticalAlignment="Center"
-                                   Title="{TemplateBinding Title}"
-                                   TitleTemplate="{TemplateBinding TitleTemplate}"
-                                   TitleFontSize="{TemplateBinding TitleFontSize}"
-                                   TitleFontWeight="{TemplateBinding TitleFontWeight}"
-                                   TitleForeground="{TemplateBinding TitleForeground}"
-                                   Subtitle="{TemplateBinding Subtitle}"
-                                   SubtitleTemplate="{TemplateBinding SubtitleTemplate}"
-                                   SubtitleFontSize="{TemplateBinding SubtitleFontSize}"
-                                   SubtitleForeground="{TemplateBinding SubtitleForeground}" />
-
-                    <ContentPresenter Name="PART_Content"
-                                      Grid.Row="2"
-                                      Grid.Column="0"
-                                      Grid.ColumnSpan="2"
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      IsVisible="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
-
-                    <ContentPresenter Name="PART_Trailing"
-                                      Grid.Row="0"
-                                      Grid.Column="2"
-                                      Grid.RowSpan="3"
-                                      Padding="{TemplateBinding (my:TrailingAssist.Padding)}"
-                                      Margin="{TemplateBinding (my:TrailingAssist.Margin)}"
-                                      VerticalAlignment="{TemplateBinding (my:TrailingAssist.VerticalAlignment)}"
-                                      HorizontalAlignment="{TemplateBinding (my:TrailingAssist.HorizontalAlignment)}"
-                                      Content="{TemplateBinding Trailing}"
-                                      ContentTemplate="{TemplateBinding TrailingTemplate}">
-                        <ContentPresenter.IsVisible>
-                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                <Binding Path="Trailing"
-                                         RelativeSource="{RelativeSource TemplatedParent}"
-                                         Converter="{x:Static my:NullConverter.IsPresent}" />
-                                <Binding Path="(my:TrailingAssist.IsVisible)"
-                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                            </MultiBinding>
-                        </ContentPresenter.IsVisible>
-                    </ContentPresenter>
-
-                </Grid>
+                <ContentControl Focusable="False"
+                                Template="{StaticResource MyNet.Card.Template.BodyGrid}" />
             </DockPanel>
         </Border>
     </ControlTemplate>
@@ -121,87 +106,14 @@
                 Classes="shadow-control is-hover"
                 Theme="{StaticResource {x:Type Button}}">
             <DockPanel>
-
                 <ContentControl DockPanel.Dock="Top"
                                 Focusable="False"
                                 Template="{StaticResource MyNet.RegionLayout.HeaderBand}" />
-
                 <ContentControl DockPanel.Dock="Bottom"
                                 Focusable="False"
                                 Template="{StaticResource MyNet.RegionLayout.ActionsBand}" />
-
-                <Grid Name="PART_BodyGrid"
-                      Margin="{TemplateBinding Padding}"
-                      ColumnDefinitions="Auto,*,Auto"
-                      RowDefinitions="Auto,Auto,Auto">
-
-                    <Panel Name="PART_LeadingHost"
-                           Grid.Row="0"
-                           Grid.Column="0"
-                           Margin="{TemplateBinding (my:LeadingAssist.Margin)}"
-                           HorizontalAlignment="{TemplateBinding (my:LeadingAssist.HorizontalAlignment)}"
-                           VerticalAlignment="{TemplateBinding (my:LeadingAssist.VerticalAlignment)}"
-                           IsVisible="{Binding Leading, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}">
-                        <Border Name="PART_LeadingBackground"
-                                CornerRadius="{TemplateBinding (my:LeadingAssist.CornerRadius)}"
-                                Background="{TemplateBinding (my:LeadingAssist.Background)}" />
-                        <ContentPresenter Name="PART_Leading"
-                                          Content="{TemplateBinding Leading}"
-                                          ContentTemplate="{TemplateBinding LeadingTemplate}"
-                                          Padding="{TemplateBinding (my:LeadingAssist.Padding)}"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          my:IconAssist.Size="{TemplateBinding (my:IconAssist.Size)}"
-                                          my:IconAssist.Role="Label" />
-                    </Panel>
-
-                    <my:TitleBlock Name="PART_TitleBlock"
-                                   Grid.Row="0"
-                                   Grid.Column="1"
-                                   Grid.RowSpan="2"
-                                   VerticalAlignment="Center"
-                                   Title="{TemplateBinding Title}"
-                                   TitleTemplate="{TemplateBinding TitleTemplate}"
-                                   TitleFontSize="{TemplateBinding TitleFontSize}"
-                                   TitleFontWeight="{TemplateBinding TitleFontWeight}"
-                                   TitleForeground="{TemplateBinding TitleForeground}"
-                                   Subtitle="{TemplateBinding Subtitle}"
-                                   SubtitleTemplate="{TemplateBinding SubtitleTemplate}"
-                                   SubtitleFontSize="{TemplateBinding SubtitleFontSize}"
-                                   SubtitleForeground="{TemplateBinding SubtitleForeground}" />
-
-                    <ContentPresenter Name="PART_Content"
-                                      Grid.Row="2"
-                                      Grid.Column="0"
-                                      Grid.ColumnSpan="2"
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      IsVisible="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
-
-                    <ContentPresenter Name="PART_Trailing"
-                                      Grid.Row="0"
-                                      Grid.Column="2"
-                                      Grid.RowSpan="3"
-                                      Padding="{TemplateBinding (my:TrailingAssist.Padding)}"
-                                      Margin="{TemplateBinding (my:TrailingAssist.Margin)}"
-                                      VerticalAlignment="{TemplateBinding (my:TrailingAssist.VerticalAlignment)}"
-                                      HorizontalAlignment="{TemplateBinding (my:TrailingAssist.HorizontalAlignment)}"
-                                      Content="{TemplateBinding Trailing}"
-                                      ContentTemplate="{TemplateBinding TrailingTemplate}">
-                        <ContentPresenter.IsVisible>
-                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                <Binding Path="Trailing"
-                                         RelativeSource="{RelativeSource TemplatedParent}"
-                                         Converter="{x:Static my:NullConverter.IsPresent}" />
-                                <Binding Path="(my:TrailingAssist.IsVisible)"
-                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                            </MultiBinding>
-                        </ContentPresenter.IsVisible>
-                    </ContentPresenter>
-
-                </Grid>
+                <ContentControl Focusable="False"
+                                Template="{StaticResource MyNet.Card.Template.BodyGrid}" />
             </DockPanel>
         </Button>
     </ControlTemplate>
