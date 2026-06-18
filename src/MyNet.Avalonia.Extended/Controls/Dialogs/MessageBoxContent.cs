@@ -12,17 +12,21 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
+using MyNet.Avalonia.Controls;
 using MyNet.UI.Dialogs.MessageBox;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Extended.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
+/// <summary>
+/// Shared message box body: horizontal layout with semantic leading badge, title, message, and action buttons.
+/// </summary>
 [TemplatePart(PartOkButton, typeof(Button))]
 [TemplatePart(PartCancelButton, typeof(Button))]
 [TemplatePart(PartYesButton, typeof(Button))]
 [TemplatePart(PartNoButton, typeof(Button))]
-public class MessageBoxContent : TemplatedControl
+public class MessageBoxContent : DialogPanel
 {
     public const string PartYesButton = "PART_YesButton";
     public const string PartNoButton = "PART_NoButton";
@@ -50,6 +54,8 @@ public class MessageBoxContent : TemplatedControl
     {
         FocusableProperty.OverrideDefaultValue<MessageBoxContent>(true);
         ButtonsProperty.Changed.AddClassHandler<MessageBoxContent>((content, _) => content.SetButtonVisibility());
+        TitleProperty.Changed.AddClassHandler<MessageBoxContent>((content, e) => content.SetCurrentValue(HeaderProperty, e.NewValue));
+        MessageProperty.Changed.AddClassHandler<MessageBoxContent>((content, e) => content.SetCurrentValue(ContentProperty, e.NewValue));
     }
 
     public object? Message

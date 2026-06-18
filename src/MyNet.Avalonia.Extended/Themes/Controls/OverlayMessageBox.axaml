@@ -20,6 +20,19 @@
                                       Buttons="{Binding $parent[my:OverlayMessageBox].Buttons}" />
             </DataTemplate>
         </Setter>
+
+        <Style Selector="^[Severity=Success]">
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:Theme Success}" />
+        </Style>
+        <Style Selector="^[Severity=Warning]">
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:Theme Warning}" />
+        </Style>
+        <Style Selector="^[Severity=Error]">
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:Theme Error}" />
+        </Style>
     </ControlTheme>
 
 </ResourceDictionary>

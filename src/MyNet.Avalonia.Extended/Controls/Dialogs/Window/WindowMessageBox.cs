@@ -6,7 +6,6 @@
 
 using System;
 using Avalonia;
-using Avalonia.Input;
 using MyNet.UI.Dialogs.MessageBox;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
@@ -65,10 +64,4 @@ public class WindowMessageBox : WindowDialog
     public WindowMessageBox(MessageBoxResultOption buttons) => Buttons = buttons;
 
     protected override Type StyleKeyOverride => typeof(WindowMessageBox);
-
-    protected override void OnKeyDown(KeyEventArgs e)
-    {
-        base.OnKeyDown(e);
-        DialogKeyboardHelper.TryHandleMessageBoxKey(e, Buttons, result => CloseWithResult(result));
-    }
 }

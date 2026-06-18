@@ -229,8 +229,8 @@
             <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Md}" />
         </Style>
         
-        <Style Selector="^.variant-outlined /template/ ContentControl#PART_Leading, ^.variant-outlined /template/ ContentControl#PART_Leading">
-            <Setter Property="Foreground" Value="{my:ThemeRole Foreground}" />
+        <Style Selector="^.variant-light /template/ ContentControl#PART_Leading, ^.variant-outlined /template/ ContentControl#PART_Leading">
+            <Setter Property="Foreground" Value="{my:ThemeRole Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
         </Style>
     </ControlTheme>
 

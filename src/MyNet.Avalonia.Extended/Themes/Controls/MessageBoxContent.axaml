@@ -3,56 +3,140 @@
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
 
-    <ControlTheme x:Key="{x:Type my:MessageBoxContent}" TargetType="my:MessageBoxContent">
+    <!-- Message box body: chromeless inside window/overlay shell, badge leading, horizontal title/message layout. -->
+    <ControlTemplate x:Key="MyNet.MessageBoxContent.Template" TargetType="my:MessageBoxContent">
+        <Border Name="PART_Root"
+                Background="Transparent"
+                BorderThickness="0">
+            <DockPanel>
+                <Border DockPanel.Dock="Bottom"
+                        Padding="{TemplateBinding (my:ActionsAssist.Padding)}">
+                    <StackPanel HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                Spacing="{my:Spacing Sm}">
+                        <Button Name="PART_CancelButton"
+                                Content="{my:Loc Cancel}"
+                                MinWidth="90"
+                                Classes="variant-text" />
+                        <Button Name="PART_NoButton"
+                                Content="{my:Loc No}"
+                                MinWidth="90"
+                                Classes="variant-outlined" />
+                        <Button Name="PART_OKButton"
+                                Content="{my:Loc Ok}"
+                                MinWidth="90"
+                                my:ThemeAssist.Role="{Binding (my:ThemeAssist.Role), RelativeSource={RelativeSource AncestorType=my:MessageBoxContent}}" />
+                        <Button Name="PART_YesButton"
+                                Content="{my:Loc Yes}"
+                                MinWidth="90"
+                                my:ThemeAssist.Role="{Binding (my:ThemeAssist.Role), RelativeSource={RelativeSource AncestorType=my:MessageBoxContent}}" />
+                    </StackPanel>
+                </Border>
+
+                <Grid Name="PART_BodyGrid"
+                      Margin="{my:Thickness Md}"
+                      ColumnDefinitions="Auto,*"
+                      RowDefinitions="Auto,Auto">
+                    <ContentControl Name="PART_LeadingHost"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Top"
+                                    Focusable="False"
+                                    Template="{StaticResource MyNet.RegionLayout.LeadingHost}" />
+
+                    <ContentPresenter Name="PART_Header"
+                                      Grid.Row="0"
+                                      Grid.Column="1"
+                                      Margin="{my:Thickness Xs, Bottom}"
+                                      Content="{TemplateBinding Header}"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                      FontSize="{TemplateBinding (my:HeaderAssist.FontSize)}"
+                                      FontWeight="{TemplateBinding (my:HeaderAssist.FontWeight)}"
+                                      Foreground="{TemplateBinding (my:HeaderAssist.Foreground)}"
+                                      IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+
+                    <ContentPresenter Name="PART_Content"
+                                      Grid.Row="1"
+                                      Grid.Column="1"
+                                      Padding="0"
+                                      VerticalAlignment="Top"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      IsVisible="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}" />
+                </Grid>
+            </DockPanel>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTheme x:Key="{x:Type my:MessageBoxContent}"
+                  TargetType="my:MessageBoxContent"
+                  BasedOn="{StaticResource {x:Type my:DialogPanel}}">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="Focusable" Value="False" />
-        <Setter Property="Template">
-            <ControlTemplate TargetType="my:MessageBoxContent">
-                <my:DialogPanel Name="PART_Dialog"
-                                Theme="{StaticResource MyNet.Theme.DialogPanel.MessageBox}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                Header="{TemplateBinding Title}"
-                                Content="{TemplateBinding Message}"
-                                my:ThemeAssist.Role="Information">
-                    <my:DialogPanel.LeadingTemplate>
-                        <DataTemplate DataType="icons:MaterialIconKind">
-                            <my:MaterialIcon Kind="{Binding}"
-                                             Classes="size-lg"
-                                             Foreground="{my:ThemeRole Foreground, Contrast=True}" />
-                        </DataTemplate>
-                    </my:DialogPanel.LeadingTemplate>
-                    <my:DialogPanel.Actions>
-                        <StackPanel HorizontalAlignment="Right"
-                                    Orientation="Horizontal"
-                                    Spacing="{my:Spacing Sm}">
-                            <Button Name="PART_CancelButton" Content="{my:Loc Cancel}" MinWidth="90" Classes="variant-text" />
-                            <Button Name="PART_NoButton" Content="{my:Loc No}" MinWidth="90" Classes="variant-outlined" />
-                            <Button Name="PART_OKButton" Content="{my:Loc Ok}" MinWidth="90"
-                                    my:ThemeAssist.Role="{Binding $parent[my:DialogPanel].(my:ThemeAssist.Role)}" />
-                            <Button Name="PART_YesButton" Content="{my:Loc Yes}" MinWidth="90"
-                                    my:ThemeAssist.Role="{Binding $parent[my:DialogPanel].(my:ThemeAssist.Role)}" />
-                        </StackPanel>
-                    </my:DialogPanel.Actions>
-                </my:DialogPanel>
-            </ControlTemplate>
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="my:VariantAssist.Background" Value="Transparent" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="Transparent" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:Foreground AncestorType=TemplatedControl}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+        <Setter Property="my:HeaderAssist.Background" Value="Transparent" />
+        <Setter Property="my:HeaderAssist.Padding" Value="0" />
+        <Setter Property="my:HeaderAssist.Margin" Value="0" />
+        <Setter Property="my:HeaderAssist.FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
+        <Setter Property="my:HeaderAssist.FontWeight" Value="{StaticResource MyNet.Font.Weight.Header}" />
+        <Setter Property="my:HeaderAssist.Foreground" Value="{my:Foreground}" />
+        <Setter Property="my:ActionsAssist.Padding" Value="{my:Thickness Md}" />
+        <Setter Property="my:LeadingAssist.Padding" Value="{my:Thickness Md}" />
+        <Setter Property="my:LeadingAssist.Margin" Value="{my:Thickness Sm, Right}" />
+        <Setter Property="my:LeadingAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Md}" />
+        <Setter Property="my:LeadingAssist.Background" Value="{my:ThemeRole Primary, Opacity=Overlay}" />
+        <Setter Property="my:LeadingAssist.VerticalAlignment" Value="Top" />
+        <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        <Setter Property="Template" Value="{StaticResource MyNet.MessageBoxContent.Template}" />
+        
+        <Setter Property="LeadingTemplate">
+            <DataTemplate DataType="icons:MaterialIconKind">
+                <my:MaterialIcon Kind="{Binding}" />
+            </DataTemplate>
         </Setter>
 
-        <Style Selector="^[Severity=Information] /template/ my|DialogPanel#PART_Dialog">
-            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.InformationVariantCircle}" />
-            <Setter Property="my:ThemeAssist.Role" Value="Information" />
+        <Style Selector="^ /template/ Border#PART_LeadingBackground">
+            <Setter Property="IsVisible" Value="True" />
         </Style>
-        <Style Selector="^[Severity=Success] /template/ my|DialogPanel#PART_Dialog">
+        <Style Selector="^ /template/ ContentPresenter#PART_Leading my|MaterialIcon">
+            <Setter Property="Foreground" Value="{my:ThemeRole Foreground, RelativeSource={RelativeSource AncestorType=my:MessageBoxContent}}" />
+        </Style>
+        <Style Selector="^ /template/ ContentPresenter">
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector="^:header-empty /template/ ContentControl#PART_LeadingHost">
+            <Setter Property="Grid.RowSpan" Value="1" />
+        </Style>
+        <Style Selector="^:header-empty /template/ ContentPresenter#PART_Content">
+            <Setter Property="Grid.Row" Value="0" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+
+        <Style Selector="^[Severity=Information]">
+            <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.InformationVariantCircle}" />
+            <Setter Property="my:ThemeAssist.Role" Value="Primary" />
+        </Style>
+        <Style Selector="^[Severity=Success]">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.CheckCircle}" />
             <Setter Property="my:ThemeAssist.Role" Value="Success" />
         </Style>
-        <Style Selector="^[Severity=Warning] /template/ my|DialogPanel#PART_Dialog">
+        <Style Selector="^[Severity=Warning]">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.Alert}" />
             <Setter Property="my:ThemeAssist.Role" Value="Warning" />
         </Style>
-        <Style Selector="^[Severity=Error] /template/ my|DialogPanel#PART_Dialog">
+        <Style Selector="^[Severity=Error]">
             <Setter Property="Leading" Value="{x:Static icons:MaterialIconKind.AlertCircle}" />
             <Setter Property="my:ThemeAssist.Role" Value="Error" />
+        </Style>
+        
+        <Style Selector="^ /template/ ContentControl#PART_LeadingHost">
+            <Setter Property="Foreground" Value="{my:ThemeRole Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
         </Style>
     </ControlTheme>
 

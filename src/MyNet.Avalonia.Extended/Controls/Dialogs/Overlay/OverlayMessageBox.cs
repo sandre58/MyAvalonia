@@ -7,7 +7,6 @@
 using System;
 using Avalonia;
 using Avalonia.Controls.Primitives;
-using Avalonia.Input;
 using MyNet.Avalonia.Controls;
 using MyNet.UI.Dialogs.MessageBox;
 
@@ -67,12 +66,6 @@ public class OverlayMessageBox : OverlayDialog
     {
         base.OnApplyTemplate(e);
         UpdateCloseButtonVisibility();
-    }
-
-    protected override void OnKeyDown(KeyEventArgs e)
-    {
-        base.OnKeyDown(e);
-        DialogKeyboardHelper.TryHandleMessageBoxKey(e, Buttons, CloseWithResult);
     }
 
     private void UpdateCloseButtonVisibility()

@@ -22,6 +22,9 @@ namespace MyNet.Avalonia.Controls.Primitives;
 /// use <see cref="Card.Title"/> / <see cref="Card.Subtitle"/> for the tile heading in the body.</description></item>
 /// <item><description><see cref="Banner"/>, <see cref="DialogPanel"/>, <see cref="ContentDialog"/>:
 /// <see cref="Header"/> = primary heading text.</description></item>
+/// <item><description><c>MessageBoxContent</c> (Extended): chromeless message box body inside window/overlay shells;
+/// <see cref="Header"/> = title (via <c>Title</c>), <see cref="ContentControl.Content"/> = message,
+/// <see cref="Leading"/> = severity icon badge.</description></item>
 /// <item><description><c>MessageNotificationControl</c> (Extended): chromeless toast body inside <c>NotificationCard</c>;
 /// <see cref="Header"/> = title, <see cref="ContentControl.Content"/> = message, <see cref="Leading"/> = severity icon.</description></item>
 /// <item><description><see cref="EmptyState"/>: <see cref="EmptyState.Title"/> / <see cref="EmptyState.Subtitle"/> convenience for
