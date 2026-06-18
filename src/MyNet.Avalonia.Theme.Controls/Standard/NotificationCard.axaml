@@ -121,7 +121,8 @@
         </Style>
 
         <Style Selector="^:information">
-            <Setter Property="my:ThemeAssist.Role" Value="Information" />
+            <!-- Neutral surface for informational toasts; success/warning/error keep semantic roles. -->
+            <Setter Property="my:ThemeAssist.Role" Value="Inverse" />
         </Style>
         <Style Selector="^:success">
             <Setter Property="my:ThemeAssist.Role" Value="Success" />

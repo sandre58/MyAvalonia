@@ -71,7 +71,8 @@
                                       ColumnDefinitions="Auto,*,Auto"
                                       RowDefinitions="Auto,Auto">
 
-                                    <ContentControl Grid.Row="0"
+                                    <ContentControl Name="PART_Leading"
+                                                    Grid.Row="0"
                                                     Grid.Column="0"
                                                     Grid.RowSpan="2"
                                                     VerticalAlignment="Top"
@@ -228,7 +229,7 @@
             <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Md}" />
         </Style>
         
-        <Style Selector="^.variant-light /template/ ContentPresenter#PART_Leading, ^.variant-outlined /template/ ContentPresenter#PART_Leading">
+        <Style Selector="^.variant-outlined /template/ ContentControl#PART_Leading, ^.variant-outlined /template/ ContentControl#PART_Leading">
             <Setter Property="Foreground" Value="{my:ThemeRole Foreground}" />
         </Style>
     </ControlTheme>

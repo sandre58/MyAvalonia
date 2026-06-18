@@ -48,7 +48,7 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
             commands,
             [
                 new ControlThemeBuilder()
-                    .AddRoles(ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information, ThemeRole.Inverse)
+                    .AddRoles(ThemeRole.Default, ThemeRole.Success, ThemeRole.Error, ThemeRole.Warning, ThemeRole.Information, ThemeRole.Inverse)
                     .AddAction<Button>(_ => toastManager.Clear(), x => x.DisplayName(nameof(UiResources.Clear))
                                                                                                       .WithIcon(MaterialIconKind.CloseCircle)
                                                                                                       .Of<ButtonEditor>(editor => editor.WithRole(ThemeRole.Error)))
@@ -187,7 +187,8 @@ internal sealed class NotificationPageViewModel : ShowcaseViewModel
             ThemeRole.Success => NotificationSeverity.Success,
             ThemeRole.Warning => NotificationSeverity.Warning,
             ThemeRole.Error => NotificationSeverity.Error,
-            _ => NotificationSeverity.Information
+            ThemeRole.Information => NotificationSeverity.Information,
+            _ => NotificationSeverity.None
         };
 
         return new MessageNotification(
