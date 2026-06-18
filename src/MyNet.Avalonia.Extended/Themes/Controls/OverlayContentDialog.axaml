@@ -1,9 +1,16 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:my="http://mynet.com/avalonia"
-                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+                    xmlns:my="http://mynet.com/avalonia">
 
-    <ControlTheme x:Key="{x:Type my:OverlayContentDialog}" TargetType="my:OverlayContentDialog"
-                  BasedOn="{StaticResource {x:Type my:OverlayDialog}}" />
+    <!-- Content dialog overlay: surface chrome + close/drag only — title lives on ContentDialog.Header. -->
+    <ControlTheme x:Key="{x:Type my:OverlayContentDialog}"
+                  TargetType="my:OverlayContentDialog"
+                  BasedOn="{StaticResource {x:Type my:OverlayDialog}}">
+        <Setter Property="MinWidth" Value="400" />
+        <Setter Property="MaxWidth" Value="720" />
+        <Setter Property="MinHeight" Value="120" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </ControlTheme>
 
 </ResourceDictionary>

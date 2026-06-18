@@ -1,10 +1,15 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls">
     <!--
       Extended control themes for host applications.
       Include once in App.axaml:
         <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Generic.axaml" />
     -->
+    <Style Selector="controls|ContentDialog">
+        <Setter Property="Theme" Value="{StaticResource {x:Type controls:ContentDialog}}" />
+    </Style>
+
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

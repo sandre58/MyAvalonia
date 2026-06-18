@@ -131,6 +131,8 @@ internal static class WindowDialogBuilder
         window.WindowState = WindowState.Normal;
 
         var title = options.Title ?? windowOptions.Title ?? dialog.Title;
+        if (string.IsNullOrEmpty(title) && window.Content is ContentDialog contentDialogForTitle)
+            title = contentDialogForTitle.Header?.ToString();
         if (!string.IsNullOrEmpty(title))
             window.Title = title;
 

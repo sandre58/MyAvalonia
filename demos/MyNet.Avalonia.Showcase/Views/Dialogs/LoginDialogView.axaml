@@ -16,9 +16,7 @@
     <my:ContentDialog.Actions>
         <StackPanel HorizontalAlignment="Right"
                     Orientation="Horizontal"
-                    DockPanel.Dock="Bottom"
-                    Margin="{my:Thickness Md, Top}"
-                    Spacing="10">
+                    Spacing="{my:Spacing Sm}">
             <Button Content="{my:Loc Reset}"
                     Command="{Binding ResetCommand}"
                     my:IconAssist.Icon="{my:MaterialIcon Restore}"

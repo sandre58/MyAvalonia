@@ -20,9 +20,11 @@ namespace MyNet.Avalonia.Controls;
 /// Modal dialog content with standard regions plus window and overlay presentation options.
 /// </summary>
 /// <remarks>
-/// The inner header band is styled via <c>HeaderAssist</c>. When an overlay or window shell
-/// already displays <see cref="RegionControl.Header"/>, set <c>HeaderAssist.IsVisible</c> to
-/// <see langword="false"/> on the dialog instance.
+/// <para>The inner header band is styled via <c>HeaderAssist</c> and supports <see cref="RegionControl.HeaderTemplate"/>
+/// for complex chrome. In overlay mode the header is shown on this control; the overlay shell only provides
+/// surface, close, and drag affordances.</para>
+/// <para>In window mode the shell shows the native title bar — set <c>HeaderAssist.IsVisible</c> to
+/// <see langword="false"/> (done automatically by the Extended window dialog builder).</para>
 /// </remarks>
 public class ContentDialog : DialogPanel
 {

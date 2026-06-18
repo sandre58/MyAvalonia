@@ -10,22 +10,24 @@
                   x:DataType="vm:ConfirmDialogBoxViewModel"
                   Header="{Binding Title}"
                   ShowCloseButton="False"
+                  Theme="{StaticResource {x:Type my:ContentDialog}}"
                   mc:Ignorable="d">
-    <Grid RowDefinitions="*,Auto">
-        <TextBlock Grid.Row="0"
-                   Text="{Binding Message}"
-                   TextWrapping="Wrap"
-                   LineHeight="22"
-                   VerticalAlignment="Center" />
-        <Border Grid.Row="1"
-                Margin="{my:Thickness Lg, Top}"
-                Padding="{my:Thickness Lg, Top}">
-            <StackPanel HorizontalAlignment="Right"
-                        Orientation="Horizontal"
-                        Spacing="{StaticResource MyNet.Spacing.Sm}">
-                <Button Command="{Binding CancelCommand}" Content="Cancel" Classes="kind-text" />
-                <Button Command="{Binding ConfirmCommand}" Content="OK" Classes="kind-filled" IsDefault="True" />
-            </StackPanel>
-        </Border>
-    </Grid>
+    <my:ContentDialog.Actions>
+        <StackPanel HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Spacing="{my:Spacing Sm}">
+            <Button Command="{Binding CancelCommand}"
+                    Content="{my:Loc Cancel}"
+                    Classes="variant-text" />
+            <Button Command="{Binding ConfirmCommand}"
+                    Content="{my:Loc Ok}"
+                    my:ThemeAssist.Role="Primary"
+                    IsDefault="True" />
+        </StackPanel>
+    </my:ContentDialog.Actions>
+
+    <TextBlock Text="{Binding Message}"
+               TextWrapping="Wrap"
+               LineHeight="22"
+               VerticalAlignment="Center" />
 </my:ContentDialog>

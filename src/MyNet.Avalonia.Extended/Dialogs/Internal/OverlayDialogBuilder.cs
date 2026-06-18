@@ -12,7 +12,6 @@ using Avalonia.Threading;
 using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Enums;
 using MyNet.Avalonia.Extended.Controls;
-using MyNet.Avalonia.Theme.Assists;
 using MyNet.UI;
 using MyNet.UI.Dialogs.ContentDialogs;
 using MyNet.UI.Dialogs.MessageBox;
@@ -42,9 +41,6 @@ internal static class OverlayDialogBuilder
         var overlay = new OverlayContentDialog();
         var overlayOptions = MergeOptions(GetOptions(view), request.OverlayOptions);
         PrepareOverlayDialog(overlay, overlayOptions, options);
-
-        if (view is ContentDialog contentDialog)
-            HeaderAssist.SetIsVisible(contentDialog, false);
 
         overlay.Content = view;
         overlay.DataContext = dialog;
