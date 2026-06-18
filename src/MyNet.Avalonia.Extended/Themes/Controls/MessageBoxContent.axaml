@@ -69,9 +69,9 @@
         </Border>
     </ControlTemplate>
 
-    <ControlTheme x:Key="{x:Type my:MessageBoxContent}"
-                  TargetType="my:MessageBoxContent"
-                  BasedOn="{StaticResource {x:Type my:DialogPanel}}">
+    <ControlTheme x:Key="{x:Type my:MessageBoxContent}" TargetType="my:MessageBoxContent">
+        <Setter Property="my:ThemeAssist.Category" Value="Surface" />
+        <Setter Property="Focusable" Value="True" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="BorderThickness" Value="0" />

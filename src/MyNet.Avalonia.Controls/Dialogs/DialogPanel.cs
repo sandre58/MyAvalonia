@@ -14,13 +14,13 @@ namespace MyNet.Avalonia.Controls;
 #pragma warning restore IDE0130
 
 /// <summary>
-/// Standard dialog body layout: optional header band, leading slot, content, and actions.
+/// Layout primitive for dialog regions (header, leading, content, actions).
 /// </summary>
 /// <remarks>
-/// <para><see cref="RegionControl.Header"/> is the dialog title. Hide the internal header band with
-/// <c>HeaderAssist.IsVisible="False"</c> when a window or overlay shell already displays the title.</para>
-/// <para>Use <see cref="ContentDialog"/> for modal dialogs. Compose <see cref="DialogPanel"/> directly
-/// when embedding dialog layout inside another control (for example a message box preset).</para>
+/// <para>No default theme — use <see cref="ContentDialog"/> or the Extended
+/// <c>MessageBoxContent</c> control for themed templates.</para>
+/// <para><see cref="RegionControl.Header"/> is the dialog title. Hide the header band with
+/// <c>HeaderAssist.IsVisible="False"</c> when a window shell shows the native title bar.</para>
 /// </remarks>
 [PseudoClasses(PseudoClassName.HeaderEmpty)]
 public class DialogPanel : RegionControl

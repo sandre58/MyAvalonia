@@ -165,7 +165,6 @@
                                             <Label Grid.Column="2" VerticalAlignment="Center"
                                                    my:ThemeAssist.Role="Inverse"
                                                    Content="{Binding DemoPageCount}"
-                                                   my:VariantAssist.Background="{my:Theme Surface.Level2}"
                                                    Classes="shadow-control variant-solid font-sm size-sm kind-badge shape-circle" />
                                         </my:Card.Trailing>
                                     </my:Card>

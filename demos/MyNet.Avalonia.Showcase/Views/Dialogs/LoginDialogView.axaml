@@ -11,7 +11,9 @@
                   x:DataType="vm:LoginDialogViewModel"
                   CanResize="{Binding CanResize}"
                   Header="User Registration"
+                  Leading="{my:MaterialIcon AccountCircleOutline}"
                   Theme="{StaticResource {x:Type my:ContentDialog}}"
+                  Classes="leading-badge"
                   mc:Ignorable="d">
     <my:ContentDialog.Actions>
         <StackPanel HorizontalAlignment="Right"

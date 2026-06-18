@@ -171,7 +171,7 @@
                                  Padding="{my:Thickness Md}">
                             <Border Height="120"
                                     CornerRadius="{StaticResource MyNet.Corners.Md}"
-                                    Background="{my:ThemeContext Surface.Level2}">
+                                    Background="{my:ThemeContext Surface.Level3}">
                                 <TextBlock Text="{my:Loc ContentOnlyExample}"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"

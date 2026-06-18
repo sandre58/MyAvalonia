@@ -5,8 +5,8 @@
 
     <!-- Surfaces -->
     <Color x:Key="MyNet.Color.Surface.Level0">#0A0A0A</Color> <!-- Headers -->
-    <Color x:Key="MyNet.Color.Surface.Level1">#111111</Color> <!-- Application -->
-    <Color x:Key="MyNet.Color.Surface.Level2">#181818</Color> <!-- Popup, Dialog -->
+    <Color x:Key="MyNet.Color.Surface.Level1">#111111</Color> <!-- Popup, Dialog -->
+    <Color x:Key="MyNet.Color.Surface.Level2">#181818</Color> <!-- Application -->
     <Color x:Key="MyNet.Color.Surface.Level3">#212121</Color> <!-- Container -->
     <Color x:Key="MyNet.Color.Surface.Level4">#2A2A2A</Color> <!-- Control -->
     <Color x:Key="MyNet.Color.Surface.Level5">#363636</Color> <!-- Container secondary -->

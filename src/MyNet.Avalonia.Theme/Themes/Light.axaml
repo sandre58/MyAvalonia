@@ -4,9 +4,9 @@
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
     <!-- Surfaces -->
-    <Color x:Key="MyNet.Color.Surface.Level0">#FFFFFF</Color> <!-- Headers -->
-    <Color x:Key="MyNet.Color.Surface.Level1">#FFFFFF</Color> <!-- Application -->
-    <Color x:Key="MyNet.Color.Surface.Level2">#F3F3F3</Color> <!-- Popup, Dialog -->
+    <Color x:Key="MyNet.Color.Surface.Level0">#F7F7F7</Color> <!-- Headers -->
+    <Color x:Key="MyNet.Color.Surface.Level1">#FFFFFF</Color> <!-- Popup, Dialog -->
+    <Color x:Key="MyNet.Color.Surface.Level2">#F3F3F3</Color> <!-- Application -->
     <Color x:Key="MyNet.Color.Surface.Level3">#FBFBFB</Color> <!-- Container -->
     <Color x:Key="MyNet.Color.Surface.Level4">#FDFDFD</Color> <!-- Control -->
     <Color x:Key="MyNet.Color.Surface.Level5">#EEEEEE</Color> <!-- Container secondary -->

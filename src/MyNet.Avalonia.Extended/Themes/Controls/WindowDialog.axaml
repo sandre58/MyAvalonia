@@ -11,6 +11,6 @@
         <Setter Property="SizeToContent" Value="WidthAndHeight" />
         <Setter Property="my:WindowAssist.ShowMinimizeButton" Value="False" />
         <Setter Property="my:WindowAssist.ShowMaximizeButton" Value="False" />
-        <Setter Property="Background" Value="{my:Theme Surface.Level2}" />
+        <Setter Property="Background" Value="{my:Theme Surface.Level1}" />
     </ControlTheme>
 </ResourceDictionary>
