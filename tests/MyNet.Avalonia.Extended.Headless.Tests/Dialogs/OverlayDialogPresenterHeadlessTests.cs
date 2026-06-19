@@ -16,7 +16,9 @@ using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.Avalonia.Extended.Dialogs.Internal;
 using MyNet.Avalonia.Extended.Dialogs.Presentation;
+using MyNet.Avalonia.Extended.Schedulers;
 using MyNet.Avalonia.Theme.Assists;
+using MyNet.Avalonia.Threading;
 
 namespace MyNet.Avalonia.Extended.Headless.Tests.Dialogs;
 
@@ -40,7 +42,8 @@ public class OverlayDialogPresenterHeadlessTests
         var presenter = new OverlayDialogPresenter(
             hostOptions,
             new PassthroughViewFactory(new ContentDialog { Header = "Edit", ShowCloseButton = true }),
-            registry);
+            registry,
+            new AvaloniaUiThreadDispatcher());
         var uiOptions = DialogOptionsFactory.ForOverlay(
             dialog,
             isModal: true,

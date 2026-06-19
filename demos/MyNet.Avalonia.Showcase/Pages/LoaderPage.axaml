@@ -1,0 +1,149 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.LoaderPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+             xmlns:enums="clr-namespace:MyNet.Avalonia.Controls.Enums;assembly=MyNet.Avalonia.Controls"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+             x:DataType="vm:LoaderPageViewModel"
+             x:Name="Root"
+             Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Display Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             ClipToBounds="False"
+             mc:Ignorable="d">
+
+    <v:ShowcaseView ShowIcon="False"
+                    ShowContent="False"
+                    ShowPreviewCode="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <Border Classes="kind-card"
+                        MinWidth="200"
+                        MinHeight="120"
+                        Padding="{my:Thickness Lg}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <my:Loader behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+                </Border>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <Border Classes="kind-card"
+                        MinWidth="160"
+                        MinHeight="100"
+                        Padding="{my:Thickness Md}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <my:Loader behavior:PlaygroundBehavior.AttachStyle="{Binding}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+                </Border>
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+        <v:ShowcaseView.CustomContent>
+            <StackPanel Spacing="{my:Spacing Lg}">
+                <TextBlock Classes="text-h6" Text="All animations" />
+                <WrapPanel Orientation="Horizontal">
+                    <Border Classes="kind-card"
+                            Width="140"
+                            Height="100"
+                            Margin="{my:Thickness Sm}"
+                            Padding="{my:Thickness Md}">
+                        <StackPanel Spacing="{my:Spacing Sm}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <my:Loader Animation="{x:Static enums:LoaderAnimation.Circular}" Classes="size-md" />
+                            <TextBlock Classes="text-caption" Text="Circular" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <Border Classes="kind-card"
+                            Width="140"
+                            Height="100"
+                            Margin="{my:Thickness Sm}"
+                            Padding="{my:Thickness Md}">
+                        <StackPanel Spacing="{my:Spacing Sm}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <my:Loader Animation="{x:Static enums:LoaderAnimation.Ring}" Classes="size-md" />
+                            <TextBlock Classes="text-caption" Text="Ring" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <Border Classes="kind-card"
+                            Width="140"
+                            Height="100"
+                            Margin="{my:Thickness Sm}"
+                            Padding="{my:Thickness Md}">
+                        <StackPanel Spacing="{my:Spacing Sm}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <my:Loader Animation="{x:Static enums:LoaderAnimation.Dots}" Classes="size-md" />
+                            <TextBlock Classes="text-caption" Text="Dots" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <Border Classes="kind-card"
+                            Width="140"
+                            Height="100"
+                            Margin="{my:Thickness Sm}"
+                            Padding="{my:Thickness Md}">
+                        <StackPanel Spacing="{my:Spacing Sm}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <my:Loader Animation="{x:Static enums:LoaderAnimation.Bars}" Classes="size-md" />
+                            <TextBlock Classes="text-caption" Text="Bars" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <Border Classes="kind-card"
+                            Width="140"
+                            Height="100"
+                            Margin="{my:Thickness Sm}"
+                            Padding="{my:Thickness Md}">
+                        <StackPanel Spacing="{my:Spacing Sm}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <my:Loader Animation="{x:Static enums:LoaderAnimation.Pulse}" Classes="size-md" />
+                            <TextBlock Classes="text-caption" Text="Pulse" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                </WrapPanel>
+
+                <TextBlock Classes="text-h6" Text="Inline usage" />
+                <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Md}">
+                    <Button Classes="variant-solid">
+                        <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Sm}">
+                            <my:Loader Classes="size-sm role-inverse" />
+                            <TextBlock Text="Saving…" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="variant-outlined" IsEnabled="False">
+                        <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Sm}">
+                            <my:Loader Classes="size-sm" IsActive="False" />
+                            <TextBlock Text="Inactive" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <my:EmptyState Title="Loading data"
+                               Subtitle="The loader can sit inside any surface while content is fetched."
+                               MaxWidth="420"
+                               HorizontalAlignment="Left">
+                    <my:EmptyState.Leading>
+                        <my:Loader Animation="{x:Static enums:LoaderAnimation.Ring}" Classes="size-lg" />
+                    </my:EmptyState.Leading>
+                </my:EmptyState>
+            </StackPanel>
+        </v:ShowcaseView.CustomContent>
+
+    </v:ShowcaseView>
+</ContentPage>

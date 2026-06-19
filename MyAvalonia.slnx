@@ -62,6 +62,7 @@
     <File Path="build/coverage/Verify-CriticalCoverage.ps1" />
   </Folder>
   <Folder Name="/Solution Files/Docs/">
+    <File Path="docs/TODO.md" />
     <File Path="LICENSE" />
     <File Path="README.md" />
   </Folder>
@@ -70,7 +71,6 @@
     <File Path="CODEOWNERS" />
     <File Path="CODE_OF_CONDUCT.md" />
     <File Path="CONTRIBUTING.md" />
-    <File Path="docs/TODO.md" />
     <File Path="SECURITY.md" />
   </Folder>
   <Folder Name="/Solution Files/Docs/Github/Issue_template/">

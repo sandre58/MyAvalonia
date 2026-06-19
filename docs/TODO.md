@@ -101,10 +101,10 @@ This document summarizes the current state of MyNet.Avalonia project development
 - [x] **Pages (Content, Carousel, Drawer, Navigation, Tabbed)**
 - [x] **SpinnerButton**
 - [ ] **CommandBar**
-- [ ] **Dialogs**
+- [x] **Dialogs**
 - [x] **Drawers**
 - [ ] **MultiAucompleteBox**
-- [ ] **Loader** - Loading animation control
+- [x] **Loader** - Loading animation control
 - [ ] **Rating**
 - [ ] **Chip**
 - [ ] **Stepper** - Step progress indicator

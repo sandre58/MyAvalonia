@@ -189,6 +189,7 @@
   <data name="IconContentControl" xml:space="preserve"><value>Icon content control</value></data>
   <data name="Label" xml:space="preserve"><value>Label</value></data>
   <data name="ListBox" xml:space="preserve"><value>List box</value></data>
+  <data name="Loader" xml:space="preserve"><value>Loader</value></data>
   <data name="MaterialIcon" xml:space="preserve"><value>Material icon</value></data>
   <data name="Menu" xml:space="preserve"><value>Menu</value></data>
   <data name="NavigationMenu" xml:space="preserve"><value>Navigation menu</value></data>

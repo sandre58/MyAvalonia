@@ -409,7 +409,7 @@ internal sealed class ControlThemeBuilder(string? themeKey = null)
     public ControlThemeDefinition Build(string controlName)
     {
         var fullKey = ResolveKey(controlName, themeKey);
-        var theme = ResolveTheme(fullKey);
+        var theme = ResolveTheme(fullKey, controlName);
 
         return new(theme, fullKey)
         {
@@ -466,25 +466,66 @@ internal sealed class ControlThemeBuilder(string? themeKey = null)
     /// Resolves and caches the control theme from the theme resource key.
     /// </summary>
     /// <param name="themeKey">The theme resource key.</param>
+    /// <param name="controlName">The control name used to resolve the default typed theme as a fallback.</param>
     /// <returns>The resolved control theme, or null if not found.</returns>
-    private static ControlTheme? ResolveTheme(string? themeKey)
+    private static ControlTheme? ResolveTheme(string? themeKey, string controlName)
     {
-        if (string.IsNullOrEmpty(themeKey))
-            return null;
-
         EnsureThemeCacheInvalidation();
 
-        if (ThemeCache.TryGetValue(themeKey, out var cached))
+        if (!string.IsNullOrEmpty(themeKey))
+        {
+            if (ThemeCache.TryGetValue(themeKey, out var cached))
+                return cached;
+
+            if (Application.Current?.TryGetResource(themeKey, null, out var value) == true && value is ControlTheme namedTheme)
+            {
+                ThemeCache[themeKey] = namedTheme;
+                return namedTheme;
+            }
+        }
+
+        return ResolveDefaultControlTheme(controlName);
+    }
+
+    private static ControlTheme? ResolveDefaultControlTheme(string controlName)
+    {
+        var controlType = ResolveControlType(controlName);
+        if (controlType is null)
+            return null;
+
+        var cacheKey = $"type:{controlType.AssemblyQualifiedName}";
+        if (ThemeCache.TryGetValue(cacheKey, out var cached))
             return cached;
 
-        if (Application.Current?.TryGetResource(themeKey, null, out var value) == true && value is ControlTheme theme)
+        if (Application.Current?.TryGetResource(controlType, null, out var value) == true && value is ControlTheme theme)
         {
-            ThemeCache[themeKey] = theme;
+            ThemeCache[cacheKey] = theme;
             return theme;
         }
 
         return null;
     }
+
+    private static Type? ResolveControlType(string controlName)
+    {
+        foreach (var (assemblyName, namespaces) in ControlTypeNamespaces)
+        {
+            foreach (var ns in namespaces)
+            {
+                var type = Type.GetType($"{ns}.{controlName}, {assemblyName}");
+                if (type is not null)
+                    return type;
+            }
+        }
+
+        return null;
+    }
+
+    private static readonly (string AssemblyName, string[] Namespaces)[] ControlTypeNamespaces =
+    [
+        ("MyNet.Avalonia.Controls", ["MyNet.Avalonia.Controls", "MyNet.Avalonia.Controls.Primitives"]),
+        ("MyNet.Avalonia.Extended", ["MyNet.Avalonia.Extended.Controls"]),
+    ];
 
     private static void EnsureThemeCacheInvalidation()
     {

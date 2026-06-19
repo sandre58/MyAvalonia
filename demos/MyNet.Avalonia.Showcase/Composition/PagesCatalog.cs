@@ -96,6 +96,7 @@ internal static class PagesCatalog
             new PagesGroup(nameof(MenuResources.Feedback), MaterialIconKind.MessageAlertOutline, [
                 new(typeof(DialogPageViewModel), typeof(DialogPage), MaterialIconKind.DockWindow),
                 new(typeof(NotificationPageViewModel), typeof(NotificationPage), MaterialIconKind.MessageAlert),
+                new(typeof(LoaderPageViewModel), typeof(LoaderPage), MaterialIconKind.Loading),
                 new(typeof(ProgressBarPageViewModel), typeof(ProgressBarPage), MaterialIconKind.ProgressCheck)
             ]),
 
