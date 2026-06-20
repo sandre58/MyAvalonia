@@ -6,468 +6,441 @@
         <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
         <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Foreground" Value="{my:ThemeRole Primary}" />
-        <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Md}" />
         <Setter Property="Height" Value="{Binding $self.Width}" />
-        <Setter Property="my:LoaderAssist.DotSize" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
-        <Setter Property="my:LoaderAssist.BarWidth" Value="3" />
+        <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Md}" />
+        <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Md}" />
+        <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Md}" />
+
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Foreground.Primary, Opacity=Overlay}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+
+        <!-- Default Theme -->
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
 
         <Setter Property="Template">
             <ControlTemplate TargetType="my:Loader">
-                <Panel Name="PART_Root">
+                <ContentPresenter Name="PART_Animation"
+                                  Content="{TemplateBinding Animation}"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center">
+                    <ContentPresenter.Styles>
+                        <Style Selector="ContentPresenter.animations-active Panel.loader-rotate">
+                            <Setter Property="RenderTransform">
+                                <RotateTransform Angle="0" />
+                            </Setter>
+                            <Style.Animations>
+                                <Animation IterationCount="Infinite" Duration="0:0:1.1">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="RotateTransform.Angle" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="RotateTransform.Angle" Value="360" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                        <Style Selector="ContentPresenter.animations-active Ellipse.loader-dot-1">
+                            <Setter Property="RenderTransform">
+                                <TranslateTransform Y="0" />
+                            </Setter>
+                            <Style.Animations>
+                                <Animation IterationCount="Infinite" Duration="0:0:0.9">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="35%">
+                                        <Setter Property="TranslateTransform.Y" Value="-5" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="70%">
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                        <Style Selector="ContentPresenter.animations-active Ellipse.loader-dot-2">
+                            <Setter Property="RenderTransform">
+                                <TranslateTransform Y="0" />
+                            </Setter>
+                            <Style.Animations>
+                                <Animation IterationCount="Infinite" Duration="0:0:0.9">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="15%">
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="50%">
+                                        <Setter Property="TranslateTransform.Y" Value="-5" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="85%">
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                        <Style Selector="ContentPresenter.animations-active Ellipse.loader-dot-3">
+                            <Setter Property="RenderTransform">
+                                <TranslateTransform Y="0" />
+                            </Setter>
+                            <Style.Animations>
+                                <Animation IterationCount="Infinite" Duration="0:0:0.9">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="30%">
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="65%">
+                                        <Setter Property="TranslateTransform.Y" Value="-5" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                        <Style Selector="ContentPresenter.animations-active Border.loader-bar-1">
+                            <Setter Property="RenderTransform">
+                                <ScaleTransform ScaleY="0.4" />
+                            </Setter>
+                            <Style.Animations>
+                                <Animation IterationCount="Infinite" Duration="0:0:1">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="40%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="80%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                        <Style Selector="ContentPresenter.animations-active Border.loader-bar-2">
+                            <Setter Property="RenderTransform">
+                                <ScaleTransform ScaleY="0.55" />
+                            </Setter>
+                            <Style.Animations>
+                                <Animation IterationCount="Infinite" Duration="0:0:1">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="10%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="50%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="90%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                        <Style Selector="ContentPresenter.animations-active Border.loader-bar-3">
+                            <Setter Property="RenderTransform">
+                                <ScaleTransform ScaleY="0.7" />
+                            </Setter>
+                            <Style.Animations>
+                                <Animation IterationCount="Infinite" Duration="0:0:1">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.7" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="20%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.7" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="60%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.7" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                        <Style Selector="ContentPresenter.animations-active Border.loader-bar-4">
+                            <Setter Property="RenderTransform">
+                                <ScaleTransform ScaleY="0.55" />
+                            </Setter>
+                            <Style.Animations>
+                                <Animation IterationCount="Infinite" Duration="0:0:1">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="30%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="70%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                        <Style Selector="ContentPresenter.animations-active Border.loader-bar-5">
+                            <Setter Property="RenderTransform">
+                                <ScaleTransform ScaleY="0.4" />
+                            </Setter>
+                            <Style.Animations>
+                                <Animation IterationCount="Infinite" Duration="0:0:1">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="40%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="80%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                        <Style Selector="ContentPresenter.animations-active Ellipse.loader-pulse-inner">
+                            <Setter Property="RenderTransform">
+                                <ScaleTransform ScaleX="0.75" ScaleY="0.75" />
+                            </Setter>
+                            <Style.Animations>
+                                <Animation IterationCount="Infinite" Duration="0:0:1.2">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="ScaleTransform.ScaleX" Value="0.75" />
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.75" />
+                                        <Setter Property="Opacity" Value="1" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="50%">
+                                        <Setter Property="ScaleTransform.ScaleX" Value="1" />
+                                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
+                                        <Setter Property="Opacity" Value="0.85" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="ScaleTransform.ScaleX" Value="0.75" />
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.75" />
+                                        <Setter Property="Opacity" Value="1" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                        <Style Selector="ContentPresenter.animations-active Ellipse.loader-pulse-outer">
+                            <Setter Property="RenderTransform">
+                                <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
+                            </Setter>
+                            <Style.Animations>
+                                <Animation IterationCount="Infinite" Duration="0:0:1.2">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="ScaleTransform.ScaleX" Value="0.6" />
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.6" />
+                                        <Setter Property="Opacity" Value="0.35" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="70%">
+                                        <Setter Property="ScaleTransform.ScaleX" Value="1.15" />
+                                        <Setter Property="ScaleTransform.ScaleY" Value="1.15" />
+                                        <Setter Property="Opacity" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="ScaleTransform.ScaleX" Value="0.6" />
+                                        <Setter Property="ScaleTransform.ScaleY" Value="0.6" />
+                                        <Setter Property="Opacity" Value="0" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                    </ContentPresenter.Styles>
+                    <ContentPresenter.DataTemplates>
+                        <my:LoaderAnimationTemplateSelector>
+                        <DataTemplate x:Key="Circular">
+                            <Panel Classes="loader-circular"
+                                   Width="{Binding Width, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                   Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}">
+                                <Panel Classes="loader-rotate"
+                                       Width="{Binding Width, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                       Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                       RenderTransformOrigin="50%,50%">
+                                    <Arc Width="{Binding Width, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         RenderOptions.EdgeMode="Antialias"
+                                         StartAngle="-90"
+                                         Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         StrokeLineCap="Round"
+                                         StrokeThickness="{Binding StrokeThickness, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         SweepAngle="270" />
+                                </Panel>
+                            </Panel>
+                        </DataTemplate>
 
-                    <!-- Circular: rotating arc -->
-                    <Panel Name="PART_Circular" IsVisible="False">
-                        <Panel Name="PART_CircularRotate"
-                               Width="{TemplateBinding Width}"
-                               Height="{TemplateBinding Height}"
-                               RenderTransformOrigin="50%,50%">
-                            <Arc Width="{TemplateBinding Width}"
-                                 Height="{TemplateBinding Height}"
-                                 RenderOptions.EdgeMode="Antialias"
-                                 StartAngle="-90"
-                                 Stroke="{TemplateBinding Foreground}"
-                                 StrokeLineCap="Round"
-                                 StrokeThickness="{TemplateBinding StrokeThickness}"
-                                 SweepAngle="270" />
-                        </Panel>
-                    </Panel>
+                        <DataTemplate x:Key="Ring">
+                            <Panel Classes="loader-ring"
+                                   Width="{Binding Width, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                   Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}">
+                                <Arc Width="{Binding Width, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                     Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                     RenderOptions.EdgeMode="Antialias"
+                                     StartAngle="-90"
+                                     Stroke="{Binding Background, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                     StrokeLineCap="Round"
+                                     StrokeThickness="{Binding StrokeThickness, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                     SweepAngle="360" />
+                                <Panel Classes="loader-rotate"
+                                       Width="{Binding Width, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                       Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                       RenderTransformOrigin="50%,50%">
+                                    <Arc Width="{Binding Width, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         RenderOptions.EdgeMode="Antialias"
+                                         StartAngle="-90"
+                                         Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         StrokeLineCap="Round"
+                                         StrokeThickness="{Binding StrokeThickness, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         SweepAngle="90" />
+                                </Panel>
+                            </Panel>
+                        </DataTemplate>
 
-                    <!-- Ring: track + rotating segment -->
-                    <Panel Name="PART_Ring" IsVisible="False">
-                        <Arc Width="{TemplateBinding Width}"
-                             Height="{TemplateBinding Height}"
-                             Opacity="0.2"
-                             RenderOptions.EdgeMode="Antialias"
-                             StartAngle="-90"
-                             Stroke="{TemplateBinding Foreground}"
-                             StrokeLineCap="Round"
-                             StrokeThickness="{TemplateBinding StrokeThickness}"
-                             SweepAngle="360" />
-                        <Panel Name="PART_RingRotate"
-                               Width="{TemplateBinding Width}"
-                               Height="{TemplateBinding Height}"
-                               RenderTransformOrigin="50%,50%">
-                            <Arc Width="{TemplateBinding Width}"
-                                 Height="{TemplateBinding Height}"
-                                 RenderOptions.EdgeMode="Antialias"
-                                 StartAngle="-90"
-                                 Stroke="{TemplateBinding Foreground}"
-                                 StrokeLineCap="Round"
-                                 StrokeThickness="{TemplateBinding StrokeThickness}"
-                                 SweepAngle="90" />
-                        </Panel>
-                    </Panel>
+                        <DataTemplate x:Key="Dots">
+                            <StackPanel Classes="loader-dots"
+                                        Orientation="Horizontal"
+                                        Spacing="{StaticResource MyNet.Spacing.Xs}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <Ellipse Classes="loader-dot loader-dot-1"
+                                         Width="{Binding DotSize, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Height="{Binding DotSize, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         RenderTransformOrigin="50%,50%" />
+                                <Ellipse Classes="loader-dot loader-dot-2"
+                                         Width="{Binding DotSize, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Height="{Binding DotSize, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         RenderTransformOrigin="50%,50%" />
+                                <Ellipse Classes="loader-dot loader-dot-3"
+                                         Width="{Binding DotSize, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Height="{Binding DotSize, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         RenderTransformOrigin="50%,50%" />
+                            </StackPanel>
+                        </DataTemplate>
 
-                    <!-- Dots -->
-                    <StackPanel Name="PART_Dots"
-                                IsVisible="False"
-                                Orientation="Horizontal"
-                                Spacing="{StaticResource MyNet.Spacing.Xs}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
-                        <Ellipse Name="PART_Dot1"
-                                 Width="{TemplateBinding (my:LoaderAssist.DotSize)}"
-                                 Height="{TemplateBinding (my:LoaderAssist.DotSize)}"
-                                 Fill="{TemplateBinding Foreground}"
-                                 RenderTransformOrigin="50%,50%" />
-                        <Ellipse Name="PART_Dot2"
-                                 Width="{TemplateBinding (my:LoaderAssist.DotSize)}"
-                                 Height="{TemplateBinding (my:LoaderAssist.DotSize)}"
-                                 Fill="{TemplateBinding Foreground}"
-                                 RenderTransformOrigin="50%,50%" />
-                        <Ellipse Name="PART_Dot3"
-                                 Width="{TemplateBinding (my:LoaderAssist.DotSize)}"
-                                 Height="{TemplateBinding (my:LoaderAssist.DotSize)}"
-                                 Fill="{TemplateBinding Foreground}"
-                                 RenderTransformOrigin="50%,50%" />
-                    </StackPanel>
+                        <DataTemplate x:Key="Bars">
+                            <StackPanel Classes="loader-bars"
+                                        Orientation="Horizontal"
+                                        Spacing="2"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <Border Classes="loader-bar loader-bar-1"
+                                        Width="{Binding BarWidth, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        CornerRadius="1"
+                                        RenderTransformOrigin="50%,100%" />
+                                <Border Classes="loader-bar loader-bar-2"
+                                        Width="{Binding BarWidth, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        CornerRadius="1"
+                                        RenderTransformOrigin="50%,100%" />
+                                <Border Classes="loader-bar loader-bar-3"
+                                        Width="{Binding BarWidth, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        CornerRadius="1"
+                                        RenderTransformOrigin="50%,100%" />
+                                <Border Classes="loader-bar loader-bar-4"
+                                        Width="{Binding BarWidth, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        CornerRadius="1"
+                                        RenderTransformOrigin="50%,100%" />
+                                <Border Classes="loader-bar loader-bar-5"
+                                        Width="{Binding BarWidth, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                        CornerRadius="1"
+                                        RenderTransformOrigin="50%,100%" />
+                            </StackPanel>
+                        </DataTemplate>
 
-                    <!-- Bars -->
-                    <StackPanel Name="PART_Bars"
-                                IsVisible="False"
-                                Orientation="Horizontal"
-                                Spacing="2"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
-                        <Border Name="PART_Bar1"
-                                Width="{TemplateBinding (my:LoaderAssist.BarWidth)}"
-                                Height="{TemplateBinding Height}"
-                                Background="{TemplateBinding Foreground}"
-                                CornerRadius="1"
-                                RenderTransformOrigin="50%,100%" />
-                        <Border Name="PART_Bar2"
-                                Width="{TemplateBinding (my:LoaderAssist.BarWidth)}"
-                                Height="{TemplateBinding Height}"
-                                Background="{TemplateBinding Foreground}"
-                                CornerRadius="1"
-                                RenderTransformOrigin="50%,100%" />
-                        <Border Name="PART_Bar3"
-                                Width="{TemplateBinding (my:LoaderAssist.BarWidth)}"
-                                Height="{TemplateBinding Height}"
-                                Background="{TemplateBinding Foreground}"
-                                CornerRadius="1"
-                                RenderTransformOrigin="50%,100%" />
-                        <Border Name="PART_Bar4"
-                                Width="{TemplateBinding (my:LoaderAssist.BarWidth)}"
-                                Height="{TemplateBinding Height}"
-                                Background="{TemplateBinding Foreground}"
-                                CornerRadius="1"
-                                RenderTransformOrigin="50%,100%" />
-                        <Border Name="PART_Bar5"
-                                Width="{TemplateBinding (my:LoaderAssist.BarWidth)}"
-                                Height="{TemplateBinding Height}"
-                                Background="{TemplateBinding Foreground}"
-                                CornerRadius="1"
-                                RenderTransformOrigin="50%,100%" />
-                    </StackPanel>
-
-                    <!-- Pulse -->
-                    <Panel Name="PART_Pulse" IsVisible="False">
-                        <Ellipse Name="PART_PulseOuter"
-                                 Width="{TemplateBinding Width}"
-                                 Height="{TemplateBinding Height}"
-                                 Fill="{TemplateBinding Foreground}"
-                                 Opacity="0.25"
-                                 RenderTransformOrigin="50%,50%" />
-                        <Ellipse Name="PART_PulseInner"
-                                 Width="{TemplateBinding Width}"
-                                 Height="{TemplateBinding Height}"
-                                 Fill="{TemplateBinding Foreground}"
-                                 RenderTransformOrigin="50%,50%" />
-                    </Panel>
-                </Panel>
+                        <DataTemplate x:Key="Pulse">
+                            <Panel Classes="loader-pulse"
+                                   Width="{Binding Width, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                   Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}">
+                                <Ellipse Classes="loader-pulse-outer"
+                                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Opacity="0.25"
+                                         RenderTransformOrigin="50%,50%" />
+                                <Ellipse Classes="loader-pulse-inner"
+                                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Height="{Binding Height, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=my:Loader}}"
+                                         RenderTransformOrigin="50%,50%" />
+                            </Panel>
+                        </DataTemplate>
+                        </my:LoaderAnimationTemplateSelector>
+                    </ContentPresenter.DataTemplates>
+                </ContentPresenter>
             </ControlTemplate>
         </Setter>
 
-        <!-- Visibility per animation -->
-        <Style Selector="^:circular /template/ Panel#PART_Circular">
-            <Setter Property="IsVisible" Value="True" />
-        </Style>
-        <Style Selector="^:ring /template/ Panel#PART_Ring">
-            <Setter Property="IsVisible" Value="True" />
-        </Style>
-        <Style Selector="^:dots /template/ StackPanel#PART_Dots">
-            <Setter Property="IsVisible" Value="True" />
-        </Style>
-        <Style Selector="^:bars /template/ StackPanel#PART_Bars">
-            <Setter Property="IsVisible" Value="True" />
-        </Style>
-        <Style Selector="^:pulse /template/ Panel#PART_Pulse">
-            <Setter Property="IsVisible" Value="True" />
-        </Style>
-
-        <!-- Inactive: dimmed, no motion -->
-        <Style Selector="^:inactive /template/ Panel#PART_Root">
+        <Style Selector="^:inactive /template/ ContentPresenter#PART_Animation">
             <Setter Property="Opacity" Value="0.35" />
         </Style>
 
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- CIRCULAR ANIMATION                                        -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <Style Selector="^:circular:active /template/ Panel#PART_CircularRotate">
-            <Setter Property="RenderTransform">
-                <RotateTransform Angle="0" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:1.1">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="RotateTransform.Angle" Value="0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="RotateTransform.Angle" Value="360" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- RING ANIMATION                                            -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <Style Selector="^:ring:active /template/ Panel#PART_RingRotate">
-            <Setter Property="RenderTransform">
-                <RotateTransform Angle="0" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:1.4">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="RotateTransform.Angle" Value="0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="RotateTransform.Angle" Value="360" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- DOTS ANIMATION                                            -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <Style Selector="^:dots:active /template/ Ellipse#PART_Dot1">
-            <Setter Property="RenderTransform">
-                <TranslateTransform Y="0" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:0.9">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="TranslateTransform.Y" Value="0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="35%">
-                        <Setter Property="TranslateTransform.Y" Value="-5" />
-                    </KeyFrame>
-                    <KeyFrame Cue="70%">
-                        <Setter Property="TranslateTransform.Y" Value="0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="TranslateTransform.Y" Value="0" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-        <Style Selector="^:dots:active /template/ Ellipse#PART_Dot2">
-            <Setter Property="RenderTransform">
-                <TranslateTransform Y="0" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:0.9">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="TranslateTransform.Y" Value="0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="15%">
-                        <Setter Property="TranslateTransform.Y" Value="0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="50%">
-                        <Setter Property="TranslateTransform.Y" Value="-5" />
-                    </KeyFrame>
-                    <KeyFrame Cue="85%">
-                        <Setter Property="TranslateTransform.Y" Value="0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="TranslateTransform.Y" Value="0" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-        <Style Selector="^:dots:active /template/ Ellipse#PART_Dot3">
-            <Setter Property="RenderTransform">
-                <TranslateTransform Y="0" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:0.9">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="TranslateTransform.Y" Value="0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="30%">
-                        <Setter Property="TranslateTransform.Y" Value="0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="65%">
-                        <Setter Property="TranslateTransform.Y" Value="-5" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="TranslateTransform.Y" Value="0" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- BARS ANIMATION                                            -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <Style Selector="^:bars:active /template/ Border#PART_Bar1">
-            <Setter Property="RenderTransform">
-                <ScaleTransform ScaleY="0.4" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:1">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
-                    </KeyFrame>
-                    <KeyFrame Cue="40%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
-                    </KeyFrame>
-                    <KeyFrame Cue="80%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-        <Style Selector="^:bars:active /template/ Border#PART_Bar2">
-            <Setter Property="RenderTransform">
-                <ScaleTransform ScaleY="0.55" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:1">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
-                    </KeyFrame>
-                    <KeyFrame Cue="10%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
-                    </KeyFrame>
-                    <KeyFrame Cue="50%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
-                    </KeyFrame>
-                    <KeyFrame Cue="90%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-        <Style Selector="^:bars:active /template/ Border#PART_Bar3">
-            <Setter Property="RenderTransform">
-                <ScaleTransform ScaleY="0.7" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:1">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.7" />
-                    </KeyFrame>
-                    <KeyFrame Cue="20%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.7" />
-                    </KeyFrame>
-                    <KeyFrame Cue="60%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.7" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-        <Style Selector="^:bars:active /template/ Border#PART_Bar4">
-            <Setter Property="RenderTransform">
-                <ScaleTransform ScaleY="0.55" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:1">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
-                    </KeyFrame>
-                    <KeyFrame Cue="30%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
-                    </KeyFrame>
-                    <KeyFrame Cue="70%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.55" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-        <Style Selector="^:bars:active /template/ Border#PART_Bar5">
-            <Setter Property="RenderTransform">
-                <ScaleTransform ScaleY="0.4" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:1">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
-                    </KeyFrame>
-                    <KeyFrame Cue="40%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
-                    </KeyFrame>
-                    <KeyFrame Cue="80%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.4" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- PULSE ANIMATION                                           -->
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <Style Selector="^:pulse:active /template/ Ellipse#PART_PulseInner">
-            <Setter Property="RenderTransform">
-                <ScaleTransform ScaleX="0.75" ScaleY="0.75" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:1.2">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="ScaleTransform.ScaleX" Value="0.75" />
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.75" />
-                        <Setter Property="Opacity" Value="1" />
-                    </KeyFrame>
-                    <KeyFrame Cue="50%">
-                        <Setter Property="ScaleTransform.ScaleX" Value="1" />
-                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
-                        <Setter Property="Opacity" Value="0.85" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="ScaleTransform.ScaleX" Value="0.75" />
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.75" />
-                        <Setter Property="Opacity" Value="1" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-        <Style Selector="^:pulse:active /template/ Ellipse#PART_PulseOuter">
-            <Setter Property="RenderTransform">
-                <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
-            </Setter>
-            <Style.Animations>
-                <Animation IterationCount="Infinite" Duration="0:0:1.2">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="ScaleTransform.ScaleX" Value="0.6" />
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.6" />
-                        <Setter Property="Opacity" Value="0.35" />
-                    </KeyFrame>
-                    <KeyFrame Cue="70%">
-                        <Setter Property="ScaleTransform.ScaleX" Value="1.15" />
-                        <Setter Property="ScaleTransform.ScaleY" Value="1.15" />
-                        <Setter Property="Opacity" Value="0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="ScaleTransform.ScaleX" Value="0.6" />
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.6" />
-                        <Setter Property="Opacity" Value="0" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-
-        <!-- ═════════════════════════════════════════════════════════ -->
-        <!-- SIZES                                                     -->
-        <!-- ═════════════════════════════════════════════════════════ -->
+        <!-- Sizes -->
         <Style Selector="^.size-xs">
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Xs}" />
-            <Setter Property="StrokeThickness" Value="2" />
-            <Setter Property="my:LoaderAssist.DotSize" Value="{StaticResource MyNet.Size.Glyph.Xs}" />
-            <Setter Property="my:LoaderAssist.BarWidth" Value="2" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Xs}" />
+            <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Xs}" />
+            <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Xs}" />
+            <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Xs}" />
         </Style>
         <Style Selector="^.size-sm">
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Sm}" />
-            <Setter Property="StrokeThickness" Value="2" />
-            <Setter Property="my:LoaderAssist.DotSize" Value="{StaticResource MyNet.Size.Glyph.Sm}" />
-            <Setter Property="my:LoaderAssist.BarWidth" Value="2.5" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Sm}" />
+            <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Sm}" />
+            <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Sm}" />
+            <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Sm}" />
         </Style>
         <Style Selector="^.size-md">
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Md}" />
-            <Setter Property="StrokeThickness" Value="2.5" />
-            <Setter Property="my:LoaderAssist.DotSize" Value="{StaticResource MyNet.Size.Glyph.Md}" />
-            <Setter Property="my:LoaderAssist.BarWidth" Value="3" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Md}" />
+            <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Md}" />
+            <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Md}" />
+            <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Md}" />
         </Style>
         <Style Selector="^.size-lg">
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Lg}" />
-            <Setter Property="StrokeThickness" Value="3" />
-            <Setter Property="my:LoaderAssist.DotSize" Value="{StaticResource MyNet.Size.Glyph.Lg}" />
-            <Setter Property="my:LoaderAssist.BarWidth" Value="3.5" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Lg}" />
+            <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Lg}" />
+            <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Lg}" />
+            <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Lg}" />
         </Style>
         <Style Selector="^.size-xl">
-            <Setter Property="Width" Value="{StaticResource MyNet.Size.Icon.Xl}" />
-            <Setter Property="StrokeThickness" Value="3.5" />
-            <Setter Property="my:LoaderAssist.DotSize" Value="{StaticResource MyNet.Size.Glyph.Xl}" />
-            <Setter Property="my:LoaderAssist.BarWidth" Value="4" />
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Xl}" />
+            <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Xl}" />
+            <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Xl}" />
+            <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Xl}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

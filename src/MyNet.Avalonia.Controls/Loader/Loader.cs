@@ -7,6 +7,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
+using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Enums;
 
@@ -16,35 +17,43 @@ namespace MyNet.Avalonia.Controls;
 /// Indeterminate loading animation. Decoupled from <c>IBusyService</c>; use inside buttons, cards, or
 /// <see cref="BusyIndicator"/> overlays.
 /// </summary>
-[PseudoClasses(
-    "circular",
-    "ring",
-    "dots",
-    "bars",
-    "pulse",
-    PseudoClassName.Circular,
-    PseudoClassName.Ring,
-    PseudoClassName.Dots,
-    PseudoClassName.Bars,
-    PseudoClassName.Pulse,
-    PseudoClassName.Active,
-    PseudoClassName.Inactive)]
+[PseudoClasses(PseudoClassName.Active, PseudoClassName.Inactive)]
+[TemplatePart("PART_Animation", typeof(ContentPresenter))]
 public class Loader : TemplatedControl
 {
+    private const string AnimationsActiveClass = "animations-active";
+
+    private ContentPresenter? _animationPresenter;
+
     /// <summary>
     /// Defines the <see cref="Animation"/> property.
     /// </summary>
-    public static readonly StyledProperty<LoaderAnimation> AnimationProperty = AvaloniaProperty.Register<Loader, LoaderAnimation>(nameof(Animation));
+    public static readonly StyledProperty<LoaderAnimation> AnimationProperty =
+        AvaloniaProperty.Register<Loader, LoaderAnimation>(nameof(Animation));
 
     /// <summary>
     /// Defines the <see cref="IsActive"/> property.
     /// </summary>
-    public static readonly StyledProperty<bool> IsActiveProperty = AvaloniaProperty.Register<Loader, bool>(nameof(IsActive), true);
+    public static readonly StyledProperty<bool> IsActiveProperty =
+        AvaloniaProperty.Register<Loader, bool>(nameof(IsActive), true);
 
     /// <summary>
     /// Defines the <see cref="StrokeThickness"/> property.
     /// </summary>
-    public static readonly StyledProperty<double> StrokeThicknessProperty = AvaloniaProperty.Register<Loader, double>(nameof(StrokeThickness), 2.5d);
+    public static readonly StyledProperty<double> StrokeThicknessProperty =
+        AvaloniaProperty.Register<Loader, double>(nameof(StrokeThickness), 2.5d);
+
+    /// <summary>
+    /// Defines the <see cref="DotSize"/> property.
+    /// </summary>
+    public static readonly StyledProperty<double> DotSizeProperty =
+        AvaloniaProperty.Register<Loader, double>(nameof(DotSize), 6.0d);
+
+    /// <summary>
+    /// Defines the <see cref="BarWidth"/> property.
+    /// </summary>
+    public static readonly StyledProperty<double> BarWidthProperty =
+        AvaloniaProperty.Register<Loader, double>(nameof(BarWidth), 3.0d);
 
     static Loader()
     {
@@ -52,18 +61,13 @@ public class Loader : TemplatedControl
         HeightProperty.OverrideDefaultValue<Loader>(32);
         FocusableProperty.OverrideDefaultValue<Loader>(false);
 
-        AnimationProperty.Changed.AddClassHandler<Loader>((control, _) => control.UpdateAnimationState());
         IsActiveProperty.Changed.AddClassHandler<Loader>((control, _) => control.UpdateActiveState());
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Loader"/> class.
     /// </summary>
-    public Loader()
-    {
-        UpdateAnimationState();
-        UpdateActiveState();
-    }
+    public Loader() => UpdateActiveState();
 
     /// <summary>
     /// Gets or sets the visual animation style.
@@ -92,14 +96,30 @@ public class Loader : TemplatedControl
         set => SetValue(StrokeThicknessProperty, value);
     }
 
-    private void UpdateAnimationState()
+    /// <summary>
+    /// Gets or sets the dot diameter for the <see cref="LoaderAnimation.Dots"/> animation.
+    /// </summary>
+    public double DotSize
     {
-        var animation = Animation;
-        PseudoClasses.Set(PseudoClassName.Circular, animation == LoaderAnimation.Circular);
-        PseudoClasses.Set(PseudoClassName.Ring, animation == LoaderAnimation.Ring);
-        PseudoClasses.Set(PseudoClassName.Dots, animation == LoaderAnimation.Dots);
-        PseudoClasses.Set(PseudoClassName.Bars, animation == LoaderAnimation.Bars);
-        PseudoClasses.Set(PseudoClassName.Pulse, animation == LoaderAnimation.Pulse);
+        get => GetValue(DotSizeProperty);
+        set => SetValue(DotSizeProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the bar width for the <see cref="LoaderAnimation.Bars"/> animation.
+    /// </summary>
+    public double BarWidth
+    {
+        get => GetValue(BarWidthProperty);
+        set => SetValue(BarWidthProperty, value);
+    }
+
+    /// <inheritdoc/>
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    {
+        base.OnApplyTemplate(e);
+        _animationPresenter = e.NameScope.Find<ContentPresenter>("PART_Animation");
+        UpdateActiveState();
     }
 
     private void UpdateActiveState()
@@ -107,5 +127,6 @@ public class Loader : TemplatedControl
         var isActive = IsActive;
         PseudoClasses.Set(PseudoClassName.Active, isActive);
         PseudoClasses.Set(PseudoClassName.Inactive, !isActive);
+        _animationPresenter?.Classes.Set(AnimationsActiveClass, isActive);
     }
 }

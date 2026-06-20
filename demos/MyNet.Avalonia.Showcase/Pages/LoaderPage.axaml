@@ -24,31 +24,17 @@
 
         <v:ShowcaseView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
-                <Border Classes="kind-card"
-                        MinWidth="200"
-                        MinHeight="120"
-                        Padding="{my:Thickness Lg}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                    <my:Loader behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center" />
-                </Border>
+                <my:Loader behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
             </DataTemplate>
         </v:ShowcaseView.PlaygroundControlTemplate>
 
         <v:ShowcaseView.ThemeControlTemplate>
             <DataTemplate x:DataType="rendering:ControlStyle">
-                <Border Classes="kind-card"
-                        MinWidth="160"
-                        MinHeight="100"
-                        Padding="{my:Thickness Md}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                    <my:Loader behavior:PlaygroundBehavior.AttachStyle="{Binding}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center" />
-                </Border>
+                <my:Loader behavior:PlaygroundBehavior.AttachStyle="{Binding}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
             </DataTemplate>
         </v:ShowcaseView.ThemeControlTemplate>
 

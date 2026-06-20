@@ -9,19 +9,16 @@ namespace MyNet.Avalonia.Controls;
 public static class PseudoClassName
 {
     public const string Active = ":active";
-    public const string Bars = ":bars";
     public const string Blackout = ":blackout";
     public const string Bottom = ":bottom";
     public const string Century = ":century";
     public const string Checked = ":checked";
-    public const string Circular = ":circular";
     public const string Compact = ":compact";
     public const string ContentOnly = ":content-only";
     public const string Day = ":day";
     public const string Decade = ":decade";
     public const string Disabled = ":disabled";
     public const string Dot = ":dot";
-    public const string Dots = ":dots";
     public const string Empty = ":empty";
     public const string EndDate = ":end-date";
     public const string Error = ":error";
@@ -57,10 +54,8 @@ public static class PseudoClassName
     public const string Pressed = ":pressed";
     public const string PreviewEndDate = ":preview-end-date";
     public const string PreviewStartDate = ":preview-start-date";
-    public const string Pulse = ":pulse";
     public const string Range = ":range";
     public const string Right = ":right";
-    public const string Ring = ":ring";
     public const string Selected = ":selected";
     public const string Selector = ":selector";
     public const string StartDate = ":start-date";
