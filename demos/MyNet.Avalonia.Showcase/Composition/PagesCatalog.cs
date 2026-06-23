@@ -97,6 +97,7 @@ internal static class PagesCatalog
                 new(typeof(DialogPageViewModel), typeof(DialogPage), MaterialIconKind.DockWindow),
                 new(typeof(NotificationPageViewModel), typeof(NotificationPage), MaterialIconKind.MessageAlert),
                 new(typeof(LoaderPageViewModel), typeof(LoaderPage), MaterialIconKind.Loading),
+                new(typeof(BusyIndicatorPageViewModel), typeof(BusyIndicatorPage), MaterialIconKind.TimerSand),
                 new(typeof(ProgressBarPageViewModel), typeof(ProgressBarPage), MaterialIconKind.ProgressCheck)
             ]),
 

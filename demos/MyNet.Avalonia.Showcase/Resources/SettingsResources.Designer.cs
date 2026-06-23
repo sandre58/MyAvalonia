@@ -159,6 +159,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        internal static string BusyMessage {
+            get {
+                return ResourceManager.GetString("BusyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Par défaut.
         /// </summary>
         internal static string ByDefault {
@@ -767,6 +776,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         internal static string IsBackButtonVisible {
             get {
                 return ResourceManager.GetString("IsBackButtonVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bloquant.
+        /// </summary>
+        internal static string IsBlocking {
+            get {
+                return ResourceManager.GetString("IsBlocking", resourceCulture);
             }
         }
         

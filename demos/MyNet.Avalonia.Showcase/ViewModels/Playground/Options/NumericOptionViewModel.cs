@@ -69,7 +69,13 @@ internal sealed class IntSliderOptionViewModel(IControlOptionDefinition definiti
 /// <param name="definition">The control option definition that supplies metadata and configuration for the slider option.</param>
 /// <param name="displayNameFunc">A provider that returns the display name for the slider option, allowing for dynamic or context-sensitive naming.</param>
 /// <param name="initialValue">The initial value of the slider option.</param>
-internal sealed class NumericUpDownOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, decimal? initialValue = null) : NumericOptionViewModel<decimal>(definition, displayNameFunc, 0, 100, 1, initialValue ?? System.Convert.ToDecimal(definition.DefaultValue, CultureInfo.CurrentCulture));
+internal sealed class NumericUpDownOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, decimal? initialValue = null) : NumericOptionViewModel<decimal>(definition, displayNameFunc, 0, 100, 1, initialValue ?? System.Convert.ToDecimal(definition.DefaultValue, CultureInfo.CurrentCulture))
+{
+    /// <summary>
+    /// Gets or sets the suffix to be displayed alongside the numeric value in the NumericUpDown editor. This property allows for additional context or units to be shown next to the numeric value, enhancing the clarity of the input for users. For example, a suffix of "kg" could be used to indicate that the numeric value represents a weight in kilograms.
+    /// </summary>
+    public IObservableValue<string>? Suffix { get; set; }
+}
 
 /// <summary>
 /// Represents a view model for a NumericUpDown-based numeric option, providing logic for managing its value and display within
@@ -80,4 +86,10 @@ internal sealed class NumericUpDownOptionViewModel(IControlOptionDefinition defi
 /// <param name="definition">The control option definition that supplies metadata and configuration for the slider option.</param>
 /// <param name="displayNameFunc">A provider that returns the display name for the slider option, allowing for dynamic or context-sensitive naming.</param>
 /// <param name="initialValue">The initial value of the slider option.</param>
-internal sealed class IntNumericUpDownOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, int? initialValue = null) : NumericOptionViewModel<int>(definition, displayNameFunc, 0, 100, 1, initialValue ?? System.Convert.ToInt32(definition.DefaultValue, CultureInfo.CurrentCulture));
+internal sealed class IntNumericUpDownOptionViewModel(IControlOptionDefinition definition, IObservableValue<string> displayNameFunc, int? initialValue = null) : NumericOptionViewModel<int>(definition, displayNameFunc, 0, 100, 1, initialValue ?? System.Convert.ToInt32(definition.DefaultValue, CultureInfo.CurrentCulture))
+{
+    /// <summary>
+    /// Gets or sets the suffix to be displayed alongside the numeric value in the NumericUpDown editor. This property allows for additional context or units to be shown next to the numeric value, enhancing the clarity of the input for users. For example, a suffix of "kg" could be used to indicate that the numeric value represents a weight in kilograms.
+    /// </summary>
+    public IObservableValue<string>? Suffix { get; set; }
+}

@@ -111,7 +111,8 @@ internal sealed class AppComposition(Func<TopLevel?> topLevelProvider)
             .AddTranslationResource(nameof(ControlThemeResources), ControlThemeResources.ResourceManager)
             .AddTranslationResource(nameof(HomePageResources), HomePageResources.ResourceManager)
             .AddTranslationResource(nameof(CardPageResources), CardPageResources.ResourceManager)
-            .AddTranslationResource(nameof(RipplePageResources), RipplePageResources.ResourceManager);
+            .AddTranslationResource(nameof(RipplePageResources), RipplePageResources.ResourceManager)
+            .AddTranslationResource(nameof(BusyIndicatorPageResources), BusyIndicatorPageResources.ResourceManager);
 
     private static void RegisterPageViewModels(IServiceCollection collection, IEnumerable<Type> viewModelTypes)
     {

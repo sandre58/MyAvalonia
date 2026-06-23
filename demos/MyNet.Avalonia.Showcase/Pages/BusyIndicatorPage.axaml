@@ -1,0 +1,105 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.BusyIndicatorPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+             x:DataType="vm:BusyIndicatorPageViewModel"
+             x:Name="Root"
+             Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Display Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             ClipToBounds="False"
+             mc:Ignorable="d">
+
+    <ContentPage.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+    </ContentPage.Resources>
+
+    <v:ShowcaseView ShowIcon="False"
+                    ShowContent="False"
+                    ShowPreviewCode="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <Border Classes="kind-card"
+                        MinWidth="360"
+                        MaxWidth="480"
+                        MinHeight="300"
+                        Padding="0"
+                        Margin="{my:Thickness Md}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <Border ClipToBounds="True"
+                            CornerRadius="{StaticResource MyNet.Corners.Surface}">
+                        <Grid>
+                            <StackPanel Spacing="{my:Spacing Md}"
+                                        Margin="{my:Thickness Xl}">
+                                <TextBlock Classes="text-h6"
+                                           Text="{my:Loc PanelTitle, Filename=BusyIndicatorPageResources}"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Classes="text-body"
+                                           Text="{my:Loc PanelDescription, Filename=BusyIndicatorPageResources}"
+                                           TextWrapping="Wrap"
+                                           TextAlignment="Center" />
+                                <StackPanel Orientation="Horizontal"
+                                            Spacing="{my:Spacing Sm}"
+                                            HorizontalAlignment="Center">
+                                    <Button Content="{my:Loc StartButton, Filename=BusyIndicatorPageResources}"
+                                            Classes="variant-solid"
+                                            Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).StartCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
+                                    <Button Content="{my:Loc TestClickButton, Filename=BusyIndicatorPageResources}"
+                                            Classes="variant-outlined"
+                                            Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).TestClickCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            Spacing="{my:Spacing Sm}"
+                                            HorizontalAlignment="Center">
+                                    <TextBlock Classes="text-caption opacity-high"
+                                               Text="{my:Loc TestClickCountLabel, Filename=BusyIndicatorPageResources}" />
+                                    <TextBlock Classes="text-caption"
+                                               Text="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).TestClickCount, Source={StaticResource PageProxy}, FallbackValue=0}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <my:BusyIndicator behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                                              IsOpen="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).IsBusy, Source={StaticResource PageProxy}, FallbackValue=False}" />
+                        </Grid>
+                    </Border>
+                </Border>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <Border Classes="kind-card"
+                        MinWidth="320"
+                        MinHeight="260"
+                        Padding="0"
+                        Margin="{my:Thickness Md}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <Border ClipToBounds="True"
+                            CornerRadius="{StaticResource MyNet.Corners.Surface}">
+                        <Grid>
+                            <TextBlock Classes="text-body"
+                                       Text="{my:Loc ThemePreviewContent, Filename=BusyIndicatorPageResources}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+
+                            <my:BusyIndicator behavior:PlaygroundBehavior.AttachStyle="{Binding}"
+                                              IsOpen="True"
+                                              Message="{my:Loc DefaultBusyMessage, Filename=BusyIndicatorPageResources}" />
+                        </Grid>
+                    </Border>
+                </Border>
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+    </v:ShowcaseView>
+</ContentPage>

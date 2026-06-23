@@ -105,6 +105,7 @@ This document summarizes the current state of MyNet.Avalonia project development
 - [x] **Drawers**
 - [ ] **MultiAucompleteBox**
 - [x] **Loader** - Loading animation control
+- [x] **BusyIndicator** - Full-surface busy overlay shell
 - [ ] **Rating**
 - [ ] **Chip**
 - [ ] **Stepper** - Step progress indicator

@@ -163,6 +163,11 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>RipplePageResources.resx</DependentUpon>
       </Compile>
+      <Compile Update="Resources\BusyIndicatorPageResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>BusyIndicatorPageResources.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -221,6 +226,10 @@
         <EmbeddedResource Update="Resources\RipplePageResources.resx">
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>RipplePageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\BusyIndicatorPageResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>BusyIndicatorPageResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 </Project>

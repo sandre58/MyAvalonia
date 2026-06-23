@@ -62,6 +62,7 @@
                            Minimum="{Binding Minimum}"
                            Maximum="{Binding Maximum}"
                            Increment="{Binding Increment}"
+                           InnerRightContent="{Binding Suffix}"
                            my:InputAssist.ShowClearButton="False"
                            my:FormItem.Label="{Binding DisplayName}" />
         </DataTemplate>
@@ -70,6 +71,7 @@
                            Minimum="{Binding Minimum}"
                            Maximum="{Binding Maximum}"
                            Increment="{Binding Increment}"
+                           InnerRightContent="{Binding Suffix}"
                            my:InputAssist.ShowClearButton="False"
                            my:FormItem.Label="{Binding DisplayName}" />
         </DataTemplate>

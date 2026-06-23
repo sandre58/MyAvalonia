@@ -170,6 +170,7 @@
   <data name="Label" xml:space="preserve"><value>Étiquette</value></data>
   <data name="ListBox" xml:space="preserve"><value>Liste</value></data>
   <data name="Loader" xml:space="preserve"><value>Chargeur</value></data>
+  <data name="BusyIndicator" xml:space="preserve"><value>Indicateur d'occupation</value></data>
   <data name="MaterialIcon" xml:space="preserve"><value>Icône Material</value></data>
   <data name="Menu" xml:space="preserve"><value>Menu</value></data>
   <data name="NavigationMenu" xml:space="preserve"><value>Menu de navigation</value></data>

@@ -742,6 +742,12 @@
   <data name="Animation" xml:space="preserve">
       <value>Animation</value>
   </data>
+  <data name="IsBlocking" xml:space="preserve">
+      <value>Bloquant</value>
+  </data>
+  <data name="BusyMessage" xml:space="preserve">
+      <value>Message</value>
+  </data>
   <data name="Opacity" xml:space="preserve">
       <value>Opacité</value>
   </data>

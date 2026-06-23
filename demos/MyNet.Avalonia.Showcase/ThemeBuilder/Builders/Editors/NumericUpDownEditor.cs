@@ -4,7 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using MyNet.Avalonia.Showcase.ThemeBuilder.Metadata;
+using MyNet.Observable;
 
 namespace MyNet.Avalonia.Showcase.ThemeBuilder.Builders.Editors;
 
@@ -16,6 +18,7 @@ internal sealed class NumericUpDownEditor : IEditorBuilder
     private decimal _minimum;
     private decimal _maximum = 100;
     private decimal _increment = 1;
+    private IObservableValue<string>? _suffixFunc;
 
     /// <summary>
     /// Specifies the minimum value for the NumericUpDown editor.
@@ -66,6 +69,47 @@ internal sealed class NumericUpDownEditor : IEditorBuilder
     }
 
     /// <summary>
+    /// Sets the suffix for the choice using the specified value provider.
+    /// </summary>
+    /// <remarks>Use this method to assign a dynamic suffix that can change based on runtime context or
+    /// localization requirements.</remarks>
+    /// <param name="displaySuffixFunc">An object that provides the suffix as a string. This provider is invoked to retrieve the suffix when
+    /// needed.</param>
+    /// <returns>The current instance of the ChoiceMetadataBuilder to enable method chaining.</returns>
+    public NumericUpDownEditor DisplaySuffix(IObservableValue<string> displaySuffixFunc)
+    {
+        _suffixFunc = displaySuffixFunc;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the suffix for the choice using the specified value provider.
+    /// </summary>
+    /// <remarks>Use this method to assign a dynamic suffix that can change based on runtime context or
+    /// localization requirements.</remarks>
+    /// <param name="displaySuffixFunc">An object that provides the suffix as a string. This provider is invoked to retrieve the suffix when
+    /// needed.</param>
+    /// <returns>The current instance of the ChoiceMetadataBuilder to enable method chaining.</returns>
+    public NumericUpDownEditor DisplaySuffix(Func<string?> displaySuffixFunc)
+    {
+        _suffixFunc = new CultureBoundValue<string>(displaySuffixFunc);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the suffix for the choice using the specified resource key.
+    /// </summary>
+    /// <remarks>This method is typically used to define a user-friendly name for the choice that can be
+    /// translated based on the application's localization settings.</remarks>
+    /// <param name="resourceKey">The resource key used to retrieve the suffix from a localization source.</param>
+    /// <returns>The current instance of the ChoiceMetadataBuilder, allowing for method chaining.</returns>
+    public NumericUpDownEditor DisplaySuffix(string resourceKey)
+    {
+        _suffixFunc = new LocalizedString(resourceKey);
+        return this;
+    }
+
+    /// <summary>
     /// Creates and returns editor metadata for a NumericUpDown editor using the configured minimum, maximum, and increment values.
     /// </summary>
     /// <remarks>Call this method after configuring the minimum, maximum, and increment values to generate the appropriate metadata for a
@@ -73,7 +117,7 @@ internal sealed class NumericUpDownEditor : IEditorBuilder
     /// grids.</remarks>
     /// <returns>An instance of <see cref="IEditorMetadata"/> that describes the metadata for a NumericUpDown editor initialized with
     /// the specified minimum, maximum, and increment values.</returns>
-    public IEditorMetadata Build() => new NumericUpDownEditorMetadata(_minimum, _maximum, _increment);
+    public IEditorMetadata Build() => new NumericUpDownEditorMetadata(_minimum, _maximum, _increment, _suffixFunc);
 }
 
 /// <summary>
@@ -84,4 +128,5 @@ internal sealed class NumericUpDownEditor : IEditorBuilder
 /// <param name="Minimum">The minimum value for the NumericUpDown editor.</param>
 /// <param name="Maximum">The maximum value for the NumericUpDown editor.</param>
 /// <param name="Increment">The increment value for the NumericUpDown editor.</param>
-internal sealed record NumericUpDownEditorMetadata(decimal Minimum, decimal Maximum, decimal Increment) : IEditorMetadata;
+/// <param name="Suffix">The suffix to be displayed alongside the numeric value in the NumericUpDown editor.</param>
+internal sealed record NumericUpDownEditorMetadata(decimal Minimum, decimal Maximum, decimal Increment, IObservableValue<string>? Suffix) : IEditorMetadata;

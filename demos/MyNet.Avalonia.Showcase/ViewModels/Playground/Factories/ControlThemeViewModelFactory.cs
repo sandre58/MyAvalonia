@@ -137,13 +137,15 @@ internal sealed class ControlThemeViewModelFactory(ControlThemeBuilder builder, 
         {
             Minimum = y.Metadata.Minimum,
             Maximum = y.Metadata.Maximum,
-            Increment = y.Metadata.Increment
+            Increment = y.Metadata.Increment,
+            Suffix = y.Metadata.Suffix
         });
         registry.RegisterEditor<IntNumericUpDownEditorMetadata>((x, y) => new IntNumericUpDownOptionViewModel(x, y.DisplayName)
         {
             Minimum = y.Metadata.Minimum,
             Maximum = y.Metadata.Maximum,
-            Increment = y.Metadata.Increment
+            Increment = y.Metadata.Increment,
+            Suffix = y.Metadata.Suffix
         });
     }
 }
