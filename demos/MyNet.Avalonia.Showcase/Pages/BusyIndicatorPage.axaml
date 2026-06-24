@@ -29,7 +29,7 @@
             <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
                 <Border Classes="kind-card"
                         MinWidth="360"
-                        MaxWidth="480"
+                        MaxWidth="600"
                         MinHeight="300"
                         Padding="0"
                         Margin="{my:Thickness Md}"

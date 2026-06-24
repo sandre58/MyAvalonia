@@ -205,7 +205,7 @@
   <data name="ThemeDialogsOverlay" xml:space="preserve">
       <value>Overlay</value>
   </data>
-  <data name="ThemeBusyIndicatorMinimal" xml:space="preserve">
-      <value>Minimal</value>
+  <data name="ThemeBusyIndicatorCard" xml:space="preserve">
+      <value>Carte</value>
   </data>
 </root>

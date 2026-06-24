@@ -3,32 +3,222 @@
                     xmlns:my="http://mynet.com/avalonia">
 
     <ControlTheme x:Key="{x:Type my:BusyIndicator}" TargetType="{x:Type my:BusyIndicator}">
+        <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="OverlayBackground" Value="{my:Theme Overlay.Background, Opacity=Scrim}" />
+        <Setter Property="OverlayOpacity" Value="1" />
+
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level1}" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+
+        <Setter Property="my:VariantAssist.Background" Value="Transparent" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="Transparent" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
+
+        <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
+        <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
+
         <Setter Property="Template">
             <ControlTemplate TargetType="my:BusyIndicator">
-                <Panel>
-                    <Border Background="{my:Theme Overlay.Background, Opacity=Scrim}" />
-                    <Border HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Margin="{my:Thickness Xl}"
-                            Padding="{my:Thickness Xl}"
-                            Background="{my:Theme Surface.Level1}"
-                            CornerRadius="{StaticResource MyNet.Corners.Lg}"
-                            BoxShadow="0 8 24 0 #40000000">
-                        <ContentControl x:Name="PART_BusyContent"
-                                        Content="{TemplateBinding BusyContent}">
-                            <ContentControl.ContentTemplate>
-                                <DataTemplate>
-                                    <StackPanel Spacing="{StaticResource MyNet.Spacing.Md}" MinWidth="280">
-                                        <ProgressBar Height="4" IsIndeterminate="True" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ContentControl.ContentTemplate>
-                        </ContentControl>
-                    </Border>
-                </Panel>
+                <Grid Name="PART_Root" Opacity="0" ClipToBounds="True">
+                    <Border Name="PART_Scrim"
+                            Background="{TemplateBinding OverlayBackground}"
+                            Opacity="{TemplateBinding OverlayOpacity}"
+                            IsHitTestVisible="{TemplateBinding IsHitTestVisible}" />
+
+                    <Panel HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                        <Border Name="PART_SurfaceBackground"
+                                Background="{my:Theme Surface.Level1}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding SurfaceCornerRadius}"
+                                IsHitTestVisible="False" />
+                        <Border Name="PART_Surface"
+                                Padding="{TemplateBinding SurfacePadding}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding SurfaceCornerRadius}"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}"
+                                RenderTransformOrigin="0.5,0.5"
+                                Opacity="0"
+                                IsHitTestVisible="{TemplateBinding IsHitTestVisible}">
+                            <Panel MinWidth="240">
+                                <StackPanel Name="PART_DefaultContent"
+                                            Spacing="{StaticResource MyNet.Spacing.Md}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <my:Loader Name="PART_Loader"
+                                               Animation="{TemplateBinding Animation}"
+                                               IsActive="{TemplateBinding IsOpen}"
+                                               Foreground="{TemplateBinding (my:VariantAssist.Primary)}"
+                                               HorizontalAlignment="Center" />
+                                    <ContentPresenter Name="PART_Message"
+                                                      Content="{TemplateBinding Message}"
+                                                      HorizontalAlignment="Center"
+                                                      TextBlock.TextWrapping="Wrap"
+                                                      TextBlock.TextAlignment="Center" />
+                                </StackPanel>
+
+                                <ContentPresenter Name="PART_BusyContent"
+                                                  Content="{TemplateBinding BusyContent}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center" />
+                            </Panel>
+                        </Border>
+                    </Panel>
+                </Grid>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^:open /template/ Grid#PART_Root">
+            <Setter Property="Opacity" Value="1" />
+            <Style.Animations>
+                <Animation Duration="0:0:0.2" FillMode="Forward" Easing="QuadraticEaseOut">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="1" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+
+        <Style Selector="^:not(:open) /template/ Grid#PART_Root">
+            <Setter Property="Opacity" Value="0" />
+            <Style.Animations>
+                <Animation Duration="0:0:0.15" FillMode="Forward" Easing="QuadraticEaseOut">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="1" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="0" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+
+        <Style Selector="^:open /template/ Border#PART_Surface">
+            <Setter Property="Opacity" Value="1" />
+            <Style.Animations>
+                <Animation Duration="0:0:0.2" FillMode="Forward" Easing="QuadraticEaseOut">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="1" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+
+        <Style Selector="^:not(:open) /template/ Border#PART_Surface">
+            <Setter Property="Opacity" Value="0" />
+            <Style.Animations>
+                <Animation Duration="0:0:0.15" FillMode="Forward" Easing="QuadraticEaseOut">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="1" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="0" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+
+        <Style Selector="^:custom-content /template/ StackPanel#PART_DefaultContent">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+
+        <Style Selector="^:message-empty /template/ ContentPresenter#PART_Message">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        
+        <Style Selector="^ /template/ Border#PART_SurfaceBackground">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        
+        <Style Selector="^.kind-card">
+            <Setter Property="SurfacePadding" Value="{my:Thickness Xl}" />
+            <Setter Property="SurfaceCornerRadius" Value="{StaticResource MyNet.Corners.Lg}" />
+            <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Popup}" />
+
+            <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+            <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+            <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Foreground, Contrast=True}" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
+
+            <Style Selector="^ /template/ Border#PART_SurfaceBackground">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+            
+            <Style Selector="^.variant-light, ^.variant-outlined">
+                <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Foreground}" />
+            </Style>
+        </Style>
+
+        <!-- Loader sizes (classes on BusyIndicator) -->
+        <Style Selector="^.size-xs">
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+        </Style>
+        <Style Selector="^.size-xs /template/ my|Loader#PART_Loader">
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Xs}" />
+            <Setter Property="Height" Value="{Binding Width, RelativeSource={RelativeSource Self}}" />
+            <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Xs}" />
+            <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Xs}" />
+            <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Xs}" />
+        </Style>
+        <Style Selector="^.size-sm">
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+        </Style>
+        <Style Selector="^.size-sm /template/ my|Loader#PART_Loader">
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Sm}" />
+            <Setter Property="Height" Value="{Binding Width, RelativeSource={RelativeSource Self}}" />
+            <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Sm}" />
+            <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Sm}" />
+            <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Sm}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+        </Style>
+        <Style Selector="^.size-md /template/ my|Loader#PART_Loader">
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Md}" />
+            <Setter Property="Height" Value="{Binding Width, RelativeSource={RelativeSource Self}}" />
+            <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Md}" />
+            <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Md}" />
+            <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Md}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+        </Style>
+        <Style Selector="^.size-lg /template/ my|Loader#PART_Loader">
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Lg}" />
+            <Setter Property="Height" Value="{Binding Width, RelativeSource={RelativeSource Self}}" />
+            <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Lg}" />
+            <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Lg}" />
+            <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Lg}" />
+        </Style>
+        <Style Selector="^.size-xl">
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
+        </Style>
+        <Style Selector="^.size-xl /template/ my|Loader#PART_Loader">
+            <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Xl}" />
+            <Setter Property="Height" Value="{Binding Width, RelativeSource={RelativeSource Self}}" />
+            <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Xl}" />
+            <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Xl}" />
+            <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Xl}" />
+        </Style>
     </ControlTheme>
 </ResourceDictionary>

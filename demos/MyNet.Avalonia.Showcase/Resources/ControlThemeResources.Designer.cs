@@ -69,6 +69,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Carte.
+        /// </summary>
+        internal static string ThemeBusyIndicatorCard {
+            get {
+                return ResourceManager.GetString("ThemeBusyIndicatorCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Icône.
         /// </summary>
         internal static string ThemeButtonIcon {

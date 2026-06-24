@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Material.Icons;
@@ -23,11 +24,12 @@ namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
 internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
 {
-    private static decimal _demoDurationSeconds = 5m;
+    private static int _demoDurationSeconds = 5;
 
     public BusyIndicatorPageViewModel(ICommandFactory commands)
         : base(nameof(BusyIndicator), commands, [
-            CreateThemeBuilder()
+            FillThemeBuilder(new ControlThemeBuilder().AddVariants(ControlVariant.Text)),
+            FillThemeBuilder(new ControlThemeBuilder().WithKind(CssClass.KindCard).AddDefaultVariants())
         ])
     {
         StartCommand = commands.Create(async () => await StartAsync().ConfigureAwait(true));
@@ -53,44 +55,37 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
     /// <inheritdoc/>
     public override MaterialIconKind Icon => MaterialIconKind.TimerSand;
 
-    private static ControlThemeBuilder CreateThemeBuilder(string? themeKey = null)
-    {
-        var builder = new ControlThemeBuilder(themeKey)
-            .AddVariants(ControlVariant.Solid)
-            .AddVariant(CssClass.Kind("minimal"))
-            .AddDefaultRoles()
-            .AddStandardSizes()
-            .AddProperty(BusyIndicator.IsBlockingProperty, true, x => x.DisplayName(nameof(SettingsResources.IsBlocking)).Of<ToggleSwitchEditor>())
-            .AddProperty(
-                BusyIndicator.MessageProperty,
-                string.Empty,
-                x => x.DisplayName(nameof(SettingsResources.BusyMessage))
-                    .Of<TextBoxEditor>(y => y.WithValue(BusyIndicatorPageResources.DefaultBusyMessage)))
-            .AddProperty(
-                BusyIndicator.OverlayOpacityProperty,
-                1d,
-                x => x.DisplayName(nameof(SettingsResources.Opacity)).Of<SliderEditor>(editor => editor.WithRange(0, 1).WithIncrement(0.05M)))
-            .AddValueAction(
-                (_, y) => _demoDurationSeconds = (decimal?)y ?? 5m,
-                5m,
-                x => x.DisplayName(nameof(SettingsResources.DisplayDuration))
-                    .Of<IntNumericUpDownEditor>(editor => editor.WithRange(1, 15).WithIncrement(1).DisplaySuffix("s")))
-            .AddEnumProperty<LoaderAnimation, ListBoxEditor>(
-                BusyIndicator.AnimationProperty,
-                LoaderAnimation.Circular,
-                x => x.DisplayName(nameof(SettingsResources.Animation)),
-                configureChoice: (animation, choice) => choice.WithIcon(animation switch
-                {
-                    LoaderAnimation.Circular => MaterialIconKind.Loading,
-                    LoaderAnimation.Ring => MaterialIconKind.CircleOutline,
-                    LoaderAnimation.Dots => MaterialIconKind.DotsHorizontal,
-                    LoaderAnimation.Bars => MaterialIconKind.ChartBar,
-                    LoaderAnimation.Pulse => MaterialIconKind.CircleOpacity,
-                    _ => MaterialIconKind.Loading
-                }));
-
-        return builder;
-    }
+    private static ControlThemeBuilder FillThemeBuilder(ControlThemeBuilder builder) => builder
+        .AddDefaultRoles()
+        .AddStandardSizes()
+        .AddProperty(BusyIndicator.IsBlockingProperty, true, x => x.DisplayName(nameof(SettingsResources.IsBlocking)).Of<ToggleSwitchEditor>())
+        .AddProperty(
+            BusyIndicator.MessageProperty,
+            string.Empty,
+            x => x.DisplayName(nameof(SettingsResources.BusyMessage))
+                .Of<TextBoxEditor>(y => y.WithValue(BusyIndicatorPageResources.DefaultBusyMessage)))
+        .AddProperty(
+            BusyIndicator.OverlayOpacityProperty,
+            1d,
+            x => x.DisplayName(nameof(SettingsResources.Opacity)).Of<SliderEditor>(editor => editor.WithRange(0, 1).WithIncrement(0.05M)))
+        .AddValueAction(
+            (_, y) => _demoDurationSeconds = Convert.ToInt32(y ?? 5, CultureInfo.CurrentCulture),
+            5,
+            x => x.DisplayName(nameof(SettingsResources.DisplayDuration))
+                .Of<IntNumericUpDownEditor>(editor => editor.WithRange(1, 15).WithIncrement(1).DisplaySuffix("s")))
+        .AddEnumProperty<LoaderAnimation, ListBoxEditor>(
+            BusyIndicator.AnimationProperty,
+            LoaderAnimation.Circular,
+            x => x.DisplayName(nameof(SettingsResources.Animation)),
+            configureChoice: (animation, choice) => choice.WithIcon(animation switch
+            {
+                LoaderAnimation.Circular => MaterialIconKind.Loading,
+                LoaderAnimation.Ring => MaterialIconKind.CircleOutline,
+                LoaderAnimation.Dots => MaterialIconKind.DotsHorizontal,
+                LoaderAnimation.Bars => MaterialIconKind.ChartBar,
+                LoaderAnimation.Pulse => MaterialIconKind.CircleOpacity,
+                _ => MaterialIconKind.Loading
+            }));
 
     private async Task StartAsync()
     {
