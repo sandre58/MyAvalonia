@@ -50,4 +50,38 @@ internal class BusyIndicatorPageResources
     internal static string ThemePreviewContent => ResourceManager.GetString(nameof(ThemePreviewContent), resourceCulture)!;
 
     internal static string DefaultBusyMessage => ResourceManager.GetString(nameof(DefaultBusyMessage), resourceCulture)!;
+
+    internal static string ServicePanelTitle => ResourceManager.GetString(nameof(ServicePanelTitle), resourceCulture)!;
+
+    internal static string ServicePanelDescription => ResourceManager.GetString(nameof(ServicePanelDescription), resourceCulture)!;
+
+    internal static string ServiceIndeterminateButton => ResourceManager.GetString(nameof(ServiceIndeterminateButton), resourceCulture)!;
+
+    internal static string ServiceDeterminateButton => ResourceManager.GetString(nameof(ServiceDeterminateButton), resourceCulture)!;
+
+    internal static string ServiceProgressionButton => ResourceManager.GetString(nameof(ServiceProgressionButton), resourceCulture)!;
+
+    internal static string ServiceNestedButton => ResourceManager.GetString(nameof(ServiceNestedButton), resourceCulture)!;
+
+    internal static string ServiceIndeterminateMessage => ResourceManager.GetString(nameof(ServiceIndeterminateMessage), resourceCulture)!;
+
+    internal static string ServiceIndeterminateStepFormat => ResourceManager.GetString(nameof(ServiceIndeterminateStepFormat), resourceCulture)!;
+
+    internal static string ServiceDeterminateMessage => ResourceManager.GetString(nameof(ServiceDeterminateMessage), resourceCulture)!;
+
+    internal static string ServiceProgressionStep1 => ResourceManager.GetString(nameof(ServiceProgressionStep1), resourceCulture)!;
+
+    internal static string ServiceProgressionStep2 => ResourceManager.GetString(nameof(ServiceProgressionStep2), resourceCulture)!;
+
+    internal static string ServiceProgressionStep3 => ResourceManager.GetString(nameof(ServiceProgressionStep3), resourceCulture)!;
+
+    internal static string ServiceProgressionStep4 => ResourceManager.GetString(nameof(ServiceProgressionStep4), resourceCulture)!;
+
+    internal static string ServiceNestedOuter => ResourceManager.GetString(nameof(ServiceNestedOuter), resourceCulture)!;
+
+    internal static string ServiceNestedInner => ResourceManager.GetString(nameof(ServiceNestedInner), resourceCulture)!;
+
+    internal static string ServiceNestedInnerResume => ResourceManager.GetString(nameof(ServiceNestedInnerResume), resourceCulture)!;
+
+    internal static string ServiceNestedResumed => ResourceManager.GetString(nameof(ServiceNestedResumed), resourceCulture)!;
 }

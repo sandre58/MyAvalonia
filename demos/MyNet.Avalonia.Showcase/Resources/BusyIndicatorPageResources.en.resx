@@ -34,4 +34,55 @@
     <data name="DefaultBusyMessage" xml:space="preserve">
         <value>Loading…</value>
     </data>
+    <data name="ServicePanelTitle" xml:space="preserve">
+        <value>IBusyService</value>
+    </data>
+    <data name="ServicePanelDescription" xml:space="preserve">
+        <value>Demos through BusyServiceIndicator and a local service: indeterminate (message + cancel), determinate, multi-step progression, and nested scopes.</value>
+    </data>
+    <data name="ServiceIndeterminateButton" xml:space="preserve">
+        <value>Indeterminate</value>
+    </data>
+    <data name="ServiceDeterminateButton" xml:space="preserve">
+        <value>Determinate</value>
+    </data>
+    <data name="ServiceProgressionButton" xml:space="preserve">
+        <value>Progression</value>
+    </data>
+    <data name="ServiceNestedButton" xml:space="preserve">
+        <value>Nested scopes</value>
+    </data>
+    <data name="ServiceIndeterminateMessage" xml:space="preserve">
+        <value>Processing…</value>
+    </data>
+    <data name="ServiceIndeterminateStepFormat" xml:space="preserve">
+        <value>Step {0} / 8</value>
+    </data>
+    <data name="ServiceDeterminateMessage" xml:space="preserve">
+        <value>Downloading…</value>
+    </data>
+    <data name="ServiceProgressionStep1" xml:space="preserve">
+        <value>Preparing data…</value>
+    </data>
+    <data name="ServiceProgressionStep2" xml:space="preserve">
+        <value>Processing batch…</value>
+    </data>
+    <data name="ServiceProgressionStep3" xml:space="preserve">
+        <value>Finalizing…</value>
+    </data>
+    <data name="ServiceProgressionStep4" xml:space="preserve">
+        <value>Done</value>
+    </data>
+    <data name="ServiceNestedOuter" xml:space="preserve">
+        <value>Outer scope (indeterminate)</value>
+    </data>
+    <data name="ServiceNestedInner" xml:space="preserve">
+        <value>Inner scope (progression)</value>
+    </data>
+    <data name="ServiceNestedInnerResume" xml:space="preserve">
+        <value>Inner scope — finishing</value>
+    </data>
+    <data name="ServiceNestedResumed" xml:space="preserve">
+        <value>Back to outer scope</value>
+    </data>
 </root>

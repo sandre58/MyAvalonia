@@ -1,77 +1,9 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:loading="using:MyNet.UI.Loading.Models"
                     xmlns:my="http://mynet.com/avalonia">
+
     <ControlTheme x:Key="{x:Type my:BusyServiceIndicator}"
                   TargetType="{x:Type my:BusyServiceIndicator}"
-                  BasedOn="{StaticResource {x:Type my:BusyIndicator}}">
-        <Setter Property="Template">
-            <ControlTemplate TargetType="my:BusyServiceIndicator">
-                <Panel>
-                    <Border Background="{my:Theme Overlay.Background, Opacity=Scrim}" />
-                    <Border HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Margin="{my:Thickness Xl}"
-                            Padding="{my:Thickness Xl}"
-                            Background="{my:Theme Surface.Level1}"
-                            CornerRadius="{StaticResource MyNet.Corners.Lg}"
-                            BoxShadow="0 8 24 0 #40000000">
-                        <ContentControl x:Name="PART_BusyContent"
-                                        Content="{TemplateBinding BusyContent}">
-                            <ContentControl.DataTemplates>
-                                <DataTemplate DataType="{x:Type loading:IndeterminateBusy}">
-                                    <StackPanel Spacing="{StaticResource MyNet.Spacing.Md}" MinWidth="280">
-                                        <ProgressBar Height="4" IsIndeterminate="True" />
-                                        <TextBlock Text="{Binding Message}"
-                                                   TextWrapping="Wrap"
-                                                   HorizontalAlignment="Center"
-                                                   IsVisible="{Binding Message, Converter={x:Static my:NullConverter.IsPresent}}" />
-                                        <Button HorizontalAlignment="Center"
-                                                Classes="variant-outlined"
-                                                Command="{Binding CancelCommand}"
-                                                Content="{my:Loc Cancel}"
-                                                IsVisible="{Binding IsCancellable}" />
-                                    </StackPanel>
-                                </DataTemplate>
+                  BasedOn="{StaticResource {x:Type my:BusyIndicator}}" />
 
-                                <DataTemplate DataType="{x:Type loading:DeterminateBusy}">
-                                    <StackPanel Spacing="{StaticResource MyNet.Spacing.Md}" MinWidth="280">
-                                        <TextBlock Text="{Binding Message}"
-                                                   TextWrapping="Wrap"
-                                                   HorizontalAlignment="Center"
-                                                   IsVisible="{Binding Message, Converter={x:Static my:NullConverter.IsPresent}}" />
-                                        <ProgressBar Height="4"
-                                                     Minimum="{Binding Minimum}"
-                                                     Maximum="{Binding Maximum}"
-                                                     Value="{Binding Value}" />
-                                        <Button HorizontalAlignment="Center"
-                                                Classes="variant-outlined"
-                                                Command="{Binding CancelCommand}"
-                                                Content="{my:Loc Cancel}"
-                                                IsVisible="{Binding IsCancellable}" />
-                                    </StackPanel>
-                                </DataTemplate>
-
-                                <DataTemplate DataType="{x:Type loading:ProgressionBusy}">
-                                    <StackPanel Spacing="{StaticResource MyNet.Spacing.Md}" MinWidth="320">
-                                        <TextBlock Classes="text-h6"
-                                                   Text="{Binding Title}"
-                                                   TextWrapping="Wrap"
-                                                   IsVisible="{Binding Title, Converter={x:Static my:NullConverter.IsPresent}}" />
-                                        <ProgressBar Height="4" Minimum="0" Maximum="1" Value="{Binding Value}" />
-                                        <ListBox MaxHeight="120" ItemsSource="{Binding Messages}" />
-                                        <Button HorizontalAlignment="Center"
-                                                Classes="variant-outlined"
-                                                Command="{Binding CancelCommand}"
-                                                Content="{my:Loc Cancel}"
-                                                IsVisible="{Binding IsCancellable}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ContentControl.DataTemplates>
-                        </ContentControl>
-                    </Border>
-                </Panel>
-            </ControlTemplate>
-        </Setter>
-    </ControlTheme>
 </ResourceDictionary>

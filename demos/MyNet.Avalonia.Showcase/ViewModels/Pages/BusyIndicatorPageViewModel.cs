@@ -19,6 +19,8 @@ using MyNet.Avalonia.Showcase.ViewModels.Playground;
 using MyNet.Avalonia.Theme.Classes;
 using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.UI.Commands;
+using MyNet.UI.Loading;
+using MyNet.UI.Loading.Models;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
@@ -32,13 +34,29 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
             FillThemeBuilder(new ControlThemeBuilder().WithKind(CssClass.KindCard).AddDefaultVariants())
         ])
     {
+        DemoBusyService = new BusyService();
+
         StartCommand = commands.Create(async () => await StartAsync().ConfigureAwait(true));
         TestClickCommand = commands.Create(RegisterTestClick);
+        RunIndeterminateCommand = commands.Create(async () => await RunIndeterminateAsync().ConfigureAwait(true));
+        RunDeterminateCommand = commands.Create(async () => await RunDeterminateAsync().ConfigureAwait(true));
+        RunProgressionCommand = commands.Create(async () => await RunProgressionAsync().ConfigureAwait(true));
+        RunNestedCommand = commands.Create(async () => await RunNestedAsync().ConfigureAwait(true));
     }
+
+    public IBusyService DemoBusyService { get; }
 
     public ICommand StartCommand { get; }
 
     public ICommand TestClickCommand { get; }
+
+    public ICommand RunIndeterminateCommand { get; }
+
+    public ICommand RunDeterminateCommand { get; }
+
+    public ICommand RunProgressionCommand { get; }
+
+    public ICommand RunNestedCommand { get; }
 
     public bool IsBusy
     {
@@ -96,7 +114,7 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
 
         try
         {
-            await Task.Delay(TimeSpan.FromSeconds((double)_demoDurationSeconds)).ConfigureAwait(true);
+            await Task.Delay(TimeSpan.FromSeconds(_demoDurationSeconds)).ConfigureAwait(true);
         }
         finally
         {
@@ -105,4 +123,108 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
     }
 
     private void RegisterTestClick() => TestClickCount++;
+
+    private async Task RunIndeterminateAsync()
+    {
+        try
+        {
+            await DemoBusyService.RunAsync<IndeterminateBusy>(async (busy, cancellationToken) =>
+            {
+                busy.CanCancel = true;
+                busy.Message = BusyIndicatorPageResources.ServiceIndeterminateMessage;
+
+                for (var step = 1; step <= 8 && !cancellationToken.IsCancellationRequested; step++)
+                {
+                    busy.Message = string.Format(
+                        CultureInfo.CurrentCulture,
+                        BusyIndicatorPageResources.ServiceIndeterminateStepFormat,
+                        step);
+
+                    await Task.Delay(TimeSpan.FromMilliseconds(600), cancellationToken).ConfigureAwait(true);
+                }
+            }).ConfigureAwait(true);
+        }
+        catch (OperationCanceledException)
+        {
+            // Cancellation requested by the user; nothing to clean up in this demo.
+        }
+    }
+
+    private async Task RunDeterminateAsync()
+    {
+        try
+        {
+            await DemoBusyService.RunAsync<DeterminateBusy>(async (busy, cancellationToken) =>
+            {
+                busy.Message = BusyIndicatorPageResources.ServiceDeterminateMessage;
+                busy.Minimum = 0;
+                busy.Maximum = 100;
+                busy.Value = 0;
+
+                for (var value = 0; value <= 100 && !cancellationToken.IsCancellationRequested; value++)
+                {
+                    busy.Value = value;
+                    await Task.Delay(TimeSpan.FromMilliseconds(45), cancellationToken).ConfigureAwait(true);
+                }
+            }).ConfigureAwait(true);
+        }
+        catch (OperationCanceledException)
+        {
+            // Cancellation requested by the user; nothing to clean up in this demo.
+        }
+    }
+
+    private async Task RunProgressionAsync()
+    {
+        try
+        {
+            await DemoBusyService.RunAsync<ProgressionBusy>(async (busy, cancellationToken) =>
+            {
+                busy.CanCancel = true;
+                busy.Report(0, BusyIndicatorPageResources.ServiceProgressionStep1);
+                await Task.Delay(TimeSpan.FromMilliseconds(900), cancellationToken).ConfigureAwait(true);
+                busy.Report(0.35, BusyIndicatorPageResources.ServiceProgressionStep2);
+                await Task.Delay(TimeSpan.FromMilliseconds(900), cancellationToken).ConfigureAwait(true);
+                busy.Report(0.7, BusyIndicatorPageResources.ServiceProgressionStep3);
+                await Task.Delay(TimeSpan.FromMilliseconds(900), cancellationToken).ConfigureAwait(true);
+                busy.Report(1, BusyIndicatorPageResources.ServiceProgressionStep4);
+                await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken).ConfigureAwait(true);
+            }).ConfigureAwait(true);
+        }
+        catch (OperationCanceledException)
+        {
+            // Cancellation requested by the user; nothing to clean up in this demo.
+        }
+    }
+
+    private async Task RunNestedAsync()
+    {
+        try
+        {
+            await DemoBusyService.RunAsync<IndeterminateBusy>(async (outer, cancellationToken) =>
+            {
+                outer.Message = BusyIndicatorPageResources.ServiceNestedOuter;
+                await Task.Delay(TimeSpan.FromMilliseconds(700), cancellationToken).ConfigureAwait(true);
+
+                using (DemoBusyService.Begin<ProgressionBusy>(cancellationToken))
+                {
+                    var inner = DemoBusyService.GetCurrent<ProgressionBusy>()
+                        ?? throw new InvalidOperationException("Expected an active progression scope.");
+
+                    inner.CanCancel = true;
+                    inner.Report(0.15, BusyIndicatorPageResources.ServiceNestedInner);
+                    await Task.Delay(TimeSpan.FromMilliseconds(1100), cancellationToken).ConfigureAwait(true);
+                    inner.Report(0.85, BusyIndicatorPageResources.ServiceNestedInnerResume);
+                    await Task.Delay(TimeSpan.FromMilliseconds(900), cancellationToken).ConfigureAwait(true);
+                }
+
+                outer.Message = BusyIndicatorPageResources.ServiceNestedResumed;
+                await Task.Delay(TimeSpan.FromMilliseconds(700), cancellationToken).ConfigureAwait(true);
+            }).ConfigureAwait(true);
+        }
+        catch (OperationCanceledException)
+        {
+            // Cancellation requested by the user; nothing to clean up in this demo.
+        }
+    }
 }

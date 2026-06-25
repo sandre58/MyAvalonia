@@ -67,10 +67,10 @@
                            my:FormItem.Label="{Binding DisplayName}" />
         </DataTemplate>
         <DataTemplate DataType="options:IntNumericUpDownOptionViewModel">
-            <NumericUpDown Value="{Binding Value}"
-                           Minimum="{Binding Minimum}"
-                           Maximum="{Binding Maximum}"
-                           Increment="{Binding Increment}"
+            <NumericUpDown Value="{Binding Value, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                           Minimum="{Binding Minimum, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                           Maximum="{Binding Maximum, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                           Increment="{Binding Increment, Converter={x:Static my:IntToDecimalConverter.Default}}"
                            InnerRightContent="{Binding Suffix}"
                            my:InputAssist.ShowClearButton="False"
                            my:FormItem.Label="{Binding DisplayName}" />

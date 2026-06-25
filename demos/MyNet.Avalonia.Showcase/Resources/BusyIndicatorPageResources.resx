@@ -38,4 +38,55 @@
     <data name="DefaultBusyMessage" xml:space="preserve">
         <value>Chargement…</value>
     </data>
+    <data name="ServicePanelTitle" xml:space="preserve">
+        <value>IBusyService</value>
+    </data>
+    <data name="ServicePanelDescription" xml:space="preserve">
+        <value>Démos via BusyServiceIndicator et un service local : indéterminé (message + annulation), déterminé, progression multi-étapes et scopes imbriqués.</value>
+    </data>
+    <data name="ServiceIndeterminateButton" xml:space="preserve">
+        <value>Indéterminé</value>
+    </data>
+    <data name="ServiceDeterminateButton" xml:space="preserve">
+        <value>Déterminé</value>
+    </data>
+    <data name="ServiceProgressionButton" xml:space="preserve">
+        <value>Progression</value>
+    </data>
+    <data name="ServiceNestedButton" xml:space="preserve">
+        <value>Scopes imbriqués</value>
+    </data>
+    <data name="ServiceIndeterminateMessage" xml:space="preserve">
+        <value>Traitement en cours…</value>
+    </data>
+    <data name="ServiceIndeterminateStepFormat" xml:space="preserve">
+        <value>Étape {0} / 8</value>
+    </data>
+    <data name="ServiceDeterminateMessage" xml:space="preserve">
+        <value>Téléchargement…</value>
+    </data>
+    <data name="ServiceProgressionStep1" xml:space="preserve">
+        <value>Préparation des données…</value>
+    </data>
+    <data name="ServiceProgressionStep2" xml:space="preserve">
+        <value>Traitement du lot…</value>
+    </data>
+    <data name="ServiceProgressionStep3" xml:space="preserve">
+        <value>Finalisation…</value>
+    </data>
+    <data name="ServiceProgressionStep4" xml:space="preserve">
+        <value>Terminé</value>
+    </data>
+    <data name="ServiceNestedOuter" xml:space="preserve">
+        <value>Scope externe (indéterminé)</value>
+    </data>
+    <data name="ServiceNestedInner" xml:space="preserve">
+        <value>Scope interne (progression)</value>
+    </data>
+    <data name="ServiceNestedInnerResume" xml:space="preserve">
+        <value>Scope interne — fin</value>
+    </data>
+    <data name="ServiceNestedResumed" xml:space="preserve">
+        <value>Retour au scope externe</value>
+    </data>
 </root>
