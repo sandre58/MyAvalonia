@@ -64,6 +64,9 @@
     <File Path="build/coverage/Verify-CriticalCoverage.ps1" />
   </Folder>
   <Folder Name="/Solution Files/Docs/">
+    <File Path="CHANGELOG.md" />
+    <File Path="docs/getting-started.md" />
+    <File Path="docs/index.md" />
     <File Path="docs/TODO.md" />
     <File Path="LICENSE" />
     <File Path="README.md" />
@@ -83,6 +86,18 @@
   </Folder>
   <Folder Name="/Benchmarks/">
     <Project Path="benchmarks/MyNet.Avalonia.Theme.Benchmarks/MyNet.Avalonia.Theme.Benchmarks.csproj" />
+  </Folder>
+  <Folder Name="/Solution Files/Docs/Guides/">
+    <File Path="docs/guides/controls-and-overlays.md" />
+    <File Path="docs/guides/extended-host.md" />
+    <File Path="docs/guides/geography-avalonia.md" />
+    <File Path="docs/guides/markup-and-converters.md" />
+    <File Path="docs/guides/README.md" />
+    <File Path="docs/guides/theme-catalog-colors.md" />
+    <File Path="docs/guides/theme-catalog-tokens.md" />
+    <File Path="docs/guides/theme-catalog-utility-classes.md" />
+    <File Path="docs/guides/theme-controls.md" />
+    <File Path="docs/guides/theming.md" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="tests/MyNet.Avalonia.Controls.Headless.Tests/MyNet.Avalonia.Controls.Headless.Tests.csproj" />

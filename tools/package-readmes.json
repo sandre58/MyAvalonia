@@ -1,0 +1,71 @@
+{
+  "githubRepo": "sandre58/MyAvalonia",
+  "packages": [
+    {
+      "id": "MyNet.Avalonia",
+      "icon": "MyAvalonia.png",
+      "tagline": "Theme-agnostic Avalonia core: globalization markup, value converters, bindings, clipboard abstractions, and color utilities.",
+      "features": [
+        "Markup|{my:Loc}, {my:Display}, and globalization markup extensions",
+        "Converters|Logic, layout, brush, and localization value converters",
+        "Bindings|Avalonia binding helpers and application resources",
+        "Clipboard|DI-friendly clipboard abstractions and extensions"
+      ]
+    },
+    {
+      "id": "MyNet.Avalonia.Controls",
+      "icon": "MyAvaloniaControls.png",
+      "tagline": "Advanced controls and UI components for Avalonia applications: color pickers, data grids, custom cursors, and integration with MyNet libraries.",
+      "features": [
+        "Controls|ColorPicker, Avatar, Calendar, DataGrid, NavigationMenu, and more",
+        "Behaviors|ItemsBehavior and elastic layout panels",
+        "Overlay dialogs|Modal and non-modal overlay presentation without MyNet.UI",
+        "Cross-platform|Windows, macOS, and Linux"
+      ]
+    },
+    {
+      "id": "MyNet.Avalonia.Theme",
+      "icon": "MyAvaloniaTheme.png",
+      "tagline": "Comprehensive theming system with custom styles, control templates, design tokens, and visual resources for Avalonia applications.",
+      "features": [
+        "MyTheme|Runtime theme engine with Dark, Light, and HighContrast variants",
+        "Markup|{my:Theme}, {my:ThemeRole}, and utility CSS-like classes",
+        "Performance|Brush LRU cache, diagnostics, and BenchmarkDotNet suite",
+        "Tokens|Design tokens and mutable theme brushes"
+      ]
+    },
+    {
+      "id": "MyNet.Avalonia.Theme.Controls",
+      "icon": "MyAvaloniaThemeControls.png",
+      "tagline": "Control themes and DataGrid columns for the MyNet Avalonia design system (Foundation, Standard, Custom catalogs).",
+      "features": [
+        "Catalog|Precompiled ThemeControlsCatalog Styles entry point",
+        "Layout|Foundation, Standard, and Custom control themes",
+        "DataGrid|Themed DataGrid columns and templates",
+        "Startup|Load after MyTheme in Application.Styles"
+      ]
+    },
+    {
+      "id": "MyNet.Avalonia.Extended",
+      "icon": "MyAvaloniaExtended.png",
+      "tagline": "High-level UI components and services for Avalonia: dialogs, toasts, busy indicators, clipboard, and MyNet.UI integration.",
+      "features": [
+        "Dialogs|Overlay and window presenters for MyNet.UI content dialogs",
+        "Toasts|Avalonia toast host with INotificationPublisher",
+        "Services|Theme, clipboard, and navigation helpers",
+        "Busy indicators|Loading states for long-running operations"
+      ]
+    },
+    {
+      "id": "MyNet.Avalonia.Geography",
+      "icon": "MyAvaloniaGeography.png",
+      "tagline": "Avalonia markup and helpers for MyNet.Geography: country lists, culture and country templates, and CulturePicker.",
+      "features": [
+        "Markup|{geo:Countries} and geography XML namespace",
+        "Templates|Country and culture data templates for lists and menus",
+        "CulturePicker|Flag dropdown with checkable culture menu",
+        "Converters|CountryConverter for codes, names, and flag bitmaps"
+      ]
+    }
+  ]
+}

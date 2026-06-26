@@ -1,13 +1,33 @@
-
 <div align="center">
-  <img src="../../assets/MyAvaloniaGeography.png" width="96" alt="MyAvalonia Geography">
-</div>
 
 # MyNet.Avalonia.Geography
 
-Optional Avalonia satellite package for [MyNet.Geography](https://www.nuget.org/packages/MyNet.Geography). Use it when your UI needs country pick lists, culture display templates, or a compact culture picker without pulling geography into the core `MyNet.Avalonia` package.
+<img src="../../assets/MyAvaloniaGeography.png" alt="MyNet.Avalonia.Geography" width="96" height="96" />
 
-Depends on [`MyNet.Avalonia`](../MyNet.Avalonia/README.md) for `{my:Display}` and `EqualsConverter`. Styled controls such as `DropDownButton` require your app to load [`MyNet.Avalonia.Theme.Controls`](../MyNet.Avalonia.Theme.Controls/README.md) (e.g. `<my:ThemeControlsCatalog />`).
+*Avalonia markup and helpers for MyNet.Geography: country lists, culture and country templates, and CulturePicker.*
+
+</div>
+
+<div align="center">
+
+[![MIT License](https://img.shields.io/github/license/sandre58/MyAvalonia)](https://github.com/sandre58/MyAvalonia/blob/main/LICENSE)
+[![NuGet](https://img.shields.io/nuget/v/MyNet.Avalonia.Geography)](https://www.nuget.org/packages/MyNet.Avalonia.Geography)
+[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/download/dotnet/10.0)
+
+</div>
+
+---
+
+## Features
+
+| Feature | Description |
+| :------ | :---------- |
+| **Markup** | {geo:Countries} and geography XML namespace |
+| **Templates** | Country and culture data templates for lists and menus |
+| **CulturePicker** | Flag dropdown with checkable culture menu |
+| **Converters** | CountryConverter for codes, names, and flag bitmaps |
+
+---
 
 ## Installation
 
@@ -15,68 +35,50 @@ Depends on [`MyNet.Avalonia`](../MyNet.Avalonia/README.md) for `{my:Display}` an
 dotnet add package MyNet.Avalonia.Geography
 ```
 
-## Resources
-
-Merge geography data templates in `App.axaml` (after theme styles):
-
-```xml
-<ResourceDictionary.MergedDictionaries>
-    <ResourceInclude Source="avares://MyNet.Avalonia.Geography/Resources/GeographyDataTemplates.axaml" />
-</ResourceDictionary.MergedDictionaries>
+```csharp
+services.AddMyNetAvaloniaGeography();
 ```
 
-| Key | Use |
-|-----|-----|
-| `MyNet.DataTemplate.Country.Xs` | Country + 16px flag in lists |
-| `MyNet.DataTemplate.Country.Xl` | Country tile (64px flag) |
-| `MyNet.DataTemplate.CultureInfo.Xs` | Culture + flag + title in menus |
-| `MyNet.DataTemplate.CultureInfo.Flag` | Culture flag only (compact button) |
+Merge `GeographyDataTemplates.axaml` and `Themes/Generic.axaml` — see guide below.
 
-## XAML
-
-Register the `geo` XML namespace (included when referencing this assembly):
+## Quick start
 
 ```xml
 xmlns:geo="http://mynet.com/avalonia/geography"
 
-<ComboBox ItemsSource="{geo:Countries}" />
+<ComboBox ItemsSource="{geo:Countries}"
+          ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}" />
 ```
 
-## CulturePicker
 
-Shell-agnostic culture selector (flag `DropDownButton` + checkable menu):
 
-```xml
-<geo:CulturePicker Cultures="{Binding Cultures}"
-                   SelectedCulture="{Binding SelectedCulture}"
-                   SelectCultureCommand="{Binding SelectCultureCommand}"
-                   ToolTipText="Language"
-                   AutomationLabel="Language" />
-```
+---
+## Documentation
 
-With `ShellCultureViewModel` from MyNet.UI:
+| Guide | Topic |
+|-------|-------|
+| [Geography (Avalonia)](../../docs/guides/geography-avalonia.md) | Templates, `CulturePicker`, converters |
+| [MyNet Geography](https://github.com/sandre58/MyNet/blob/main/docs/guides/geography.md) | Core country model |
+| [Showcase](../../demos/MyNet.Avalonia.Showcase/) | Geography / culture pages |
 
-```xml
-<geo:CulturePicker Cultures="{Binding Culture.Cultures}"
-                   SelectedCulture="{Binding Culture.SelectedCulture}"
-                   SelectCultureCommand="{Binding Culture.ChangeCultureCommand}" />
-```
 
-## Code
 
-```csharp
-using MyNet.Avalonia.Geography;
+---
+## Related packages
 
-var countries = CountrySource.GetAllOrderedByDisplay();
-```
+- [MyNet.Geography](https://www.nuget.org/packages/MyNet.Geography) · [MyNet.Geography.Resources](https://www.nuget.org/packages/MyNet.Geography.Resources)
+---
 
-## Country bindings
+<div align="center">
 
-`CountryConverter` resolves a `Country` (or `CultureInfo`) to codes, localized names, or flag bitmaps:
+<sub>
 
-```xml
-<Image Source="{Binding Converter={x:Static my:CountryConverter.To24}}" />
-<TextBlock Text="{Binding Converter={x:Static my:CountryConverter.ToDisplayName}}" />
-```
+Copyright © 2016-2026 - Stéphane ANDRE. All Rights Reserved.
 
-Requires the `MyNet.Geography.Resources` package (referenced transitively by this project).
+<br/>
+
+Released under the [MIT License](https://github.com/sandre58/MyAvalonia/blob/main/LICENSE).
+
+</sub>
+
+</div>

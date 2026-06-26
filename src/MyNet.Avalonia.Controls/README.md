@@ -1,190 +1,84 @@
-
-<div id="top"></div>
-
-<!-- PROJECT INFO -->
-<br />
 <div align="center">
-  <img src="../../assets/MyAvaloniaControls.png" width="128" alt="MyAvalonia Controls">
+
+# MyNet.Avalonia.Controls
+
+<img src="../../assets/MyAvaloniaControls.png" alt="MyNet.Avalonia.Controls" width="96" height="96" />
+
+*Advanced controls and UI components for Avalonia applications: color pickers, data grids, custom cursors, and integration with MyNet libraries.*
+
 </div>
 
-<h1 align="center">My .NET Avalonia Controls</h1>
+<div align="center">
 
-[![MIT License](https://img.shields.io/github/license/sandre58/MyAvalonia?style=for-the-badge)](https://github.com/sandre58/MyAvalonia/blob/main/LICENSE)
-[![NuGet](https://img.shields.io/nuget/v/MyNet.Avalonia.Controls?style=for-the-badge)](https://www.nuget.org/packages/MyNet.Avalonia.Controls)
+[![MIT License](https://img.shields.io/github/license/sandre58/MyAvalonia)](https://github.com/sandre58/MyAvalonia/blob/main/LICENSE)
+[![NuGet](https://img.shields.io/nuget/v/MyNet.Avalonia.Controls)](https://www.nuget.org/packages/MyNet.Avalonia.Controls)
+[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/download/dotnet/10.0)
 
-Advanced controls and UI components for Avalonia applications: color pickers, data grids, custom cursors, and integration with MyNet libraries.
+</div>
 
-[![.NET 8.0](https://img.shields.io/badge/.NET-8.0-purple)](#)
-[![.NET 9.0](https://img.shields.io/badge/.NET-9.0-purple)](#)
-[![.NET 10.0](https://img.shields.io/badge/.NET-10.0-purple)](#)
-[![C#](https://img.shields.io/badge/language-C%23-blue)](#)
-[![Cross Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)](#)
+---
+
+## Features
+
+| Feature | Description |
+| :------ | :---------- |
+| **Controls** | ColorPicker, Avatar, Calendar, DataGrid, NavigationMenu, and more |
+| **Behaviors** | ItemsBehavior and elastic layout panels |
+| **Overlay dialogs** | Modal and non-modal overlay presentation without MyNet.UI |
+| **Cross-platform** | Windows, macOS, and Linux |
 
 ---
 
 ## Installation
 
-Install via NuGet:
-
 ```bash
 dotnet add package MyNet.Avalonia.Controls
 ```
 
-## Features
-
-- **Avatar** - User profile picture display with fallback options
-- **Badge** - Notification badges and status indicators
-- **Banner** - Informational banners and alerts
-- **Calendar** - Multi-view calendar with range selection and blackout dates
-- **Clock** - Digital and analog clock components
-- **CodeBlock** - Syntax highlighted code display
-- **ColorPicker** - Advanced color selection and palette controls
-- **ColorPalettes** - Pre-defined color schemes and themes
-- **Cursors** - Custom cursor definitions and management
-- **DataGrid** - Enhanced data grid with sorting, filtering, and selection
-- **DateTimePickers** - Date and time input controls
-- **Divider** - Visual separators and spacers
-- **ElasticWrapPanel** - Flexible layout panel with elastic wrapping
-- **Forms** - Form controls and validation helpers
-- **MultiComboBox** - Multi-selection combo box control
-- **NavigationMenu** - Navigation and menu components
-- **ExtendedIcon** - Icon controls with outline styles
-- **OverflowStackPanel** - Stack panel with overflow handling
-- **Pagination** - Page navigation and data pagination controls
-- **TagBox** - Tag input and management control
-- **Cross-platform compatibility** - Works on Windows, macOS, and Linux
-
-
-## Styling & Themes
-
-MyNet.Avalonia.Controls integrates seamlessly with the MyNet.Avalonia.Theme package to provide consistent styling across all controls.
-
-### Using with MyNet Theme
-
-To apply consistent theming to all controls, reference the MyNet theme in your `App.axaml`:
-
-```xml
-<Application.Resources>
-  <ResourceDictionary>
-    <ResourceDictionary.MergedDictionaries>
-      <ResourceDictionary Source="avares://MyNet.Avalonia.Theme/MyTheme.axaml" />
-    </ResourceDictionary.MergedDictionaries>
-  </ResourceDictionary>
-</Application.Resources>
-```
-
-### Custom Styling
-
-Controls can be styled individually using Avalonia's styling system:
-
-```xml
-<Style Selector="controls|Avatar">
-  <Setter Property="BorderThickness" Value="2" />
-  <Setter Property="BorderBrush" Value="Blue" />
-</Style>
-```
-
-### Color Palette Integration
-
-Use the built-in color palettes for consistent theming:
+For styled controls, install [Theme](../../docs/guides/theming.md) + [Theme.Controls](../../docs/guides/theme-controls.md) and add `<my:MyTheme />` + `<my:ThemeControlsCatalog />` in `App.axaml`.
 
 ```csharp
-// Access predefined color palettes
-var primaryPalette = ColorPalettes.Primary;
-var accentColor = primaryPalette.Color500;
+services.AddMyNetAvaloniaControls(); // color picker + message .resx
 ```
 
+## Quick start
 
-## Example Usage
-
-### Avatar Control
 ```xml
-<controls:Avatar Source="/Assets/user-avatar.png" 
-                 Size="64" 
-                 Initials="JD" 
-                 Background="Blue" />
+xmlns:controls="http://mynet.com/avalonia/controls"
+
+<controls:Avatar Width="64" Height="64" Initials="JD" />
+<controls:ColorPickerEx SelectedColor="{Binding Accent, Mode=TwoWay}" />
 ```
 
-### Color Picker
-```xml
-<controls:ColorPicker x:Name="colorPicker" 
-                      SelectedColor="Red" 
-                      ShowAlphaChannel="True" />
-```
 
-### Multi ComboBox
-```xml
-<controls:MultiComboBox x:Name="multiCombo"
-                        ItemsSource="{Binding AvailableItems}"
-                        SelectedItems="{Binding SelectedItems}" />
-```
 
-### Navigation Menu
-```xml
-<controls:NavigationMenu>
-  <controls:NavigationMenuItem Header="Home" Icon="Home" />
-  <controls:NavigationMenuItem Header="Settings" Icon="Settings" />
-  <controls:NavigationMenuItem Header="About" Icon="Info" />
-</controls:NavigationMenu>
-```
+---
+## Documentation
 
-### Badge with Counter
-```xml
-<Grid>
-  <Button Content="Messages" />
-  <controls:Badge Count="5" 
-                  Background="Red" 
-                  HorizontalAlignment="Right" 
-                  VerticalAlignment="Top" />
-</Grid>
-```
+| Guide | Topic |
+|-------|-------|
+| [Controls & overlays](../../docs/guides/controls-and-overlays.md) | Full catalog, overlay host |
+| [Getting started](../../docs/getting-started.md) | App bootstrap |
+| [Showcase](../../demos/MyNet.Avalonia.Showcase/) | Live control demos |
 
-### Tag Box
-```xml
-<controls:TagBox x:Name="tagBox"
-                 Tags="{Binding Tags}"
-                 NewTagCommand="{Binding AddTagCommand}"
-                 RemoveTagCommand="{Binding RemoveTagCommand}" />
-```
 
-## Testing
 
-Unit tests live in [`tests/MyNet.Avalonia.Controls.Tests`](../../tests/MyNet.Avalonia.Controls.Tests/). They cover pure logic extracted from controls (calendar date ranges, selection, grid layout, validation, `DateContext`, converters) without requiring a UI host.
+---
+## Related packages
 
-```bash
-dotnet test tests/MyNet.Avalonia.Controls.Tests
-```
+- [MyNet.Avalonia.Theme.Controls](https://www.nuget.org/packages/MyNet.Avalonia.Theme.Controls) — control themes
+---
 
-Calendar helpers are in `Calendar/Internal/` (`MyNet.Avalonia.Controls.Internals`) and are consumed by the `Calendar` control:
+<div align="center">
 
-- `CalendarDateRangeHelper`, `CalendarSelectionCoordinator` — plages et sélection
-- `CalendarMonthGridHelper`, `CalendarYearGridHelper` — construction des grilles
-- `CalendarKeyboardNavigationHelper`, `CalendarDisplayModeHelper` — navigation clavier et modes d’affichage
-- `CalendarValidationHelper`, `CalendarDisplayContextHelper` — validation et contexte
+<sub>
 
-Pagination and TextPicker helpers:
+Copyright © 2016-2026 - Stéphane ANDRE. All Rights Reserved.
 
-- `PaginationHelper`, `PaginationLayoutHelper` — page count, clamp, button layout
-- `TextPickerKeyboardHelper`, `TextPickerCommitHelper`, `TextPickerValidationHelper` — clavier, commit texte, parsing
+<br/>
 
-Other tested modules: `ItemsBehaviorHelper`, `OverlayDialogHostLookupHelper`, `StandardColorPalette`, `PositionToDockConverter`, `DateContext`, `WeekendDateSelector`.
+Released under the [MIT License](https://github.com/sandre58/MyAvalonia/blob/main/LICENSE).
 
-### Overlay dialogs
+</sub>
 
-`OverlayDialogHost`, `OverlayDialog`, and `OverlayDialogHostManager` provide modal/non-modal overlay presentation without `MyNet.UI`. See [`Dialogs/Overlay/README.md`](Dialogs/Overlay/README.md) for host registration, `HostId`, `TopLevelHashCode`, and automatic top-level host creation.
-
-### Headless UI tests
-
-Headless tests live in [`tests/MyNet.Avalonia.Controls.Headless.Tests`](../../tests/MyNet.Avalonia.Controls.Headless.Tests/). They use [Avalonia Headless](https://docs.avaloniaui.net/docs/testing/headless-xunit) with `[AvaloniaFact]` to exercise control templates, layout, and interactions without a visible window.
-
-```bash
-dotnet run --project tests/MyNet.Avalonia.Controls.Headless.Tests
-```
-
-Covered controls: `Pagination`, `Calendar`, `Badge`, `Divider`, `OverlayDialog`, `OverlayDialogHost`.
-
-## License
-
-Copyright © Stéphane ANDRE.
-
-Distributed under the MIT License. See [LICENSE](../../LICENSE) for details.
+</div>

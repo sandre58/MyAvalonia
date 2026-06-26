@@ -131,7 +131,7 @@ This document summarizes the current state of MyNet.Avalonia project development
 
 - **GitHub Issues:** [MyAvalonia Issues](https://github.com/sandre58/MyAvalonia/issues)
 - **Discussions:** [MyAvalonia Discussions](https://github.com/sandre58/MyAvalonia/discussions)
-- **Documentation:** See README of each package
+- **Documentation:** [docs/index.md](../docs/index.md) · [guides](../docs/guides/README.md) · package READMEs under `src/`
 
 ---
 

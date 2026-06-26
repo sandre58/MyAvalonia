@@ -1,13 +1,33 @@
-
 <div align="center">
-  <img src="../../assets/MyAvalonia.png" width="128" alt="MyAvalonia">
-</div>
 
 # MyNet.Avalonia
 
-Theme-agnostic Avalonia core: globalization markup, value converters, bindings, clipboard abstractions, and color utilities. Visual styles live in [`MyNet.Avalonia.Theme`](../MyNet.Avalonia.Theme/README.md); optional geography markup in [`MyNet.Avalonia.Geography`](../MyNet.Avalonia.Geography/README.md).
+<img src="../../assets/MyAvalonia.png" alt="MyNet.Avalonia" width="96" height="96" />
 
-[![NuGet](https://img.shields.io/nuget/v/MyNet.Avalonia?style=for-the-badge)](https://www.nuget.org/packages/MyNet.Avalonia)
+*Theme-agnostic Avalonia core: globalization markup, value converters, bindings, clipboard abstractions, and color utilities.*
+
+</div>
+
+<div align="center">
+
+[![MIT License](https://img.shields.io/github/license/sandre58/MyAvalonia)](https://github.com/sandre58/MyAvalonia/blob/main/LICENSE)
+[![NuGet](https://img.shields.io/nuget/v/MyNet.Avalonia)](https://www.nuget.org/packages/MyNet.Avalonia)
+[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/download/dotnet/10.0)
+
+</div>
+
+---
+
+## Features
+
+| Feature | Description |
+| :------ | :---------- |
+| **Markup** | {my:Loc}, {my:Display}, and globalization markup extensions |
+| **Converters** | Logic, layout, brush, and localization value converters |
+| **Bindings** | Avalonia binding helpers and application resources |
+| **Clipboard** | DI-friendly clipboard abstractions and extensions |
+
+---
 
 ## Installation
 
@@ -15,71 +35,49 @@ Theme-agnostic Avalonia core: globalization markup, value converters, bindings, 
 dotnet add package MyNet.Avalonia
 ```
 
-Register globalization in the host before using markup extensions:
+Theme-agnostic core — no visual styles. For the MyNet look, add [Theme](../MyNet.Avalonia.Theme/README.md) packages (see [Getting started](../../docs/getting-started.md)).
+
+## Quick start
+
+Requires **MyNet.UI** + **MyNet.Globalization** on the host:
 
 ```csharp
-services.UseGlobalization();
+services.AddUi(/* cultures */)
+    .AddMyNetAvaloniaColors();
+provider.UseUi();
+provider.UseMyNetAvaloniaClipboard(); // optional, after Extended clipboard registration
 ```
 
-## Packages
 
-| Package | Role |
-| ------- | ---- |
-| **MyNet.Avalonia** | Converters, `{my:Loc}` / `{my:Display}`, bindings, extensions |
-| [MyNet.Avalonia.Geography](../MyNet.Avalonia.Geography/README.md) | `{geo:Countries}` and country list helpers |
-| [MyNet.Avalonia.Controls](../MyNet.Avalonia.Controls/) | Controls, behaviors (`ItemsBehavior`) |
-| [MyNet.Avalonia.Theme](../MyNet.Avalonia.Theme/) | Control themes, styles, visual markup |
 
-## Markup extensions (`my`)
+---
+## Documentation
 
-Namespace: `xmlns:my="http://mynet.com/avalonia"`
+| Guide | Topic |
+|-------|-------|
+| [Getting started](../../docs/getting-started.md) | Full app bootstrap |
+| [Markup & converters](../../docs/guides/markup-and-converters.md) | `{my:Loc}`, `{my:Display}`, converters |
+| [Guides index](../../docs/guides/README.md) | All system guides |
+| [Showcase](../../demos/MyNet.Avalonia.Showcase/) | Runnable examples |
 
-| Extension | Use case |
-| --------- | -------- |
-| `{my:Loc Key}` | Static `.resx` key (`Style`, `Filename`, `Format`, `Casing`) |
-| `{my:LocObject Key}` | Same as `Loc`, returns `LocalizedString` for object properties |
-| `{my:Display Path}` | Bound value with culture/time zone refresh (`Style`, `Format`, `Quantity`, `Casing`) |
-| `{my:DisplayTextBlock Path}` | `Display` wrapped in a `TextBlock` |
 
-```xml
-<TextBlock Text="{my:Loc Welcome}" />
-<TextBlock Text="{my:Loc ItemCount, Format=ItemsCount, Style=Abbreviation}" />
-<TextBlock Text="{my:Display Count, Format=ItemsCount, Quantity=True}" />
-<Button my:FormItem.Label="{my:LocObject Field_Email}" />
-```
 
-Resource keys and format strings use MyNet.Globalization `TranslationOptions` (`Style`, `Quantity`). `LetterCasing` is applied after translation.
+---
+## Related packages
 
-## Value converters
+- [MyNet.UI](https://www.nuget.org/packages/MyNet.UI) · [MyNet.Globalization](https://www.nuget.org/packages/MyNet.Globalization) · [MyNet.Observable](https://www.nuget.org/packages/MyNet.Observable)
+---
 
-Common converters are exposed on the `my` XML namespace (`MyNet.Avalonia.Converters`):
+<div align="center">
 
-```xml
-<Border IsVisible="{Binding Status, Converter={x:Static my:EqualsConverter.IsEquals}, ConverterParameter=Active}" />
-<TextBlock Text="{Binding Width, Converter={x:Static my:MathConverter.Add}, ConverterParameter=10}" />
-```
+<sub>
 
-Categories: logic (`Equals`, `Math`, `Null`), layout (`Thickness`, `CornerRadius`), brushes/gradients, localization (`StringConverter`, `DateTimeConverter`).
+Copyright © 2016-2026 - Stéphane ANDRE. All Rights Reserved.
 
-## Application resources
+<br/>
 
-```csharp
-using MyNet.Avalonia.Resources;
+Released under the [MIT License](https://github.com/sandre58/MyAvalonia/blob/main/LICENSE).
 
-var brush = ApplicationResources.GetResource<SolidColorBrush>("PrimaryBrush");
-```
+</sub>
 
-## Clipboard
-
-Register `IClipboardService` in DI and call `UseClipboard()` on the built `IServiceProvider`. Theme commands use `ClipboardManager` as a static facade.
-
-## Related MyNet packages
-
-- `MyNet.Globalization` — translation and culture
-- `MyNet.Observable` — `LocalizedString`, `LocalizedEnum`
-- `MyNet.Humanizer` — enum and smart enum display
-- `System.Reactive` — optional reactive helpers
-
-## License
-
-MIT — see [LICENSE](../../LICENSE).
+</div>

@@ -119,7 +119,8 @@ ValidationLocalization.Configure();
 
 Le ViewModel expose `INotifyDataErrorInfo` via `IValidationAware` pour que `DataValidationErrors` des contrôles MyNet affiche les erreurs inline.
 
-## Documentation MyNet
+## Documentation
 
-- [Guides MyNet](https://github.com/sandre58/MyNet/tree/main/docs/guides)
-- Packages Avalonia : `src/MyNet.Avalonia*/README.md` dans ce dépôt
+- [MyAvalonia docs](../../docs/index.md) · [Guides](../../docs/guides/README.md) · [Getting started](../../docs/getting-started.md)
+- [Guides MyNet](https://github.com/sandre58/MyNet/tree/main/docs/guides) (MVVM contracts)
+- Package READMEs : `src/MyNet.Avalonia*/README.md`

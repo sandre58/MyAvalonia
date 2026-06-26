@@ -1,59 +1,84 @@
+<div align="center">
+
 # MyNet.Avalonia.Theme.Controls
 
-Control themes and DataGrid columns for the MyNet Avalonia design system.
+<img src="../../assets/MyAvaloniaThemeControls.png" alt="MyNet.Avalonia.Theme.Controls" width="96" height="96" />
 
-## Reference
+*Control themes and DataGrid columns for the MyNet Avalonia design system (Foundation, Standard, Custom catalogs).*
+
+</div>
+
+<div align="center">
+
+[![MIT License](https://img.shields.io/github/license/sandre58/MyAvalonia)](https://github.com/sandre58/MyAvalonia/blob/main/LICENSE)
+[![NuGet](https://img.shields.io/nuget/v/MyNet.Avalonia.Theme.Controls)](https://www.nuget.org/packages/MyNet.Avalonia.Theme.Controls)
+[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/download/dotnet/10.0)
+
+</div>
+
+---
+
+## Features
+
+| Feature | Description |
+| :------ | :---------- |
+| **Catalog** | Precompiled ThemeControlsCatalog Styles entry point |
+| **Layout** | Foundation, Standard, and Custom control themes |
+| **DataGrid** | Themed DataGrid columns and templates |
+| **Startup** | Load after MyTheme in Application.Styles |
+
+---
+
+## Installation
 
 ```bash
 dotnet add package MyNet.Avalonia.Theme.Controls
 ```
 
-Also requires `MyNet.Avalonia.Theme`, `MyNet.Avalonia.Controls`, and `MyNet.Avalonia`.
+Requires `MyNet.Avalonia.Theme`, `MyNet.Avalonia.Controls`, and `MyNet.Avalonia`.
 
-## Startup (required)
+## Quick start
 
-Add `<my:MyTheme />` in `Application.Styles`, then use `MyNetThemeBootstrap`:
+Load immediately after `<my:MyTheme />`:
 
-```csharp
-using MyNet.Avalonia.Theme.Controls;
-
-public override void Initialize()
-    => MyNetThemeBootstrap.Initialize(this);
-
-public override void OnFrameworkInitializationCompleted()
-{
-    MyNetThemeBootstrap.LoadTheme(this);
-    // show main window…
-}
+```xml
+<Application xmlns:my="http://mynet.com/avalonia">
+    <Application.Styles>
+        <my:MyTheme />
+        <my:ThemeControlsCatalog />
+    </Application.Styles>
+</Application>
 ```
 
-`Initialize` registers utility classes and loads application XAML. `LoadTheme` calls `MyTheme.Current.EnsureLoaded()` then attaches the precompiled catalog.
 
-Do **not** use `<StyleInclude Source="avares://MyNet.Avalonia.Theme.Controls/..." />` in `App.axaml` for the full catalog: Avalonia would load ~100 XAML files on the UI thread during `AvaloniaXamlLoader.Load`, before tokens are ready, which blocks startup.
 
-In DEBUG builds, `LoadTheme` verifies the catalog is attached when `attachCatalog` is `true`.
+---
+## Documentation
 
-### Advanced (manual steps)
+| Guide | Topic |
+|-------|-------|
+| [Theme controls](../../docs/guides/theme-controls.md) | Catalog layers, anti-patterns |
+| [Theming](../../docs/guides/theming.md) | `MyTheme`, tokens |
+| [Getting started](../../docs/getting-started.md) | Full stack |
 
-```csharp
-ThemeControlsHost.Register();
-AvaloniaXamlLoader.Load(this);
-// …
-MyTheme.Current.EnsureLoaded();
-ThemeControlsHost.AttachCatalog(this);
-```
 
-## What gets loaded
 
-1. `Resources/DataTemplates.axaml`
-2. **Catalog** — Foundation → Standard → Custom
+---
+## Related packages
 
-## Project layout
+- [MyNet.Avalonia.Theme](../MyNet.Avalonia.Theme/README.md) · [MyNet.Avalonia.Controls](../MyNet.Avalonia.Controls/README.md)
+---
 
-```
-Foundation/
-Standard/
-Custom/
-ThemeControlsCatalog.axaml   # precompiled entry point (AttachCatalog)
-DataGrid/
-```
+<div align="center">
+
+<sub>
+
+Copyright © 2016-2026 - Stéphane ANDRE. All Rights Reserved.
+
+<br/>
+
+Released under the [MIT License](https://github.com/sandre58/MyAvalonia/blob/main/LICENSE).
+
+</sub>
+
+</div>
