@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using FluentAssertions;
@@ -113,10 +112,7 @@ public class SingletonNavigationMiddlewareTests
         {
         }
 
-        public void Push(Page view)
-        {
-            _stack.Add((INavigationPage)view.DataContext!);
-        }
+        public void Push(Page view) => _stack.Add((INavigationPage)view.DataContext!);
 
         public bool Contains(Page view) => GetStackDistance(view) >= 0;
 
@@ -183,7 +179,7 @@ public class SingletonNavigationMiddlewareTests
         public void Clear() => _pages.Clear();
     }
 
-    private sealed class TestNavigationPage(string name) : INavigationPage, INavigationLifecycle
+    private sealed class TestNavigationPage(string name) : INavigationPage
     {
         public Task OnNavigatingToAsync(NavigationContext context, System.Threading.CancellationToken cancellationToken)
             => Task.CompletedTask;

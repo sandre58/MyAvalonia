@@ -31,14 +31,12 @@ public class ToastHoverLifetimeAttachmentTests
         ToastHoverLifetimeAttachment.ShouldAttach(toast).Should().Be(expected);
     }
 
-    private static IToast CreateToast(ToastClosingStrategy closingStrategy, bool freezeOnMouseEnter)
-        => new Toast(
+    private static Toast CreateToast(ToastClosingStrategy closingStrategy, bool freezeOnMouseEnter)
+        => new(
             new MessageNotification("message", severity: NotificationSeverity.Information),
-            new ToastSettings
+            new()
             {
                 ClosingStrategy = closingStrategy,
                 FreezeOnMouseEnter = freezeOnMouseEnter
-            },
-            null,
-            null);
+            });
 }

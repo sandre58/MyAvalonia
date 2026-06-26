@@ -11,7 +11,6 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
-using Avalonia.Threading;
 using MyNet.Avalonia.Controls.Enums;
 
 #pragma warning disable IDE0130
@@ -62,7 +61,7 @@ public class BusyIndicator : TemplatedControl
     /// Defines the <see cref="Animation"/> property.
     /// </summary>
     public static readonly StyledProperty<LoaderAnimation> AnimationProperty =
-        AvaloniaProperty.Register<BusyIndicator, LoaderAnimation>(nameof(Animation), LoaderAnimation.Circular);
+        AvaloniaProperty.Register<BusyIndicator, LoaderAnimation>(nameof(Animation));
 
     /// <summary>
     /// Defines the <see cref="BusyContent"/> property.

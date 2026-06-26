@@ -105,7 +105,7 @@ public class OverlayDialogHost : Canvas
             IsVisible = true,
 
             // Start transparent so the appear transition animates from 0 → 1.
-            Opacity = 0,
+            Opacity = 0
         };
 
         if (modal)
@@ -319,8 +319,15 @@ public class OverlayDialogHost : Canvas
         ResetZIndices();
 
         // Trigger mask appear transition and dialog XAML appear transition (IsClosed true → false).
-        if (mask is not null && !IsAnimationDisabled) TriggerMaskAppear(mask, MaskAppearDuration);
-        else if (mask is not null) mask.Opacity = 1.0;
+        if (mask is not null && !IsAnimationDisabled)
+        {
+            TriggerMaskAppear(mask, MaskAppearDuration);
+        }
+        else
+        {
+            mask?.Opacity = 1.0;
+        }
+
         control.IsClosed = false;
     }
 

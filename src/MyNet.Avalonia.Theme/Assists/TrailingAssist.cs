@@ -58,7 +58,7 @@ public static class TrailingAssist
     #region IsVisible
 
     public static readonly AttachedProperty<bool> IsVisibleProperty =
-        AvaloniaProperty.RegisterAttached<StyledElement, bool>("IsVisible", typeof(TrailingAssist), false);
+        AvaloniaProperty.RegisterAttached<StyledElement, bool>("IsVisible", typeof(TrailingAssist));
 
     public static void SetIsVisible(StyledElement obj, bool value) => obj.SetValue(IsVisibleProperty, value);
 

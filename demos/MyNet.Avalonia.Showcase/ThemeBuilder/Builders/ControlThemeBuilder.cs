@@ -524,7 +524,7 @@ internal sealed class ControlThemeBuilder(string? themeKey = null)
     private static readonly (string AssemblyName, string[] Namespaces)[] ControlTypeNamespaces =
     [
         ("MyNet.Avalonia.Controls", ["MyNet.Avalonia.Controls", "MyNet.Avalonia.Controls.Primitives"]),
-        ("MyNet.Avalonia.Extended", ["MyNet.Avalonia.Extended.Controls"]),
+        ("MyNet.Avalonia.Extended", ["MyNet.Avalonia.Extended.Controls"])
     ];
 
     private static void EnsureThemeCacheInvalidation()

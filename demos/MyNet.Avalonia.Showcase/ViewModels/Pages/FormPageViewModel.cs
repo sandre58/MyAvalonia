@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Material.Icons;
@@ -25,8 +26,8 @@ internal sealed class FormPageViewModel(ICommandFactory commands) : ShowcaseView
         .AddProperty(Controls.Form.SpacingProperty, 16d, x => x.DisplayName(nameof(SettingsResources.Spacing)).Of<IntNumericUpDownEditor>(editor => editor.WithRange(0, 48)))
         .AddValueAction((control, value) =>
             {
-                var pixels = Convert.ToDouble(value);
-                control.SetValue(Controls.Form.LabelWidthProperty, pixels <= 0 ? GridLength.Auto : new GridLength(pixels));
+                var pixels = Convert.ToDouble(value, CultureInfo.CurrentCulture);
+                control.SetValue(Controls.Form.LabelWidthProperty, pixels <= 0 ? GridLength.Auto : new(pixels));
             },
             120d,
             x => x.DisplayName(nameof(SettingsResources.LabelWidth)).Of<IntNumericUpDownEditor>(editor => editor.WithRange(0, 240)))

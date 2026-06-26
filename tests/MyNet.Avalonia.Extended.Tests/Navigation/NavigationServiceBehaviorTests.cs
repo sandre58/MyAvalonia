@@ -42,7 +42,7 @@ public class NavigationServiceBehaviorTests
         navigation.CurrentContext!.To.Should().BeSameAs(theme);
     }
 
-    private sealed class TestNavigationPage(string name) : INavigationPage, INavigationLifecycle
+    private sealed class TestNavigationPage(string name) : INavigationPage
     {
         public Task OnNavigatingToAsync(NavigationContext context, CancellationToken cancellationToken)
             => Task.CompletedTask;

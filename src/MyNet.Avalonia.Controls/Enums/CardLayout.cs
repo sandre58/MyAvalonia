@@ -34,5 +34,5 @@ public enum CardLayout
     /// <summary>
     /// <see cref="RegionControl.Leading"/> in a fixed left column — contacts, files, rich list rows.
     /// </summary>
-    MediaLeft,
+    MediaLeft
 }

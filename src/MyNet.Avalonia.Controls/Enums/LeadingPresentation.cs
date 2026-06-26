@@ -29,5 +29,5 @@ public enum LeadingPresentation
     /// <summary>
     /// Hides the leading slot entirely.
     /// </summary>
-    None,
+    None
 }

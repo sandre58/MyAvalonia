@@ -16,7 +16,6 @@ using MyNet.Avalonia.Extended.Controls;
 using MyNet.Avalonia.Extended.Dialogs;
 using MyNet.Avalonia.Extended.Dialogs.Internal;
 using MyNet.Avalonia.Extended.Dialogs.Presentation;
-using MyNet.Avalonia.Extended.Schedulers;
 using MyNet.Avalonia.Theme.Assists;
 using MyNet.Avalonia.Threading;
 

@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;

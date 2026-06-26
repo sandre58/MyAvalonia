@@ -101,7 +101,7 @@ public class MessageBoxContent : DialogPanel
     {
         base.OnLoaded(e);
         ConfigureDefaultButtons();
-        _ = DialogButtonHelper.GetAffirmativeButton(Buttons, _okButton, _cancelButton, _yesButton, _noButton)?.Focus();
+        _ = DialogButtonHelper.GetAffirmativeButton(Buttons, _okButton, _yesButton)?.Focus();
     }
 
     protected override void OnKeyDown(KeyEventArgs e)
@@ -115,7 +115,7 @@ public class MessageBoxContent : DialogPanel
         foreach (var button in new[] { _okButton, _cancelButton, _yesButton, _noButton })
             Button.IsDefaultProperty.SetValue(false, button);
 
-        var affirmative = DialogButtonHelper.GetAffirmativeButton(Buttons, _okButton, _cancelButton, _yesButton, _noButton);
+        var affirmative = DialogButtonHelper.GetAffirmativeButton(Buttons, _okButton, _yesButton);
         Button.IsDefaultProperty.SetValue(true, affirmative);
     }
 

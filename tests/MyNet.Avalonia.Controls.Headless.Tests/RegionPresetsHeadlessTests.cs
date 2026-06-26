@@ -5,10 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Linq;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
-using Avalonia.Styling;
 using Avalonia.VisualTree;
 using FluentAssertions;
 using Material.Icons;
@@ -24,14 +21,14 @@ public class RegionPresetsHeadlessTests
         {
             Title = "Nothing here",
             Subtitle = "Try again later",
-            Leading = new MaterialIcon { Kind = MaterialIconKind.InboxOutline },
+            Leading = new MaterialIcon { Kind = MaterialIconKind.InboxOutline }
         };
 
         HeadlessControlHost.Show(emptyState, new(320, 240));
 
         var titleBlock = emptyState.GetVisualDescendants().OfType<TitleBlock>().FirstOrDefault();
         titleBlock.Should().NotBeNull();
-        titleBlock!.Title.Should().Be("Nothing here");
+        titleBlock.Title.Should().Be("Nothing here");
         titleBlock.Subtitle.Should().Be("Try again later");
     }
 }

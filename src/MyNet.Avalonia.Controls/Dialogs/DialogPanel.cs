@@ -25,14 +25,11 @@ namespace MyNet.Avalonia.Controls;
 [PseudoClasses(PseudoClassName.HeaderEmpty)]
 public class DialogPanel : RegionControl
 {
-    static DialogPanel()
+    static DialogPanel() => HeaderProperty.Changed.AddClassHandler<DialogPanel, object?>((panel, _) =>
     {
-        HeaderProperty.Changed.AddClassHandler<DialogPanel, object?>((panel, _) =>
-        {
-            UpdateAutomationName(panel);
-            panel.UpdateHeaderEmptyPseudoClass();
-        });
-    }
+        UpdateAutomationName(panel);
+        panel.UpdateHeaderEmptyPseudoClass();
+    });
 
     public DialogPanel() => UpdateHeaderEmptyPseudoClass();
 

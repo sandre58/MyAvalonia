@@ -6,6 +6,8 @@
 
 using System;
 using System.Globalization;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Material.Icons;
@@ -21,11 +23,15 @@ using MyNet.Avalonia.Theme.Classes.Enums;
 using MyNet.UI.Commands;
 using MyNet.UI.Loading;
 using MyNet.UI.Loading.Models;
+using MyNet.Utilities;
 
 namespace MyNet.Avalonia.Showcase.ViewModels.Pages;
 
 internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
 {
+    private static readonly CompositeFormat ServiceIndeterminateStepFormat = CompositeFormat.Parse(BusyIndicatorPageResources.ServiceIndeterminateStepFormat);
+    private static readonly CompositeFormat ServiceDownloadSizeFormat = CompositeFormat.Parse(BusyIndicatorPageResources.ServiceDownloadSizeFormat);
+    private static readonly CompositeFormat ServiceDownloadSpeedFormat = CompositeFormat.Parse(BusyIndicatorPageResources.ServiceDownloadSpeedFormat);
     private static int _demoDurationSeconds = 5;
 
     public BusyIndicatorPageViewModel(ICommandFactory commands)
@@ -43,6 +49,7 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
         RunProgressionCommand = commands.Create(async () => await RunProgressionAsync().ConfigureAwait(true));
         RunNestedCommand = commands.Create(async () => await RunNestedAsync().ConfigureAwait(true));
         RunDownloadCommand = commands.Create(async () => await RunDownloadAsync().ConfigureAwait(true));
+        RunProgresserCommand = commands.Create(async () => await RunProgresserAsync().ConfigureAwait(true));
     }
 
     public IBusyService DemoBusyService { get; }
@@ -61,6 +68,8 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
 
     public ICommand RunDownloadCommand { get; }
 
+    public ICommand RunProgresserCommand { get; }
+
     public bool IsBusy
     {
         get;
@@ -76,37 +85,38 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
     /// <inheritdoc/>
     public override MaterialIconKind Icon => MaterialIconKind.TimerSand;
 
-    private static ControlThemeBuilder FillThemeBuilder(ControlThemeBuilder builder) => builder
-        .AddDefaultRoles()
-        .AddStandardSizes()
-        .AddProperty(BusyIndicator.IsBlockingProperty, true, x => x.DisplayName(nameof(SettingsResources.IsBlocking)).Of<ToggleSwitchEditor>())
-        .AddProperty(
-            BusyIndicator.MessageProperty,
-            string.Empty,
-            x => x.DisplayName(nameof(SettingsResources.BusyMessage))
-                .Of<TextBoxEditor>(y => y.WithValue(BusyIndicatorPageResources.DefaultBusyMessage)))
-        .AddProperty(
-            BusyIndicator.OverlayOpacityProperty,
-            1d,
-            x => x.DisplayName(nameof(SettingsResources.Opacity)).Of<SliderEditor>(editor => editor.WithRange(0, 1).WithIncrement(0.05M)))
-        .AddValueAction(
-            (_, y) => _demoDurationSeconds = Convert.ToInt32(y ?? 5, CultureInfo.CurrentCulture),
-            5,
-            x => x.DisplayName(nameof(SettingsResources.DisplayDuration))
-                .Of<IntNumericUpDownEditor>(editor => editor.WithRange(1, 15).WithIncrement(1).DisplaySuffix("s")))
-        .AddEnumProperty<LoaderAnimation, ListBoxEditor>(
-            BusyIndicator.AnimationProperty,
-            LoaderAnimation.Circular,
-            x => x.DisplayName(nameof(SettingsResources.Animation)),
-            configureChoice: (animation, choice) => choice.WithIcon(animation switch
-            {
-                LoaderAnimation.Circular => MaterialIconKind.Loading,
-                LoaderAnimation.Ring => MaterialIconKind.CircleOutline,
-                LoaderAnimation.Dots => MaterialIconKind.DotsHorizontal,
-                LoaderAnimation.Bars => MaterialIconKind.ChartBar,
-                LoaderAnimation.Pulse => MaterialIconKind.CircleOpacity,
-                _ => MaterialIconKind.Loading
-            }));
+    private static ControlThemeBuilder FillThemeBuilder(ControlThemeBuilder builder)
+        => builder
+            .AddDefaultRoles()
+            .AddStandardSizes()
+            .AddProperty(BusyIndicator.IsBlockingProperty, true, x => x.DisplayName(nameof(SettingsResources.IsBlocking)).Of<ToggleSwitchEditor>())
+            .AddProperty(
+                BusyIndicator.MessageProperty,
+                string.Empty,
+                x => x.DisplayName(nameof(SettingsResources.BusyMessage))
+                    .Of<TextBoxEditor>(y => y.WithValue(BusyIndicatorPageResources.DefaultBusyMessage)))
+            .AddProperty(
+                BusyIndicator.OverlayOpacityProperty,
+                1d,
+                x => x.DisplayName(nameof(SettingsResources.Opacity)).Of<SliderEditor>(editor => editor.WithRange(0, 1).WithIncrement(0.05M)))
+            .AddValueAction(
+                (_, y) => _demoDurationSeconds = Convert.ToInt32(y ?? 5, CultureInfo.CurrentCulture),
+                5,
+                x => x.DisplayName(nameof(SettingsResources.DisplayDuration))
+                    .Of<IntNumericUpDownEditor>(editor => editor.WithRange(1, 15).WithIncrement(1).DisplaySuffix("s")))
+            .AddEnumProperty<LoaderAnimation, ListBoxEditor>(
+                BusyIndicator.AnimationProperty,
+                LoaderAnimation.Circular,
+                x => x.DisplayName(nameof(SettingsResources.Animation)),
+                configureChoice: (animation, choice) => choice.WithIcon(animation switch
+                {
+                    LoaderAnimation.Circular => MaterialIconKind.Loading,
+                    LoaderAnimation.Ring => MaterialIconKind.CircleOutline,
+                    LoaderAnimation.Dots => MaterialIconKind.DotsHorizontal,
+                    LoaderAnimation.Bars => MaterialIconKind.ChartBar,
+                    LoaderAnimation.Pulse => MaterialIconKind.CircleOpacity,
+                    _ => MaterialIconKind.Loading
+                }));
 
     private async Task StartAsync()
     {
@@ -140,7 +150,7 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
                 {
                     busy.Message = string.Format(
                         CultureInfo.CurrentCulture,
-                        BusyIndicatorPageResources.ServiceIndeterminateStepFormat,
+                        ServiceIndeterminateStepFormat,
                         step);
 
                     await Task.Delay(TimeSpan.FromMilliseconds(600), cancellationToken).ConfigureAwait(true);
@@ -219,15 +229,61 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
                     busy.Percentage = fraction;
                     busy.Sizes = string.Format(
                         CultureInfo.CurrentCulture,
-                        BusyIndicatorPageResources.ServiceDownloadSizeFormat,
+                        ServiceDownloadSizeFormat,
                         received,
                         totalMegabytes);
                     busy.Speed = string.Format(
                         CultureInfo.CurrentCulture,
-                        BusyIndicatorPageResources.ServiceDownloadSpeedFormat,
+                        ServiceDownloadSpeedFormat,
                         4.5 + ((value % 7) * 0.3));
 
                     await Task.Delay(TimeSpan.FromMilliseconds(80), cancellationToken).ConfigureAwait(true);
+                }
+            }).ConfigureAwait(true);
+        }
+        catch (OperationCanceledException)
+        {
+            // Cancellation requested by the user; nothing to clean up in this demo.
+        }
+    }
+
+    private async Task RunProgresserAsync()
+    {
+        try
+        {
+            // The IProgresser drives a ProgressionBusy through the MyNet.UI bridge. The cancel
+            // action passed to Begin is invoked when the user cancels the busy overlay.
+            await DemoBusyService.RunWithProgressAsync(async (progresser, _) =>
+            {
+                using var operationCts = new CancellationTokenSource();
+
+                using var root = progresser.Begin(3, operationCts.Cancel, BusyIndicatorPageResources.ServiceProgresserRoot);
+
+                using (var step = progresser.StartStep(BusyIndicatorPageResources.ServiceProgressionStep1))
+                {
+                    for (var i = 1; i <= 10 && !operationCts.IsCancellationRequested; i++)
+                    {
+                        step.UpdateProgress(i / 10d);
+                        await Task.Delay(TimeSpan.FromMilliseconds(120), operationCts.Token).ConfigureAwait(true);
+                    }
+                }
+
+                using (var step = progresser.StartStep(BusyIndicatorPageResources.ServiceProgressionStep2))
+                {
+                    for (var i = 1; i <= 10 && !operationCts.IsCancellationRequested; i++)
+                    {
+                        step.UpdateProgress(i / 10d);
+                        await Task.Delay(TimeSpan.FromMilliseconds(120), operationCts.Token).ConfigureAwait(true);
+                    }
+                }
+
+                using (var step = progresser.StartStep(BusyIndicatorPageResources.ServiceProgressionStep3))
+                {
+                    for (var i = 1; i <= 10 && !operationCts.IsCancellationRequested; i++)
+                    {
+                        step.UpdateProgress(i / 10d);
+                        await Task.Delay(TimeSpan.FromMilliseconds(120), operationCts.Token).ConfigureAwait(true);
+                    }
                 }
             }).ConfigureAwait(true);
         }
@@ -249,7 +305,7 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
                 using (DemoBusyService.Begin<ProgressionBusy>(cancellationToken))
                 {
                     var inner = DemoBusyService.GetCurrent<ProgressionBusy>()
-                        ?? throw new InvalidOperationException("Expected an active progression scope.");
+                                ?? throw new InvalidOperationException("Expected an active progression scope.");
 
                     inner.CanCancel = true;
                     inner.Report(0.15, BusyIndicatorPageResources.ServiceNestedInner);

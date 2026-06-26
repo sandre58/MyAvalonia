@@ -8,7 +8,6 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using MyNet.Avalonia.Controls;
 
 namespace MyNet.Avalonia.Controls.Primitives;
 
@@ -156,7 +155,7 @@ public abstract class RegionControl : ContentControl
         double dbl => double.IsNaN(dbl),
         Array arr => arr.Length == 0,
         DateTime date => date == DateTime.MinValue,
-        _ => false,
+        _ => false
     };
 
     /// <summary>

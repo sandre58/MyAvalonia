@@ -7,7 +7,6 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.VisualTree;
 using MyNet.UI.Dialogs.MessageBox;
 
@@ -108,7 +107,7 @@ internal static class DialogKeyboardHelper
             return true;
         }
 
-        button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        button.RaiseEvent(new(Button.ClickEvent));
         return true;
     }
 }

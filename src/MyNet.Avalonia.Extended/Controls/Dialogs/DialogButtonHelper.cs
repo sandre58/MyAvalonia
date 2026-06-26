@@ -63,9 +63,7 @@ internal static class DialogButtonHelper
     public static Button? GetAffirmativeButton(
         MessageBoxResultOption buttons,
         Button? okButton,
-        Button? cancelButton,
-        Button? yesButton,
-        Button? noButton)
+        Button? yesButton)
         => buttons switch
         {
             MessageBoxResultOption.Ok or MessageBoxResultOption.OkCancel => okButton,

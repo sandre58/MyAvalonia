@@ -825,4 +825,7 @@
   <data name="VerticalAnchor" xml:space="preserve">
       <value>Vertical anchor</value>
   </data>
+  <data name="HorizontalAnchor" xml:space="preserve">
+      <value>Horizontal anchor</value>
+  </data>
 </root>

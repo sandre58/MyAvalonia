@@ -32,7 +32,7 @@ public sealed class MessageNotificationToastContentContributor : IAvaloniaToastC
         {
             Header = message.Title,
             Content = message.Message,
-            Leading = MapLeading(message.Severity),
+            Leading = MapLeading(message.Severity)
         };
 
         if (width is > 0)
@@ -48,6 +48,6 @@ public sealed class MessageNotificationToastContentContributor : IAvaloniaToastC
         NotificationSeverity.Warning => MaterialIconKind.AlertCircle,
         NotificationSeverity.Error => MaterialIconKind.CloseCircle,
         NotificationSeverity.Information => MaterialIconKind.InformationVariantCircle,
-        _ => null,
+        _ => null
     };
 }

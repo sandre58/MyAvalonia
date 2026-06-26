@@ -115,6 +115,11 @@
                                             Classes="variant-outlined"
                                             my:ThemeAssist.Role="Accent"
                                             Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).RunDownloadCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
+                                        <Button
+                                            Content="{my:Loc ServiceProgresserButton, Filename=BusyIndicatorPageResources}"
+                                            Classes="variant-outlined"
+                                            my:ThemeAssist.Role="Information"
+                                            Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).RunProgresserCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
                                     </UniformGrid>
                                 </StackPanel>
 

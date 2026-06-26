@@ -326,7 +326,7 @@ public class NavigationMenu : ItemsControl
         if (index < 0)
             return false;
 
-        NavigationMenuItem? target = key switch
+        var target = key switch
         {
             Key.Down => index < visible.Count - 1 ? visible[index + 1] : null,
             Key.Up => index > 0 ? visible[index - 1] : null,
@@ -335,24 +335,10 @@ public class NavigationMenu : ItemsControl
             _ => null
         };
 
-        if (target is null || ReferenceEquals(target, current))
-            return false;
-
-        return target.Focus(NavigationMethod.Directional);
+        return target is not null && !ReferenceEquals(target, current) && target.Focus(NavigationMethod.Directional);
     }
 
-    private IEnumerable<NavigationMenuItem> GetFocusableItems()
-    {
-        foreach (var child in LogicalChildren.OfType<NavigationMenuItem>())
-        {
-            foreach (var item in GetFocusableItemsRecursive(child))
-                yield return item;
-        }
-    }
+    private IEnumerable<NavigationMenuItem> GetFocusableItems() => LogicalChildren.OfType<NavigationMenuItem>().SelectMany(GetFocusableItemsRecursive);
 
-    private static IEnumerable<NavigationMenuItem> GetFocusableItemsRecursive(NavigationMenuItem item)
-    {
-        foreach (var focusable in item.GetFocusableDescendants())
-            yield return focusable;
-    }
+    private static IEnumerable<NavigationMenuItem> GetFocusableItemsRecursive(NavigationMenuItem item) => item.GetFocusableDescendants();
 }

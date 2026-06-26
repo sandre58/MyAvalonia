@@ -24,5 +24,5 @@ public enum LoaderAnimation
     Bars,
 
     /// <summary>Pulsing filled circle.</summary>
-    Pulse,
+    Pulse
 }

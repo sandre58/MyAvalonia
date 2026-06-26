@@ -13,12 +13,10 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 using FluentAssertions;
 using MyNet.Avalonia.Extended.Toasting;
-using MyNet.Avalonia.Extended.Toasting.Settings;
 using MyNet.UI.Notifications.Models;
 using MyNet.UI.Toasting;
 using MyNet.UI.Toasting.Models;
 using MyNet.UI.Toasting.Settings;
-using Xunit;
 
 namespace MyNet.Avalonia.Extended.Headless.Tests.Toasting;
 
@@ -34,7 +32,7 @@ public class AvaloniaToastHostHeadlessTests
             () => window,
             toastManager,
             new PassthroughToastContentFactory(),
-            new AvaloniaToastHostOptions(),
+            new(),
             TimeSpan.FromSeconds(5));
 
         try
@@ -55,14 +53,12 @@ public class AvaloniaToastHostHeadlessTests
         }
     }
 
-    private static IToast CreateToast(string message)
-        => new Toast(
+    private static Toast CreateToast(string message)
+        => new(
             new MessageNotification(message, severity: NotificationSeverity.Information),
-            ToastSettings.Default,
-            null,
-            null);
+            ToastSettings.Default);
 
-    private sealed class TestToastManager : IToastManager, IDisposable
+    private sealed class TestToastManager : IToastManager
     {
         private readonly ObservableCollection<IToast> _toasts = [];
 

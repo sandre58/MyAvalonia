@@ -71,6 +71,12 @@
     <data name="ServiceDownloadSpeedFormat" xml:space="preserve">
         <value>{0:0.0} Mo/s</value>
     </data>
+    <data name="ServiceProgresserButton" xml:space="preserve">
+        <value>Progresser (pont)</value>
+    </data>
+    <data name="ServiceProgresserRoot" xml:space="preserve">
+        <value>Opération multi-étapes…</value>
+    </data>
     <data name="ServiceIndeterminateMessage" xml:space="preserve">
         <value>Traitement en cours…</value>
     </data>

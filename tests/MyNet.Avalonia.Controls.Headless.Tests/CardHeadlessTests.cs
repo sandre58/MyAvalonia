@@ -38,7 +38,7 @@ public class CardHeadlessTests
 
         var titleBlock = card.GetVisualDescendants().OfType<TitleBlock>().FirstOrDefault();
         titleBlock.Should().NotBeNull();
-        titleBlock!.Title.Should().Be("Title");
+        titleBlock.Title.Should().Be("Title");
         titleBlock.Subtitle.Should().Be("Subtitle");
     }
 
@@ -61,7 +61,7 @@ public class CardHeadlessTests
             Layout = CardLayout.Vertical,
             Title = "Title",
             Subtitle = "Subtitle with enough text to wrap on narrow cards.",
-            Padding = new(16),
+            Padding = new(16)
         };
 
         HeadlessControlHost.Show(card, new(200, 160));
@@ -92,14 +92,14 @@ public class CardHeadlessTests
         {
             LeadingPresentation = LeadingPresentation.None,
             Leading = new MaterialIcon { Kind = MaterialIconKind.EyeOffOutline },
-            Title = "Hidden leading",
+            Title = "Hidden leading"
         };
 
         HeadlessControlHost.Show(card, new(320, 120));
 
         var leadingHost = card.GetVisualDescendants().OfType<Panel>().FirstOrDefault(b => b.Name == "PART_LeadingHost");
         leadingHost.Should().NotBeNull();
-        leadingHost!.IsVisible.Should().BeFalse();
+        leadingHost.IsVisible.Should().BeFalse();
     }
 
     [AvaloniaFact]
@@ -117,7 +117,7 @@ public class CardHeadlessTests
 
         var leadingBackground = card.GetVisualDescendants().OfType<Border>().FirstOrDefault(b => b.Name == "PART_LeadingBackground");
         leadingBackground.Should().NotBeNull();
-        leadingBackground!.IsVisible.Should().BeFalse();
+        leadingBackground.IsVisible.Should().BeFalse();
     }
 
     [AvaloniaFact]
@@ -165,7 +165,7 @@ public class CardHeadlessTests
 
         var header = card.GetVisualDescendants().OfType<Border>().FirstOrDefault(b => b.Name == "PART_Header");
         header.Should().NotBeNull();
-        header!.IsVisible.Should().BeFalse();
+        header.IsVisible.Should().BeFalse();
     }
 
     [AvaloniaFact]
@@ -177,7 +177,7 @@ public class CardHeadlessTests
 
         var actions = card.GetVisualDescendants().OfType<Border>().FirstOrDefault(b => b.Name == "PART_Actions");
         actions.Should().NotBeNull();
-        actions!.IsVisible.Should().BeFalse();
+        actions.IsVisible.Should().BeFalse();
     }
 
     private sealed class HeadlessCommand : System.Windows.Input.ICommand

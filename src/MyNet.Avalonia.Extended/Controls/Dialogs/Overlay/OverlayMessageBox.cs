@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls;
@@ -71,7 +70,6 @@ public class OverlayMessageBox : OverlayDialog
     private void UpdateCloseButtonVisibility()
     {
         var closeButtonVisible = IsCloseButtonVisible && Buttons != MessageBoxResultOption.YesNo;
-        if (CloseButton is not null)
-            CloseButton.IsVisible = closeButtonVisible;
+        CloseButton?.IsVisible = closeButtonVisible;
     }
 }

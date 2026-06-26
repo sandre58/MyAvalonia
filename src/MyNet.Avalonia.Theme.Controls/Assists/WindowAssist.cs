@@ -5,11 +5,8 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Chrome;
-using Avalonia.LogicalTree;
 using Avalonia.Media;
 
 namespace MyNet.Avalonia.Theme.Controls.Assists;

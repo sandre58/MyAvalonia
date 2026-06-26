@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
@@ -176,7 +175,7 @@ public class Card : RegionControl
     #region Layout
 
     public static readonly StyledProperty<CardLayout> CardLayoutProperty =
-        AvaloniaProperty.Register<Card, CardLayout>(nameof(Layout), CardLayout.Horizontal);
+        AvaloniaProperty.Register<Card, CardLayout>(nameof(Layout));
 
     public CardLayout Layout
     {
@@ -185,7 +184,7 @@ public class Card : RegionControl
     }
 
     public static readonly StyledProperty<LeadingPresentation> LeadingPresentationProperty =
-        AvaloniaProperty.Register<Card, LeadingPresentation>(nameof(LeadingPresentation), LeadingPresentation.Badge);
+        AvaloniaProperty.Register<Card, LeadingPresentation>(nameof(LeadingPresentation));
 
     public LeadingPresentation LeadingPresentation
     {
