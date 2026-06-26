@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,8 +52,25 @@ public class OverlayDialogPresenterHeadlessTests
 
         var presentTask = presenter.PresentAsync(dialog, uiOptions, CancellationToken.None);
 
-        var shell = host.GetVisualDescendants().OfType<OverlayContentDialog>().Single();
-        var content = host.GetVisualDescendants().OfType<ContentDialog>().Single();
+        // Wait until the dialog shell is rendered in the visual tree
+        OverlayContentDialog? shell = null;
+        ContentDialog? content = null;
+        var timeout = DateTime.UtcNow.AddSeconds(5);
+        while (DateTime.UtcNow < timeout)
+        {
+            shell = host.GetVisualDescendants().OfType<OverlayContentDialog>().FirstOrDefault();
+            if (shell != null)
+            {
+                content = host.GetVisualDescendants().OfType<ContentDialog>().FirstOrDefault();
+                if (content != null)
+                    break;
+            }
+
+            await Task.Delay(10).ConfigureAwait(true);
+        }
+
+        shell.Should().NotBeNull();
+        content.Should().NotBeNull();
         HeaderAssist.GetIsVisible(content).Should().BeFalse();
         await Dispatcher.UIThread.InvokeAsync(() => shell.CloseWithResult(true));
 

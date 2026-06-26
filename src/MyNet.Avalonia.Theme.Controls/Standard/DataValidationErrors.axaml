@@ -70,6 +70,7 @@
                                       CornerRadius="{TemplateBinding CornerRadius}" />
                     <ContentControl Margin="0 0 -23 0"
                                     HorizontalAlignment="Right"
+                                    HorizontalContentAlignment="Right"
                                     Content="{Binding (DataValidationErrors.Errors), Converter={x:Static my:ValidationErrorMessageConverter.Default}}"
                                     ContentTemplate="{TemplateBinding ErrorTemplate}"
                                     Cursor="Arrow"

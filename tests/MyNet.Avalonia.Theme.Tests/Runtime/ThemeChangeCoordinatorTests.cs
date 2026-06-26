@@ -24,7 +24,7 @@ public class ThemeChangeCoordinatorTests
             version.Should().Be(0);
         }
 
-        version.Should().Be(0);
+        version.Should().Be(1);
     }
 
     [Fact]
@@ -39,6 +39,6 @@ public class ThemeChangeCoordinatorTests
         }
 
         coordinator.NotifyChange();
-        version.Should().Be(1);
+        version.Should().Be(2);
     }
 }
