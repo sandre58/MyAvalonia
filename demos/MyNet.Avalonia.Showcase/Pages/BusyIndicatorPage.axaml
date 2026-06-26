@@ -28,98 +28,160 @@
 
         <v:ShowcaseView.PlaygroundControlTemplate>
             <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
-                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                              VerticalScrollBarVisibility="Auto">
-                    <StackPanel Spacing="{my:Spacing Lg}"
-                                Margin="{my:Thickness Md}"
-                                MaxWidth="640"
-                                HorizontalAlignment="Center">
-                        <Border Classes="kind-card"
-                                MinWidth="360"
-                                MinHeight="300"
-                                Padding="0"
-                                HorizontalAlignment="Stretch">
-                            <Border ClipToBounds="True"
-                                    CornerRadius="{StaticResource MyNet.Corners.Surface}">
-                                <Grid>
-                                    <StackPanel Spacing="{my:Spacing Md}"
-                                                Margin="{my:Thickness Xl}">
-                                        <TextBlock Classes="text-h6"
-                                                   Text="{my:Loc PanelTitle, Filename=BusyIndicatorPageResources}"
-                                                   HorizontalAlignment="Center" />
-                                        <TextBlock Classes="text-body"
-                                                   Text="{my:Loc PanelDescription, Filename=BusyIndicatorPageResources}"
-                                                   TextWrapping="Wrap"
-                                                   TextAlignment="Center" />
-                                        <StackPanel Orientation="Horizontal"
-                                                    Spacing="{my:Spacing Sm}"
-                                                    HorizontalAlignment="Center">
-                                            <Button Content="{my:Loc StartButton, Filename=BusyIndicatorPageResources}"
-                                                    Classes="variant-solid"
-                                                    Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).StartCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
-                                            <Button Content="{my:Loc TestClickButton, Filename=BusyIndicatorPageResources}"
-                                                    Classes="variant-outlined"
-                                                    Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).TestClickCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal"
-                                                    Spacing="{my:Spacing Sm}"
-                                                    HorizontalAlignment="Center">
-                                            <TextBlock Classes="text-caption opacity-high"
-                                                       Text="{my:Loc TestClickCountLabel, Filename=BusyIndicatorPageResources}" />
-                                            <TextBlock Classes="text-caption"
-                                                       Text="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).TestClickCount, Source={StaticResource PageProxy}, FallbackValue=0}" />
-                                        </StackPanel>
+                <Grid RowDefinitions="*,*" RowSpacing="{my:Spacing Md}" Margin="{my:Thickness Md}">
+                    <Border Classes="kind-card"
+                            MinWidth="360"
+                            MinHeight="300"
+                            Padding="0"
+                            HorizontalAlignment="Stretch">
+                        <Border ClipToBounds="True"
+                                CornerRadius="{StaticResource MyNet.Corners.Surface}">
+                            <Grid>
+                                <StackPanel Spacing="{my:Spacing Md}"
+                                            Margin="{my:Thickness Xl}">
+                                    <TextBlock Classes="text-h6"
+                                               Text="{my:Loc PanelTitle, Filename=BusyIndicatorPageResources}"
+                                               HorizontalAlignment="Center" />
+                                    <TextBlock Classes="text-body"
+                                               Text="{my:Loc PanelDescription, Filename=BusyIndicatorPageResources}"
+                                               TextWrapping="Wrap"
+                                               TextAlignment="Center" />
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="{my:Spacing Sm}"
+                                                HorizontalAlignment="Center">
+                                        <Button Content="{my:Loc StartButton, Filename=BusyIndicatorPageResources}"
+                                                Classes="variant-solid"
+                                                Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).StartCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
+                                        <Button Content="{my:Loc TestClickButton, Filename=BusyIndicatorPageResources}"
+                                                Classes="variant-outlined"
+                                                Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).TestClickCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
                                     </StackPanel>
-
-                                    <my:BusyIndicator behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
-                                                      IsOpen="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).IsBusy, Source={StaticResource PageProxy}, FallbackValue=False}" />
-                                </Grid>
-                            </Border>
-                        </Border>
-
-                        <Border Classes="kind-card"
-                                MinWidth="360"
-                                MinHeight="320"
-                                Padding="0"
-                                HorizontalAlignment="Stretch">
-                            <Border ClipToBounds="True"
-                                    CornerRadius="{StaticResource MyNet.Corners.Surface}">
-                                <Grid>
-                                    <StackPanel Spacing="{my:Spacing Md}"
-                                                Margin="{my:Thickness Xl}">
-                                        <TextBlock Classes="text-h6"
-                                                   Text="{my:Loc ServicePanelTitle, Filename=BusyIndicatorPageResources}"
-                                                   HorizontalAlignment="Center" />
-                                        <TextBlock Classes="text-body"
-                                                   Text="{my:Loc ServicePanelDescription, Filename=BusyIndicatorPageResources}"
-                                                   TextWrapping="Wrap"
-                                                   TextAlignment="Center" />
-                                        <UniformGrid Columns="2"
-                                                     HorizontalAlignment="Stretch"
-                                                     ColumnSpacing="{StaticResource MyNet.Spacing.Sm}"
-                                                     RowSpacing="{StaticResource MyNet.Spacing.Sm}">
-                                            <Button Content="{my:Loc ServiceIndeterminateButton, Filename=BusyIndicatorPageResources}"
-                                                    Classes="variant-solid"
-                                                    Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).RunIndeterminateCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
-                                            <Button Content="{my:Loc ServiceDeterminateButton, Filename=BusyIndicatorPageResources}"
-                                                    Classes="variant-outlined"
-                                                    Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).RunDeterminateCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
-                                            <Button Content="{my:Loc ServiceProgressionButton, Filename=BusyIndicatorPageResources}"
-                                                    Classes="variant-outlined"
-                                                    Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).RunProgressionCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
-                                            <Button Content="{my:Loc ServiceNestedButton, Filename=BusyIndicatorPageResources}"
-                                                    Classes="variant-outlined"
-                                                    Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).RunNestedCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
-                                        </UniformGrid>
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="{my:Spacing Sm}"
+                                                HorizontalAlignment="Center">
+                                        <TextBlock Classes="text-caption opacity-high"
+                                                   Text="{my:Loc TestClickCountLabel, Filename=BusyIndicatorPageResources}" />
+                                        <TextBlock Classes="text-caption"
+                                                   Text="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).TestClickCount, Source={StaticResource PageProxy}, FallbackValue=0}" />
                                     </StackPanel>
+                                </StackPanel>
 
-                                    <ext:BusyServiceIndicator behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
-                                                              BusyService="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).DemoBusyService, Source={StaticResource PageProxy}}" />
-                                </Grid>
-                            </Border>
+                                <my:BusyIndicator behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                                                  IsOpen="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).IsBusy, Source={StaticResource PageProxy}, FallbackValue=False}" />
+                            </Grid>
                         </Border>
-                    </StackPanel>
-                </ScrollViewer>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                            Classes="kind-card"
+                            MinWidth="360"
+                            MinHeight="320"
+                            Padding="0"
+                            HorizontalAlignment="Stretch">
+                        <Border ClipToBounds="True"
+                                CornerRadius="{StaticResource MyNet.Corners.Surface}">
+                            <Grid>
+                                <StackPanel Spacing="{my:Spacing Md}"
+                                            Margin="{my:Thickness Xl}">
+                                    <TextBlock Classes="text-h6"
+                                               Text="{my:Loc ServicePanelTitle, Filename=BusyIndicatorPageResources}"
+                                               HorizontalAlignment="Center" />
+                                    <TextBlock Classes="text-body"
+                                               Text="{my:Loc ServicePanelDescription, Filename=BusyIndicatorPageResources}"
+                                               TextWrapping="Wrap"
+                                               TextAlignment="Center" />
+                                    <UniformGrid Columns="2"
+                                                 HorizontalAlignment="Stretch"
+                                                 ColumnSpacing="{StaticResource MyNet.Spacing.Sm}"
+                                                 RowSpacing="{StaticResource MyNet.Spacing.Sm}">
+                                        <Button
+                                            Content="{my:Loc ServiceIndeterminateButton, Filename=BusyIndicatorPageResources}"
+                                            Classes="variant-solid"
+                                            Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).RunIndeterminateCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
+                                        <Button
+                                            Content="{my:Loc ServiceDeterminateButton, Filename=BusyIndicatorPageResources}"
+                                            Classes="variant-outlined"
+                                            Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).RunDeterminateCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
+                                        <Button
+                                            Content="{my:Loc ServiceProgressionButton, Filename=BusyIndicatorPageResources}"
+                                            Classes="variant-outlined"
+                                            Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).RunProgressionCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
+                                        <Button
+                                            Content="{my:Loc ServiceNestedButton, Filename=BusyIndicatorPageResources}"
+                                            Classes="variant-outlined"
+                                            Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).RunNestedCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
+                                        <Button
+                                            Content="{my:Loc ServiceDownloadButton, Filename=BusyIndicatorPageResources}"
+                                            Classes="variant-outlined"
+                                            my:ThemeAssist.Role="Accent"
+                                            Command="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).RunDownloadCommand, Source={StaticResource PageProxy}, FallbackValue={x:Null}}" />
+                                    </UniformGrid>
+                                </StackPanel>
+
+                                <ext:BusyServiceIndicator behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
+                                                          BusyService="{ReflectionBinding ((vm:BusyIndicatorPageViewModel)Data).DemoBusyService, Source={StaticResource PageProxy}, FallbackValue={x:Null}}">
+                                    <ext:BusyServiceIndicator.BusyContentTemplates>
+                                        <!-- Custom IBusy model rendered through the extensible template collection. -->
+                                        <DataTemplate x:DataType="vm:DownloadBusy">
+                                            <StackPanel MinWidth="280"
+                                                        MaxWidth="420"
+                                                        HorizontalAlignment="Center"
+                                                        Spacing="{my:Spacing Md}">
+                                                <my:MaterialIcon Kind="CloudDownloadOutline"
+                                                                 Width="40"
+                                                                 Height="40"
+                                                                 HorizontalAlignment="Center"
+                                                                 Foreground="{Binding Path=(my:VariantAssist.Primary), RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}" />
+
+                                                <TextBlock Classes="text-caption opacity-high"
+                                                           Text="{my:Loc ServiceDownloadCaption, Filename=BusyIndicatorPageResources}"
+                                                           TextAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                           Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}" />
+
+                                                <TextBlock Classes="text-h6"
+                                                           Text="{Binding FileName}"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           TextAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                           Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}" />
+
+                                                <ProgressBar Minimum="0"
+                                                             Maximum="1"
+                                                             Value="{Binding Percentage}"
+                                                             ShowProgressText="True"
+                                                             ProgressTextFormat="{}{1:0}%"
+                                                             HorizontalAlignment="Stretch"
+                                                             my:InteractionAssist.ActiveBackground="{Binding Path=(my:VariantAssist.Primary), RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}" />
+
+                                                <Grid ColumnDefinitions="*,Auto">
+                                                    <TextBlock Grid.Column="0"
+                                                               Classes="text-caption opacity-medium"
+                                                               Text="{Binding Sizes}"
+                                                               HorizontalAlignment="Left"
+                                                               Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}" />
+                                                    <TextBlock Grid.Column="1"
+                                                               Classes="text-caption opacity-medium"
+                                                               Text="{Binding Speed}"
+                                                               HorizontalAlignment="Right"
+                                                               Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}" />
+                                                </Grid>
+
+                                                <Button Classes="variant-text variant-outlined busy-cancel"
+                                                        HorizontalAlignment="Center"
+                                                        my:ThemeAssist.Role="Error"
+                                                        Command="{Binding CancelCommand}"
+                                                        Content="{my:Loc Cancel}"
+                                                        my:IconAssist.Icon="{my:MaterialIcon Cancel}"
+                                                        IsVisible="{Binding IsCancellable}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ext:BusyServiceIndicator.BusyContentTemplates>
+                                </ext:BusyServiceIndicator>
+                            </Grid>
+                        </Border>
+                    </Border>
+                </Grid>
             </DataTemplate>
         </v:ShowcaseView.PlaygroundControlTemplate>
 

@@ -42,6 +42,7 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
         RunDeterminateCommand = commands.Create(async () => await RunDeterminateAsync().ConfigureAwait(true));
         RunProgressionCommand = commands.Create(async () => await RunProgressionAsync().ConfigureAwait(true));
         RunNestedCommand = commands.Create(async () => await RunNestedAsync().ConfigureAwait(true));
+        RunDownloadCommand = commands.Create(async () => await RunDownloadAsync().ConfigureAwait(true));
     }
 
     public IBusyService DemoBusyService { get; }
@@ -57,6 +58,8 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
     public ICommand RunProgressionCommand { get; }
 
     public ICommand RunNestedCommand { get; }
+
+    public ICommand RunDownloadCommand { get; }
 
     public bool IsBusy
     {
@@ -189,6 +192,43 @@ internal sealed class BusyIndicatorPageViewModel : ShowcaseViewModel
                 await Task.Delay(TimeSpan.FromMilliseconds(900), cancellationToken).ConfigureAwait(true);
                 busy.Report(1, BusyIndicatorPageResources.ServiceProgressionStep4);
                 await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken).ConfigureAwait(true);
+            }).ConfigureAwait(true);
+        }
+        catch (OperationCanceledException)
+        {
+            // Cancellation requested by the user; nothing to clean up in this demo.
+        }
+    }
+
+    private async Task RunDownloadAsync()
+    {
+        const double totalMegabytes = 48.0;
+
+        try
+        {
+            await DemoBusyService.RunAsync<DownloadBusy>(async (busy, cancellationToken) =>
+            {
+                busy.CanCancel = true;
+                busy.FileName = BusyIndicatorPageResources.ServiceDownloadFileName;
+
+                for (var value = 0; value <= 100 && !cancellationToken.IsCancellationRequested; value += 2)
+                {
+                    var fraction = value / 100d;
+                    var received = totalMegabytes * fraction;
+
+                    busy.Percentage = fraction;
+                    busy.Sizes = string.Format(
+                        CultureInfo.CurrentCulture,
+                        BusyIndicatorPageResources.ServiceDownloadSizeFormat,
+                        received,
+                        totalMegabytes);
+                    busy.Speed = string.Format(
+                        CultureInfo.CurrentCulture,
+                        BusyIndicatorPageResources.ServiceDownloadSpeedFormat,
+                        4.5 + ((value % 7) * 0.3));
+
+                    await Task.Delay(TimeSpan.FromMilliseconds(80), cancellationToken).ConfigureAwait(true);
+                }
             }).ConfigureAwait(true);
         }
         catch (OperationCanceledException)

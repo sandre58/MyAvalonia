@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls;
@@ -25,13 +26,34 @@ namespace MyNet.Avalonia.Extended.Controls;
 /// <summary>
 /// <see cref="BusyIndicator"/> that mirrors state from an application-wide <see cref="IBusyService"/>.
 /// </summary>
+/// <remarks>
+/// The control ships with templates for the built-in busy models (<see cref="IndeterminateBusy"/>,
+/// <see cref="DeterminateBusy"/> and <see cref="ProgressionBusy"/>). To render a custom
+/// <see cref="IBusy"/> implementation, add a <see cref="DataTemplate"/> to <see cref="BusyContentTemplates"/>:
+/// <code>
+/// <![CDATA[
+/// <ext:BusyServiceIndicator BusyService="{Binding MyService}">
+///     <ext:BusyServiceIndicator.BusyContentTemplates>
+///         <DataTemplate DataType="local:DownloadBusy">
+///             <!-- custom presentation -->
+///         </DataTemplate>
+///     </ext:BusyServiceIndicator.BusyContentTemplates>
+/// </ext:BusyServiceIndicator>
+/// ]]>
+/// </code>
+/// User templates are evaluated before the built-in ones, so they can also override a default model.
+/// </remarks>
 public sealed class BusyServiceIndicator : BusyIndicator
 {
-    private static IReadOnlyList<IDataTemplate>? _busyContentTemplates;
+    private static IReadOnlyList<IDataTemplate>? _defaultBusyContentTemplates;
 
     private IBusyService? _subscribedService;
     private ContentPresenter? _busyContentPresenter;
-    private ContentPresenter? _templatesAttachedPresenter;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BusyServiceIndicator"/> class.
+    /// </summary>
+    public BusyServiceIndicator() => BusyContentTemplates.CollectionChanged += OnBusyContentTemplatesChanged;
 
     /// <summary>
     /// Defines the <see cref="BusyService"/> property.
@@ -48,13 +70,20 @@ public sealed class BusyServiceIndicator : BusyIndicator
         set => SetValue(BusyServiceProperty, value);
     }
 
+    /// <summary>
+    /// Gets the data templates used to present the active <see cref="IBusy"/> model.
+    /// Populate it in XAML to support custom <see cref="IBusy"/> implementations; entries are
+    /// matched before the built-in templates, so they can also override a default presentation.
+    /// </summary>
+    public DataTemplates BusyContentTemplates { get; } = [];
+
     /// <inheritdoc />
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
 
         _busyContentPresenter = e.NameScope.Find<ContentPresenter>("PART_BusyContent");
-        AttachBusyContentTemplates();
+        RebuildBusyContentTemplates();
 
         if (!ReferenceEquals(_subscribedService, BusyService))
         {
@@ -101,7 +130,6 @@ public sealed class BusyServiceIndicator : BusyIndicator
         Unsubscribe(_subscribedService);
         _subscribedService = null;
         _busyContentPresenter = null;
-        _templatesAttachedPresenter = null;
         base.OnDetachedFromVisualTree(e);
     }
 
@@ -141,16 +169,23 @@ public sealed class BusyServiceIndicator : BusyIndicator
         BusyContent = isBusy ? service?.CurrentBusy : null;
     }
 
-    private void AttachBusyContentTemplates()
+    private void OnBusyContentTemplatesChanged(object? sender, NotifyCollectionChangedEventArgs e) =>
+        Post(RebuildBusyContentTemplates);
+
+    private void RebuildBusyContentTemplates()
     {
-        if (_busyContentPresenter is null
-            || ReferenceEquals(_busyContentPresenter, _templatesAttachedPresenter))
+        if (_busyContentPresenter is null)
             return;
 
-        foreach (var template in GetBusyContentTemplates())
+        _busyContentPresenter.DataTemplates.Clear();
+
+        // User templates first so they can override (or extend) the built-in defaults.
+        foreach (var template in BusyContentTemplates)
             _busyContentPresenter.DataTemplates.Add(template);
 
-        _templatesAttachedPresenter = _busyContentPresenter;
+        foreach (var template in GetDefaultBusyContentTemplates())
+            _busyContentPresenter.DataTemplates.Add(template);
+
         RefreshBusyContentPresentation();
     }
 
@@ -164,17 +199,17 @@ public sealed class BusyServiceIndicator : BusyIndicator
         BusyContent = content;
     }
 
-    private static IReadOnlyList<IDataTemplate> GetBusyContentTemplates() =>
-        _busyContentTemplates ??= LoadBusyContentTemplates();
+    private static IReadOnlyList<IDataTemplate> GetDefaultBusyContentTemplates() =>
+        _defaultBusyContentTemplates ??= LoadDefaultBusyContentTemplates();
 
-    private static readonly string[] BusyContentTemplateKeys =
+    private static readonly string[] DefaultBusyContentTemplateKeys =
         [nameof(IndeterminateBusy), nameof(DeterminateBusy), nameof(ProgressionBusy)];
 
-    private static List<IDataTemplate> LoadBusyContentTemplates()
+    private static List<IDataTemplate> LoadDefaultBusyContentTemplates()
     {
-        var templates = new List<IDataTemplate>(BusyContentTemplateKeys.Length);
+        var templates = new List<IDataTemplate>(DefaultBusyContentTemplateKeys.Length);
 
-        foreach (var key in BusyContentTemplateKeys)
+        foreach (var key in DefaultBusyContentTemplateKeys)
         {
             if (ApplicationResources.TryGetResource<IDataTemplate>(key) is { } template)
                 templates.Add(template);

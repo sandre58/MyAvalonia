@@ -52,6 +52,21 @@
     <data name="ServiceNestedButton" xml:space="preserve">
         <value>Nested scopes</value>
     </data>
+    <data name="ServiceDownloadButton" xml:space="preserve">
+        <value>Download (custom)</value>
+    </data>
+    <data name="ServiceDownloadCaption" xml:space="preserve">
+        <value>Downloading file</value>
+    </data>
+    <data name="ServiceDownloadFileName" xml:space="preserve">
+        <value>annual-report-2026.zip</value>
+    </data>
+    <data name="ServiceDownloadSizeFormat" xml:space="preserve">
+        <value>{0:0.0} / {1:0.0} MB</value>
+    </data>
+    <data name="ServiceDownloadSpeedFormat" xml:space="preserve">
+        <value>{0:0.0} MB/s</value>
+    </data>
     <data name="ServiceIndeterminateMessage" xml:space="preserve">
         <value>Processing…</value>
     </data>

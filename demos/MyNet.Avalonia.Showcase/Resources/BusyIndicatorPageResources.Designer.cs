@@ -63,6 +63,16 @@ internal class BusyIndicatorPageResources
 
     internal static string ServiceNestedButton => ResourceManager.GetString(nameof(ServiceNestedButton), resourceCulture)!;
 
+    internal static string ServiceDownloadButton => ResourceManager.GetString(nameof(ServiceDownloadButton), resourceCulture)!;
+
+    internal static string ServiceDownloadCaption => ResourceManager.GetString(nameof(ServiceDownloadCaption), resourceCulture)!;
+
+    internal static string ServiceDownloadFileName => ResourceManager.GetString(nameof(ServiceDownloadFileName), resourceCulture)!;
+
+    internal static string ServiceDownloadSizeFormat => ResourceManager.GetString(nameof(ServiceDownloadSizeFormat), resourceCulture)!;
+
+    internal static string ServiceDownloadSpeedFormat => ResourceManager.GetString(nameof(ServiceDownloadSpeedFormat), resourceCulture)!;
+
     internal static string ServiceIndeterminateMessage => ResourceManager.GetString(nameof(ServiceIndeterminateMessage), resourceCulture)!;
 
     internal static string ServiceIndeterminateStepFormat => ResourceManager.GetString(nameof(ServiceIndeterminateStepFormat), resourceCulture)!;
