@@ -86,6 +86,9 @@ _ReSharper.Caches/
 *.DotSettings.user
 *.idea/
 
+# Local MyNet NuGet feed (see Directory.Build.local.props.example)
+Directory.Build.local.props
+
 # MSBuild generated
 msbuild.log
 msbuild.err

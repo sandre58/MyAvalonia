@@ -8,6 +8,7 @@
         <Message Text="IsDemoProject=$(IsDemoProject)" Importance="High" />
         <Message Text="IsPackable=$(IsPackable)" Importance="High" />
         <Message Text="EnableAnalyzers=$(EnableAnalyzers)" Importance="High" />
+        <Message Text="MyNetVersion=$(MyNetVersion)" Importance="High" />
         <Message Text="RunSettingsFile=$(RunSettingsFile)" Importance="High" Condition="'$(IsTestProject)' == 'True'" />
     </Target>
 </Project>

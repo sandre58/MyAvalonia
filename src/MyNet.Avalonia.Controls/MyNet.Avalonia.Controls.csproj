@@ -24,12 +24,7 @@
         <PackageReference Include="Material.Icons" />
         <PackageReference Include="MyNet.Globalization" />
     </ItemGroup>
-
-    <ItemGroup Condition="'$(UseLocalMyNetProjects)' == 'true' and Exists('..\..\..\MyNet\src\MyNet.Globalization\MyNet.Globalization.csproj')">
-        <ProjectReference Include="..\..\..\MyNet\src\MyNet.Globalization\MyNet.Globalization.csproj" />
-        <PackageReference Remove="MyNet.Globalization" />
-    </ItemGroup>
-
+    
     <ItemGroup>
         <ProjectReference Include="..\MyNet.Avalonia\MyNet.Avalonia.csproj" />
     </ItemGroup>

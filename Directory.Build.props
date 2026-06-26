@@ -29,8 +29,6 @@
         <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
         <IsCiBuild Condition="'$(IsCiBuild)' == '' and ('$(CI)' != '' or '$(TF_BUILD)' != '' or '$(GITHUB_ACTIONS)' != '')">true</IsCiBuild>
         <IsCiBuild Condition="'$(IsCiBuild)' == ''">false</IsCiBuild>
-        <UseLocalMyNetProjects Condition="'$(UseLocalMyNetProjects)' == '' and '$(IsCiBuild)' == 'true'">false</UseLocalMyNetProjects>
-        <UseLocalMyNetProjects Condition="'$(UseLocalMyNetProjects)' == ''">true</UseLocalMyNetProjects>
 
         <!-- Output builds -->
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
@@ -75,5 +73,5 @@
     <Import Project="$(MSBuildThisFileDirectory)/build/code-analysis.props" Condition="Exists('$(MSBuildThisFileDirectory)/build/code-analysis.props') and '$(EnableAnalyzers)' == 'true'" />
     <Import Project="$(MSBuildThisFileDirectory)/build/dependencies.props" Condition="Exists('$(MSBuildThisFileDirectory)/build/dependencies.props')" />
     <Import Project="$(MSBuildThisFileDirectory)/build/package.props" Condition="Exists('$(MSBuildThisFileDirectory)/build/package.props') and '$(IsPackable)' == 'true'" />
-
+    
 </Project>
