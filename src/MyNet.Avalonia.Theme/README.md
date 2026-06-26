@@ -96,7 +96,7 @@ Use the `my` XML namespace (`http://mynet.com/avalonia`):
 
 <TextBlock Foreground="{my:ThemeRole Foreground}" Classes="has-role" />
 
-<Border Background="{my:ThemeContext Surface.Level1}" />
+<Border Background="{my:ThemeContext Surface.Popup}" />
 ```
 
 Utility CSS-like classes (`variant-solid`, `size-md`, `gap-sm`, …) are applied on controls; the theme engine activates them lazily when a registered class is present.

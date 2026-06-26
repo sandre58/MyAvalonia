@@ -17,7 +17,7 @@
 
             <!-- Theme -->
             <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
+            <Setter Property="Background" Value="{my:ThemeContext Surface.Level2}" />
             <Setter Property="my:InteractionAssist.HoverBackground" Value="{my:ThemeRole Primary, Opacity=Hover}" />
             <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="Transparent" />
             <Setter Property="my:InteractionAssist.ActiveBackground" Value="{my:ThemeRole Primary, Opacity=Focus}" />

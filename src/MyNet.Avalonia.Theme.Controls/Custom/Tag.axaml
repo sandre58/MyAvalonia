@@ -19,7 +19,7 @@
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level2}" />
         <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
 
         <!-- Variant -->

@@ -11,11 +11,8 @@
     <sys:Double x:Key="MyNet.Opacity.Foreground.Secondary">0.7</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Foreground.Tertiary">0.5</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Surface.Level0">0.18</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Surface.Level2">1</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Surface.Level1">1</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Surface.Level3">0.07</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Surface.Level4">0.10</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Surface.Level5">0.11</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Surface.Level1">0.07</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Surface.Level2">0.10</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Surface.Border">0.12</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Control.Border">0.14</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Control.Border.Hover">0.18</sys:Double>

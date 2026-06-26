@@ -1,6 +1,6 @@
-ï»¿// -----------------------------------------------------------------------
-// <copyright file="VariantClassRegistry.cs" company="StÃ©phane ANDRE">
-// Copyright (c) StÃ©phane ANDRE. All rights reserved.
+// -----------------------------------------------------------------------
+// <copyright file="VariantClassRegistry.cs" company="Stéphane ANDRE">
+// Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -43,8 +43,8 @@ public static class VariantClassRegistry
     private static readonly object HeaderHighForeground = Brush("(my:HeaderAssist.Foreground)", Opacity.High);
     private static readonly object HeaderHoverForeground = Brush("(my:HeaderAssist.Foreground)", Opacity.Hover);
     private static readonly object HeaderFocusForeground = Brush("(my:HeaderAssist.Foreground)", Opacity.Focus);
-    private static readonly object SurfaceContext = Context("Surface.Level3");
-    private static readonly object ControlContext = Context("Surface.Level4");
+    private static readonly object SurfaceContext = Context("Surface.Level1");
+    private static readonly object ControlContext = Context("Surface.Level2");
     private static readonly object ControlBorderContext = Context("Control.Border");
     private static readonly object BackgroundRole = Role(VariantBrush.Background);
     private static readonly object OverlayBackgroundRole = Role(VariantBrush.Background, Opacity.Overlay);

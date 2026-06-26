@@ -4,14 +4,14 @@
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
     <!-- Surfaces -->
-    <Color x:Key="MyNet.Color.Surface.Level0">#F7F7F7</Color> <!-- Headers -->
-    <Color x:Key="MyNet.Color.Surface.Level1">#FFFFFF</Color> <!-- Popup, Dialog -->
-    <Color x:Key="MyNet.Color.Surface.Level2">#F3F3F3</Color> <!-- Application -->
-    <Color x:Key="MyNet.Color.Surface.Level3">#FBFBFB</Color> <!-- Container -->
-    <Color x:Key="MyNet.Color.Surface.Level4">#FDFDFD</Color> <!-- Control -->
-    <Color x:Key="MyNet.Color.Surface.Level5">#EEEEEE</Color> <!-- Container secondary -->
+    <Color x:Key="MyNet.Color.Surface.Application">#F3F3F3</Color> <!-- Window / application background -->
+    <Color x:Key="MyNet.Color.Surface.Popup">#FFFFFF</Color> <!-- Flyout (menu, dropdown) -->
+    <Color x:Key="MyNet.Color.Surface.Overlay">#FFFFFF</Color> <!-- Modal overlay (busy, dialog) -->
     <Color x:Key="MyNet.Color.Surface.Inverse">#454545</Color> <!-- Tooltip -->
     <Color x:Key="MyNet.Color.Surface.Border">#CCCCCC</Color>
+    <Color x:Key="MyNet.Color.Surface.Level0">#EBEBEB</Color> <!-- Chrome / header -->
+    <Color x:Key="MyNet.Color.Surface.Level1">#FAFAFA</Color> <!-- Container -->
+    <Color x:Key="MyNet.Color.Surface.Level2">#FFFFFF</Color> <!-- Control -->
 
     <!-- Foreground -->
     <Color x:Key="MyNet.Color.Foreground.Primary">#121212</Color>

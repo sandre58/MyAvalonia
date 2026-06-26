@@ -21,7 +21,7 @@
         <Setter Property="my:IconAssist.PrimarySize" Value="{Binding $self.Bounds.Width, Converter={x:Static my:MathConverter.Divide}, ConverterParameter=1.5}" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level1}" />
         <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
         <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
 

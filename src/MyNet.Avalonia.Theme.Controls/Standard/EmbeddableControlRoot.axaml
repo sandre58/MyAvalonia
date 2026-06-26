@@ -6,7 +6,7 @@
     <!-- DEFAULT EMBEDDABLECONTROLROOT THEME                       -->
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type EmbeddableControlRoot}" TargetType="EmbeddableControlRoot">
-        <Setter Property="Background" Value="{my:Theme Surface.Level2}" />
+        <Setter Property="Background" Value="{my:Theme Surface.Application}" />
         <Setter Property="Foreground" Value="{my:Theme Foreground.Primary}" />
         <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size}" />
         <Setter Property="FontFamily" Value="{StaticResource MyNet.Font.FontFamily}" />

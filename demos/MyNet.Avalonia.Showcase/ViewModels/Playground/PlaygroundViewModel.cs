@@ -461,7 +461,7 @@ internal sealed class PlaygroundViewModel : ObservableObject, IStyleProvider
         var accentForeground = theme.GetBrush($"{nameof(MyTheme.Accent)}.{nameof(ColorShades.Foreground)}");
         var primary = theme.GetBrush(nameof(MyTheme.Primary));
         var primaryForeground = theme.GetBrush($"{nameof(MyTheme.Primary)}.{nameof(ColorShades.Foreground)}");
-        var surface = theme.GetBrush("Surface.Level2");
+        var surface = theme.GetBrush("Surface.Application");
         var surfaceForeground = theme.GetBrush(ThemeResourceKeyFactory.PrimaryForeground);
         return
         [

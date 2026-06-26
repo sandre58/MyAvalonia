@@ -63,7 +63,7 @@
         <!-- Code label -->
         <Style Selector="^.kind-code">
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            <Setter Property="Background" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="Background" Value="{my:ThemeContext Surface.Level1}" />
             <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
             <Setter Property="Foreground" Value="{my:ThemeRole Foreground, Opacity=High}" />
             <Setter Property="BorderThickness" Value="1" />
@@ -80,7 +80,7 @@
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
 
             <!-- Default colors -->
-            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level1}" />
             <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
             <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
 

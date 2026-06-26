@@ -28,5 +28,17 @@ public class ThemeResourceKeyFactoryTests
         .Should().Be("MyNet.Color.Foreground.Primary");
 
     [Fact]
+    public void ContrastedColor_SurfaceOverlay_UsesPrimaryForeground() => ThemeResourceKeyFactory.ContrastedColor("Surface.Overlay")
+        .Should().Be("MyNet.Color.Foreground.Primary");
+
+    [Fact]
+    public void ContrastedColor_SurfacePopup_UsesPrimaryForeground() => ThemeResourceKeyFactory.ContrastedColor("Surface.Popup")
+        .Should().Be("MyNet.Color.Foreground.Primary");
+
+    [Fact]
+    public void ContrastedColor_SurfaceApplication_UsesPrimaryForeground() => ThemeResourceKeyFactory.ContrastedColor("Surface.Application")
+        .Should().Be("MyNet.Color.Foreground.Primary");
+
+    [Fact]
     public void ContrastedColor_UnknownKey_ReturnsNull() => ThemeResourceKeyFactory.ContrastedColor("Overlay").Should().BeNull();
 }

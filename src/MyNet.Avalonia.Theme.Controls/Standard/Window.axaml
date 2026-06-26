@@ -10,7 +10,7 @@
         <Setter Property="my:ThemeAssist.Category" Value="Surface" />
         <Setter Property="my:WindowAssist.IsTitleVisible" Value="True" />
         <Setter Property="my:WindowAssist.TitleBarHeight" Value="{StaticResource MyNet.Height.TitleBar}" />
-        <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Surface.Level3}" />
+        <Setter Property="my:WindowAssist.TitleBarBackground" Value="{my:Theme Surface.Level1}" />
         <Setter Property="my:WindowAssist.TitleBarForeground" Value="{my:Theme Foreground.Primary}" />
         <Setter Property="my:WindowAssist.ExtendContentIntoTitleBar" Value="False" />
         <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="-1" />

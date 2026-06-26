@@ -105,7 +105,7 @@
 
             <Border Grid.Row="2"
                     VerticalAlignment="Top"
-                    Background="{my:ThemeContext Surface.Level3}"
+                    Background="{my:ThemeContext Surface.Level1}"
                     BorderBrush="{my:ThemeContext Surface.Border}"
                     BorderThickness="1"
                     CornerRadius="{StaticResource MyNet.Corners.Control}"

@@ -96,11 +96,11 @@
                     <Border Opacity="{Binding Value}" Background="{my:Theme Primary}" Height="25" Width="25" />
                     <Border Opacity="{Binding Value}" Background="{my:Theme Accent}" />
                     <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level0}" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Application}" />
                     <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level1}" />
                     <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level2}" />
-                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level3}" />
-                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level4}" />
-                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Level5}" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Popup}" />
+                    <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Overlay}" />
                     <Border Opacity="{Binding Value}" Background="{my:Theme Surface.Inverse}" />
                     <Border Opacity="{Binding Value}" Background="{my:Theme Foreground.Primary}" />
                 </UniformGrid>

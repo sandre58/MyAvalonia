@@ -111,7 +111,7 @@
         <Setter Property="Focusable" Value="True" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level2}" />
         <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Control.Border}" />
         <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />

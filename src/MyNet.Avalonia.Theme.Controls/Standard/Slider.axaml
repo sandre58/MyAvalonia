@@ -99,7 +99,7 @@
 
                                 <Border Name="PART_Positioner" Grid.Row="0">
                                     <Border Name="PART_ContentContainer">
-                                        <ContentPresenter Name="PART_ContentPresenter" Foreground="{my:ThemeContext Surface.Level1, Contrast=True}" />
+                                        <ContentPresenter Name="PART_ContentPresenter" Foreground="{my:ThemeContext Surface.Popup, Contrast=True}" />
                                     </Border>
                                 </Border>
                             </Grid>
@@ -121,7 +121,7 @@
             </Style>
 
             <Style Selector="^ /template/ Border#PART_ContentContainer">
-                <Setter Property="Background" Value="{my:ThemeContext Surface.Level1}" />
+                <Setter Property="Background" Value="{my:ThemeContext Surface.Popup}" />
                 <Setter Property="CornerRadius" Value="2" />
                 <Setter Property="Padding" Value="4, 8" />
             </Style>
@@ -164,7 +164,7 @@
             <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource {x:Type DataValidationErrors}}" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level2}" />
         <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
@@ -176,7 +176,7 @@
 
         <!-- Default Theme -->
         <Setter Property="BorderThickness" Value="{Binding $self.(my:VariantAssist.BorderThickness)}" />
-        <Setter Property="Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="Background" Value="{my:ThemeContext Surface.Level2}" />
         <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
         <Setter Property="my:InteractionAssist.ActiveBackground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
             <Setter Property="my:InteractionAssist.IndicatorColor" Value="{Binding $self.(my:VariantAssist.Primary)}" />

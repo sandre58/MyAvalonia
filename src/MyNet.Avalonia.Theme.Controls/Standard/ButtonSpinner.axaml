@@ -60,7 +60,7 @@
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
         <!-- Default -->
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
-        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level2}" />
         <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
         <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
         <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />

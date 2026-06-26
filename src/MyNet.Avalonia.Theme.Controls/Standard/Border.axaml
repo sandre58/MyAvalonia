@@ -24,7 +24,7 @@
             <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Surface}" />
 
             <!-- Default colors -->
-            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level1}" />
             <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
 
             <!-- Variant -->

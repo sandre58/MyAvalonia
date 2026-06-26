@@ -18,34 +18,35 @@ public class ControlPalette
     // Surfaces
 
     /// <summary>
-    /// Gets the background color for surface level 0 (Header background).
+    /// Gets the elevated surface color for modal overlays (busy indicator, overlay dialogs).
+    /// Lighter than the application surface in dark themes.
+    /// </summary>
+    public required Color SurfaceOverlay { get; init; }
+
+    /// <summary>
+    /// Gets the elevated surface color for contextual popups (menus, dropdowns, flyouts).
+    /// </summary>
+    public required Color SurfacePopup { get; init; }
+
+    /// <summary>
+    /// Gets the root application background color (window client area).
+    /// </summary>
+    public required Color SurfaceApplication { get; init; }
+
+    /// <summary>
+    /// Gets the background color for surface level 0 (chrome / header).
     /// </summary>
     public required Color SurfaceLevel0 { get; init; }
 
     /// <summary>
-    /// Gets the background color for surface level 1 (Application background).
+    /// Gets the background color for surface level 1 (container / card).
     /// </summary>
     public required Color SurfaceLevel1 { get; init; }
 
     /// <summary>
-    /// Gets the background color for surface level 2 (Popup, Dialog).
+    /// Gets the background color for surface level 2 (control / input).
     /// </summary>
     public required Color SurfaceLevel2 { get; init; }
-
-    /// <summary>
-    /// Gets the background color for surface level 3 (Container background).
-    /// </summary>
-    public required Color SurfaceLevel3 { get; init; }
-
-    /// <summary>
-    /// Gets the background color for surface level 4 (Control background).
-    /// </summary>
-    public required Color SurfaceLevel4 { get; init; }
-
-    /// <summary>
-    /// Gets the background color for surface level 5 (Surface secondary).
-    /// </summary>
-    public required Color SurfaceLevel5 { get; init; }
 
     /// <summary>
     /// Gets the inverse surface color (Tooltip).
@@ -131,14 +132,14 @@ public class ControlPalette
     public IReadOnlyDictionary<string, object> ToResourceDictionary() => new Dictionary<string, object>
         {
             // Surfaces
+            { "Surface.Overlay", SurfaceOverlay },
+            { "Surface.Popup", SurfacePopup },
+            { "Surface.Application", SurfaceApplication },
+            { "Surface.Inverse", SurfaceInverse },
+            { "Surface.Border", SurfaceBorder },
             { "Surface.Level0", SurfaceLevel0 },
             { "Surface.Level1", SurfaceLevel1 },
             { "Surface.Level2", SurfaceLevel2 },
-            { "Surface.Level3", SurfaceLevel3 },
-            { "Surface.Level4", SurfaceLevel4 },
-            { "Surface.Level5", SurfaceLevel5 },
-            { "Surface.Inverse", SurfaceInverse },
-            { "Surface.Border", SurfaceBorder },
 
             // Foreground
             { "Foreground.Primary", ForegroundPrimary },
@@ -176,11 +177,11 @@ public class ControlPalette
         {
             // Surfaces
             SurfaceLevel0 = (Color)dictionary.GetValueOrDefault("Surface.Level0", defaultColor),
+            SurfaceOverlay = (Color)dictionary.GetValueOrDefault("Surface.Overlay", defaultColor),
+            SurfacePopup = (Color)dictionary.GetValueOrDefault("Surface.Popup", defaultColor),
+            SurfaceApplication = (Color)dictionary.GetValueOrDefault("Surface.Application", defaultColor),
             SurfaceLevel1 = (Color)dictionary.GetValueOrDefault("Surface.Level1", defaultColor),
             SurfaceLevel2 = (Color)dictionary.GetValueOrDefault("Surface.Level2", defaultColor),
-            SurfaceLevel3 = (Color)dictionary.GetValueOrDefault("Surface.Level3", defaultColor),
-            SurfaceLevel4 = (Color)dictionary.GetValueOrDefault("Surface.Level4", defaultColor),
-            SurfaceLevel5 = (Color)dictionary.GetValueOrDefault("Surface.Level5", defaultColor),
             SurfaceInverse = (Color)dictionary.GetValueOrDefault("Surface.Inverse", defaultColor),
             SurfaceBorder = (Color)dictionary.GetValueOrDefault("Surface.Border", defaultColor),
 

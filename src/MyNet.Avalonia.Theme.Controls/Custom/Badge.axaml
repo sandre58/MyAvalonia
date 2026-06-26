@@ -22,7 +22,7 @@
         <Setter Property="CornerPosition" Value="TopRight" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level1}" />
         <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
         <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
 
@@ -37,7 +37,7 @@
         <Setter Property="Background" Value="{Binding $self.(my:VariantAssist.Background)}" />
         <Setter Property="BorderBrush" Value="{Binding $self.(my:VariantAssist.BorderBrush)}" />
         <Setter Property="BadgeForeground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
-        <Setter Property="MaskBackground" Value="{my:Theme Surface.Level2}" />
+        <Setter Property="MaskBackground" Value="{my:Theme Surface.Application}" />
 
         <Style Selector="^.context-contrast">
             <Setter Property="MaskBackground" Value="Transparent" />

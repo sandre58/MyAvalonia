@@ -24,7 +24,7 @@
             <!-- Browser / single-view shell header (desktop uses the window title bar) -->
             <Border Grid.Row="0"
                     Padding="{my:Thickness Sm, Vertical}"
-                    Background="{my:Theme Surface.Level4}"
+                    Background="{my:Theme Surface.Level2}"
                     BorderBrush="{my:Theme Surface.Border}"
                     BorderThickness="0 0 0 1"
                     IsVisible="{Binding ShowShellChromeInView}">

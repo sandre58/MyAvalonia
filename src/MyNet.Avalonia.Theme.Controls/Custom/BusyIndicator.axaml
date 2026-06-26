@@ -12,7 +12,7 @@
         <Setter Property="OverlayBackground" Value="{my:Theme Overlay.Background, Opacity=Scrim}" />
         <Setter Property="OverlayOpacity" Value="1" />
 
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level1}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Overlay}" />
         <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
         <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
@@ -39,7 +39,7 @@
                     <Panel HorizontalAlignment="Center"
                            VerticalAlignment="Center">
                         <Border Name="PART_SurfaceBackground"
-                                Background="{my:Theme Surface.Level1}"
+                                Background="{my:Theme Surface.Overlay}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding SurfaceCornerRadius}"
                                 IsHitTestVisible="False" />
@@ -168,14 +168,18 @@
             <Setter Property="SurfaceCornerRadius" Value="{StaticResource MyNet.Corners.Lg}" />
             <Setter Property="my:ShadowAssist.ShadowDepth" Value="{StaticResource MyNet.Shadow.Popup}" />
 
+            <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Overlay}" />
             <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
-            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+            <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Surface.Border}" />
             <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
             <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary, Contrast=True}" />
-            <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
+            <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
 
             <Style Selector="^ /template/ Border#PART_SurfaceBackground">
                 <Setter Property="IsVisible" Value="True" />
+                <Setter Property="Background" Value="{my:Theme Surface.Overlay}" />
+                <Setter Property="BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+                <Setter Property="BorderThickness" Value="1" />
             </Style>
             
             <Style Selector="^.variant-light, ^.variant-outlined">

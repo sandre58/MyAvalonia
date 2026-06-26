@@ -509,7 +509,7 @@
 
     <ControlTheme x:Key="{x:Type DataGridRowGroupHeader}" TargetType="DataGridRowGroupHeader">
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Background" Value="{my:ThemeContext Surface.Level5}" />
+        <Setter Property="Background" Value="{my:ThemeContext Surface.Level1}" />
         <Setter Property="Margin" Value="{my:Thickness Top=10, Bottom=2}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Template">

@@ -132,7 +132,7 @@
 
                         <Panel Height="{TemplateBinding DefaultTitleBarHeight}"
                                VerticalAlignment="Top"
-                               Background="{my:Theme Surface.Level3}"
+                               Background="{my:Theme Surface.Level1}"
                                WindowDecorationProperties.ElementRole="TitleBar">
 
                             <TextBlock Text="{TemplateBinding Title}"

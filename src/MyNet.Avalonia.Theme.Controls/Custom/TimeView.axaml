@@ -54,7 +54,7 @@
         <Setter Property="my:HeaderAssist.VerticalAlignment" Value="Center" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level1}" />
         <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
         <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
 
@@ -163,7 +163,7 @@
                                           Second="{TemplateBinding Second, Mode=TwoWay}"
                                           my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                           my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
-                                          my:VariantAssist.DefaultBackground="{my:ThemeContext Surface.Level4}"
+                                          my:VariantAssist.DefaultBackground="{my:ThemeContext Surface.Level2}"
                                           TimeFormat="{TemplateBinding TimeFormat}"
                                           ShowSeconds="{TemplateBinding ShowSeconds}"
                                           SelectedComponent="{TemplateBinding SelectedComponent, Mode=TwoWay}"

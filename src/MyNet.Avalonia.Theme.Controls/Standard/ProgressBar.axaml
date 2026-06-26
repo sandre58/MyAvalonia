@@ -23,12 +23,12 @@
         <Setter Property="my:ProgressBarAssist.BarSize" Value="{StaticResource MyNet.Height.ProgressBar.Md}" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level2}" />
         <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
         <!-- Variant -->
-        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level2}" />
         <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
         <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
@@ -311,7 +311,7 @@
         <Setter Property="Width" Value="{StaticResource MyNet.Size.ProgressBar.Circular.Md}" />
 
         <!-- Default colors -->
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level2}" />
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
         <!-- Variant -->

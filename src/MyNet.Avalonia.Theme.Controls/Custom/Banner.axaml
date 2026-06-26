@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
@@ -32,7 +32,7 @@
         <Setter Property="my:ActionsAssist.Margin" Value="0" />
         <Setter Property="my:ActionsAssist.HorizontalAlignment" Value="Right" />
 
-        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level3}" />
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="{my:ThemeContext Surface.Level1}" />
         <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="{my:ThemeContext Surface.Border}" />
         <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
         <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />

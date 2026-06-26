@@ -4,14 +4,14 @@
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
     <!-- Surfaces -->
-    <Color x:Key="MyNet.Color.Surface.Level0">#0A0A0A</Color> <!-- Headers -->
-    <Color x:Key="MyNet.Color.Surface.Level1">#111111</Color> <!-- Popup, Dialog -->
-    <Color x:Key="MyNet.Color.Surface.Level2">#181818</Color> <!-- Application -->
-    <Color x:Key="MyNet.Color.Surface.Level3">#212121</Color> <!-- Container -->
-    <Color x:Key="MyNet.Color.Surface.Level4">#2A2A2A</Color> <!-- Control -->
-    <Color x:Key="MyNet.Color.Surface.Level5">#363636</Color> <!-- Container secondary -->
+    <Color x:Key="MyNet.Color.Surface.Application">#181818</Color> <!-- Window / application background -->
+    <Color x:Key="MyNet.Color.Surface.Popup">#323232</Color> <!-- Flyout (menu, dropdown) -->
+    <Color x:Key="MyNet.Color.Surface.Overlay">#3A3A3A</Color> <!-- Modal overlay (busy, dialog) -->
     <Color x:Key="MyNet.Color.Surface.Inverse">#F9F9F9</Color> <!-- Tooltip -->
     <Color x:Key="MyNet.Color.Surface.Border">#3A3A3A</Color> <!-- All surfaces -->
+    <Color x:Key="MyNet.Color.Surface.Level0">#080808</Color> <!-- Chrome / header -->
+    <Color x:Key="MyNet.Color.Surface.Level1">#222222</Color> <!-- Container -->
+    <Color x:Key="MyNet.Color.Surface.Level2">#2C2C2C</Color> <!-- Control -->
 
     <!-- Foreground -->
     <Color x:Key="MyNet.Color.Foreground.Primary">#F9F9F9</Color>
@@ -64,7 +64,7 @@
     <sys:Double x:Key="MyNet.Opacity.High">0.7</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Medium">0.56</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Low">0.45</sys:Double>
-    <sys:Double x:Key="MyNet.Opacity.Scrim">0.40</sys:Double>
+    <sys:Double x:Key="MyNet.Opacity.Scrim">0.60</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Disabled">0.38</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Drag">0.32</sys:Double>
     <sys:Double x:Key="MyNet.Opacity.Pressed">0.24</sys:Double>

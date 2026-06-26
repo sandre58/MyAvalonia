@@ -31,7 +31,7 @@
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
 
         <!-- Variant -->
-        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level4}" />
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeContext Surface.Level2}" />
         <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeContext Surface.Border}" />
         <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
         <Setter Property="my:VariantAssist.BorderThickness" Value="1" />
