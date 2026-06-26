@@ -17,7 +17,7 @@
                        Animation="{Binding Path=Animation, RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}"
                        Foreground="{Binding Path=(my:VariantAssist.Primary), RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}" />
 
-            <TextBlock Classes="text-md"
+            <TextBlock Classes="busy-text"
                        Text="{Binding Message}"
                        TextWrapping="Wrap"
                        TextAlignment="Center"
@@ -54,7 +54,7 @@
                          Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}"
                          my:InteractionAssist.ActiveBackground="{Binding Path=(my:VariantAssist.Primary), RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}" />
 
-            <TextBlock Classes="text-md"
+            <TextBlock Classes="busy-text"
                        Text="{Binding Message}"
                        TextWrapping="Wrap"
                        TextAlignment="Center"
@@ -76,21 +76,25 @@
     <!-- Progression: current step + circular progress + step history  -->
     <!-- ════════════════════════════════════════════════════════════ -->
     <DataTemplate x:Key="ProgressionBusy" DataType="{x:Type loading:ProgressionBusy}">
-        <StackPanel MinWidth="320"
-                    MaxWidth="460"
-                    HorizontalAlignment="Center"
-                    Spacing="{StaticResource MyNet.Spacing.Md}">
-            <TextBlock Classes="text-h6"
+        <Grid MinWidth="320"
+              MaxWidth="460"
+              HorizontalAlignment="Center"
+              RowDefinitions="Auto,Auto,Auto,Auto">
+            <TextBlock Grid.Row="0"
+                       Classes="text-h6"
                        Text="{Binding Title}"
                        TextWrapping="Wrap"
                        TextAlignment="Center"
                        HorizontalAlignment="Center"
+                       Margin="{my:Thickness Sm, Bottom}"
                        Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}"
                        IsVisible="{Binding Title, Converter={x:Static my:NullConverter.IsPresent}}" />
 
-            <ProgressBar Classes="busy-progress"
+            <ProgressBar Grid.Row="1"
+                         Classes="busy-progress"
                          Theme="{StaticResource MyNet.Theme.ProgressBar.Circular}"
                          HorizontalAlignment="Center"
+                         Margin="{my:Thickness Md, Bottom}"
                          ShowProgressText="True"
                          ProgressTextFormat="{}{1:0}%"
                          Minimum="0"
@@ -99,11 +103,14 @@
                          Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}"
                          my:InteractionAssist.ActiveBackground="{Binding Path=(my:VariantAssist.Primary), RelativeSource={RelativeSource AncestorType=my:BusyIndicator}}" />
 
-            <Border Background="{my:ThemeContext Surface.Level3}"
+            <Border Grid.Row="2"
+                    VerticalAlignment="Top"
+                    Background="{my:ThemeContext Surface.Level3}"
                     BorderBrush="{my:ThemeContext Surface.Border}"
                     BorderThickness="1"
                     CornerRadius="{StaticResource MyNet.Corners.Control}"
                     Padding="{my:Thickness Sm}"
+                    Margin="{my:Thickness Sm, Bottom}"
                     IsVisible="{Binding Messages.Count, Converter={x:Static my:MathComparisonConverter.IsGreaterThan}, ConverterParameter=0}">
                 <ScrollViewer MaxHeight="140"
                               HorizontalScrollBarVisibility="Disabled"
@@ -131,14 +138,15 @@
                 </ScrollViewer>
             </Border>
 
-            <Button Classes="variant-text variant-outlined busy-cancel"
+            <Button Grid.Row="3"
+                    Classes="variant-text variant-outlined busy-cancel"
                     HorizontalAlignment="Center"
                     my:ThemeAssist.Role="Error"
                     Command="{Binding CancelCommand}"
                     Content="{my:Loc Cancel}"
                     my:IconAssist.Icon="{my:MaterialIcon Cancel}"
                     IsVisible="{Binding IsCancellable}" />
-        </StackPanel>
+        </Grid>
     </DataTemplate>
 
 </ResourceDictionary>

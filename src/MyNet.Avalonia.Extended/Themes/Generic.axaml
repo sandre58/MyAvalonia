@@ -1,94 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="http://mynet.com/avalonia"
-        xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls">
-    <!--
-      Extended control themes for host applications.
-      Include once in App.axaml:
-        <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Generic.axaml" />
-    -->
-    <Style Selector="controls|ContentDialog">
-        <Setter Property="Theme" Value="{StaticResource {x:Type controls:ContentDialog}}" />
-    </Style>
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <!-- BusyServiceIndicator content sizing (follows size-* class)   -->
-    <!-- Declared as global styles: descendant selectors are not      -->
-    <!-- allowed inside a ControlTheme.                               -->
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <Style Selector="my|BusyServiceIndicator my|Loader.busy-spinner">
-        <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Md}" />
-        <Setter Property="Height" Value="{StaticResource MyNet.Size.Loader.Md}" />
-        <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Md}" />
-        <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Md}" />
-        <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Md}" />
-    </Style>
-    <Style Selector="my|BusyServiceIndicator.size-xs my|Loader.busy-spinner">
-        <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Xs}" />
-        <Setter Property="Height" Value="{StaticResource MyNet.Size.Loader.Xs}" />
-        <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Xs}" />
-        <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Xs}" />
-        <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Xs}" />
-    </Style>
-    <Style Selector="my|BusyServiceIndicator.size-sm my|Loader.busy-spinner">
-        <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Sm}" />
-        <Setter Property="Height" Value="{StaticResource MyNet.Size.Loader.Sm}" />
-        <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Sm}" />
-        <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Sm}" />
-        <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Sm}" />
-    </Style>
-    <Style Selector="my|BusyServiceIndicator.size-md my|Loader.busy-spinner">
-        <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Md}" />
-        <Setter Property="Height" Value="{StaticResource MyNet.Size.Loader.Md}" />
-        <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Md}" />
-        <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Md}" />
-        <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Md}" />
-    </Style>
-    <Style Selector="my|BusyServiceIndicator.size-lg my|Loader.busy-spinner">
-        <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Lg}" />
-        <Setter Property="Height" Value="{StaticResource MyNet.Size.Loader.Lg}" />
-        <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Lg}" />
-        <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Lg}" />
-        <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Lg}" />
-    </Style>
-    <Style Selector="my|BusyServiceIndicator.size-xl my|Loader.busy-spinner">
-        <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Xl}" />
-        <Setter Property="Height" Value="{StaticResource MyNet.Size.Loader.Xl}" />
-        <Setter Property="StrokeThickness" Value="{StaticResource MyNet.Size.Loader.Arc.Xl}" />
-        <Setter Property="DotSize" Value="{StaticResource MyNet.Size.Loader.Dot.Xl}" />
-        <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Xl}" />
-    </Style>
-
-    <Style Selector="my|BusyServiceIndicator ProgressBar.busy-progress">
-        <Setter Property="Width" Value="68" />
-        <Setter Property="Height" Value="68" />
-        <Setter Property="my:ProgressBarAssist.BarSize" Value="6" />
-    </Style>
-    <Style Selector="my|BusyServiceIndicator.size-xs ProgressBar.busy-progress">
-        <Setter Property="Width" Value="44" />
-        <Setter Property="Height" Value="44" />
-        <Setter Property="my:ProgressBarAssist.BarSize" Value="4" />
-    </Style>
-    <Style Selector="my|BusyServiceIndicator.size-sm ProgressBar.busy-progress">
-        <Setter Property="Width" Value="56" />
-        <Setter Property="Height" Value="56" />
-        <Setter Property="my:ProgressBarAssist.BarSize" Value="5" />
-    </Style>
-    <Style Selector="my|BusyServiceIndicator.size-md ProgressBar.busy-progress">
-        <Setter Property="Width" Value="68" />
-        <Setter Property="Height" Value="68" />
-        <Setter Property="my:ProgressBarAssist.BarSize" Value="6" />
-    </Style>
-    <Style Selector="my|BusyServiceIndicator.size-lg ProgressBar.busy-progress">
-        <Setter Property="Width" Value="92" />
-        <Setter Property="Height" Value="92" />
-        <Setter Property="my:ProgressBarAssist.BarSize" Value="8" />
-    </Style>
-    <Style Selector="my|BusyServiceIndicator.size-xl ProgressBar.busy-progress">
-        <Setter Property="Width" Value="116" />
-        <Setter Property="Height" Value="116" />
-        <Setter Property="my:ProgressBarAssist.BarSize" Value="10" />
-    </Style>
+    <StyleInclude Source="avares://MyNet.Avalonia.Extended/Themes/Styles/BusyServiceIndicator.axaml" />
 
     <Styles.Resources>
         <ResourceDictionary>
@@ -101,6 +14,7 @@
                 <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowDialog.axaml" />
                 <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/MessageBoxContent.axaml" />
                 <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Controls/WindowMessageBox.axaml" />
+                <ResourceInclude Source="avares://MyNet.Avalonia.Extended/Themes/Resources/BusyServiceIndicator.DataTemplates.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>

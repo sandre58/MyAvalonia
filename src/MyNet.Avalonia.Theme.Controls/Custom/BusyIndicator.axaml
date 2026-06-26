@@ -141,6 +141,20 @@
             <Setter Property="IsVisible" Value="False" />
         </Style>
 
+        <Style Selector="^:custom-content /template/ Panel[HorizontalAlignment=Center]">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="0,72,0,0" />
+        </Style>
+
+        <Style Selector="^:custom-content /template/ Border#PART_Surface > Panel">
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+
+        <Style Selector="^:custom-content /template/ ContentPresenter#PART_BusyContent">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
         <Style Selector="^:message-empty /template/ ContentPresenter#PART_Message">
             <Setter Property="IsVisible" Value="False" />
         </Style>
@@ -157,7 +171,7 @@
             <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
             <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
             <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
-            <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Foreground, Contrast=True}" />
+            <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary, Contrast=True}" />
             <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
 
             <Style Selector="^ /template/ Border#PART_SurfaceBackground">
@@ -201,7 +215,7 @@
             <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Md}" />
         </Style>
         <Style Selector="^.size-lg">
-            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
         </Style>
         <Style Selector="^.size-lg /template/ my|Loader#PART_Loader">
             <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Lg}" />
@@ -211,7 +225,7 @@
             <Setter Property="BarWidth" Value="{StaticResource MyNet.Size.Loader.Bar.Lg}" />
         </Style>
         <Style Selector="^.size-xl">
-            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
+            <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Xl}" />
         </Style>
         <Style Selector="^.size-xl /template/ my|Loader#PART_Loader">
             <Setter Property="Width" Value="{StaticResource MyNet.Size.Loader.Xl}" />

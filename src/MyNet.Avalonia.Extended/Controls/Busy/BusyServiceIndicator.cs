@@ -12,9 +12,9 @@ using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
-using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using MyNet.Avalonia.Controls;
+using MyNet.Avalonia.Resources;
 using MyNet.UI.Loading;
 using MyNet.UI.Loading.Models;
 
@@ -27,14 +27,11 @@ namespace MyNet.Avalonia.Extended.Controls;
 /// </summary>
 public sealed class BusyServiceIndicator : BusyIndicator
 {
-    private static readonly Uri BusyContentTemplatesUri =
-        new("avares://MyNet.Avalonia.Extended/Themes/Controls/BusyServiceIndicator.DataTemplates.axaml");
-
     private static IReadOnlyList<IDataTemplate>? _busyContentTemplates;
 
     private IBusyService? _subscribedService;
     private ContentPresenter? _busyContentPresenter;
-    private bool _busyContentTemplatesAttached;
+    private ContentPresenter? _templatesAttachedPresenter;
 
     /// <summary>
     /// Defines the <see cref="BusyService"/> property.
@@ -59,6 +56,13 @@ public sealed class BusyServiceIndicator : BusyIndicator
         _busyContentPresenter = e.NameScope.Find<ContentPresenter>("PART_BusyContent");
         AttachBusyContentTemplates();
 
+        if (!ReferenceEquals(_subscribedService, BusyService))
+        {
+            Unsubscribe(_subscribedService);
+            _subscribedService = BusyService;
+            Subscribe(_subscribedService);
+        }
+
         SyncFromService(BusyService);
     }
 
@@ -77,10 +81,27 @@ public sealed class BusyServiceIndicator : BusyIndicator
     }
 
     /// <inheritdoc />
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+
+        if (!ReferenceEquals(_subscribedService, BusyService))
+        {
+            Unsubscribe(_subscribedService);
+            _subscribedService = BusyService;
+            Subscribe(_subscribedService);
+        }
+
+        SyncFromService(BusyService);
+    }
+
+    /// <inheritdoc />
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
         Unsubscribe(_subscribedService);
         _subscribedService = null;
+        _busyContentPresenter = null;
+        _templatesAttachedPresenter = null;
         base.OnDetachedFromVisualTree(e);
     }
 
@@ -122,13 +143,25 @@ public sealed class BusyServiceIndicator : BusyIndicator
 
     private void AttachBusyContentTemplates()
     {
-        if (_busyContentTemplatesAttached || _busyContentPresenter is null)
+        if (_busyContentPresenter is null
+            || ReferenceEquals(_busyContentPresenter, _templatesAttachedPresenter))
             return;
 
         foreach (var template in GetBusyContentTemplates())
             _busyContentPresenter.DataTemplates.Add(template);
 
-        _busyContentTemplatesAttached = true;
+        _templatesAttachedPresenter = _busyContentPresenter;
+        RefreshBusyContentPresentation();
+    }
+
+    private void RefreshBusyContentPresentation()
+    {
+        var content = BusyContent;
+        if (content is null)
+            return;
+
+        BusyContent = null;
+        BusyContent = content;
     }
 
     private static IReadOnlyList<IDataTemplate> GetBusyContentTemplates() =>
@@ -139,14 +172,11 @@ public sealed class BusyServiceIndicator : BusyIndicator
 
     private static List<IDataTemplate> LoadBusyContentTemplates()
     {
-        if (AvaloniaXamlLoader.Load(BusyContentTemplatesUri) is not ResourceDictionary resources)
-            return [];
-
         var templates = new List<IDataTemplate>(BusyContentTemplateKeys.Length);
 
         foreach (var key in BusyContentTemplateKeys)
         {
-            if (resources.TryGetResource(key, null, out var value) && value is IDataTemplate template)
+            if (ApplicationResources.TryGetResource<IDataTemplate>(key) is { } template)
                 templates.Add(template);
         }
 
