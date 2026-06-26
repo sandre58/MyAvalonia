@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="../../assets/MyAvalonia.png" width="96" alt="MyAvalonia">
+  <img src="../../assets/MyAvaloniaGeography.png" width="96" alt="MyAvalonia Geography">
 </div>
 
 # MyNet.Avalonia.Geography

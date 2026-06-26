@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Product>My .NET Avalonia - UI</Product>
-        <PackageIcon>MyAvalonia.png</PackageIcon>
+        <PackageIcon>MyAvaloniaExtended.png</PackageIcon>
         <Description>Custom user interface components and controls for Avalonia applications, providing a rich set of features and functionality.</Description>
         <PackageTags>Avalonia;UI;Controls;MyNet;Extensions;CrossPlatform;Desktop</PackageTags>
     </PropertyGroup>

@@ -1,0 +1,10 @@
+{
+  "icons": [
+    { "file": "MyAvalonia.png", "label": "AV", "svg": "xaml-binding.svg", "base": "#581C87", "accent": "#C026D3" },
+    { "file": "MyAvaloniaControls.png", "label": "AC", "svg": "controls-panel.svg", "base": "#581C87", "accent": "#D946EF" },
+    { "file": "MyAvaloniaExtended.png", "label": "AE", "svg": "dialog.svg", "base": "#581C87", "accent": "#A855F7" },
+    { "file": "MyAvaloniaGeography.png", "label": "AG", "svg": "map-pin.svg", "base": "#581C87", "accent": "#E879F9" },
+    { "file": "MyAvaloniaTheme.png", "label": "AT", "svg": "palette.svg", "base": "#581C87", "accent": "#9333EA" },
+    { "file": "MyAvaloniaThemeControls.png", "label": "TC", "svg": "theme-control.svg", "base": "#581C87", "accent": "#C084FC" }
+  ]
+}

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Product>My .NET Avalonia - Controls</Product>
-        <PackageIcon>MyAvalonia.png</PackageIcon>
+        <PackageIcon>MyAvaloniaControls.png</PackageIcon>
         <NeutralLanguage>fr</NeutralLanguage>
         <Description>Advanced controls and UI components for Avalonia applications: color pickers, data grids, custom cursors, and integration with MyNet libraries.</Description>
         <PackageTags>Avalonia;UI;Controls;ColorPicker;DataGrid;MyNet;Extensions;CrossPlatform;Desktop</PackageTags>

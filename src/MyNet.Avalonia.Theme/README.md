@@ -3,7 +3,7 @@
 <!-- PROJECT INFO -->
 <br />
 <div align="center">
-  <img src="MyAvalonia.png" width="128" alt="MyAvalonia">
+  <img src="../../assets/MyAvaloniaTheme.png" width="128" alt="MyAvalonia Theme">
 </div>
 
 <h1 align="center">My .NET Avalonia Theme</h1>

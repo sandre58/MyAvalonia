@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Product>My .NET Avalonia - Geography</Product>
-        <PackageIcon>MyAvalonia.png</PackageIcon>
+        <PackageIcon>MyAvaloniaGeography.png</PackageIcon>
         <Description>Avalonia markup and helpers for MyNet.Geography (country lists, culture/country templates, CulturePicker).</Description>
         <PackageTags>Avalonia;UI;Geography;Countries;Culture;MyNet;Extensions;CrossPlatform;Desktop</PackageTags>
     </PropertyGroup>

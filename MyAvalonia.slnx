@@ -5,10 +5,6 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Demos/" />
-  <Folder Name="/Demos/PerfTest/">
-    <Project Path="demos/MyNet.Avalonia.PerfTest.Desktop/MyNet.Avalonia.PerfTest.Desktop.csproj" />
-    <Project Path="demos/MyNet.Avalonia.PerfTest/MyNet.Avalonia.PerfTest.csproj" />
-  </Folder>
   <Folder Name="/Demos/Showcase/">
     <Project Path="demos/MyNet.Avalonia.Showcase.Android/MyNet.Avalonia.Showcase.Android.csproj" />
     <Project Path="demos/MyNet.Avalonia.Showcase.Browser/MyNet.Avalonia.Showcase.Browser.csproj" />
@@ -37,6 +33,12 @@
   </Folder>
   <Folder Name="/Solution Files/Assets/">
     <File Path="assets/MyAvalonia.png" />
+    <File Path="assets/MyAvaloniaControls.png" />
+    <File Path="assets/MyAvaloniaExtended.png" />
+    <File Path="assets/MyAvaloniaGeography.png" />
+    <File Path="assets/MyAvaloniaTheme.png" />
+    <File Path="assets/MyAvaloniaThemeControls.png" />
+    <File Path="assets/README.md" />
   </Folder>
   <Folder Name="/Solution Files/Build/">
     <File Path=".runsettings" />
@@ -91,6 +93,10 @@
     <Project Path="tests/MyNet.Avalonia.Tests/MyNet.Avalonia.Tests.csproj" />
     <Project Path="tests/MyNet.Avalonia.Theme.Tests/MyNet.Avalonia.Theme.Tests.csproj" />
     <Project Path="tests/MyNet.Avalonia.Showcase.Tests/MyNet.Avalonia.Showcase.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Tools/">
+    <File Path="tools/generate-package-icons.ps1" />
+    <File Path="tools/package-icons.json" />
   </Folder>
   <Project Path="src/MyNet.Avalonia.Controls/MyNet.Avalonia.Controls.csproj" />
   <Project Path="src/MyNet.Avalonia.Extended/MyNet.Avalonia.Extended.csproj" />

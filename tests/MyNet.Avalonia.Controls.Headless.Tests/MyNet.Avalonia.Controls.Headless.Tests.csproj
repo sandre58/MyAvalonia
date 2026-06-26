@@ -3,6 +3,7 @@
     <PropertyGroup>
         <RootNamespace>MyNet.Avalonia.Controls.Headless.Tests</RootNamespace>
         <OutputType>Exe</OutputType>
+        <GenerateTestingPlatformEntryPoint>false</GenerateTestingPlatformEntryPoint>
     </PropertyGroup>
 
     <ItemGroup>

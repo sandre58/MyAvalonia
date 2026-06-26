@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Product>My .NET Avalonia - Theme Controls</Product>
-        <PackageIcon>MyAvalonia.png</PackageIcon>
+        <PackageIcon>MyAvaloniaThemeControls.png</PackageIcon>
         <Description>Control themes and DataGrid columns for MyNet Avalonia (Foundation, Standard, Custom catalogs).</Description>
         <PackageTags>Avalonia;UI;Theme;Controls;MyNet;CrossPlatform;Desktop</PackageTags>
     </PropertyGroup>

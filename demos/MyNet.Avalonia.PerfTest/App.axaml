@@ -1,9 +1,0 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:my="http://mynet.com/avalonia"
-             x:Class="MyNet.Avalonia.PerfTest.App"
-             RequestedThemeVariant="Default">
-    <Application.Styles>
-        <my:MyTheme />
-    </Application.Styles>
-</Application>

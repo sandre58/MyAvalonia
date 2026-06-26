@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Product>My .NET Avalonia - Theme</Product>
-        <PackageIcon>MyAvalonia.png</PackageIcon>
+        <PackageIcon>MyAvaloniaTheme.png</PackageIcon>
         <Description>Custom themes and styles for Avalonia applications, enhancing the visual appearance and user experience.</Description>
         <PackageTags>Avalonia;UI;Theme;MyNet;Extensions;CrossPlatform;Desktop</PackageTags>
     </PropertyGroup>

@@ -4,7 +4,7 @@
 <!-- PROJECT INFO -->
 <br />
 <div align="center">
-  <img src="../../assets/MyAvalonia.png" width="128" alt="MyAvalonia">
+  <img src="../../assets/MyAvaloniaControls.png" width="128" alt="MyAvalonia Controls">
 </div>
 
 <h1 align="center">My .NET Avalonia Controls</h1>
