@@ -110,6 +110,8 @@
     <!-- DEFAULT CLOCKTIMECOMPONENT THEME                          -->
     <!-- ═════════════════════════════════════════════════════════ -->
     <ControlTheme x:Key="{x:Type my:ClockTimeComponent}" TargetType="my:ClockTimeComponent">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="my:ItemsAssist.Background" Value="{Binding $parent[my:ClockSelector].(my:ItemsAssist.Background)}" />
         <Setter Property="my:ItemsAssist.BorderBrush" Value="{Binding $parent[my:ClockSelector].(my:ItemsAssist.BorderBrush)}" />
         <Setter Property="my:ItemsAssist.BorderThickness" Value="{Binding $parent[my:ClockSelector].(my:ItemsAssist.BorderThickness)}" />
@@ -152,6 +154,8 @@
         <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Control}" />
         <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Control}" />
         <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="my:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
@@ -212,7 +216,12 @@
                             CornerRadius="{StaticResource MyNet.Corners.Round}"
                             my:ShadowAssist.ShadowDepth="{TemplateBinding my:ShadowAssist.ShadowDepth}" />
                     <Grid Margin="{TemplateBinding Padding}">
-                        <Carousel x:Name="PART_Carousel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Carousel x:Name="PART_Carousel"
+                                  Focusable="False"
+                                  IsTabStop="False"
+                                  KeyboardNavigation.TabNavigation="None"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch">
                             <Carousel.PageTransition>
                                 <CompositePageTransition>
                                     <CrossFade Duration="{StaticResource MyNet.Animation.Fade}" />

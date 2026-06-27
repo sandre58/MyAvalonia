@@ -1,0 +1,60 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
+
+    <ControlTheme x:Key="{x:Type my:DateTimeView}" TargetType="my:DateTimeView">
+        <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="{StaticResource MyNet.HorizontalAlignment.Surface}" />
+        <Setter Property="VerticalAlignment" Value="{StaticResource MyNet.VerticalAlignment.Surface}" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="IsTodayHighlighted" Value="True" />
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:DateTimeView">
+                <Grid ColumnDefinitions="Auto,Auto,Auto"
+                      ColumnSpacing="{StaticResource MyNet.Spacing.Sm}"
+                      KeyboardNavigation.TabNavigation="Continue">
+                    <my:Calendar x:Name="PART_Calendar"
+                                 Grid.Column="0"
+                                 TabIndex="0"
+                                 VerticalAlignment="Top"
+                                 my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                 my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                 Foreground="{TemplateBinding Foreground}"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 DisplayDate="{TemplateBinding DisplayDate}"
+                                 DisplayDateEnd="{TemplateBinding DisplayDateEnd}"
+                                 DisplayDateStart="{TemplateBinding DisplayDateStart}"
+                                 FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                 IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}" />
+                    <Separator Grid.Column="1"
+                               Margin="{my:Thickness Sm, Vertical}"
+                               VerticalAlignment="Stretch"
+                               Classes="orientation-vertical" />
+                    <my:TimeView x:Name="PART_TimeView"
+                                 Grid.Column="2"
+                                 TabIndex="1"
+                                 Classes="compact"
+                                 VerticalAlignment="Top"
+                                 Height="{Binding #PART_Calendar.Bounds.Height}"
+                                 ShowClock="True"
+                                 my:HeaderAssist.FontSize="{StaticResource MyNet.Font.Size.H3}"
+                                 my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                 my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                 my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
+                                 Foreground="{TemplateBinding Foreground}"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 NumberFormat="{TemplateBinding NumberFormat}"
+                                 ShowSeconds="{TemplateBinding ShowSeconds}"
+                                 TimeFormat="{TemplateBinding TimeFormat}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

@@ -77,8 +77,17 @@ public abstract partial class TextPicker<T, TPreviewer>
 
     protected override void OnLostFocus(FocusChangedEventArgs e)
     {
-        if (TopLevel.GetTopLevel(this)?.FocusManager.GetFocusedElement() is Visual v && ReferenceEquals(v.FindAncestorOfType<TPreviewer>(true), Previewer)) return;
-        if (e.Source is Visual v1 && ReferenceEquals(v1.FindAncestorOfType<TPreviewer>(true), Previewer)) return;
+        if (TopLevel.GetTopLevel(this)?.FocusManager.GetFocusedElement() is Visual focused)
+        {
+            if (ReferenceEquals(focused.FindAncestorOfType<TPreviewer>(includeSelf: true), Previewer))
+                return;
+
+            if (ReferenceEquals(focused.FindAncestorOfType<TextPicker<T, TPreviewer>>(includeSelf: true), this))
+                return;
+        }
+
+        if (e.Source is Visual source && ReferenceEquals(source.FindAncestorOfType<TPreviewer>(includeSelf: true), Previewer))
+            return;
 
         CommitFromTextBox();
 

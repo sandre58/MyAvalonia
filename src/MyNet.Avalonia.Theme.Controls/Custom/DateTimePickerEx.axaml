@@ -3,7 +3,7 @@
                     xmlns:my="http://mynet.com/avalonia"
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
-    <ControlTheme x:Key="{x:Type my:TimePickerEx}" TargetType="my:TimePickerEx">
+    <ControlTheme x:Key="{x:Type my:DateTimePickerEx}" TargetType="my:DateTimePickerEx">
 
         <!-- Common -->
         <Setter Property="my:ThemeAssist.Category" Value="Input" />
@@ -37,6 +37,7 @@
         <Setter Property="InputMethod.IsInputMethodEnabled" Value="True" />
         <Setter Property="Cursor" Value="IBeam" />
         <Setter Property="PlaceholderText" Value="{x:Static sys:String.Empty}" />
+        <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="my:ItemsAssist.HorizontalContentAlignment" Value="Center" />
         <Setter Property="my:ItemsAssist.VerticalContentAlignment" Value="Center" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
@@ -84,7 +85,7 @@
         <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}" />
 
         <Setter Property="Template">
-            <ControlTemplate TargetType="my:TimePickerEx">
+            <ControlTemplate TargetType="my:DateTimePickerEx">
                 <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
                     <Panel Name="PART_RootPanel">
 
@@ -177,17 +178,17 @@
                                             Grid.Column="3"
                                             Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
-                                            Command="{Binding $parent[my:TimePickerEx].Clear}"
+                                            Command="{Binding $parent[my:DateTimePickerEx].Clear}"
                                             Content="{my:MaterialIcon Close}"
                                             IsVisible="False" />
 
-                                    <!-- Time button -->
+                                    <!-- Date button -->
                                     <Button Name="PART_Button"
                                             Grid.Column="5"
                                             Classes="kind-tool is-stretch"
                                             my:DisableAssist.IsDisablable="False"
                                             Classes.is-selected="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
-                                            Content="{my:MaterialIcon Clock}"
+                                            Content="{my:MaterialIcon CalendarClock}"
                                             my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                             my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}" />
                                 </Grid>
@@ -218,32 +219,25 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        Theme="{StaticResource MyNet.Theme.Border.Popup}"
+                                <Border Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
-                                    <Border HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            ClipToBounds="True"
-                                            CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                        <my:TimeView Name="PART_Previewer"
-                                                     HorizontalAlignment="Left"
-                                                     VerticalAlignment="Top"
-                                                     my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
-                                                     my:ItemsAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
-                                                     my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
-                                                     Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
-                                                     Background="Transparent"
-                                                     BorderThickness="0"
-                                                     Hour="{TemplateBinding Hour, Mode=TwoWay}"
-                                                     Minute="{TemplateBinding Minute, Mode=TwoWay}"
-                                                     Second="{TemplateBinding Second, Mode=TwoWay}"
-                                                     IsAm="{TemplateBinding IsAm, Mode=TwoWay}"
-                                                     TimeFormat="{TemplateBinding TimeFormat}"
-                                                     NumberFormat="{TemplateBinding NumberFormat}"
-                                                     ShowSeconds="{TemplateBinding ShowSeconds}"
-                                                     SelectedValue="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                        <my:DateTimeView Name="PART_Previewer"
+                                                         HorizontalAlignment="Stretch"
+                                                         my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
+                                                         my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
+                                                         Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
+                                                         Background="Transparent"
+                                                         BorderThickness="0"
+                                                         DisplayDate="{TemplateBinding DisplayDate}"
+                                                         DisplayDateEnd="{TemplateBinding DisplayDateEnd}"
+                                                         DisplayDateStart="{TemplateBinding DisplayDateStart}"
+                                                         FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                                         IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
+                                                         NumberFormat="{TemplateBinding NumberFormat}"
+                                                         ShowSeconds="{TemplateBinding ShowSeconds}"
+                                                         TimeFormat="{TemplateBinding TimeFormat}"
+                                                         SelectedValue="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedValue, Mode=TwoWay}" />
                                     </Border>
                                 </Border>
                             </Popup>
@@ -354,7 +348,7 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="MyNet.Theme.TimePickerEx.Underline" TargetType="my:TimePickerEx" BasedOn="{StaticResource {x:Type my:TimePickerEx}}">
+    <ControlTheme x:Key="MyNet.Theme.DateTimePickerEx.Underline" TargetType="my:DateTimePickerEx" BasedOn="{StaticResource {x:Type my:DateTimePickerEx}}">
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Underline.Md}" />
         <Setter Property="my:InputAssist.InnerPadding" Value="{StaticResource MyNet.Padding.Input.Underline.Inner.Md}" />
@@ -371,7 +365,7 @@
         <Setter Property="my:InteractionAssist.RippleColor" Value="Transparent" />
 
         <Setter Property="Template">
-            <ControlTemplate TargetType="my:TimePickerEx">
+            <ControlTemplate TargetType="my:DateTimePickerEx">
                 <DataValidationErrors Name="PART_DataValidation" Theme="{TemplateBinding my:ValidationAssist.Theme}">
                     <Panel Name="PART_RootPanel">
 
@@ -458,18 +452,18 @@
                                         Margin="{my:Thickness Xs, Left}"
                                         Classes="kind-tool"
                                         my:DisableAssist.IsDisablable="False"
-                                        Command="{Binding $parent[my:TimePickerEx].Clear}"
+                                        Command="{Binding $parent[my:DateTimePickerEx].Clear}"
                                         Content="{my:MaterialIcon Close}"
                                         IsVisible="False" />
 
-                                <!-- Time button -->
+                                <!-- Date button -->
                                 <Button Name="PART_Button"
                                         Grid.Column="5"
                                         Margin="{my:Thickness Xs, Left}"
                                         Classes="kind-tool"
                                         my:DisableAssist.IsDisablable="False"
                                         Classes.is-selected="{TemplateBinding IsDropDownOpen, Mode=OneWay}"
-                                        Content="{my:MaterialIcon Clock}"
+                                        Content="{my:MaterialIcon CalendarClock}"
                                         my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                         my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}" />
                             </Grid>
@@ -512,32 +506,25 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        Theme="{StaticResource MyNet.Theme.Border.Popup}"
+                                <Border Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
-                                    <Border HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            ClipToBounds="True"
-                                            CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                        <my:TimeView Name="PART_Previewer"
-                                                     HorizontalAlignment="Left"
-                                                     VerticalAlignment="Top"
-                                                     my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
-                                                     my:ItemsAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
-                                                     my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
-                                                     Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
-                                                     Background="Transparent"
-                                                     BorderThickness="0"
-                                                     Hour="{TemplateBinding Hour}"
-                                                     Minute="{TemplateBinding Minute}"
-                                                     Second="{TemplateBinding Second}"
-                                                     IsAm="{TemplateBinding IsAm}"
-                                                     TimeFormat="{TemplateBinding TimeFormat}"
-                                                     NumberFormat="{TemplateBinding NumberFormat}"
-                                                     ShowSeconds="{TemplateBinding ShowSeconds}"
-                                                     SelectedValue="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+                                    <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
+                                        <my:DateTimeView Name="PART_Previewer"
+                                                         HorizontalAlignment="Stretch"
+                                                         my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
+                                                         my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
+                                                         Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
+                                                         Background="Transparent"
+                                                         BorderThickness="0"
+                                                         DisplayDate="{TemplateBinding DisplayDate}"
+                                                         DisplayDateEnd="{TemplateBinding DisplayDateEnd}"
+                                                         DisplayDateStart="{TemplateBinding DisplayDateStart}"
+                                                         FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                                         IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
+                                                         NumberFormat="{TemplateBinding NumberFormat}"
+                                                         ShowSeconds="{TemplateBinding ShowSeconds}"
+                                                         TimeFormat="{TemplateBinding TimeFormat}"
+                                                         SelectedValue="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedValue, Mode=TwoWay}" />
                                     </Border>
                                 </Border>
                             </Popup>

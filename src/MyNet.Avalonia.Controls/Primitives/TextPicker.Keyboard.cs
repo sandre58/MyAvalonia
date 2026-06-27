@@ -24,7 +24,7 @@ public abstract partial class TextPicker<T, TPreviewer>
         e.Handled = handled;
     }
 
-    private bool ProcessKey(KeyEventArgs e)
+    protected virtual bool ProcessKey(KeyEventArgs e)
     {
         var result = TextPickerKeyboardHelper.Resolve(
             e.Key,

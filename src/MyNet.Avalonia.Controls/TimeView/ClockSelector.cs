@@ -11,6 +11,7 @@ using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Media;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives;
@@ -22,12 +23,32 @@ namespace MyNet.Avalonia.Controls;
 [TemplatePart(PartCarousel, typeof(Carousel))]
 public class ClockSelector : TimeSelectorBase
 {
-    static ClockSelector() =>
+    static ClockSelector()
+    {
         AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<ClockSelector>(AutomationControlType.Custom);
+
+        // The clock must be focusable so that clicking it pulls keyboard focus away from a header
+        // editor (e.g. a NumericUpDown being edited). This lets the editor commit and re-sync its
+        // displayed text from the updated value. It is excluded from Tab navigation via IsTabStop.
+        FocusableProperty.OverrideDefaultValue<ClockSelector>(true);
+    }
 
     public const string PartCarousel = "PART_Carousel";
 
     private Carousel? _carousel;
+
+    protected override bool ShouldFocusActiveComponent(TimeComponent component) => false;
+
+    /// <inheritdoc />
+    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    {
+        base.OnPointerPressed(e);
+
+        // Take keyboard focus on click (without stealing it via Tab/component navigation) so that any
+        // header field currently being edited loses focus, commits, and refreshes from the new value.
+        if (!IsKeyboardFocusWithin)
+            Focus(NavigationMethod.Pointer);
+    }
 
     /// <inheritdoc />
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -141,7 +162,7 @@ public class ClockSelector : TimeSelectorBase
 
     #region Mouse handlers
 
-    private void ComponentIsDragged(object? sender, EventArgs e) => AutoChangeMode.IfTrue(MoveToNextComponent);
+    private void ComponentIsDragged(object? sender, EventArgs e) => AutoChangeMode.IfTrue(() => MoveToNextComponent());
 
     #endregion
 

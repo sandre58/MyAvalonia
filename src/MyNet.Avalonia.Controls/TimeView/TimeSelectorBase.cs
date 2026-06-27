@@ -14,6 +14,8 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
+using Avalonia.Interactivity;
+using Avalonia.VisualTree;
 using MyNet.Primitives;
 using MyNet.Primitives.Temporal;
 using MyNet.Utilities.Suspending;
@@ -32,6 +34,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
     static TimeSelectorBase()
     {
+        FocusableProperty.OverrideDefaultValue<TimeSelectorBase>(true);
         SelectedValueProperty.Changed.AddClassHandler<TimeSelectorBase>((o, _) =>
         {
             o.UpdateTimeValues();
@@ -86,9 +89,23 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
         UpdateTimeValues();
     }
 
-    protected virtual void AddComponentHandlers(IComponentTimeSelector component) { }
+    protected virtual void AddComponentHandlers(IComponentTimeSelector component)
+    {
+        if (component is not InputElement input)
+            return;
 
-    protected virtual void RemoveComponentHandlers(IComponentTimeSelector component) { }
+        input.AddHandler(KeyDownEvent, OnComponentKeyDown, RoutingStrategies.Tunnel);
+        input.AddHandler(GotFocusEvent, OnComponentGotFocus, RoutingStrategies.Bubble);
+    }
+
+    protected virtual void RemoveComponentHandlers(IComponentTimeSelector component)
+    {
+        if (component is not InputElement input)
+            return;
+
+        input.RemoveHandler(KeyDownEvent, OnComponentKeyDown);
+        input.RemoveHandler(GotFocusEvent, OnComponentGotFocus);
+    }
 
     protected Dictionary<TimeComponent, IComponentTimeSelector?> Components { get; } = [];
 
@@ -207,7 +224,28 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
         if (Components.GetValueOrDefault(value) is { } componentTimeSelector)
             ShowComponent(componentTimeSelector);
+
+        if (ShouldFocusActiveComponent(value))
+            FocusSelectedComponent();
+
+        OnActiveComponentChanged(value);
     }
+
+    protected virtual bool ShouldFocusActiveComponent(TimeComponent component) =>
+        IsKeyboardFocusWithin && !IsFocusWithinComponent(component);
+
+    private bool IsFocusWithinComponent(TimeComponent component)
+    {
+        if (TopLevel.GetTopLevel(this)?.FocusManager.GetFocusedElement() is not Visual focused)
+            return false;
+
+        if (Components.GetValueOrDefault(component) is not Visual componentVisual)
+            return false;
+
+        return ReferenceEquals(componentVisual, focused) || componentVisual.IsVisualAncestorOf(focused);
+    }
+
+    protected virtual void OnActiveComponentChanged(TimeComponent component) { }
 
     #endregion
 
@@ -247,6 +285,24 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
     #endregion
 
+    #region ShowClock
+
+    /// <summary>
+    /// Defines the <see cref="ShowClock"/> property.
+    /// </summary>
+    public static readonly StyledProperty<bool> ShowClockProperty = AvaloniaProperty.Register<TimeSelectorBase, bool>(nameof(ShowClock), true);
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the analog clock selector is displayed.
+    /// </summary>
+    public bool ShowClock
+    {
+        get => GetValue(ShowClockProperty);
+        set => SetValue(ShowClockProperty, value);
+    }
+
+    #endregion
+
     #region TimeFormat
 
     /// <summary>
@@ -271,55 +327,84 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
     {
         base.OnKeyDown(e);
 
-        switch (e.Key)
-        {
-            case Key.Space:
-            case Key.Enter:
-                MoveToNextComponent();
-                e.Handled = true;
-                break;
-
-            case Key.Left:
-                MoveToPreviousComponent();
-                e.Handled = true;
-                break;
-
-            case Key.Up:
-                Previous();
-                e.Handled = true;
-                break;
-
-            case Key.Right:
-                MoveToNextComponent();
-                e.Handled = true;
-                break;
-
-            case Key.Down:
-                Next();
-                e.Handled = true;
-                break;
-
-            case Key.PageDown:
-                NextLarge();
-                e.Handled = true;
-                break;
-
-            case Key.PageUp:
-                PreviousLarge();
-                e.Handled = true;
-                break;
-
-            case Key.Home:
-                First();
-                e.Handled = true;
-                break;
-
-            case Key.End:
-                Last();
-                e.Handled = true;
-                break;
-        }
+        if (TryProcessDigitKey(e) || ProcessKeyboardKey(e))
+            e.Handled = true;
     }
+
+    protected bool ProcessKeyboardKey(KeyEventArgs e)
+    {
+        if (!IsEnabled || e.Handled || e.KeyModifiers != KeyModifiers.None)
+            return false;
+
+        return e.Key switch
+        {
+            Key.Space or Key.Enter or Key.Right => MoveToNextComponent(wrap: true) || true,
+            Key.Left => MoveToPreviousComponent(wrap: true) || true,
+            Key.Up => Previous() || true,
+            Key.Down => Next() || true,
+            Key.PageDown => NextLarge() || true,
+            Key.PageUp => PreviousLarge() || true,
+            Key.Home => First() || true,
+            Key.End => Last() || true,
+            _ => false
+        };
+    }
+
+    private void OnComponentKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (TryProcessDigitKey(e) || ProcessKeyboardKey(e))
+            e.Handled = true;
+    }
+
+    protected virtual bool TryProcessDigitKey(KeyEventArgs e) => false;
+
+    private void OnComponentGotFocus(object? sender, RoutedEventArgs e)
+    {
+        if (ResolveComponentKey(sender ?? e.Source) is { } key)
+            SetCurrentValue(SelectedComponentProperty, key);
+    }
+
+    #endregion
+
+    #region Focus
+
+    public void FocusActiveComponent()
+    {
+        if (!GetSelectableComponents().Contains(SelectedComponent) && GetSelectableComponents().FirstOrDefault() is { } first)
+            SetCurrentValue(SelectedComponentProperty, first);
+
+        Focus(NavigationMethod.Directional);
+        FocusSelectedComponent();
+    }
+
+    protected void FocusSelectedComponent(NavigationMethod method = NavigationMethod.Directional)
+    {
+        if (Components.GetValueOrDefault(SelectedComponent) is IInputElement { Focusable: true, IsEffectivelyEnabled: true } input)
+            input.Focus(method);
+    }
+
+    protected TimeComponent? ResolveComponentKey(object? source)
+    {
+        if (source is not Visual visual)
+            return null;
+
+        foreach (var (key, component) in Components)
+        {
+            if (component is not Visual componentVisual)
+                continue;
+
+            if (ReferenceEquals(componentVisual, visual) || componentVisual.IsVisualAncestorOf(visual))
+                return key;
+        }
+
+        return null;
+    }
+
+    protected IEnumerable<TimeComponent> GetSelectableComponents() =>
+        Components
+            .Where(x => x.Value is Control { IsEnabled: true })
+            .OrderBy(x => x.Key)
+            .Select(x => x.Key);
 
     #endregion
 
@@ -335,6 +420,8 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
         }
     }
 
+    protected IDisposable SuppressComponentValueChanged() => _componentValueChangedSuspender.Suspend();
+
     private void OnComponentChanged(bool computeIsAm = false)
     {
         if (_componentValueChangedSuspender.IsSuspended) return;
@@ -343,17 +430,67 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
         SetCurrentValue(SelectedValueProperty, timeContext.ToTimeSpan());
     }
 
-    public void Previous() => CurrentComponent?.IfIs<IComponentTimeSelector>(Previous);
+    public bool Previous()
+    {
+        if (CurrentComponent is not { } component)
+            return false;
 
-    public void Next() => CurrentComponent?.IfIs<IComponentTimeSelector>(Next);
+        Previous(component);
+        return true;
+    }
 
-    public void PreviousLarge() => CurrentComponent?.IfIs<IComponentTimeSelector>(PreviousLarge);
+    public bool Next()
+    {
+        if (CurrentComponent is not { } component)
+            return false;
 
-    public void NextLarge() => CurrentComponent?.IfIs<IComponentTimeSelector>(NextLarge);
+        Next(component);
+        return true;
+    }
 
-    public void Last() => CurrentComponent?.IfIs<IComponentTimeSelector>(Last);
+    public bool PreviousLarge()
+    {
+        if (CurrentComponent is not { } component)
+            return false;
 
-    public void First() => CurrentComponent?.IfIs<IComponentTimeSelector>(First);
+        PreviousLarge(component, GetLargeStepFrequency(SelectedComponent));
+        return true;
+    }
+
+    public bool NextLarge()
+    {
+        if (CurrentComponent is not { } component)
+            return false;
+
+        NextLarge(component, GetLargeStepFrequency(SelectedComponent));
+        return true;
+    }
+
+    protected virtual int GetLargeStepFrequency(TimeComponent component) => component switch
+    {
+        TimeComponent.Hour => 3,
+        TimeComponent.Minute => 10,
+        TimeComponent.Second => 15,
+        _ => 1
+    };
+
+    public bool Last()
+    {
+        if (CurrentComponent is not { } component)
+            return false;
+
+        Last(component);
+        return true;
+    }
+
+    public bool First()
+    {
+        if (CurrentComponent is not { } component)
+            return false;
+
+        First(component);
+        return true;
+    }
 
     public bool IsEmpty() => Components.All(c => c.Value is null);
 
@@ -383,26 +520,22 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
         component.Value = newValue > component.Maximum ? component.Minimum : newValue;
     }
 
-    private static void PreviousLarge(IComponentTimeSelector component)
+    private static void PreviousLarge(IComponentTimeSelector component, int step)
     {
         if (component.Value is not { } current)
         {
-            component.Value = component.Maximum - ((component.Maximum - component.Minimum) % component.StepFrequency);
+            component.Value = component.Maximum;
             return;
         }
 
-        var newValue = current - component.StepFrequency;
+        var newValue = current - step;
         while (newValue < component.Minimum)
             newValue += component.Maximum - component.Minimum + 1;
-
-        var offset = (newValue - component.Minimum) % component.StepFrequency;
-        if (offset != 0)
-            newValue -= offset;
 
         component.Value = newValue;
     }
 
-    private static void NextLarge(IComponentTimeSelector component)
+    private static void NextLarge(IComponentTimeSelector component, int step)
     {
         if (component.Value is not { } current)
         {
@@ -410,13 +543,9 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
             return;
         }
 
-        var newValue = current + component.StepFrequency;
+        var newValue = current + step;
         while (newValue > component.Maximum)
             newValue -= component.Maximum - component.Minimum + 1;
-
-        var offset = (newValue - component.Minimum) % component.StepFrequency;
-        if (offset != 0)
-            newValue += component.StepFrequency - offset;
 
         component.Value = newValue;
     }
@@ -425,20 +554,46 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
     private static void Last(IComponentTimeSelector component) => component.Value = component.Maximum;
 
-    public void MoveToPreviousComponent()
+    public bool MoveToPreviousComponent(bool wrap = false)
     {
-        var components = Components.Where(x => x.Key < SelectedComponent && x.Value?.IsEnabled == true).Select(x => x.Key).OrderDescending().ToList();
+        var selectable = GetSelectableComponents().ToList();
+        if (selectable.Count == 0)
+            return false;
 
-        if (components.Count > 0)
-            SetCurrentValue(SelectedComponentProperty, components[0]);
+        var index = selectable.IndexOf(SelectedComponent);
+
+        if (index > 0)
+        {
+            SetCurrentValue(SelectedComponentProperty, selectable[index - 1]);
+            return true;
+        }
+
+        if (!wrap)
+            return false;
+
+        SetCurrentValue(SelectedComponentProperty, selectable[^1]);
+        return true;
     }
 
-    public void MoveToNextComponent()
+    public bool MoveToNextComponent(bool wrap = false)
     {
-        var components = Components.Where(x => x.Key > SelectedComponent && x.Value?.IsEnabled == true).Select(x => x.Key).Order().ToList();
+        var selectable = GetSelectableComponents().ToList();
+        if (selectable.Count == 0)
+            return false;
 
-        if (components.Count > 0)
-            SetCurrentValue(SelectedComponentProperty, components[0]);
+        var index = selectable.IndexOf(SelectedComponent);
+
+        if (index >= 0 && index < selectable.Count - 1)
+        {
+            SetCurrentValue(SelectedComponentProperty, selectable[index + 1]);
+            return true;
+        }
+
+        if (!wrap)
+            return false;
+
+        SetCurrentValue(SelectedComponentProperty, selectable[0]);
+        return true;
     }
 
     protected virtual void ShowComponent(IComponentTimeSelector component) { }

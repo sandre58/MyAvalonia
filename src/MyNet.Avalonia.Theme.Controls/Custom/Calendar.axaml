@@ -514,7 +514,7 @@
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch"
                               ColumnDefinitions="*, *, *, *, *, *, *"
-                              RowDefinitions="*, Auto, *, *, *, *, *, *" />
+                              RowDefinitions="Auto, *, *, *, *, *, *" />
                         <Grid Name="{x:Static my:Calendar.PartYearGrid}"
                               Grid.Row="1"
                               HorizontalAlignment="Stretch"

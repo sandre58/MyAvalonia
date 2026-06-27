@@ -95,6 +95,9 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                         case TimePickerEx timePickerEx:
                             timePickerEx.SetValue(TimePickerEx.SelectedValueProperty, RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)).TimeOfDay);
                             break;
+                        case DateTimePickerEx dateTimePickerEx:
+                            dateTimePickerEx.SetValue(DateTimePickerEx.SelectedValueProperty, RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)));
+                            break;
                         case ColorPickerEx colorPickerEx:
                             colorPickerEx.SetValue(ColorPickerEx.SelectedValueProperty, Faker.Colors.Hex().ToColor());
                             break;
@@ -141,6 +144,9 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                         case TimePickerEx timePickerEx:
                             timePickerEx.SetValue(TimePickerEx.SelectedValueProperty, null);
                             break;
+                        case DateTimePickerEx dateTimePickerEx:
+                            dateTimePickerEx.SetValue(DateTimePickerEx.SelectedValueProperty, null);
+                            break;
                         case ColorPickerEx colorPickerEx:
                             colorPickerEx.SetValue(ColorPickerEx.SelectedValueProperty, null);
                             break;
@@ -162,6 +168,7 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                         { typeof(DatePicker), InputAssist.PlaceholderTextProperty },
                         { typeof(TimePicker), InputAssist.PlaceholderTextProperty },
                         { typeof(TimePickerEx), TimePickerEx.PlaceholderTextProperty },
+                        { typeof(DateTimePickerEx), DateTimePickerEx.PlaceholderTextProperty },
                         { typeof(ColorPickerEx), ColorPickerEx.PlaceholderTextProperty }
                     },
                     x,
@@ -288,7 +295,7 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                 true,
                 x => x.DisplayName(nameof(SettingsResources.ShowPlaceholderText)).Group(nameof(TimePicker)).Of<ToggleSwitchEditor>())
             .AddValueAction(
-                (x, y) => UpdateControl(new() { { typeof(TimePicker), TimePicker.UseSecondsProperty }, { typeof(TimePickerEx), TimePickerEx.ShowSecondsProperty } },
+                (x, y) => UpdateControl(new() { { typeof(TimePicker), TimePicker.UseSecondsProperty }, { typeof(TimePickerEx), TimePickerEx.ShowSecondsProperty }, { typeof(DateTimePickerEx), DateTimePickerEx.ShowSecondsProperty } },
                     x,
                     ((bool?)y).GetValueOrDefault()),
                 false,
@@ -296,7 +303,7 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
             .AddValueAction(
                 (x, y) =>
                 {
-                    UpdateControl(new() { { typeof(TimePickerEx), TimePickerEx.TimeFormatProperty } },
+                    UpdateControl(new() { { typeof(TimePickerEx), TimePickerEx.TimeFormatProperty }, { typeof(DateTimePickerEx), DateTimePickerEx.TimeFormatProperty } },
                         x,
                         y ?? default(TimeFormat));
 

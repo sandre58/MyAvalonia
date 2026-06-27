@@ -23,7 +23,7 @@ public sealed class NumericUpDownTimeComponent : NumericUpDown, IComponentTimeSe
 
     int IComponentTimeSelector.StepFrequency => (int)Increment;
 
-    int? IComponentTimeSelector.Value { get => (int?)Value; set => Value = value; }
+    int? IComponentTimeSelector.Value { get => (int?)Value; set => SetCurrentValue(ValueProperty, (decimal?)value); }
 
     event EventHandler<ValueChangedEventArgs<int>>? IComponentTimeSelector.ValueChanged
     {

@@ -202,7 +202,7 @@ public class DropDownControl : TemplatedControl, IPopupControl
 
     public void ClosePopup() => IsDropDownOpen.IfTrue(() => SetCurrentValue(IsDropDownOpenProperty, false));
 
-    private void TryFocusPopupContent()
+    protected virtual void TryFocusPopupContent()
     {
         if (IsDropDownOpen)
         {

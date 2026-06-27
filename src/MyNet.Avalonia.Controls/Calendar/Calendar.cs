@@ -524,22 +524,28 @@ public class Calendar : TemplatedControl
 
     private void InitializeGridButtons()
     {
+        _monthGrid?.Children.Clear();
+        _yearGrid?.Children.Clear();
+
         // Generate Day titles (Sun, Mon, Tue, Wed, Thu, Fri, Sat) based on FirstDayOfWeek and culture.
-        const int count = DateTimeHelper.DaysPerWeek + (DateTimeHelper.DaysPerWeek * DateTimeHelper.DaysPerWeek);
-        var children = new List<Control>(count);
+        const int dayTitleRow = 0;
+        const int firstDayRow = 1;
+        var weekRowCount = DateTimeHelper.MaxNumberOfWeeksPerMonth;
+        var capacity = DateTimeHelper.DaysPerWeek + (DateTimeHelper.DaysPerWeek * weekRowCount);
+        var children = new List<Control>(capacity);
         for (var i = 0; i < DateTimeHelper.DaysPerWeek; i++)
         {
             if (DayTitleTemplate?.Build() is { } cell)
             {
                 cell.DataContext = string.Empty;
-                _ = cell.SetValue(Grid.RowProperty, 0);
+                _ = cell.SetValue(Grid.RowProperty, dayTitleRow);
                 _ = cell.SetValue(Grid.ColumnProperty, i);
                 children.Add(cell);
             }
         }
 
         // Generate date buttons.
-        for (var i = 2; i < DateTimeHelper.DaysPerMonth + 2; i++)
+        for (var i = firstDayRow; i < weekRowCount + firstDayRow; i++)
         {
             for (var j = 0; j < DateTimeHelper.DaysPerWeek; j++)
             {
@@ -886,6 +892,8 @@ public class Calendar : TemplatedControl
     #endregion
 
     #region Focus
+
+    public void FocusSelectedDay() => UpdateFocus(SelectedDate ?? DisplayDate);
 
     private void UpdateFocus(DateTime? date = null)
     {
