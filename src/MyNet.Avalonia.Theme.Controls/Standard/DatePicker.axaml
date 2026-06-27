@@ -61,7 +61,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid Name="ContentPanel" RowDefinitions="*,Auto" Margin="{TemplateBinding Padding}">
+                        <Grid Name="ContentPanel" RowDefinitions="*,Auto">
                             <Grid Name="PART_PickerContainer">
                                 <Grid.Styles>
                                     <Style Selector="DateTimePickerPanel">

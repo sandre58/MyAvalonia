@@ -138,10 +138,12 @@ public static class GlobalizationBehavior
 
     private static void UpdateDateTimeScrollPickerEx(DateTimeScrollPickerEx dateTimePicker)
     {
-        dateTimePicker.TimeFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? TimeFormat.TwentyFourHour : TimeFormat.TwelveHour;
-        dateTimePicker.DisplayFormat = dateTimePicker.ShowSeconds
-            ? $"{GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern} {GlobalizationServices.Current.CurrentCulture.DateTimeFormat.LongTimePattern}"
-            : $"{GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern} {GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern}";
+        dateTimePicker.ClockIdentifier = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? "24HourClock" : "12HourClock";
+
+        // Force the segment grid and text to refresh against the new culture (date order, designators).
+        var dayVisible = dateTimePicker.DayVisible;
+        dateTimePicker.DayVisible = !dayVisible;
+        dateTimePicker.DayVisible = dayVisible;
     }
 
     private static void UpdateDatePicker(DatePicker datePicker)

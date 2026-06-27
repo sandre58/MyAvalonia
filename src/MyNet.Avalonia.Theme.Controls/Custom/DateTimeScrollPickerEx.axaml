@@ -49,6 +49,9 @@
         <Setter Property="my:DateTimePickerAssist.PlaceholderDay" Value="{my:Loc Day}" />
         <Setter Property="my:DateTimePickerAssist.PlaceholderMonth" Value="{my:Loc Month}" />
         <Setter Property="my:DateTimePickerAssist.PlaceholderYear" Value="{my:Loc Year}" />
+        <Setter Property="my:DateTimePickerAssist.PlaceholderHour" Value="{my:Loc Hour}" />
+        <Setter Property="my:DateTimePickerAssist.PlaceholderMinute" Value="{my:Loc Minute}" />
+        <Setter Property="my:DateTimePickerAssist.PlaceholderSecond" Value="{my:Loc Second}" />
         <Setter Property="my:DateTimePickerBehavior.OverridePlaceholderText" Value="True" />
         <Setter Property="my:GlobalizationBehavior.UpdateOnCultureChanged" Value="True" />
         <Setter Property="my:PopupBehavior.EnableShortcutKeys" Value="True" />
@@ -128,7 +131,8 @@
                                 Theme="{StaticResource MyNet.Theme.Border.State}" />
 
                         <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                            <my:Ripple Name="PART_Ripple" RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
+                            <my:Ripple Name="PART_Ripple"
+                                       RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}">
                                 <Grid Name="PART_Grid" Margin="{TemplateBinding Padding}"
                                       ColumnDefinitions="Auto,*,Auto,Auto,Auto">
 
@@ -144,8 +148,12 @@
                                                     Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
                                         <ContentControl.IsVisible>
                                             <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                         Path="(my:IconAssist.Icon)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                         Path="(my:IconAssist.IconTemplate)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
                                             </MultiBinding>
                                         </ContentControl.IsVisible>
                                     </ContentControl>
@@ -258,13 +266,15 @@
                                                            FontFamily="{TemplateBinding FontFamily}"
                                                            FontSize="{TemplateBinding FontSize}"
                                                            FontWeight="{TemplateBinding FontWeight}"
-                                                           Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderDay}" />
-                                                <Rectangle Name="PART_SixthSpacer"
-                                                           Grid.Column="11"
-                                                           Width="1"
-                                                           Height="{TemplateBinding Height}"
-                                                           HorizontalAlignment="Center"
-                                                           Fill="{TemplateBinding BorderBrush}" />
+                                                           Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderSecond}" />
+                                                <ContentControl Name="PART_DateTimeSeparator"
+                                                                Grid.Column="11"
+                                                                Margin="4,0"
+                                                                IsHitTestVisible="False"
+                                                                Content="{my:MaterialIcon Clock}"
+                                                                Classes="size-xs"
+                                                                Opacity="{DynamicResource MyNet.Opacity.Medium}"
+                                                                VerticalAlignment="Center" />
                                                 <TextBlock Name="PART_PeriodTextBlock"
                                                            Grid.Column="12"
                                                            Padding="{my:Thickness Sm, Horizontal}"
@@ -317,8 +327,8 @@
                                 <Border HorizontalAlignment="Stretch" ClipToBounds="True"
                                         CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                     <my:DateTimeScrollPickerPresenter Name="PART_PickerPresenter"
-                                                         Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
-                                                         my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}" />
+                                                                      Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
+                                                                      my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}" />
                                 </Border>
                             </Border>
                         </Popup>
@@ -442,7 +452,8 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="MyNet.Theme.DateTimeScrollPickerEx.Underline" TargetType="my:DateTimeScrollPickerEx" BasedOn="{StaticResource {x:Type my:DateTimeScrollPickerEx}}">
+    <ControlTheme x:Key="MyNet.Theme.DateTimeScrollPickerEx.Underline" TargetType="my:DateTimeScrollPickerEx"
+                  BasedOn="{StaticResource {x:Type my:DateTimeScrollPickerEx}}">
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="{StaticResource MyNet.Padding.Input.Underline.Md}" />
         <Setter Property="my:InputAssist.InnerPadding" Value="{StaticResource MyNet.Padding.Input.Underline.Inner.Md}" />
@@ -492,138 +503,144 @@
                                                 Opacity="{TemplateBinding (my:IconAssist.Opacity)}">
                                     <ContentControl.IsVisible>
                                         <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.Icon)" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="(my:IconAssist.IconTemplate)" RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                     Path="(my:IconAssist.Icon)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                     Path="(my:IconAssist.IconTemplate)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
                                         </MultiBinding>
                                     </ContentControl.IsVisible>
                                 </ContentControl>
 
-                                    <Button Name="PART_FlyoutButton"
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch"
-                                            my:DisableAssist.IsDisablable="False"
-                                            Theme="{StaticResource MyNet.Theme.Button.Clean}">
-                                        <my:InputChrome Name="PART_Input"
-                                                        Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
-                                                        HorizontalAlignment="Stretch"
-                                                        VerticalAlignment="Center"
-                                                        ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
-                                                        FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
-                                                        FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
-                                                        InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
-                                                        InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
-                                                        InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
-                                                        InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
-                                                        InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
-                                                        Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                                        UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
-                                                        PlaceholderText="{TemplateBinding (my:InputAssist.PlaceholderText)}"
-                                                        PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
+                                <Button Name="PART_FlyoutButton"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        my:DisableAssist.IsDisablable="False"
+                                        Theme="{StaticResource MyNet.Theme.Button.Clean}">
+                                    <my:InputChrome Name="PART_Input"
+                                                    Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
+                                                    FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
+                                                    FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
+                                                    InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
+                                                    InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
+                                                    InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
+                                                    InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
+                                                    InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
+                                                    Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
+                                                    UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
+                                                    PlaceholderText="{TemplateBinding (my:InputAssist.PlaceholderText)}"
+                                                    PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
 
-                                            <Grid Name="PART_ButtonContentGrid" VerticalAlignment="Center"
-                                                  ColumnDefinitions="*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*">
-                                                <TextBlock Name="PART_DayTextBlock"
-                                                           Padding="{my:Thickness Sm, Horizontal}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           FontFamily="{TemplateBinding FontFamily}"
-                                                           FontSize="{TemplateBinding FontSize}"
-                                                           FontWeight="{TemplateBinding FontWeight}"
-                                                           Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderDay}" />
-                                                <Rectangle Name="PART_FirstSpacer"
-                                                           Grid.Column="1"
-                                                           Width="1"
-                                                           Height="{TemplateBinding Height}"
-                                                           HorizontalAlignment="Center"
-                                                           Fill="{TemplateBinding BorderBrush}" />
-                                                <TextBlock Name="PART_MonthTextBlock"
-                                                           Grid.Column="2"
-                                                           Padding="{my:Thickness Sm, Horizontal}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           FontFamily="{TemplateBinding FontFamily}"
-                                                           FontSize="{TemplateBinding FontSize}"
-                                                           FontWeight="{TemplateBinding FontWeight}"
-                                                           Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderMonth}"
-                                                           TextAlignment="Left" />
-                                                <Rectangle Name="PART_SecondSpacer"
-                                                           Grid.Column="3"
-                                                           Width="1"
-                                                           Height="{TemplateBinding Height}"
-                                                           HorizontalAlignment="Center"
-                                                           Fill="{TemplateBinding BorderBrush}" />
-                                                <TextBlock Name="PART_YearTextBlock"
-                                                           Grid.Column="4"
-                                                           Padding="{my:Thickness Sm, Horizontal}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           FontFamily="{TemplateBinding FontFamily}"
-                                                           FontSize="{TemplateBinding FontSize}"
-                                                           FontWeight="{TemplateBinding FontWeight}"
-                                                           Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderYear}" />
-                                                <Rectangle Name="PART_ThirdSpacer"
-                                                           Grid.Column="5"
-                                                           Width="1"
-                                                           Height="{TemplateBinding Height}"
-                                                           HorizontalAlignment="Center"
-                                                           Fill="{TemplateBinding BorderBrush}" />
-                                                <TextBlock Name="PART_HourTextBlock"
-                                                           Grid.Column="6"
-                                                           Padding="{my:Thickness Sm, Horizontal}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           FontFamily="{TemplateBinding FontFamily}"
-                                                           FontSize="{TemplateBinding FontSize}"
-                                                           FontWeight="{TemplateBinding FontWeight}"
-                                                           Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderHour}" />
-                                                <Rectangle Name="PART_FourthSpacer"
-                                                           Grid.Column="7"
-                                                           Width="1"
-                                                           Height="{TemplateBinding Height}"
-                                                           HorizontalAlignment="Center"
-                                                           Fill="{TemplateBinding BorderBrush}" />
-                                                <TextBlock Name="PART_MinuteTextBlock"
-                                                           Grid.Column="8"
-                                                           Padding="{my:Thickness Sm, Horizontal}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           FontFamily="{TemplateBinding FontFamily}"
-                                                           FontSize="{TemplateBinding FontSize}"
-                                                           FontWeight="{TemplateBinding FontWeight}"
-                                                           Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderMinute}" />
-                                                <Rectangle Name="PART_FifthSpacer"
-                                                           Grid.Column="9"
-                                                           Width="1"
-                                                           Height="{TemplateBinding Height}"
-                                                           HorizontalAlignment="Center"
-                                                           Fill="{TemplateBinding BorderBrush}" />
-                                                <TextBlock Name="PART_SecondTextBlock"
-                                                           Grid.Column="10"
-                                                           Padding="{my:Thickness Sm, Horizontal}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           FontFamily="{TemplateBinding FontFamily}"
-                                                           FontSize="{TemplateBinding FontSize}"
-                                                           FontWeight="{TemplateBinding FontWeight}"
-                                                           Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderDay}" />
-                                                <Rectangle Name="PART_SixthSpacer"
-                                                           Grid.Column="11"
-                                                           Width="1"
-                                                           Height="{TemplateBinding Height}"
-                                                           HorizontalAlignment="Center"
-                                                           Fill="{TemplateBinding BorderBrush}" />
-                                                <TextBlock Name="PART_PeriodTextBlock"
-                                                           Grid.Column="12"
-                                                           Padding="{my:Thickness Sm, Horizontal}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           FontFamily="{TemplateBinding FontFamily}"
-                                                           FontSize="{TemplateBinding FontSize}"
-                                                           FontWeight="{TemplateBinding FontWeight}" />
-                                            </Grid>
-                                        </my:InputChrome>
-                                    </Button>
+                                        <Grid Name="PART_ButtonContentGrid" VerticalAlignment="Center"
+                                              ColumnDefinitions="*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*">
+                                            <TextBlock Name="PART_DayTextBlock"
+                                                       Padding="{my:Thickness Sm, Horizontal}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}"
+                                                       Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderDay}" />
+                                            <Rectangle Name="PART_FirstSpacer"
+                                                       Grid.Column="1"
+                                                       Width="1"
+                                                       Height="{TemplateBinding Height}"
+                                                       HorizontalAlignment="Center"
+                                                       Fill="{TemplateBinding BorderBrush}" />
+                                            <TextBlock Name="PART_MonthTextBlock"
+                                                       Grid.Column="2"
+                                                       Padding="{my:Thickness Sm, Horizontal}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}"
+                                                       Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderMonth}"
+                                                       TextAlignment="Left" />
+                                            <Rectangle Name="PART_SecondSpacer"
+                                                       Grid.Column="3"
+                                                       Width="1"
+                                                       Height="{TemplateBinding Height}"
+                                                       HorizontalAlignment="Center"
+                                                       Fill="{TemplateBinding BorderBrush}" />
+                                            <TextBlock Name="PART_YearTextBlock"
+                                                       Grid.Column="4"
+                                                       Padding="{my:Thickness Sm, Horizontal}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}"
+                                                       Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderYear}" />
+                                            <Rectangle Name="PART_ThirdSpacer"
+                                                       Grid.Column="5"
+                                                       Width="1"
+                                                       Height="{TemplateBinding Height}"
+                                                       HorizontalAlignment="Center"
+                                                       Fill="{TemplateBinding BorderBrush}" />
+                                            <TextBlock Name="PART_HourTextBlock"
+                                                       Grid.Column="6"
+                                                       Padding="{my:Thickness Sm, Horizontal}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}"
+                                                       Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderHour}" />
+                                            <Rectangle Name="PART_FourthSpacer"
+                                                       Grid.Column="7"
+                                                       Width="1"
+                                                       Height="{TemplateBinding Height}"
+                                                       HorizontalAlignment="Center"
+                                                       Fill="{TemplateBinding BorderBrush}" />
+                                            <TextBlock Name="PART_MinuteTextBlock"
+                                                       Grid.Column="8"
+                                                       Padding="{my:Thickness Sm, Horizontal}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}"
+                                                       Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderMinute}" />
+                                            <Rectangle Name="PART_FifthSpacer"
+                                                       Grid.Column="9"
+                                                       Width="1"
+                                                       Height="{TemplateBinding Height}"
+                                                       HorizontalAlignment="Center"
+                                                       Fill="{TemplateBinding BorderBrush}" />
+                                            <TextBlock Name="PART_SecondTextBlock"
+                                                       Grid.Column="10"
+                                                       Padding="{my:Thickness Sm, Horizontal}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}"
+                                                       Text="{TemplateBinding my:DateTimePickerAssist.PlaceholderSecond}" />
+                                            <ContentControl Name="PART_DateTimeSeparator"
+                                                            Grid.Column="11"
+                                                            Margin="4,0"
+                                                            IsHitTestVisible="False"
+                                                            Content="{my:MaterialIcon Clock}"
+                                                            Classes="size-xs"
+                                                            Opacity="{DynamicResource MyNet.Opacity.Medium}"
+                                                            VerticalAlignment="Center" />
+                                            <TextBlock Name="PART_PeriodTextBlock"
+                                                       Grid.Column="12"
+                                                       Padding="{my:Thickness Sm, Horizontal}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}" />
+                                        </Grid>
+                                    </my:InputChrome>
+                                </Button>
 
                                 <!-- Clear button -->
                                 <Button Name="PART_ClearButton"
@@ -677,9 +694,9 @@
                                     Background="{TemplateBinding (my:PopupAssist.Background)}">
                                 <Border HorizontalAlignment="Stretch" ClipToBounds="True"
                                         CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                    <DatePickerPresenter Name="PART_PickerPresenter"
-                                                         Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
-                                                         my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}" />
+                                    <my:DateTimeScrollPickerPresenter Name="PART_PickerPresenter"
+                                                                      Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
+                                                                      my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}" />
                                 </Border>
                             </Border>
                         </Popup>

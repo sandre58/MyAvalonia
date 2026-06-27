@@ -141,4 +141,26 @@ public static class DateTimePickerAssist
     public static string GetPlaceholderSecond(StyledElement element) => element.GetValue(PlaceholderSecondProperty);
 
     #endregion
+
+    #region PlaceholderPeriod
+
+    /// <summary>
+    /// Provides PlaceholderPeriod Property for attached DateTimePickerBehavior element.
+    /// </summary>
+    public static readonly AttachedProperty<string> PlaceholderPeriodProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("PlaceholderPeriod", typeof(DateTimePickerAssist));
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PlaceholderPeriodProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    /// <param name="value">The value to set  <see cref="PlaceholderPeriodProperty"/>.</param>
+    public static void SetPlaceholderPeriod(StyledElement element, string value) => element.SetValue(PlaceholderPeriodProperty, value);
+
+    /// <summary>
+    /// Accessor for Attached  <see cref="PlaceholderPeriodProperty"/>.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public static string GetPlaceholderPeriod(StyledElement element) => element.GetValue(PlaceholderPeriodProperty);
+
+    #endregion
 }

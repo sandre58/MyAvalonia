@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 
@@ -30,7 +29,7 @@ public sealed class DateTimeScrollPickerExProxy : IControlProxy
     public DateTimeScrollPickerExProxy(DateTimeScrollPickerEx control)
     {
         _control = control ?? throw new ArgumentNullException(nameof(control));
-        _ = DropDownControl.IsDropDownOpenProperty.Changed.Subscribe(e =>
+        _ = DateTimeScrollPickerEx.IsDropDownOpenProperty.Changed.Subscribe(e =>
         {
             if (e.Sender is not DateTimeScrollPickerEx picker || picker != _control)
                 return;
@@ -40,17 +39,10 @@ public sealed class DateTimeScrollPickerExProxy : IControlProxy
         });
         _control.GotFocus += OnGotFocus;
         _control.LostFocus += OnLostFocus;
-        _control.SelectedValueChanged += OnSelectedValueChanged;
-        _control.TextChanged += OnTextChanged;
+        _control.SelectedDateTimeChanged += OnSelectedDateTimeChanged;
     }
 
-    private void OnTextChanged(object? sender, TextChangedEventArgs e)
-    {
-        IsEmptyChanged?.Invoke(_control, EventArgs.Empty);
-        IsActiveChanged?.Invoke(_control, EventArgs.Empty);
-    }
-
-    private void OnSelectedValueChanged(object? sender, SelectionChangedEventArgs e)
+    private void OnSelectedDateTimeChanged(object? sender, DateTimeScrollPickerSelectedValueChangedEventArgs e)
     {
         IsEmptyChanged?.Invoke(_control, EventArgs.Empty);
         IsActiveChanged?.Invoke(_control, EventArgs.Empty);
@@ -72,7 +64,6 @@ public sealed class DateTimeScrollPickerExProxy : IControlProxy
     {
         _control.GotFocus -= OnGotFocus;
         _control.LostFocus -= OnLostFocus;
-        _control.SelectedValueChanged -= OnSelectedValueChanged;
-        _control.TextChanged -= OnTextChanged;
+        _control.SelectedDateTimeChanged -= OnSelectedDateTimeChanged;
     }
 }

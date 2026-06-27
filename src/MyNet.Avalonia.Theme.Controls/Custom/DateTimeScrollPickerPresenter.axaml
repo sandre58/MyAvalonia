@@ -2,20 +2,24 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia">
 
-        <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Embedded.DateTimeScrollPickerEx" TargetType="ListBoxItem"
+    <ControlTheme x:Key="MyNet.Theme.ListBoxItem.Embedded.DateTimeScrollPickerEx" TargetType="ListBoxItem"
                   BasedOn="{StaticResource {x:Type ListBoxItem}}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment"
                 Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.HorizontalAlignment)}" />
-        <Setter Property="VerticalAlignment" Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.VerticalAlignment)}" />
+        <Setter Property="VerticalAlignment"
+                Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.VerticalAlignment)}" />
         <Setter Property="Margin" Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.Margin)}" />
         <Setter Property="Padding" Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.Padding)}" />
-        <Setter Property="CornerRadius" Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.CornerRadius)}" />
+        <Setter Property="CornerRadius"
+                Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.CornerRadius)}" />
         <Setter Property="Background" Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.Background)}" />
-        <Setter Property="BorderBrush" Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.BorderBrush)}" />
+        <Setter Property="BorderBrush"
+                Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.BorderBrush)}" />
         <Setter Property="Foreground" Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.Foreground)}" />
-        <Setter Property="BorderThickness" Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.BorderThickness)}" />
+        <Setter Property="BorderThickness"
+                Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.BorderThickness)}" />
         <Setter Property="my:InteractionAssist.HoverBackground"
                 Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.HoverBackground)}" />
         <Setter Property="my:InteractionAssist.HoverBorderBrush"
@@ -32,9 +36,12 @@
                 Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.RippleColor)}" />
         <Setter Property="my:ShadowAssist.ShadowDepth"
                 Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:ItemsAssist.ShadowDepth)}" />
-        <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:IconAssist.Alignment)}" />
-        <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:IconAssist.Spacing)}" />
-        <Setter Property="my:IconAssist.Opacity" Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:IconAssist.Opacity)}" />
+        <Setter Property="my:IconAssist.Alignment"
+                Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:IconAssist.Alignment)}" />
+        <Setter Property="my:IconAssist.Spacing"
+                Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:IconAssist.Spacing)}" />
+        <Setter Property="my:IconAssist.Opacity"
+                Value="{Binding $parent[my:DateTimeScrollPickerEx].(my:IconAssist.Opacity)}" />
 
         <Style Selector="^:selected">
             <Setter Property="IsHitTestVisible" Value="False" />
@@ -45,7 +52,7 @@
             <Setter Property="my:TransitionsAssist.UseTransitions" Value="False" />
         </Style>
     </ControlTheme>
-    
+
     <ControlTheme x:Key="{x:Type my:DateTimeScrollPickerPresenter}" TargetType="my:DateTimeScrollPickerPresenter">
         <Setter Property="Width" Value="{Binding $parent[my:DateTimeScrollPickerEx].Bounds.Width}" />
         <Setter Property="MinWidth" Value="{Binding $parent[my:DateTimeScrollPickerEx].Bounds.Width}" />
@@ -54,21 +61,24 @@
 
         <Setter Property="Template">
             <ControlTemplate TargetType="my:DateTimeScrollPickerPresenter">
-                <Border Background="{TemplateBinding Background}"
+                <Border Name="Background"
+                        HorizontalAlignment="Stretch"
+                        Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        HorizontalAlignment="Stretch">
+                        CornerRadius="{TemplateBinding CornerRadius}">
 
                     <Border ClipToBounds="True" CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid  RowDefinitions="*,Auto" Margin="{TemplateBinding Padding}">
-                            <Grid x:Name="PART_LayoutGrid">
+                        <Grid Name="ContentPanel" RowDefinitions="*,Auto">
+                            <Grid x:Name="PART_PickerContainer">
                                 <Grid.Styles>
                                     <Style Selector="DateTimePickerPanel">
-                                        <Setter Property="ItemHeight" Value="{Binding $parent[my:DateTimeScrollPickerEx].Bounds.Height}" />
+                                        <Setter Property="ItemHeight"
+                                                Value="{Binding $parent[my:DateTimeScrollPickerEx].Bounds.Height}" />
 
                                         <Style Selector="^ > ListBoxItem">
-                                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ListBoxItem.Embedded.DateTimeScrollPickerEx}" />
+                                            <Setter Property="Theme"
+                                                    Value="{StaticResource MyNet.Theme.ListBoxItem.Embedded.DateTimeScrollPickerEx}" />
                                             <Setter Property="ContentTemplate">
                                                 <Setter.Value>
                                                     <DataTemplate>
@@ -277,8 +287,16 @@
                                            Width="0"
                                            HorizontalAlignment="Center"
                                            Fill="{my:ThemeContext Surface.Border}" />
+                                <ContentControl Name="PART_DateTimeSeparator"
+                                                Content="{my:MaterialIcon Clock}"
+                                                VerticalAlignment="Center"
+                                                Margin="6,0"
+                                                Classes="size-xs"
+                                                Opacity="{DynamicResource MyNet.Opacity.Medium}"
+                                                IsHitTestVisible="False" />
 
-                            </Grid><Grid Name="AcceptDismissGrid" Grid.Row="1" ColumnDefinitions="*,Auto,*" Margin="0 3 0 0">
+                            </Grid>
+                            <Grid Name="AcceptDismissGrid" Grid.Row="1" ColumnDefinitions="*,Auto,*" Margin="0 3 0 0">
                                 <Button Name="PART_AcceptButton"
                                         Grid.Column="0"
                                         HorizontalAlignment="Stretch"
@@ -307,6 +325,11 @@
 
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^ /template/ Panel">
+            <Style Selector="^:pointerover RepeatButton">
+                <Setter Property="Opacity" Value="1.0" />
+            </Style>
+        </Style>
     </ControlTheme>
 </ResourceDictionary>
-
