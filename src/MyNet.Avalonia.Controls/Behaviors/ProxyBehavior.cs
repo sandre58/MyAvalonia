@@ -40,6 +40,7 @@ public static class ProxyBehavior
         Builders.Add(new(c => c is NumericUpDown, c => new NumericUpDownProxy((NumericUpDown)c)));
         Builders.Add(new(c => c is CalendarDatePicker, c => new CalendarDatePickerProxy((CalendarDatePicker)c)));
         Builders.Add(new(c => c is DateTimePickerEx, c => new DateTimePickerExProxy((DateTimePickerEx)c)));
+        Builders.Add(new(c => c is DateTimeScrollPickerEx, c => new DateTimeScrollPickerExProxy((DateTimeScrollPickerEx)c)));
         Builders.Add(new(c => c is ITextPicker, c => new PickerProxy((ITextPicker)c)));
         Builders.Add(new(c => c is DatePicker, c => new DatePickerProxy((DatePicker)c)));
         Builders.Add(new(c => c is TimePicker, c => new TimePickerProxy((TimePicker)c)));

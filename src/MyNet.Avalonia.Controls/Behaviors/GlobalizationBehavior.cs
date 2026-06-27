@@ -103,6 +103,9 @@ public static class GlobalizationBehavior
             case DateTimePickerEx dateTimePickerEx:
                 UpdateDateTimePickerEx(dateTimePickerEx);
                 break;
+            case DateTimeScrollPickerEx dateTimeScrollPickerEx:
+                UpdateDateTimeScrollPickerEx(dateTimeScrollPickerEx);
+                break;
             case DatePicker datepicker:
                 UpdateDatePicker(datepicker);
                 break;
@@ -126,6 +129,14 @@ public static class GlobalizationBehavior
     private static void UpdateCalendarDatePickerEx(CalendarDatePickerEx calendarDatePicker) => calendarDatePicker.DisplayFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern;
 
     private static void UpdateDateTimePickerEx(DateTimePickerEx dateTimePicker)
+    {
+        dateTimePicker.TimeFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? TimeFormat.TwentyFourHour : TimeFormat.TwelveHour;
+        dateTimePicker.DisplayFormat = dateTimePicker.ShowSeconds
+            ? $"{GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern} {GlobalizationServices.Current.CurrentCulture.DateTimeFormat.LongTimePattern}"
+            : $"{GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern} {GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern}";
+    }
+
+    private static void UpdateDateTimeScrollPickerEx(DateTimeScrollPickerEx dateTimePicker)
     {
         dateTimePicker.TimeFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? TimeFormat.TwentyFourHour : TimeFormat.TwelveHour;
         dateTimePicker.DisplayFormat = dateTimePicker.ShowSeconds

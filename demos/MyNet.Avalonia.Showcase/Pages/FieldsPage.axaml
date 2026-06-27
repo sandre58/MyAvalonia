@@ -31,7 +31,7 @@
                              HorizontalAlignment="Center">
                     <UniformGrid.Styles>
                         <Style
-                            Selector="AutoCompleteBox, ButtonSpinner, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|ColorPickerEx, my|DateTimePickerEx, my|MultiComboBox, my|TagBox, my|TimePickerEx">
+                            Selector="AutoCompleteBox, ButtonSpinner, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|ColorPickerEx, my|DateTimePickerEx, my|DateTimeScrollPickerEx, my|MultiComboBox, my|TagBox, my|TimePickerEx">
                             <Setter Property="HorizontalAlignment" Value="Stretch" />
                             <Setter Property="MaxWidth" Value="250" />
                         </Style>
@@ -78,6 +78,9 @@
                         <Style Selector="my|DateTimePickerEx.kind-underline">
                             <Setter Property="Theme" Value="{StaticResource MyNet.Theme.DateTimePickerEx.Underline}" />
                         </Style>
+                        <Style Selector="my|DateTimeScrollPickerEx.kind-underline">
+                            <Setter Property="Theme" Value="{StaticResource MyNet.Theme.DateTimeScrollPickerEx.Underline}" />
+                        </Style>
                     </UniformGrid.Styles>
 
                     <TextBox behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
@@ -104,6 +107,7 @@
                     <TimePicker behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
                     <my:TimePickerEx behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
                     <my:DateTimePickerEx behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <my:DateTimeScrollPickerEx behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
                     <my:ColorPickerEx behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
                 </UniformGrid>
             </DataTemplate>
