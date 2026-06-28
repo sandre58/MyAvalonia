@@ -455,6 +455,8 @@ public class DateTimeScrollPickerEx : TemplatedControl
         if (!_areControlsAvailable || _contentGrid is null)
             return;
 
+        ResetGridChildrenColumns();
+
         var fmt = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
         List<(TextBlock? Text, int Index)> orderedDateParts =
         [
@@ -531,6 +533,21 @@ public class DateTimeScrollPickerEx : TemplatedControl
             columns.Add(new ColumnDefinition(GridLength.Star));
 
         _contentGrid.ColumnDefinitions = columns;
+    }
+
+    private void ResetGridChildrenColumns()
+    {
+        foreach (var text in new[] { _dayText, _monthText, _yearText, _hourText, _minuteText, _secondText, _periodText })
+        {
+            if (text is not null)
+                Grid.SetColumn(text, 0);
+        }
+
+        foreach (var spacer in _spacers)
+            Grid.SetColumn(spacer, 0);
+
+        if (_dateTimeSeparator is not null)
+            Grid.SetColumn(_dateTimeSeparator, 0);
     }
 
     private void SetSelectedDateTimeText()

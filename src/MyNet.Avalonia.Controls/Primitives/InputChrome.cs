@@ -298,7 +298,11 @@ public class InputChrome : ContentControl
 
     private void IsEmptyChangedCallback(object? sender, System.EventArgs e) => RefreshIsEmpty();
 
-    private void IsFocusedChangedCallback(object? sender, System.EventArgs e) => RefreshIsActive();
+    private void IsFocusedChangedCallback(object? sender, System.EventArgs e)
+    {
+        RefreshIsActive();
+        RefreshIsFloating();
+    }
 
     private void IsActiveChangedCallback(object? sender, System.EventArgs e)
     {

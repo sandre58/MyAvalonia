@@ -714,7 +714,7 @@
                                         my:DisableAssist.IsDisablable="False"
                                         Theme="{StaticResource MyNet.Theme.Button.Clean}">
                                     <my:InputChrome Name="PART_Input"
-                                                    Margin="{TemplateBinding (my:InputAssist.InnerPadding)}"
+                                                    Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"

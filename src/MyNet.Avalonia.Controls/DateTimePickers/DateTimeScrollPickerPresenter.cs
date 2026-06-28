@@ -558,6 +558,8 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
 
     private void SetGrid(TemplateItems items)
     {
+        ResetGridChildrenColumns(items);
+
         var fmt = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
 
         // Date parts ordered following the current culture short date pattern.
@@ -639,6 +641,25 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
             columns.Add(new ColumnDefinition(GridLength.Star));
 
         items.PickerContainer.ColumnDefinitions = columns;
+    }
+
+    private void ResetGridChildrenColumns(TemplateItems items)
+    {
+        foreach (var host in new Panel?[]
+                 {
+                     items.DayHost, items.MonthHost, items.YearHost,
+                     items.HourHost, items.MinuteHost, items.SecondHost, items.PeriodHost
+                 })
+        {
+            if (host is not null)
+                Grid.SetColumn(host, 0);
+        }
+
+        foreach (var spacer in _spacers)
+            Grid.SetColumn(spacer, 0);
+
+        if (_dateTimeSeparator is not null)
+            Grid.SetColumn(_dateTimeSeparator, 0);
     }
 
     private void SetInitialFocus(TemplateItems items)
