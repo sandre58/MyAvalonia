@@ -15,6 +15,8 @@ internal enum CalendarNavigationKind
 {
     None,
     SelectDate,
+    MoveFocus,
+    SelectFocused,
     SelectMonthContext,
     Next,
     Previous,

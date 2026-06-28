@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using Avalonia.Controls;
 using Avalonia.Input;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Internals;
@@ -26,10 +27,46 @@ public class CalendarKeyboardNavigationHelperTests
             new MonthContext(5, 2026),
             FocusedDate,
             CurrentMonth,
+            CalendarSelectionMode.SingleDate,
+            allowTapRangeSelection: false,
             ctrl: false,
             shift: false);
 
         result.Kind.Should().Be(CalendarNavigationKind.SelectDate);
+        result.Date.Should().Be(FocusedDate.AddDays(-7));
+    }
+
+    [Fact]
+    public void Resolve_ArrowUpInMultipleRangeWithoutShift_SelectsDate()
+    {
+        var result = CalendarKeyboardNavigationHelper.Resolve(
+            Key.Up,
+            new MonthContext(5, 2026),
+            FocusedDate,
+            CurrentMonth,
+            CalendarSelectionMode.MultipleRange,
+            allowTapRangeSelection: false,
+            ctrl: false,
+            shift: false);
+
+        result.Kind.Should().Be(CalendarNavigationKind.SelectDate);
+        result.Date.Should().Be(FocusedDate.AddDays(-7));
+    }
+
+    [Fact]
+    public void Resolve_ArrowUpInMultipleRangeWithCtrl_MovesFocusOnly()
+    {
+        var result = CalendarKeyboardNavigationHelper.Resolve(
+            Key.Up,
+            new MonthContext(5, 2026),
+            FocusedDate,
+            CurrentMonth,
+            CalendarSelectionMode.MultipleRange,
+            allowTapRangeSelection: false,
+            ctrl: true,
+            shift: false);
+
+        result.Kind.Should().Be(CalendarNavigationKind.MoveFocus);
         result.Date.Should().Be(FocusedDate.AddDays(-7));
     }
 
@@ -41,6 +78,8 @@ public class CalendarKeyboardNavigationHelperTests
             new MonthContext(5, 2026),
             FocusedDate,
             CurrentMonth,
+            CalendarSelectionMode.SingleDate,
+            allowTapRangeSelection: false,
             ctrl: false,
             shift: false);
 
@@ -55,6 +94,8 @@ public class CalendarKeyboardNavigationHelperTests
             new MonthContext(5, 2026),
             FocusedDate,
             CurrentMonth,
+            CalendarSelectionMode.SingleDate,
+            allowTapRangeSelection: false,
             ctrl: true,
             shift: false);
 
@@ -69,6 +110,8 @@ public class CalendarKeyboardNavigationHelperTests
             new YearContext(2026),
             FocusedDate,
             CurrentMonth,
+            CalendarSelectionMode.SingleDate,
+            allowTapRangeSelection: false,
             ctrl: false,
             shift: false);
 
@@ -84,9 +127,27 @@ public class CalendarKeyboardNavigationHelperTests
             new DecadeContext(2020),
             FocusedDate,
             CurrentMonth,
+            CalendarSelectionMode.SingleDate,
+            allowTapRangeSelection: false,
             ctrl: true,
             shift: false);
 
         result.Kind.Should().Be(CalendarNavigationKind.ShowYearView);
+    }
+
+    [Fact]
+    public void Resolve_Space_SelectsFocusedDate()
+    {
+        var result = CalendarKeyboardNavigationHelper.Resolve(
+            Key.Space,
+            new MonthContext(5, 2026),
+            FocusedDate,
+            CurrentMonth,
+            CalendarSelectionMode.MultipleRange,
+            allowTapRangeSelection: false,
+            ctrl: false,
+            shift: false);
+
+        result.Kind.Should().Be(CalendarNavigationKind.SelectFocused);
     }
 }

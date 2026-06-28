@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using Avalonia.Controls;
 using Avalonia.Input;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives;
@@ -23,75 +24,129 @@ internal static class CalendarKeyboardNavigationHelper
         DateContext displayContext,
         DateTime focusedDate,
         MonthContext currentMonth,
+        CalendarSelectionMode selectionMode,
+        bool allowTapRangeSelection,
         bool ctrl,
         bool shift) =>
         key switch
         {
-            Key.Up => ResolveUp(displayContext, focusedDate, currentMonth),
-            Key.Down => ResolveDown(displayContext, focusedDate, currentMonth),
-            Key.Left => ResolveLeft(displayContext, focusedDate, currentMonth),
-            Key.Right => ResolveRight(displayContext, focusedDate, currentMonth),
-            Key.Home => ResolveHome(displayContext, focusedDate, currentMonth),
-            Key.End => ResolveEnd(displayContext, focusedDate, currentMonth),
+            Key.Up => ResolveUp(displayContext, focusedDate, currentMonth, selectionMode, allowTapRangeSelection, ctrl, shift),
+            Key.Down => ResolveDown(displayContext, focusedDate, currentMonth, selectionMode, allowTapRangeSelection, ctrl, shift),
+            Key.Left => ResolveLeft(displayContext, focusedDate, currentMonth, selectionMode, allowTapRangeSelection, ctrl, shift),
+            Key.Right => ResolveRight(displayContext, focusedDate, currentMonth, selectionMode, allowTapRangeSelection, ctrl, shift),
+            Key.Home => ResolveHome(displayContext, focusedDate, currentMonth, selectionMode, allowTapRangeSelection, ctrl, shift),
+            Key.End => ResolveEnd(displayContext, focusedDate, currentMonth, selectionMode, allowTapRangeSelection, ctrl, shift),
             Key.PageDown => ResolvePageDown(displayContext, focusedDate, ctrl, shift),
             Key.PageUp => ResolvePageUp(displayContext, focusedDate, ctrl, shift),
+            Key.Space or Key.Enter => new(CalendarNavigationKind.SelectFocused),
             _ => default
         };
 
-    private static CalendarNavigationResult ResolveUp(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
+    private static CalendarNavigationKind GetDateNavigationKind(
+        CalendarSelectionMode selectionMode,
+        bool allowTapRangeSelection,
+        bool ctrl,
+        bool shift) =>
+        selectionMode == CalendarSelectionMode.MultipleRange && !allowTapRangeSelection && ctrl && !shift
+            ? CalendarNavigationKind.MoveFocus
+            : CalendarNavigationKind.SelectDate;
+
+    private static CalendarNavigationResult ResolveUp(
+        DateContext displayContext,
+        DateTime focusedDate,
+        MonthContext currentMonth,
+        CalendarSelectionMode selectionMode,
+        bool allowTapRangeSelection,
+        bool ctrl,
+        bool shift) =>
         displayContext switch
         {
-            MonthContext => new(CalendarNavigationKind.SelectDate, focusedDate.AddDays(-DateTimeHelper.DaysPerWeek)),
+            MonthContext => new(GetDateNavigationKind(selectionMode, allowTapRangeSelection, ctrl, shift), focusedDate.AddDays(-DateTimeHelper.DaysPerWeek)),
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.Add(-YearGridColumns)),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddYears(-YearGridColumns)),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddDecades(-YearGridColumns)),
             _ => default
         };
 
-    private static CalendarNavigationResult ResolveDown(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
+    private static CalendarNavigationResult ResolveDown(
+        DateContext displayContext,
+        DateTime focusedDate,
+        MonthContext currentMonth,
+        CalendarSelectionMode selectionMode,
+        bool allowTapRangeSelection,
+        bool ctrl,
+        bool shift) =>
         displayContext switch
         {
-            MonthContext => new(CalendarNavigationKind.SelectDate, focusedDate.AddDays(DateTimeHelper.DaysPerWeek)),
+            MonthContext => new(GetDateNavigationKind(selectionMode, allowTapRangeSelection, ctrl, shift), focusedDate.AddDays(DateTimeHelper.DaysPerWeek)),
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.Add(YearGridColumns)),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddYears(YearGridColumns)),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddDecades(YearGridColumns)),
             _ => default
         };
 
-    private static CalendarNavigationResult ResolveLeft(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
+    private static CalendarNavigationResult ResolveLeft(
+        DateContext displayContext,
+        DateTime focusedDate,
+        MonthContext currentMonth,
+        CalendarSelectionMode selectionMode,
+        bool allowTapRangeSelection,
+        bool ctrl,
+        bool shift) =>
         displayContext switch
         {
-            MonthContext => new(CalendarNavigationKind.SelectDate, focusedDate.AddDays(-1)),
+            MonthContext => new(GetDateNavigationKind(selectionMode, allowTapRangeSelection, ctrl, shift), focusedDate.AddDays(-1)),
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.Add(-1)),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddYears(-1)),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddDecades(-1)),
             _ => default
         };
 
-    private static CalendarNavigationResult ResolveRight(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
+    private static CalendarNavigationResult ResolveRight(
+        DateContext displayContext,
+        DateTime focusedDate,
+        MonthContext currentMonth,
+        CalendarSelectionMode selectionMode,
+        bool allowTapRangeSelection,
+        bool ctrl,
+        bool shift) =>
         displayContext switch
         {
-            MonthContext => new(CalendarNavigationKind.SelectDate, focusedDate.AddDays(1)),
+            MonthContext => new(GetDateNavigationKind(selectionMode, allowTapRangeSelection, ctrl, shift), focusedDate.AddDays(1)),
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.Add(1)),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddYears(1)),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.AddDecades(1)),
             _ => default
         };
 
-    private static CalendarNavigationResult ResolveHome(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
+    private static CalendarNavigationResult ResolveHome(
+        DateContext displayContext,
+        DateTime focusedDate,
+        MonthContext currentMonth,
+        CalendarSelectionMode selectionMode,
+        bool allowTapRangeSelection,
+        bool ctrl,
+        bool shift) =>
         displayContext switch
         {
-            MonthContext => new(CalendarNavigationKind.SelectDate, focusedDate.BeginningOfMonth()),
+            MonthContext => new(GetDateNavigationKind(selectionMode, allowTapRangeSelection, ctrl, shift), focusedDate.BeginningOfMonth()),
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.BeginningOfYear()),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.BeginningOfDecade()),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.BeginningOfCentury()),
             _ => default
         };
 
-    private static CalendarNavigationResult ResolveEnd(DateContext displayContext, DateTime focusedDate, MonthContext currentMonth) =>
+    private static CalendarNavigationResult ResolveEnd(
+        DateContext displayContext,
+        DateTime focusedDate,
+        MonthContext currentMonth,
+        CalendarSelectionMode selectionMode,
+        bool allowTapRangeSelection,
+        bool ctrl,
+        bool shift) =>
         displayContext switch
         {
-            MonthContext => new(CalendarNavigationKind.SelectDate, focusedDate.EndOfMonth()),
+            MonthContext => new(GetDateNavigationKind(selectionMode, allowTapRangeSelection, ctrl, shift), focusedDate.EndOfMonth()),
             YearContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.EndOfYear()),
             DecadeContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.EndOfDecade()),
             CenturyContext => new(CalendarNavigationKind.SelectMonthContext, MonthContext: currentMonth.EndOfCentury()),

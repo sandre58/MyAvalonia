@@ -7,6 +7,7 @@
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.VisualTree;
 
 namespace MyNet.Avalonia.Controls.Headless.Tests;
@@ -36,4 +37,29 @@ internal static class HeadlessControlHost
 
     public static void Click(Button button) =>
         button.RaiseEvent(new(Button.ClickEvent));
+
+    public static void PointerPress(Button button, KeyModifiers modifiers = KeyModifiers.None) =>
+        button.RaiseEvent(new PointerPressedEventArgs(
+            button,
+            new Pointer(1, PointerType.Mouse, true),
+            button,
+            new(4, 4),
+            0,
+            new PointerPointProperties(RawInputModifiers.None, PointerUpdateKind.LeftButtonPressed),
+            modifiers,
+            0));
+
+    public static void PointerRelease(Button button, KeyModifiers modifiers = KeyModifiers.None) =>
+        button.RaiseEvent(new PointerReleasedEventArgs(
+            InputElement.PointerReleasedEvent,
+            new Pointer(1, PointerType.Mouse, true),
+            button,
+            new(4, 4),
+            0,
+            new PointerPointProperties(RawInputModifiers.None, PointerUpdateKind.LeftButtonReleased),
+            modifiers,
+            MouseButton.Left));
+
+    public static void PointerEnter(Control control, KeyModifiers modifiers = KeyModifiers.None) =>
+        control.RaiseEvent(new PointerEventArgs(InputElement.PointerEnteredEvent, control, null!, control, new(4, 4), 0, new PointerPointProperties(RawInputModifiers.None, PointerUpdateKind.Other), modifiers));
 }

@@ -53,6 +53,7 @@ public static class PseudoClassName
     public const string Pointerover = ":pointerover";
     public const string Pressed = ":pressed";
     public const string PreviewEndDate = ":preview-end-date";
+    public const string PreviewInRange = ":preview-in-range";
     public const string PreviewStartDate = ":preview-start-date";
     public const string Range = ":range";
     public const string Right = ":right";

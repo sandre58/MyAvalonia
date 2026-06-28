@@ -109,11 +109,12 @@
             </Style>
         </Style>
 
-        <Style Selector="^:in-range">
+        <Style Selector="^:in-range, ^:preview-in-range">
             <Setter Property="CornerRadius" Value="0" />
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
                 <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Scrim}" />
+                <Setter Property="CornerRadius" Value="0" />
             </Style>
         </Style>
 
@@ -145,11 +146,29 @@
         <Style Selector="^:start-date, ^:preview-start-date">
             <Setter Property="CornerRadius"
                     Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
+
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="CornerRadius"
+                        Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:start-date:end-date, ^:preview-start-date:preview-end-date">
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            </Style>
         </Style>
 
         <Style Selector="^:end-date, ^:preview-end-date">
             <Setter Property="CornerRadius"
                     Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
+
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="CornerRadius"
+                        Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
+            </Style>
         </Style>
 
         <Style Selector="^:blackout /template/ Panel#PART_RootPanel">

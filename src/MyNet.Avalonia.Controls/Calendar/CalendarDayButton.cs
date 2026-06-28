@@ -11,7 +11,7 @@ using Avalonia.Controls.Metadata;
 namespace MyNet.Avalonia.Controls.Primitives;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-[PseudoClasses(PseudoClassName.Pressed, PseudoClassName.Selected, PseudoClassName.StartDate, PseudoClassName.EndDate, PseudoClassName.PreviewStartDate, PseudoClassName.PreviewEndDate, PseudoClassName.InRange, PseudoClassName.Today, PseudoClassName.Blackout, PseudoClassName.Inactive)]
+[PseudoClasses(PseudoClassName.Pressed, PseudoClassName.Selected, PseudoClassName.StartDate, PseudoClassName.EndDate, PseudoClassName.PreviewStartDate, PseudoClassName.PreviewEndDate, PseudoClassName.PreviewInRange, PseudoClassName.InRange, PseudoClassName.Today, PseudoClassName.Blackout, PseudoClassName.Inactive)]
 public class CalendarDayButton : CalendarDateButton
 {
     public bool IsStartDate
@@ -54,6 +54,16 @@ public class CalendarDayButton : CalendarDateButton
         }
     }
 
+    public bool IsPreviewInRange
+    {
+        get;
+        set
+        {
+            field = value;
+            PseudoClasses.Set(PseudoClassName.PreviewInRange, value);
+        }
+    }
+
     public bool IsInRange
     {
         get;
@@ -85,6 +95,7 @@ public class CalendarDayButton : CalendarDateButton
         PseudoClasses.Set(PseudoClassName.EndDate, IsEndDate);
         PseudoClasses.Set(PseudoClassName.PreviewEndDate, IsPreviewEndDate);
         PseudoClasses.Set(PseudoClassName.PreviewStartDate, IsPreviewStartDate);
+        PseudoClasses.Set(PseudoClassName.PreviewInRange, IsPreviewInRange);
         PseudoClasses.Set(PseudoClassName.InRange, IsInRange);
     }
 }

@@ -18,20 +18,38 @@ internal sealed class CalendarSelectionCoordinator(
     Func<DateTime, bool> isValidSelection,
     ICalendarSelectionCommands commands)
 {
-    private DateTime? _hoverStart;
+    private DateTime? _anchorDate;
+    private DateTime? _pointerPressDate;
 
-    public DateTime? HoverStart => _hoverStart;
+    public DateTime? HoverStart => _anchorDate;
 
-    public void ResetHover() => _hoverStart = null;
+    public DateTime? PointerPressDate => _pointerPressDate;
+
+    public bool HasPendingRangeAnchor => _anchorDate.HasValue;
+
+    public void ResetHover() => _anchorDate = null;
 
     public void ProcessDateSelection(DateTime date, bool shift, bool ctrl)
     {
         if (!isValidSelection(date))
             return;
 
+        if (selectionMode() == CalendarSelectionMode.MultipleRange && ctrl)
+        {
+            if (allowTapRangeSelection())
+            {
+                ProcessTapRangeSelection(date, ctrl: true, shift);
+                return;
+            }
+
+            ProcessMultipleRangeSelection(date, shift, ctrl);
+            commands.MoveToDate(date);
+            return;
+        }
+
         if (allowTapRangeSelection())
         {
-            ProcessTapRangeSelection(date, ctrl);
+            ProcessTapRangeSelection(date, ctrl, shift);
             return;
         }
 
@@ -42,45 +60,62 @@ internal sealed class CalendarSelectionCoordinator(
                 break;
 
             case CalendarSelectionMode.SingleRange:
-                if (shift)
-                    commands.SetSelection(_hoverStart ?? displayDate(), date);
-                else
-                    commands.SetSelection(date);
-
+                ProcessSingleRangeSelection(date, shift);
                 break;
 
             case CalendarSelectionMode.MultipleRange:
-                if (ctrl)
-                {
-                    if (shift)
-                    {
-                        var startDate = _hoverStart ?? displayDate();
-                        commands.ChangeSelection(startDate, date, commands.Contains(startDate));
-                    }
-                    else
-                    {
-                        commands.ToggleSelection(date);
-                    }
-                }
-                else if (shift)
-                {
-                    commands.SetSelection(_hoverStart ?? displayDate(), date);
-                }
-                else
-                {
-                    commands.SetSelection(date);
-                }
-
+                ProcessMultipleRangeSelection(date, shift, ctrl);
                 break;
         }
-
-        if (!shift)
-            _hoverStart = date;
 
         commands.MoveToDate(date);
     }
 
-    public void ProcessTapRangeSelection(DateTime date, bool ctrl)
+    public void PointerSelectionEnd(DateTime releaseDate, bool shift, bool ctrl)
+    {
+        if (!isValidSelection(releaseDate))
+            return;
+
+        var pressDate = _pointerPressDate;
+        var wasDrag = pressDate.HasValue
+            && pressDate.Value != releaseDate
+            && !allowTapRangeSelection();
+
+        if (wasDrag)
+        {
+            var press = pressDate!.Value;
+
+            switch (selectionMode())
+            {
+                case CalendarSelectionMode.SingleRange:
+                    if (shift)
+                    {
+                        commands.SetSelection(GetEffectiveAnchor(press), releaseDate);
+                    }
+                    else
+                    {
+                        commands.SetSelection(press, releaseDate);
+                        _anchorDate = press;
+                    }
+
+                    break;
+
+                case CalendarSelectionMode.MultipleRange:
+                    ProcessMultipleRangeDragEnd(press, releaseDate, shift, ctrl);
+                    break;
+            }
+
+            commands.MoveToDate(releaseDate);
+        }
+        else
+        {
+            ProcessDateSelection(releaseDate, shift, ctrl);
+        }
+
+        _pointerPressDate = null;
+    }
+
+    public void ProcessTapRangeSelection(DateTime date, bool ctrl, bool shift = false)
     {
         switch (selectionMode())
         {
@@ -89,15 +124,19 @@ internal sealed class CalendarSelectionCoordinator(
                 break;
 
             case CalendarSelectionMode.SingleRange:
-                if (!_hoverStart.HasValue)
+                if (shift && _anchorDate.HasValue)
+                {
+                    commands.SetSelection(_anchorDate.Value, date);
+                }
+                else if (!_anchorDate.HasValue)
                 {
                     commands.SetSelection(date);
-                    _hoverStart = date;
+                    _anchorDate = date;
                 }
                 else
                 {
-                    commands.SetSelection(_hoverStart.Value, date);
-                    _hoverStart = null;
+                    commands.SetSelection(_anchorDate.Value, date);
+                    _anchorDate = null;
                 }
 
                 break;
@@ -105,26 +144,30 @@ internal sealed class CalendarSelectionCoordinator(
             case CalendarSelectionMode.MultipleRange:
                 if (ctrl)
                 {
-                    if (!_hoverStart.HasValue)
+                    if (!_anchorDate.HasValue)
                     {
                         commands.AddSelection(date);
-                        _hoverStart = date;
+                        _anchorDate = date;
                     }
                     else
                     {
-                        commands.AddSelection(_hoverStart.Value, date);
-                        _hoverStart = null;
+                        commands.AddSelection(_anchorDate.Value, date);
+                        _anchorDate = null;
                     }
                 }
-                else if (!_hoverStart.HasValue)
+                else if (shift && _anchorDate.HasValue)
+                {
+                    commands.SetSelection(_anchorDate.Value, date);
+                }
+                else if (!_anchorDate.HasValue)
                 {
                     commands.SetSelection(date);
-                    _hoverStart = date;
+                    _anchorDate = date;
                 }
                 else
                 {
-                    commands.SetSelection(_hoverStart.Value, date);
-                    _hoverStart = null;
+                    commands.SetSelection(_anchorDate.Value, date);
+                    _anchorDate = null;
                 }
 
                 break;
@@ -135,7 +178,68 @@ internal sealed class CalendarSelectionCoordinator(
 
     public void BeginPointerSelection(DateTime date, bool shift)
     {
-        if (!shift || !_hoverStart.HasValue)
-            _hoverStart = date;
+        _pointerPressDate = date;
+
+        if (!shift || !_anchorDate.HasValue)
+            _anchorDate = date;
+    }
+
+    private void ProcessSingleRangeSelection(DateTime date, bool shift)
+    {
+        if (shift)
+        {
+            commands.SetSelection(GetEffectiveAnchor(), date);
+        }
+        else
+        {
+            commands.SetSelection(date);
+            _anchorDate = date;
+        }
+    }
+
+    private DateTime GetEffectiveAnchor(DateTime? fallback = null) =>
+        _anchorDate ?? fallback ?? displayDate();
+
+    private void ProcessMultipleRangeSelection(DateTime date, bool shift, bool ctrl)
+    {
+        if (ctrl && shift)
+        {
+            commands.AddSelection(_anchorDate ?? displayDate(), date);
+        }
+        else if (ctrl)
+        {
+            var wasSelected = commands.Contains(date);
+            commands.ToggleSelection(date);
+            if (!wasSelected)
+            {
+                _anchorDate = date;
+            }
+        }
+        else if (shift)
+        {
+            commands.SetSelection(_anchorDate ?? displayDate(), date);
+        }
+        else
+        {
+            commands.SetSelection(date);
+            _anchorDate = date;
+        }
+    }
+
+    private void ProcessMultipleRangeDragEnd(DateTime pressDate, DateTime releaseDate, bool shift, bool ctrl)
+    {
+        if (ctrl && shift)
+        {
+            commands.AddSelection(_anchorDate ?? pressDate, releaseDate);
+        }
+        else if (shift)
+        {
+            commands.SetSelection(_anchorDate ?? pressDate, releaseDate);
+        }
+        else
+        {
+            commands.SetSelection(pressDate, releaseDate);
+            _anchorDate = pressDate;
+        }
     }
 }

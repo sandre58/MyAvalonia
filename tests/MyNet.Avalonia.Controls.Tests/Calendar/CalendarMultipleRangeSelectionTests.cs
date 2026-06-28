@@ -1,12 +1,12 @@
 // -----------------------------------------------------------------------
-// <copyright file="CalendarSelectionCoordinatorExpandedTests.cs" company="Stéphane ANDRE">
+// <copyright file="CalendarMultipleRangeSelectionTests.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Avalonia.Controls;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Internals;
@@ -15,77 +15,75 @@ using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Calendar;
 
-public class CalendarSelectionCoordinatorExpandedTests
+public class CalendarMultipleRangeSelectionTests
 {
     [Fact]
-    public void ProcessDateSelection_MultipleRangeWithCtrl_TogglesSelection()
+    public void ProcessDateSelection_CtrlClickOnSelectedDate_RemovesDate()
     {
         var commands = new RecordingSelectionCommands();
-        var coordinator = new CalendarSelectionCoordinator(
-            () => CalendarSelectionMode.MultipleRange,
-            () => false,
-            () => new(2026, 5, 1),
-            _ => true,
-            commands);
+        var coordinator = CreateCoordinator(commands);
 
         coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: true);
         commands.Contains(new(2026, 5, 10)).Should().BeTrue();
 
         coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: true);
+
         commands.Contains(new(2026, 5, 10)).Should().BeFalse();
     }
 
     [Fact]
-    public void ProcessTapRangeSelection_MultipleRangeWithCtrl_AddsTwoTapRange()
+    public void ProcessDateSelection_ShiftClicks_KeepsAnchorForSubsequentShift()
     {
         var commands = new RecordingSelectionCommands();
-        var coordinator = new CalendarSelectionCoordinator(
-            () => CalendarSelectionMode.MultipleRange,
-            () => true,
-            () => new(2026, 5, 1),
-            _ => true,
-            commands);
-
-        coordinator.ProcessTapRangeSelection(new(2026, 5, 5), ctrl: true);
-        coordinator.ProcessTapRangeSelection(new(2026, 5, 15), ctrl: true);
-
-        commands.Ranges.Should().ContainSingle()
-            .Which.Should().Be((new(2026, 5, 5), new(2026, 5, 15)));
-    }
-
-    [Fact]
-    public void BeginPointerSelection_WithShift_KeepsExistingHoverStart()
-    {
-        var commands = new RecordingSelectionCommands();
-        var coordinator = new CalendarSelectionCoordinator(
-            () => CalendarSelectionMode.SingleRange,
-            () => false,
-            () => new(2026, 5, 1),
-            _ => true,
-            commands);
+        var coordinator = CreateCoordinator(commands);
 
         coordinator.ProcessDateSelection(new(2026, 5, 5), shift: false, ctrl: false);
-        coordinator.BeginPointerSelection(new(2026, 5, 20), shift: true);
+        coordinator.ProcessDateSelection(new(2026, 5, 20), shift: true, ctrl: false);
+        coordinator.ProcessDateSelection(new(2026, 5, 25), shift: true, ctrl: false);
 
+        commands.Ranges.Should().HaveCount(2);
+        commands.Ranges[1].Should().Be((new(2026, 5, 5), new(2026, 5, 25)));
         coordinator.HoverStart.Should().Be(new(2026, 5, 5));
     }
 
     [Fact]
-    public void ProcessDateSelection_SingleRangeWithoutShift_ReplacesSelection()
+    public void PointerSelectionEnd_DragWithoutShift_ReplacesWithRange()
     {
         var commands = new RecordingSelectionCommands();
-        var coordinator = new CalendarSelectionCoordinator(
-            () => CalendarSelectionMode.SingleRange,
+        var coordinator = CreateCoordinator(commands);
+
+        coordinator.BeginPointerSelection(new(2026, 5, 5), shift: false);
+        coordinator.PointerSelectionEnd(new(2026, 5, 15), shift: false, ctrl: false);
+
+        commands.Ranges.Should().ContainSingle()
+            .Which.Should().Be((new(2026, 5, 5), new(2026, 5, 15)));
+        coordinator.HoverStart.Should().Be(new(2026, 5, 5));
+    }
+
+    [Fact]
+    public void PointerSelectionEnd_CtrlShiftDrag_AddsRangeToExistingSelection()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = CreateCoordinator(commands);
+
+        coordinator.ProcessDateSelection(new(2026, 5, 1), shift: false, ctrl: false);
+        coordinator.ProcessDateSelection(new(2026, 5, 7), shift: true, ctrl: false);
+        coordinator.ProcessDateSelection(new(2026, 5, 12), shift: false, ctrl: true);
+        coordinator.BeginPointerSelection(new(2026, 5, 12), shift: false);
+        coordinator.PointerSelectionEnd(new(2026, 5, 18), shift: true, ctrl: true);
+
+        commands.Ranges.Should().HaveCount(2);
+        commands.Ranges[0].Should().Be((new(2026, 5, 1), new(2026, 5, 7)));
+        commands.Ranges[1].Should().Be((new(2026, 5, 12), new(2026, 5, 18)));
+    }
+
+    private static CalendarSelectionCoordinator CreateCoordinator(RecordingSelectionCommands commands) =>
+        new(
+            () => CalendarSelectionMode.MultipleRange,
             () => false,
             () => new(2026, 5, 1),
             _ => true,
             commands);
-
-        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
-        coordinator.ProcessDateSelection(new(2026, 5, 20), shift: false, ctrl: false);
-
-        commands.Singles.Should().Equal(new DateTime(2026, 5, 10), new DateTime(2026, 5, 20));
-    }
 
     private sealed class RecordingSelectionCommands : ICalendarSelectionCommands
     {
@@ -95,8 +93,7 @@ public class CalendarSelectionCoordinatorExpandedTests
 
         public List<(DateTime Start, DateTime End)> Ranges { get; } = [];
 
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Local", Justification = "Used for recording move operations")]
-        private List<DateTime> Moves { get; } = [];
+        public List<DateTime> Moves { get; } = [];
 
         public void SetSelection(DateTime date)
         {
