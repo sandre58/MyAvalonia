@@ -515,6 +515,13 @@ internal sealed class ControlThemeBuilder(string? themeKey = null)
                 var type = Type.GetType($"{ns}.{controlName}, {assemblyName}");
                 if (type is not null)
                     return type;
+
+                if (!controlName.EndsWith("Ex", StringComparison.Ordinal))
+                {
+                    type = Type.GetType($"{ns}.{controlName}Ex, {assemblyName}");
+                    if (type is not null)
+                        return type;
+                }
             }
         }
 

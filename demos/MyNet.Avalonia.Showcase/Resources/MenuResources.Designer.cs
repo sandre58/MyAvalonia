@@ -132,6 +132,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sélecteur de plage de dates.
+        /// </summary>
+        internal static string DateRangePicker {
+            get {
+                return ResourceManager.GetString("DateRangePicker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Carte.
         /// </summary>
         internal static string Card {

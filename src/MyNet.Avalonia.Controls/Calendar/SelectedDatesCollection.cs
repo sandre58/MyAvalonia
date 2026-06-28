@@ -40,6 +40,15 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
 
     public void Set(DateTime start, DateTime end)
     {
+        start = start.DiscardTime();
+        end = end.DiscardTime();
+
+        if (start == end)
+        {
+            Set(start);
+            return;
+        }
+
         var period = start.ToPeriod(end);
 
         var datesToRemove = this.Where(x => !period.Contains(x)).ToList();

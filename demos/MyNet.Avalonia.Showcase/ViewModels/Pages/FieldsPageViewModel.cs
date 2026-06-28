@@ -28,6 +28,7 @@ using MyNet.Collections;
 using MyNet.Fakers.Static;
 using MyNet.Generator.Facade;
 using MyNet.Humanizer.Facade;
+using MyNet.Primitives;
 using MyNet.Primitives.Temporal;
 using MyNet.UI.Commands;
 using MyNet.UI.Resources;
@@ -86,6 +87,14 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                         case CalendarDatePickerEx calendarDatePickerEx:
                             calendarDatePickerEx.SetValue(CalendarDatePickerEx.SelectedValueProperty, RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)));
                             break;
+                        case DateRangePickerEx dateRangePickerEx:
+                        {
+                            var start = RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)).DiscardTime();
+                            var end = start.AddDays(RandomGenerator.Current.Int(1, 14));
+                            dateRangePickerEx.SetValue(DateRangePickerEx.SelectedValueProperty, start.ToPeriod(end));
+                            break;
+                        }
+
                         case DatePicker datePicker:
                             datePicker.SetValue(DatePicker.SelectedDateProperty, new DateTimeOffset(RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10))));
                             break;
@@ -138,6 +147,9 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                         case CalendarDatePickerEx calendarDatePickerEx:
                             calendarDatePickerEx.SetValue(CalendarDatePickerEx.SelectedValueProperty, null);
                             break;
+                        case DateRangePickerEx dateRangePickerEx:
+                            dateRangePickerEx.SetValue(DateRangePickerEx.SelectedValueProperty, null);
+                            break;
                         case DatePicker datePicker:
                             datePicker.SetValue(DatePicker.SelectedDateProperty, null);
                             break;
@@ -171,6 +183,7 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                         { typeof(MultiComboBox), MultiComboBox.PlaceholderTextProperty },
                         { typeof(CalendarDatePicker), CalendarDatePicker.PlaceholderTextProperty },
                         { typeof(CalendarDatePickerEx), CalendarDatePickerEx.PlaceholderTextProperty },
+                        { typeof(DateRangePickerEx), DateRangePickerEx.PlaceholderTextProperty },
                         { typeof(DatePicker), InputAssist.PlaceholderTextProperty },
                         { typeof(TimePicker), InputAssist.PlaceholderTextProperty },
                         { typeof(TimePickerEx), TimePickerEx.PlaceholderTextProperty },
@@ -180,7 +193,7 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                     },
                     x,
                     ((bool?)y).GetValueOrDefault() ? x.GetType().Name : string.Empty),
-                useDefaultFloatingPlaceholder,
+                true,
                 x => x.DisplayName(nameof(SettingsResources.ShowPlaceholderText)).Of<ToggleSwitchEditor>())
             .AddProperty(InputAssist.UseFloatingPlaceholderProperty, useDefaultFloatingPlaceholder, x => x.DisplayName(nameof(SettingsResources.IsFloating)))
             .AddProperty(InputBehavior.IsTextEditableProperty,

@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using MyNet.Primitives;
+using MyNet.Primitives.Intervals;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Internals;
@@ -14,6 +15,19 @@ namespace MyNet.Avalonia.Controls.Internals;
 
 internal static class CalendarDateRangeHelper
 {
+    public static Period ToDateRangePeriod(DateTime start, DateTime end)
+    {
+        start = start.DiscardTime();
+        end = end.DiscardTime();
+
+        if (start.IsAfter(end))
+            (start, end) = (end, start);
+
+        return start == end
+            ? start.ToPeriod(start.AddDays(1).AddTicks(-1))
+            : start.ToPeriod(end);
+    }
+
     public static DateTime GetRangeStart(DateTime? displayDateStart) => displayDateStart ?? DateTime.MinValue;
 
     public static DateTime GetRangeEnd(DateTime? displayDateEnd) => displayDateEnd ?? DateTime.MaxValue;

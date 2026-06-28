@@ -7,12 +7,34 @@
 using System;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Internals;
+using MyNet.Primitives;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Calendar;
 
 public class CalendarDateRangeHelperTests
 {
+    [Fact]
+    public void ToDateRangePeriod_SingleDay_ReturnsSameCalendarBounds()
+    {
+        var date = new DateTime(2026, 6, 15);
+        var period = CalendarDateRangeHelper.ToDateRangePeriod(date, date);
+
+        period.Start!.Value.Value.DiscardTime().Should().Be(date);
+        period.End!.Value.Value.DiscardTime().Should().Be(date);
+    }
+
+    [Fact]
+    public void ToDateRangePeriod_MultiDay_PreservesInclusiveBounds()
+    {
+        var start = new DateTime(2026, 6, 1);
+        var end = new DateTime(2026, 6, 7);
+        var period = CalendarDateRangeHelper.ToDateRangePeriod(start, end);
+
+        period.Start!.Value.Value.Should().Be(start);
+        period.End!.Value.Value.Should().Be(end);
+    }
+
     [Fact]
     public void GetSelectedMin_ReturnsEarliestDate()
     {

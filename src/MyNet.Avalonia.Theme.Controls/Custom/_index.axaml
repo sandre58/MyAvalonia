@@ -9,6 +9,7 @@
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/Card.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/Calendar.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/CalendarDatePickerEx.axaml" />
+        <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/DateRangePickerEx.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/DateTimePickerEx.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/DateTimeScrollPickerPresenter.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/DateTimeScrollPickerEx.axaml" />

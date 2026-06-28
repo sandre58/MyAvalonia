@@ -63,7 +63,7 @@ internal sealed class HomePageViewModel : PageViewModel
         new(MaterialIconKind.FormatText, nameof(MenuResources.Typography), "CategoryTextsDescription", "Typography", 3),
         new(MaterialIconKind.GestureTapButton, nameof(MenuResources.ButtonsAndActions), "CategoryButtonsDescription", "ButtonsAndActions", 6),
         new(MaterialIconKind.CheckboxMarkedOutline, nameof(MenuResources.Selection), "CategorySelectionDescription", "Selection", 4),
-        new(MaterialIconKind.FormTextbox, nameof(MenuResources.Inputs), "CategoryInputsDescription", "Inputs", 7),
+        new(MaterialIconKind.FormTextbox, nameof(MenuResources.Inputs), "CategoryInputsDescription", "Inputs", 8),
         new(MaterialIconKind.ViewDashboardOutline, nameof(MenuResources.Layout), "CategoryContainersDescription", "Layout", 10),
         new(MaterialIconKind.Table, nameof(MenuResources.DataAndLists), "CategoryDataDescription", "DataAndLists", 3),
         new(MaterialIconKind.BookOpenPageVariantOutline, nameof(MenuResources.ShellNavigation), "CategoryNavigationDescription", "ShellNavigation", 7),

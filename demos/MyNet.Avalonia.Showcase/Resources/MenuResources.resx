@@ -147,6 +147,7 @@
   <data name="Button" xml:space="preserve"><value>Bouton</value></data>
   <data name="ButtonSpinner" xml:space="preserve"><value>Bouton avec indicateur</value></data>
   <data name="Calendar" xml:space="preserve"><value>Calendrier</value></data>
+  <data name="DateRangePicker" xml:space="preserve"><value>Sélecteur de plage de dates</value></data>
   <data name="Carousel" xml:space="preserve"><value>Carrousel</value></data>
   <data name="CarouselPage" xml:space="preserve"><value>Page carrousel</value></data>
   <data name="CheckBox" xml:space="preserve"><value>Case à cocher</value></data>

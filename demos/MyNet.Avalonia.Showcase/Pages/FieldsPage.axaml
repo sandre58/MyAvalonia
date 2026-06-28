@@ -31,7 +31,7 @@
                              HorizontalAlignment="Center">
                     <UniformGrid.Styles>
                         <Style
-                            Selector="AutoCompleteBox, ButtonSpinner, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|ColorPickerEx, my|DateTimePickerEx, my|DateTimeScrollPickerEx, my|MultiComboBox, my|TagBox, my|TimePickerEx">
+                            Selector="AutoCompleteBox, ButtonSpinner, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|ColorPickerEx, my|DateRangePickerEx, my|DateTimePickerEx, my|DateTimeScrollPickerEx, my|MultiComboBox, my|TagBox, my|TimePickerEx">
                             <Setter Property="HorizontalAlignment" Value="Stretch" />
                             <Setter Property="MaxWidth" Value="250" />
                         </Style>
@@ -62,6 +62,10 @@
                         <Style Selector="my|CalendarDatePickerEx.kind-underline">
                             <Setter Property="Theme"
                                     Value="{StaticResource MyNet.Theme.CalendarDatePickerEx.Underline}" />
+                        </Style>
+                        <Style Selector="my|DateRangePickerEx.kind-underline">
+                            <Setter Property="Theme"
+                                    Value="{StaticResource MyNet.Theme.DateRangePickerEx.Underline}" />
                         </Style>
                         <Style Selector="my|ColorPickerEx.kind-underline">
                             <Setter Property="Theme" Value="{StaticResource MyNet.Theme.ColorPickerEx.Underline}" />
@@ -103,6 +107,7 @@
                     <NumericUpDown behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
                     <CalendarDatePicker behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
                     <my:CalendarDatePickerEx behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <my:DateRangePickerEx behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
                     <DatePicker behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
                     <TimePicker behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
                     <my:TimePickerEx behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />

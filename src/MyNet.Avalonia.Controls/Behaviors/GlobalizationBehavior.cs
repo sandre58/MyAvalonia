@@ -100,6 +100,9 @@ public static class GlobalizationBehavior
             case CalendarDatePickerEx calendarDatePickerEx:
                 UpdateCalendarDatePickerEx(calendarDatePickerEx);
                 break;
+            case DateRangePickerEx dateRangePickerEx:
+                UpdateDateRangePickerEx(dateRangePickerEx);
+                break;
             case DateTimePickerEx dateTimePickerEx:
                 UpdateDateTimePickerEx(dateTimePickerEx);
                 break;
@@ -127,6 +130,8 @@ public static class GlobalizationBehavior
     }
 
     private static void UpdateCalendarDatePickerEx(CalendarDatePickerEx calendarDatePicker) => calendarDatePicker.DisplayFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern;
+
+    private static void UpdateDateRangePickerEx(DateRangePickerEx dateRangePicker) => dateRangePicker.DisplayFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern;
 
     private static void UpdateDateTimePickerEx(DateTimePickerEx dateTimePicker)
     {
