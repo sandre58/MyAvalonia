@@ -110,7 +110,7 @@ public class CalendarSelectionCoordinatorTests
     }
 
     [Fact]
-    public void ProcessTapRangeSelection_SingleRangeWithShift_KeepsAnchor()
+    public void ProcessTapRangeSelection_SingleRangeWithShift_IgnoresShift()
     {
         var commands = new RecordingSelectionCommands();
         var coordinator = new CalendarSelectionCoordinator(
@@ -124,9 +124,33 @@ public class CalendarSelectionCoordinatorTests
         coordinator.Commit(new(2026, 5, 20), shift: true, ctrl: false);
         coordinator.Commit(new(2026, 5, 25), shift: true, ctrl: false);
 
-        commands.Ranges.Should().HaveCount(2);
-        commands.Ranges[1].Should().Be((new(2026, 5, 10), new(2026, 5, 25)));
-        coordinator.HoverStart.Should().Be(new(2026, 5, 10));
+        commands.Ranges.Should().ContainSingle()
+            .Which.Should().Be((new(2026, 5, 10), new(2026, 5, 20)));
+        coordinator.HoverStart.Should().Be(new(2026, 5, 25));
+    }
+
+    [Fact]
+    public void ProcessTapRangeSelection_SingleRangeWithCtrl_IgnoresCtrlAndReplaces()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = new CalendarSelectionCoordinator(
+            () => CalendarSelectionMode.SingleRange,
+            () => true,
+            () => new(2026, 5, 1),
+            _ => true,
+            commands);
+
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 20), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 5), shift: false, ctrl: true);
+        coordinator.Commit(new(2026, 5, 8), shift: false, ctrl: true);
+
+        commands.Contains(new(2026, 5, 5)).Should().BeTrue();
+        commands.Contains(new(2026, 5, 8)).Should().BeTrue();
+        commands.Contains(new(2026, 5, 10)).Should().BeFalse();
+        commands.Contains(new(2026, 5, 20)).Should().BeFalse();
+        commands.Ranges[^1].Should().Be((new(2026, 5, 5), new(2026, 5, 8)));
+        coordinator.HoverStart.Should().BeNull();
     }
 
     [Fact]
@@ -185,7 +209,7 @@ public class CalendarSelectionCoordinatorTests
     }
 
     [Fact]
-    public void ProcessDateSelection_SingleRangeTapWithShift_KeepsAnchor()
+    public void ProcessDateSelection_SingleRangeTapWithShift_IgnoresShift()
     {
         var commands = new RecordingSelectionCommands();
         var coordinator = new CalendarSelectionCoordinator(
@@ -199,9 +223,9 @@ public class CalendarSelectionCoordinatorTests
         coordinator.Commit(new(2026, 5, 20), shift: true, ctrl: false);
         coordinator.Commit(new(2026, 5, 25), shift: true, ctrl: false);
 
-        commands.Ranges.Should().HaveCount(2);
-        commands.Ranges[1].Should().Be((new(2026, 5, 10), new(2026, 5, 25)));
-        coordinator.HoverStart.Should().Be(new(2026, 5, 10));
+        commands.Ranges.Should().ContainSingle()
+            .Which.Should().Be((new(2026, 5, 10), new(2026, 5, 20)));
+        coordinator.HoverStart.Should().Be(new(2026, 5, 25));
     }
 
     [Fact]

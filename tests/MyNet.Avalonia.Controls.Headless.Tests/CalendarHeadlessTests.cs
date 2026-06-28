@@ -242,12 +242,353 @@ public class CalendarHeadlessTests
         var endButton = FindDayButton(grid!, endDate);
 
         HeadlessControlHost.PointerPress(startButton);
-        HeadlessControlHost.PointerEnter(endButton);
+        HeadlessControlHost.PointerMove(endButton, leftButtonPressed: true);
         HeadlessControlHost.PointerRelease(endButton);
 
         calendar.SelectedDates.Should().Contain(startDate);
         calendar.SelectedDates.Should().Contain(endDate);
         calendar.SelectedDates.Should().Contain(new DateTime(2026, 5, 7));
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_CtrlClickTogglesWhenReleaseLosesModifier()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var toggleDate = new DateTime(2026, 5, 10);
+        var toggleButton = FindDayButton(grid!, toggleDate);
+
+        HeadlessControlHost.PointerPress(toggleButton, KeyModifiers.Control);
+        HeadlessControlHost.PointerRelease(toggleButton);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        calendar.SelectedDates.Should().Contain(toggleDate);
+
+        HeadlessControlHost.PointerPress(toggleButton, KeyModifiers.Control);
+        HeadlessControlHost.PointerRelease(toggleButton);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        calendar.SelectedDates.Should().NotContain(toggleDate);
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_CtrlClickToggles()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var toggleDate = new DateTime(2026, 5, 10);
+        var toggleButton = FindDayButton(grid!, toggleDate);
+
+        HeadlessControlHost.PointerPress(toggleButton, KeyModifiers.Control);
+        HeadlessControlHost.PointerRelease(toggleButton, KeyModifiers.Control);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        calendar.SelectedDates.Should().Contain(toggleDate);
+
+        HeadlessControlHost.PointerPress(toggleButton, KeyModifiers.Control);
+        HeadlessControlHost.PointerRelease(toggleButton, KeyModifiers.Control);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        calendar.SelectedDates.Should().NotContain(toggleDate);
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_CtrlClickTogglesMiddleOfRange()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var middleDate = new DateTime(2026, 5, 12);
+        var endDate = new DateTime(2026, 5, 14);
+
+        HeadlessControlHost.PointerPress(FindDayButton(grid!, startDate));
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, endDate), leftButtonPressed: true);
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, endDate));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        var middleButton = FindDayButton(grid!, middleDate);
+        HeadlessControlHost.PointerPress(middleButton, KeyModifiers.Control);
+        HeadlessControlHost.PointerRelease(middleButton, KeyModifiers.Control);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        calendar.SelectedDates.Should().Contain(startDate);
+        calendar.SelectedDates.Should().Contain(endDate);
+        calendar.SelectedDates.Should().Contain(new DateTime(2026, 5, 11));
+        calendar.SelectedDates.Should().Contain(new DateTime(2026, 5, 13));
+        calendar.SelectedDates.Should().NotContain(middleDate);
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_PlainClickOnMiddleOfRange_ReplacesWithSingleDate()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var middleDate = new DateTime(2026, 5, 12);
+        var endDate = new DateTime(2026, 5, 14);
+
+        HeadlessControlHost.PointerPress(FindDayButton(grid!, startDate));
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, endDate), leftButtonPressed: true);
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, endDate));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        var middleButton = FindDayButton(grid!, middleDate);
+        HeadlessControlHost.PointerPress(middleButton);
+        HeadlessControlHost.PointerRelease(middleButton);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        calendar.SelectedDates.Should().ContainSingle().Which.Should().Be(middleDate);
+        middleButton.IsStartDate.Should().BeTrue("single selected day must show committed range styling");
+        middleButton.IsEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_CtrlClickNearRangeStart_TogglesOnlyThatDate()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var secondDate = new DateTime(2026, 5, 11);
+        var endDate = new DateTime(2026, 5, 14);
+
+        HeadlessControlHost.PointerPress(FindDayButton(grid!, startDate));
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, endDate), leftButtonPressed: true);
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, endDate));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        var startButton = FindDayButton(grid!, startDate);
+        HeadlessControlHost.PointerPress(startButton, KeyModifiers.Control);
+        HeadlessControlHost.PointerRelease(startButton, KeyModifiers.Control);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        calendar.SelectedDates.Should().NotContain(startDate);
+        calendar.SelectedDates.Should().Contain(secondDate);
+        calendar.SelectedDates.Should().Contain(endDate);
+        calendar.SelectedDates.Count.Should().Be(4);
+        startButton.IsStartDate.Should().BeFalse();
+        FindDayButton(grid!, secondDate).IsStartDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_DragPreviewStartsOnlyAfterMove()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var startButton = FindDayButton(grid!, startDate);
+        var endButton = FindDayButton(grid!, endDate);
+
+        HeadlessControlHost.PointerPress(startButton);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsPreviewStartDate.Should().BeFalse("preview must not start on press alone");
+        startButton.IsPreviewEndDate.Should().BeFalse();
+        startButton.IsPreviewInRange.Should().BeFalse();
+
+        HeadlessControlHost.PointerEnter(endButton);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsPreviewStartDate.Should().BeFalse("pointer enter without button down must not start drag preview");
+
+        HeadlessControlHost.PointerMove(endButton, leftButtonPressed: true);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsPreviewStartDate.Should().BeTrue("preview should start after moving to another cell with button down");
+        endButton.IsPreviewEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_CtrlClickNoDragPreview()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var toggleDate = new DateTime(2026, 5, 10);
+        var toggleButton = FindDayButton(grid!, toggleDate);
+
+        HeadlessControlHost.PointerPress(toggleButton, KeyModifiers.Control);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        toggleButton.IsPreviewStartDate.Should().BeFalse("ctrl+click must not start drag preview on press");
+        toggleButton.IsPreviewEndDate.Should().BeFalse();
+        toggleButton.IsPreviewInRange.Should().BeFalse();
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_ShiftKeyboardPreview()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var startButton = FindDayButton(grid!, startDate);
+        var endButton = FindDayButton(grid!, endDate);
+        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+
+        EstablishDragModeAnchor(calendar, startDate);
+
+        for (var i = 0; i < 4; i++)
+            HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsPreviewStartDate.Should().BeTrue();
+        middleButton.IsPreviewInRange.Should().BeTrue();
+        endButton.IsPreviewEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_CtrlShiftKeyboardAddRange()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var firstStart = new DateTime(2026, 5, 5);
+        var firstEnd = new DateTime(2026, 5, 9);
+        var secondStart = new DateTime(2026, 5, 12);
+        var secondEnd = new DateTime(2026, 5, 18);
+
+        HeadlessControlHost.PointerPress(FindDayButton(grid!, firstStart));
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, firstEnd), leftButtonPressed: true);
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, firstEnd));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        EstablishDragModeAnchor(calendar, secondStart);
+
+        for (var i = 0; i < 6; i++)
+            HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift | KeyModifiers.Control);
+
+        HeadlessControlHost.KeyDown(calendar, Key.Space, KeyModifiers.Shift | KeyModifiers.Control);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        calendar.SelectedDates.Should().Contain(firstStart);
+        calendar.SelectedDates.Should().Contain(firstEnd);
+        calendar.SelectedDates.Should().Contain(secondStart);
+        calendar.SelectedDates.Should().Contain(secondEnd);
+        calendar.SelectedDates.Should().Contain(new DateTime(2026, 5, 7));
+        calendar.SelectedDates.Should().Contain(new DateTime(2026, 5, 15));
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_CtrlShiftDragAddsRange()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var firstStart = new DateTime(2026, 5, 1);
+        var firstEnd = new DateTime(2026, 5, 7);
+        var secondStart = new DateTime(2026, 5, 12);
+        var secondEnd = new DateTime(2026, 5, 18);
+
+        HeadlessControlHost.PointerPress(FindDayButton(grid!, firstStart));
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, firstEnd), leftButtonPressed: true);
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, firstEnd));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        var secondStartButton = FindDayButton(grid!, secondStart);
+        HeadlessControlHost.PointerPress(secondStartButton, KeyModifiers.Control);
+        HeadlessControlHost.PointerRelease(secondStartButton, KeyModifiers.Control);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        HeadlessControlHost.PointerPress(secondStartButton, KeyModifiers.Shift | KeyModifiers.Control);
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, secondEnd), KeyModifiers.Shift | KeyModifiers.Control, leftButtonPressed: true);
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, secondEnd), KeyModifiers.Shift | KeyModifiers.Control);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        calendar.SelectedDates.Should().Contain(firstStart);
+        calendar.SelectedDates.Should().Contain(firstEnd);
+        calendar.SelectedDates.Should().Contain(secondStart);
+        calendar.SelectedDates.Should().Contain(secondEnd);
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_ShiftKeyDownNoPreviewUntilPointerMove()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var hoverDate = new DateTime(2026, 5, 18);
+
+        EstablishDragModeAnchor(calendar, startDate);
+        HeadlessControlHost.PointerEnter(FindDayButton(grid!, hoverDate));
+        HeadlessControlHost.KeyDown(calendar, Key.LeftShift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, hoverDate).IsPreviewEndDate.Should().BeFalse("shift alone must not start pointer preview");
+        FindDayButton(grid!, hoverDate).IsPreviewInRange.Should().BeFalse();
+
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, hoverDate), KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, startDate).IsPreviewStartDate.Should().BeTrue();
+        FindDayButton(grid!, hoverDate).IsPreviewEndDate.Should().BeTrue();
     }
 
     [AvaloniaFact]

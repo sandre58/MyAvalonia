@@ -39,14 +39,25 @@ internal sealed class CalendarSelectionCoordinator(
             _anchorDate = date;
     }
 
+    /// <summary>Records a pointer press without changing anchor or committed selection.</summary>
+    public void RecordPointerPress(DateTime date)
+    {
+        if (isValidSelection(date))
+            _pointerPressDate = date;
+    }
+
+    public void ClearPointerPress() => _pointerPressDate = null;
+
     /// <summary>Pointer click release or drag-free commit.</summary>
     public void Commit(DateTime date, bool shift, bool ctrl) => CommitCore(date, shift, ctrl);
 
     /// <summary>Space / Enter — applies preview state then commits.</summary>
-    public void CommitFromKeyboard(DateTime date, bool intervalPreview)
+    public void CommitFromKeyboard(DateTime date, bool intervalPreview, bool shift = false, bool ctrl = false)
     {
         if (!isValidSelection(date))
             return;
+
+        NormalizeTapModifiers(ref shift, ref ctrl);
 
         switch (selectionMode())
         {
@@ -58,11 +69,11 @@ internal sealed class CalendarSelectionCoordinator(
             case CalendarSelectionMode.SingleRange:
             case CalendarSelectionMode.MultipleRange:
                 if (!_anchorDate.HasValue)
-                    CommitCore(date, shift: false, ctrl: false);
+                    CommitCore(date, shift, ctrl);
                 else if (intervalPreview)
-                    CommitRange(_anchorDate.Value, date, shift: false, ctrl: false, clearAnchor: allowTapRangeSelection());
+                    CommitRange(_anchorDate.Value, date, shift, ctrl, clearAnchor: allowTapRangeSelection());
                 else
-                    CommitCore(date, shift: false, ctrl: false);
+                    CommitCore(date, shift, ctrl);
 
                 break;
         }
@@ -97,6 +108,8 @@ internal sealed class CalendarSelectionCoordinator(
         if (!isValidSelection(date))
             return;
 
+        NormalizeTapModifiers(ref shift, ref ctrl);
+
         switch (selectionMode())
         {
             case CalendarSelectionMode.SingleDate:
@@ -104,18 +117,18 @@ internal sealed class CalendarSelectionCoordinator(
                 break;
 
             case CalendarSelectionMode.SingleRange:
-                CommitSingleRange(date, shift, ctrl);
+                CommitSingleRangeClick(date, shift, ctrl);
                 break;
 
             case CalendarSelectionMode.MultipleRange:
-                CommitMultipleRange(date, shift, ctrl);
+                CommitMultipleRangeClick(date, shift, ctrl);
                 break;
         }
 
         commands.MoveToDate(date);
     }
 
-    private void CommitSingleRange(DateTime date, bool shift, bool ctrl)
+    private void CommitSingleRangeClick(DateTime date, bool shift, bool ctrl)
     {
         if (allowTapRangeSelection())
         {
@@ -133,15 +146,12 @@ internal sealed class CalendarSelectionCoordinator(
         _anchorDate = date;
     }
 
-    private void CommitMultipleRange(DateTime date, bool shift, bool ctrl)
+    /// <summary>MultipleRange drag-mode click (ListBox Extended): plain = replace, Ctrl = toggle, Shift = range replace, Ctrl+Shift = add range.</summary>
+    private void CommitMultipleRangeClick(DateTime date, bool shift, bool ctrl)
     {
         if (allowTapRangeSelection())
         {
-            if (ctrl)
-                CommitTapRange(date, shift, ctrl: true);
-            else
-                CommitTapRange(date, shift, ctrl: false);
-
+            CommitTapRange(date, shift, ctrl: ctrl);
             return;
         }
 
@@ -171,10 +181,10 @@ internal sealed class CalendarSelectionCoordinator(
         _anchorDate = date;
     }
 
-    /// <summary>Variant A — 1st tap commits start + anchor; 2nd tap commits range.</summary>
+    /// <summary>Variant A — 1st tap commits start + anchor; 2nd tap commits range. Tap mode ignores Shift; SingleRange tap also ignores Ctrl.</summary>
     private void CommitTapRange(DateTime date, bool shift, bool ctrl)
     {
-        if (ctrl)
+        if (ctrl && selectionMode() == CalendarSelectionMode.MultipleRange)
         {
             if (!_anchorDate.HasValue)
             {
@@ -190,12 +200,6 @@ internal sealed class CalendarSelectionCoordinator(
             return;
         }
 
-        if (shift && _anchorDate.HasValue)
-        {
-            CommitRange(_anchorDate.Value, date, shift, ctrl, clearAnchor: false);
-            return;
-        }
-
         if (!_anchorDate.HasValue)
         {
             commands.SetSelection(date);
@@ -203,7 +207,18 @@ internal sealed class CalendarSelectionCoordinator(
             return;
         }
 
-        CommitRange(_anchorDate.Value, date, shift, ctrl, clearAnchor: true);
+        CommitRange(_anchorDate.Value, date, shift: false, ctrl: false, clearAnchor: true);
+    }
+
+    private void NormalizeTapModifiers(ref bool shift, ref bool ctrl)
+    {
+        if (!allowTapRangeSelection())
+            return;
+
+        shift = false;
+
+        if (selectionMode() == CalendarSelectionMode.SingleRange)
+            ctrl = false;
     }
 
     private void CommitRange(DateTime anchor, DateTime end, bool shift, bool ctrl, bool clearAnchor)
@@ -232,14 +247,7 @@ internal sealed class CalendarSelectionCoordinator(
         switch (selectionMode())
         {
             case CalendarSelectionMode.SingleRange:
-                if (shift)
-                    CommitRange(GetEffectiveAnchor(pressDate), releaseDate, shift, ctrl, clearAnchor: false);
-                else
-                {
-                    commands.SetSelection(pressDate, releaseDate);
-                    _anchorDate = pressDate;
-                }
-
+                CommitSingleRangeDrag(pressDate, releaseDate, shift, ctrl);
                 break;
 
             case CalendarSelectionMode.MultipleRange:
@@ -250,12 +258,30 @@ internal sealed class CalendarSelectionCoordinator(
         commands.MoveToDate(releaseDate);
     }
 
+    private void CommitSingleRangeDrag(DateTime pressDate, DateTime releaseDate, bool shift, bool ctrl)
+    {
+        if (shift)
+        {
+            CommitRange(GetEffectiveAnchor(pressDate), releaseDate, shift, ctrl, clearAnchor: false);
+        }
+        else
+        {
+            commands.SetSelection(pressDate, releaseDate);
+            _anchorDate = pressDate;
+        }
+    }
+
+    /// <summary>MultipleRange drag-mode drag: plain = replace range, Shift = range replace from anchor, Ctrl+Shift = add range; Ctrl alone ignored.</summary>
     private void CommitMultipleRangeDrag(DateTime pressDate, DateTime releaseDate, bool shift, bool ctrl)
     {
         if (ctrl && shift)
+        {
             commands.AddSelection(_anchorDate ?? pressDate, releaseDate);
+        }
         else if (shift)
+        {
             CommitRange(_anchorDate ?? pressDate, releaseDate, shift, ctrl, clearAnchor: false);
+        }
         else
         {
             commands.SetSelection(pressDate, releaseDate);

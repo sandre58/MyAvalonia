@@ -61,6 +61,51 @@ public class CalendarMultipleRangeSelectionTests
     }
 
     [Fact]
+    public void CommitFromKeyboard_CtrlWithoutPreview_TogglesSelection()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = CreateCoordinator(commands);
+
+        coordinator.CommitFromKeyboard(new(2026, 5, 10), intervalPreview: false, ctrl: true);
+
+        commands.Contains(new(2026, 5, 10)).Should().BeTrue();
+        coordinator.HoverStart.Should().Be(new(2026, 5, 10));
+
+        coordinator.CommitFromKeyboard(new(2026, 5, 10), intervalPreview: false, ctrl: true);
+
+        commands.Contains(new(2026, 5, 10)).Should().BeFalse();
+    }
+
+    [Fact]
+    public void CommitFromKeyboard_ShiftIntervalPreview_ReplacesRange()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = CreateCoordinator(commands);
+
+        coordinator.Commit(new(2026, 5, 5), shift: false, ctrl: false);
+        coordinator.CommitFromKeyboard(new(2026, 5, 15), intervalPreview: true, shift: true, ctrl: false);
+
+        commands.Ranges.Should().ContainSingle()
+            .Which.Should().Be((new(2026, 5, 5), new(2026, 5, 15)));
+        coordinator.HoverStart.Should().Be(new(2026, 5, 5));
+    }
+
+    [Fact]
+    public void CommitFromKeyboard_CtrlShiftIntervalPreview_AddsRange()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = CreateCoordinator(commands);
+
+        coordinator.Commit(new(2026, 5, 1), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 7), shift: true, ctrl: false);
+        coordinator.CommitFromKeyboard(new(2026, 5, 18), intervalPreview: true, shift: true, ctrl: true);
+
+        commands.Ranges.Should().HaveCount(2);
+        commands.Ranges[0].Should().Be((new(2026, 5, 1), new(2026, 5, 7)));
+        commands.Ranges[1].Should().Be((new(2026, 5, 1), new(2026, 5, 18)));
+    }
+
+    [Fact]
     public void PointerSelectionEnd_CtrlShiftDrag_AddsRangeToExistingSelection()
     {
         var commands = new RecordingSelectionCommands();
@@ -75,6 +120,37 @@ public class CalendarMultipleRangeSelectionTests
         commands.Ranges.Should().HaveCount(2);
         commands.Ranges[0].Should().Be((new(2026, 5, 1), new(2026, 5, 7)));
         commands.Ranges[1].Should().Be((new(2026, 5, 12), new(2026, 5, 18)));
+    }
+
+    [Fact]
+    public void Commit_PlainClickOnMiddleOfRange_ReplacesWithSingleDate()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = CreateCoordinator(commands);
+
+        coordinator.BeginPointerSelection(new(2026, 5, 10), shift: false);
+        coordinator.CompletePointerSelection(new(2026, 5, 14), shift: false, ctrl: false, wasDrag: true);
+
+        coordinator.Commit(new(2026, 5, 12), shift: false, ctrl: false);
+
+        commands.Contains(new(2026, 5, 12)).Should().BeTrue();
+        commands.Contains(new(2026, 5, 10)).Should().BeFalse();
+        commands.Contains(new(2026, 5, 11)).Should().BeFalse();
+        commands.Contains(new(2026, 5, 13)).Should().BeFalse();
+        commands.Contains(new(2026, 5, 14)).Should().BeFalse();
+    }
+
+    [Fact]
+    public void Commit_PlainClickOnOnlySelectedDate_KeepsSingleSelection()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = CreateCoordinator(commands);
+
+        coordinator.Commit(new(2026, 5, 12), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 12), shift: false, ctrl: false);
+
+        commands.Singles.Should().HaveCount(2);
+        commands.Contains(new(2026, 5, 12)).Should().BeTrue();
     }
 
     private static CalendarSelectionCoordinator CreateCoordinator(RecordingSelectionCommands commands) =>
