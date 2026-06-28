@@ -106,6 +106,29 @@ public class CalendarMultipleRangeSelectionTests
     }
 
     [Fact]
+    public void CommitFromKeyboard_CtrlIntervalPreviewTap_AddsRangeWithoutReplacing()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = new CalendarSelectionCoordinator(
+            () => CalendarSelectionMode.MultipleRange,
+            () => true,
+            () => new(2026, 5, 1),
+            _ => true,
+            commands);
+
+        coordinator.Commit(new(2026, 5, 5), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 9), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 12), shift: false, ctrl: true);
+        coordinator.CommitFromKeyboard(new(2026, 5, 18), intervalPreview: true, ctrl: true);
+
+        commands.Contains(new(2026, 5, 5)).Should().BeTrue();
+        commands.Contains(new(2026, 5, 7)).Should().BeTrue();
+        commands.Contains(new(2026, 5, 9)).Should().BeTrue();
+        commands.Contains(new(2026, 5, 12)).Should().BeTrue();
+        commands.Contains(new(2026, 5, 18)).Should().BeTrue();
+    }
+
+    [Fact]
     public void PointerSelectionEnd_CtrlShiftDrag_AddsRangeToExistingSelection()
     {
         var commands = new RecordingSelectionCommands();

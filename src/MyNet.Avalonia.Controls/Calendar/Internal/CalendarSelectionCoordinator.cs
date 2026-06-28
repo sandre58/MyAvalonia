@@ -229,7 +229,7 @@ internal sealed class CalendarSelectionCoordinator(
                 commands.SetSelection(anchor, end);
                 break;
 
-            case CalendarSelectionMode.MultipleRange when ctrl && shift:
+            case CalendarSelectionMode.MultipleRange when ctrl && (shift || allowTapRangeSelection()):
                 commands.AddSelection(anchor, end);
                 break;
 
