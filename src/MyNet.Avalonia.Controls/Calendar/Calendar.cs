@@ -82,8 +82,10 @@ public class Calendar : TemplatedControl
     private DateTime? _cachedPreviewAnchor;
     private DateTime? _cachedPreviewEnd;
     private readonly HashSet<DateTime> _previewHighlightDates = [];
+    private readonly HashSet<DateTime> _committedHighlightDates = [];
     private bool _isPointerSelecting;
     private bool _previewUpdateScheduled;
+    private bool _rangeHighlightsUpdateScheduled;
     private bool _intervalPreviewActive;
     private PreviewController _previewController;
     private KeyModifiers _pointerPressModifiers;
@@ -353,12 +355,16 @@ public class Calendar : TemplatedControl
 
         if (e.Action == NotifyCollectionChangedAction.Reset)
         {
-            _cells.ForEach(x => ChangeSelectedState(x.Key, false));
+            foreach (var cell in _cells.Values.OfType<CalendarDayButton>())
+            {
+                if (cell.DateContext?.ToDate() is { } date)
+                    ChangeSelectedState(date, SelectedDates.Contains(date.DiscardTime()));
+            }
         }
 
         SelectedDatesChanged?.Invoke(this, new(SelectingItemsControl.SelectionChangedEvent, oldItems, newItems) { Source = this });
 
-        UpdateRangeHighlights();
+        ScheduleRangeHighlightsUpdate();
     }
 
     private void ChangeSelectedState(DateTime date, bool value)
@@ -649,6 +655,8 @@ public class Calendar : TemplatedControl
         if (_monthGrid is null || DisplayDateContext is not MonthContext monthContext) return;
 
         _cells.Clear();
+        _committedHighlightDates.Clear();
+        _previewHighlightDates.Clear();
 
         var children = _monthGrid.Children;
         var dayCellCount = children.Count - DateTimeHelper.DaysPerWeek;
@@ -681,26 +689,95 @@ public class Calendar : TemplatedControl
 
     private bool IsRangeSelectionMode() => IsRangeSelectionMode(SelectionMode);
 
+    private void ScheduleRangeHighlightsUpdate()
+    {
+        if (_rangeHighlightsUpdateScheduled)
+            return;
+
+        _rangeHighlightsUpdateScheduled = true;
+        Dispatcher.UIThread.Post(
+            () =>
+            {
+                _rangeHighlightsUpdateScheduled = false;
+                UpdateRangeHighlights();
+            },
+            DispatcherPriority.Input);
+    }
+
     private void UpdateRangeHighlights()
     {
-        foreach (var cell in _cells.Values.OfType<CalendarDayButton>())
-            CalendarDayRangeStateHelper.ClearRangeState(cell);
+        UpdateCommittedRangeHighlights();
+        UpdatePreviewRangeHighlightsOnly();
+        SyncSelectedStateWithRangeRoles();
+    }
 
-        if (IsRangeSelectionMode())
+    private void UpdateCommittedRangeHighlights()
+    {
+        if (!IsRangeSelectionMode())
         {
-            foreach (var (start, end) in CalendarDayRangeStateHelper.EnumerateConsecutiveRanges(SelectedDates))
+            ClearAllCommittedHighlightDates();
+            return;
+        }
+
+        HashSet<DateTime> newDates = [];
+        Dictionary<DateTime, (DateTime Start, DateTime End)> dateSegments = [];
+
+        foreach (var (start, end) in CalendarDayRangeStateHelper.EnumerateConsecutiveRanges(SelectedDates))
+        {
+            foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
             {
-                foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
-                {
-                    if (_cells.GetOrDefault(date) is CalendarDayButton cell)
-                        CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, date, start, end, isPreview: false);
-                }
+                var normalized = date.DiscardTime();
+                newDates.Add(normalized);
+                dateSegments[normalized] = (start, end);
             }
         }
 
-        InvalidatePreviewHighlightCache();
-        UpdatePreviewRangeHighlightsOnly();
-        SyncSelectedStateWithRangeRoles();
+        foreach (var date in _committedHighlightDates.ToArray())
+        {
+            if (newDates.Contains(date))
+                continue;
+
+            if (_cells.GetOrDefault(date) is CalendarDayButton cell)
+            {
+                CalendarDayRangeStateHelper.ClearCommittedRangeState(cell);
+                SyncCellSelectedState(cell, date);
+            }
+
+            _committedHighlightDates.Remove(date);
+        }
+
+        foreach (var date in newDates)
+        {
+            if (_cells.GetOrDefault(date) is not CalendarDayButton cell)
+                continue;
+
+            var (start, end) = dateSegments[date];
+            if (!CalendarDayRangeStateHelper.CellMatchesCommittedInterval(cell, date, start, end))
+                CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, date, start, end, isPreview: false);
+
+            _committedHighlightDates.Add(date);
+        }
+    }
+
+    private void ClearAllCommittedHighlightDates()
+    {
+        foreach (var date in _committedHighlightDates.ToArray())
+        {
+            if (_cells.GetOrDefault(date) is CalendarDayButton cell)
+            {
+                CalendarDayRangeStateHelper.ClearCommittedRangeState(cell);
+                SyncCellSelectedState(cell, date);
+            }
+        }
+
+        _committedHighlightDates.Clear();
+    }
+
+    private void SyncCellSelectedState(CalendarDayButton cell, DateTime date)
+    {
+        var shouldSelect = SelectedDates.Contains(date.DiscardTime());
+        if (cell.IsSelected != shouldSelect)
+            cell.IsSelected = shouldSelect;
     }
 
     private void InvalidatePreviewHighlightCache()
@@ -714,16 +791,28 @@ public class Calendar : TemplatedControl
         if (!IsRangeSelectionMode())
             return;
 
-        foreach (var cell in _cells.Values.OfType<CalendarDayButton>())
+        foreach (var date in _committedHighlightDates)
         {
+            if (_cells.GetOrDefault(date) is not CalendarDayButton cell)
+                continue;
+
+            if (cell.IsSelected)
+                cell.IsSelected = false;
+        }
+
+        foreach (var date in SelectedDates)
+        {
+            if (_cells.GetOrDefault(date) is not CalendarDayButton cell)
+                continue;
+
             if (cell.IsStartDate || cell.IsEndDate || cell.IsInRange)
             {
-                cell.IsSelected = false;
+                if (cell.IsSelected)
+                    cell.IsSelected = false;
                 continue;
             }
 
-            if (cell.DateContext?.ToDate() is { } date)
-                cell.IsSelected = SelectedDates.Contains(date.DiscardTime());
+            SyncCellSelectedState(cell, date);
         }
     }
 
@@ -847,7 +936,7 @@ public class Calendar : TemplatedControl
                 _previewUpdateScheduled = false;
                 UpdatePreviewRangeHighlightsOnly();
             },
-            DispatcherPriority.Render);
+            DispatcherPriority.Input);
     }
 
     private KeyModifiers GetCurrentKeyModifiers() => _lastKeyModifiers;
@@ -1532,7 +1621,7 @@ public class Calendar : TemplatedControl
         if (!_selectionCoordinator.HasPendingRangeAnchor)
             _previewEndDate = null;
 
-        UpdateRangeHighlights();
+        UpdatePreviewRangeHighlightsOnly();
         DayButtonClick?.Invoke(this, e ?? new RoutedEventArgs());
     }
 

@@ -57,4 +57,32 @@ public class SelectedDatesCollectionTests
         act.Should().NotThrow();
         calendar.SelectedDates.Should().ContainSingle().Which.Should().Be(date);
     }
+
+    [Fact]
+    public void SetRange_RaisesSingleCollectionChanged()
+    {
+        var calendar = new Controls.Calendar { SelectionMode = CalendarSelectionMode.SingleRange };
+        var changeCount = 0;
+        calendar.SelectedDates.CollectionChanged += (_, _) => changeCount++;
+
+        calendar.SelectedDates.Set(new DateTime(2026, 6, 10), new DateTime(2026, 6, 20));
+
+        changeCount.Should().Be(1);
+        calendar.SelectedDates.Should().HaveCount(11);
+    }
+
+    [Fact]
+    public void SetRange_ReplacingRange_RaisesSingleCollectionChanged()
+    {
+        var calendar = new Controls.Calendar { SelectionMode = CalendarSelectionMode.SingleRange };
+        calendar.SelectedDates.Set(new DateTime(2026, 6, 1), new DateTime(2026, 6, 5));
+
+        var changeCount = 0;
+        calendar.SelectedDates.CollectionChanged += (_, _) => changeCount++;
+
+        calendar.SelectedDates.Set(new DateTime(2026, 6, 10), new DateTime(2026, 6, 15));
+
+        changeCount.Should().Be(1);
+        calendar.SelectedDates.Should().HaveCount(6);
+    }
 }

@@ -41,6 +41,9 @@ public class CalendarDayButton : CalendarDateButton
         get;
         set
         {
+            if (field == value)
+                return;
+
             field = value;
             PseudoClasses.Set(PseudoClassName.StartDate, value);
         }
@@ -51,6 +54,9 @@ public class CalendarDayButton : CalendarDateButton
         get;
         set
         {
+            if (field == value)
+                return;
+
             field = value;
             PseudoClasses.Set(PseudoClassName.EndDate, value);
         }
@@ -94,6 +100,9 @@ public class CalendarDayButton : CalendarDateButton
         get;
         set
         {
+            if (field == value)
+                return;
+
             field = value;
             PseudoClasses.Set(PseudoClassName.InRange, value);
         }

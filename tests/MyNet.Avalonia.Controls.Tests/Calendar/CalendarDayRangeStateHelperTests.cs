@@ -122,4 +122,36 @@ public class CalendarDayRangeStateHelperTests
         cell.IsInRange.Should().BeFalse();
         cell.IsPreviewInRange.Should().BeFalse();
     }
+
+    [Fact]
+    public void ClearCommittedRangeState_ResetsOnlyCommittedFlags()
+    {
+        var cell = new CalendarDayButton
+        {
+            IsStartDate = true,
+            IsEndDate = true,
+            IsPreviewStartDate = true,
+            IsPreviewEndDate = true,
+            IsInRange = true,
+        };
+
+        CalendarDayRangeStateHelper.ClearCommittedRangeState(cell);
+
+        cell.IsStartDate.Should().BeFalse();
+        cell.IsEndDate.Should().BeFalse();
+        cell.IsInRange.Should().BeFalse();
+        cell.IsPreviewStartDate.Should().BeTrue();
+        cell.IsPreviewEndDate.Should().BeTrue();
+    }
+
+    [Fact]
+    public void CellMatchesCommittedInterval_SingleDay_ReturnsTrueWhenCorrect()
+    {
+        var cell = new CalendarDayButton();
+        var date = new DateTime(2026, 6, 15);
+
+        CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, date, date, date, isPreview: false);
+
+        CalendarDayRangeStateHelper.CellMatchesCommittedInterval(cell, date, date, date).Should().BeTrue();
+    }
 }

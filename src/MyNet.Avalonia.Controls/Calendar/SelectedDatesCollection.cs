@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Threading;
@@ -18,24 +19,54 @@ namespace MyNet.Avalonia.Controls.Primitives;
 
 public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollection<DateTime>
 {
+    private int _updateDepth;
+
     public void AddRange(DateTime start, DateTime end)
     {
-        foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
-            Add(date);
+        BeginUpdate();
+        try
+        {
+            foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
+                Add(date);
+        }
+        finally
+        {
+            EndUpdate();
+        }
     }
 
     public void RemoveRange(DateTime start, DateTime end)
     {
-        foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
-            Remove(date);
+        BeginUpdate();
+        try
+        {
+            foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
+                Remove(date);
+        }
+        finally
+        {
+            EndUpdate();
+        }
     }
 
     public void Set(DateTime date)
     {
-        var datesToRemove = this.Except([date.DiscardTime()]).ToList();
-        datesToRemove.ForEach(x => Remove(x));
+        date = date.DiscardTime();
+        var datesToRemove = this.Except([date]).ToList();
 
-        Add(date);
+        BeginUpdate();
+        try
+        {
+            foreach (var item in datesToRemove)
+                Remove(item);
+
+            if (!Contains(date))
+                Add(date);
+        }
+        finally
+        {
+            EndUpdate();
+        }
     }
 
     public void Set(DateTime start, DateTime end)
@@ -50,16 +81,35 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         }
 
         var period = start.ToPeriod(end);
-
         var datesToRemove = this.Where(x => !period.Contains(x)).ToList();
-        datesToRemove.ForEach(x => Remove(x));
 
-        AddRange(start, end);
+        BeginUpdate();
+        try
+        {
+            foreach (var item in datesToRemove)
+                Remove(item);
+
+            foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
+            {
+                if (!Contains(date))
+                    Add(date);
+            }
+        }
+        finally
+        {
+            EndUpdate();
+        }
     }
 
     protected override void ClearItems()
     {
         EnsureValidThread();
+
+        if (_updateDepth > 0)
+        {
+            base.ClearItems();
+            return;
+        }
 
         base.ClearItems();
 
@@ -77,9 +127,8 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         {
             base.InsertItem(index, date);
 
-            // The event fires after Value changes
-            if (index == 0 && !(owner.SelectedDate.HasValue && DateTime.Compare(owner.SelectedDate.Value, date) == 0))
-                owner.SelectedDate = date;
+            if (_updateDepth == 0)
+                SyncSelectedDateAfterInsert(index, date);
         }
     }
 
@@ -89,9 +138,8 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
 
         base.RemoveItem(index);
 
-        // The event fires after Value changes
-        if (index == 0)
-            owner.SelectedDate = Count > 0 ? this[0] : null;
+        if (_updateDepth == 0)
+            SyncSelectedDateAfterRemove(index);
     }
 
     protected override void SetItem(int index, DateTime item)
@@ -102,10 +150,17 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         {
             base.SetItem(index, item);
 
-            // The event fires after Value changes
-            if (index == 0 && !(owner.SelectedDate.HasValue && DateTime.Compare(owner.SelectedDate.Value, item) == 0))
-                owner.SelectedDate = item;
+            if (_updateDepth == 0 && index == 0)
+                SyncSelectedDateAfterInsert(index, item);
         }
+    }
+
+    protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+    {
+        if (_updateDepth > 0)
+            return;
+
+        base.OnCollectionChanged(e);
     }
 
     internal void ClearInternal()
@@ -113,6 +168,49 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         EnsureValidThread();
 
         base.ClearItems();
+    }
+
+    private void BeginUpdate() => _updateDepth++;
+
+    private void EndUpdate()
+    {
+        if (_updateDepth == 0)
+            return;
+
+        _updateDepth--;
+
+        if (_updateDepth > 0)
+            return;
+
+        SyncSelectedDateAfterBatch();
+        OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+    }
+
+    private void SyncSelectedDateAfterInsert(int index, DateTime date)
+    {
+        if (index == 0 && !(owner.SelectedDate.HasValue && DateTime.Compare(owner.SelectedDate.Value, date) == 0))
+            owner.SelectedDate = date;
+    }
+
+    private void SyncSelectedDateAfterRemove(int index)
+    {
+        if (index == 0)
+            owner.SelectedDate = Count > 0 ? this[0] : null;
+    }
+
+    private void SyncSelectedDateAfterBatch()
+    {
+        if (Count == 0)
+        {
+            if (owner.SelectionMode != CalendarSelectionMode.None && owner.SelectedDate != null)
+                owner.SelectedDate = null;
+
+            return;
+        }
+
+        var first = this[0];
+        if (!(owner.SelectedDate.HasValue && DateTime.Compare(owner.SelectedDate.Value, first) == 0))
+            owner.SelectedDate = first;
     }
 
     private static void EnsureValidThread() => Dispatcher.UIThread.VerifyAccess();

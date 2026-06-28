@@ -16,12 +16,17 @@ namespace MyNet.Avalonia.Controls.Internals;
 
 internal static class CalendarDayRangeStateHelper
 {
-    public static void ClearRangeState(CalendarDayButton cell)
+    public static void ClearCommittedRangeState(CalendarDayButton cell)
     {
         cell.IsStartDate = false;
         cell.IsEndDate = false;
-        ClearPreviewRangeState(cell);
         cell.IsInRange = false;
+    }
+
+    public static void ClearRangeState(CalendarDayButton cell)
+    {
+        ClearCommittedRangeState(cell);
+        ClearPreviewRangeState(cell);
     }
 
     public static void ClearPreviewRangeState(CalendarDayButton cell) =>
@@ -98,6 +103,35 @@ internal static class CalendarDayRangeStateHelper
         }
 
         cell.SetPreviewRangeState(isPreviewStart, isPreviewEnd, isPreviewInRange);
+    }
+
+    public static bool CellMatchesCommittedInterval(CalendarDayButton cell, DateTime date, DateTime rangeStart, DateTime rangeEnd)
+    {
+        rangeStart = rangeStart.DiscardTime();
+        rangeEnd = rangeEnd.DiscardTime();
+        date = date.DiscardTime();
+
+        if (rangeStart.IsAfter(rangeEnd))
+            (rangeStart, rangeEnd) = (rangeEnd, rangeStart);
+
+        if (rangeStart == rangeEnd)
+        {
+            if (date != rangeStart)
+                return !cell.IsStartDate && !cell.IsEndDate && !cell.IsInRange;
+
+            return cell.IsStartDate && cell.IsEndDate && !cell.IsInRange;
+        }
+
+        if (date.IsBefore(rangeStart) || date.IsAfter(rangeEnd))
+            return !cell.IsStartDate && !cell.IsEndDate && !cell.IsInRange;
+
+        if (date == rangeStart)
+            return cell.IsStartDate && !cell.IsEndDate && !cell.IsInRange;
+
+        if (date == rangeEnd)
+            return cell.IsEndDate && !cell.IsStartDate && !cell.IsInRange;
+
+        return cell.IsInRange && !cell.IsStartDate && !cell.IsEndDate;
     }
 
     public static bool CellMatchesPreviewInterval(CalendarDayButton cell, DateTime date, DateTime anchor, DateTime previewEnd)
