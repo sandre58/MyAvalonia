@@ -264,10 +264,7 @@ public class CalendarHeadlessTests
 
         var startDate = new DateTime(2026, 5, 10);
         var middleDate = new DateTime(2026, 5, 12);
-        calendar.MoveToDate(startDate);
-        HeadlessControlHost.KeyDown(calendar, Key.Space);
-
-        FindDayButton(grid!, middleDate).IsPreviewInRange.Should().BeFalse("mouse-style preview must not appear without keyboard navigation");
+        EstablishDragModeAnchor(calendar, startDate);
 
         HeadlessControlHost.KeyDown(calendar, Key.Right);
         HeadlessControlHost.KeyDown(calendar, Key.Right);
@@ -279,6 +276,236 @@ public class CalendarHeadlessTests
         middleButton.IsPreviewStartDate.Should().BeFalse("single-cell keyboard navigation uses focus, not preview pseudos");
         middleButton.IsPreviewEndDate.Should().BeFalse();
         middleButton.IsFocused.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_PointerEnterNoPreview()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var hoverDate = new DateTime(2026, 5, 18);
+        EstablishDragModeAnchor(calendar, startDate);
+
+        HeadlessControlHost.PointerEnter(FindDayButton(grid!, hoverDate));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, hoverDate).IsPreviewInRange.Should().BeFalse("drag mode must not preview on pointer enter alone");
+        FindDayButton(grid!, hoverDate).IsPreviewEndDate.Should().BeFalse();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_ShiftKeyDownNoPreviewUntilPointerMove()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var hoverDate = new DateTime(2026, 5, 18);
+
+        EstablishDragModeAnchor(calendar, startDate);
+        HeadlessControlHost.PointerEnter(FindDayButton(grid!, hoverDate));
+        HeadlessControlHost.KeyDown(calendar, Key.LeftShift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, hoverDate).IsPreviewEndDate.Should().BeFalse("shift alone must not start pointer preview");
+        FindDayButton(grid!, hoverDate).IsPreviewInRange.Should().BeFalse();
+
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, hoverDate), KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, startDate).IsPreviewStartDate.Should().BeTrue();
+        FindDayButton(grid!, hoverDate).IsPreviewEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_ShiftPointerMovePreview()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 18);
+        EstablishDragModeAnchor(calendar, startDate);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, endDate), KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, startDate).IsPreviewStartDate.Should().BeTrue();
+        FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeTrue();
+        FindDayButton(grid!, new DateTime(2026, 5, 14)).IsPreviewInRange.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_KeyboardShiftPreview_SurvivesShiftRelease()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var pointerDate = new DateTime(2026, 5, 8);
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+
+        HeadlessControlHost.PointerEnter(FindDayButton(grid!, pointerDate));
+        EstablishDragModeAnchor(calendar, startDate);
+
+        for (var i = 0; i < 4; i++)
+            HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+
+        HeadlessControlHost.KeyUp(calendar, Key.LeftShift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, pointerDate).IsPreviewEndDate.Should().BeFalse("static pointer must not override keyboard interval end");
+        FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeTrue();
+        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_KeyboardPreview_StableAcrossFrames()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var startButton = FindDayButton(grid!, startDate);
+        var endButton = FindDayButton(grid!, endDate);
+        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+
+        EstablishDragModeAnchor(calendar, startDate);
+
+        for (var i = 0; i < 4; i++)
+            HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+
+        for (var i = 0; i < 3; i++)
+        {
+            Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+            startButton.IsPreviewStartDate.Should().BeTrue("preview start should stay visible after frame " + i);
+            middleButton.IsPreviewInRange.Should().BeTrue("keyboard preview should stay visible after frame " + i);
+            endButton.IsPreviewEndDate.Should().BeTrue("preview end should stay visible after frame " + i);
+        }
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_KeyboardShiftPreview_UnaffectedByPointerMoveAfterShiftRelease()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var pointerDate = new DateTime(2026, 5, 18);
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+
+        EstablishDragModeAnchor(calendar, startDate);
+
+        for (var i = 0; i < 4; i++)
+            HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+
+        HeadlessControlHost.KeyUp(calendar, Key.LeftShift);
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, pointerDate));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, pointerDate).IsPreviewEndDate.Should().BeFalse("pointer move without shift must not affect keyboard preview");
+        FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeTrue();
+        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_KeyboardShiftPreview_HandoffOnMove()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var pointerDate = new DateTime(2026, 5, 18);
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+
+        EstablishDragModeAnchor(calendar, startDate);
+
+        for (var i = 0; i < 4; i++)
+            HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+
+        HeadlessControlHost.KeyUp(calendar, Key.LeftShift);
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, pointerDate), KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, pointerDate).IsPreviewEndDate.Should().BeTrue("shift+move should take over preview end");
+        FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeFalse();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_ArrowWithoutShift_ClearsBand()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var middleDate = new DateTime(2026, 5, 12);
+        EstablishDragModeAnchor(calendar, startDate);
+
+        HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+        HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+        HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+        HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, new DateTime(2026, 5, 14)).IsPreviewEndDate.Should().BeTrue();
+
+        HeadlessControlHost.KeyDown(calendar, Key.Right);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, middleDate).IsPreviewInRange.Should().BeFalse("non-shift arrow must clear interval preview band");
+        FindDayButton(grid!, new DateTime(2026, 5, 15)).IsFocused.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -312,6 +539,70 @@ public class CalendarHeadlessTests
     }
 
     [AvaloniaFact]
+    public void SingleRange_KeyboardShiftPreview_UnaffectedByPointerUntilMove()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = true;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var pointerDate = new DateTime(2026, 5, 8);
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+
+        HeadlessControlHost.PointerEnter(FindDayButton(grid!, pointerDate));
+
+        calendar.MoveToDate(startDate);
+        HeadlessControlHost.KeyDown(calendar, Key.Space);
+
+        for (var i = 0; i < 4; i++)
+            HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+
+        HeadlessControlHost.KeyUp(calendar, Key.LeftShift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, pointerDate).IsPreviewEndDate.Should().BeFalse("pointer hover must not override keyboard interval end");
+        FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeTrue("keyboard interval end must survive shift release");
+        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_KeyboardShiftPreview_UpdatesOnPointerMove()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = true;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var pointerDate = new DateTime(2026, 5, 16);
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+
+        HeadlessControlHost.PointerEnter(FindDayButton(grid!, pointerDate));
+
+        calendar.MoveToDate(startDate);
+        HeadlessControlHost.KeyDown(calendar, Key.Space);
+
+        for (var i = 0; i < 4; i++)
+            HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+
+        HeadlessControlHost.KeyUp(calendar, Key.LeftShift);
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, pointerDate));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        FindDayButton(grid!, pointerDate).IsPreviewEndDate.Should().BeTrue("pointer move should take over preview end");
+        FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeFalse();
+    }
+
+    [AvaloniaFact]
     public void SingleRange_KeyboardCommit_WorksAfterReleasingShift()
     {
         var calendar = CreateCalendar(new(2026, 5, 15));
@@ -325,8 +616,7 @@ public class CalendarHeadlessTests
 
         var startDate = new DateTime(2026, 5, 10);
         var endDate = new DateTime(2026, 5, 14);
-        calendar.MoveToDate(startDate);
-        HeadlessControlHost.KeyDown(calendar, Key.Space);
+        EstablishDragModeAnchor(calendar, startDate);
 
         for (var i = 0; i < 4; i++)
             HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
@@ -334,7 +624,7 @@ public class CalendarHeadlessTests
         HeadlessControlHost.KeyUp(calendar, Key.LeftShift);
         HeadlessControlHost.KeyDown(calendar, Key.Enter);
 
-        dayButtonClicks.Should().Be(2);
+        dayButtonClicks.Should().Be(1);
         calendar.SelectedDates.Should().Contain(startDate);
         calendar.SelectedDates.Should().Contain(endDate);
     }
@@ -444,6 +734,12 @@ public class CalendarHeadlessTests
 
     private static CalendarDayButton FindDayButton(Grid grid, DateTime date) =>
         grid.Children.OfType<CalendarDayButton>().Single(x => x.DataContext is DateTime d && d == date);
+
+    private static void EstablishDragModeAnchor(Calendar calendar, DateTime anchorDate)
+    {
+        calendar.MoveToDate(anchorDate.AddDays(-1));
+        HeadlessControlHost.KeyDown(calendar, Key.Right);
+    }
 
     private static Calendar CreateCalendar(DateTime displayDate)
     {

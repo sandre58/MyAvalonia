@@ -28,10 +28,10 @@ public class CalendarSelectionCoordinatorExpandedTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: true);
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: true);
         commands.Contains(new(2026, 5, 10)).Should().BeTrue();
 
-        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: true);
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: true);
         commands.Contains(new(2026, 5, 10)).Should().BeFalse();
     }
 
@@ -46,8 +46,8 @@ public class CalendarSelectionCoordinatorExpandedTests
             _ => true,
             commands);
 
-        coordinator.ProcessTapRangeSelection(new(2026, 5, 5), ctrl: true);
-        coordinator.ProcessTapRangeSelection(new(2026, 5, 15), ctrl: true);
+        coordinator.Commit(new(2026, 5, 5), shift: false, ctrl: true);
+        coordinator.Commit(new(2026, 5, 15), shift: false, ctrl: true);
 
         commands.Ranges.Should().ContainSingle()
             .Which.Should().Be((new(2026, 5, 5), new(2026, 5, 15)));
@@ -64,7 +64,7 @@ public class CalendarSelectionCoordinatorExpandedTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 5), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 5), shift: false, ctrl: false);
         coordinator.BeginPointerSelection(new(2026, 5, 20), shift: true);
 
         coordinator.HoverStart.Should().Be(new(2026, 5, 5));
@@ -81,8 +81,8 @@ public class CalendarSelectionCoordinatorExpandedTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
-        coordinator.ProcessDateSelection(new(2026, 5, 20), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 20), shift: false, ctrl: false);
 
         commands.Singles.Should().Equal(new DateTime(2026, 5, 10), new DateTime(2026, 5, 20));
     }

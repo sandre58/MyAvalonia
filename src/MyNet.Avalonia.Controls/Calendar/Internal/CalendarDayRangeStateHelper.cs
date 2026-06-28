@@ -24,12 +24,8 @@ internal static class CalendarDayRangeStateHelper
         cell.IsInRange = false;
     }
 
-    public static void ClearPreviewRangeState(CalendarDayButton cell)
-    {
-        cell.IsPreviewStartDate = false;
-        cell.IsPreviewEndDate = false;
-        cell.IsPreviewInRange = false;
-    }
+    public static void ClearPreviewRangeState(CalendarDayButton cell) =>
+        cell.SetPreviewRangeState(isPreviewStart: false, isPreviewEnd: false, isPreviewInRange: false);
 
     public static void ApplyRangeSegmentToCell(CalendarDayButton cell, DateTime date, DateTime rangeStart, DateTime rangeEnd, bool isPreview)
     {
@@ -39,7 +35,7 @@ internal static class CalendarDayRangeStateHelper
 
         if (isPreview)
         {
-            ApplyPreviewRangeToCell(cell, date, rangeStart, rangeEnd);
+            SetPreviewRangeToCell(cell, date, rangeStart, rangeEnd);
             return;
         }
 
@@ -64,7 +60,47 @@ internal static class CalendarDayRangeStateHelper
             cell.IsInRange = true;
     }
 
-    public static void ApplyPreviewRangeToCell(CalendarDayButton cell, DateTime date, DateTime anchor, DateTime previewEnd)
+    public static void ApplyPreviewRangeToCell(CalendarDayButton cell, DateTime date, DateTime anchor, DateTime previewEnd) =>
+        SetPreviewRangeToCell(cell, date, anchor, previewEnd);
+
+    public static void SetPreviewRangeToCell(CalendarDayButton cell, DateTime date, DateTime anchor, DateTime previewEnd)
+    {
+        anchor = anchor.DiscardTime();
+        previewEnd = previewEnd.DiscardTime();
+        date = date.DiscardTime();
+
+        var isPreviewStart = false;
+        var isPreviewEnd = false;
+        var isPreviewInRange = false;
+
+        if (anchor == previewEnd)
+        {
+            if (date == anchor)
+            {
+                isPreviewStart = true;
+                isPreviewEnd = true;
+            }
+        }
+        else
+        {
+            var rangeStart = anchor.IsBefore(previewEnd) ? anchor : previewEnd;
+            var rangeEnd = anchor.IsAfter(previewEnd) ? anchor : previewEnd;
+
+            if (!date.IsBefore(rangeStart) && !date.IsAfter(rangeEnd))
+            {
+                if (date == rangeStart)
+                    isPreviewStart = true;
+                else if (date == rangeEnd)
+                    isPreviewEnd = true;
+                else
+                    isPreviewInRange = true;
+            }
+        }
+
+        cell.SetPreviewRangeState(isPreviewStart, isPreviewEnd, isPreviewInRange);
+    }
+
+    public static bool CellMatchesPreviewInterval(CalendarDayButton cell, DateTime date, DateTime anchor, DateTime previewEnd)
     {
         anchor = anchor.DiscardTime();
         previewEnd = previewEnd.DiscardTime();
@@ -72,27 +108,25 @@ internal static class CalendarDayRangeStateHelper
 
         if (anchor == previewEnd)
         {
-            if (date == anchor)
-            {
-                cell.IsPreviewStartDate = true;
-                cell.IsPreviewEndDate = true;
-            }
+            if (date != anchor)
+                return !cell.IsPreviewStartDate && !cell.IsPreviewEndDate && !cell.IsPreviewInRange;
 
-            return;
+            return cell.IsPreviewStartDate && cell.IsPreviewEndDate && !cell.IsPreviewInRange;
         }
 
         var rangeStart = anchor.IsBefore(previewEnd) ? anchor : previewEnd;
         var rangeEnd = anchor.IsAfter(previewEnd) ? anchor : previewEnd;
 
         if (date.IsBefore(rangeStart) || date.IsAfter(rangeEnd))
-            return;
+            return !cell.IsPreviewStartDate && !cell.IsPreviewEndDate && !cell.IsPreviewInRange;
 
         if (date == rangeStart)
-            cell.IsPreviewStartDate = true;
-        else if (date == rangeEnd)
-            cell.IsPreviewEndDate = true;
-        else
-            cell.IsPreviewInRange = true;
+            return cell.IsPreviewStartDate && !cell.IsPreviewEndDate && !cell.IsPreviewInRange;
+
+        if (date == rangeEnd)
+            return cell.IsPreviewEndDate && !cell.IsPreviewStartDate && !cell.IsPreviewInRange;
+
+        return cell.IsPreviewInRange && !cell.IsPreviewStartDate && !cell.IsPreviewEndDate;
     }
 
     public static IEnumerable<(DateTime Start, DateTime End)> EnumerateConsecutiveRanges(IReadOnlyList<DateTime> dates)

@@ -14,6 +14,28 @@ namespace MyNet.Avalonia.Controls.Primitives;
 [PseudoClasses(PseudoClassName.Pressed, PseudoClassName.Selected, PseudoClassName.StartDate, PseudoClassName.EndDate, PseudoClassName.PreviewStartDate, PseudoClassName.PreviewEndDate, PseudoClassName.PreviewInRange, PseudoClassName.InRange, PseudoClassName.Today, PseudoClassName.Blackout, PseudoClassName.Inactive)]
 public class CalendarDayButton : CalendarDateButton
 {
+    private bool _suppressPreviewPseudoClassUpdates;
+
+    internal void SetPreviewRangeState(bool isPreviewStart, bool isPreviewEnd, bool isPreviewInRange)
+    {
+        if (IsPreviewStartDate == isPreviewStart
+            && IsPreviewEndDate == isPreviewEnd
+            && IsPreviewInRange == isPreviewInRange)
+        {
+            return;
+        }
+
+        _suppressPreviewPseudoClassUpdates = true;
+        IsPreviewStartDate = isPreviewStart;
+        IsPreviewEndDate = isPreviewEnd;
+        IsPreviewInRange = isPreviewInRange;
+        _suppressPreviewPseudoClassUpdates = false;
+
+        PseudoClasses.Set(PseudoClassName.PreviewStartDate, isPreviewStart);
+        PseudoClasses.Set(PseudoClassName.PreviewEndDate, isPreviewEnd);
+        PseudoClasses.Set(PseudoClassName.PreviewInRange, isPreviewInRange);
+    }
+
     public bool IsStartDate
     {
         get;
@@ -40,7 +62,8 @@ public class CalendarDayButton : CalendarDateButton
         set
         {
             field = value;
-            PseudoClasses.Set(PseudoClassName.PreviewStartDate, value);
+            if (!_suppressPreviewPseudoClassUpdates)
+                PseudoClasses.Set(PseudoClassName.PreviewStartDate, value);
         }
     }
 
@@ -50,7 +73,8 @@ public class CalendarDayButton : CalendarDateButton
         set
         {
             field = value;
-            PseudoClasses.Set(PseudoClassName.PreviewEndDate, value);
+            if (!_suppressPreviewPseudoClassUpdates)
+                PseudoClasses.Set(PseudoClassName.PreviewEndDate, value);
         }
     }
 
@@ -60,7 +84,8 @@ public class CalendarDayButton : CalendarDateButton
         set
         {
             field = value;
-            PseudoClasses.Set(PseudoClassName.PreviewInRange, value);
+            if (!_suppressPreviewPseudoClassUpdates)
+                PseudoClasses.Set(PseudoClassName.PreviewInRange, value);
         }
     }
 

@@ -11,6 +11,9 @@ using Avalonia.Controls;
 namespace MyNet.Avalonia.Controls.Internals;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
+/// <summary>
+/// ListBox Extended-style selection rules for calendar day cells (Variant A: first commit sets anchor + selection).
+/// </summary>
 internal sealed class CalendarSelectionCoordinator(
     Func<CalendarSelectionMode> selectionMode,
     Func<bool> allowTapRangeSelection,
@@ -29,199 +32,40 @@ internal sealed class CalendarSelectionCoordinator(
 
     public void ResetHover() => _anchorDate = null;
 
-    public void CommitPendingKeyboardRange(DateTime endDate)
+    /// <summary>Sets the range anchor without changing the committed selection (drag-mode focus tracking).</summary>
+    public void SetRangeAnchor(DateTime date)
     {
-        if (!isValidSelection(endDate) || !_anchorDate.HasValue)
-            return;
-
-        if (allowTapRangeSelection())
-        {
-            ProcessTapRangeSelection(endDate, ctrl: false, shift: false);
-            return;
-        }
-
-        var anchor = _anchorDate.Value;
-
-        switch (selectionMode())
-        {
-            case CalendarSelectionMode.SingleRange:
-            case CalendarSelectionMode.MultipleRange:
-                commands.SetSelection(anchor, endDate);
-                break;
-        }
-
-        _anchorDate = null;
-        commands.MoveToDate(endDate);
+        if (isValidSelection(date))
+            _anchorDate = date;
     }
 
-    public void CommitKeyboardAnchor(DateTime date)
+    /// <summary>Pointer click release or drag-free commit.</summary>
+    public void Commit(DateTime date, bool shift, bool ctrl) => CommitCore(date, shift, ctrl);
+
+    /// <summary>Space / Enter — applies preview state then commits.</summary>
+    public void CommitFromKeyboard(DateTime date, bool intervalPreview)
     {
         if (!isValidSelection(date))
             return;
-
-        if (allowTapRangeSelection())
-        {
-            ProcessTapRangeSelection(date, ctrl: false, shift: false);
-            return;
-        }
-
-        switch (selectionMode())
-        {
-            case CalendarSelectionMode.SingleRange:
-                ProcessSingleRangeSelection(date, shift: false);
-                break;
-
-            case CalendarSelectionMode.MultipleRange:
-                ProcessMultipleRangeSelection(date, shift: false, ctrl: false);
-                break;
-        }
-    }
-
-    public void ProcessDateSelection(DateTime date, bool shift, bool ctrl)
-    {
-        if (!isValidSelection(date))
-            return;
-
-        if (selectionMode() == CalendarSelectionMode.MultipleRange && ctrl)
-        {
-            if (allowTapRangeSelection())
-            {
-                ProcessTapRangeSelection(date, ctrl: true, shift);
-                return;
-            }
-
-            ProcessMultipleRangeSelection(date, shift, ctrl);
-            commands.MoveToDate(date);
-            return;
-        }
-
-        if (allowTapRangeSelection())
-        {
-            ProcessTapRangeSelection(date, ctrl, shift);
-            return;
-        }
 
         switch (selectionMode())
         {
             case CalendarSelectionMode.SingleDate:
                 commands.SetSelection(date);
+                commands.MoveToDate(date);
                 break;
 
             case CalendarSelectionMode.SingleRange:
-                ProcessSingleRangeSelection(date, shift);
-                break;
-
             case CalendarSelectionMode.MultipleRange:
-                ProcessMultipleRangeSelection(date, shift, ctrl);
-                break;
-        }
-
-        commands.MoveToDate(date);
-    }
-
-    public void PointerSelectionEnd(DateTime releaseDate, bool shift, bool ctrl)
-    {
-        if (!isValidSelection(releaseDate))
-            return;
-
-        var pressDate = _pointerPressDate;
-        var wasDrag = pressDate.HasValue
-            && pressDate.Value != releaseDate
-            && !allowTapRangeSelection();
-
-        if (wasDrag)
-        {
-            var press = pressDate!.Value;
-
-            switch (selectionMode())
-            {
-                case CalendarSelectionMode.SingleRange:
-                    if (shift)
-                    {
-                        commands.SetSelection(GetEffectiveAnchor(press), releaseDate);
-                    }
-                    else
-                    {
-                        commands.SetSelection(press, releaseDate);
-                        _anchorDate = press;
-                    }
-
-                    break;
-
-                case CalendarSelectionMode.MultipleRange:
-                    ProcessMultipleRangeDragEnd(press, releaseDate, shift, ctrl);
-                    break;
-            }
-
-            commands.MoveToDate(releaseDate);
-        }
-        else
-        {
-            ProcessDateSelection(releaseDate, shift, ctrl);
-        }
-
-        _pointerPressDate = null;
-    }
-
-    public void ProcessTapRangeSelection(DateTime date, bool ctrl, bool shift = false)
-    {
-        switch (selectionMode())
-        {
-            case CalendarSelectionMode.SingleDate:
-                commands.SetSelection(date);
-                break;
-
-            case CalendarSelectionMode.SingleRange:
-                if (shift && _anchorDate.HasValue)
-                {
-                    commands.SetSelection(_anchorDate.Value, date);
-                }
-                else if (!_anchorDate.HasValue)
-                {
-                    commands.SetSelection(date);
-                    _anchorDate = date;
-                }
+                if (!_anchorDate.HasValue)
+                    CommitCore(date, shift: false, ctrl: false);
+                else if (intervalPreview)
+                    CommitRange(_anchorDate.Value, date, shift: false, ctrl: false, clearAnchor: allowTapRangeSelection());
                 else
-                {
-                    commands.SetSelection(_anchorDate.Value, date);
-                    _anchorDate = null;
-                }
-
-                break;
-
-            case CalendarSelectionMode.MultipleRange:
-                if (ctrl)
-                {
-                    if (!_anchorDate.HasValue)
-                    {
-                        commands.AddSelection(date);
-                        _anchorDate = date;
-                    }
-                    else
-                    {
-                        commands.AddSelection(_anchorDate.Value, date);
-                        _anchorDate = null;
-                    }
-                }
-                else if (shift && _anchorDate.HasValue)
-                {
-                    commands.SetSelection(_anchorDate.Value, date);
-                }
-                else if (!_anchorDate.HasValue)
-                {
-                    commands.SetSelection(date);
-                    _anchorDate = date;
-                }
-                else
-                {
-                    commands.SetSelection(_anchorDate.Value, date);
-                    _anchorDate = null;
-                }
+                    CommitCore(date, shift: false, ctrl: false);
 
                 break;
         }
-
-        commands.MoveToDate(date);
     }
 
     public void BeginPointerSelection(DateTime date, bool shift)
@@ -232,62 +76,193 @@ internal sealed class CalendarSelectionCoordinator(
             _anchorDate = date;
     }
 
-    private void ProcessSingleRangeSelection(DateTime date, bool shift)
+    public void CompletePointerSelection(DateTime releaseDate, bool shift, bool ctrl, bool wasDrag)
     {
-        if (shift)
+        if (!isValidSelection(releaseDate))
+            return;
+
+        if (wasDrag && _pointerPressDate is { } pressDate && pressDate != releaseDate)
         {
-            commands.SetSelection(GetEffectiveAnchor(), date);
+            CommitDrag(pressDate, releaseDate, shift, ctrl);
+            _pointerPressDate = null;
+            return;
         }
-        else
-        {
-            commands.SetSelection(date);
-            _anchorDate = date;
-        }
+
+        Commit(releaseDate, shift, ctrl);
+        _pointerPressDate = null;
     }
 
-    private DateTime GetEffectiveAnchor(DateTime? fallback = null) =>
-        _anchorDate ?? fallback ?? displayDate();
-
-    private void ProcessMultipleRangeSelection(DateTime date, bool shift, bool ctrl)
+    private void CommitCore(DateTime date, bool shift, bool ctrl)
     {
+        if (!isValidSelection(date))
+            return;
+
+        switch (selectionMode())
+        {
+            case CalendarSelectionMode.SingleDate:
+                commands.SetSelection(date);
+                break;
+
+            case CalendarSelectionMode.SingleRange:
+                CommitSingleRange(date, shift, ctrl);
+                break;
+
+            case CalendarSelectionMode.MultipleRange:
+                CommitMultipleRange(date, shift, ctrl);
+                break;
+        }
+
+        commands.MoveToDate(date);
+    }
+
+    private void CommitSingleRange(DateTime date, bool shift, bool ctrl)
+    {
+        if (allowTapRangeSelection())
+        {
+            CommitTapRange(date, shift, ctrl);
+            return;
+        }
+
+        if (shift)
+        {
+            CommitRange(GetEffectiveAnchor(), date, shift, ctrl, clearAnchor: false);
+            return;
+        }
+
+        commands.SetSelection(date);
+        _anchorDate = date;
+    }
+
+    private void CommitMultipleRange(DateTime date, bool shift, bool ctrl)
+    {
+        if (allowTapRangeSelection())
+        {
+            if (ctrl)
+                CommitTapRange(date, shift, ctrl: true);
+            else
+                CommitTapRange(date, shift, ctrl: false);
+
+            return;
+        }
+
         if (ctrl && shift)
         {
-            commands.AddSelection(_anchorDate ?? displayDate(), date);
+            commands.AddSelection(GetEffectiveAnchor(), date);
+            return;
         }
-        else if (ctrl)
+
+        if (ctrl)
         {
             var wasSelected = commands.Contains(date);
             commands.ToggleSelection(date);
             if (!wasSelected)
+                _anchorDate = date;
+
+            return;
+        }
+
+        if (shift)
+        {
+            CommitRange(GetEffectiveAnchor(), date, shift, ctrl, clearAnchor: false);
+            return;
+        }
+
+        commands.SetSelection(date);
+        _anchorDate = date;
+    }
+
+    /// <summary>Variant A — 1st tap commits start + anchor; 2nd tap commits range.</summary>
+    private void CommitTapRange(DateTime date, bool shift, bool ctrl)
+    {
+        if (ctrl)
+        {
+            if (!_anchorDate.HasValue)
             {
+                commands.AddSelection(date);
                 _anchorDate = date;
             }
+            else
+            {
+                commands.AddSelection(_anchorDate.Value, date);
+                _anchorDate = null;
+            }
+
+            return;
         }
-        else if (shift)
+
+        if (shift && _anchorDate.HasValue)
         {
-            commands.SetSelection(_anchorDate ?? displayDate(), date);
+            CommitRange(_anchorDate.Value, date, shift, ctrl, clearAnchor: false);
+            return;
         }
-        else
+
+        if (!_anchorDate.HasValue)
         {
             commands.SetSelection(date);
             _anchorDate = date;
+            return;
         }
+
+        CommitRange(_anchorDate.Value, date, shift, ctrl, clearAnchor: true);
     }
 
-    private void ProcessMultipleRangeDragEnd(DateTime pressDate, DateTime releaseDate, bool shift, bool ctrl)
+    private void CommitRange(DateTime anchor, DateTime end, bool shift, bool ctrl, bool clearAnchor)
+    {
+        switch (selectionMode())
+        {
+            case CalendarSelectionMode.SingleRange:
+                commands.SetSelection(anchor, end);
+                break;
+
+            case CalendarSelectionMode.MultipleRange when ctrl && shift:
+                commands.AddSelection(anchor, end);
+                break;
+
+            case CalendarSelectionMode.MultipleRange:
+                commands.SetSelection(anchor, end);
+                break;
+        }
+
+        if (clearAnchor && !shift)
+            _anchorDate = null;
+    }
+
+    private void CommitDrag(DateTime pressDate, DateTime releaseDate, bool shift, bool ctrl)
+    {
+        switch (selectionMode())
+        {
+            case CalendarSelectionMode.SingleRange:
+                if (shift)
+                    CommitRange(GetEffectiveAnchor(pressDate), releaseDate, shift, ctrl, clearAnchor: false);
+                else
+                {
+                    commands.SetSelection(pressDate, releaseDate);
+                    _anchorDate = pressDate;
+                }
+
+                break;
+
+            case CalendarSelectionMode.MultipleRange:
+                CommitMultipleRangeDrag(pressDate, releaseDate, shift, ctrl);
+                break;
+        }
+
+        commands.MoveToDate(releaseDate);
+    }
+
+    private void CommitMultipleRangeDrag(DateTime pressDate, DateTime releaseDate, bool shift, bool ctrl)
     {
         if (ctrl && shift)
-        {
             commands.AddSelection(_anchorDate ?? pressDate, releaseDate);
-        }
         else if (shift)
-        {
-            commands.SetSelection(_anchorDate ?? pressDate, releaseDate);
-        }
+            CommitRange(_anchorDate ?? pressDate, releaseDate, shift, ctrl, clearAnchor: false);
         else
         {
             commands.SetSelection(pressDate, releaseDate);
             _anchorDate = pressDate;
         }
     }
+
+    private DateTime GetEffectiveAnchor(DateTime? fallback = null) =>
+        _anchorDate ?? fallback ?? displayDate();
 }

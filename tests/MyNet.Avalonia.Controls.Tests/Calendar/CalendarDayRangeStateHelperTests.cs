@@ -70,6 +70,25 @@ public class CalendarDayRangeStateHelperTests
     }
 
     [Fact]
+    public void SetPreviewRangeToCell_ExtendedRange_PromotesPreviousEndToInRange()
+    {
+        var cell = new CalendarDayButton();
+        var anchor = new DateTime(2026, 6, 10);
+        var previousEnd = new DateTime(2026, 6, 12);
+        var newEnd = new DateTime(2026, 6, 13);
+
+        CalendarDayRangeStateHelper.SetPreviewRangeToCell(cell, previousEnd, anchor, previousEnd);
+        cell.IsPreviewEndDate.Should().BeTrue();
+        cell.IsPreviewInRange.Should().BeFalse();
+
+        CalendarDayRangeStateHelper.SetPreviewRangeToCell(cell, previousEnd, anchor, newEnd);
+
+        cell.IsPreviewEndDate.Should().BeFalse();
+        cell.IsPreviewInRange.Should().BeTrue();
+        cell.IsPreviewStartDate.Should().BeFalse();
+    }
+
+    [Fact]
     public void ApplyRangeSegmentToCell_CommittedSingleDay_SetsStartAndEnd()
     {
         var cell = new CalendarDayButton();

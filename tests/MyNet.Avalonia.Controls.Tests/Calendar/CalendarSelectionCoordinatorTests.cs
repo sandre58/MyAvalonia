@@ -27,7 +27,7 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: false);
 
         commands.Singles.Should().ContainSingle().Which.Should().Be(new(2026, 5, 10));
         commands.Moves.Should().ContainSingle().Which.Should().Be(new(2026, 5, 10));
@@ -45,8 +45,8 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 5), shift: false, ctrl: false);
-        coordinator.ProcessDateSelection(new(2026, 5, 15), shift: true, ctrl: false);
+        coordinator.Commit(new(2026, 5, 5), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 15), shift: true, ctrl: false);
 
         commands.Ranges.Should().ContainSingle()
             .Which.Should().Be((new(2026, 5, 5), new(2026, 5, 15)));
@@ -64,9 +64,9 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 5), shift: false, ctrl: false);
-        coordinator.ProcessDateSelection(new(2026, 5, 15), shift: true, ctrl: false);
-        coordinator.ProcessDateSelection(new(2026, 5, 20), shift: true, ctrl: false);
+        coordinator.Commit(new(2026, 5, 5), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 15), shift: true, ctrl: false);
+        coordinator.Commit(new(2026, 5, 20), shift: true, ctrl: false);
 
         commands.Ranges.Should().HaveCount(2);
         commands.Ranges[1].Should().Be((new(2026, 5, 5), new(2026, 5, 20)));
@@ -84,7 +84,7 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: false);
         coordinator.ResetHover();
 
         coordinator.HoverStart.Should().BeNull();
@@ -101,8 +101,8 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessTapRangeSelection(new(2026, 5, 10), ctrl: false);
-        coordinator.ProcessTapRangeSelection(new(2026, 5, 20), ctrl: false);
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 20), shift: false, ctrl: false);
 
         commands.Ranges.Should().ContainSingle()
             .Which.Should().Be((new(2026, 5, 10), new(2026, 5, 20)));
@@ -120,9 +120,9 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessTapRangeSelection(new(2026, 5, 10), ctrl: false);
-        coordinator.ProcessTapRangeSelection(new(2026, 5, 20), ctrl: false, shift: true);
-        coordinator.ProcessTapRangeSelection(new(2026, 5, 25), ctrl: false, shift: true);
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 20), shift: true, ctrl: false);
+        coordinator.Commit(new(2026, 5, 25), shift: true, ctrl: false);
 
         commands.Ranges.Should().HaveCount(2);
         commands.Ranges[1].Should().Be((new(2026, 5, 10), new(2026, 5, 25)));
@@ -140,7 +140,7 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.CommitKeyboardAnchor(new(2026, 5, 10));
+        coordinator.CommitFromKeyboard(new(2026, 5, 10), intervalPreview: false);
 
         commands.Singles.Should().ContainSingle().Which.Should().Be(new(2026, 5, 10));
         coordinator.HoverStart.Should().Be(new(2026, 5, 10));
@@ -157,12 +157,12 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
-        coordinator.CommitPendingKeyboardRange(new(2026, 5, 20));
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.CommitFromKeyboard(new(2026, 5, 20), intervalPreview: true);
 
         commands.Ranges.Should().ContainSingle()
             .Which.Should().Be((new(2026, 5, 10), new(2026, 5, 20)));
-        coordinator.HoverStart.Should().BeNull();
+        coordinator.HoverStart.Should().Be(new(2026, 5, 10));
     }
 
     [Fact]
@@ -176,8 +176,8 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
-        coordinator.CommitPendingKeyboardRange(new(2026, 5, 20));
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.CommitFromKeyboard(new(2026, 5, 20), intervalPreview: true);
 
         commands.Ranges.Should().ContainSingle()
             .Which.Should().Be((new(2026, 5, 10), new(2026, 5, 20)));
@@ -195,9 +195,9 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
-        coordinator.ProcessDateSelection(new(2026, 5, 20), shift: true, ctrl: false);
-        coordinator.ProcessDateSelection(new(2026, 5, 25), shift: true, ctrl: false);
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 20), shift: true, ctrl: false);
+        coordinator.Commit(new(2026, 5, 25), shift: true, ctrl: false);
 
         commands.Ranges.Should().HaveCount(2);
         commands.Ranges[1].Should().Be((new(2026, 5, 10), new(2026, 5, 25)));
@@ -215,8 +215,8 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: true);
-        coordinator.ProcessDateSelection(new(2026, 5, 20), shift: true, ctrl: true);
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: true);
+        coordinator.Commit(new(2026, 5, 20), shift: true, ctrl: true);
 
         commands.Singles.Should().ContainSingle().Which.Should().Be(new(2026, 5, 10));
         commands.Ranges.Should().ContainSingle()
@@ -235,8 +235,8 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 5), shift: false, ctrl: true);
-        coordinator.ProcessDateSelection(new(2026, 5, 15), shift: false, ctrl: true);
+        coordinator.Commit(new(2026, 5, 5), shift: false, ctrl: true);
+        coordinator.Commit(new(2026, 5, 15), shift: false, ctrl: true);
 
         commands.Ranges.Should().ContainSingle()
             .Which.Should().Be((new(2026, 5, 5), new(2026, 5, 15)));
@@ -254,10 +254,10 @@ public class CalendarSelectionCoordinatorTests
             _ => true,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 1), shift: false, ctrl: false);
-        coordinator.ProcessDateSelection(new(2026, 5, 7), shift: true, ctrl: false);
-        coordinator.ProcessDateSelection(new(2026, 5, 12), shift: false, ctrl: true);
-        coordinator.ProcessDateSelection(new(2026, 5, 18), shift: true, ctrl: true);
+        coordinator.Commit(new(2026, 5, 1), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 7), shift: true, ctrl: false);
+        coordinator.Commit(new(2026, 5, 12), shift: false, ctrl: true);
+        coordinator.Commit(new(2026, 5, 18), shift: true, ctrl: true);
 
         commands.Ranges.Should().HaveCount(2);
         commands.Ranges[0].Should().Be((new(2026, 5, 1), new(2026, 5, 7)));
@@ -276,7 +276,7 @@ public class CalendarSelectionCoordinatorTests
             _ => false,
             commands);
 
-        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.Commit(new(2026, 5, 10), shift: false, ctrl: false);
 
         commands.Singles.Should().BeEmpty();
         commands.Moves.Should().BeEmpty();
