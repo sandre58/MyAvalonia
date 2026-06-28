@@ -1,0 +1,33 @@
+---
+description: NuGet packaging and public API rules
+globs: "src/**/*.csproj,build/package.props"
+alwaysApply: false
+---
+
+# NuGet Packaging Rules
+
+## Packable packages (6)
+
+All under `src/` — auto-detected by `Directory.Build.props` (`IsPackable=true`).
+
+## Packaging config
+
+- Output: `packages/` via `build/package.props`
+- Symbols: `.snupkg` with SourceLink
+- README: per-project `README.md` packed automatically
+- Version: GitVersion (Conventional Commits)
+
+## Pre-publish checklist
+
+- [ ] Public API has XML documentation
+- [ ] No dependency on `demos/` or `tests/` from `src/`
+- [ ] No breaking changes without explicit note
+- [ ] `dotnet test` passes; coverage meets assembly threshold
+- [ ] `dotnet pack -c Release` without warnings
+
+## API evolution
+
+Prefer additive APIs, extensibility points, optional behaviors.
+Avoid redesigning public APIs without strong justification.
+
+See `.cursor/docs/08-nuget-checklist.md` for full review template.

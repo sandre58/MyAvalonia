@@ -1,0 +1,45 @@
+---
+description: Avalonia control implementation in MyNet.Avalonia.Controls
+globs: "src/MyNet.Avalonia.Controls/**"
+alwaysApply: false
+---
+
+# Controls Package Rules
+
+## Hard rules
+
+- Zero `.axaml` files in this package
+- No service locator; controls must not resolve DI services
+- No business logic or ViewModel assumptions
+
+## New control checklist
+
+1. Single responsibility — see `04-control-design.mdc`
+2. Class in `Controls/{Domain}/` — inherit `RegionControl`, `TemplatedControl`, etc.
+3. Pseudo-classes via `PseudoClassName` constants + `Property.Changed.AddClassHandler`
+4. `[TemplatePart("PART_*", typeof(...))]` for each template part
+5. Theme: `Theme.Controls/Custom/{Name}.axaml` with `x:Key="{x:Type my:Name}"`
+6. Register in `Custom/_index.axaml`
+7. Showcase page + headless test
+
+## Property pattern (mandatory)
+
+```csharp
+public static readonly StyledProperty<T> XProperty =
+    AvaloniaProperty.Register<MyControl, T>(nameof(X));
+
+public T X
+{
+    get => GetValue(XProperty);
+    set => SetValue(XProperty, value);
+}
+```
+
+## DirectProperty
+
+Only when performance-critical or styling is not required.
+
+## Lifecycle
+
+Use `OnApplyTemplate`, `OnAttachedToVisualTree`, `OnDetachedFromVisualTree`.
+Unsubscribe all events and observables on detach.

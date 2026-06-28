@@ -1,0 +1,37 @@
+---
+description: Architecture review mindset for framework decisions
+alwaysApply: false
+---
+
+# Architecture Review Rules
+
+The codebase is actively evolving. Do not preserve code solely because it exists.
+
+## Mindset
+
+- Evaluate designs **as if the codebase did not exist yet**
+- Prefer simplest correct long-term design over minimal diff
+- Backward compatibility is not a goal unless explicitly requested
+
+## For every significant system, ask
+
+*"Would this still be designed this way if implemented from scratch today?"*
+
+Evaluate: keep | simplify | redesign | split | merge | remove
+
+## Review output format
+
+1. What is good
+2. What is problematic
+3. Proposed solution
+4. Trade-offs
+5. Recommendation (keep / simplify / redesign / remove)
+
+## Challenge
+
+- Unnecessary abstractions hiding Avalonia
+- Duplicated registration and static bootstrapper chains
+- God controls and feature accumulation
+- Application patterns leaking into `src/` packages
+
+Framework quality > preserving legacy code.

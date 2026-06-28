@@ -1,0 +1,31 @@
+---
+description: C# and .NET conventions for MyAvalonia
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# C# / .NET Conventions
+
+## Target
+
+- `net10.0`, nullable enabled, file-scoped namespaces
+- Follow `.editorconfig` and StyleCop (enforced at build)
+- XML documentation on all public APIs (`GenerateDocumentationFile` is enabled)
+
+## Dependencies
+
+- Central Package Management: add versions in `Directory.Packages.props` only
+- Never pin package versions in individual `.csproj` files
+- Shared test deps: `build/dependencies.props`
+
+## Code style
+
+- Explicit access modifiers; `sealed` when inheritance is not intended
+- Composition over inheritance; avoid unnecessary abstraction layers
+- Prefer modern C# when it improves clarity
+
+## Public API
+
+- Strongly typed, discoverable, predictable
+- No magic strings, ambiguous booleans, or hidden side effects
+- Breaking changes require explicit justification (NuGet consumers)

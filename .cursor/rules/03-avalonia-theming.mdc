@@ -1,0 +1,43 @@
+---
+description: Theming rules for MyNet.Avalonia.Theme and Theme.Controls
+globs: "src/MyNet.Avalonia.Theme*/**"
+alwaysApply: false
+---
+
+# Theming Rules
+
+## Startup order (Application.Styles)
+
+```xml
+<my:MyTheme />
+<my:ThemeControlsCatalog />
+<!-- then Extended, Geography, app-specific styles -->
+```
+
+Call `MyTheme.Current.EnsureLoaded()` at app initialization.
+
+## ControlTheme conventions
+
+- Implicit key: `x:Key="{x:Type my:Control}"` or `{x:Type Button}`
+- Named variant: `MyNet.Theme.{Control}.{Variant}`
+- Template resource keys: `MyNet.{Control}.Template.{Variant}`
+- One file per control: `{ControlName}.axaml`
+
+## Resource keys
+
+Prefix all tokens with `MyNet.*` (e.g. `MyNet.Color.Surface.Level1`, `MyNet.Font.Size.H5`).
+
+## Layers in ThemeControlsCatalog
+
+Foundation → Standard → Custom → Presets → Resources
+
+## Assists
+
+- Theme assists: `MyNet.Avalonia.Theme/Assists/` (`VariantAssist`, `ShadowAssist`, …)
+- Control assists: `MyNet.Avalonia.Theme.Controls/Assists/` (`IconAssist`, `DataGridAssist`, …)
+
+## CSS utility classes
+
+Use `CssClass` registries (`variant-*`, `size-*`, `kind-*`) — not ad-hoc class strings.
+
+Visual customization must not require subclassing controls.

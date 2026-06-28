@@ -1,0 +1,38 @@
+---
+description: Testing conventions for MyAvalonia
+globs: "tests/**"
+alwaysApply: false
+---
+
+# Testing Rules
+
+## Project mapping
+
+Each `src/MyNet.Avalonia.*` package has a matching `tests/MyNet.Avalonia.*.Tests` project.
+Headless tests: `*.Headless.Tests` for visual/template behavior.
+
+## Coverage thresholds (`build/coverage/assembly-thresholds.json`)
+
+| Assembly | Minimum line rate |
+|----------|-------------------|
+| Default | 50% |
+| Controls | 60% |
+| Extended, Geography, Core | 70% |
+| Theme | 50% |
+
+## What to test for controls
+
+- Property get/set and coercion
+- Pseudo-class toggling
+- Commands and events
+- Template application (headless)
+- Culture change behavior (if localized)
+
+## Commands
+
+```bash
+dotnet test MyAvalonia.slnx
+dotnet test /p:CollectCoverage=true
+```
+
+Public controls are framework contracts — add tests with new public API.

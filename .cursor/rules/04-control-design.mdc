@@ -1,0 +1,39 @@
+---
+description: Control design decision matrix and anti-patterns
+globs: "src/**/Controls/**,**/Theme.Controls/**"
+alwaysApply: false
+---
+
+# Control Design Decision Matrix
+
+Before creating anything, ask: *What is the single responsibility?*
+
+| Need | Use |
+|------|-----|
+| Visual + state + templating | `TemplatedControl` (default) |
+| Wrap single content | `ContentControl` |
+| Display collection | `ItemsControl` / built-in list controls |
+| Add interaction to existing control | Behavior |
+| Cross-control layout hint | Attached property |
+| Pure UI transform | Converter |
+| Visual only | Style / ControlTheme override |
+
+## Do NOT create a control when
+
+Style, template override, behavior, or attached property is sufficient.
+
+## Anti-patterns
+
+- God controls mixing layout + data orchestration + state
+- Feature flags (`IsCompact`, `EnableX`) — split into variants or composition
+- Deep inheritance chains
+- Business semantics in events (`CustomerSaved` → use UI events only)
+
+## MVVM
+
+Controls must support binding and commands without ViewModel-specific logic.
+
+## Templates
+
+- Document and validate `[TemplatePart]` parts in `OnApplyTemplate`
+- Prefer `TemplateBinding`; avoid runtime visual tree search

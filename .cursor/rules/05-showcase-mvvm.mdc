@@ -1,0 +1,37 @@
+---
+description: Showcase demo MVVM patterns
+globs: "demos/MyNet.Avalonia.Showcase/**"
+alwaysApply: false
+---
+
+# Showcase MVVM Rules
+
+This is a **reference demo app**, not part of the NuGet framework.
+
+## Structure
+
+- Composition root: `Composition/AppComposition.cs`
+- Page registry: `Composition/PagesCatalog.cs` (explicit tuples, no convention discovery)
+- ViewModels: `ViewModels/` — pages inherit `PageViewModel`
+- Views/Pages: `Views/`, `Pages/` with `x:DataType` for compiled bindings
+
+## ViewModel patterns
+
+- Base: `ObservableObject` from `MyNet.Observable`
+- Commands: inject `ICommandFactory` (via `AvaloniaCommandFactory`)
+- Localized properties: `[UpdateOnCultureChanged]` attribute
+- Navigation pages: implement `INavigationPage` lifecycle methods
+
+## New demo page checklist
+
+1. `{Name}PageViewModel` inheriting `PageViewModel` or `ShowcaseViewModel`
+2. `{Name}Page.axaml` with `x:DataType="vm:{Name}PageViewModel"`
+3. Entry in `PagesCatalog.cs`
+4. Register ViewModel singleton in `AppComposition.RegisterPageViewModels`
+5. `.resx` resources if user-facing text
+
+## Validation sample
+
+See `FormViewModel` + `FormViewModelValidator` (FluentValidation + `INotifyDataErrorInfo`).
+
+Do not move Showcase patterns into `src/` library packages.

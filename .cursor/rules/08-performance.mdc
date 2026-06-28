@@ -1,0 +1,36 @@
+---
+description: UI performance rules for framework code
+globs: "src/**"
+alwaysApply: false
+---
+
+# Performance Rules (src/)
+
+Optimize only when justified. Never sacrifice API clarity for micro-optimizations.
+
+## Hot paths to watch
+
+- Visual tree depth and repeated traversal (`GetVisualDescendants` in loops)
+- Binding count per control and per list item
+- Allocations in layout/render (LINQ, closures, boxing)
+- Event subscriptions without cleanup
+
+## Bindings
+
+- Prefer compiled bindings in AXAML consumers
+- Minimize bindings in item templates (lists, grids)
+- Converters must be stateless and lightweight
+
+## Collections
+
+- Prefer virtualization for long lists
+- No per-item services or subscriptions without cleanup
+- Cache template parts in `OnApplyTemplate` — resolve once
+
+## Attached properties
+
+Lightweight setters only — no heavy computation on change.
+
+## Lifecycle
+
+No heavy work in `OnApplyTemplate`, `OnAttachedToVisualTree` that runs repeatedly.
