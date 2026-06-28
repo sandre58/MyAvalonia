@@ -130,6 +130,61 @@ public class CalendarSelectionCoordinatorTests
     }
 
     [Fact]
+    public void CommitKeyboardAnchor_SingleRangeWithoutTap_SetsAnchor()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = new CalendarSelectionCoordinator(
+            () => CalendarSelectionMode.SingleRange,
+            () => false,
+            () => new(2026, 5, 1),
+            _ => true,
+            commands);
+
+        coordinator.CommitKeyboardAnchor(new(2026, 5, 10));
+
+        commands.Singles.Should().ContainSingle().Which.Should().Be(new(2026, 5, 10));
+        coordinator.HoverStart.Should().Be(new(2026, 5, 10));
+    }
+
+    [Fact]
+    public void CommitPendingKeyboardRange_SingleRangeWithoutTap_CompletesRangeWithoutShift()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = new CalendarSelectionCoordinator(
+            () => CalendarSelectionMode.SingleRange,
+            () => false,
+            () => new(2026, 5, 1),
+            _ => true,
+            commands);
+
+        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.CommitPendingKeyboardRange(new(2026, 5, 20));
+
+        commands.Ranges.Should().ContainSingle()
+            .Which.Should().Be((new(2026, 5, 10), new(2026, 5, 20)));
+        coordinator.HoverStart.Should().BeNull();
+    }
+
+    [Fact]
+    public void CommitPendingKeyboardRange_SingleRangeTap_CompletesRangeWithoutShift()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = new CalendarSelectionCoordinator(
+            () => CalendarSelectionMode.SingleRange,
+            () => true,
+            () => new(2026, 5, 1),
+            _ => true,
+            commands);
+
+        coordinator.ProcessDateSelection(new(2026, 5, 10), shift: false, ctrl: false);
+        coordinator.CommitPendingKeyboardRange(new(2026, 5, 20));
+
+        commands.Ranges.Should().ContainSingle()
+            .Which.Should().Be((new(2026, 5, 10), new(2026, 5, 20)));
+        coordinator.HoverStart.Should().BeNull();
+    }
+
+    [Fact]
     public void ProcessDateSelection_SingleRangeTapWithShift_KeepsAnchor()
     {
         var commands = new RecordingSelectionCommands();

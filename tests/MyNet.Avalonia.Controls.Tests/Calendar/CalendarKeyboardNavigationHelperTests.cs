@@ -32,12 +32,12 @@ public class CalendarKeyboardNavigationHelperTests
             ctrl: false,
             shift: false);
 
-        result.Kind.Should().Be(CalendarNavigationKind.SelectDate);
+        result.Kind.Should().Be(CalendarNavigationKind.MoveFocus);
         result.Date.Should().Be(FocusedDate.AddDays(-7));
     }
 
     [Fact]
-    public void Resolve_ArrowUpInMultipleRangeWithoutShift_SelectsDate()
+    public void Resolve_ArrowUpInMultipleRangeWithoutShift_MovesFocusOnly()
     {
         var result = CalendarKeyboardNavigationHelper.Resolve(
             Key.Up,
@@ -49,7 +49,24 @@ public class CalendarKeyboardNavigationHelperTests
             ctrl: false,
             shift: false);
 
-        result.Kind.Should().Be(CalendarNavigationKind.SelectDate);
+        result.Kind.Should().Be(CalendarNavigationKind.MoveFocus);
+        result.Date.Should().Be(FocusedDate.AddDays(-7));
+    }
+
+    [Fact]
+    public void Resolve_ArrowUpInSingleRangeWithoutTap_MovesFocusOnly()
+    {
+        var result = CalendarKeyboardNavigationHelper.Resolve(
+            Key.Up,
+            new MonthContext(5, 2026),
+            FocusedDate,
+            CurrentMonth,
+            CalendarSelectionMode.SingleRange,
+            allowTapRangeSelection: false,
+            ctrl: false,
+            shift: false);
+
+        result.Kind.Should().Be(CalendarNavigationKind.MoveFocus);
         result.Date.Should().Be(FocusedDate.AddDays(-7));
     }
 
@@ -68,6 +85,57 @@ public class CalendarKeyboardNavigationHelperTests
 
         result.Kind.Should().Be(CalendarNavigationKind.MoveFocus);
         result.Date.Should().Be(FocusedDate.AddDays(-7));
+    }
+
+    [Fact]
+    public void Resolve_ArrowUpInSingleRangeWithTap_MovesFocusOnly()
+    {
+        var result = CalendarKeyboardNavigationHelper.Resolve(
+            Key.Up,
+            new MonthContext(5, 2026),
+            FocusedDate,
+            CurrentMonth,
+            CalendarSelectionMode.SingleRange,
+            allowTapRangeSelection: true,
+            ctrl: false,
+            shift: false);
+
+        result.Kind.Should().Be(CalendarNavigationKind.MoveFocus);
+        result.Date.Should().Be(FocusedDate.AddDays(-7));
+    }
+
+    [Fact]
+    public void Resolve_ShiftPageDownInSingleRangeWithoutTap_MovesFocusOneMonthForward()
+    {
+        var result = CalendarKeyboardNavigationHelper.Resolve(
+            Key.PageDown,
+            new MonthContext(5, 2026),
+            FocusedDate,
+            CurrentMonth,
+            CalendarSelectionMode.SingleRange,
+            allowTapRangeSelection: false,
+            ctrl: false,
+            shift: true);
+
+        result.Kind.Should().Be(CalendarNavigationKind.MoveFocus);
+        result.Date.Should().Be(FocusedDate.AddMonths(1));
+    }
+
+    [Fact]
+    public void Resolve_ShiftPageDownInSingleRangeWithTap_MovesFocusOneMonthForward()
+    {
+        var result = CalendarKeyboardNavigationHelper.Resolve(
+            Key.PageDown,
+            new MonthContext(5, 2026),
+            FocusedDate,
+            CurrentMonth,
+            CalendarSelectionMode.SingleRange,
+            allowTapRangeSelection: true,
+            ctrl: false,
+            shift: true);
+
+        result.Kind.Should().Be(CalendarNavigationKind.MoveFocus);
+        result.Date.Should().Be(FocusedDate.AddMonths(1));
     }
 
     [Fact]
@@ -136,7 +204,7 @@ public class CalendarKeyboardNavigationHelperTests
     }
 
     [Fact]
-    public void Resolve_Space_SelectsFocusedDate()
+    public void Resolve_Space_IsHandledByCalendarNotHelper()
     {
         var result = CalendarKeyboardNavigationHelper.Resolve(
             Key.Space,
@@ -148,6 +216,22 @@ public class CalendarKeyboardNavigationHelperTests
             ctrl: false,
             shift: false);
 
-        result.Kind.Should().Be(CalendarNavigationKind.SelectFocused);
+        result.Kind.Should().Be(CalendarNavigationKind.None);
+    }
+
+    [Fact]
+    public void Resolve_Enter_IsHandledByCalendarNotHelper()
+    {
+        var result = CalendarKeyboardNavigationHelper.Resolve(
+            Key.Enter,
+            new MonthContext(5, 2026),
+            FocusedDate,
+            CurrentMonth,
+            CalendarSelectionMode.SingleRange,
+            allowTapRangeSelection: true,
+            ctrl: false,
+            shift: false);
+
+        result.Kind.Should().Be(CalendarNavigationKind.None);
     }
 }

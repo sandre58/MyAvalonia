@@ -62,4 +62,20 @@ internal static class HeadlessControlHost
 
     public static void PointerEnter(Control control, KeyModifiers modifiers = KeyModifiers.None) =>
         control.RaiseEvent(new PointerEventArgs(InputElement.PointerEnteredEvent, control, null!, control, new(4, 4), 0, new PointerPointProperties(RawInputModifiers.None, PointerUpdateKind.Other), modifiers));
+
+    public static void KeyDown(InputElement element, Key key, KeyModifiers modifiers = KeyModifiers.None) =>
+        element.RaiseEvent(new KeyEventArgs
+        {
+            RoutedEvent = InputElement.KeyDownEvent,
+            Key = key,
+            KeyModifiers = modifiers
+        });
+
+    public static void KeyUp(InputElement element, Key key, KeyModifiers modifiers = KeyModifiers.None) =>
+        element.RaiseEvent(new KeyEventArgs
+        {
+            RoutedEvent = InputElement.KeyUpEvent,
+            Key = key,
+            KeyModifiers = modifiers
+        });
 }

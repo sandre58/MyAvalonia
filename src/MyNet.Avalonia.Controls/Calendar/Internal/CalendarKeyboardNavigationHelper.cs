@@ -36,9 +36,8 @@ internal static class CalendarKeyboardNavigationHelper
             Key.Right => ResolveRight(displayContext, focusedDate, currentMonth, selectionMode, allowTapRangeSelection, ctrl, shift),
             Key.Home => ResolveHome(displayContext, focusedDate, currentMonth, selectionMode, allowTapRangeSelection, ctrl, shift),
             Key.End => ResolveEnd(displayContext, focusedDate, currentMonth, selectionMode, allowTapRangeSelection, ctrl, shift),
-            Key.PageDown => ResolvePageDown(displayContext, focusedDate, ctrl, shift),
-            Key.PageUp => ResolvePageUp(displayContext, focusedDate, ctrl, shift),
-            Key.Space or Key.Enter => new(CalendarNavigationKind.SelectFocused),
+            Key.PageDown => ResolvePageDown(displayContext, focusedDate, selectionMode, allowTapRangeSelection, ctrl, shift),
+            Key.PageUp => ResolvePageUp(displayContext, focusedDate, selectionMode, allowTapRangeSelection, ctrl, shift),
             _ => default
         };
 
@@ -47,9 +46,7 @@ internal static class CalendarKeyboardNavigationHelper
         bool allowTapRangeSelection,
         bool ctrl,
         bool shift) =>
-        selectionMode == CalendarSelectionMode.MultipleRange && !allowTapRangeSelection && ctrl && !shift
-            ? CalendarNavigationKind.MoveFocus
-            : CalendarNavigationKind.SelectDate;
+        CalendarNavigationKind.MoveFocus;
 
     private static CalendarNavigationResult ResolveUp(
         DateContext displayContext,
@@ -156,6 +153,8 @@ internal static class CalendarKeyboardNavigationHelper
     private static CalendarNavigationResult ResolvePageDown(
         DateContext displayContext,
         DateTime focusedDate,
+        CalendarSelectionMode selectionMode,
+        bool allowTapRangeSelection,
         bool ctrl,
         bool shift)
         => !ctrl && !shift
@@ -163,7 +162,9 @@ internal static class CalendarKeyboardNavigationHelper
             : displayContext switch
             {
                 MonthContext when ctrl => new(CalendarNavigationKind.ShowYearView),
-                MonthContext when shift => new(CalendarNavigationKind.SelectDate, focusedDate.AddMonths(1)),
+                MonthContext when shift => new(
+                    GetDateNavigationKind(selectionMode, allowTapRangeSelection, ctrl, shift),
+                    focusedDate.AddMonths(1)),
                 YearContext when ctrl => new(CalendarNavigationKind.ShowDecadeView),
                 DecadeContext when ctrl => new(CalendarNavigationKind.ShowCenturyView),
                 _ => default
@@ -172,13 +173,17 @@ internal static class CalendarKeyboardNavigationHelper
     private static CalendarNavigationResult ResolvePageUp(
         DateContext displayContext,
         DateTime focusedDate,
+        CalendarSelectionMode selectionMode,
+        bool allowTapRangeSelection,
         bool ctrl,
         bool shift)
         => !ctrl && !shift
             ? new(CalendarNavigationKind.Previous)
             : displayContext switch
             {
-                MonthContext when shift => new(CalendarNavigationKind.SelectDate, focusedDate.AddMonths(-1)),
+                MonthContext when shift => new(
+                    GetDateNavigationKind(selectionMode, allowTapRangeSelection, ctrl, shift),
+                    focusedDate.AddMonths(-1)),
                 YearContext when ctrl => new(CalendarNavigationKind.ShowMonthView),
                 DecadeContext when ctrl => new(CalendarNavigationKind.ShowYearView),
                 CenturyContext when ctrl => new(CalendarNavigationKind.ShowDecadeView),

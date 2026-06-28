@@ -82,6 +82,8 @@ public class Calendar : TemplatedControl
     private readonly HashSet<DateTime> _previewHighlightDates = [];
     private bool _isPointerSelecting;
     private bool _previewUpdateScheduled;
+    private bool _keyboardRangePreview;
+    private bool _keyboardPreviewIsRange;
 
     static Calendar()
     {
@@ -97,12 +99,12 @@ public class Calendar : TemplatedControl
         DisplayDateProperty.Changed.AddClassHandler<Calendar>((x, e) => x.OnDisplayDateChanged(e));
         DisplayDateStartProperty.Changed.AddClassHandler<Calendar>((x, e) => x.OnDisplayDateStartChanged(e));
         DisplayDateEndProperty.Changed.AddClassHandler<Calendar>((x, e) => x.OnDisplayDateEndChanged(e));
-        KeyDownEvent.AddClassHandler<Calendar>((x, e) => x.OnCalendarKeyDown(e), handledEventsToo: true);
-        KeyUpEvent.AddClassHandler<Calendar>((x, e) => x.OnCalendarKeyUp(e), handledEventsToo: true);
     }
 
     public Calendar()
     {
+        AddHandler(KeyDownEvent, OnCalendarKeyDownHandler, RoutingStrategies.Tunnel, handledEventsToo: true);
+        AddHandler(KeyUpEvent, OnCalendarKeyUpHandler, RoutingStrategies.Tunnel, handledEventsToo: true);
         DisplayDateContext = new MonthContext(DateTime.Today.Month, DateTime.Today.Year);
         SetCurrentValue(DisplayDateProperty, DateTime.Today);
         UpdateDisplayDate(DisplayDate, DateTime.MinValue);
@@ -442,7 +444,13 @@ public class Calendar : TemplatedControl
 
     private void OnDisplayDate(CalendarDateChangedEventArgs e) => DisplayDateChanged?.Invoke(this, e);
 
-    private DateTime GetFocusedDate() => CalendarDisplayContextHelper.GetFocusedDate(_lastSelectedDate, DisplayDateContext, DateTime.Today);
+    private DateTime GetFocusedDate()
+    {
+        if (GetFocusedDayButton()?.DataContext is DateTime focusedDate)
+            return focusedDate;
+
+        return CalendarDisplayContextHelper.GetFocusedDate(_lastSelectedDate, DisplayDateContext, DateTime.Today);
+    }
 
     #endregion
 
@@ -634,8 +642,6 @@ public class Calendar : TemplatedControl
         var dayCellCount = children.Count - DateTimeHelper.DaysPerWeek;
         var cellIndex = DateTimeHelper.DaysPerWeek;
 
-        var isRangeMode = IsRangeSelectionMode();
-
         foreach (var state in CalendarMonthGridHelper.EnumerateDayCells(monthContext, FirstDayOfWeek, dayCellCount))
         {
             if (children[cellIndex] is not CalendarDayButton cell)
@@ -649,7 +655,6 @@ public class Calendar : TemplatedControl
             cell.IsInactive = state.IsInactive;
             cell.IsSelected = SelectedDates.Contains(state.Date);
             cell.IsBlackout = BlackoutDates.Contains(state.Date);
-            cell.Classes.Set("Range", isRangeMode);
 
             _cells.Add(state.Date, cell);
             cellIndex++;
@@ -671,26 +676,45 @@ public class Calendar : TemplatedControl
         foreach (var cell in _cells.Values.OfType<CalendarDayButton>())
             CalendarDayRangeStateHelper.ClearRangeState(cell);
 
-        if (!IsRangeSelectionMode())
-            return;
-
-        foreach (var (start, end) in CalendarDayRangeStateHelper.EnumerateConsecutiveRanges(SelectedDates))
+        if (IsRangeSelectionMode())
         {
-            if (!ShouldShowCommittedRangeSegment(start, end))
-                continue;
-
-            foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
+            foreach (var (start, end) in CalendarDayRangeStateHelper.EnumerateConsecutiveRanges(SelectedDates))
             {
-                if (_cells.GetOrDefault(date) is CalendarDayButton cell)
-                    CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, date, start, end, isPreview: false);
+                if (!ShouldShowCommittedRangeSegment(start, end))
+                    continue;
+
+                foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
+                {
+                    if (_cells.GetOrDefault(date) is CalendarDayButton cell)
+                        CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, date, start, end, isPreview: false);
+                }
             }
         }
 
         ApplyPreviewRangeHighlights();
+        SyncSelectedStateWithRangeRoles();
+    }
+
+    private void SyncSelectedStateWithRangeRoles()
+    {
+        if (!IsRangeSelectionMode())
+            return;
+
+        foreach (var cell in _cells.Values.OfType<CalendarDayButton>())
+        {
+            if (cell.IsStartDate || cell.IsEndDate || cell.IsInRange)
+                cell.IsSelected = false;
+        }
     }
 
     private void ApplyPreviewRangeHighlights()
     {
+        if (_keyboardRangePreview && _previewEndDate is { } keyboardEnd)
+        {
+            ApplyKeyboardPreviewHighlights(keyboardEnd);
+            return;
+        }
+
         if (!_selectionCoordinator.HasPendingRangeAnchor || !ShouldPreviewInterval())
             return;
 
@@ -707,6 +731,48 @@ public class Calendar : TemplatedControl
                 _previewHighlightDates.Add(date);
             }
         }
+    }
+
+    private void ApplyKeyboardPreviewHighlights(DateTime end)
+    {
+        if (!_keyboardPreviewIsRange || !_selectionCoordinator.HasPendingRangeAnchor)
+            return;
+
+        var anchor = _selectionCoordinator.HoverStart!.Value;
+        foreach (var date in SelectedDatesHelper.EnumerateDateRange(anchor, end))
+        {
+            if (_cells.GetOrDefault(date) is CalendarDayButton cell)
+            {
+                CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, date, anchor, end, isPreview: true);
+                _previewHighlightDates.Add(date);
+            }
+        }
+    }
+
+    private void UpdateKeyboardPreviewRangeMode(bool shiftHeld, bool collapseSingleCell = false)
+    {
+        if (!IsRangeSelectionMode())
+        {
+            _keyboardPreviewIsRange = false;
+            return;
+        }
+
+        if (!_selectionCoordinator.HasPendingRangeAnchor)
+        {
+            _keyboardPreviewIsRange = false;
+            return;
+        }
+
+        if (AllowTapRangeSelection)
+        {
+            _keyboardPreviewIsRange = true;
+            return;
+        }
+
+        if (shiftHeld)
+            _keyboardPreviewIsRange = true;
+        else if (collapseSingleCell)
+            _keyboardPreviewIsRange = false;
     }
 
     private void UpdatePreviewRangeHighlightsOnly()
@@ -740,6 +806,14 @@ public class Calendar : TemplatedControl
 
     private bool ShouldPreviewInterval()
     {
+        if (_keyboardRangePreview && _previewEndDate.HasValue)
+        {
+            if (_keyboardPreviewIsRange)
+                return _selectionCoordinator.HasPendingRangeAnchor;
+
+            return false;
+        }
+
         if (!IsRangeSelectionMode())
             return false;
 
@@ -754,9 +828,6 @@ public class Calendar : TemplatedControl
 
         if (AllowTapRangeSelection)
             return _pointerOverDate.HasValue || _isPointerSelecting;
-
-        if (SelectionMode == CalendarSelectionMode.MultipleRange && ctrl)
-            return shift;
 
         return shift;
     }
@@ -782,6 +853,8 @@ public class Calendar : TemplatedControl
         _previewEndDate = null;
         _pointerOverDate = null;
         _isPointerSelecting = false;
+        _keyboardRangePreview = false;
+        _keyboardPreviewIsRange = false;
         _selectionCoordinator.ResetHover();
         UpdateRangeHighlights();
     }
@@ -793,7 +866,7 @@ public class Calendar : TemplatedControl
             if (_pointerOverDate is { } date)
                 _previewEndDate = date;
         }
-        else
+        else if (!(_keyboardRangePreview && _previewEndDate.HasValue && _selectionCoordinator.HasPendingRangeAnchor))
         {
             _previewEndDate = null;
         }
@@ -801,12 +874,15 @@ public class Calendar : TemplatedControl
         SchedulePreviewUpdate();
     }
 
-    private void UpdatePreviewEndFromCell(object? sender)
+    private void UpdatePreviewEndFromCell(object? sender, bool fromPointer = false)
     {
-        if (!IsRangeSelectionMode() || sender is not CalendarDayButton cell)
+        if (sender is not CalendarDayButton cell)
             return;
 
         if (cell.IsBlackout || !cell.IsEnabled || cell.DateContext?.ToDate() is not { } date)
+            return;
+
+        if (!IsRangeSelectionMode())
             return;
 
         _pointerOverDate = date;
@@ -814,9 +890,15 @@ public class Calendar : TemplatedControl
         if (!_selectionCoordinator.HasPendingRangeAnchor && !_isPointerSelecting)
             return;
 
+        if (fromPointer && _keyboardRangePreview && CanPointerReplaceKeyboardPreview())
+        {
+            _keyboardRangePreview = false;
+            _keyboardPreviewIsRange = false;
+        }
+
         if (!ShouldPreviewInterval())
         {
-            if (_previewEndDate is not null)
+            if (_previewEndDate is not null && !_keyboardRangePreview)
             {
                 _previewEndDate = null;
                 SchedulePreviewUpdate();
@@ -830,6 +912,23 @@ public class Calendar : TemplatedControl
 
         _previewEndDate = date;
         SchedulePreviewUpdate();
+    }
+
+    private bool CanPointerReplaceKeyboardPreview()
+    {
+        if (!IsRangeSelectionMode())
+            return false;
+
+        if (_isPointerSelecting)
+            return true;
+
+        if (!_selectionCoordinator.HasPendingRangeAnchor)
+            return false;
+
+        if (AllowTapRangeSelection)
+            return _pointerOverDate.HasValue;
+
+        return (GetCurrentKeyModifiers() & KeyModifiers.Shift) == KeyModifiers.Shift;
     }
 
     private void UpdateYears()
@@ -851,8 +950,6 @@ public class Calendar : TemplatedControl
         }
     }
 
-    internal CalendarDayButton? GetFocusedDayButton() => (CalendarDayButton?)_cells.Values.FirstOrDefault(x => x.IsFocused);
-
     #endregion
 
     #region Move Display Date
@@ -872,7 +969,48 @@ public class Calendar : TemplatedControl
         DisplayDateContext = CalendarDisplayModeHelper.ToMonthContext(date);
         SetCurrentValue(DisplayDateProperty, date);
 
-        UpdateFocus(date);
+        if (DisplayDateContext is MonthContext)
+            _cells.GetOrDefault(date)?.Focus();
+    }
+
+    private void NavigateKeyboardPreview(DateTime focusDate, bool shiftHeld)
+    {
+        MoveToDate(focusDate);
+
+        _keyboardRangePreview = true;
+        _previewEndDate = focusDate;
+        UpdateKeyboardPreviewRangeMode(shiftHeld, collapseSingleCell: true);
+        SchedulePreviewUpdate();
+    }
+
+    private void CommitKeyboardPreview(KeyEventArgs e)
+    {
+        var date = GetFocusedDate();
+        var previewWasRange = _keyboardPreviewIsRange;
+
+        _keyboardRangePreview = false;
+        _keyboardPreviewIsRange = false;
+
+        switch (SelectionMode)
+        {
+            case CalendarSelectionMode.SingleDate:
+                SetSelection(date);
+                MoveToDate(date);
+                break;
+
+            case CalendarSelectionMode.SingleRange:
+            case CalendarSelectionMode.MultipleRange:
+                if (!_selectionCoordinator.HasPendingRangeAnchor)
+                    _selectionCoordinator.CommitKeyboardAnchor(date);
+                else if (previewWasRange)
+                    _selectionCoordinator.CommitPendingKeyboardRange(date);
+                else
+                    _selectionCoordinator.CommitKeyboardAnchor(date);
+
+                break;
+        }
+
+        FinishDaySelectionInteraction(e);
     }
 
     #endregion
@@ -1009,11 +1147,6 @@ public class Calendar : TemplatedControl
         if (AllowTapRangeSelection)
         {
             OnDayButtonClick(sender, e, e.KeyModifiers);
-
-            if (!_selectionCoordinator.HasPendingRangeAnchor)
-                _previewEndDate = null;
-
-            UpdateRangeHighlights();
             return;
         }
 
@@ -1032,14 +1165,11 @@ public class Calendar : TemplatedControl
             ProcessDateSelection(releaseDate, shift, ctrl);
         }
 
-        if (!_selectionCoordinator.HasPendingRangeAnchor)
-            _previewEndDate = null;
-
-        UpdateRangeHighlights();
-        DayButtonClick?.Invoke(this, e);
+        FinishDaySelectionInteraction(e);
     }
 
-    private void OnDayPointerEnter(object? sender, PointerEventArgs e) => UpdatePreviewEndFromCell(sender);
+    private void OnDayPointerEnter(object? sender, PointerEventArgs e) =>
+        UpdatePreviewEndFromCell(sender, fromPointer: true);
 
     private void OnDayPointerExited(object? sender, PointerEventArgs e)
     {
@@ -1055,16 +1185,24 @@ public class Calendar : TemplatedControl
         ClearPointerPreview();
     }
 
-    private void OnDayPointerMove(object? sender, PointerEventArgs e) => UpdatePreviewEndFromCell(sender);
+    private void OnDayPointerMove(object? sender, PointerEventArgs e) =>
+        UpdatePreviewEndFromCell(sender, fromPointer: true);
 
     private void OnMonthGridPointerLeave(object? sender, PointerEventArgs e) => ClearPointerPreview();
 
     private void ClearPointerPreview()
     {
-        if (_pointerOverDate is null && _previewEndDate is null)
+        if (_pointerOverDate is null)
             return;
 
         _pointerOverDate = null;
+
+        if (_keyboardRangePreview)
+            return;
+
+        if (_previewEndDate is null)
+            return;
+
         _previewEndDate = null;
         SchedulePreviewUpdate();
     }
@@ -1079,13 +1217,7 @@ public class Calendar : TemplatedControl
             var ctrl = (keyModifiers & KeyModifiers.Control) == KeyModifiers.Control;
 
             ProcessDateSelection(selectedDate, shift, ctrl);
-
-            if (!_selectionCoordinator.HasPendingRangeAnchor)
-                _previewEndDate = null;
-
-            UpdateRangeHighlights();
-
-            DayButtonClick?.Invoke(this, e);
+            FinishDaySelectionInteraction(e);
         }
     }
 
@@ -1102,6 +1234,10 @@ public class Calendar : TemplatedControl
 
     #region Keyboard events
 
+    private void OnCalendarKeyDownHandler(object? sender, KeyEventArgs e) => OnCalendarKeyDown(e);
+
+    private void OnCalendarKeyUpHandler(object? sender, KeyEventArgs e) => OnCalendarKeyUp(e);
+
     private void OnCalendarKeyDown(KeyEventArgs e)
     {
         if (!IsEnabled) return;
@@ -1110,6 +1246,12 @@ public class Calendar : TemplatedControl
 
         if (IsModifierKey(e.Key))
         {
+            if (_keyboardRangePreview && _previewEndDate.HasValue && e.Key is Key.LeftShift or Key.RightShift)
+            {
+                if ((GetCurrentKeyModifiers() & KeyModifiers.Shift) == KeyModifiers.Shift)
+                    UpdateKeyboardPreviewRangeMode(shiftHeld: true);
+            }
+
             RefreshIntervalPreview();
             return;
         }
@@ -1118,6 +1260,14 @@ public class Calendar : TemplatedControl
 
         var ctrl = (e.KeyModifiers & KeyModifiers.Control) == KeyModifiers.Control;
         var shift = (e.KeyModifiers & KeyModifiers.Shift) == KeyModifiers.Shift;
+
+        if (e.Key is Key.Space or Key.Enter)
+        {
+            CommitKeyboardPreview(e);
+            e.Handled = true;
+            return;
+        }
+
         var result = CalendarKeyboardNavigationHelper.Resolve(
             e.Key,
             DisplayDateContext,
@@ -1142,36 +1292,35 @@ public class Calendar : TemplatedControl
         _lastKeyModifiers = GetEffectiveModifiers(e, isKeyDown: false);
 
         if (IsModifierKey(e.Key))
+        {
+            if (_keyboardRangePreview && _previewEndDate.HasValue && e.Key is Key.LeftShift or Key.RightShift)
+                SchedulePreviewUpdate();
+
             RefreshIntervalPreview();
+        }
     }
 
     private static bool IsModifierKey(Key key) =>
         key is Key.LeftShift or Key.RightShift or Key.LeftCtrl or Key.RightCtrl;
+
+    private void FinishDaySelectionInteraction(RoutedEventArgs? e = null)
+    {
+        _keyboardRangePreview = false;
+        _keyboardPreviewIsRange = false;
+
+        if (!_selectionCoordinator.HasPendingRangeAnchor)
+            _previewEndDate = null;
+
+        UpdateRangeHighlights();
+        DayButtonClick?.Invoke(this, e ?? new RoutedEventArgs());
+    }
 
     private void ApplyNavigation(CalendarNavigationResult result, bool ctrl, bool shift)
     {
         switch (result.Kind)
         {
             case CalendarNavigationKind.MoveFocus when result.Date is { } focusDate:
-                MoveToDate(focusDate);
-                break;
-
-            case CalendarNavigationKind.SelectFocused:
-                ProcessDateSelection(GetFocusedDate(), shift, ctrl);
-
-                if (!_selectionCoordinator.HasPendingRangeAnchor)
-                    _previewEndDate = null;
-
-                UpdateRangeHighlights();
-                break;
-
-            case CalendarNavigationKind.SelectDate when result.Date is { } date:
-                ProcessDateSelection(date, shift, ctrl);
-
-                if (!_selectionCoordinator.HasPendingRangeAnchor)
-                    _previewEndDate = null;
-
-                UpdateRangeHighlights();
+                NavigateKeyboardPreview(focusDate, shift);
                 break;
 
             case CalendarNavigationKind.SelectMonthContext when result.MonthContext is { } context:
@@ -1208,26 +1357,34 @@ public class Calendar : TemplatedControl
 
     #region Focus
 
-    public void FocusSelectedDay() => UpdateFocus(SelectedDate ?? DisplayDate);
+    public void FocusSelectedDay()
+    {
+        Focus();
+        MoveToDate(SelectedDate ?? DisplayDate);
+    }
+
+    internal CalendarDayButton? GetFocusedDayButton() =>
+        (CalendarDayButton?)_cells.Values.FirstOrDefault(x => x.IsFocused);
 
     private void UpdateFocus(DateTime? date = null)
     {
+        if (DisplayDateContext is MonthContext)
+        {
+            if (date.HasValue)
+                _cells.GetOrDefault(date.Value)?.Focus();
+            else
+                _cells.GetOrDefault(GetFocusedDate())?.Focus();
+
+            return;
+        }
+
         if (date.HasValue)
         {
             _cells.GetOrDefault(date.Value)?.Focus();
         }
         else
         {
-            switch (DisplayDateContext)
-            {
-                case MonthContext:
-                    _cells.GetValueOrDefault(GetFocusedDate())?.Focus();
-                    break;
-
-                default:
-                    _cells.Values.FirstOrDefault(x => x.IsSelected)?.Focus();
-                    break;
-            }
+            _cells.Values.FirstOrDefault(x => x.IsSelected)?.Focus();
         }
     }
 

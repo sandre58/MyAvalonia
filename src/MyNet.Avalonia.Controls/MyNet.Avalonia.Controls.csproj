@@ -55,6 +55,7 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="MyNet.Avalonia.Controls.Tests" />
+        <InternalsVisibleTo Include="MyNet.Avalonia.Controls.Headless.Tests" />
     </ItemGroup>
 
 </Project>

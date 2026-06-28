@@ -89,37 +89,95 @@
             </ControlTemplate>
         </Setter>
 
-        <!-- Hover -->
+        <!-- L0 Base -->
+        <Style Selector="^:inactive /template/ Panel#PART_RootPanel">
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+        </Style>
+
+        <Style Selector="^:blackout /template/ Panel#PART_RootPanel">
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Disabled}" />
+        </Style>
+
+        <Style Selector="^:today">
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBorderBrush)}" />
+        </Style>
+
+        <!-- L0 Interaction — hover -->
         <Style Selector="^:not(:disabled):pointerover">
             <Setter Property="Foreground" Value="{Binding $self.(my:InteractionAssist.HoverForeground)}" />
 
             <Style Selector="^ /template/ Border#PART_HoverBorder">
                 <Setter Property="Opacity" Value="1" />
             </Style>
+
+            <Style Selector="^:start-date /template/ Border#PART_HoverBorder, ^:end-date /template/ Border#PART_HoverBorder, ^:in-range /template/ Border#PART_HoverBorder, ^:selected /template/ Border#PART_HoverBorder, ^:preview-start-date /template/ Border#PART_HoverBorder, ^:preview-end-date /template/ Border#PART_HoverBorder, ^:preview-in-range /template/ Border#PART_HoverBorder">
+                <Setter Property="Opacity" Value="0" />
+            </Style>
         </Style>
 
-        <Style Selector="^.Range">
-            <Setter Property="Margin" Value="{my:Thickness Xs, Vertical}" />
+        <!-- L0 Interaction — pressed -->
+        <Style Selector="^:pressed:not(:disabled) /template/ Border#PART_ActiveBorder">
+            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+        </Style>
 
+        <!-- L0 Interaction — focus clavier sans preview (fill léger + anneau atténué) -->
+        <Style Selector="^:focus:not(:disabled)">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBorderBrush)}" />
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="my:TransitionsAssist.UseTransitions" Value="False" />
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Overlay}" />
             </Style>
-            <Style Selector="^ /template/ Border#PART_HoverBorder">
-                <Setter Property="my:TransitionsAssist.UseTransitions" Value="False" />
+            <Style Selector="^ /template/ Border#PART_MainBorder">
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
             </Style>
         </Style>
 
-        <Style Selector="^:in-range, ^:preview-in-range">
+        <!-- L1 Preview -->
+        <Style Selector="^:preview-in-range, ^:preview-start-date, ^:preview-end-date">
+            <Setter Property="Foreground" Value="{Binding $self.(my:InteractionAssist.ActiveForeground)}" />
+            
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+            </Style>
+        </Style>
+
+        <!-- L1 Preview — in-range (middle) -->
+        <Style Selector="^:preview-in-range:not(:preview-start-date):not(:preview-end-date)">
             <Setter Property="CornerRadius" Value="0" />
+        </Style>
 
+        <!-- L1 Preview — start (not end on same cell) -->
+        <Style Selector="^:preview-start-date:not(:preview-end-date)">
+            <Setter Property="CornerRadius"
+                    Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
+            
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Scrim}" />
-                <Setter Property="CornerRadius" Value="0" />
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
             </Style>
         </Style>
 
-        <!-- Active (for button with state "selected") -->
-        <Style Selector="^:selected, ^:start-date, ^:end-date">
+        <!-- L1 Preview — end (not start on same cell) -->
+        <Style Selector="^:preview-end-date:not(:preview-start-date)">
+            <Setter Property="CornerRadius"
+                    Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
+
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+            </Style>
+        </Style>
+
+        <!-- L1 Preview — single-cell (keyboard focus / anchor) -->
+        <Style Selector="^:preview-start-date:preview-end-date">
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+            </Style>
+        </Style>
+
+        <!-- L2 Committed — selected -->
+        <Style Selector="^:selected, ^:start-date, ^:end-date, ^:in-range">
             <Setter Property="Foreground" Value="{Binding $self.(my:InteractionAssist.ActiveForeground)}" />
 
             <Style Selector="^ /template/ Border#PART_ActiveBorder">
@@ -127,52 +185,35 @@
             </Style>
         </Style>
 
-        <Style Selector="^:today">
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground)}" />
+        <!-- L2 Committed — in-range (middle): joined corners -->
+        <Style Selector="^:in-range:not(:start-date):not(:end-date)">
+            <Setter Property="CornerRadius" Value="0" />
         </Style>
 
-        <Style Selector="^:inactive /template/ Panel#PART_RootPanel">
-            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
-        </Style>
-
-        <Style Selector="^:preview-start-date, ^:preview-end-date">
-
-            <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
-            </Style>
-        </Style>
-
-        <Style Selector="^:start-date, ^:preview-start-date">
+        <!-- L2 Committed — start (not end on same cell) -->
+        <Style Selector="^:start-date:not(:end-date)">
             <Setter Property="CornerRadius"
                     Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
-
-            <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="CornerRadius"
-                        Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
-            </Style>
         </Style>
 
-        <Style Selector="^:start-date:end-date, ^:preview-start-date:preview-end-date">
-            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-
-            <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
-            </Style>
-        </Style>
-
-        <Style Selector="^:end-date, ^:preview-end-date">
+        <!-- L2 Committed — end (not start on same cell) -->
+        <Style Selector="^:end-date:not(:start-date)">
             <Setter Property="CornerRadius"
                     Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
-
-            <Style Selector="^ /template/ Border#PART_ActiveBorder">
-                <Setter Property="CornerRadius"
-                        Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
-            </Style>
         </Style>
 
-        <Style Selector="^:blackout /template/ Panel#PART_RootPanel">
-            <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Disabled}" />
+        <!-- L2 Committed — single-day capsule (start + end) -->
+        <Style Selector="^:start-date:end-date">
+            <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        </Style>
+
+        <!-- L3 Committed + Interaction -->
+        <Style Selector="^:selected:focus:not(:disabled), ^:start-date:focus:not(:disabled), ^:end-date:focus:not(:disabled), ^:in-range:focus:not(:disabled)">
+            <Setter Property="BorderThickness" Value="1" />
+            <Style Selector="^ /template/ Border#PART_ActiveBorder">
+                <Setter Property="BorderBrush" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBorderBrush), RelativeSource={RelativeSource TemplatedParent}, Darken=0.80}" />
+                <Setter Property="Background" Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), RelativeSource={RelativeSource TemplatedParent}, Darken=0.50}" />
+            </Style>
         </Style>
     </ControlTheme>
 
@@ -338,7 +379,7 @@
         <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
 
         <!-- Items -->
-        <Setter Property="my:ItemsAssist.Margin" Value="2" />
+        <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Left=0, Right=0, Top=2, Bottom=2}" />
         <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Md}" />
         <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
@@ -436,7 +477,7 @@
         <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
 
         <!-- Items -->
-        <Setter Property="my:ItemsAssist.Margin" Value="2" />
+        <Setter Property="my:ItemsAssist.Margin" Value="{my:Thickness Left=0, Right=0, Top=2, Bottom=2}" />
         <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Calendar.Item.Md}" />
         <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />

@@ -29,6 +29,54 @@ internal sealed class CalendarSelectionCoordinator(
 
     public void ResetHover() => _anchorDate = null;
 
+    public void CommitPendingKeyboardRange(DateTime endDate)
+    {
+        if (!isValidSelection(endDate) || !_anchorDate.HasValue)
+            return;
+
+        if (allowTapRangeSelection())
+        {
+            ProcessTapRangeSelection(endDate, ctrl: false, shift: false);
+            return;
+        }
+
+        var anchor = _anchorDate.Value;
+
+        switch (selectionMode())
+        {
+            case CalendarSelectionMode.SingleRange:
+            case CalendarSelectionMode.MultipleRange:
+                commands.SetSelection(anchor, endDate);
+                break;
+        }
+
+        _anchorDate = null;
+        commands.MoveToDate(endDate);
+    }
+
+    public void CommitKeyboardAnchor(DateTime date)
+    {
+        if (!isValidSelection(date))
+            return;
+
+        if (allowTapRangeSelection())
+        {
+            ProcessTapRangeSelection(date, ctrl: false, shift: false);
+            return;
+        }
+
+        switch (selectionMode())
+        {
+            case CalendarSelectionMode.SingleRange:
+                ProcessSingleRangeSelection(date, shift: false);
+                break;
+
+            case CalendarSelectionMode.MultipleRange:
+                ProcessMultipleRangeSelection(date, shift: false, ctrl: false);
+                break;
+        }
+    }
+
     public void ProcessDateSelection(DateTime date, bool shift, bool ctrl)
     {
         if (!isValidSelection(date))

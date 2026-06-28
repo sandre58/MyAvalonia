@@ -14,6 +14,7 @@ using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Controls.Internals;
 using MyNet.Avalonia.Controls.Primitives;
@@ -314,6 +315,18 @@ public class DateRangePickerEx : TextPicker<Period?, Calendar>
         {
             SetCurrentValue(TextProperty, ConvertValueToString(SelectedValue));
         }
+    }
+
+    protected override void TryFocusPopupContent()
+    {
+        if (Previewer is { } calendar)
+        {
+            calendar.Focus(NavigationMethod.Unspecified);
+            calendar.FocusSelectedDay();
+            return;
+        }
+
+        base.TryFocusPopupContent();
     }
 
     protected override Period? IncrementValue(int offset)

@@ -25,7 +25,7 @@ public class CalendarKeyboardNavigationExpandedTests
     [InlineData(Key.Right)]
     [InlineData(Key.Up)]
     [InlineData(Key.Down)]
-    public void Resolve_ArrowKeysInMonthView_SelectDate(Key key)
+    public void Resolve_ArrowKeysInMonthView_MoveFocus(Key key)
     {
         var result = CalendarKeyboardNavigationHelper.Resolve(
             key,
@@ -37,7 +37,7 @@ public class CalendarKeyboardNavigationExpandedTests
             ctrl: false,
             shift: false);
 
-        result.Kind.Should().Be(CalendarNavigationKind.SelectDate);
+        result.Kind.Should().Be(CalendarNavigationKind.MoveFocus);
         result.Date.Should().NotBeNull();
     }
 
@@ -54,6 +54,7 @@ public class CalendarKeyboardNavigationExpandedTests
             ctrl: false,
             shift: false);
 
+        result.Kind.Should().Be(CalendarNavigationKind.MoveFocus);
         result.Date.Should().Be(FocusedDate.EndOfMonth());
     }
 
@@ -70,6 +71,7 @@ public class CalendarKeyboardNavigationExpandedTests
             ctrl: false,
             shift: true);
 
+        result.Kind.Should().Be(CalendarNavigationKind.MoveFocus);
         result.Date.Should().Be(FocusedDate.AddMonths(1));
     }
 
@@ -106,7 +108,7 @@ public class CalendarKeyboardNavigationExpandedTests
     }
 
     [Fact]
-    public void Resolve_Enter_SelectsFocusedDate()
+    public void Resolve_Enter_IsHandledByCalendarNotHelper()
     {
         var result = CalendarKeyboardNavigationHelper.Resolve(
             Key.Enter,
@@ -118,6 +120,6 @@ public class CalendarKeyboardNavigationExpandedTests
             ctrl: false,
             shift: false);
 
-        result.Kind.Should().Be(CalendarNavigationKind.SelectFocused);
+        result.Kind.Should().Be(CalendarNavigationKind.None);
     }
 }
