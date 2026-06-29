@@ -85,6 +85,8 @@ public class Calendar : TemplatedControl
     private readonly HashSet<DateTime> _committedHighlightDates = [];
     private bool _isPointerSelecting;
     private bool _intervalPreviewActive;
+    private bool _previewSuspendedAfterCommit;
+    private DateTime? _previewSuspendedAtDate;
     private PreviewController _previewController;
     private KeyModifiers _pointerPressModifiers;
 
@@ -995,6 +997,9 @@ public class Calendar : TemplatedControl
         if (!IsRangeSelectionMode())
             return false;
 
+        if (_previewSuspendedAfterCommit)
+            return false;
+
         if (_isPointerSelecting || _previewController == PreviewController.Drag)
             return true;
 
@@ -1177,12 +1182,36 @@ public class Calendar : TemplatedControl
         if (_previewController == PreviewController.PointerShift)
             return true;
 
+        if (_previewSuspendedAfterCommit
+            && IsShiftHeld()
+            && _selectionCoordinator.HasPendingRangeAnchor)
+            return true;
+
         return AllowTapRangeSelection && _selectionCoordinator.HasPendingRangeAnchor;
     }
 
     private void ApplyPointerPreviewUpdate(DateTime date, bool fromMove, KeyModifiers pointerModifiers = default)
     {
         var shiftHeld = IsShiftHeld(pointerModifiers);
+        date = date.DiscardTime();
+
+        if (_previewSuspendedAfterCommit)
+        {
+            if (!fromMove || !shiftHeld)
+            {
+                _pointerOverDate = date;
+                return;
+            }
+
+            if (_previewSuspendedAtDate == date)
+            {
+                _pointerOverDate = date;
+                return;
+            }
+
+            _previewSuspendedAfterCommit = false;
+            _previewSuspendedAtDate = null;
+        }
 
         if (IsDragRangeSelectionMode()
             && fromMove
@@ -1322,6 +1351,9 @@ public class Calendar : TemplatedControl
 
     private void NavigatePreview(DateTime focusDate, bool shiftHeld)
     {
+        _previewSuspendedAfterCommit = false;
+        _previewSuspendedAtDate = null;
+
         if (AllowTapRangeSelection)
             shiftHeld = false;
 
@@ -1367,7 +1399,7 @@ public class Calendar : TemplatedControl
         var target = date ?? GetFocusedDate();
         var intervalPreview = _intervalPreviewActive;
 
-        ClearPreviewController();
+        ClearPreviewVisuals();
 
         if (e is KeyEventArgs keyEvent)
         {
@@ -1395,7 +1427,15 @@ public class Calendar : TemplatedControl
             _selectionCoordinator.Commit(target, shift, ctrl);
         }
 
-        FinishDaySelectionInteraction(e);
+        var suspendUntilMove = shift;
+        if (e is KeyEventArgs keyEvt)
+        {
+            suspendUntilMove = (keyEvt.KeyModifiers & KeyModifiers.Shift) == KeyModifiers.Shift;
+            if (AllowTapRangeSelection)
+                suspendUntilMove = false;
+        }
+
+        FinishDaySelectionInteraction(e, suspendUntilMove, target);
     }
 
     #endregion
@@ -1537,6 +1577,7 @@ public class Calendar : TemplatedControl
         _previewController = PreviewController.None;
         _previewEndDate = null;
         _selectionCoordinator.RecordPointerPress(date);
+        SchedulePreviewUpdate();
     }
 
     private void TryStartPointerDragSelection(DateTime hoverDate, KeyModifiers pointerModifiers, IPointer? pointer = null)
@@ -1596,8 +1637,9 @@ public class Calendar : TemplatedControl
             && IsRangeSelectionMode();
 
         _isPointerSelecting = false;
+        ClearPreviewVisuals();
         _selectionCoordinator.CompletePointerSelection(releaseDate, shift, ctrl, wasDragging);
-        FinishDaySelectionInteraction(e);
+        FinishDaySelectionInteraction(e, shift, releaseDate);
     }
 
     private void OnDayPointerEnter(object? sender, PointerEventArgs e)
@@ -1802,9 +1844,24 @@ public class Calendar : TemplatedControl
     private static bool IsModifierKey(Key key) =>
         key is Key.LeftShift or Key.RightShift or Key.LeftCtrl or Key.RightCtrl;
 
-    private void FinishDaySelectionInteraction(RoutedEventArgs? e = null)
+    private void FinishDaySelectionInteraction(
+        RoutedEventArgs? e = null,
+        bool suspendPointerPreviewUntilMove = false,
+        DateTime? suspendAtDate = null)
     {
         ClearPreviewVisuals();
+
+        if (suspendPointerPreviewUntilMove)
+        {
+            _previewSuspendedAfterCommit = true;
+            _previewSuspendedAtDate = suspendAtDate?.DiscardTime() ?? GetFocusedDate().DiscardTime();
+        }
+        else
+        {
+            _previewSuspendedAfterCommit = false;
+            _previewSuspendedAtDate = null;
+        }
+
         UpdateRangeHighlights();
         DayButtonClick?.Invoke(this, e ?? new RoutedEventArgs());
     }

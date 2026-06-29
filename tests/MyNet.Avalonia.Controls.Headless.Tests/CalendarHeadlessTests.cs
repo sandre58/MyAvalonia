@@ -1057,6 +1057,138 @@ public class CalendarHeadlessTests
     }
 
     [AvaloniaFact]
+    public void SingleRange_WithoutTap_ShiftPointerCommit_ClearsPreviewWhileShiftHeld()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var startButton = FindDayButton(grid!, startDate);
+        var endButton = FindDayButton(grid!, endDate);
+        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+
+        EstablishDragModeAnchor(calendar, startDate);
+        HeadlessControlHost.PointerMove(endButton, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        endButton.IsPreviewEndDate.Should().BeTrue("shift+move must show preview before commit");
+
+        HeadlessControlHost.PointerPress(endButton, KeyModifiers.Shift);
+        HeadlessControlHost.PointerRelease(endButton, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsPreviewStartDate.Should().BeFalse("commit with shift held must clear preview");
+        middleButton.IsPreviewInRange.Should().BeFalse();
+        endButton.IsPreviewEndDate.Should().BeFalse();
+        startButton.IsStartDate.Should().BeTrue();
+        middleButton.IsInRange.Should().BeTrue();
+        endButton.IsEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_ShiftPointerCommit_ReactivatesOnMove()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var reactivateDate = new DateTime(2026, 5, 18);
+        var startButton = FindDayButton(grid!, startDate);
+        var endButton = FindDayButton(grid!, endDate);
+
+        EstablishDragModeAnchor(calendar, startDate);
+        HeadlessControlHost.PointerMove(endButton, KeyModifiers.Shift);
+        HeadlessControlHost.PointerPress(endButton, KeyModifiers.Shift);
+        HeadlessControlHost.PointerRelease(endButton, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        endButton.IsPreviewEndDate.Should().BeFalse("preview must stay off after commit until pointer moves");
+
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, reactivateDate), KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsPreviewStartDate.Should().BeTrue("shift+move after commit must reactivate preview");
+        FindDayButton(grid!, reactivateDate).IsPreviewEndDate.Should().BeTrue();
+        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_ShiftPointerCommit_ReactivatesOnArrow()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var extendedDate = new DateTime(2026, 5, 15);
+        var startButton = FindDayButton(grid!, startDate);
+        var endButton = FindDayButton(grid!, endDate);
+
+        EstablishDragModeAnchor(calendar, startDate);
+        HeadlessControlHost.PointerMove(endButton, KeyModifiers.Shift);
+        HeadlessControlHost.PointerPress(endButton, KeyModifiers.Shift);
+        HeadlessControlHost.PointerRelease(endButton, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        endButton.IsPreviewEndDate.Should().BeFalse("preview must stay off after commit until keyboard navigation");
+
+        HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsPreviewStartDate.Should().BeTrue("shift+arrow after commit must reactivate preview");
+        FindDayButton(grid!, extendedDate).IsPreviewEndDate.Should().BeTrue();
+        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_ShiftPointerCommit_DoesNotReactivateOnSameCellMove()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var endButton = FindDayButton(grid!, endDate);
+
+        EstablishDragModeAnchor(calendar, startDate);
+        HeadlessControlHost.PointerMove(endButton, KeyModifiers.Shift);
+        HeadlessControlHost.PointerPress(endButton, KeyModifiers.Shift);
+        HeadlessControlHost.PointerRelease(endButton, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        endButton.IsPreviewEndDate.Should().BeFalse();
+
+        HeadlessControlHost.PointerMove(endButton, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        endButton.IsPreviewEndDate.Should().BeFalse("pointer move on commit cell must not reactivate preview");
+        endButton.IsEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
     public void MultipleRange_WithoutTap_PreviewVisibleOverCommittedRange()
     {
         var calendar = CreateCalendar(new(2026, 5, 15));
