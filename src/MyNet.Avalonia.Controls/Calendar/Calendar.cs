@@ -1405,6 +1405,15 @@ public class Calendar : TemplatedControl
             _cells.GetOrDefault(date)?.Focus();
     }
 
+    /// <summary>Whether a range selection is in progress (anchor, drag, or interval preview).</summary>
+    public bool HasPendingRangeSelection =>
+        _selectionCoordinator.HasPendingRangeAnchor
+        || _preview.IsPointerSelecting
+        || _preview.Controller != CalendarPreviewController.None;
+
+    /// <summary>Cancels in-progress range selection without changing <see cref="SelectedDates"/>.</summary>
+    public void CancelPendingRangeSelection() => ClearRangePreview();
+
     private void NavigatePreview(DateTime focusDate, bool shiftHeld)
     {
         ClearPostCommitPreviewSuspension();

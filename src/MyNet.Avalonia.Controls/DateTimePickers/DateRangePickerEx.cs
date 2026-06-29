@@ -292,7 +292,7 @@ public class DateRangePickerEx : TextPicker<Period?, Calendar>
             {
                 _pendingRangeStart = null;
             }
-            else if (_pendingRangeStart is not null)
+            else if (HasUncommittedRangePreview())
             {
                 _pendingRangeStart = null;
                 Rollback();
@@ -388,6 +388,8 @@ public class DateRangePickerEx : TextPicker<Period?, Calendar>
         if (Previewer is null)
             return;
 
+        Previewer.CancelPendingRangeSelection();
+
         if (value is null)
         {
             Previewer.SelectedDates.Clear();
@@ -400,6 +402,10 @@ public class DateRangePickerEx : TextPicker<Period?, Calendar>
         Previewer.SelectedDates.Set(start, end);
         Previewer.MoveToDate(start);
     }
+
+    private bool HasUncommittedRangePreview() =>
+        _pendingRangeStart is not null
+        || Previewer?.HasPendingRangeSelection == true;
 
     protected override Period? GetPreviewValue()
     {

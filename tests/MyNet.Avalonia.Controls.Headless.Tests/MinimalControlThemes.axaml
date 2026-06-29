@@ -56,6 +56,24 @@
         </Setter>
     </ControlTheme>
 
+    <ControlTheme x:Key="{x:Type controls:DateRangePickerEx}" TargetType="controls:DateRangePickerEx">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:DateRangePickerEx">
+                <Panel>
+                    <TextBox Name="PART_TextBox" />
+                    <Button Name="PART_Button" />
+                    <Popup Name="PART_Popup"
+                           IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}">
+                        <controls:Calendar Name="PART_Previewer"
+                                           AllowTapRangeSelection="{TemplateBinding AllowTapRangeSelection}"
+                                           DisplayDate="{TemplateBinding DisplayDate}"
+                                           SelectionMode="SingleRange" />
+                    </Popup>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
     <ControlTheme x:Key="{x:Type controls:Badge}" TargetType="controls:Badge">
         <Setter Property="Template">
             <ControlTemplate TargetType="controls:Badge">
