@@ -128,7 +128,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
             base.InsertItem(index, date);
 
             if (_updateDepth == 0)
-                SyncSelectedDateAfterInsert(index, date);
+                owner.SyncSelectedDateAfterInsertAt(index, date);
         }
     }
 
@@ -139,7 +139,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         base.RemoveItem(index);
 
         if (_updateDepth == 0)
-            SyncSelectedDateAfterRemove(index);
+            owner.SyncSelectedDateAfterRemovalAt(index);
     }
 
     protected override void SetItem(int index, DateTime item)
@@ -151,7 +151,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
             base.SetItem(index, item);
 
             if (_updateDepth == 0 && index == 0)
-                SyncSelectedDateAfterInsert(index, item);
+                owner.SyncSelectedDateAfterInsertAt(index, item);
         }
     }
 
@@ -182,35 +182,8 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         if (_updateDepth > 0)
             return;
 
-        SyncSelectedDateAfterBatch();
         OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-    }
-
-    private void SyncSelectedDateAfterInsert(int index, DateTime date)
-    {
-        if (index == 0 && !(owner.SelectedDate.HasValue && DateTime.Compare(owner.SelectedDate.Value, date) == 0))
-            owner.SelectedDate = date;
-    }
-
-    private void SyncSelectedDateAfterRemove(int index)
-    {
-        if (index == 0)
-            owner.SelectedDate = Count > 0 ? this[0] : null;
-    }
-
-    private void SyncSelectedDateAfterBatch()
-    {
-        if (Count == 0)
-        {
-            if (owner.SelectionMode != CalendarSelectionMode.None && owner.SelectedDate != null)
-                owner.SelectedDate = null;
-
-            return;
-        }
-
-        var first = this[0];
-        if (!(owner.SelectedDate.HasValue && DateTime.Compare(owner.SelectedDate.Value, first) == 0))
-            owner.SelectedDate = first;
+        owner.SyncSelectedDateFromCollection();
     }
 
     private static void EnsureValidThread() => Dispatcher.UIThread.VerifyAccess();

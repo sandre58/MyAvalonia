@@ -85,4 +85,20 @@ public class SelectedDatesCollectionTests
         changeCount.Should().Be(1);
         calendar.SelectedDates.Should().HaveCount(6);
     }
+
+    [Fact]
+    public void SetRange_DoesNotChangeDisplayDateContext_WhenSameMonth()
+    {
+        var calendar = new Controls.Calendar
+        {
+            SelectionMode = CalendarSelectionMode.MultipleRange,
+            DisplayDate = new DateTime(2026, 6, 15),
+        };
+        var contextBefore = calendar.DisplayDateContext;
+
+        calendar.SelectedDates.Set(new DateTime(2026, 6, 10), new DateTime(2026, 6, 14));
+
+        calendar.DisplayDateContext.Should().Be(contextBefore);
+        calendar.SelectedDate.Should().Be(new DateTime(2026, 6, 10));
+    }
 }

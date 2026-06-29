@@ -84,8 +84,6 @@ public class Calendar : TemplatedControl
     private readonly HashSet<DateTime> _previewHighlightDates = [];
     private readonly HashSet<DateTime> _committedHighlightDates = [];
     private bool _isPointerSelecting;
-    private bool _previewUpdateScheduled;
-    private bool _rangeHighlightsUpdateScheduled;
     private bool _intervalPreviewActive;
     private PreviewController _previewController;
     private KeyModifiers _pointerPressModifiers;
@@ -342,29 +340,76 @@ public class Calendar : TemplatedControl
     private void OnSelectedDatesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         var oldItems = e.OldItems?.OfType<DateTime>().ToList() ?? [];
-        foreach (var date in oldItems)
-        {
-            ChangeSelectedState(date, false);
-        }
-
         var newItems = e.NewItems?.OfType<DateTime>().ToList() ?? [];
-        foreach (var date in newItems)
-        {
-            ChangeSelectedState(date, true);
-        }
 
         if (e.Action == NotifyCollectionChangedAction.Reset)
         {
-            foreach (var cell in _cells.Values.OfType<CalendarDayButton>())
+            if (IsRangeSelectionMode())
             {
-                if (cell.DateContext?.ToDate() is { } date)
-                    ChangeSelectedState(date, SelectedDates.Contains(date.DiscardTime()));
+                UpdateRangeHighlights();
             }
+            else
+            {
+                foreach (var cell in _cells.Values.OfType<CalendarDayButton>())
+                {
+                    if (cell.DateContext?.ToDate() is { } date)
+                        ChangeSelectedState(date, SelectedDates.Contains(date.DiscardTime()));
+                }
+            }
+        }
+        else
+        {
+            foreach (var date in oldItems)
+                ChangeSelectedState(date, false);
+
+            foreach (var date in newItems)
+                ChangeSelectedState(date, true);
+
+            UpdateRangeHighlights();
         }
 
         SelectedDatesChanged?.Invoke(this, new(SelectingItemsControl.SelectionChangedEvent, oldItems, newItems) { Source = this });
+    }
 
-        ScheduleRangeHighlightsUpdate();
+    internal void SyncSelectedDateFromCollection()
+    {
+        using (_changeDisplayDate.Suspend())
+        {
+            if (SelectedDates.Count == 0)
+            {
+                if (SelectionMode != CalendarSelectionMode.None && SelectedDate != null)
+                    SelectedDate = null;
+
+                return;
+            }
+
+            var first = SelectedDates[0];
+            if (!SelectedDate.HasValue || SelectedDate.Value != first)
+                SelectedDate = first;
+        }
+    }
+
+    internal void SyncSelectedDateAfterInsertAt(int index, DateTime date)
+    {
+        if (index != 0)
+            return;
+
+        using (_changeDisplayDate.Suspend())
+        {
+            if (!SelectedDate.HasValue || SelectedDate.Value != date)
+                SelectedDate = date;
+        }
+    }
+
+    internal void SyncSelectedDateAfterRemovalAt(int removedIndex)
+    {
+        if (removedIndex != 0)
+            return;
+
+        using (_changeDisplayDate.Suspend())
+        {
+            SelectedDate = SelectedDates.Count > 0 ? SelectedDates[0] : null;
+        }
     }
 
     private void ChangeSelectedState(DateTime date, bool value)
@@ -662,6 +707,12 @@ public class Calendar : TemplatedControl
         var dayCellCount = children.Count - DateTimeHelper.DaysPerWeek;
         var cellIndex = DateTimeHelper.DaysPerWeek;
 
+        for (var i = DateTimeHelper.DaysPerWeek; i < children.Count; i++)
+        {
+            if (children[i] is CalendarDayButton dayCell)
+                CalendarDayRangeStateHelper.ClearRangeState(dayCell);
+        }
+
         foreach (var state in CalendarMonthGridHelper.EnumerateDayCells(monthContext, FirstDayOfWeek, dayCellCount))
         {
             if (children[cellIndex] is not CalendarDayButton cell)
@@ -688,21 +739,6 @@ public class Calendar : TemplatedControl
         mode is CalendarSelectionMode.SingleRange or CalendarSelectionMode.MultipleRange;
 
     private bool IsRangeSelectionMode() => IsRangeSelectionMode(SelectionMode);
-
-    private void ScheduleRangeHighlightsUpdate()
-    {
-        if (_rangeHighlightsUpdateScheduled)
-            return;
-
-        _rangeHighlightsUpdateScheduled = true;
-        Dispatcher.UIThread.Post(
-            () =>
-            {
-                _rangeHighlightsUpdateScheduled = false;
-                UpdateRangeHighlights();
-            },
-            DispatcherPriority.Input);
-    }
 
     private void UpdateRangeHighlights()
     {
@@ -820,6 +856,13 @@ public class Calendar : TemplatedControl
     {
         if (!TryGetPreviewInterval(out var anchor, out var end))
         {
+            if (_selectionCoordinator.HasPendingRangeAnchor
+                && _previewEndDate is not null
+                && _previewController != PreviewController.Keyboard)
+            {
+                return;
+            }
+
             if (_previewHighlightDates.Count == 0)
             {
                 InvalidatePreviewHighlightCache();
@@ -868,7 +911,7 @@ public class Calendar : TemplatedControl
                 continue;
 
             if (!CalendarDayRangeStateHelper.CellMatchesPreviewInterval(cell, date, anchor, end))
-                CalendarDayRangeStateHelper.SetPreviewRangeToCell(cell, date, anchor, end);
+                CalendarDayRangeStateHelper.ApplyPreviewRoleTransition(cell, date, anchor, end);
 
             _previewHighlightDates.Add(date);
         }
@@ -924,20 +967,7 @@ public class Calendar : TemplatedControl
         && _selectionCoordinator.HasPendingRangeAnchor
         && (AllowTapRangeSelection || shiftHeld);
 
-    private void SchedulePreviewUpdate()
-    {
-        if (_previewUpdateScheduled)
-            return;
-
-        _previewUpdateScheduled = true;
-        Dispatcher.UIThread.Post(
-            () =>
-            {
-                _previewUpdateScheduled = false;
-                UpdatePreviewRangeHighlightsOnly();
-            },
-            DispatcherPriority.Input);
-    }
+    private void SchedulePreviewUpdate() => UpdatePreviewRangeHighlightsOnly();
 
     private KeyModifiers GetCurrentKeyModifiers() => _lastKeyModifiers;
 
@@ -1134,6 +1164,13 @@ public class Calendar : TemplatedControl
     {
         if (!ShouldPreviewInterval())
         {
+            if (_previewController != PreviewController.Keyboard
+                && _selectionCoordinator.HasPendingRangeAnchor
+                && _previewEndDate is not null)
+            {
+                return;
+            }
+
             if (_previewEndDate is not null && _previewController != PreviewController.Keyboard)
             {
                 _previewEndDate = null;
@@ -1487,7 +1524,7 @@ public class Calendar : TemplatedControl
             return;
         }
 
-        ClearPointerPreview();
+        ClearPointerPreview(fullClear: false);
     }
 
     private void OnDayPointerMove(object? sender, PointerEventArgs e)
@@ -1504,14 +1541,34 @@ public class Calendar : TemplatedControl
         ApplyPointerPreviewUpdate(date, fromMove: true, e.KeyModifiers);
     }
 
-    private void OnMonthGridPointerLeave(object? sender, PointerEventArgs e) => ClearPointerPreview();
+    private void OnMonthGridPointerLeave(object? sender, PointerEventArgs e) => ClearPointerPreview(fullClear: true);
 
-    private void ClearPointerPreview()
+    private void ClearPointerHoverOnly()
     {
         if (_previewController == PreviewController.Keyboard)
             return;
 
-        if (_pointerOverDate is null)
+        if (_isPointerSelecting || _previewController == PreviewController.Drag)
+            return;
+
+        _pointerOverDate = null;
+    }
+
+    private void ClearPointerPreview(bool fullClear = true)
+    {
+        if (_previewController == PreviewController.Keyboard)
+            return;
+
+        if (!fullClear)
+        {
+            ClearPointerHoverOnly();
+            return;
+        }
+
+        if (_isPointerSelecting || _previewController == PreviewController.Drag)
+            return;
+
+        if (_pointerOverDate is null && _previewEndDate is null)
             return;
 
         _pointerOverDate = null;

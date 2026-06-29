@@ -81,7 +81,20 @@ public class CalendarDayRangeStateHelperTests
         cell.IsPreviewEndDate.Should().BeTrue();
         cell.IsPreviewInRange.Should().BeFalse();
 
-        CalendarDayRangeStateHelper.SetPreviewRangeToCell(cell, previousEnd, anchor, newEnd);
+        CalendarDayRangeStateHelper.ApplyPreviewRoleTransition(cell, previousEnd, anchor, newEnd);
+
+        cell.IsPreviewEndDate.Should().BeFalse();
+        cell.IsPreviewInRange.Should().BeTrue();
+        cell.IsPreviewStartDate.Should().BeFalse();
+    }
+
+    [Fact]
+    public void SetPreviewRangeState_EndToInRange_PromotesWithoutClearingInRange()
+    {
+        var cell = new CalendarDayButton();
+        cell.SetPreviewRangeState(isPreviewStart: false, isPreviewEnd: true, isPreviewInRange: false);
+
+        cell.SetPreviewRangeState(isPreviewStart: false, isPreviewEnd: false, isPreviewInRange: true);
 
         cell.IsPreviewEndDate.Should().BeFalse();
         cell.IsPreviewInRange.Should().BeTrue();

@@ -26,14 +26,44 @@ public class CalendarDayButton : CalendarDateButton
         }
 
         _suppressPreviewPseudoClassUpdates = true;
-        IsPreviewStartDate = isPreviewStart;
-        IsPreviewEndDate = isPreviewEnd;
-        IsPreviewInRange = isPreviewInRange;
-        _suppressPreviewPseudoClassUpdates = false;
 
-        PseudoClasses.Set(PseudoClassName.PreviewStartDate, isPreviewStart);
-        PseudoClasses.Set(PseudoClassName.PreviewEndDate, isPreviewEnd);
-        PseudoClasses.Set(PseudoClassName.PreviewInRange, isPreviewInRange);
+        if (isPreviewInRange && !IsPreviewInRange)
+        {
+            IsPreviewInRange = true;
+            PseudoClasses.Set(PseudoClassName.PreviewInRange, true);
+        }
+
+        if (isPreviewStart && !IsPreviewStartDate)
+        {
+            IsPreviewStartDate = true;
+            PseudoClasses.Set(PseudoClassName.PreviewStartDate, true);
+        }
+
+        if (isPreviewEnd && !IsPreviewEndDate)
+        {
+            IsPreviewEndDate = true;
+            PseudoClasses.Set(PseudoClassName.PreviewEndDate, true);
+        }
+
+        if (!isPreviewStart && IsPreviewStartDate)
+        {
+            IsPreviewStartDate = false;
+            PseudoClasses.Set(PseudoClassName.PreviewStartDate, false);
+        }
+
+        if (!isPreviewEnd && IsPreviewEndDate)
+        {
+            IsPreviewEndDate = false;
+            PseudoClasses.Set(PseudoClassName.PreviewEndDate, false);
+        }
+
+        if (!isPreviewInRange && IsPreviewInRange)
+        {
+            IsPreviewInRange = false;
+            PseudoClasses.Set(PseudoClassName.PreviewInRange, false);
+        }
+
+        _suppressPreviewPseudoClassUpdates = false;
     }
 
     public bool IsStartDate

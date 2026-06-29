@@ -105,6 +105,9 @@ internal static class CalendarDayRangeStateHelper
         cell.SetPreviewRangeState(isPreviewStart, isPreviewEnd, isPreviewInRange);
     }
 
+    public static void ApplyPreviewRoleTransition(CalendarDayButton cell, DateTime date, DateTime anchor, DateTime previewEnd) =>
+        SetPreviewRangeToCell(cell, date, anchor, previewEnd);
+
     public static bool CellMatchesCommittedInterval(CalendarDayButton cell, DateTime date, DateTime rangeStart, DateTime rangeEnd)
     {
         rangeStart = rangeStart.DiscardTime();

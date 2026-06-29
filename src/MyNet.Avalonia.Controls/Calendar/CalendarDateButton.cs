@@ -68,6 +68,9 @@ public class CalendarDateButton : Button
         get;
         set
         {
+            if (field == value)
+                return;
+
             field = value;
             PseudoClasses.Set(PseudoClassName.Selected, value);
         }

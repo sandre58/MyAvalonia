@@ -435,6 +435,75 @@ public class CalendarHeadlessTests
     }
 
     [AvaloniaFact]
+    public void SingleRange_DragPreview_MovingAcrossCells_KeepsMiddleCellsHighlighted()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var middleDate = new DateTime(2026, 5, 12);
+        var endDate = new DateTime(2026, 5, 14);
+        var startButton = FindDayButton(grid!, startDate);
+        var middleButton = FindDayButton(grid!, middleDate);
+        var endButton = FindDayButton(grid!, endDate);
+
+        HeadlessControlHost.PointerPress(startButton);
+        HeadlessControlHost.PointerMove(middleButton, leftButtonPressed: true);
+
+        middleButton.IsPreviewInRange.Should().BeTrue("middle cell must stay highlighted while dragging across cells");
+        startButton.IsPreviewStartDate.Should().BeTrue();
+
+        HeadlessControlHost.PointerMove(endButton, leftButtonPressed: true);
+
+        middleButton.IsPreviewInRange.Should().BeTrue("middle cell must not lose preview when drag end extends");
+        startButton.IsPreviewStartDate.Should().BeTrue();
+        endButton.IsPreviewEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_KeyboardPreview_ExtendingRange_OnlyEndCapChanges()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = true;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var middleDate = new DateTime(2026, 5, 12);
+        var endDate = new DateTime(2026, 5, 14);
+        calendar.MoveToDate(startDate);
+        HeadlessControlHost.KeyDown(calendar, Key.Space);
+
+        HeadlessControlHost.KeyDown(calendar, Key.Right);
+        HeadlessControlHost.KeyDown(calendar, Key.Right);
+        HeadlessControlHost.KeyDown(calendar, Key.Right);
+        HeadlessControlHost.KeyDown(calendar, Key.Right);
+
+        var middleButton = FindDayButton(grid!, middleDate);
+        var endButton = FindDayButton(grid!, endDate);
+        var startButton = FindDayButton(grid!, startDate);
+
+        middleButton.IsPreviewInRange.Should().BeTrue();
+        endButton.IsPreviewEndDate.Should().BeTrue();
+        startButton.IsPreviewStartDate.Should().BeTrue();
+
+        HeadlessControlHost.KeyDown(calendar, Key.Right);
+
+        middleButton.IsPreviewInRange.Should().BeTrue("stable middle cell must keep preview-in-range when end cap moves");
+        endButton.IsPreviewEndDate.Should().BeFalse("previous end cap becomes in-range");
+        FindDayButton(grid!, new DateTime(2026, 5, 15)).IsPreviewEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
     public void MultipleRange_WithoutTap_CtrlClickNoDragPreview()
     {
         var calendar = CreateCalendar(new(2026, 5, 15));
@@ -1025,6 +1094,61 @@ public class CalendarHeadlessTests
         previewButton.IsFocused.Should().BeTrue("keyboard focus must survive unrelated pointer movement");
         previewButton.IsPreviewStartDate.Should().BeFalse();
         previewButton.IsPreviewEndDate.Should().BeFalse();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_TapPreview_VisibleImmediatelyWithoutDeferredFrame()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = true;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var startButton = FindDayButton(grid!, startDate);
+        var endButton = FindDayButton(grid!, endDate);
+        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+
+        HeadlessControlHost.PointerRelease(startButton);
+        HeadlessControlHost.PointerEnter(endButton);
+
+        middleButton.IsPreviewInRange.Should().BeTrue("preview must be visible on the same frame as pointer enter");
+        startButton.IsPreviewStartDate.Should().BeTrue();
+        endButton.IsPreviewEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_TapCommit_RangeRolesAppliedImmediatelyWithoutSelectedFlash()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = true;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var middleDate = new DateTime(2026, 5, 12);
+        var endDate = new DateTime(2026, 5, 14);
+
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, startDate));
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, endDate));
+
+        var startButton = FindDayButton(grid!, startDate);
+        var middleButton = FindDayButton(grid!, middleDate);
+        var endButton = FindDayButton(grid!, endDate);
+
+        startButton.IsStartDate.Should().BeTrue("committed range styling must be immediate");
+        endButton.IsEndDate.Should().BeTrue();
+        middleButton.IsInRange.Should().BeTrue();
+        startButton.IsSelected.Should().BeFalse("range cap cells must not flash :selected before range roles");
+        middleButton.IsSelected.Should().BeFalse();
+        endButton.IsSelected.Should().BeFalse();
     }
 
     [AvaloniaFact]

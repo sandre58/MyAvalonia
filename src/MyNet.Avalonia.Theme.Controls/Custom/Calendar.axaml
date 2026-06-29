@@ -210,6 +210,18 @@
                         Value="{my:ThemeBrush (my:InteractionAssist.ActiveBackground), RelativeSource={RelativeSource TemplatedParent}, Darken=0.50}" />
             </Style>
         </Style>
+
+        <!-- Instant ActiveBorder for preview/committed (no opacity flash on range changes) -->
+        <Style Selector="^:preview-in-range /template/ Border#PART_ActiveBorder,
+                         ^:preview-start-date /template/ Border#PART_ActiveBorder,
+                         ^:preview-end-date /template/ Border#PART_ActiveBorder,
+                         ^:start-date /template/ Border#PART_ActiveBorder,
+                         ^:end-date /template/ Border#PART_ActiveBorder,
+                         ^:in-range /template/ Border#PART_ActiveBorder,
+                         ^:selected /template/ Border#PART_ActiveBorder">
+            <Setter Property="my:TransitionsAssist.UseTransitions" Value="False" />
+            <Setter Property="Transitions" Value="{x:Null}" />
+        </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="MyNet.Theme.Button.Embedded.Calendar.Extended" TargetType="Button"
