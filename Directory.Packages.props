@@ -45,7 +45,7 @@
         <PackageVersion Include="MyNet.Geography.Localization" Version="$(MyNetVersion)"/>
         <PackageVersion Include="MyNet.Geography.Resources" Version="$(MyNetVersion)"/>
         <PackageVersion Include="MyNet.Globalization" Version="$(MyNetVersion)"/>
-        <PackageVersion Include="System.Reactive" Version="7.0.0-rc-1"/>
+        <PackageVersion Include="System.Reactive" Version="7.0.0-rc.1"/>
         <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.14"/>
         <!-- Code Analysis -->
         <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="11.0.100-preview.5.26302.115"/>

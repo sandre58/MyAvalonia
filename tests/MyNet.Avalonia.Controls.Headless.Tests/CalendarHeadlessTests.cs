@@ -6,6 +6,7 @@
 
 using System;
 using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
 using Avalonia.Input;
@@ -461,6 +462,41 @@ public class CalendarHeadlessTests
         HeadlessControlHost.PointerMove(endButton, leftButtonPressed: true);
 
         middleButton.IsPreviewInRange.Should().BeTrue("middle cell must not lose preview when drag end extends");
+        startButton.IsPreviewStartDate.Should().BeTrue();
+        endButton.IsPreviewEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_DragPreview_GridGap_KeepsPreviewStable()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = true;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Loaded);
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 3);
+        var middleDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 17);
+        var startButton = FindDayButton(grid!, startDate);
+        var middleButton = FindDayButton(grid!, middleDate);
+        var endButton = FindDayButton(grid!, endDate);
+
+        HeadlessControlHost.PointerRelease(startButton);
+        HeadlessControlHost.PointerEnter(endButton);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        middleButton.IsPreviewInRange.Should().BeTrue();
+        startButton.IsPreviewStartDate.Should().BeTrue();
+        endButton.IsPreviewEndDate.Should().BeTrue();
+
+        SimulateVerticalGridGap(grid!, middleButton, endButton);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        middleButton.IsPreviewInRange.Should().BeTrue("preview must survive vertical margin gap between rows");
         startButton.IsPreviewStartDate.Should().BeTrue();
         endButton.IsPreviewEndDate.Should().BeTrue();
     }
@@ -1199,6 +1235,24 @@ public class CalendarHeadlessTests
 
     private static CalendarDayButton FindDayButton(Grid grid, DateTime date) =>
         grid.Children.OfType<CalendarDayButton>().Single(x => x.DataContext is DateTime d && d == date);
+
+    private static void SimulateVerticalGridGap(Grid grid, CalendarDayButton upperButton, CalendarDayButton lowerButton, bool leftButtonPressed = false)
+    {
+        var gapPosition = GetVerticalGapPosition(grid, upperButton, lowerButton);
+
+        HeadlessControlHost.PointerExitedAt(upperButton, new(4, 4), leftButtonPressed: leftButtonPressed);
+        HeadlessControlHost.PointerExitedAt(grid, gapPosition, leftButtonPressed: leftButtonPressed);
+        HeadlessControlHost.PointerMoveAt(grid, gapPosition, leftButtonPressed: leftButtonPressed);
+    }
+
+    private static Point GetVerticalGapPosition(Grid grid, CalendarDayButton upperButton, CalendarDayButton lowerButton)
+    {
+        var upperOrigin = upperButton.TranslatePoint(new Point(0, 0), grid) ?? default;
+        var lowerOrigin = lowerButton.TranslatePoint(new Point(0, 0), grid) ?? default;
+        var gapY = (upperOrigin.Y + upperButton.Bounds.Height + lowerOrigin.Y) / 2;
+        var gapX = upperOrigin.X + (upperButton.Bounds.Width / 2);
+        return new Point(gapX, gapY);
+    }
 
     private static void EstablishDragModeAnchor(Calendar calendar, DateTime anchorDate)
     {

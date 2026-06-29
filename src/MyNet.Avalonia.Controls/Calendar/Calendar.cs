@@ -116,6 +116,7 @@ public class Calendar : TemplatedControl
     {
         AddHandler(KeyDownEvent, OnCalendarKeyDownHandler, RoutingStrategies.Tunnel, handledEventsToo: true);
         AddHandler(KeyUpEvent, OnCalendarKeyUpHandler, RoutingStrategies.Tunnel, handledEventsToo: true);
+        AddHandler(PointerExitedEvent, OnCalendarPointerExited, RoutingStrategies.Direct | RoutingStrategies.Tunnel, handledEventsToo: true);
         DisplayDateContext = new MonthContext(DateTime.Today.Month, DateTime.Today.Year);
         SetCurrentValue(DisplayDateProperty, DateTime.Today);
         UpdateDisplayDate(DisplayDate, DateTime.MinValue);
@@ -649,6 +650,7 @@ public class Calendar : TemplatedControl
 
         _monthGrid?.Children.AddRange(children);
         _monthGrid?.AddHandler(PointerExitedEvent, OnMonthGridPointerLeave, handledEventsToo: true);
+        _monthGrid?.AddHandler(PointerMovedEvent, OnMonthGridPointerMove, handledEventsToo: true);
 
         // Generate month/year buttons.
         for (var i = 0; i < 12; i++)
@@ -1103,6 +1105,40 @@ public class Calendar : TemplatedControl
         return true;
     }
 
+    private bool TryHitTestDayButton(Point position, out DateTime date)
+    {
+        date = default;
+
+        if (_monthGrid is null)
+            return false;
+
+        if (_monthGrid.InputHitTest(position) is not CalendarDayButton { IsBlackout: false, IsEnabled: true } cell)
+            return false;
+
+        if (cell.DateContext?.ToDate() is not { } cellDate || !IsRangeSelectionMode())
+            return false;
+
+        date = cellDate;
+        return true;
+    }
+
+    private bool IsPointerPreviewTrackingActive()
+    {
+        if (!IsRangeSelectionMode())
+            return false;
+
+        if (_previewController == PreviewController.Keyboard)
+            return false;
+
+        if (_isPointerSelecting || _previewController == PreviewController.Drag)
+            return true;
+
+        if (_previewController == PreviewController.PointerShift)
+            return true;
+
+        return AllowTapRangeSelection && _selectionCoordinator.HasPendingRangeAnchor;
+    }
+
     private void ApplyPointerPreviewUpdate(DateTime date, bool fromMove, KeyModifiers pointerModifiers = default)
     {
         var shiftHeld = IsShiftHeld(pointerModifiers);
@@ -1400,7 +1436,19 @@ public class Calendar : TemplatedControl
 
     protected override void OnPointerReleased(PointerReleasedEventArgs e)
     {
+        ReleaseMonthGridPointerCapture(e);
         base.OnPointerReleased(e);
+    }
+
+    private void OnCalendarPointerExited(object? sender, PointerEventArgs e)
+    {
+        var position = e.GetPosition(this);
+        var bounds = new Rect(Bounds.Size);
+
+        if (bounds.Contains(position))
+            return;
+
+        ClearPointerPreview(fullClear: true);
     }
 
     protected override void OnPointerWheelChanged(PointerWheelEventArgs e)
@@ -1450,7 +1498,7 @@ public class Calendar : TemplatedControl
         _selectionCoordinator.RecordPointerPress(date);
     }
 
-    private void TryStartPointerDragSelection(DateTime hoverDate, KeyModifiers pointerModifiers)
+    private void TryStartPointerDragSelection(DateTime hoverDate, KeyModifiers pointerModifiers, IPointer? pointer = null)
     {
         if (AllowTapRangeSelection || !IsRangeSelectionMode())
             return;
@@ -1469,7 +1517,17 @@ public class Calendar : TemplatedControl
         _previewController = PreviewController.Drag;
         _selectionCoordinator.BeginPointerSelection(pressDate, shift);
         _previewEndDate = hoverDate;
+
+        if (pointer is not null && _monthGrid is not null)
+            pointer.Capture(_monthGrid);
+
         SchedulePreviewUpdate();
+    }
+
+    private void ReleaseMonthGridPointerCapture(PointerEventArgs e)
+    {
+        if (_monthGrid is not null && e.Pointer.Captured == _monthGrid)
+            e.Pointer.Capture(null);
     }
 
     private void OnDayPointerReleased(object? sender, PointerReleasedEventArgs e)
@@ -1482,6 +1540,7 @@ public class Calendar : TemplatedControl
 
         var shift = ResolvePointerShift(e.KeyModifiers);
         var ctrl = ResolvePointerCtrl(e.KeyModifiers);
+        ReleaseMonthGridPointerCapture(e);
         ClearPointerPressModifiers();
 
         if (AllowTapRangeSelection)
@@ -1518,8 +1577,7 @@ public class Calendar : TemplatedControl
         if (sender is not CalendarDayButton)
             return;
 
-        if (_monthGrid is not null
-            && _monthGrid.InputHitTest(e.GetPosition(_monthGrid)) is CalendarDayButton { IsBlackout: false, IsEnabled: true })
+        if (_monthGrid is not null && TryHitTestDayButton(e.GetPosition(_monthGrid), out _))
         {
             return;
         }
@@ -1535,13 +1593,45 @@ public class Calendar : TemplatedControl
         if (sender is CalendarDayButton cell
             && e.GetCurrentPoint(cell).Properties.IsLeftButtonPressed)
         {
-            TryStartPointerDragSelection(date, e.KeyModifiers);
+            TryStartPointerDragSelection(date, e.KeyModifiers, e.Pointer);
         }
 
         ApplyPointerPreviewUpdate(date, fromMove: true, e.KeyModifiers);
     }
 
-    private void OnMonthGridPointerLeave(object? sender, PointerEventArgs e) => ClearPointerPreview(fullClear: true);
+    private void OnMonthGridPointerMove(object? sender, PointerEventArgs e)
+    {
+        if (_monthGrid is null)
+            return;
+
+        var position = e.GetPosition(_monthGrid);
+        var leftButtonPressed = e.GetCurrentPoint(_monthGrid).Properties.IsLeftButtonPressed;
+
+        if (!TryHitTestDayButton(position, out var date))
+            return;
+
+        if (leftButtonPressed)
+            TryStartPointerDragSelection(date, e.KeyModifiers, e.Pointer);
+
+        if (!IsPointerPreviewTrackingActive())
+            return;
+
+        ApplyPointerPreviewUpdate(date, fromMove: true, e.KeyModifiers);
+    }
+
+    private void OnMonthGridPointerLeave(object? sender, PointerEventArgs e)
+    {
+        if (_monthGrid is null)
+            return;
+
+        var position = e.GetPosition(_monthGrid);
+        var bounds = new Rect(_monthGrid.Bounds.Size);
+
+        if (bounds.Contains(position))
+            return;
+
+        ClearPointerPreview(fullClear: true);
+    }
 
     private void ClearPointerHoverOnly()
     {

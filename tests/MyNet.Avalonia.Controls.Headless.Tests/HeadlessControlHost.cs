@@ -64,12 +64,26 @@ internal static class HeadlessControlHost
         control.RaiseEvent(new PointerEventArgs(InputElement.PointerEnteredEvent, control, null!, control, new(4, 4), 0, new PointerPointProperties(RawInputModifiers.None, PointerUpdateKind.Other), modifiers));
 
     public static void PointerMove(Control control, KeyModifiers modifiers = KeyModifiers.None, bool leftButtonPressed = false) =>
+        PointerMoveAt(control, new(4, 4), modifiers, leftButtonPressed);
+
+    public static void PointerMoveAt(Control control, Point position, KeyModifiers modifiers = KeyModifiers.None, bool leftButtonPressed = false) =>
         control.RaiseEvent(new PointerEventArgs(
             InputElement.PointerMovedEvent,
             control,
             null!,
             control,
-            new(4, 4),
+            position,
+            0,
+            new PointerPointProperties(leftButtonPressed ? RawInputModifiers.LeftMouseButton : RawInputModifiers.None, PointerUpdateKind.Other),
+            modifiers));
+
+    public static void PointerExitedAt(Control control, Point position, KeyModifiers modifiers = KeyModifiers.None, bool leftButtonPressed = false) =>
+        control.RaiseEvent(new PointerEventArgs(
+            InputElement.PointerExitedEvent,
+            control,
+            null!,
+            control,
+            position,
             0,
             new PointerPointProperties(leftButtonPressed ? RawInputModifiers.LeftMouseButton : RawInputModifiers.None, PointerUpdateKind.Other),
             modifiers));
