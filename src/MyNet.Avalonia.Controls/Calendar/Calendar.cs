@@ -858,8 +858,9 @@ public class Calendar : TemplatedControl
     {
         if (!TryGetPreviewInterval(out var anchor, out var end))
         {
-            if (_selectionCoordinator.HasPendingRangeAnchor
-                && _previewEndDate is not null
+            if (AllowTapRangeSelection
+                && _selectionCoordinator.HasPendingRangeAnchor
+                && (_previewEndDate is not null || _pointerOverDate is not null)
                 && _previewController != PreviewController.Keyboard)
             {
                 return;
@@ -1064,6 +1065,28 @@ public class Calendar : TemplatedControl
         _intervalPreviewActive = false;
     }
 
+    private void ClearPreviewVisuals()
+    {
+        _previewEndDate = null;
+        _pointerOverDate = null;
+        ClearPreviewController();
+
+        if (_previewHighlightDates.Count == 0)
+        {
+            InvalidatePreviewHighlightCache();
+            return;
+        }
+
+        foreach (var date in _previewHighlightDates.ToArray())
+        {
+            if (_cells.GetOrDefault(date) is CalendarDayButton cell)
+                CalendarDayRangeStateHelper.ClearPreviewRangeState(cell);
+        }
+
+        _previewHighlightDates.Clear();
+        InvalidatePreviewHighlightCache();
+    }
+
     private void OnShiftKeyDown()
     {
         if (!IsRangeSelectionMode())
@@ -1095,7 +1118,9 @@ public class Calendar : TemplatedControl
         }
 
         if (_previewController == PreviewController.Keyboard)
+        {
             _intervalPreviewActive = true;
+        }
         else if (_previewController == PreviewController.PointerShift)
         {
             _previewController = PreviewController.None;
@@ -1779,12 +1804,8 @@ public class Calendar : TemplatedControl
 
     private void FinishDaySelectionInteraction(RoutedEventArgs? e = null)
     {
-        ClearPreviewController();
-
-        if (!_selectionCoordinator.HasPendingRangeAnchor)
-            _previewEndDate = null;
-
-        UpdatePreviewRangeHighlightsOnly();
+        ClearPreviewVisuals();
+        UpdateRangeHighlights();
         DayButtonClick?.Invoke(this, e ?? new RoutedEventArgs());
     }
 

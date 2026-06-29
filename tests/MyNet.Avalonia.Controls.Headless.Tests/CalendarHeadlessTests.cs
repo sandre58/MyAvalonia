@@ -891,7 +891,7 @@ public class CalendarHeadlessTests
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
         FindDayButton(grid!, pointerDate).IsPreviewEndDate.Should().BeFalse("static pointer must not override keyboard interval end");
-        FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeTrue();
+        FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeTrue("keyboard preview must survive shift release");
         FindDayButton(grid!, new DateTime(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
     }
 
@@ -984,6 +984,111 @@ public class CalendarHeadlessTests
 
         FindDayButton(grid!, pointerDate).IsPreviewEndDate.Should().BeTrue("shift+move should take over preview end");
         FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeFalse();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_ShiftKeyboardCommit_ClearsPreview_ShowsCommitted()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var startButton = FindDayButton(grid!, startDate);
+        var endButton = FindDayButton(grid!, endDate);
+        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+
+        EstablishDragModeAnchor(calendar, startDate);
+
+        for (var i = 0; i < 4; i++)
+            HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+
+        startButton.IsPreviewStartDate.Should().BeTrue();
+        middleButton.IsPreviewInRange.Should().BeTrue();
+        endButton.IsPreviewEndDate.Should().BeTrue();
+
+        HeadlessControlHost.KeyDown(calendar, Key.Space, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsPreviewStartDate.Should().BeFalse("commit must clear preview pseudos");
+        middleButton.IsPreviewInRange.Should().BeFalse();
+        endButton.IsPreviewEndDate.Should().BeFalse();
+        startButton.IsStartDate.Should().BeTrue("committed range must be visible after commit");
+        middleButton.IsInRange.Should().BeTrue();
+        endButton.IsEndDate.Should().BeTrue();
+        calendar.SelectedDates.Should().Contain(startDate);
+        calendar.SelectedDates.Should().Contain(endDate);
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_ShiftDragCommit_ClearsPreview()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var startButton = FindDayButton(grid!, startDate);
+        var endButton = FindDayButton(grid!, endDate);
+        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+
+        HeadlessControlHost.PointerPress(startButton, KeyModifiers.Shift);
+        HeadlessControlHost.PointerMove(endButton, KeyModifiers.Shift, leftButtonPressed: true);
+        HeadlessControlHost.PointerRelease(endButton, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsPreviewStartDate.Should().BeFalse("commit must clear preview pseudos");
+        middleButton.IsPreviewInRange.Should().BeFalse();
+        endButton.IsPreviewEndDate.Should().BeFalse();
+        startButton.IsStartDate.Should().BeTrue();
+        middleButton.IsInRange.Should().BeTrue();
+        endButton.IsEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void MultipleRange_WithoutTap_PreviewVisibleOverCommittedRange()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.MultipleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+        calendar.Focus();
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var rangeStart = new DateTime(2026, 5, 10);
+        var rangeEnd = new DateTime(2026, 5, 14);
+        var previewEnd = new DateTime(2026, 5, 18);
+
+        HeadlessControlHost.PointerPress(FindDayButton(grid!, rangeStart));
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, rangeEnd), leftButtonPressed: true);
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, rangeEnd));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        var committedMiddle = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        committedMiddle.IsInRange.Should().BeTrue("existing range must be committed before preview extension");
+
+        for (var i = 0; i < 4; i++)
+            HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
+
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        committedMiddle.IsPreviewInRange.Should().BeTrue("preview must overlay already-committed dates while shift is held");
+        FindDayButton(grid!, rangeStart).IsPreviewStartDate.Should().BeTrue();
+        FindDayButton(grid!, previewEnd).IsPreviewEndDate.Should().BeTrue();
+        FindDayButton(grid!, new DateTime(2026, 5, 16)).IsPreviewInRange.Should().BeTrue();
     }
 
     [AvaloniaFact]
