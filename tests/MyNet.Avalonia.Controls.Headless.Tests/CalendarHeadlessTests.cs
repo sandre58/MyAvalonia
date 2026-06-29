@@ -866,6 +866,47 @@ public class CalendarHeadlessTests
     }
 
     [AvaloniaFact]
+    public void SingleRange_WithoutTap_PointerPreview_PersistsThroughPressUntilRelease()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var startButton = FindDayButton(grid!, startDate);
+        var endButton = FindDayButton(grid!, endDate);
+        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+
+        EstablishDragModeAnchor(calendar, startDate);
+        HeadlessControlHost.PointerMove(endButton, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        endButton.IsPreviewEndDate.Should().BeTrue();
+
+        HeadlessControlHost.PointerPress(endButton, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsPreviewStartDate.Should().BeTrue("preview must stay visible while mouse button is held");
+        middleButton.IsPreviewInRange.Should().BeTrue();
+        endButton.IsPreviewEndDate.Should().BeTrue();
+
+        HeadlessControlHost.PointerRelease(endButton, KeyModifiers.Shift);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsPreviewStartDate.Should().BeFalse("preview must clear only on release commit");
+        middleButton.IsPreviewInRange.Should().BeFalse();
+        endButton.IsPreviewEndDate.Should().BeFalse();
+        startButton.IsStartDate.Should().BeTrue();
+        middleButton.IsInRange.Should().BeTrue();
+        endButton.IsEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
     public void SingleRange_WithoutTap_KeyboardShiftPreview_SurvivesShiftRelease()
     {
         var calendar = CreateCalendar(new(2026, 5, 15));

@@ -87,6 +87,8 @@ public class Calendar : TemplatedControl
     private bool _intervalPreviewActive;
     private bool _previewSuspendedAfterCommit;
     private DateTime? _previewSuspendedAtDate;
+    private bool _pointerCommitInProgress;
+    private bool _deferSelectionHighlightUpdate;
     private PreviewController _previewController;
     private KeyModifiers _pointerPressModifiers;
 
@@ -347,7 +349,7 @@ public class Calendar : TemplatedControl
 
         if (e.Action == NotifyCollectionChangedAction.Reset)
         {
-            if (IsRangeSelectionMode())
+            if (IsRangeSelectionMode() && !_deferSelectionHighlightUpdate)
             {
                 UpdateRangeHighlights();
             }
@@ -368,7 +370,8 @@ public class Calendar : TemplatedControl
             foreach (var date in newItems)
                 ChangeSelectedState(date, true);
 
-            UpdateRangeHighlights();
+            if (!_deferSelectionHighlightUpdate)
+                UpdateRangeHighlights();
         }
 
         SelectedDatesChanged?.Invoke(this, new(SelectingItemsControl.SelectionChangedEvent, oldItems, newItems) { Source = this });
@@ -858,6 +861,9 @@ public class Calendar : TemplatedControl
 
     private void UpdatePreviewRangeHighlightsOnly()
     {
+        if (_pointerCommitInProgress && !_isPointerSelecting && _previewHighlightDates.Count > 0)
+            return;
+
         if (!TryGetPreviewInterval(out var anchor, out var end))
         {
             if (AllowTapRangeSelection
@@ -971,6 +977,16 @@ public class Calendar : TemplatedControl
         anchor = default;
         end = default;
 
+        if (_pointerCommitInProgress
+            && !_isPointerSelecting
+            && _cachedPreviewAnchor is { } cachedAnchor
+            && _cachedPreviewEnd is { } cachedEnd)
+        {
+            anchor = cachedAnchor;
+            end = cachedEnd;
+            return true;
+        }
+
         if (!ShouldPreviewInterval())
             return false;
 
@@ -1013,6 +1029,9 @@ public class Calendar : TemplatedControl
             return _previewEndDate.HasValue || _pointerOverDate.HasValue;
 
         if (_previewController == PreviewController.PointerShift)
+            return true;
+
+        if (_pointerCommitInProgress && !_isPointerSelecting && _previewHighlightDates.Count > 0)
             return true;
 
         return false;
@@ -1128,6 +1147,9 @@ public class Calendar : TemplatedControl
         }
         else if (_previewController == PreviewController.PointerShift)
         {
+            if (_pointerCommitInProgress)
+                return;
+
             _previewController = PreviewController.None;
             _previewEndDate = null;
             _intervalPreviewActive = false;
@@ -1192,6 +1214,9 @@ public class Calendar : TemplatedControl
 
     private void ApplyPointerPreviewUpdate(DateTime date, bool fromMove, KeyModifiers pointerModifiers = default)
     {
+        if (_pointerCommitInProgress && !_isPointerSelecting)
+            return;
+
         var shiftHeld = IsShiftHeld(pointerModifiers);
         date = date.DiscardTime();
 
@@ -1399,7 +1424,7 @@ public class Calendar : TemplatedControl
         var target = date ?? GetFocusedDate();
         var intervalPreview = _intervalPreviewActive;
 
-        ClearPreviewVisuals();
+        _deferSelectionHighlightUpdate = true;
 
         if (e is KeyEventArgs keyEvent)
         {
@@ -1574,10 +1599,8 @@ public class Calendar : TemplatedControl
         }
 
         _isPointerSelecting = false;
-        _previewController = PreviewController.None;
-        _previewEndDate = null;
         _selectionCoordinator.RecordPointerPress(date);
-        SchedulePreviewUpdate();
+        _pointerCommitInProgress = true;
     }
 
     private void TryStartPointerDragSelection(DateTime hoverDate, KeyModifiers pointerModifiers, IPointer? pointer = null)
@@ -1589,6 +1612,9 @@ public class Calendar : TemplatedControl
             return;
 
         if (_selectionCoordinator.PointerPressDate is not { } pressDate)
+            return;
+
+        if (_pointerCommitInProgress && hoverDate == pressDate)
             return;
 
         var shift = IsShiftHeld(pointerModifiers);
@@ -1627,7 +1653,9 @@ public class Calendar : TemplatedControl
 
         if (AllowTapRangeSelection)
         {
+            _deferSelectionHighlightUpdate = true;
             CommitPreview(e, releaseDate, shift, ctrl);
+            _pointerCommitInProgress = false;
             return;
         }
 
@@ -1636,10 +1664,11 @@ public class Calendar : TemplatedControl
             && pressDate != releaseDate
             && IsRangeSelectionMode();
 
+        _deferSelectionHighlightUpdate = true;
         _isPointerSelecting = false;
-        ClearPreviewVisuals();
         _selectionCoordinator.CompletePointerSelection(releaseDate, shift, ctrl, wasDragging);
         FinishDaySelectionInteraction(e, shift, releaseDate);
+        _pointerCommitInProgress = false;
     }
 
     private void OnDayPointerEnter(object? sender, PointerEventArgs e)
@@ -1748,6 +1777,12 @@ public class Calendar : TemplatedControl
 
         if (_previewController == PreviewController.PointerShift)
         {
+            if (_pointerCommitInProgress)
+            {
+                ClearPointerHoverOnly();
+                return;
+            }
+
             _previewController = PreviewController.None;
             _intervalPreviewActive = false;
             _previewEndDate = null;
@@ -1863,6 +1898,7 @@ public class Calendar : TemplatedControl
         }
 
         UpdateRangeHighlights();
+        _deferSelectionHighlightUpdate = false;
         DayButtonClick?.Invoke(this, e ?? new RoutedEventArgs());
     }
 
