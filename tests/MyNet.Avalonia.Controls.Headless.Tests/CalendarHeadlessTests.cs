@@ -115,6 +115,9 @@ public class CalendarHeadlessTests
         middleButton.IsPreviewInRange.Should().BeTrue();
         endButton.IsPreviewEndDate.Should().BeTrue();
 
+        startButton.IsEndDate.Should().BeFalse("anchor must lose end cap while extending preview to the right");
+        startButton.IsStartDate.Should().BeTrue();
+
         HeadlessControlHost.PointerRelease(endButton);
 
         startButton.IsStartDate.Should().BeTrue();
@@ -122,6 +125,32 @@ public class CalendarHeadlessTests
         endButton.IsEndDate.Should().BeTrue();
         startButton.IsPreviewStartDate.Should().BeFalse();
         endButton.IsPreviewEndDate.Should().BeFalse();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_TapPreview_AnchorCap_ReversedExtension_ClearsStartDate()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = true;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var anchorDate = new DateTime(2026, 5, 14);
+        var previewEndDate = new DateTime(2026, 5, 10);
+        var anchorButton = FindDayButton(grid!, anchorDate);
+        var previewEndButton = FindDayButton(grid!, previewEndDate);
+
+        HeadlessControlHost.PointerRelease(anchorButton);
+        HeadlessControlHost.PointerEnter(previewEndButton);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        anchorButton.IsPreviewEndDate.Should().BeTrue();
+        previewEndButton.IsPreviewStartDate.Should().BeTrue();
+        anchorButton.IsStartDate.Should().BeFalse("anchor must lose start cap while extending preview to the left");
+        anchorButton.IsEndDate.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -276,6 +305,40 @@ public class CalendarHeadlessTests
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
         calendar.SelectedDates.Should().NotContain(toggleDate);
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_ClickThenDragCommit_StartCellKeepsStartCapOnly()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var startDate = new DateTime(2026, 5, 10);
+        var endDate = new DateTime(2026, 5, 14);
+        var startButton = FindDayButton(grid!, startDate);
+        var endButton = FindDayButton(grid!, endDate);
+
+        HeadlessControlHost.PointerPress(startButton);
+        HeadlessControlHost.PointerRelease(startButton);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsStartDate.Should().BeTrue();
+        startButton.IsEndDate.Should().BeTrue("first click commits a single-day range cap");
+
+        HeadlessControlHost.PointerPress(startButton);
+        HeadlessControlHost.PointerMove(endButton, leftButtonPressed: true);
+        HeadlessControlHost.PointerRelease(endButton);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        startButton.IsStartDate.Should().BeTrue();
+        startButton.IsEndDate.Should().BeFalse("committed range start must not keep single-day end cap");
+        endButton.IsEndDate.Should().BeTrue();
+        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsInRange.Should().BeTrue();
     }
 
     [AvaloniaFact]

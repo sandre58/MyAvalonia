@@ -109,8 +109,20 @@
                     Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
         </Style>
 
+        <!-- committed single-day bubble extending via preview -->
+        <Style Selector="^:start-date:end-date:preview-start-date:not(:preview-end-date)">
+            <Setter Property="CornerRadius"
+                    Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Left}}" />
+        </Style>
+
+        <Style Selector="^:start-date:end-date:preview-end-date:not(:preview-start-date)">
+            <Setter Property="CornerRadius"
+                    Value="{Binding Source={StaticResource MyNet.Corners.Control}, Converter={x:Static my:CornerRadiusAdjustConverter.Right}}" />
+        </Style>
+
         <!-- single -->
-        <Style Selector="^:preview-start-date:preview-end-date, ^:start-date:end-date">
+        <Style Selector="^:preview-start-date:preview-end-date,
+                         ^:start-date:end-date:not(:preview-start-date):not(:preview-end-date):not(:preview-in-range)">
             <Setter Property="CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
         </Style>
 

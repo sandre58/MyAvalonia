@@ -879,6 +879,7 @@ public class Calendar : TemplatedControl
 
             _previewHighlightDates.Clear();
             InvalidatePreviewHighlightCache();
+            UpdateCommittedRangeHighlights();
             return;
         }
 
@@ -886,7 +887,10 @@ public class Calendar : TemplatedControl
         end = end.DiscardTime();
 
         if (_cachedPreviewAnchor == anchor && _cachedPreviewEnd == end)
+        {
+            ReconcileCommittedCapsDuringPreview();
             return;
+        }
 
         HashSet<DateTime>? newDates = null;
         foreach (var date in SelectedDatesHelper.EnumerateDateRange(anchor, end))
@@ -920,6 +924,18 @@ public class Calendar : TemplatedControl
 
         _cachedPreviewAnchor = anchor;
         _cachedPreviewEnd = end;
+        ReconcileCommittedCapsDuringPreview();
+    }
+
+    private void ReconcileCommittedCapsDuringPreview()
+    {
+        if (!ShouldPreviewInterval() || !TryGetPreviewInterval(out var anchor, out var end) || anchor == end)
+            return;
+
+        if (_cells.GetOrDefault(anchor) is not CalendarDayButton anchorCell)
+            return;
+
+        CalendarDayRangeStateHelper.ReconcileSingleDayCapDuringPreview(anchorCell, anchor, end);
     }
 
     private bool IsDragRangeSelectionMode() =>

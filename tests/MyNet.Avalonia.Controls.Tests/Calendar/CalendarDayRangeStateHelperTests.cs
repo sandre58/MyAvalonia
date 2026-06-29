@@ -115,6 +115,24 @@ public class CalendarDayRangeStateHelperTests
     }
 
     [Fact]
+    public void ApplyRangeSegmentToCell_CommittedRangeStart_ClearsSingleDayEndCap()
+    {
+        var cell = new CalendarDayButton();
+        var start = new DateTime(2026, 6, 10);
+        var end = new DateTime(2026, 6, 14);
+
+        CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, start, start, start, isPreview: false);
+        cell.IsStartDate.Should().BeTrue();
+        cell.IsEndDate.Should().BeTrue();
+
+        CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, start, start, end, isPreview: false);
+
+        cell.IsStartDate.Should().BeTrue();
+        cell.IsEndDate.Should().BeFalse();
+        cell.IsInRange.Should().BeFalse();
+    }
+
+    [Fact]
     public void ClearRangeState_ResetsAllRangeFlags()
     {
         var cell = new CalendarDayButton
@@ -166,5 +184,49 @@ public class CalendarDayRangeStateHelperTests
         CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, date, date, date, isPreview: false);
 
         CalendarDayRangeStateHelper.CellMatchesCommittedInterval(cell, date, date, date).Should().BeTrue();
+    }
+
+    [Fact]
+    public void ReconcileSingleDayCapDuringPreview_AnchorAsStart_ClearsEndDate()
+    {
+        var cell = new CalendarDayButton();
+        var anchor = new DateTime(2026, 6, 10);
+        var previewEnd = new DateTime(2026, 6, 14);
+
+        CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, anchor, anchor, anchor, isPreview: false);
+
+        CalendarDayRangeStateHelper.ReconcileSingleDayCapDuringPreview(cell, anchor, previewEnd);
+
+        cell.IsStartDate.Should().BeTrue();
+        cell.IsEndDate.Should().BeFalse();
+    }
+
+    [Fact]
+    public void ReconcileSingleDayCapDuringPreview_AnchorAsEnd_ClearsStartDate()
+    {
+        var cell = new CalendarDayButton();
+        var anchor = new DateTime(2026, 6, 14);
+        var previewEnd = new DateTime(2026, 6, 10);
+
+        CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, anchor, anchor, anchor, isPreview: false);
+
+        CalendarDayRangeStateHelper.ReconcileSingleDayCapDuringPreview(cell, anchor, previewEnd);
+
+        cell.IsStartDate.Should().BeFalse();
+        cell.IsEndDate.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ReconcileSingleDayCapDuringPreview_SameDay_NoOp()
+    {
+        var cell = new CalendarDayButton();
+        var anchor = new DateTime(2026, 6, 10);
+
+        CalendarDayRangeStateHelper.ApplyRangeSegmentToCell(cell, anchor, anchor, anchor, isPreview: false);
+
+        CalendarDayRangeStateHelper.ReconcileSingleDayCapDuringPreview(cell, anchor, anchor);
+
+        cell.IsStartDate.Should().BeTrue();
+        cell.IsEndDate.Should().BeTrue();
     }
 }

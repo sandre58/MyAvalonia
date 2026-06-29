@@ -50,6 +50,8 @@ internal static class CalendarDayRangeStateHelper
         if (date.IsBefore(rangeStart) || date.IsAfter(rangeEnd))
             return;
 
+        ClearCommittedRangeState(cell);
+
         if (rangeStart == rangeEnd)
         {
             cell.IsStartDate = true;
@@ -103,6 +105,26 @@ internal static class CalendarDayRangeStateHelper
         }
 
         cell.SetPreviewRangeState(isPreviewStart, isPreviewEnd, isPreviewInRange);
+    }
+
+    public static void ReconcileSingleDayCapDuringPreview(CalendarDayButton cell, DateTime anchor, DateTime previewEnd)
+    {
+        anchor = anchor.DiscardTime();
+        previewEnd = previewEnd.DiscardTime();
+
+        if (anchor == previewEnd)
+            return;
+
+        if (!cell.IsStartDate || !cell.IsEndDate)
+            return;
+
+        var rangeStart = anchor.IsBefore(previewEnd) ? anchor : previewEnd;
+        var rangeEnd = anchor.IsAfter(previewEnd) ? anchor : previewEnd;
+
+        if (anchor == rangeStart)
+            cell.IsEndDate = false;
+        else if (anchor == rangeEnd)
+            cell.IsStartDate = false;
     }
 
     public static void ApplyPreviewRoleTransition(CalendarDayButton cell, DateTime date, DateTime anchor, DateTime previewEnd) =>
