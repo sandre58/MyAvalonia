@@ -53,15 +53,15 @@ public class CalendarDayRangeStateHelperTests
     }
 
     [Fact]
-    public void ApplyPreviewRangeToCell_ReversedHover_UsesChronologicalCaps()
+    public void ApplyPreviewRoleTransition_ReversedHover_UsesChronologicalCaps()
     {
         var start = new CalendarDayButton();
         var end = new CalendarDayButton();
         var anchor = new DateTime(2026, 6, 14);
         var previewEnd = new DateTime(2026, 6, 10);
 
-        CalendarDayRangeStateHelper.ApplyPreviewRangeToCell(start, previewEnd, anchor, previewEnd);
-        CalendarDayRangeStateHelper.ApplyPreviewRangeToCell(end, anchor, anchor, previewEnd);
+        CalendarDayRangeStateHelper.ApplyPreviewRoleTransition(start, previewEnd, anchor, previewEnd);
+        CalendarDayRangeStateHelper.ApplyPreviewRoleTransition(end, anchor, anchor, previewEnd);
 
         start.IsPreviewStartDate.Should().BeTrue();
         start.IsPreviewEndDate.Should().BeFalse();

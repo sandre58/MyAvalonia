@@ -77,28 +77,15 @@ public class Calendar : TemplatedControl
 
     private DateTime? _lastSelectedDate;
     private KeyModifiers _lastKeyModifiers;
-    private DateTime? _previewEndDate;
-    private DateTime? _pointerOverDate;
-    private DateTime? _cachedPreviewAnchor;
-    private DateTime? _cachedPreviewEnd;
+    private readonly CalendarPreviewSession _preview = new();
     private readonly HashSet<DateTime> _previewHighlightDates = [];
     private readonly HashSet<DateTime> _committedHighlightDates = [];
-    private bool _isPointerSelecting;
-    private bool _intervalPreviewActive;
-    private bool _previewSuspendedAfterCommit;
-    private DateTime? _previewSuspendedAtDate;
-    private bool _pointerCommitInProgress;
-    private bool _deferSelectionHighlightUpdate;
-    private PreviewController _previewController;
+    private readonly Suspender _selectionHighlightSuspender = new();
+    private readonly Suspender _pointerCommitSuspender = new();
+    private readonly Suspender _postCommitPreviewSuspender = new();
+    private IDisposable? _pointerCommitScope;
+    private IDisposable? _postCommitPreviewScope;
     private KeyModifiers _pointerPressModifiers;
-
-    private enum PreviewController
-    {
-        None,
-        Keyboard,
-        PointerShift,
-        Drag
-    }
 
     static Calendar()
     {
@@ -349,7 +336,7 @@ public class Calendar : TemplatedControl
 
         if (e.Action == NotifyCollectionChangedAction.Reset)
         {
-            if (IsRangeSelectionMode() && !_deferSelectionHighlightUpdate)
+            if (IsRangeSelectionMode() && !_selectionHighlightSuspender.IsSuspended)
             {
                 UpdateRangeHighlights();
             }
@@ -370,7 +357,7 @@ public class Calendar : TemplatedControl
             foreach (var date in newItems)
                 ChangeSelectedState(date, true);
 
-            if (!_deferSelectionHighlightUpdate)
+            if (!_selectionHighlightSuspender.IsSuspended)
                 UpdateRangeHighlights();
         }
 
@@ -747,6 +734,11 @@ public class Calendar : TemplatedControl
 
     private bool IsRangeSelectionMode() => IsRangeSelectionMode(SelectionMode);
 
+    // Preview / selection highlight architecture:
+    // - CalendarSelectionCoordinator owns commit semantics (anchor, SelectedDates).
+    // - CalendarPreviewSession owns transient preview interval state (controller, end date, cache).
+    // - Suspender gates re-entrant visual updates (_selectionHighlightSuspender, _pointerCommitSuspender, _postCommitPreviewSuspender).
+    // - FinishDaySelectionInteraction is the single transition point: clear preview visuals, then UpdateRangeHighlights.
     private void UpdateRangeHighlights()
     {
         UpdateCommittedRangeHighlights();
@@ -823,10 +815,46 @@ public class Calendar : TemplatedControl
             cell.IsSelected = shouldSelect;
     }
 
-    private void InvalidatePreviewHighlightCache()
+    private CalendarPreviewContext CreatePreviewContext() =>
+        new(
+            IsRangeSelectionMode(),
+            AllowTapRangeSelection,
+            IsDragRangeSelectionMode(),
+            _selectionCoordinator.HasPendingRangeAnchor,
+            _selectionCoordinator.HoverStart,
+            _selectionCoordinator.PointerDragOriginDate
+            ?? _preview.DragOrigin
+            ?? _selectionCoordinator.PointerPressDate,
+            _pointerCommitSuspender.IsSuspended,
+            _postCommitPreviewSuspender.IsSuspended,
+            _previewHighlightDates.Count);
+
+    private void InvalidatePreviewHighlightCache() => _preview.InvalidateCache();
+
+    private void BeginPointerCommit()
     {
-        _cachedPreviewAnchor = null;
-        _cachedPreviewEnd = null;
+        _pointerCommitScope?.Dispose();
+        _pointerCommitScope = _pointerCommitSuspender.Suspend();
+    }
+
+    private void EndPointerCommit()
+    {
+        _pointerCommitScope?.Dispose();
+        _pointerCommitScope = null;
+    }
+
+    private void BeginPostCommitPreviewSuspension(DateTime? atDate)
+    {
+        _postCommitPreviewScope?.Dispose();
+        _postCommitPreviewScope = _postCommitPreviewSuspender.Suspend();
+        _preview.SuspendedAtDate = atDate?.DiscardTime() ?? GetFocusedDate().DiscardTime();
+    }
+
+    private void ClearPostCommitPreviewSuspension()
+    {
+        _postCommitPreviewScope?.Dispose();
+        _postCommitPreviewScope = null;
+        _preview.SuspendedAtDate = null;
     }
 
     private void SyncSelectedStateWithRangeRoles()
@@ -861,15 +889,15 @@ public class Calendar : TemplatedControl
 
     private void UpdatePreviewRangeHighlightsOnly()
     {
-        if (_pointerCommitInProgress && !_isPointerSelecting && _previewHighlightDates.Count > 0)
+        if (_pointerCommitSuspender.IsSuspended && !_preview.IsPointerSelecting && _previewHighlightDates.Count > 0)
             return;
 
-        if (!TryGetPreviewInterval(out var anchor, out var end))
+        if (!_preview.TryGetPreviewInterval(CreatePreviewContext(), out var anchor, out var end))
         {
             if (AllowTapRangeSelection
                 && _selectionCoordinator.HasPendingRangeAnchor
-                && (_previewEndDate is not null || _pointerOverDate is not null)
-                && _previewController != PreviewController.Keyboard)
+                && (_preview.PreviewEndDate is not null || _preview.PointerOverDate is not null)
+                && _preview.Controller != CalendarPreviewController.Keyboard)
             {
                 return;
             }
@@ -895,7 +923,7 @@ public class Calendar : TemplatedControl
         anchor = anchor.DiscardTime();
         end = end.DiscardTime();
 
-        if (_cachedPreviewAnchor == anchor && _cachedPreviewEnd == end)
+        if (_preview.CachedAnchor == anchor && _preview.CachedEnd == end)
         {
             ReconcileCommittedCapsDuringPreview();
             return;
@@ -931,14 +959,16 @@ public class Calendar : TemplatedControl
             _previewHighlightDates.Add(date);
         }
 
-        _cachedPreviewAnchor = anchor;
-        _cachedPreviewEnd = end;
+        _preview.CachedAnchor = anchor;
+        _preview.CachedEnd = end;
         ReconcileCommittedCapsDuringPreview();
     }
 
     private void ReconcileCommittedCapsDuringPreview()
     {
-        if (!ShouldPreviewInterval() || !TryGetPreviewInterval(out var anchor, out var end) || anchor == end)
+        if (!_preview.ShouldPreviewInterval(CreatePreviewContext())
+            || !_preview.TryGetPreviewInterval(CreatePreviewContext(), out var anchor, out var end)
+            || anchor == end)
             return;
 
         if (_cells.GetOrDefault(anchor) is not CalendarDayButton anchorCell)
@@ -950,92 +980,9 @@ public class Calendar : TemplatedControl
     private bool IsDragRangeSelectionMode() =>
         IsRangeSelectionMode() && !AllowTapRangeSelection;
 
-    private bool TryResolvePreviewStart(out DateTime start)
-    {
-        start = default;
-
-        if (!IsDragRangeSelectionMode())
-        {
-            if (_selectionCoordinator.HasPendingRangeAnchor)
-            {
-                start = _selectionCoordinator.HoverStart!.Value;
-                return true;
-            }
-
-            return false;
-        }
-
-        if (!_selectionCoordinator.HasPendingRangeAnchor)
-            return false;
-
-        start = _selectionCoordinator.HoverStart!.Value;
-        return true;
-    }
-
-    private bool TryGetPreviewInterval(out DateTime anchor, out DateTime end)
-    {
-        anchor = default;
-        end = default;
-
-        if (_pointerCommitInProgress
-            && !_isPointerSelecting
-            && _cachedPreviewAnchor is { } cachedAnchor
-            && _cachedPreviewEnd is { } cachedEnd)
-        {
-            anchor = cachedAnchor;
-            end = cachedEnd;
-            return true;
-        }
-
-        if (!ShouldPreviewInterval())
-            return false;
-
-        if (!TryResolvePreviewStart(out anchor))
-            return false;
-
-        end = _previewController == PreviewController.Keyboard
-            ? _previewEndDate ?? default
-            : _previewEndDate ?? _pointerOverDate ?? default;
-        return end != default;
-    }
-
-    private bool ResolveIntervalPreview(bool shiftHeld) =>
-        IsRangeSelectionMode()
-        && _selectionCoordinator.HasPendingRangeAnchor
-        && (AllowTapRangeSelection || shiftHeld);
-
     private void SchedulePreviewUpdate() => UpdatePreviewRangeHighlightsOnly();
 
     private KeyModifiers GetCurrentKeyModifiers() => _lastKeyModifiers;
-
-    private bool ShouldPreviewInterval()
-    {
-        if (!IsRangeSelectionMode())
-            return false;
-
-        if (_previewSuspendedAfterCommit)
-            return false;
-
-        if (_isPointerSelecting || _previewController == PreviewController.Drag)
-            return true;
-
-        if (!_selectionCoordinator.HasPendingRangeAnchor)
-            return false;
-
-        if (_previewController == PreviewController.Keyboard && _previewEndDate.HasValue)
-            return _intervalPreviewActive;
-
-        if (AllowTapRangeSelection)
-            return _previewEndDate.HasValue || _pointerOverDate.HasValue;
-
-        if (_previewController == PreviewController.PointerShift)
-            return true;
-
-        if (_pointerCommitInProgress && !_isPointerSelecting && _previewHighlightDates.Count > 0)
-            return true;
-
-        return false;
-    }
 
     private KeyModifiers GetEffectivePointerModifiers(KeyModifiers pointerModifiers) =>
         GetCurrentKeyModifiers() | pointerModifiers;
@@ -1070,30 +1017,64 @@ public class Calendar : TemplatedControl
         };
     }
 
-    private void ClearRangePreview()
-    {
-        _previewEndDate = null;
-        _pointerOverDate = null;
-        _isPointerSelecting = false;
-        _previewController = PreviewController.None;
-        _intervalPreviewActive = false;
-        _selectionCoordinator.ResetHover();
-        _selectionCoordinator.ClearPointerPress();
-        ClearPointerPressModifiers();
-        UpdateRangeHighlights();
-    }
+    private void ClearRangePreview() => ClearPreview(PreviewClearScope.FullRange);
 
-    private void ClearPreviewController()
+    private void ClearPreview(PreviewClearScope scope)
     {
-        _previewController = PreviewController.None;
-        _intervalPreviewActive = false;
+        switch (scope)
+        {
+            case PreviewClearScope.HoverOnly:
+                ClearPointerHoverOnly();
+                return;
+
+            case PreviewClearScope.FullRange:
+                _preview.ResetForFullClear();
+                _selectionCoordinator.ResetHover();
+                _selectionCoordinator.ClearPointerPress();
+                ClearPointerPressModifiers();
+                UpdateRangeHighlights();
+                return;
+
+            case PreviewClearScope.PointerSession:
+                break;
+        }
+
+        if (_preview.Controller == CalendarPreviewController.Keyboard)
+            return;
+
+        if (_preview.IsPointerSelecting || _preview.Controller == CalendarPreviewController.Drag)
+            return;
+
+        if (_preview.PointerOverDate is null && _preview.PreviewEndDate is null)
+            return;
+
+        _preview.PointerOverDate = null;
+
+        if (_preview.Controller == CalendarPreviewController.PointerShift)
+        {
+            if (_pointerCommitSuspender.IsSuspended)
+            {
+                ClearPointerHoverOnly();
+                return;
+            }
+
+            _preview.Controller = CalendarPreviewController.None;
+            _preview.IntervalPreviewActive = false;
+            _preview.PreviewEndDate = null;
+            SchedulePreviewUpdate();
+            return;
+        }
+
+        if (_preview.PreviewEndDate is null)
+            return;
+
+        _preview.PreviewEndDate = null;
+        SchedulePreviewUpdate();
     }
 
     private void ClearPreviewVisuals()
     {
-        _previewEndDate = null;
-        _pointerOverDate = null;
-        ClearPreviewController();
+        _preview.ClearVisualState();
 
         if (_previewHighlightDates.Count == 0)
         {
@@ -1111,49 +1092,49 @@ public class Calendar : TemplatedControl
         InvalidatePreviewHighlightCache();
     }
 
-    private void OnShiftKeyDown()
+    private void ApplyShiftModifierChange(bool isKeyDown)
     {
         if (!IsRangeSelectionMode())
             return;
 
         if (AllowTapRangeSelection)
         {
-            if (_previewController == PreviewController.Keyboard && _previewEndDate.HasValue)
-                _intervalPreviewActive = ResolveIntervalPreview(shiftHeld: true);
+            if (_preview.Controller == CalendarPreviewController.Keyboard && _preview.PreviewEndDate.HasValue)
+                _preview.IntervalPreviewActive = true;
 
             return;
         }
 
-        if (_previewController == PreviewController.Keyboard)
-            _intervalPreviewActive = true;
+        if (_preview.Controller == CalendarPreviewController.Keyboard)
+        {
+            if (isKeyDown)
+                _preview.IntervalPreviewActive = true;
+
+            return;
+        }
+
+        if (_preview.Controller == CalendarPreviewController.PointerShift && !isKeyDown)
+        {
+            if (_pointerCommitSuspender.IsSuspended)
+                return;
+
+            _preview.Controller = CalendarPreviewController.None;
+            _preview.PreviewEndDate = null;
+            _preview.IntervalPreviewActive = false;
+        }
     }
+
+    private void OnShiftKeyDown() => ApplyShiftModifierChange(isKeyDown: true);
 
     private void OnShiftKeyUp()
     {
-        if (!IsRangeSelectionMode())
+        ApplyShiftModifierChange(isKeyDown: false);
+
+        if (!IsRangeSelectionMode() || AllowTapRangeSelection)
             return;
 
-        if (AllowTapRangeSelection)
-        {
-            if (_previewController == PreviewController.Keyboard && _previewEndDate.HasValue)
-                _intervalPreviewActive = true;
-
-            return;
-        }
-
-        if (_previewController == PreviewController.Keyboard)
-        {
-            _intervalPreviewActive = true;
-        }
-        else if (_previewController == PreviewController.PointerShift)
-        {
-            if (_pointerCommitInProgress)
-                return;
-
-            _previewController = PreviewController.None;
-            _previewEndDate = null;
-            _intervalPreviewActive = false;
-        }
+        if (_preview.Controller == CalendarPreviewController.Keyboard)
+            _preview.IntervalPreviewActive = true;
     }
 
     private bool TryGetPreviewDateFromCell(object? sender, out DateTime date)
@@ -1195,16 +1176,16 @@ public class Calendar : TemplatedControl
         if (!IsRangeSelectionMode())
             return false;
 
-        if (_previewController == PreviewController.Keyboard)
+        if (_preview.Controller == CalendarPreviewController.Keyboard)
             return false;
 
-        if (_isPointerSelecting || _previewController == PreviewController.Drag)
+        if (_preview.IsPointerSelecting || _preview.Controller == CalendarPreviewController.Drag)
             return true;
 
-        if (_previewController == PreviewController.PointerShift)
+        if (_preview.Controller == CalendarPreviewController.PointerShift)
             return true;
 
-        if (_previewSuspendedAfterCommit
+        if (_postCommitPreviewSuspender.IsSuspended
             && IsShiftHeld()
             && _selectionCoordinator.HasPendingRangeAnchor)
             return true;
@@ -1212,109 +1193,159 @@ public class Calendar : TemplatedControl
         return AllowTapRangeSelection && _selectionCoordinator.HasPendingRangeAnchor;
     }
 
+    private enum PreviewClearScope
+    {
+        HoverOnly,
+        PointerSession,
+        FullRange
+    }
+
     private void ApplyPointerPreviewUpdate(DateTime date, bool fromMove, KeyModifiers pointerModifiers = default)
     {
-        if (_pointerCommitInProgress && !_isPointerSelecting)
+        if (_pointerCommitSuspender.IsSuspended && !_preview.IsPointerSelecting)
             return;
 
         var shiftHeld = IsShiftHeld(pointerModifiers);
         date = date.DiscardTime();
 
-        if (_previewSuspendedAfterCommit)
-        {
-            if (!fromMove || !shiftHeld)
-            {
-                _pointerOverDate = date;
-                return;
-            }
-
-            if (_previewSuspendedAtDate == date)
-            {
-                _pointerOverDate = date;
-                return;
-            }
-
-            _previewSuspendedAfterCommit = false;
-            _previewSuspendedAtDate = null;
-        }
-
-        if (IsDragRangeSelectionMode()
-            && fromMove
-            && !shiftHeld
-            && !_isPointerSelecting
-            && _previewController == PreviewController.Keyboard)
+        if (!TryResumePostCommitPreview(date, fromMove, shiftHeld))
             return;
 
-        _pointerOverDate = date;
+        if (ShouldIgnoreKeyboardHandoff(fromMove, shiftHeld))
+            return;
 
-        if (!_selectionCoordinator.HasPendingRangeAnchor && !_isPointerSelecting)
+        _preview.PointerOverDate = date;
+
+        if (!_selectionCoordinator.HasPendingRangeAnchor && !_preview.IsPointerSelecting)
             return;
 
         if (AllowTapRangeSelection)
         {
-            if (_previewController == PreviewController.Keyboard && !fromMove)
-                return;
-
-            if (fromMove && _previewController == PreviewController.Keyboard)
-            {
-                _previewController = PreviewController.None;
-                _intervalPreviewActive = true;
-            }
-
-            SetPreviewEndDate(date);
+            ApplyTapPointerPreview(date, fromMove);
             return;
         }
 
-        if (!fromMove && !_isPointerSelecting)
+        ApplyDragPointerPreview(date, fromMove, shiftHeld);
+    }
+
+    private bool TryResumePostCommitPreview(DateTime date, bool fromMove, bool shiftHeld)
+    {
+        if (!_postCommitPreviewSuspender.IsSuspended)
+            return true;
+
+        if (!fromMove || !shiftHeld)
+        {
+            _preview.PointerOverDate = date;
+            return false;
+        }
+
+        if (_preview.SuspendedAtDate == date)
+        {
+            _preview.PointerOverDate = date;
+            return false;
+        }
+
+        ClearPostCommitPreviewSuspension();
+        return true;
+    }
+
+    private bool ShouldIgnoreKeyboardHandoff(bool fromMove, bool shiftHeld) =>
+        IsDragRangeSelectionMode()
+        && fromMove
+        && !shiftHeld
+        && !_preview.IsPointerSelecting
+        && _preview.Controller == CalendarPreviewController.Keyboard;
+
+    private void ApplyTapPointerPreview(DateTime date, bool fromMove)
+    {
+        if (_preview.Controller == CalendarPreviewController.Keyboard && !fromMove)
             return;
 
-        if (_previewController == PreviewController.Keyboard)
+        if (fromMove && _preview.Controller == CalendarPreviewController.Keyboard)
         {
-            if (!fromMove)
-                return;
-
-            if (!shiftHeld)
-                return;
-
-            _previewController = PreviewController.PointerShift;
-            _intervalPreviewActive = true;
-        }
-        else if (!_isPointerSelecting)
-        {
-            if (!fromMove || !shiftHeld)
-                return;
-
-            _previewController = PreviewController.PointerShift;
-            _intervalPreviewActive = true;
+            _preview.Controller = CalendarPreviewController.None;
+            _preview.IntervalPreviewActive = true;
         }
 
         SetPreviewEndDate(date);
     }
 
+    private void ApplyDragPointerPreview(DateTime date, bool fromMove, bool shiftHeld)
+    {
+        if (!fromMove && !_preview.IsPointerSelecting)
+            return;
+
+        if (_preview.Controller == CalendarPreviewController.Keyboard)
+        {
+            if (!fromMove || !shiftHeld)
+                return;
+
+            _preview.Controller = CalendarPreviewController.PointerShift;
+            _preview.IntervalPreviewActive = true;
+        }
+        else if (!_preview.IsPointerSelecting)
+        {
+            if (!fromMove || !shiftHeld)
+                return;
+
+            _preview.Controller = CalendarPreviewController.PointerShift;
+            _preview.IntervalPreviewActive = true;
+        }
+
+        SetPreviewEndDate(date);
+    }
+
+    private void HandlePointerEnterOverDay(DateTime date, KeyModifiers pointerModifiers)
+    {
+        if (_preview.IsPointerSelecting)
+            ApplyPointerPreviewUpdate(date, fromMove: false, pointerModifiers);
+        else if (AllowTapRangeSelection && _preview.Controller != CalendarPreviewController.Keyboard)
+            ApplyPointerPreviewUpdate(date, fromMove: false, pointerModifiers);
+    }
+
+    private void HandlePointerMoveOverDay(
+        DateTime date,
+        KeyModifiers pointerModifiers,
+        IPointer? pointer,
+        bool leftButtonPressed,
+        bool gateOnActiveTracking)
+    {
+        if (leftButtonPressed)
+            TryStartPointerDragSelection(date, pointerModifiers, pointer);
+
+        if (gateOnActiveTracking && !IsPointerPreviewTrackingActive())
+            return;
+
+        ApplyPointerPreviewUpdate(date, fromMove: true, pointerModifiers);
+    }
+
     private void SetPreviewEndDate(DateTime date)
     {
-        if (!ShouldPreviewInterval())
+        if (!_preview.ShouldPreviewInterval(CreatePreviewContext()))
         {
-            if (_previewController != PreviewController.Keyboard
+            if (_preview.Controller != CalendarPreviewController.Keyboard
                 && _selectionCoordinator.HasPendingRangeAnchor
-                && _previewEndDate is not null)
+                && _preview.PreviewEndDate is not null)
             {
                 return;
             }
 
-            if (_previewEndDate is not null && _previewController != PreviewController.Keyboard)
+            if (_preview.PreviewEndDate is not null && _preview.Controller != CalendarPreviewController.Keyboard)
             {
-                _previewEndDate = null;
+                _preview.PreviewEndDate = null;
                 SchedulePreviewUpdate();
             }
 
             return;
         }
 
-        if (_previewEndDate == date)
+        if (_preview.PreviewEndDate == date)
             return;
 
-        _previewEndDate = date;
+        _preview.PreviewEndDate = date;
+        if (_preview.IsPointerSelecting)
+            _preview.DragExtent = date;
+
         SchedulePreviewUpdate();
     }
 
@@ -1329,7 +1360,7 @@ public class Calendar : TemplatedControl
         if (!IsRangeSelectionMode())
             return;
 
-        _pointerOverDate = date;
+        _preview.PointerOverDate = date;
     }
 
     private void UpdateYears()
@@ -1376,8 +1407,7 @@ public class Calendar : TemplatedControl
 
     private void NavigatePreview(DateTime focusDate, bool shiftHeld)
     {
-        _previewSuspendedAfterCommit = false;
-        _previewSuspendedAtDate = null;
+        ClearPostCommitPreviewSuspension();
 
         if (AllowTapRangeSelection)
             shiftHeld = false;
@@ -1390,77 +1420,78 @@ public class Calendar : TemplatedControl
             {
                 if (!_selectionCoordinator.HasPendingRangeAnchor)
                 {
-                    _previewController = PreviewController.None;
-                    _intervalPreviewActive = false;
-                    _previewEndDate = null;
+                    _preview.Controller = CalendarPreviewController.None;
+                    _preview.IntervalPreviewActive = false;
+                    _preview.PreviewEndDate = null;
                     UpdatePreviewRangeHighlightsOnly();
                     return;
                 }
 
-                _previewEndDate = focusDate;
-                _intervalPreviewActive = true;
-                _previewController = PreviewController.Keyboard;
+                _preview.PreviewEndDate = focusDate;
+                _preview.IntervalPreviewActive = true;
+                _preview.Controller = CalendarPreviewController.Keyboard;
             }
             else
             {
                 _selectionCoordinator.SetRangeAnchor(focusDate);
-                _previewController = PreviewController.None;
-                _intervalPreviewActive = false;
-                _previewEndDate = null;
+                _preview.Controller = CalendarPreviewController.None;
+                _preview.IntervalPreviewActive = false;
+                _preview.PreviewEndDate = null;
             }
 
             UpdatePreviewRangeHighlightsOnly();
             return;
         }
 
-        _previewEndDate = focusDate;
-        _intervalPreviewActive = ResolveIntervalPreview(shiftHeld);
-        _previewController = _intervalPreviewActive ? PreviewController.Keyboard : PreviewController.None;
+        _preview.PreviewEndDate = focusDate;
+        _preview.IntervalPreviewActive = _preview.ResolveIntervalPreview(CreatePreviewContext(), shiftHeld);
+        _preview.Controller = _preview.IntervalPreviewActive ? CalendarPreviewController.Keyboard : CalendarPreviewController.None;
         UpdatePreviewRangeHighlightsOnly();
     }
 
     private void CommitPreview(RoutedEventArgs? e, DateTime? date = null, bool shift = false, bool ctrl = false)
     {
         var target = date ?? GetFocusedDate();
-        var intervalPreview = _intervalPreviewActive;
+        var intervalPreview = _preview.IntervalPreviewActive;
 
-        _deferSelectionHighlightUpdate = true;
-
-        if (e is KeyEventArgs keyEvent)
+        using (_selectionHighlightSuspender.Suspend())
         {
-            if (SelectionMode == CalendarSelectionMode.SingleDate)
+            if (e is KeyEventArgs keyEvent)
             {
-                SetSelection(target);
-                MoveToDate(target);
+                if (SelectionMode == CalendarSelectionMode.SingleDate)
+                {
+                    SetSelection(target);
+                    MoveToDate(target);
+                }
+                else
+                {
+                    var keyShift = (keyEvent.KeyModifiers & KeyModifiers.Shift) == KeyModifiers.Shift;
+                    var keyCtrl = (keyEvent.KeyModifiers & KeyModifiers.Control) == KeyModifiers.Control;
+                    if (AllowTapRangeSelection)
+                    {
+                        keyShift = false;
+                        if (SelectionMode == CalendarSelectionMode.SingleRange)
+                            keyCtrl = false;
+                    }
+
+                    _selectionCoordinator.CommitFromKeyboard(target, intervalPreview, keyShift, keyCtrl);
+                }
             }
             else
             {
-                var keyShift = (keyEvent.KeyModifiers & KeyModifiers.Shift) == KeyModifiers.Shift;
-                var keyCtrl = (keyEvent.KeyModifiers & KeyModifiers.Control) == KeyModifiers.Control;
-                if (AllowTapRangeSelection)
-                {
-                    keyShift = false;
-                    if (SelectionMode == CalendarSelectionMode.SingleRange)
-                        keyCtrl = false;
-                }
-
-                _selectionCoordinator.CommitFromKeyboard(target, intervalPreview, keyShift, keyCtrl);
+                _selectionCoordinator.Commit(target, shift, ctrl);
             }
-        }
-        else
-        {
-            _selectionCoordinator.Commit(target, shift, ctrl);
-        }
 
-        var suspendUntilMove = shift;
-        if (e is KeyEventArgs keyEvt)
-        {
-            suspendUntilMove = (keyEvt.KeyModifiers & KeyModifiers.Shift) == KeyModifiers.Shift;
-            if (AllowTapRangeSelection)
-                suspendUntilMove = false;
-        }
+            var suspendUntilMove = shift;
+            if (e is KeyEventArgs keyEvt)
+            {
+                suspendUntilMove = (keyEvt.KeyModifiers & KeyModifiers.Shift) == KeyModifiers.Shift;
+                if (AllowTapRangeSelection)
+                    suspendUntilMove = false;
+            }
 
-        FinishDaySelectionInteraction(e, suspendUntilMove, target);
+            FinishDaySelectionInteraction(e, suspendUntilMove, target);
+        }
     }
 
     #endregion
@@ -1554,7 +1585,7 @@ public class Calendar : TemplatedControl
         if (bounds.Contains(position))
             return;
 
-        ClearPointerPreview(fullClear: true);
+        ClearPreview(PreviewClearScope.PointerSession);
     }
 
     protected override void OnPointerWheelChanged(PointerWheelEventArgs e)
@@ -1598,9 +1629,11 @@ public class Calendar : TemplatedControl
             return;
         }
 
-        _isPointerSelecting = false;
+        _preview.IsPointerSelecting = false;
+        _preview.DragOrigin = date;
+        _preview.DragExtent = null;
         _selectionCoordinator.RecordPointerPress(date);
-        _pointerCommitInProgress = true;
+        BeginPointerCommit();
     }
 
     private void TryStartPointerDragSelection(DateTime hoverDate, KeyModifiers pointerModifiers, IPointer? pointer = null)
@@ -1608,23 +1641,24 @@ public class Calendar : TemplatedControl
         if (AllowTapRangeSelection || !IsRangeSelectionMode())
             return;
 
-        if (_isPointerSelecting)
+        if (_preview.IsPointerSelecting)
             return;
 
         if (_selectionCoordinator.PointerPressDate is not { } pressDate)
             return;
 
-        if (_pointerCommitInProgress && hoverDate == pressDate)
+        if (_pointerCommitSuspender.IsSuspended && hoverDate == pressDate)
             return;
 
         var shift = IsShiftHeld(pointerModifiers);
         if (hoverDate == pressDate && !shift)
             return;
 
-        _isPointerSelecting = true;
-        _previewController = PreviewController.Drag;
+        _preview.IsPointerSelecting = true;
+        _preview.Controller = CalendarPreviewController.Drag;
         _selectionCoordinator.BeginPointerSelection(pressDate, shift);
-        _previewEndDate = hoverDate;
+        _preview.DragExtent = hoverDate;
+        _preview.PreviewEndDate = hoverDate;
 
         if (pointer is not null && _monthGrid is not null)
             pointer.Capture(_monthGrid);
@@ -1653,22 +1687,48 @@ public class Calendar : TemplatedControl
 
         if (AllowTapRangeSelection)
         {
-            _deferSelectionHighlightUpdate = true;
             CommitPreview(e, releaseDate, shift, ctrl);
-            _pointerCommitInProgress = false;
+            EndPointerCommit();
             return;
         }
 
-        var wasDragging = _isPointerSelecting
-            && _selectionCoordinator.PointerPressDate is { } pressDate
-            && pressDate != releaseDate
-            && IsRangeSelectionMode();
+        var origin = _preview.DragOrigin ?? _selectionCoordinator.PointerDragOriginDate;
+        var extent = ResolveDragCommitExtent(origin, releaseDate);
 
-        _deferSelectionHighlightUpdate = true;
-        _isPointerSelecting = false;
-        _selectionCoordinator.CompletePointerSelection(releaseDate, shift, ctrl, wasDragging);
-        FinishDaySelectionInteraction(e, shift, releaseDate);
-        _pointerCommitInProgress = false;
+        using (_selectionHighlightSuspender.Suspend())
+        {
+            _preview.IsPointerSelecting = false;
+            if (origin is { } dragOrigin
+                && IsRangeSelectionMode()
+                && dragOrigin != extent)
+            {
+                _selectionCoordinator.CommitPointerDrag(dragOrigin, extent, shift, ctrl);
+            }
+            else
+            {
+                _selectionCoordinator.CompletePointerSelection(extent, shift, ctrl, wasDrag: false);
+            }
+
+            FinishDaySelectionInteraction(e, shift, extent);
+        }
+
+        EndPointerCommit();
+    }
+
+    private DateTime ResolveDragCommitExtent(DateTime? origin, DateTime releaseDate)
+    {
+        if (origin is not { } dragOrigin)
+            return releaseDate;
+
+        var hadDrag = _preview.IsPointerSelecting
+            || _preview.Controller == CalendarPreviewController.Drag
+            || _preview.DragExtent is not null;
+
+        if (!hadDrag)
+            return releaseDate;
+
+        var extent = _preview.DragExtent ?? _preview.PreviewEndDate ?? releaseDate;
+        return CalendarPreviewSession.ExtentFarthestFromAnchor(dragOrigin, extent, releaseDate);
     }
 
     private void OnDayPointerEnter(object? sender, PointerEventArgs e)
@@ -1678,10 +1738,7 @@ public class Calendar : TemplatedControl
         if (!TryGetPreviewDateFromCell(sender, out var date))
             return;
 
-        if (_isPointerSelecting)
-            ApplyPointerPreviewUpdate(date, fromMove: false, e.KeyModifiers);
-        else if (AllowTapRangeSelection && _previewController != PreviewController.Keyboard)
-            ApplyPointerPreviewUpdate(date, fromMove: false, e.KeyModifiers);
+        HandlePointerEnterOverDay(date, e.KeyModifiers);
     }
 
     private void OnDayPointerExited(object? sender, PointerEventArgs e)
@@ -1694,7 +1751,7 @@ public class Calendar : TemplatedControl
             return;
         }
 
-        ClearPointerPreview(fullClear: false);
+        ClearPreview(PreviewClearScope.HoverOnly);
     }
 
     private void OnDayPointerMove(object? sender, PointerEventArgs e)
@@ -1702,13 +1759,10 @@ public class Calendar : TemplatedControl
         if (!TryGetPreviewDateFromCell(sender, out var date))
             return;
 
-        if (sender is CalendarDayButton cell
-            && e.GetCurrentPoint(cell).Properties.IsLeftButtonPressed)
-        {
-            TryStartPointerDragSelection(date, e.KeyModifiers, e.Pointer);
-        }
+        var leftButtonPressed = sender is CalendarDayButton cell
+            && e.GetCurrentPoint(cell).Properties.IsLeftButtonPressed;
 
-        ApplyPointerPreviewUpdate(date, fromMove: true, e.KeyModifiers);
+        HandlePointerMoveOverDay(date, e.KeyModifiers, e.Pointer, leftButtonPressed, gateOnActiveTracking: false);
     }
 
     private void OnMonthGridPointerMove(object? sender, PointerEventArgs e)
@@ -1722,13 +1776,7 @@ public class Calendar : TemplatedControl
         if (!TryHitTestDayButton(position, out var date))
             return;
 
-        if (leftButtonPressed)
-            TryStartPointerDragSelection(date, e.KeyModifiers, e.Pointer);
-
-        if (!IsPointerPreviewTrackingActive())
-            return;
-
-        ApplyPointerPreviewUpdate(date, fromMove: true, e.KeyModifiers);
+        HandlePointerMoveOverDay(date, e.KeyModifiers, e.Pointer, leftButtonPressed, gateOnActiveTracking: true);
     }
 
     private void OnMonthGridPointerLeave(object? sender, PointerEventArgs e)
@@ -1742,59 +1790,18 @@ public class Calendar : TemplatedControl
         if (bounds.Contains(position))
             return;
 
-        ClearPointerPreview(fullClear: true);
+        ClearPreview(PreviewClearScope.PointerSession);
     }
 
     private void ClearPointerHoverOnly()
     {
-        if (_previewController == PreviewController.Keyboard)
+        if (_preview.Controller == CalendarPreviewController.Keyboard)
             return;
 
-        if (_isPointerSelecting || _previewController == PreviewController.Drag)
+        if (_preview.IsPointerSelecting || _preview.Controller == CalendarPreviewController.Drag)
             return;
 
-        _pointerOverDate = null;
-    }
-
-    private void ClearPointerPreview(bool fullClear = true)
-    {
-        if (_previewController == PreviewController.Keyboard)
-            return;
-
-        if (!fullClear)
-        {
-            ClearPointerHoverOnly();
-            return;
-        }
-
-        if (_isPointerSelecting || _previewController == PreviewController.Drag)
-            return;
-
-        if (_pointerOverDate is null && _previewEndDate is null)
-            return;
-
-        _pointerOverDate = null;
-
-        if (_previewController == PreviewController.PointerShift)
-        {
-            if (_pointerCommitInProgress)
-            {
-                ClearPointerHoverOnly();
-                return;
-            }
-
-            _previewController = PreviewController.None;
-            _intervalPreviewActive = false;
-            _previewEndDate = null;
-            SchedulePreviewUpdate();
-            return;
-        }
-
-        if (_previewEndDate is null)
-            return;
-
-        _previewEndDate = null;
-        SchedulePreviewUpdate();
+        _preview.PointerOverDate = null;
     }
 
     private void OnCalendarYearButtonClick(object? sender, RoutedEventArgs e)
@@ -1887,18 +1894,11 @@ public class Calendar : TemplatedControl
         ClearPreviewVisuals();
 
         if (suspendPointerPreviewUntilMove)
-        {
-            _previewSuspendedAfterCommit = true;
-            _previewSuspendedAtDate = suspendAtDate?.DiscardTime() ?? GetFocusedDate().DiscardTime();
-        }
+            BeginPostCommitPreviewSuspension(suspendAtDate);
         else
-        {
-            _previewSuspendedAfterCommit = false;
-            _previewSuspendedAtDate = null;
-        }
+            ClearPostCommitPreviewSuspension();
 
         UpdateRangeHighlights();
-        _deferSelectionHighlightUpdate = false;
         DayButtonClick?.Invoke(this, e ?? new RoutedEventArgs());
     }
 

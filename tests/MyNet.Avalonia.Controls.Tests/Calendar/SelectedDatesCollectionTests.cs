@@ -101,4 +101,29 @@ public class SelectedDatesCollectionTests
         calendar.DisplayDateContext.Should().Be(contextBefore);
         calendar.SelectedDate.Should().Be(new DateTime(2026, 6, 10));
     }
+
+    [Fact]
+    public void Set_ReverseRangeOrder_IncludesBothEnds()
+    {
+        var calendar = new Controls.Calendar { SelectionMode = CalendarSelectionMode.SingleRange };
+
+        calendar.SelectedDates.Set(new DateTime(2026, 6, 14), new DateTime(2026, 6, 9));
+
+        calendar.SelectedDates.Should().Contain(new DateTime(2026, 6, 9));
+        calendar.SelectedDates.Should().Contain(new DateTime(2026, 6, 14));
+        calendar.SelectedDates.Should().HaveCount(6);
+    }
+
+    [Fact]
+    public void Set_ReverseRangeOrder_WithOverlappingPriorSelection_IncludesBothEnds()
+    {
+        var calendar = new Controls.Calendar { SelectionMode = CalendarSelectionMode.SingleRange };
+
+        calendar.SelectedDates.Set(new DateTime(2026, 6, 8), new DateTime(2026, 6, 11));
+        calendar.SelectedDates.Set(new DateTime(2026, 6, 14), new DateTime(2026, 6, 9));
+
+        calendar.SelectedDates.Should().Contain(new DateTime(2026, 6, 9));
+        calendar.SelectedDates.Should().Contain(new DateTime(2026, 6, 14));
+        calendar.SelectedDates.Should().HaveCount(6);
+    }
 }

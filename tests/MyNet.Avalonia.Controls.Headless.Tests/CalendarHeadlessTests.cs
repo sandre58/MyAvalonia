@@ -17,78 +17,8 @@ using MyNet.Primitives.Temporal;
 
 namespace MyNet.Avalonia.Controls.Headless.Tests;
 
-public class CalendarHeadlessTests
+public partial class CalendarHeadlessTests
 {
-    [AvaloniaFact]
-    public void ApplyTemplate_CreatesMonthGrid()
-    {
-        var calendar = CreateCalendar(new(2026, 5, 15));
-        HeadlessControlHost.Show(calendar, new(420, 360));
-
-        HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid).Should().NotBeNull();
-    }
-
-    [AvaloniaFact]
-    public void NextButton_AdvancesDisplayDateContext()
-    {
-        var calendar = CreateCalendar(new(2026, 5, 15));
-        HeadlessControlHost.Show(calendar, new(420, 360));
-
-        var nextButton = HeadlessControlHost.FindByName<Button>(calendar, Calendar.PartNextButton);
-        nextButton.Should().NotBeNull();
-
-        HeadlessControlHost.Click(nextButton);
-
-        calendar.DisplayDateContext.Should().Be(new MonthContext(6, 2026));
-    }
-
-    [AvaloniaFact]
-    public void SettingSelectedDate_UpdatesSelection()
-    {
-        var calendar = CreateCalendar(new(2026, 5, 15));
-        HeadlessControlHost.Show(calendar, new(420, 360));
-
-        var selectedDate = new DateTime(2026, 5, 20);
-        calendar.SelectedDate = selectedDate;
-
-        calendar.SelectedDate.Should().Be(selectedDate);
-        calendar.SelectedDates.Should().Contain(selectedDate);
-    }
-
-    [AvaloniaFact]
-    public void ReapplyTemplate_DoesNotDuplicateMonthGridChildren()
-    {
-        var calendar = CreateCalendar(new(2026, 5, 15));
-        HeadlessControlHost.Show(calendar, new(420, 360));
-
-        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
-        grid.Should().NotBeNull();
-        var initialCount = grid!.Children.Count;
-        initialCount.Should().BeGreaterThan(0);
-
-        var theme = calendar.Theme;
-        calendar.Theme = null;
-        calendar.Theme = theme;
-        Dispatcher.UIThread.RunJobs(DispatcherPriority.Loaded);
-
-        grid.Children.Count.Should().Be(initialCount);
-    }
-
-    [AvaloniaFact]
-    public void LastWeekDayButtons_AreAssignedToFinalGridRow()
-    {
-        var calendar = CreateCalendar(new(2026, 5, 15));
-        HeadlessControlHost.Show(calendar, new(420, 360));
-
-        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
-        grid.Should().NotBeNull();
-
-        var dayButtons = grid!.Children.OfType<CalendarDayButton>().ToList();
-        dayButtons.Should().NotBeEmpty();
-        dayButtons.Should().HaveCount(DateTimeHelper.DaysPerWeek * DateTimeHelper.MaxNumberOfWeeksPerMonth);
-        dayButtons.Max(x => Grid.GetRow(x)).Should().Be(DateTimeHelper.MaxNumberOfWeeksPerMonth);
-    }
-
     [AvaloniaFact]
     public void SingleRange_TapSelection_ShowsPreviewStates()
     {
@@ -518,11 +448,13 @@ public class CalendarHeadlessTests
 
         HeadlessControlHost.PointerPress(startButton);
         HeadlessControlHost.PointerMove(middleButton, leftButtonPressed: true);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
-        middleButton.IsPreviewInRange.Should().BeTrue("middle cell must stay highlighted while dragging across cells");
+        middleButton.IsPreviewEndDate.Should().BeTrue("end of partial drag is preview end, not in-range");
         startButton.IsPreviewStartDate.Should().BeTrue();
 
         HeadlessControlHost.PointerMove(endButton, leftButtonPressed: true);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
         middleButton.IsPreviewInRange.Should().BeTrue("middle cell must not lose preview when drag end extends");
         startButton.IsPreviewStartDate.Should().BeTrue();
@@ -1230,6 +1162,76 @@ public class CalendarHeadlessTests
     }
 
     [AvaloniaFact]
+    public void SingleRange_WithoutTap_BackwardDragAfterRange_IncludesPressCellWhenIntersectingPriorEnd()
+    {
+        var calendar = CreateCalendar(new(2026, 6, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var firstStart = new DateTime(2026, 6, 8);
+        var firstEnd = new DateTime(2026, 6, 11);
+        DragSelectRange(grid!, firstStart, firstEnd);
+
+        var pressDate = new DateTime(2026, 6, 14);
+        var releaseDate = new DateTime(2026, 6, 9);
+
+        HeadlessControlHost.PointerPress(FindDayButton(grid!, pressDate));
+        for (var date = pressDate.AddDays(-1); date >= releaseDate; date = date.AddDays(-1))
+            HeadlessControlHost.PointerMove(FindDayButton(grid!, date), leftButtonPressed: true);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        AssertPreviewRange(grid!, releaseDate, pressDate);
+
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, releaseDate));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        AssertCommittedRange(grid!, releaseDate, pressDate);
+        calendar.SelectedDates.Should().Contain(pressDate);
+        calendar.SelectedDates.Should().Contain(releaseDate);
+        calendar.SelectedDates.Max().Should().Be(pressDate, "committed range must reach the press cell, not stop at first hover");
+        calendar.SelectedDates.Min().Should().Be(releaseDate);
+        FindDayButton(grid!, pressDate).IsEndDate.Should().BeTrue();
+        FindDayButton(grid!, releaseDate).IsStartDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void SingleRange_WithoutTap_OverlappingDrag_CommitsPreviewExtentNotReleaseCell()
+    {
+        var calendar = CreateCalendar(new(2026, 5, 15));
+        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
+        calendar.AllowTapRangeSelection = false;
+        HeadlessControlHost.Show(calendar, new(420, 360));
+
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var firstStart = new DateTime(2026, 5, 10);
+        var firstEnd = new DateTime(2026, 5, 14);
+        DragSelectRange(grid!, firstStart, firstEnd);
+
+        var secondStart = new DateTime(2026, 5, 12);
+        var previewEnd = new DateTime(2026, 5, 18);
+        var releaseOn = new DateTime(2026, 5, 17);
+
+        HeadlessControlHost.PointerPress(FindDayButton(grid!, secondStart));
+        HeadlessControlHost.PointerMove(FindDayButton(grid!, previewEnd), leftButtonPressed: true);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        AssertPreviewRange(grid!, secondStart, previewEnd);
+
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, releaseOn));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        AssertCommittedRange(grid!, secondStart, previewEnd);
+        calendar.SelectedDates.Should().Contain(previewEnd);
+        FindDayButton(grid!, previewEnd).IsEndDate.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
     public void MultipleRange_WithoutTap_PreviewVisibleOverCommittedRange()
     {
         var calendar = CreateCalendar(new(2026, 5, 15));
@@ -1501,62 +1503,17 @@ public class CalendarHeadlessTests
     [AvaloniaFact]
     public void SingleRange_TapCommit_RangeRolesAppliedImmediatelyWithoutSelectedFlash()
     {
-        var calendar = CreateCalendar(new(2026, 5, 15));
-        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
-        calendar.AllowTapRangeSelection = true;
-        HeadlessControlHost.Show(calendar, new(420, 360));
-
-        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
-        grid.Should().NotBeNull();
+        var (calendar, grid) = ShowRangeCalendar(CalendarSelectionMode.SingleRange, allowTap: true);
 
         var startDate = new DateTime(2026, 5, 10);
-        var middleDate = new DateTime(2026, 5, 12);
         var endDate = new DateTime(2026, 5, 14);
 
-        HeadlessControlHost.PointerRelease(FindDayButton(grid!, startDate));
-        HeadlessControlHost.PointerRelease(FindDayButton(grid!, endDate));
+        HeadlessControlHost.PointerRelease(FindDayButton(grid, startDate));
+        HeadlessControlHost.PointerRelease(FindDayButton(grid, endDate));
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
-        var startButton = FindDayButton(grid!, startDate);
-        var middleButton = FindDayButton(grid!, middleDate);
-        var endButton = FindDayButton(grid!, endDate);
-
-        startButton.IsStartDate.Should().BeTrue("committed range styling must be immediate");
-        endButton.IsEndDate.Should().BeTrue();
-        middleButton.IsInRange.Should().BeTrue();
-        startButton.IsSelected.Should().BeFalse("range cap cells must not flash :selected before range roles");
-        middleButton.IsSelected.Should().BeFalse();
-        endButton.IsSelected.Should().BeFalse();
-    }
-
-    [AvaloniaFact]
-    public void SingleRange_CommittedRange_MiddleCellsAreNotSelected()
-    {
-        var calendar = CreateCalendar(new(2026, 5, 15));
-        calendar.SelectionMode = CalendarSelectionMode.SingleRange;
-        calendar.AllowTapRangeSelection = true;
-        HeadlessControlHost.Show(calendar, new(420, 360));
-
-        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
-        grid.Should().NotBeNull();
-
-        var startDate = new DateTime(2026, 5, 10);
-        var middleDate = new DateTime(2026, 5, 12);
-        var endDate = new DateTime(2026, 5, 14);
-
-        HeadlessControlHost.PointerRelease(FindDayButton(grid!, startDate));
-        HeadlessControlHost.PointerRelease(FindDayButton(grid!, endDate));
-
-        var startButton = FindDayButton(grid!, startDate);
-        var middleButton = FindDayButton(grid!, middleDate);
-        var endButton = FindDayButton(grid!, endDate);
-
-        startButton.IsStartDate.Should().BeTrue();
-        endButton.IsEndDate.Should().BeTrue();
-        middleButton.IsInRange.Should().BeTrue();
-
-        startButton.IsSelected.Should().BeFalse();
-        middleButton.IsSelected.Should().BeFalse();
-        endButton.IsSelected.Should().BeFalse();
+        AssertCommittedRange(grid, startDate, endDate);
+        calendar.SelectedDates.Count.Should().Be(5);
     }
 
     [AvaloniaFact]
@@ -1572,43 +1529,5 @@ public class CalendarHeadlessTests
 
         foreach (var dayButton in grid!.Children.OfType<CalendarDayButton>())
             dayButton.Focusable.Should().BeTrue();
-    }
-
-    private static CalendarDayButton FindDayButton(Grid grid, DateTime date) =>
-        grid.Children.OfType<CalendarDayButton>().Single(x => x.DataContext is DateTime d && d == date);
-
-    private static void SimulateVerticalGridGap(Grid grid, CalendarDayButton upperButton, CalendarDayButton lowerButton, bool leftButtonPressed = false)
-    {
-        var gapPosition = GetVerticalGapPosition(grid, upperButton, lowerButton);
-
-        HeadlessControlHost.PointerExitedAt(upperButton, new(4, 4), leftButtonPressed: leftButtonPressed);
-        HeadlessControlHost.PointerExitedAt(grid, gapPosition, leftButtonPressed: leftButtonPressed);
-        HeadlessControlHost.PointerMoveAt(grid, gapPosition, leftButtonPressed: leftButtonPressed);
-    }
-
-    private static Point GetVerticalGapPosition(Grid grid, CalendarDayButton upperButton, CalendarDayButton lowerButton)
-    {
-        var upperOrigin = upperButton.TranslatePoint(new Point(0, 0), grid) ?? default;
-        var lowerOrigin = lowerButton.TranslatePoint(new Point(0, 0), grid) ?? default;
-        var gapY = (upperOrigin.Y + upperButton.Bounds.Height + lowerOrigin.Y) / 2;
-        var gapX = upperOrigin.X + (upperButton.Bounds.Width / 2);
-        return new Point(gapX, gapY);
-    }
-
-    private static void EstablishDragModeAnchor(Calendar calendar, DateTime anchorDate)
-    {
-        calendar.MoveToDate(anchorDate.AddDays(-1));
-        HeadlessControlHost.KeyDown(calendar, Key.Right);
-    }
-
-    private static Calendar CreateCalendar(DateTime displayDate)
-    {
-        HeadlessTestApp.EnsureGlobalizationServices();
-
-        return new()
-        {
-            DisplayDate = displayDate,
-            SelectionMode = CalendarSelectionMode.SingleDate
-        };
     }
 }

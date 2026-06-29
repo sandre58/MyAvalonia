@@ -23,10 +23,12 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
 
     public void AddRange(DateTime start, DateTime end)
     {
+        var (rangeStart, rangeEnd) = NormalizeRange(start.DiscardTime(), end.DiscardTime());
+
         BeginUpdate();
         try
         {
-            foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
+            foreach (var date in SelectedDatesHelper.EnumerateDateRange(rangeStart, rangeEnd))
                 Add(date);
         }
         finally
@@ -37,10 +39,12 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
 
     public void RemoveRange(DateTime start, DateTime end)
     {
+        var (rangeStart, rangeEnd) = NormalizeRange(start.DiscardTime(), end.DiscardTime());
+
         BeginUpdate();
         try
         {
-            foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
+            foreach (var date in SelectedDatesHelper.EnumerateDateRange(rangeStart, rangeEnd))
                 Remove(date);
         }
         finally
@@ -80,7 +84,8 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
             return;
         }
 
-        var period = start.ToPeriod(end);
+        var (rangeStart, rangeEnd) = NormalizeRange(start, end);
+        var period = rangeStart.ToPeriod(rangeEnd);
         var datesToRemove = this.Where(x => !period.Contains(x)).ToList();
 
         BeginUpdate();
@@ -89,7 +94,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
             foreach (var item in datesToRemove)
                 Remove(item);
 
-            foreach (var date in SelectedDatesHelper.EnumerateDateRange(start, end))
+            foreach (var date in SelectedDatesHelper.EnumerateDateRange(rangeStart, rangeEnd))
             {
                 if (!Contains(date))
                     Add(date);
@@ -188,9 +193,14 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
 
     private static void EnsureValidThread() => Dispatcher.UIThread.VerifyAccess();
 
+    private static (DateTime RangeStart, DateTime RangeEnd) NormalizeRange(DateTime start, DateTime end) =>
+        start <= end ? (start, end) : (end, start);
+
     private bool IsValid(DateTime date)
         => owner.SelectionMode != CalendarSelectionMode.None
         && (owner.SelectionMode != CalendarSelectionMode.SingleDate || Count <= 0)
-        && ((owner.SelectionMode != CalendarSelectionMode.SingleRange || this.Concat([date]).IsConsecutiveDays())
+        && ((owner.SelectionMode != CalendarSelectionMode.SingleRange
+            || _updateDepth > 0
+            || this.Concat([date]).IsConsecutiveDays())
         && owner.BlackoutDates.All(x => !x.Contains(date)));
 }

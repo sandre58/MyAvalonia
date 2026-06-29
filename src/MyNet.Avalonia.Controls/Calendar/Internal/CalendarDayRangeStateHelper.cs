@@ -67,9 +67,6 @@ internal static class CalendarDayRangeStateHelper
             cell.IsInRange = true;
     }
 
-    public static void ApplyPreviewRangeToCell(CalendarDayButton cell, DateTime date, DateTime anchor, DateTime previewEnd) =>
-        SetPreviewRangeToCell(cell, date, anchor, previewEnd);
-
     public static void SetPreviewRangeToCell(CalendarDayButton cell, DateTime date, DateTime anchor, DateTime previewEnd)
     {
         anchor = anchor.DiscardTime();

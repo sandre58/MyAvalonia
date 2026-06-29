@@ -306,6 +306,27 @@ public class CalendarSelectionCoordinatorTests
         commands.Moves.Should().BeEmpty();
     }
 
+    [Fact]
+    public void CommitPointerDrag_BackwardRange_IncludesPressCell()
+    {
+        var commands = new RecordingSelectionCommands();
+        var coordinator = new CalendarSelectionCoordinator(
+            () => CalendarSelectionMode.SingleRange,
+            () => false,
+            () => new(2026, 6, 15),
+            _ => true,
+            commands);
+
+        coordinator.RecordPointerPress(new(2026, 6, 14));
+        coordinator.BeginPointerSelection(new(2026, 6, 14), shift: false);
+        coordinator.CommitPointerDrag(new(2026, 6, 14), new(2026, 6, 9), shift: false, ctrl: false);
+
+        commands.Ranges.Should().ContainSingle();
+        commands.Ranges[0].Start.Should().Be(new(2026, 6, 9));
+        commands.Ranges[0].End.Should().Be(new(2026, 6, 14));
+        coordinator.HoverStart.Should().Be(new(2026, 6, 14));
+    }
+
     private sealed class RecordingSelectionCommands : ICalendarSelectionCommands
     {
         private readonly HashSet<DateTime> _dates = [];

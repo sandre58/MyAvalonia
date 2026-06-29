@@ -14,9 +14,7 @@ namespace MyNet.Avalonia.Controls.Internals;
 internal enum CalendarNavigationKind
 {
     None,
-    SelectDate,
     MoveFocus,
-    SelectFocused,
     SelectMonthContext,
     Next,
     Previous,
