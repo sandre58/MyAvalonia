@@ -15,45 +15,49 @@
 
         <Setter Property="Template">
             <ControlTemplate TargetType="my:DateTimeView">
-                <Grid ColumnDefinitions="Auto,Auto,Auto"
-                      ColumnSpacing="{StaticResource MyNet.Spacing.Sm}"
-                      KeyboardNavigation.TabNavigation="Continue">
-                    <my:Calendar x:Name="PART_Calendar"
-                                 Grid.Column="0"
-                                 TabIndex="0"
-                                 VerticalAlignment="Top"
-                                 my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                 my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
-                                 Foreground="{TemplateBinding Foreground}"
-                                 Background="Transparent"
-                                 BorderThickness="0"
-                                 DisplayDate="{TemplateBinding DisplayDate}"
-                                 DisplayDateEnd="{TemplateBinding DisplayDateEnd}"
-                                 DisplayDateStart="{TemplateBinding DisplayDateStart}"
-                                 FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
-                                 IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}" />
-                    <Separator Grid.Column="1"
-                               Margin="{my:Thickness Sm, Vertical}"
-                               VerticalAlignment="Stretch"
-                               Classes="orientation-vertical" />
-                    <my:TimeView x:Name="PART_TimeView"
-                                 Grid.Column="2"
-                                 TabIndex="1"
-                                 Classes="compact"
-                                 VerticalAlignment="Top"
-                                 Height="{Binding #PART_Calendar.Bounds.Height}"
-                                 ShowClock="True"
-                                 my:HeaderAssist.FontSize="{StaticResource MyNet.Font.Size.H3}"
-                                 my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                 my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                 my:VariantAssist.DefaultPrimary="{TemplateBinding (my:VariantAssist.DefaultPrimary)}"
-                                 Foreground="{TemplateBinding Foreground}"
-                                 Background="Transparent"
-                                 BorderThickness="0"
-                                 NumberFormat="{TemplateBinding NumberFormat}"
-                                 ShowSeconds="{TemplateBinding ShowSeconds}"
-                                 TimeFormat="{TemplateBinding TimeFormat}" />
-                </Grid>
+                <TabControl x:Name="PART_SectionSelector"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Padding="0"
+                            Classes="flex-uniform"
+                            my:DisableAssist.IsDisablable="False"
+                            my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                            my:VariantAssist.Primary="{my:Theme Primary}"
+                            my:HeaderAssist.Padding="0"
+                            KeyboardNavigation.TabNavigation="Continue">
+                    <TabItem Header="{my:Loc Day}">
+                        <my:Calendar x:Name="PART_Calendar"
+                                     TabIndex="0"
+                                     VerticalAlignment="Top"
+                                     my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                     my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                     my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
+                                     Foreground="{TemplateBinding Foreground}"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     DisplayDate="{TemplateBinding DisplayDate}"
+                                     DisplayDateEnd="{TemplateBinding DisplayDateEnd}"
+                                     DisplayDateStart="{TemplateBinding DisplayDateStart}"
+                                     FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                     IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}" />
+                    </TabItem>
+                    <TabItem Header="{my:Loc Hour}">
+                        <my:TimeView x:Name="PART_TimeView"
+                                     TabIndex="1"
+                                     ShowClock="True"
+                                     VerticalAlignment="Top"
+                                     my:HeaderAssist.FontSize="{StaticResource MyNet.Font.Size.H3}"
+                                     my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                     my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                     my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
+                                     Foreground="{TemplateBinding Foreground}"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     NumberFormat="{TemplateBinding NumberFormat}"
+                                     ShowSeconds="{TemplateBinding ShowSeconds}"
+                                     TimeFormat="{TemplateBinding TimeFormat}" />
+                    </TabItem>
+                </TabControl>
             </ControlTemplate>
         </Setter>
     </ControlTheme>

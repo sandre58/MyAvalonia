@@ -219,12 +219,14 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border Theme="{StaticResource MyNet.Theme.Border.Popup}"
+                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <my:DateTimeView Name="PART_Previewer"
                                                          HorizontalAlignment="Stretch"
                                                          my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
+                                                         my:ItemsAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                          my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
                                                          Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
                                                          Background="Transparent"
@@ -506,12 +508,14 @@
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
-                                <Border Theme="{StaticResource MyNet.Theme.Border.Popup}"
+                                <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <my:DateTimeView Name="PART_Previewer"
                                                          HorizontalAlignment="Stretch"
                                                          my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
+                                                         my:ItemsAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                          my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
                                                          Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
                                                          Background="Transparent"

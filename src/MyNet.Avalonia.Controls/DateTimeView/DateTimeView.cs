@@ -30,15 +30,19 @@ namespace MyNet.Avalonia.Controls;
 
 [TemplatePart(PartCalendar, typeof(Calendar))]
 [TemplatePart(PartTimeView, typeof(TimeView))]
+[TemplatePart(PartSectionSelector, typeof(TabControl))]
 public class DateTimeView : TemplatedControl, IValueSelector<DateTime?>
 {
     public const string PartCalendar = "PART_Calendar";
     public const string PartTimeView = "PART_TimeView";
+    public const string PartSectionSelector = "PART_SectionSelector";
 
     private readonly Suspender _syncSuspender = new();
 
     private Calendar? _calendar;
     private TimeView? _timeView;
+    private TabControl? _sectionSelector;
+    private bool _suppressSectionSelectionChanged;
 
     public DateTimeViewSection ActiveSection { get; private set; } = DateTimeViewSection.Calendar;
 
@@ -72,14 +76,17 @@ public class DateTimeView : TemplatedControl, IValueSelector<DateTime?>
 
         _calendar = e.NameScope.Find<Calendar>(PartCalendar);
         _timeView = e.NameScope.Find<TimeView>(PartTimeView);
+        _sectionSelector = e.NameScope.Find<TabControl>(PartSectionSelector);
 
         AddHandlers();
+        SyncSectionSelectorFromActiveSection();
         SyncPartsFromSelectedValue();
     }
 
     public void FocusSection(DateTimeViewSection section)
     {
         ActiveSection = section;
+        SyncSectionSelectorFromActiveSection();
 
         switch (section)
         {
@@ -93,6 +100,26 @@ public class DateTimeView : TemplatedControl, IValueSelector<DateTime?>
         }
 
         UpdateAutomationName();
+    }
+
+    private void SyncSectionSelectorFromActiveSection()
+    {
+        if (_sectionSelector is null)
+            return;
+
+        var index = ActiveSection == DateTimeViewSection.Calendar ? 0 : 1;
+        if (_sectionSelector.SelectedIndex == index)
+            return;
+
+        _suppressSectionSelectionChanged = true;
+        try
+        {
+            _sectionSelector.SelectedIndex = index;
+        }
+        finally
+        {
+            _suppressSectionSelectionChanged = false;
+        }
     }
 
     internal Calendar? CalendarPart => _calendar;
@@ -162,6 +189,9 @@ public class DateTimeView : TemplatedControl, IValueSelector<DateTime?>
             ActiveSection = DateTimeViewSection.Time;
         else if (_calendar != null && visual.FindAncestorOfType<Calendar>(includeSelf: true) == _calendar)
             ActiveSection = DateTimeViewSection.Calendar;
+
+        SyncSectionSelectorFromActiveSection();
+        UpdateAutomationName();
     }
 
     private void RemoveHandlers()
@@ -174,6 +204,9 @@ public class DateTimeView : TemplatedControl, IValueSelector<DateTime?>
 
         if (_timeView != null)
             _timeView.SelectedValueChanged -= OnTimeViewSelectedValueChanged;
+
+        if (_sectionSelector != null)
+            _sectionSelector.SelectionChanged -= OnSectionSelectionChanged;
     }
 
     private void AddHandlers()
@@ -186,9 +219,28 @@ public class DateTimeView : TemplatedControl, IValueSelector<DateTime?>
         }
 
         _timeView?.SelectedValueChanged += OnTimeViewSelectedValueChanged;
+
+        if (_sectionSelector != null)
+            _sectionSelector.SelectionChanged += OnSectionSelectionChanged;
     }
 
-    private void OnCalendarDayButtonClick(object? sender, RoutedEventArgs e) => UpdateSelectedValueFromParts();
+    private void OnSectionSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (_suppressSectionSelectionChanged || _sectionSelector is null)
+            return;
+
+        ActiveSection = _sectionSelector.SelectedIndex == 0
+            ? DateTimeViewSection.Calendar
+            : DateTimeViewSection.Time;
+
+        UpdateAutomationName();
+    }
+
+    private void OnCalendarDayButtonClick(object? sender, RoutedEventArgs e)
+    {
+        UpdateSelectedValueFromParts();
+        FocusSection(DateTimeViewSection.Time);
+    }
 
     private void OnCalendarPropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
     {

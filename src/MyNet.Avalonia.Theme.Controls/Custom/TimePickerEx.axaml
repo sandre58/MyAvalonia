@@ -219,16 +219,16 @@
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                                        HorizontalAlignment="Left"
+                                        HorizontalAlignment="Stretch"
                                         VerticalAlignment="Top"
                                         Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
-                                    <Border HorizontalAlignment="Left"
+                                    <Border HorizontalAlignment="Stretch"
                                             VerticalAlignment="Top"
                                             ClipToBounds="True"
                                             CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <my:TimeView Name="PART_Previewer"
-                                                     HorizontalAlignment="Left"
+                                                     HorizontalAlignment="Stretch"
                                                      VerticalAlignment="Top"
                                                      my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                      my:ItemsAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
@@ -513,16 +513,16 @@
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                                        HorizontalAlignment="Left"
+                                        HorizontalAlignment="Stretch"
                                         VerticalAlignment="Top"
                                         Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
-                                    <Border HorizontalAlignment="Left"
+                                    <Border HorizontalAlignment="Stretch"
                                             VerticalAlignment="Top"
                                             ClipToBounds="True"
                                             CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <my:TimeView Name="PART_Previewer"
-                                                     HorizontalAlignment="Left"
+                                                     HorizontalAlignment="Stretch"
                                                      VerticalAlignment="Top"
                                                      my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                      my:ItemsAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"

@@ -206,6 +206,7 @@
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <my:Calendar Name="PART_Previewer"
+                                                     my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                      my:ItemsAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                      my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
                                                      Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
@@ -490,6 +491,7 @@
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <my:Calendar Name="PART_Previewer"
+                                                     my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                      my:ItemsAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                      my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
                                                      Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"

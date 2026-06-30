@@ -234,6 +234,7 @@
                                             CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <ColorView Name="PART_Previewer"
                                                    my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
+                                                   my:ItemsAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                    my:VariantAssist.Primary="{my:Theme Primary}"
                                                    Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
                                                    Background="Transparent"
@@ -563,6 +564,7 @@
                                             CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <ColorView Name="PART_Previewer"
                                                    my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
+                                                   my:ItemsAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                    my:VariantAssist.DefaultPrimary="{my:Theme Primary}"
                                                    Foreground="{my:ThemeBrush (my:PopupAssist.Background), Contrast=True}"
                                                    Background="Transparent"

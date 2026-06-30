@@ -23,7 +23,6 @@
                             my:HeaderAssist.Padding="0">
                     <TabItem Header="{x:Static loc:TimeRangePickerExResources.Start}">
                         <my:TimeView x:Name="PART_StartTimeView"
-                                     Margin="{StaticResource MyNet.Padding.Popup}"
                                      ShowClock="True"
                                      my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                      my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
@@ -37,7 +36,6 @@
                     </TabItem>
                     <TabItem Header="{x:Static loc:TimeRangePickerExResources.End}">
                         <my:TimeView x:Name="PART_EndTimeView"
-                                     Margin="{StaticResource MyNet.Padding.Popup}"
                                      ShowClock="True"
                                      my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                                      my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"

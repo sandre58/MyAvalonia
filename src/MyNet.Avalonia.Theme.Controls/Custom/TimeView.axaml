@@ -138,122 +138,139 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
-                    <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource MyNet.Spacing.Md}" Margin="{my:Thickness Md}">
-                        <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
-                              HorizontalAlignment="Center"
-                              KeyboardNavigation.TabNavigation="Continue">
-                            <my:NumericUpDownTimeComponent x:Name="PART_Hour"
-                                                           Grid.Column="0"
-                                                           TabIndex="0"
-                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                           my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
-                                                           FormatString="{TemplateBinding NumberFormat}"
-                                                           Value="{TemplateBinding Hour, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
-                                                           FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
-                                                           Minimum="{TemplateBinding TimeFormat, Converter={x:Static c:AmPmRangeConverter.Minimum}}"
-                                                           Maximum="{TemplateBinding TimeFormat, Converter={x:Static c:AmPmRangeConverter.Maximum}}"
-                                                           Increment="1"
-                                                           IsActive="True"
-                                                           my:DisableAssist.IsDisablable="False" />
-                            <ContentControl Content=":"
-                                            Grid.Column="1"
-                                            Focusable="False"
-                                            IsTabStop="False"
-                                            Margin="{my:Thickness Sm, Horizontal}" />
-                            <my:NumericUpDownTimeComponent x:Name="PART_Minute"
-                                                           Grid.Column="2"
-                                                           TabIndex="1"
-                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                           my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
-                                                           FormatString="{TemplateBinding NumberFormat}"
-                                                           FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
-                                                           Minimum="0"
-                                                           Maximum="59"
-                                                           Value="{TemplateBinding Minute, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
-                                                           Increment="1"
-                                                           my:DisableAssist.IsDisablable="False" />
-                            <ContentControl Grid.Column="3"
-                                            Content=":"
-                                            Focusable="False"
-                                            IsTabStop="False"
-                                            Margin="{my:Thickness Sm, Horizontal}"
-                                            IsVisible="{TemplateBinding ShowSeconds}" />
-                            <my:NumericUpDownTimeComponent x:Name="PART_Second"
-                                                           Grid.Column="4"
-                                                           TabIndex="2"
-                                                           my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                           my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
-                                                           FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
-                                                           FormatString="{TemplateBinding NumberFormat}"
-                                                           Minimum="0"
-                                                           Maximum="59"
-                                                           Increment="1"
-                                                           Value="{TemplateBinding Second, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
-                                                           IsEnabled="{TemplateBinding ShowSeconds}"
-                                                           IsVisible="{TemplateBinding ShowSeconds}"
-                                                           my:DisableAssist.IsDisablable="False" />
-                            <Separator Grid.Column="5" Margin="{my:Thickness Sm, Horizontal}" IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static temporal:TimeFormat.TwelveHour}}" />
-                            <my:PeriodTimeComponent x:Name="PART_Period"
-                                                    Grid.Column="6"
-                                                    TabIndex="3"
-                                                    my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                    my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
-                                                    FontSize="{TemplateBinding FontSize}"
-                                                    IsAm="{TemplateBinding IsAm, Mode=TwoWay}"
-                                                    IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static temporal:TimeFormat.TwelveHour}}" />
-                        </Grid>
-                        <Grid x:Name="PART_ClockHost"
-                              Grid.Row="1"
-                              Height="236"
-                              HorizontalAlignment="Center"
-                              ClipToBounds="False">
-                            <Viewbox x:Name="PART_ClockViewbox"
-                                     Stretch="Uniform"
-                                     ClipToBounds="False"
-                                     MaxWidth="236"
-                                     MaxHeight="236">
-                                <Panel x:Name="PART_ClockPanel"
-                                       Width="236"
-                                       Height="236">
-                                    <my:ClockSelector x:Name="PART_ClockSelector"
-                                                      Width="220"
-                                                      Height="220"
-                                                      Margin="8"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"
-                                                      Focusable="True"
-                                                      IsTabStop="False"
-                                                      TabIndex="-1"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="0">
+                    <Grid RowDefinitions="Auto,Auto" RowSpacing="0">
+                        <Border x:Name="PART_HeaderBand"
+                                Grid.Row="0"
+                                my:ShadowAssist.ShadowDepth="{TemplateBinding my:HeaderAssist.ShadowDepth}"
+                                Background="{TemplateBinding my:HeaderAssist.Background}"
+                                BorderBrush="{TemplateBinding my:HeaderAssist.BorderBrush}"
+                                BorderThickness="{TemplateBinding my:HeaderAssist.BorderThickness}"
+                                CornerRadius="{TemplateBinding my:HeaderAssist.CornerRadius}"
+                                Padding="{TemplateBinding my:HeaderAssist.Padding}"
+                                Opacity="{TemplateBinding my:HeaderAssist.Opacity}">
+                            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                                  HorizontalAlignment="{TemplateBinding my:HeaderAssist.HorizontalAlignment}"
+                                  VerticalAlignment="{TemplateBinding my:HeaderAssist.VerticalAlignment}"
+                                  KeyboardNavigation.TabNavigation="Continue">
+                                <my:NumericUpDownTimeComponent x:Name="PART_Hour"
+                                                               Grid.Column="0"
+                                                               TabIndex="0"
+                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
+                                                               FormatString="{TemplateBinding NumberFormat}"
+                                                               Value="{TemplateBinding Hour, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                                                               FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                                               Minimum="{TemplateBinding TimeFormat, Converter={x:Static c:AmPmRangeConverter.Minimum}}"
+                                                               Maximum="{TemplateBinding TimeFormat, Converter={x:Static c:AmPmRangeConverter.Maximum}}"
+                                                               Increment="1"
+                                                               IsActive="True"
+                                                               my:DisableAssist.IsDisablable="False" />
+                                <ContentControl Content=":"
+                                                Grid.Column="1"
+                                                Focusable="False"
+                                                IsTabStop="False"
+                                                Margin="{my:Thickness Sm, Horizontal}" />
+                                <my:NumericUpDownTimeComponent x:Name="PART_Minute"
+                                                               Grid.Column="2"
+                                                               TabIndex="1"
+                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
+                                                               FormatString="{TemplateBinding NumberFormat}"
+                                                               FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                                               Minimum="0"
+                                                               Maximum="59"
+                                                               Value="{TemplateBinding Minute, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                                                               Increment="1"
+                                                               my:DisableAssist.IsDisablable="False" />
+                                <ContentControl Grid.Column="3"
+                                                Content=":"
+                                                Focusable="False"
+                                                IsTabStop="False"
+                                                Margin="{my:Thickness Sm, Horizontal}"
+                                                IsVisible="{TemplateBinding ShowSeconds}" />
+                                <my:NumericUpDownTimeComponent x:Name="PART_Second"
+                                                               Grid.Column="4"
+                                                               TabIndex="2"
+                                                               my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                               my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
+                                                               FontSize="{TemplateBinding my:HeaderAssist.FontSize}"
+                                                               FormatString="{TemplateBinding NumberFormat}"
+                                                               Minimum="0"
+                                                               Maximum="59"
+                                                               Increment="1"
+                                                               Value="{TemplateBinding Second, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}"
+                                                               IsEnabled="{TemplateBinding ShowSeconds}"
+                                                               IsVisible="{TemplateBinding ShowSeconds}"
+                                                               my:DisableAssist.IsDisablable="False" />
+                                <Separator Grid.Column="5" Margin="{my:Thickness Sm, Horizontal}" IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static temporal:TimeFormat.TwelveHour}}" />
+                                <my:PeriodTimeComponent x:Name="PART_Period"
+                                                        Grid.Column="6"
+                                                        TabIndex="3"
+                                                        my:ThemeAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                        my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
+                                                        FontSize="{TemplateBinding FontSize}"
+                                                        IsAm="{TemplateBinding IsAm, Mode=TwoWay}"
+                                                        IsVisible="{TemplateBinding TimeFormat, Converter={x:Static my:EnumConverter.Any}, ConverterParameter={x:Static temporal:TimeFormat.TwelveHour}}" />
+                            </Grid>
+                        </Border>
+                        <Border x:Name="PART_Body"
+                                Grid.Row="1"
+                                Padding="{StaticResource MyNet.Padding.Popup}"
+                                IsVisible="{TemplateBinding ShowClock}">
+                            <Grid x:Name="PART_ClockHost"
+                                  Height="236"
+                                  HorizontalAlignment="Center"
+                                  ClipToBounds="False">
+                                <Viewbox x:Name="PART_ClockViewbox"
+                                         Stretch="Uniform"
+                                         ClipToBounds="False"
+                                         MaxWidth="236"
+                                         MaxHeight="236">
+                                    <Panel x:Name="PART_ClockPanel"
+                                           Width="236"
+                                           Height="236">
+                                        <my:ClockSelector x:Name="PART_ClockSelector"
+                                                          Width="220"
+                                                          Height="220"
+                                                          Margin="8"
+                                                          HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center"
+                                                          Focusable="True"
+                                                          IsTabStop="False"
+                                                          TabIndex="-1"
+                                                          BorderThickness="0"
                                                       Classes="variant-solid shadow-surface"
-                                                      my:DisableAssist.IsDisablable="False"
-                                                      IsVisible="{TemplateBinding ShowClock}"
-                                                      Hour="{TemplateBinding Hour, Mode=TwoWay}"
-                                                      Minute="{TemplateBinding Minute, Mode=TwoWay}"
-                                                      Second="{TemplateBinding Second, Mode=TwoWay}"
-                                                      my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
-                                                      my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
-                                                      my:VariantAssist.DefaultBackground="{my:ThemeContext Surface.Level2}"
-                                                      TimeFormat="{TemplateBinding TimeFormat}"
-                                                      ShowSeconds="{TemplateBinding ShowSeconds}"
-                                                      SelectedComponent="{Binding SelectedComponent, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                      IsAm="{TemplateBinding IsAm}" />
-                                </Panel>
-                            </Viewbox>
-                        </Grid>
+                                                          my:DisableAssist.IsDisablable="False"
+                                                          Hour="{TemplateBinding Hour, Mode=TwoWay}"
+                                                          Minute="{TemplateBinding Minute, Mode=TwoWay}"
+                                                          Second="{TemplateBinding Second, Mode=TwoWay}"
+                                                          my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
+                                                          my:VariantAssist.Primary="{TemplateBinding (my:VariantAssist.Primary)}"
+                                                          my:VariantAssist.DefaultBackground="{my:ThemeContext Surface.Level2}"
+                                                          TimeFormat="{TemplateBinding TimeFormat}"
+                                                          ShowSeconds="{TemplateBinding ShowSeconds}"
+                                                          SelectedComponent="{Binding SelectedComponent, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                          IsAm="{TemplateBinding IsAm}" />
+                                    </Panel>
+                                </Viewbox>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Border>
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^[ShowClock=False] /template/ Grid">
-            <Setter Property="RowSpacing" Value="0" />
+        <Style Selector="^[ShowClock=True]">
+            <Setter Property="my:HeaderAssist.Background" Value="{my:ThemeContext Surface.Level1}" />
+            <Setter Property="my:HeaderAssist.BorderBrush" Value="{my:ThemeContext Surface.Border}" />
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0,0,0,1" />
+            <Setter Property="my:HeaderAssist.Padding" Value="{StaticResource MyNet.Padding.Popup}" />
         </Style>
 
-        <Style Selector="^[ShowClock=False] /template/ Grid#PART_ClockHost">
-            <Setter Property="Height" Value="0" />
-            <Setter Property="MaxHeight" Value="0" />
-            <Setter Property="Margin" Value="0" />
+        <Style Selector="^[ShowClock=False]">
+            <Setter Property="my:HeaderAssist.BorderThickness" Value="0" />
         </Style>
 
         <Style Selector="^ /template/ my|ClockSelector#PART_ClockSelector">
@@ -262,10 +279,13 @@
             <Setter Property="TabIndex" Value="-1" />
         </Style>
 
-        <!-- Compact layout used inside DateTimeView to align with calendar height. -->
-        <Style Selector="^.compact /template/ Grid">
-            <Setter Property="Margin" Value="{my:Thickness Sm}" />
-            <Setter Property="RowSpacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+        <!-- Compact layout for constrained popup hosts. -->
+        <Style Selector="^.compact">
+            <Setter Property="my:HeaderAssist.Padding" Value="{my:Thickness Sm}" />
+        </Style>
+
+        <Style Selector="^.compact /template/ Border#PART_Body">
+            <Setter Property="Padding" Value="{my:Thickness Sm}" />
         </Style>
 
         <Style Selector="^.compact /template/ Grid#PART_ClockHost">

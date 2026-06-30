@@ -90,6 +90,36 @@ public class PickerInteractionHeadlessTests
     }
 
     [AvaloniaFact]
+    public void DateTimePickerEx_DayClick_AdvancesToTimeTabAndKeepsPopupOpen()
+    {
+        var picker = CreateDateTimePickerEx();
+        picker.SelectedValue = new DateTime(2026, 6, 1, 9, 0, 0);
+
+        picker.IsDropDownOpen = true;
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        var view = picker.PreviewerView!;
+        var calendar = HeadlessControlHost.FindByName<Calendar>(view, DateTimeView.PartCalendar)!;
+        var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
+        grid.Should().NotBeNull();
+
+        var day = CalendarHeadlessTestHelpers.FindDayButton(grid!, new(2026, 6, 10));
+        HeadlessControlHost.PointerPress(day);
+        HeadlessControlHost.PointerRelease(day);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        var sectionSelector = HeadlessControlHost.FindByName<TabControl>(view, DateTimeView.PartSectionSelector)!;
+        sectionSelector.SelectedIndex.Should().Be(1);
+        view.ActiveSection.Should().Be(DateTimeViewSection.Time);
+
+        var timeView = HeadlessControlHost.FindByName<TimeView>(view, DateTimeView.PartTimeView)!;
+        IsHourFocused(timeView).Should().BeTrue();
+
+        picker.SelectedValue.Should().Be(new(2026, 6, 10, 9, 0, 0));
+        picker.IsDropDownOpen.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
     public void DateTimePickerEx_EnterWhenClosed_OpensPopup()
     {
         var picker = CreateDateTimePickerEx();
