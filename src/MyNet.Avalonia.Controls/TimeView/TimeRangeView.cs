@@ -27,7 +27,7 @@ using Avalonia.Data;
 using Avalonia.Interactivity;
 
 using Avalonia.Threading;
-
+using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Internals;
 
 using MyNet.Avalonia.Controls.Primitives;
@@ -155,14 +155,6 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
 
 
     public event EventHandler<SelectionChangedEventArgs>? SelectedValueChanged;
-
-
-
-    /// <summary>Raised when both boundaries are complete and the range should be committed.</summary>
-
-    public event EventHandler? CompleteRequested;
-
-
 
     public static readonly StyledProperty<Period?> SelectedValueProperty =
 
@@ -334,6 +326,8 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
 
             PushStartSlotToTimeView();
 
+            TrySyncSelectedValueFromSlots();
+
         }
 
     }
@@ -353,6 +347,8 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
             _endTime = value;
 
             PushEndSlotToTimeView();
+
+            TrySyncSelectedValueFromSlots();
 
         }
 
@@ -528,6 +524,28 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
 
     }
 
+    internal TimeView? StartTimeViewPart => _startTimeView;
+
+    internal TimeView? EndTimeViewPart => _endTimeView;
+
+    internal void FocusStartHour() => FinalizePopupOpen();
+
+    internal bool IsSourceInStartSection(object? source)
+    {
+        if (source is not Visual visual || _startTimeView is null)
+            return false;
+
+        return visual.FindAncestorOfType<TimeView>(includeSelf: true) == _startTimeView;
+    }
+
+    internal bool IsSourceInEndSection(object? source)
+    {
+        if (source is not Visual visual || _endTimeView is null)
+            return false;
+
+        return visual.FindAncestorOfType<TimeView>(includeSelf: true) == _endTimeView;
+    }
+
 
 
     internal TimeRangeBuildResult TryBuildSelectedValue()
@@ -544,7 +562,15 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
 
     }
 
+    private void TrySyncSelectedValueFromSlots()
+    {
+        if (_syncSuspender.IsSuspended)
+            return;
 
+        var result = TryBuildSelectedValue();
+        if (result.IsValid)
+            SetCurrentValue(SelectedValueProperty, result.Period);
+    }
 
     internal void LoadFromPeriod(Period value)
 
@@ -652,6 +678,8 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
 
         }
 
+        TrySyncSelectedValueFromSlots();
+
     }
 
 
@@ -677,6 +705,8 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
             _endTime = _endTimeView.SelectedValue;
 
         }
+
+        TrySyncSelectedValueFromSlots();
 
     }
 
@@ -788,14 +818,7 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
 
 
 
-    private void SyncBoundaryTabs()
-
-    {
-
-        SetBoundaryTabIndex((int)ActiveBoundary);
-
-    }
-
+    private void SyncBoundaryTabs() => SetBoundaryTabIndex((int)ActiveBoundary);
 
 
     private void FocusActiveHourComponent()
@@ -928,6 +951,8 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
 
         _startTime = _startTimeView.SelectedValue;
 
+        TrySyncSelectedValueFromSlots();
+
     }
 
 
@@ -944,48 +969,29 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
 
         _endTime = _endTimeView.SelectedValue;
 
+        TrySyncSelectedValueFromSlots();
+
     }
 
 
 
-    private void OnTimeViewInputCompleted(object? sender, RoutedEventArgs e)
-
+    private void OnTimeViewInputCompleted(object? sender, TimeInputCompletedEventArgs e)
     {
-
         var boundary = _startTimeView is not null && ReferenceEquals(sender, _startTimeView) ? TimeRangeBoundary.Start
-
             : _endTimeView is not null && ReferenceEquals(sender, _endTimeView) ? TimeRangeBoundary.End
-
             : ActiveBoundary;
 
-
-
         if (boundary == TimeRangeBoundary.Start)
-
         {
-
             PersistSlotFromTimeView(TimeRangeBoundary.Start);
-
             SwitchToEnd(autoAdvance: true);
-
             return;
-
         }
-
-
 
         PersistSlotFromTimeView(TimeRangeBoundary.End);
 
-
-
-        if (_startTime.HasValue)
-
-            CompleteRequested?.Invoke(this, EventArgs.Empty);
-
-        else
-
+        if (!_startTime.HasValue)
             SwitchBoundary(TimeRangeBoundary.Start);
-
     }
 
 }

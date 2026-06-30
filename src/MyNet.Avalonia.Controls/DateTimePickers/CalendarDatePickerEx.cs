@@ -29,10 +29,14 @@ namespace MyNet.Avalonia.Controls;
 [TemplatePart(PartPreviewer, typeof(Calendar))]
 [PseudoClasses(PseudoClassName.FlyoutOpen)]
 [SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
-public class CalendarDatePickerEx : TextPicker<DateTime?, Calendar>
+public partial class CalendarDatePickerEx : TextPicker<DateTime?, Calendar>
 {
-    static CalendarDatePickerEx() =>
+    static CalendarDatePickerEx()
+    {
         AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<CalendarDatePickerEx>(AutomationControlType.Custom);
+        CloseOnCommitProperty.OverrideDefaultValue<CalendarDatePickerEx>(false);
+        CloseOnSingleSelectionProperty.OverrideDefaultValue<CalendarDatePickerEx>(true);
+    }
 
     public CalendarDatePickerEx()
     {
@@ -127,10 +131,16 @@ public class CalendarDatePickerEx : TextPicker<DateTime?, Calendar>
 
     #region Calendar
 
-    protected override void RemovePreviewerHandlers() => Previewer?.DayButtonClick -= OnCalendarDayButtonClick;
+    protected override void RemovePreviewerHandlers()
+    {
+        base.RemovePreviewerHandlers();
+        Previewer?.DayButtonClick -= OnCalendarDayButtonClick;
+    }
 
     protected override void AddPreviewerHandlers()
     {
+        base.AddPreviewerHandlers();
+
         if (Previewer != null)
         {
             Previewer.SelectionMode = CalendarSelectionMode.SingleDate;

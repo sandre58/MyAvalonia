@@ -4,7 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Primitives.Internal;
 using Xunit;
@@ -43,5 +45,56 @@ public class TextPickerExpandedTests
         var result = TextPickerValidationHelper.Parse<string?>("test", _ => null, v => v is not null);
 
         result.Status.Should().Be(TextPickerParseStatus.InvalidValue);
+    }
+
+    [Fact]
+    public void TryHandleTextBoxTab_WhenKeyIsNotTab_ReturnsFalse()
+    {
+        var textBox = new TextBox();
+        var previewer = new Panel();
+        var e = new KeyEventArgs { Key = Key.Enter, KeyModifiers = KeyModifiers.None };
+
+        TextPickerPopupFocusHelper.TryHandleTextBoxTab(previewer, textBox, e).Should().BeFalse();
+    }
+
+    [Fact]
+    public void TryHandleTextBoxTab_WhenTabFromTextBox_InvokesFocusCallback()
+    {
+        Control? focused = null;
+        var textBox = new TextBox();
+        var previewer = new Panel();
+        textBox.RaiseEvent(new KeyEventArgs
+        {
+            RoutedEvent = InputElement.KeyDownEvent,
+            Key = Key.Tab,
+            KeyModifiers = KeyModifiers.None,
+        });
+
+        var e = new KeyEventArgs
+        {
+            RoutedEvent = InputElement.KeyDownEvent,
+            Key = Key.Tab,
+            KeyModifiers = KeyModifiers.None,
+        };
+
+        object? source = textBox;
+        typeof(RoutedEventArgs).GetProperty(nameof(RoutedEventArgs.Source))!
+            .SetValue(e, source);
+
+        TextPickerPopupFocusHelper.TryHandleTextBoxTab(previewer, textBox, e, c => focused = c).Should().BeTrue();
+        focused.Should().BeSameAs(previewer);
+    }
+
+    [Fact]
+    public void GetTabFocusables_ExcludesNonTabStopControls()
+    {
+        var root = new Panel();
+        var tabStop = new TextBox { Focusable = true, IsTabStop = true };
+        var notTabStop = new TextBox { Focusable = true, IsTabStop = false };
+        root.Children.Add(tabStop);
+        root.Children.Add(notTabStop);
+
+        var focusables = TextPickerPopupFocusHelper.GetTabFocusables(root);
+        focusables.Should().ContainSingle().Which.Should().BeSameAs(tabStop);
     }
 }

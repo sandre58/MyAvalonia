@@ -14,7 +14,6 @@ using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using MyNet.Avalonia.Controls.Internals;
 using MyNet.Avalonia.Controls.Primitives;
@@ -33,7 +32,7 @@ namespace MyNet.Avalonia.Controls;
 [TemplatePart(PartClearButton, typeof(Button))]
 [PseudoClasses(PseudoClassName.FlyoutOpen)]
 [SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
-public class DateRangePickerEx : TextPicker<Period?, Calendar>
+public partial class DateRangePickerEx : TextPicker<Period?, Calendar>
 {
     public const string PartClearButton = "PART_ClearButton";
 
@@ -42,8 +41,12 @@ public class DateRangePickerEx : TextPicker<Period?, Calendar>
     private DateTime? _partialStart;
     private DateTime? _partialEnd;
 
-    static DateRangePickerEx() =>
+    static DateRangePickerEx()
+    {
         AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<DateRangePickerEx>(AutomationControlType.Custom);
+        CloseOnCommitProperty.OverrideDefaultValue<DateRangePickerEx>(false);
+        CloseOnSingleSelectionProperty.OverrideDefaultValue<DateRangePickerEx>(true);
+    }
 
     public DateRangePickerEx()
     {
@@ -241,10 +244,16 @@ public class DateRangePickerEx : TextPicker<Period?, Calendar>
 
     private void OnClearButtonClick(object? sender, RoutedEventArgs e) => Clear();
 
-    protected override void RemovePreviewerHandlers() => Previewer?.DayButtonClick -= OnCalendarDayButtonClick;
+    protected override void RemovePreviewerHandlers()
+    {
+        base.RemovePreviewerHandlers();
+        Previewer?.DayButtonClick -= OnCalendarDayButtonClick;
+    }
 
     protected override void AddPreviewerHandlers()
     {
+        base.AddPreviewerHandlers();
+
         if (Previewer is null)
             return;
 
@@ -253,6 +262,19 @@ public class DateRangePickerEx : TextPicker<Period?, Calendar>
         Previewer.DayButtonClick += OnCalendarDayButtonClick;
         SyncBlackoutDates();
     }
+
+    protected override void OnDropDownClosing()
+    {
+        if (ShouldRollbackOnClose())
+            _pendingRangeStart = null;
+
+        base.OnDropDownClosing();
+    }
+
+    protected override bool ShouldCloseAfterSingleSelection() =>
+        CloseOnSingleSelection && IsDropDownOpen && GetPreviewValue() is not null;
+
+    protected override bool ShouldRollbackOnClose() => HasUncommittedRangePreview();
 
     private void SyncBlackoutDates()
     {
@@ -286,17 +308,9 @@ public class DateRangePickerEx : TextPicker<Period?, Calendar>
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == IsDropDownOpenProperty)
+        if (change.Property == IsDropDownOpenProperty && change.GetNewValue<bool>())
         {
-            if (change.GetNewValue<bool>())
-            {
-                _pendingRangeStart = null;
-            }
-            else if (HasUncommittedRangePreview())
-            {
-                _pendingRangeStart = null;
-                Rollback();
-            }
+            _pendingRangeStart = null;
         }
         else if (change.Property == AllowTapRangeSelectionProperty && Previewer is not null)
         {
@@ -321,7 +335,6 @@ public class DateRangePickerEx : TextPicker<Period?, Calendar>
     {
         if (Previewer is { } calendar)
         {
-            calendar.Focus(NavigationMethod.Unspecified);
             calendar.FocusSelectedDay();
             return;
         }

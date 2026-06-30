@@ -98,5 +98,8 @@ public abstract partial class TextPicker<T, TPreviewer>
 
         if (AutoCommit)
             CommitFromPreview();
+
+        if (ShouldCloseAfterSingleSelection())
+            CloseAfterSingleSelection();
     }
 }

@@ -175,6 +175,20 @@ public partial class DateTimePickerEx : TextPicker<DateTime?, DateTimeView>
 
     private void OnDateTimeChanged(object? sender, SelectionChangedEventArgs e) => OnPreviewValueChanged();
 
+    protected override void RemovePreviewerHandlers()
+    {
+        if (Previewer is DateTimeView view)
+            view.SelectedValueChanged -= OnDateTimeChanged;
+
+        base.RemovePreviewerHandlers();
+    }
+
+    protected override void AddPreviewerHandlers()
+    {
+        base.AddPreviewerHandlers();
+        Previewer?.OnLoading<DateTimeView>(view => view.SelectedValueChanged += OnDateTimeChanged, view => view.SelectedValueChanged -= OnDateTimeChanged);
+    }
+
     protected override DateTime? IncrementValue(int offset) => SelectedValue?.AddMinutes(offset);
 
     protected override DateTime? IncrementLargeValue(int offset) => SelectedValue?.AddHours(offset);

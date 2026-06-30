@@ -8,10 +8,12 @@ using System;
 using System.Globalization;
 using System.Reflection;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives;
+using MyNet.Primitives.Intervals;
+using MyNet.Primitives.Temporal;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.DateTimePickers;
@@ -131,6 +133,48 @@ public class TimeRangePickerExTests
     }
 
     [Fact]
+    public void AutoCommit_DefaultIsTrue()
+    {
+        CreatePicker().AutoCommit.Should().BeTrue();
+    }
+
+    [Fact]
+    public void AutoCommit_WhenCompleteRangeInPreviewer_UpdatesSelectedValue()
+    {
+        var picker = CreatePickerWithPreviewer();
+        var start = new TimeSpan(9, 0, 0);
+        var end = new TimeSpan(17, 0, 0);
+        picker.SelectedValue = TimeRangeHelper.BuildPeriod(start, end, DateTime.Today).Period;
+        picker.IsDropDownOpen = true;
+
+        var previewer = picker.TestPreviewer!;
+        previewer.StartTime = new TimeSpan(10, 0, 0);
+        previewer.EndTime = new TimeSpan(18, 0, 0);
+
+        picker.StartTime.Should().Be(new TimeSpan(10, 0, 0));
+        picker.EndTime.Should().Be(new TimeSpan(18, 0, 0));
+    }
+
+    [Fact]
+    public void ShouldRollbackOnClose_ReturnsFalse_WhenPreviewComplete()
+    {
+        var picker = CreatePickerWithPreviewer();
+        picker.TestPreviewer!.StartTime = new TimeSpan(9, 0, 0);
+        picker.TestPreviewer.EndTime = new TimeSpan(17, 0, 0);
+
+        picker.TestShouldRollbackOnClose().Should().BeFalse();
+    }
+
+    [Fact]
+    public void ShouldRollbackOnClose_ReturnsTrue_WhenOnlyStartSet()
+    {
+        var picker = CreatePickerWithPreviewer();
+        picker.TestPreviewer!.StartTime = new TimeSpan(9, 0, 0);
+
+        picker.TestShouldRollbackOnClose().Should().BeTrue();
+    }
+
+    [Fact]
     public void TryUpdateSelectedValue_KeepsActiveBoundaryOnEnd()
     {
         var view = new TimeRangeView();
@@ -156,7 +200,7 @@ public class TimeRangePickerExTests
     }
 
     [Fact]
-    public void SwitchToEnd_DoesNotSetSelectedValueDuringFlyoutEdit()
+    public void SwitchToEnd_SyncsSelectedValueWhenBothBoundariesValid()
     {
         var view = new TimeRangeView();
         view.StartTime = new TimeSpan(9, 0, 0);
@@ -165,23 +209,9 @@ public class TimeRangePickerExTests
 
         view.ActiveBoundary.Should().Be(TimeRangeBoundary.End);
         view.EndTime.Should().Be(new TimeSpan(10, 0, 0));
-        view.SelectedValue.Should().BeNull();
-    }
-
-    [Fact]
-    public void CompleteRequested_IsRaisedWhenEndBoundaryCompletesWithStartDefined()
-    {
-        var view = new TimeRangeView();
-        var raised = false;
-        view.CompleteRequested += (_, _) => raised = true;
-        view.StartTime = new TimeSpan(9, 0, 0);
-        view.SwitchBoundary(TimeRangeBoundary.End);
-        view.EndTime = new TimeSpan(17, 0, 0);
-
-        view.GetType().GetMethod("OnTimeViewInputCompleted", BindingFlags.NonPublic | BindingFlags.Instance)!
-            .Invoke(view, [null, new RoutedEventArgs()]);
-
-        raised.Should().BeTrue();
+        view.SelectedValue.Should().NotBeNull();
+        TimeRangeHelper.GetPeriodStartTime(view.SelectedValue!).Should().Be(new TimeSpan(9, 0, 0));
+        TimeRangeHelper.GetPeriodEndTime(view.SelectedValue!).Should().Be(new TimeSpan(10, 0, 0));
     }
 
     [Fact]
@@ -192,7 +222,7 @@ public class TimeRangePickerExTests
         view.EndTime = new TimeSpan(17, 0, 0);
 
         view.GetType().GetMethod("OnTimeViewInputCompleted", BindingFlags.NonPublic | BindingFlags.Instance)!
-            .Invoke(view, [null, new RoutedEventArgs()]);
+            .Invoke(view, [null, new TimeInputCompletedEventArgs(TimeSelectorBase.InputCompletedEvent) { Mode = TimeInputCompletionMode.FieldAdvance }]);
 
         view.ActiveBoundary.Should().Be(TimeRangeBoundary.Start);
     }
@@ -202,5 +232,31 @@ public class TimeRangePickerExTests
         var picker = new TimeRangePickerEx { DisplayFormat = @"hh\:mm" };
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         return picker;
+    }
+
+    private static TestableTimeRangePickerEx CreatePickerWithPreviewer()
+    {
+        var picker = new TestableTimeRangePickerEx { DisplayFormat = @"hh\:mm" };
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        picker.AttachPreviewer(new TimeRangeView());
+        return picker;
+    }
+
+    private sealed class TestableTimeRangePickerEx : TimeRangePickerEx
+    {
+        public TimeRangeView? TestPreviewer { get; private set; }
+
+        public void AttachPreviewer(TimeRangeView view)
+        {
+            TestPreviewer = view;
+            typeof(TextPicker<Period?, TimeRangeView>)
+                .GetProperty("Previewer", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)!
+                .SetValue(this, view);
+
+            // Direct subscription: OnLoading defers until Loaded, which does not fire without a visual tree.
+            view.SelectedValueChanged += (_, _) => OnPreviewValueChanged();
+        }
+
+        public bool TestShouldRollbackOnClose() => ShouldRollbackOnClose();
     }
 }

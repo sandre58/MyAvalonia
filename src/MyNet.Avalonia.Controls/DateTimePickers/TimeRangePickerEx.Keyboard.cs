@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="DateTimePickerEx.Keyboard.cs" company="Stéphane ANDRE">
+// <copyright file="TimeRangePickerEx.Keyboard.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -11,16 +11,16 @@ using Avalonia.Input;
 namespace MyNet.Avalonia.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-public partial class DateTimePickerEx
+public partial class TimeRangePickerEx
 {
     protected override bool ProcessKey(KeyEventArgs e)
     {
-        if (IsDropDownOpen && Previewer is DateTimeView view && TextBox is { } textBox)
+        if (IsDropDownOpen && Previewer is TimeRangeView view && TextBox is { } textBox)
         {
-            if (ReferenceEquals(e.Source, textBox) && DateTimeViewFocusHelper.TryHandleTextBoxTab(view, textBox, e))
+            if (ReferenceEquals(e.Source, textBox) && TimeRangeViewFocusHelper.TryHandleTextBoxTab(view, textBox, e))
                 return true;
 
-            if (DateTimeViewFocusHelper.TryHandlePreviewerTab(view, TextBox, e))
+            if (TimeRangeViewFocusHelper.TryHandlePreviewerTab(view, TextBox, e))
                 return true;
         }
 
@@ -29,7 +29,7 @@ public partial class DateTimePickerEx
 
     protected override void OnPreviewerKeyDown(object? sender, KeyEventArgs e)
     {
-        if (IsDropDownOpen && Previewer is DateTimeView view && DateTimeViewFocusHelper.TryHandlePreviewerTab(view, TextBox, e))
+        if (IsDropDownOpen && Previewer is TimeRangeView view && TimeRangeViewFocusHelper.TryHandlePreviewerTab(view, TextBox, e))
         {
             e.Handled = true;
             return;
@@ -38,21 +38,10 @@ public partial class DateTimePickerEx
         base.OnPreviewerKeyDown(sender, e);
     }
 
-    protected override void TryFocusPopupContent()
-    {
-        if (Previewer is { } dateTimeView)
-        {
-            dateTimeView.FocusSection(DateTimeViewSection.Calendar);
-            return;
-        }
-
-        base.TryFocusPopupContent();
-    }
-
     protected override void FocusPreviewerOnTabFromTextBox(Control previewer)
     {
-        if (previewer is DateTimeView dateTimeView)
-            dateTimeView.FocusSection(DateTimeViewSection.Calendar);
+        if (previewer is TimeRangeView view)
+            view.FocusStartHour();
         else
             base.FocusPreviewerOnTabFromTextBox(previewer);
     }

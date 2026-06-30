@@ -165,7 +165,7 @@ public class ClockSelector : TimeSelectorBase
     private void ComponentIsDragged(object? sender, EventArgs e) => AutoChangeMode.IfTrue(() =>
     {
         if (!MoveToNextComponent(wrap: false))
-            RaiseInputCompleted();
+            RaiseInputCompleted(TimeInputCompletionMode.FieldAdvance);
     });
 
     #endregion

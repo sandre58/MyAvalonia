@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="DateTimePickerEx.Keyboard.cs" company="Stéphane ANDRE">
+// <copyright file="CalendarDatePickerEx.Keyboard.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -11,16 +11,16 @@ using Avalonia.Input;
 namespace MyNet.Avalonia.Controls;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-public partial class DateTimePickerEx
+public partial class CalendarDatePickerEx
 {
     protected override bool ProcessKey(KeyEventArgs e)
     {
-        if (IsDropDownOpen && Previewer is DateTimeView view && TextBox is { } textBox)
+        if (IsDropDownOpen && Previewer is Calendar calendar && TextBox is { } textBox)
         {
-            if (ReferenceEquals(e.Source, textBox) && DateTimeViewFocusHelper.TryHandleTextBoxTab(view, textBox, e))
+            if (ReferenceEquals(e.Source, textBox) && CalendarFocusHelper.TryHandleTextBoxTab(calendar, textBox, e))
                 return true;
 
-            if (DateTimeViewFocusHelper.TryHandlePreviewerTab(view, TextBox, e))
+            if (CalendarFocusHelper.TryHandlePreviewerTab(calendar, TextBox, e))
                 return true;
         }
 
@@ -29,7 +29,7 @@ public partial class DateTimePickerEx
 
     protected override void OnPreviewerKeyDown(object? sender, KeyEventArgs e)
     {
-        if (IsDropDownOpen && Previewer is DateTimeView view && DateTimeViewFocusHelper.TryHandlePreviewerTab(view, TextBox, e))
+        if (IsDropDownOpen && Previewer is Calendar calendar && CalendarFocusHelper.TryHandlePreviewerTab(calendar, TextBox, e))
         {
             e.Handled = true;
             return;
@@ -40,9 +40,9 @@ public partial class DateTimePickerEx
 
     protected override void TryFocusPopupContent()
     {
-        if (Previewer is { } dateTimeView)
+        if (Previewer is { } calendar)
         {
-            dateTimeView.FocusSection(DateTimeViewSection.Calendar);
+            calendar.FocusSelectedDay();
             return;
         }
 
@@ -51,8 +51,8 @@ public partial class DateTimePickerEx
 
     protected override void FocusPreviewerOnTabFromTextBox(Control previewer)
     {
-        if (previewer is DateTimeView dateTimeView)
-            dateTimeView.FocusSection(DateTimeViewSection.Calendar);
+        if (previewer is Calendar calendar)
+            calendar.FocusSelectedDay();
         else
             base.FocusPreviewerOnTabFromTextBox(previewer);
     }

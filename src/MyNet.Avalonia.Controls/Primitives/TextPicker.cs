@@ -92,9 +92,10 @@ public abstract partial class TextPicker<T, TPreviewer> : DropDownControl, IText
         AddPreviewerHandlers();
     }
 
-    protected virtual void AddPreviewerHandlers() { }
+    protected virtual void AddPreviewerHandlers() => Previewer?.AddHandler(KeyDownEvent, OnPreviewerKeyDown, RoutingStrategies.Tunnel, handledEventsToo: true);
 
-    protected virtual void RemovePreviewerHandlers() { }
+    protected virtual void RemovePreviewerHandlers() =>
+        Previewer?.RemoveHandler(KeyDownEvent, OnPreviewerKeyDown);
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
@@ -106,6 +107,10 @@ public abstract partial class TextPicker<T, TPreviewer> : DropDownControl, IText
 
                 _oldSelectedValue = SelectedValue;
                 UpdatePreviewer(SelectedValue);
+            }
+            else if (change.GetOldValue<bool>())
+            {
+                OnDropDownClosing();
             }
         }
         else if (change.Property == DisplayFormatProperty)
@@ -243,6 +248,18 @@ public abstract partial class TextPicker<T, TPreviewer> : DropDownControl, IText
     {
         get => GetValue(CloseOnCommitProperty);
         set => SetValue(CloseOnCommitProperty, value);
+    }
+
+    #endregion
+
+    #region CloseOnSingleSelection
+
+    public static readonly StyledProperty<bool> CloseOnSingleSelectionProperty = AvaloniaProperty.Register<TextPicker<T, TPreviewer>, bool>(nameof(CloseOnSingleSelection));
+
+    public bool CloseOnSingleSelection
+    {
+        get => GetValue(CloseOnSingleSelectionProperty);
+        set => SetValue(CloseOnSingleSelectionProperty, value);
     }
 
     #endregion

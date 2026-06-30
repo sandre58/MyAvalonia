@@ -89,7 +89,7 @@ public class Calendar : TemplatedControl
 
     static Calendar()
     {
-        FocusableProperty.OverrideDefaultValue<Calendar>(true);
+        FocusableProperty.OverrideDefaultValue<Calendar>(false);
         AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<Calendar>(AutomationControlType.Calendar);
         _ = SelectedDateProperty.Changed.AddClassHandler<Calendar>((calendar, _) => calendar.UpdateAutomationName());
         _ = DisplayDateProperty.Changed.AddClassHandler<Calendar>((calendar, _) => calendar.UpdateAutomationName());
@@ -1953,11 +1953,7 @@ public class Calendar : TemplatedControl
 
     #region Focus
 
-    public void FocusSelectedDay()
-    {
-        Focus();
-        MoveToDate(SelectedDate ?? DisplayDate);
-    }
+    public void FocusSelectedDay() => UpdateFocus(SelectedDate ?? DisplayDate);
 
     internal CalendarDayButton? GetFocusedDayButton() =>
         (CalendarDayButton?)_cells.Values.FirstOrDefault(x => x.IsFocused);

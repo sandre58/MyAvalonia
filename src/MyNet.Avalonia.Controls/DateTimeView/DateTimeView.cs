@@ -84,16 +84,35 @@ public class DateTimeView : TemplatedControl, IValueSelector<DateTime?>
         switch (section)
         {
             case DateTimeViewSection.Calendar:
-                _calendar?.Focus(NavigationMethod.Directional);
                 _calendar?.FocusSelectedDay();
                 break;
 
             case DateTimeViewSection.Time:
-                _timeView?.FocusActiveComponent();
+                _timeView?.FocusComponent(TimeComponent.Hour);
                 break;
         }
 
         UpdateAutomationName();
+    }
+
+    internal Calendar? CalendarPart => _calendar;
+
+    internal TimeView? TimeViewPart => _timeView;
+
+    internal bool IsSourceInCalendarSection(object? source)
+    {
+        if (source is not Visual visual || _calendar is null)
+            return false;
+
+        return visual.FindAncestorOfType<Calendar>(includeSelf: true) == _calendar;
+    }
+
+    internal bool IsSourceInTimeSection(object? source)
+    {
+        if (source is not Visual visual || _timeView is null)
+            return false;
+
+        return visual.FindAncestorOfType<TimeView>(includeSelf: true) == _timeView;
     }
 
     protected override void OnGotFocus(FocusChangedEventArgs e)

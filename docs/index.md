@@ -19,6 +19,7 @@ docs/
 │   ├── theme-catalog-utility-classes.md ★ Reference — CSS classes
 │   ├── theme-controls.md          ★ Reference — control templates
 │   ├── controls-and-overlays.md
+│   ├── pickers.md                   ★ Picker families, properties, keyboard/focus
 │   ├── extended-host.md       ★ DI, dialogs, toasts, IThemeService
 │   ├── markup-and-converters.md
 │   └── geography-avalonia.md

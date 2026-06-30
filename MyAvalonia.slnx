@@ -68,6 +68,8 @@
     <File Path=".cursor/docs/09-anti-patterns.md" />
     <File Path=".cursor/docs/10-mynet-companion.md" />
     <File Path=".cursor/docs/11-markup-extensions.md" />
+    <File Path=".cursor/docs/picker-interaction-contract.md" />
+    <File Path=".cursor/docs/pickers.md" />
     <File Path=".cursor/docs/README.md" />
   </Folder>
   <Folder Name="/Solution Files/Cursor/Reference/">
@@ -116,6 +118,7 @@
     <File Path="docs/guides/extended-host.md" />
     <File Path="docs/guides/geography-avalonia.md" />
     <File Path="docs/guides/markup-and-converters.md" />
+    <File Path="docs/guides/pickers.md" />
     <File Path="docs/guides/README.md" />
     <File Path="docs/guides/theme-catalog-colors.md" />
     <File Path="docs/guides/theme-catalog-tokens.md" />

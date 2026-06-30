@@ -17,6 +17,7 @@ using Avalonia.Controls.Shapes;
 using Avalonia.Data;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
+using MyNet.Avalonia.Controls.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -26,6 +27,7 @@ namespace MyNet.Avalonia.Controls;
 /// A control that allows the user to select a date and a time using scrollable
 /// selectors. It merges the behavior of Avalonia's <c>DatePicker</c> and <c>TimePicker</c>.
 /// </summary>
+
 [TemplatePart(PartFlyoutButton, typeof(Button))]
 [TemplatePart(PartButtonContentGrid, typeof(Grid))]
 [TemplatePart(PartDayTextBlock, typeof(TextBlock))]
@@ -39,7 +41,7 @@ namespace MyNet.Avalonia.Controls;
 [TemplatePart(PartPickerPresenter, typeof(DateTimeScrollPickerPresenter))]
 [PseudoClasses(PseudoHasNoDate, PseudoFlyoutOpen)]
 [SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
-public class DateTimeScrollPickerEx : TemplatedControl
+public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
 {
     private const string PartFlyoutButton = "PART_FlyoutButton";
     private const string PartButtonContentGrid = "PART_ButtonContentGrid";
@@ -176,6 +178,16 @@ public class DateTimeScrollPickerEx : TemplatedControl
     /// Raised when the <see cref="SelectedDateTime"/> property changes.
     /// </summary>
     public event EventHandler<DateTimeScrollPickerSelectedValueChangedEventArgs>? SelectedDateTimeChanged;
+
+    /// <summary>
+    /// Raised when the drop-down opens.
+    /// </summary>
+    public event EventHandler? DropDownOpened;
+
+    /// <summary>
+    /// Raised when the drop-down closes.
+    /// </summary>
+    public event EventHandler? DropDownClosed;
 
     /// <summary>
     /// Gets or sets the selected date and time. Can be null.
@@ -608,8 +620,25 @@ public class DateTimeScrollPickerEx : TemplatedControl
             ? CultureInfo.CurrentCulture.DateTimeFormat.PMDesignator
             : CultureInfo.InvariantCulture.DateTimeFormat.PMDesignator;
 
-    private void OnFlyoutButtonClicked(object? sender, RoutedEventArgs e)
+    /// <summary>
+    /// Toggles the drop-down open state.
+    /// </summary>
+    public void TogglePopup()
     {
+        if (IsDropDownOpen)
+            ClosePopup();
+        else
+            OpenPopup();
+    }
+
+    /// <summary>
+    /// Opens the drop-down.
+    /// </summary>
+    public void OpenPopup()
+    {
+        if (IsDropDownOpen)
+            return;
+
         if (_presenter is null)
             throw new InvalidOperationException("No DateTimeScrollPickerPresenter found.");
         if (_popup is null)
@@ -631,9 +660,22 @@ public class DateTimeScrollPickerEx : TemplatedControl
 
         // The extra 5 px relates to the default popup placement behavior.
         _popup.VerticalOffset = deltaY + 5;
+
+        DropDownOpened?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnPopupClosed(object? sender, EventArgs e) => SetCurrentValue(IsDropDownOpenProperty, false);
+    /// <summary>
+    /// Closes the drop-down.
+    /// </summary>
+    public void ClosePopup() => _popup?.Close();
+
+    private void OnFlyoutButtonClicked(object? sender, RoutedEventArgs e) => OpenPopup();
+
+    private void OnPopupClosed(object? sender, EventArgs e)
+    {
+        SetCurrentValue(IsDropDownOpenProperty, false);
+        DropDownClosed?.Invoke(this, EventArgs.Empty);
+    }
 
     private void OnDismissPicker(object? sender, EventArgs e)
     {

@@ -13,6 +13,7 @@ Short guides for Cursor agents. For deep reference, see `.cursor/reference/`.
 | Showcase demo page | `05-showcase-structure.md` |
 | Bindings, loc, validation | `06-mvvm-patterns.md` + `11-markup-extensions.md` |
 | Tests | `07-testing-guide.md` |
+| Pickers / commit / focus | `pickers.md` |
 | Before NuGet pack | `08-nuget-checklist.md` |
 | Review / avoid mistakes | `09-anti-patterns.md` |
 | MyNet external APIs | `10-mynet-companion.md` |

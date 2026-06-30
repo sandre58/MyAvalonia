@@ -12,6 +12,7 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using MyNet.Avalonia.Controls.Primitives;
+using MyNet.Avalonia.Controls.Primitives.Internal;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -480,7 +481,22 @@ public class ColorPickerEx : TextPicker<Color?, ColorView>
 
     #region Selector
 
-    protected override void AddPreviewerHandlers() => Previewer?.OnLoading<ColorView>(x => x.ColorChanged += OnColorChanged, x => x.ColorChanged -= OnColorChanged);
+    protected override void AddPreviewerHandlers()
+    {
+        base.AddPreviewerHandlers();
+        Previewer?.OnLoading<ColorView>(x => x.ColorChanged += OnColorChanged, x => x.ColorChanged -= OnColorChanged);
+    }
+
+    protected override void TryFocusPopupContent()
+    {
+        if (Previewer is ColorView colorView)
+        {
+            ColorViewFocusHelper.FocusDefaultContent(colorView);
+            return;
+        }
+
+        base.TryFocusPopupContent();
+    }
 
     private void OnColorChanged(object? sender, ColorChangedEventArgs e) => OnPreviewValueChanged();
 

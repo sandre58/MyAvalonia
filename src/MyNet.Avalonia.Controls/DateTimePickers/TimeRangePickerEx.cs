@@ -33,7 +33,7 @@ namespace MyNet.Avalonia.Controls;
 [TemplatePart(PartClearButton, typeof(Button))]
 [PseudoClasses(PseudoClassName.FlyoutOpen, PseudoClassName.Pressed)]
 [SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
-public class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
+public partial class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
 {
     public const string PartClearButton = "PART_ClearButton";
 
@@ -44,7 +44,6 @@ public class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
     static TimeRangePickerEx()
     {
         AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<TimeRangePickerEx>(AutomationControlType.Custom);
-        AutoCommitProperty.OverrideDefaultValue<TimeRangePickerEx>(false);
         CloseOnCommitProperty.OverrideDefaultValue<TimeRangePickerEx>(false);
         DisplayFormatProperty.OverrideDefaultValue<TimeRangePickerEx>("hh\\:mm");
         ShowSecondsProperty.Changed.AddClassHandler<TimeRangePickerEx>((o, _) => o.DisplayFormat = o.ComputeDisplayFormat());
@@ -231,36 +230,34 @@ public class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
 
     private void OnClearButtonClick(object? sender, RoutedEventArgs e) => Clear();
 
-    protected override void AddPreviewerHandlers() =>
+    protected override void AddPreviewerHandlers()
+    {
+        base.AddPreviewerHandlers();
         Previewer?.OnLoading<TimeRangeView>(
             x =>
             {
                 x.SelectedValueChanged += OnPreviewerValueChanged;
-                x.CompleteRequested += OnPreviewerCompleteRequested;
                 SyncPreviewerSettings(x);
             },
-            x =>
-            {
-                x.SelectedValueChanged -= OnPreviewerValueChanged;
-                x.CompleteRequested -= OnPreviewerCompleteRequested;
-            });
+            x => x.SelectedValueChanged -= OnPreviewerValueChanged);
+    }
+
+    protected override void OnDropDownClosing()
+    {
+        if (Previewer?.TryBuildSelectedValue() is { IsValid: true, Period: { } period }
+            && !Equals(period, SelectedValue))
+        {
+            SetCurrentValue(SelectedValueProperty, period);
+            DataValidationErrors.ClearErrors(this);
+            return;
+        }
+
+        base.OnDropDownClosing();
+    }
+
+    protected override bool ShouldRollbackOnClose() => HasUncommittedIncompletePreview();
 
     private void OnPreviewerValueChanged(object? sender, SelectionChangedEventArgs e) => OnPreviewValueChanged();
-
-    private void OnPreviewerCompleteRequested(object? sender, EventArgs e)
-    {
-        CommitFromPreview();
-        ClosePopup();
-        Focus();
-    }
-
-    protected override void OnPreviewValueChanged()
-    {
-        if (IsDropDownOpen)
-            return;
-
-        base.OnPreviewValueChanged();
-    }
 
     protected override void TryFocusPopupContent()
     {
@@ -303,17 +300,8 @@ public class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
             }
         }
 
-        if (change.Property == IsDropDownOpenProperty)
-        {
-            if (change.GetNewValue<bool>())
-            {
-                Previewer?.ResetForPopupOpen();
-            }
-            else if (HasUncommittedPreview())
-            {
-                Rollback();
-            }
-        }
+        if (change.Property == IsDropDownOpenProperty && change.GetNewValue<bool>())
+            Previewer?.ResetForPopupOpen();
         else if (change.Property == RangeSeparatorProperty && SelectedValue is not null)
         {
             SetCurrentValue(TextProperty, ConvertValueToString(SelectedValue));
@@ -366,12 +354,6 @@ public class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
         }
 
         DataValidationErrors.ClearErrors(this);
-
-        if (CloseOnCommit)
-        {
-            ClosePopup();
-            Focus();
-        }
     }
 
     public override void Clear()
@@ -472,16 +454,16 @@ public class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
         return result.IsValid ? result.Period : SelectedValue;
     }
 
-    private bool HasUncommittedPreview()
+    private bool HasUncommittedIncompletePreview()
     {
         if (Previewer is null)
             return false;
 
         var preview = Previewer.TryBuildSelectedValue();
-        if (!preview.IsValid)
-            return Previewer.StartTime.HasValue || Previewer.EndTime.HasValue;
+        if (preview.IsValid)
+            return false;
 
-        return !Equals(preview.Period, SelectedValue);
+        return Previewer.StartTime.HasValue || Previewer.EndTime.HasValue;
     }
 
     private void ReportInvalidRange() =>

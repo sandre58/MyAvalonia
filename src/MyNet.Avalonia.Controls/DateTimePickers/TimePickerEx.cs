@@ -14,6 +14,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Primitives;
+using MyNet.Avalonia.Controls.Primitives.Internal;
 using MyNet.Primitives;
 using MyNet.Primitives.Temporal;
 
@@ -166,7 +167,30 @@ public class TimePickerEx : TextPicker<TimeSpan?, TimeView>
 
     #region Selector
 
-    protected override void AddPreviewerHandlers() => Previewer?.OnLoading<TimeView>(x => x.SelectedValueChanged += OnTimeChanged, x => x.SelectedValueChanged -= OnTimeChanged);
+    protected override void AddPreviewerHandlers()
+    {
+        base.AddPreviewerHandlers();
+        Previewer?.OnLoading<TimeView>(x => x.SelectedValueChanged += OnTimeChanged, x => x.SelectedValueChanged -= OnTimeChanged);
+    }
+
+    protected override void TryFocusPopupContent()
+    {
+        if (Previewer is TimeView timeView)
+        {
+            timeView.FocusComponent(TimeComponent.Hour);
+            return;
+        }
+
+        base.TryFocusPopupContent();
+    }
+
+    protected override void FocusPreviewerOnTabFromTextBox(Control previewer)
+    {
+        if (previewer is TimeView timeView)
+            timeView.FocusComponent(TimeComponent.Hour);
+        else
+            base.FocusPreviewerOnTabFromTextBox(previewer);
+    }
 
     private void OnTimeChanged(object? sender, SelectionChangedEventArgs e) => OnPreviewValueChanged();
 

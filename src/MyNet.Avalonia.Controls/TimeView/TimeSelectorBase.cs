@@ -31,6 +31,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
     private const string PartSecond = "PART_Second";
 
     private readonly Suspender _componentValueChangedSuspender = new();
+    private bool _syncingComponentFromFocus;
 
     static TimeSelectorBase()
     {
@@ -113,10 +114,10 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
     #region SelectedValue
 
-    public static readonly RoutedEvent<RoutedEventArgs> InputCompletedEvent =
-        RoutedEvent.Register<TimeSelectorBase, RoutedEventArgs>(nameof(InputCompleted), RoutingStrategies.Bubble);
+    public static readonly RoutedEvent<TimeInputCompletedEventArgs> InputCompletedEvent =
+        RoutedEvent.Register<TimeSelectorBase, TimeInputCompletedEventArgs>(nameof(InputCompleted), RoutingStrategies.Bubble);
 
-    public event EventHandler<RoutedEventArgs>? InputCompleted;
+    public event EventHandler<TimeInputCompletedEventArgs>? InputCompleted;
 
     public event EventHandler<SelectionChangedEventArgs>? SelectedValueChanged;
 
@@ -237,7 +238,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
     }
 
     protected virtual bool ShouldFocusActiveComponent(TimeComponent component) =>
-        IsKeyboardFocusWithin && !IsFocusWithinComponent(component);
+        !_syncingComponentFromFocus && IsKeyboardFocusWithin && !IsFocusWithinComponent(component);
 
     private bool IsFocusWithinComponent(TimeComponent component)
     {
@@ -338,12 +339,18 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
     protected bool ProcessKeyboardKey(KeyEventArgs e)
     {
-        if (!IsEnabled || e.Handled || e.KeyModifiers != KeyModifiers.None)
+        if (!IsEnabled || e.Handled)
+            return false;
+
+        if (ProcessTabKey(e))
+            return true;
+
+        if (e.KeyModifiers != KeyModifiers.None)
             return false;
 
         return e.Key switch
         {
-            Key.Enter when IsOnLastSelectableComponent() => RaiseInputCompleted() || true,
+            Key.Enter when IsOnLastSelectableComponent() => RaiseInputCompleted(TimeInputCompletionMode.EnterKey) || true,
             Key.Space or Key.Enter or Key.Right => MoveToNextComponent(wrap: true) || true,
             Key.Left => MoveToPreviousComponent(wrap: true) || true,
             Key.Up => Previous() || true,
@@ -358,16 +365,52 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
     private void OnComponentKeyDown(object? sender, KeyEventArgs e)
     {
-        if (TryProcessDigitKey(e) || ProcessKeyboardKey(e))
+        if (ProcessTabKey(e) || TryProcessDigitKey(e) || ProcessKeyboardKey(e))
             e.Handled = true;
+    }
+
+    private bool ProcessTabKey(KeyEventArgs e)
+    {
+        if (e.Key != Key.Tab)
+            return false;
+
+        if ((e.KeyModifiers & ~KeyModifiers.Shift) != KeyModifiers.None)
+            return false;
+
+        var shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
+
+        if (shift)
+        {
+            if (!MoveToPreviousComponent(wrap: false))
+                return false;
+
+            FocusSelectedComponent(NavigationMethod.Tab);
+            return true;
+        }
+
+        if (!MoveToNextComponent(wrap: false))
+            return false;
+
+        FocusSelectedComponent(NavigationMethod.Tab);
+        return true;
     }
 
     protected virtual bool TryProcessDigitKey(KeyEventArgs e) => false;
 
     private void OnComponentGotFocus(object? sender, RoutedEventArgs e)
     {
-        if (ResolveComponentKey(sender ?? e.Source) is { } key)
+        if (ResolveComponentKey(sender ?? e.Source) is not { } key)
+            return;
+
+        _syncingComponentFromFocus = true;
+        try
+        {
             SetCurrentValue(SelectedComponentProperty, key);
+        }
+        finally
+        {
+            _syncingComponentFromFocus = false;
+        }
     }
 
     #endregion
@@ -641,9 +684,9 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
         return selectable.Count > 0 && selectable[^1] == SelectedComponent;
     }
 
-    protected bool RaiseInputCompleted()
+    protected bool RaiseInputCompleted(TimeInputCompletionMode mode = TimeInputCompletionMode.EnterKey)
     {
-        var args = new RoutedEventArgs(InputCompletedEvent);
+        var args = new TimeInputCompletedEventArgs(InputCompletedEvent) { Mode = mode };
         RaiseEvent(args);
         return true;
     }

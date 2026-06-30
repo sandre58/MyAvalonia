@@ -26,6 +26,16 @@ public abstract partial class TextPicker<T, TPreviewer>
 
     protected virtual bool ProcessKey(KeyEventArgs e)
     {
+        if (IsDropDownOpen && Previewer is { } previewer && TextBox is { } textBox)
+        {
+            if (ReferenceEquals(e.Source, textBox)
+                && TextPickerPopupFocusHelper.TryHandleTextBoxTab(previewer, textBox, e, FocusPreviewerOnTabFromTextBox))
+                return true;
+
+            if (TextPickerPopupFocusHelper.TryHandlePreviewerTab(previewer, TextBox, e))
+                return true;
+        }
+
         var result = TextPickerKeyboardHelper.Resolve(
             e.Key,
             IsDropDownOpen,

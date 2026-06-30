@@ -15,6 +15,26 @@ namespace MyNet.Avalonia.Controls.Tests.TimeView;
 public class TimeSelectorBaseTests
 {
     [Fact]
+    public void MoveToNextComponent_IncludesEnabledComponentsEvenWhenNotVisible()
+    {
+        var selector = new TestableClockSelector();
+        selector.SelectedComponent.Should().Be(TimeComponent.Hour);
+
+        selector.MoveToNextComponent(wrap: false).Should().BeTrue();
+        selector.SelectedComponent.Should().Be(TimeComponent.Minute);
+    }
+
+    private sealed class TestableClockSelector : ClockSelector
+    {
+        public TestableClockSelector()
+        {
+            Components[TimeComponent.Hour] = new ClockTimeComponent { IsVisible = true };
+            Components[TimeComponent.Minute] = new ClockTimeComponent { IsVisible = false };
+            SelectedComponent = TimeComponent.Hour;
+        }
+    }
+
+    [Fact]
     public void HourChange_TwentyFourHour_12_DoesNotResetToMidnight()
     {
         var timeView = new TimeViewControl
