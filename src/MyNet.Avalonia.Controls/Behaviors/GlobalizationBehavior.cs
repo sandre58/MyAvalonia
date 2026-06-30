@@ -103,6 +103,9 @@ public static class GlobalizationBehavior
             case DateRangePickerEx dateRangePickerEx:
                 UpdateDateRangePickerEx(dateRangePickerEx);
                 break;
+            case TimeRangePickerEx timeRangePickerEx:
+                UpdateTimeRangePickerEx(timeRangePickerEx);
+                break;
             case DateTimePickerEx dateTimePickerEx:
                 UpdateDateTimePickerEx(dateTimePickerEx);
                 break;
@@ -132,6 +135,12 @@ public static class GlobalizationBehavior
     private static void UpdateCalendarDatePickerEx(CalendarDatePickerEx calendarDatePicker) => calendarDatePicker.DisplayFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern;
 
     private static void UpdateDateRangePickerEx(DateRangePickerEx dateRangePicker) => dateRangePicker.DisplayFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortDatePattern;
+
+    private static void UpdateTimeRangePickerEx(TimeRangePickerEx timeRangePicker)
+    {
+        timeRangePicker.TimeFormat = GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("HH", StringComparison.InvariantCulture) ? TimeFormat.TwentyFourHour : TimeFormat.TwelveHour;
+        timeRangePicker.DisplayFormat = timeRangePicker.ShowSeconds ? GlobalizationServices.Current.CurrentCulture.DateTimeFormat.LongTimePattern : GlobalizationServices.Current.CurrentCulture.DateTimeFormat.ShortTimePattern;
+    }
 
     private static void UpdateDateTimePickerEx(DateTimePickerEx dateTimePicker)
     {

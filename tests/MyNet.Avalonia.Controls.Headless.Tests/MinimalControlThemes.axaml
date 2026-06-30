@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls">
+                    xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls"
+                    xmlns:my="http://mynet.com/avalonia">
 
     <ControlTheme x:Key="{x:Type controls:PaginationButton}" TargetType="controls:PaginationButton">
         <Setter Property="MinWidth" Value="32" />
@@ -68,6 +69,57 @@
                                            AllowTapRangeSelection="{TemplateBinding AllowTapRangeSelection}"
                                            DisplayDate="{TemplateBinding DisplayDate}"
                                            SelectionMode="SingleRange" />
+                    </Popup>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:TimeView}" TargetType="controls:TimeView">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:TimeView">
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <controls:NumericUpDownTimeComponent Name="PART_Hour"
+                                                         Minimum="0"
+                                                         Maximum="23"
+                                                         Value="{TemplateBinding Hour, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}" />
+                    <controls:NumericUpDownTimeComponent Name="PART_Minute"
+                                                         Minimum="0"
+                                                         Maximum="59"
+                                                         Value="{TemplateBinding Minute, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}" />
+                    <controls:NumericUpDownTimeComponent Name="PART_Second"
+                                                         Minimum="0"
+                                                         Maximum="59"
+                                                         Value="{TemplateBinding Second, Mode=TwoWay, Converter={x:Static my:IntToDecimalConverter.Default}}" />
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:TimeRangeView}" TargetType="controls:TimeRangeView">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:TimeRangeView">
+                <TabControl Name="{x:Static controls:TimeRangeView.PartBoundarySelector}">
+                    <TabItem Header="Start">
+                        <controls:TimeView Name="{x:Static controls:TimeRangeView.PartStartTimeView}" />
+                    </TabItem>
+                    <TabItem Header="End">
+                        <controls:TimeView Name="{x:Static controls:TimeRangeView.PartEndTimeView}" />
+                    </TabItem>
+                </TabControl>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:TimeRangePickerEx}" TargetType="controls:TimeRangePickerEx">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:TimeRangePickerEx">
+                <Panel>
+                    <TextBox Name="PART_TextBox" />
+                    <Button Name="PART_Button" />
+                    <Popup Name="PART_Popup"
+                           IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}">
+                        <controls:TimeRangeView Name="PART_Previewer" />
                     </Popup>
                 </Panel>
             </ControlTemplate>

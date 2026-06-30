@@ -97,7 +97,7 @@ This document summarizes the current state of MyNet.Avalonia project development
 - [x] **Form**
 - [x] **DateTimePicker**
 - [x] **DateRangePicker**
-- [ ] **TimeRangePicker**
+- [x] **TimeRangePicker**
 - [x] **Pages (Content, Carousel, Drawer, Navigation, Tabbed)**
 - [x] **SpinnerButton**
 - [ ] **CommandBar**

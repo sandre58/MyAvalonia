@@ -104,6 +104,19 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                         case TimePickerEx timePickerEx:
                             timePickerEx.SetValue(TimePickerEx.SelectedValueProperty, RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)).TimeOfDay);
                             break;
+                        case TimeRangePickerEx timeRangePickerEx:
+                        {
+                            var startHour = RandomGenerator.Current.Int(6, 18);
+                            var start = new TimeSpan(startHour, RandomGenerator.Current.Int(0, 59), 0);
+                            var end = start.Add(TimeSpan.FromHours(RandomGenerator.Current.Int(1, 4)));
+                            if (end.TotalDays >= 1)
+                                end = new TimeSpan(23, 59, 0);
+
+                            timeRangePickerEx.StartTime = start;
+                            timeRangePickerEx.EndTime = end;
+                            break;
+                        }
+
                         case DateTimePickerEx dateTimePickerEx:
                             dateTimePickerEx.SetValue(DateTimePickerEx.SelectedValueProperty, RandomGenerator.Current.Date(DateTime.Now.AddYears(-10), DateTime.Now.AddYears(10)));
                             break;
@@ -159,6 +172,9 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                         case TimePickerEx timePickerEx:
                             timePickerEx.SetValue(TimePickerEx.SelectedValueProperty, null);
                             break;
+                        case TimeRangePickerEx timeRangePickerEx:
+                            timeRangePickerEx.SetValue(TimeRangePickerEx.SelectedValueProperty, null);
+                            break;
                         case DateTimePickerEx dateTimePickerEx:
                             dateTimePickerEx.SetValue(DateTimePickerEx.SelectedValueProperty, null);
                             break;
@@ -187,6 +203,7 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                         { typeof(DatePicker), InputAssist.PlaceholderTextProperty },
                         { typeof(TimePicker), InputAssist.PlaceholderTextProperty },
                         { typeof(TimePickerEx), TimePickerEx.PlaceholderTextProperty },
+                        { typeof(TimeRangePickerEx), TimeRangePickerEx.PlaceholderTextProperty },
                         { typeof(DateTimePickerEx), DateTimePickerEx.PlaceholderTextProperty },
                         { typeof(DateTimeScrollPickerEx), InputAssist.PlaceholderTextProperty },
                         { typeof(ColorPickerEx), ColorPickerEx.PlaceholderTextProperty }

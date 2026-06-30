@@ -189,6 +189,7 @@
   <data name="TabbedPage" xml:space="preserve"><value>Page à onglets</value></data>
   <data name="TextBlock" xml:space="preserve"><value>Bloc de texte</value></data>
   <data name="TextField" xml:space="preserve"><value>Chrome de champ</value></data>
+  <data name="TimeRangePicker" xml:space="preserve"><value>Sélecteur de plage horaire</value></data>
   <data name="TimeView" xml:space="preserve"><value>Vue horaire</value></data>
   <data name="ToggleButton" xml:space="preserve"><value>Bouton basculant</value></data>
   <data name="ToggleSplitButton" xml:space="preserve"><value>Bouton partagé basculant</value></data>

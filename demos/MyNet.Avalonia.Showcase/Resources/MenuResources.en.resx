@@ -209,6 +209,7 @@
   <data name="TabbedPage" xml:space="preserve"><value>Tabbed page</value></data>
   <data name="TextBlock" xml:space="preserve"><value>Text block</value></data>
   <data name="TextField" xml:space="preserve"><value>Input chrome</value></data>
+  <data name="TimeRangePicker" xml:space="preserve"><value>Time range picker</value></data>
   <data name="TimeView" xml:space="preserve"><value>Time view</value></data>
   <data name="ToggleButton" xml:space="preserve"><value>Toggle button</value></data>
   <data name="ToggleSplitButton" xml:space="preserve"><value>Toggle split button</value></data>

@@ -58,6 +58,7 @@ internal static class PagesCatalog
                 new(typeof(ColorViewPageViewModel), typeof(ColorViewPage), MaterialIconKind.Palette),
                 new(typeof(CalendarPageViewModel), typeof(CalendarPage), MaterialIconKind.Calendar),
                 new(typeof(DateRangePickerPageViewModel), typeof(DateRangePickerPage), MaterialIconKind.CalendarRange),
+                new(typeof(TimeRangePickerPageViewModel), typeof(TimeRangePickerPage), MaterialIconKind.ClockTimeFourOutline),
                 new(typeof(ClockPageViewModel), typeof(ClockPage), MaterialIconKind.Clock),
                 new(typeof(ClockSelectorPageViewModel), typeof(ClockSelectorPage), MaterialIconKind.ClockEdit),
                 new(typeof(TimeViewPageViewModel), typeof(TimeViewPage), MaterialIconKind.TimerOutline)

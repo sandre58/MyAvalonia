@@ -330,6 +330,15 @@
   <data name="AllowTapRangeSelection" xml:space="preserve">
     <value>Allow tag range</value>
   </data>
+  <data name="AllowOvernight" xml:space="preserve">
+    <value>Overnight range</value>
+  </data>
+  <data name="ShowOvernightIndicator" xml:space="preserve">
+    <value>Overnight indicator (+1)</value>
+  </data>
+  <data name="InvalidRangeReportError" xml:space="preserve">
+    <value>Report invalid range error</value>
+  </data>
   <data name="SelectionMode" xml:space="preserve">
     <value>Selection mode</value>
   </data>

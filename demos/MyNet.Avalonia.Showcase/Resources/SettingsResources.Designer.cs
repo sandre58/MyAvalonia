@@ -105,6 +105,33 @@ namespace MyNet.Avalonia.Showcase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plage overnight.
+        /// </summary>
+        internal static string AllowOvernight {
+            get {
+                return ResourceManager.GetString("AllowOvernight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indicateur overnight (+1).
+        /// </summary>
+        internal static string ShowOvernightIndicator {
+            get {
+                return ResourceManager.GetString("ShowOvernightIndicator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erreur si plage invalide.
+        /// </summary>
+        internal static string InvalidRangeReportError {
+            get {
+                return ResourceManager.GetString("InvalidRangeReportError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Animation.
         /// </summary>
         internal static string Animation {

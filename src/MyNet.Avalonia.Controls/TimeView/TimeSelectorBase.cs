@@ -41,7 +41,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
             o.UpdateAutomationName();
         });
         TimeFormatProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.UpdateTimeValues());
-        HourProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.OnComponentChanged(true));
+        HourProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.OnComponentChanged());
         MinuteProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.OnComponentChanged());
         SecondProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.OnComponentChanged());
         IsAmProperty.Changed.AddClassHandler<TimeSelectorBase>((x, _) => x.OnComponentChanged());
@@ -112,6 +112,11 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
     public IComponentTimeSelector? CurrentComponent => Components.GetValueOrDefault(SelectedComponent);
 
     #region SelectedValue
+
+    public static readonly RoutedEvent<RoutedEventArgs> InputCompletedEvent =
+        RoutedEvent.Register<TimeSelectorBase, RoutedEventArgs>(nameof(InputCompleted), RoutingStrategies.Bubble);
+
+    public event EventHandler<RoutedEventArgs>? InputCompleted;
 
     public event EventHandler<SelectionChangedEventArgs>? SelectedValueChanged;
 
@@ -338,6 +343,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
         return e.Key switch
         {
+            Key.Enter when IsOnLastSelectableComponent() => RaiseInputCompleted() || true,
             Key.Space or Key.Enter or Key.Right => MoveToNextComponent(wrap: true) || true,
             Key.Left => MoveToPreviousComponent(wrap: true) || true,
             Key.Up => Previous() || true,
@@ -368,19 +374,53 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
     #region Focus
 
+    public void FocusComponent(TimeComponent component)
+    {
+        EnsureComponentActive(component);
+        FocusSelectedComponent(NavigationMethod.Tab);
+    }
+
     public void FocusActiveComponent()
     {
-        if (!GetSelectableComponents().Contains(SelectedComponent) && GetSelectableComponents().FirstOrDefault() is { } first)
-            SetCurrentValue(SelectedComponentProperty, first);
+        var component = SelectedComponent;
+        if (!GetSelectableComponents().Contains(component) && GetSelectableComponents().FirstOrDefault() is { } first)
+            component = first;
 
-        Focus(NavigationMethod.Directional);
-        FocusSelectedComponent();
+        FocusComponent(component);
+    }
+
+    private void EnsureComponentActive(TimeComponent component)
+    {
+        if (Components.GetValueOrDefault(component) is not { } activeComponent)
+            return;
+
+        if (SelectedComponent != component)
+            SetCurrentValue(SelectedComponentProperty, component);
+        else
+            ShowComponent(activeComponent);
     }
 
     protected void FocusSelectedComponent(NavigationMethod method = NavigationMethod.Directional)
     {
-        if (Components.GetValueOrDefault(SelectedComponent) is IInputElement { Focusable: true, IsEffectivelyEnabled: true } input)
-            input.Focus(method);
+        if (Components.GetValueOrDefault(SelectedComponent) is not IInputElement { Focusable: true, IsEffectivelyEnabled: true } input)
+            return;
+
+        if (TryFocusInputEditor(input, method))
+            return;
+
+        input.Focus(method);
+    }
+
+    private static bool TryFocusInputEditor(IInputElement input, NavigationMethod method)
+    {
+        if (input is not Control control)
+            return false;
+
+        var editor = control.GetVisualDescendants()
+            .OfType<TextBox>()
+            .FirstOrDefault(x => x is { IsEffectivelyEnabled: true, IsVisible: true });
+
+        return editor?.Focus(method) == true;
     }
 
     protected TimeComponent? ResolveComponentKey(object? source)
@@ -422,12 +462,11 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
     protected IDisposable SuppressComponentValueChanged() => _componentValueChangedSuspender.Suspend();
 
-    private void OnComponentChanged(bool computeIsAm = false)
+    private void OnComponentChanged()
     {
         if (_componentValueChangedSuspender.IsSuspended) return;
 
-        var timeContext = new TimeContext(Hour, Minute, Second, computeIsAm && Hour.HasValue ? TimeContext.ComputeIsAm(Hour.Value) : IsAm);
-        SetCurrentValue(SelectedValueProperty, timeContext.ToTimeSpan());
+        SetCurrentValue(SelectedValueProperty, new TimeContext(Hour, Minute, Second, IsAm).ToTimeSpan(TimeFormat));
     }
 
     public bool Previous()
@@ -596,6 +635,19 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
         return true;
     }
 
+    protected bool IsOnLastSelectableComponent()
+    {
+        var selectable = GetSelectableComponents().ToList();
+        return selectable.Count > 0 && selectable[^1] == SelectedComponent;
+    }
+
+    protected bool RaiseInputCompleted()
+    {
+        var args = new RoutedEventArgs(InputCompletedEvent);
+        RaiseEvent(args);
+        return true;
+    }
+
     protected virtual void ShowComponent(IComponentTimeSelector component) { }
 }
 
@@ -614,15 +666,17 @@ internal sealed record TimeContext(int? Hours, int? Minutes, int? Seconds, bool 
         return new(hours, time.Value.Minutes, time.Value.Seconds, isAm);
     }
 
-    public TimeSpan? ToTimeSpan() => !Hours.HasValue ? null : new TimeSpan(ConvertTo24FormattedHours(Hours.Value, IsAm), Minutes ?? 0, Seconds ?? 0);
+    public TimeSpan? ToTimeSpan(TimeFormat format) => !Hours.HasValue
+        ? null
+        : format == TimeFormat.TwentyFourHour
+            ? new TimeSpan(Hours.Value, Minutes ?? 0, Seconds ?? 0)
+            : new TimeSpan(ConvertTo12HourClockTo24(Hours.Value, IsAm), Minutes ?? 0, Seconds ?? 0);
 
     public static bool ComputeIsAm(int hours) => hours < 12;
 
     private static int ConvertTo12FormattedHours(int hours) => hours > 12 ? hours - 12 : hours == 0 ? 12 : hours;
 
-    private static int ConvertTo24FormattedHours(int hours, bool isAm)
-        => isAm && hours < 12 ? hours
-            : isAm && hours > 12 ? hours - 12
-            : !isAm && hours < 12 ? hours + 12
-            : !isAm && hours > 12 ? hours : 0;
+    private static int ConvertTo12HourClockTo24(int hours, bool isAm) => isAm
+        ? hours == 12 ? 0 : hours
+        : hours == 12 ? 12 : hours + 12;
 }

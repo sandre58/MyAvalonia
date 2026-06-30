@@ -162,7 +162,11 @@ public class ClockSelector : TimeSelectorBase
 
     #region Mouse handlers
 
-    private void ComponentIsDragged(object? sender, EventArgs e) => AutoChangeMode.IfTrue(() => MoveToNextComponent());
+    private void ComponentIsDragged(object? sender, EventArgs e) => AutoChangeMode.IfTrue(() =>
+    {
+        if (!MoveToNextComponent(wrap: false))
+            RaiseInputCompleted();
+    });
 
     #endregion
 

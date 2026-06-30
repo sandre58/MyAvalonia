@@ -122,7 +122,8 @@ public class TimeView : TimeSelectorBase
         {
             component.Value = Math.Clamp(parsed, component.Minimum, max);
             _digitBuffer = string.Empty;
-            MoveToNextComponent();
+            if (!MoveToNextComponent())
+                RaiseInputCompleted();
             FocusSelectedComponent();
         }
         else

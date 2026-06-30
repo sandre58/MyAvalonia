@@ -620,6 +620,15 @@ namespace MyNet.Avalonia.Showcase.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Vue horaire.
         /// </summary>
+        internal static string TimeRangePicker {
+            get {
+                return ResourceManager.GetString("TimeRangePicker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vue horaire.
+        /// </summary>
         internal static string TimeView {
             get {
                 return ResourceManager.GetString("TimeView", resourceCulture);
