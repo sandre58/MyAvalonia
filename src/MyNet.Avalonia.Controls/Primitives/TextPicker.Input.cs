@@ -7,7 +7,6 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Behaviors;
 
 namespace MyNet.Avalonia.Controls.Primitives;
@@ -77,16 +76,9 @@ public abstract partial class TextPicker<T, TPreviewer>
 
     protected override void OnLostFocus(FocusChangedEventArgs e)
     {
-        if (TopLevel.GetTopLevel(this)?.FocusManager.GetFocusedElement() is Visual focused)
-        {
-            if (ReferenceEquals(focused.FindAncestorOfType<TPreviewer>(includeSelf: true), Previewer))
-                return;
+        var focused = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
 
-            if (ReferenceEquals(focused.FindAncestorOfType<TextPicker<T, TPreviewer>>(includeSelf: true), this))
-                return;
-        }
-
-        if (e.Source is Visual source && ReferenceEquals(source.FindAncestorOfType<TPreviewer>(includeSelf: true), Previewer))
+        if (IsKeyboardFocusWithinDropDown(focused))
             return;
 
         CommitFromTextBox();
@@ -98,7 +90,12 @@ public abstract partial class TextPicker<T, TPreviewer>
 
     #region TextBox
 
-    private void OnTextBoxKeyDown(object? sender, KeyEventArgs e) => OnKeyDown(e);
+    private void OnTextBoxKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Handled) return;
+
+        OnKeyDown(e);
+    }
 
     private void OnTextBoxTextChanged()
     {

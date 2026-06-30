@@ -47,6 +47,17 @@ public abstract partial class TextPicker<T, TPreviewer>
             return;
 
         if (TextPickerPopupFocusHelper.TryHandlePreviewerTab(previewer, TextBox, e))
+        {
             e.Handled = true;
+            return;
+        }
+
+        if (IsPickerPopupShortcut(e.Key, e.KeyModifiers))
+            OnKeyDown(e);
     }
+
+    private static bool IsPickerPopupShortcut(Key key, KeyModifiers modifiers) =>
+        key is Key.Escape or Key.F4
+        || key is Key.Down && modifiers == KeyModifiers.Alt
+        || key is Key.Up && modifiers == KeyModifiers.Alt;
 }

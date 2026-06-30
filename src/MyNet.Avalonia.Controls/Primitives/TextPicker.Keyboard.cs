@@ -17,11 +17,13 @@ public abstract partial class TextPicker<T, TPreviewer>
     {
         if (e.Handled) return;
 
-        var handled = ProcessKey(e);
+        if (ProcessKey(e))
+        {
+            e.Handled = true;
+            return;
+        }
 
         base.OnKeyDown(e);
-
-        e.Handled = handled;
     }
 
     protected virtual bool ProcessKey(KeyEventArgs e)
@@ -48,10 +50,13 @@ public abstract partial class TextPicker<T, TPreviewer>
         {
             case TextPickerKeyAction.CommitPreview:
                 CommitFromPreview();
+                if (ShouldCloseAfterSingleSelection())
+                    CloseAfterSingleSelection();
                 return true;
 
             case TextPickerKeyAction.Rollback:
                 Rollback();
+                ClosePopup();
                 return true;
 
             case TextPickerKeyAction.IncrementByOffset:

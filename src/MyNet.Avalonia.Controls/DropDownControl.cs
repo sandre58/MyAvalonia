@@ -102,7 +102,39 @@ public class DropDownControl : TemplatedControl, IPopupControl
     {
         base.OnLostFocus(e);
 
+        if (!IsDropDownOpen)
+            return;
+
+        var focused = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+
+        if (IsKeyboardFocusWithinDropDown(focused))
+            return;
+
         ClosePopup();
+    }
+
+    /// <summary>
+    /// Returns whether keyboard focus is moving to an element that belongs to this control
+    /// or its popup content (popup visuals are not descendants of the templated control).
+    /// </summary>
+    protected virtual bool IsKeyboardFocusWithinDropDown(IInputElement? focused)
+    {
+        if (focused is Visual visual)
+            return IsVisualWithinDropDownFocusScope(visual);
+
+        return focused is null && IsDropDownOpen;
+    }
+
+    private bool IsVisualWithinDropDownFocusScope(Visual visual)
+    {
+        if (ReferenceEquals(visual.FindAncestorOfType<DropDownControl>(includeSelf: true), this))
+            return true;
+
+        if (_popup?.Child is Visual popupChild &&
+            (ReferenceEquals(visual, popupChild) || popupChild.IsVisualAncestorOf(visual)))
+            return true;
+
+        return false;
     }
 
     #endregion
@@ -119,27 +151,34 @@ public class DropDownControl : TemplatedControl, IPopupControl
         {
             case Key.Enter:
                 OpenPopup();
-
+                e.Handled = true;
                 break;
 
             case Key.Escape:
                 ClosePopup();
-
+                e.Handled = true;
                 break;
 
             case Key.F4:
                 TogglePopup();
+                e.Handled = true;
                 break;
 
             case Key.Down:
                 if (e.KeyModifiers.HasFlag(KeyModifiers.Alt))
+                {
                     OpenPopup();
+                    e.Handled = true;
+                }
 
                 break;
 
             case Key.Up:
                 if (e.KeyModifiers.HasFlag(KeyModifiers.Alt))
+                {
                     ClosePopup();
+                    e.Handled = true;
+                }
 
                 break;
         }

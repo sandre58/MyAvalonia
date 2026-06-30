@@ -170,6 +170,50 @@ public class PickerInteractionHeadlessTests
         picker.IsDropDownOpen.Should().BeTrue();
     }
 
+    [AvaloniaFact]
+    public void TimePickerEx_F4OnTextBox_TogglesPopupWithoutDoubleToggle()
+    {
+        var picker = CreateTimePickerEx();
+        picker.SelectedValue = new TimeSpan(9, 0, 0);
+
+        var textBox = GetTextBox(picker);
+        textBox.Focus();
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        HeadlessControlHost.KeyDown(textBox, Key.F4);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        picker.IsDropDownOpen.Should().BeTrue();
+
+        HeadlessControlHost.KeyDown(textBox, Key.F4);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        picker.IsDropDownOpen.Should().BeFalse();
+    }
+
+    [AvaloniaFact]
+    public void TimePickerEx_EscapeOnPreviewerWhileOpen_RollsBackAndCloses()
+    {
+        var picker = CreateTimePickerEx();
+        var committed = new TimeSpan(9, 0, 0);
+        picker.SelectedValue = committed;
+
+        picker.IsDropDownOpen = true;
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        picker.TimePreviewer!.SelectedValue = new TimeSpan(11, 30, 0);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        picker.TimePreviewer!.Focus();
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        HeadlessControlHost.KeyDown(picker.TimePreviewer!, Key.Escape);
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        picker.SelectedValue.Should().Be(committed);
+        picker.IsDropDownOpen.Should().BeFalse();
+    }
+
     private sealed class TestableCalendarDatePickerEx : CalendarDatePickerEx
     {
         public Calendar? CalendarPreviewer => Previewer;
