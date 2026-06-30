@@ -97,6 +97,7 @@ public class DropDownControl : TemplatedControl, IPopupControl
     protected void UpdatePseudoClasses() => PseudoClasses.Set(PseudoClassName.FlyoutOpen, IsDropDownOpen);
 
     #region Focus
+
     protected override void OnLostFocus(FocusChangedEventArgs e)
     {
         base.OnLostFocus(e);
@@ -126,10 +127,19 @@ public class DropDownControl : TemplatedControl, IPopupControl
 
                 break;
 
+            case Key.F4:
+                TogglePopup();
+                break;
+
             case Key.Down:
-            case Key.Up:
                 if (e.KeyModifiers.HasFlag(KeyModifiers.Alt))
                     OpenPopup();
+
+                break;
+
+            case Key.Up:
+                if (e.KeyModifiers.HasFlag(KeyModifiers.Alt))
+                    ClosePopup();
 
                 break;
         }

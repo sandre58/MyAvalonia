@@ -6,12 +6,14 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
 using Avalonia.Input;
 using Avalonia.Styling;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Internals;
 using MyNet.Avalonia.Controls.Primitives;
@@ -140,6 +142,8 @@ public class PickerInteractionHeadlessTests
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
         timeView.SelectedComponent.Should().Be(TimeComponent.Minute);
+        IsMinuteFocused(timeView).Should().BeTrue();
+        IsHourFocused(timeView).Should().BeFalse();
         picker.IsDropDownOpen.Should().BeTrue();
     }
 
@@ -262,5 +266,17 @@ public class PickerInteractionHeadlessTests
         var textBox = HeadlessControlHost.FindByName<TextBox>(picker, TextPicker<TimeSpan?, TimeView>.PartTextBox);
         textBox.Should().NotBeNull();
         return textBox!;
+    }
+
+    private static bool IsHourFocused(TimeView timeView)
+    {
+        var hour = HeadlessControlHost.FindByName<NumericUpDownTimeComponent>(timeView, "PART_Hour");
+        return hour is not null && (hour.IsFocused || hour.GetVisualDescendants().OfType<TextBox>().Any(x => x.IsFocused));
+    }
+
+    private static bool IsMinuteFocused(TimeView timeView)
+    {
+        var minute = HeadlessControlHost.FindByName<NumericUpDownTimeComponent>(timeView, "PART_Minute");
+        return minute is not null && (minute.IsFocused || minute.GetVisualDescendants().OfType<TextBox>().Any(x => x.IsFocused));
     }
 }

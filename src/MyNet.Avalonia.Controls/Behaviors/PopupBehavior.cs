@@ -176,6 +176,7 @@ public static class PopupBehavior
                 break;
         }
     }
+
     #endregion
 
     #region OpenOnFocus
@@ -258,13 +259,27 @@ public static class PopupBehavior
 
         var popupOpen = tc.IsPopupOpen();
 
-        if (!popupOpen)
+        switch (e.Key)
         {
-            if ((e.Key is Key.Down or Key.Up && e.KeyModifiers == KeyModifiers.Alt) || e.Key == Key.Enter)
-            {
+            case Key.Escape when popupOpen:
+                tc.ClosePopup();
+                e.Handled = true;
+                break;
+
+            case Key.Enter when !popupOpen:
+            case Key.Down when e.KeyModifiers == KeyModifiers.Alt && !popupOpen:
                 tc.OpenPopup();
                 e.Handled = true;
-            }
+                break;
+
+            case Key.Up when e.KeyModifiers == KeyModifiers.Alt && popupOpen:
+                tc.ClosePopup();
+                e.Handled = true;
+                break;
+
+            case Key.F4:
+                tc.TogglePopup();
+                break;
         }
     }
 
@@ -312,10 +327,10 @@ public static class PopupBehavior
 
         var popup = e.NameScope.Find<Popup>("PART_Popup");
         popup?.Opened += (_, _) =>
-            {
-                var focusable = popup.Child?.GetFirstFocusableControl();
-                focusable?.Focus();
-            };
+        {
+            var focusable = popup.Child?.GetFirstFocusableControl();
+            focusable?.Focus();
+        };
     }
 
     #endregion
@@ -444,29 +459,30 @@ public static class PopupBehavior
         control.RenderTransform = TransformOperations.Parse("translateY(-20px)");
     }
 
-    private static SlideDirection GetSlideDirectionFromPlacement(PlacementMode placement) => placement switch
-    {
-        // Top placements: popup appears above target, slide from top
-        PlacementMode.Top or
-        PlacementMode.TopEdgeAlignedLeft or
-        PlacementMode.TopEdgeAlignedRight => SlideDirection.Up,
+    private static SlideDirection GetSlideDirectionFromPlacement(PlacementMode placement)
+        => placement switch
+        {
+            // Top placements: popup appears above target, slide from top
+            PlacementMode.Top or
+                PlacementMode.TopEdgeAlignedLeft or
+                PlacementMode.TopEdgeAlignedRight => SlideDirection.Up,
 
-        // Bottom placements: popup appears below target, slide from bottom
-        PlacementMode.Bottom or
-        PlacementMode.BottomEdgeAlignedLeft or
-        PlacementMode.BottomEdgeAlignedRight => SlideDirection.Down,
+            // Bottom placements: popup appears below target, slide from bottom
+            PlacementMode.Bottom or
+                PlacementMode.BottomEdgeAlignedLeft or
+                PlacementMode.BottomEdgeAlignedRight => SlideDirection.Down,
 
-        // Side placements: default to slide down
-        PlacementMode.Left or
-        PlacementMode.LeftEdgeAlignedTop or
-        PlacementMode.LeftEdgeAlignedBottom or
-        PlacementMode.Right or
-        PlacementMode.RightEdgeAlignedTop or
-        PlacementMode.RightEdgeAlignedBottom => SlideDirection.Down,
+            // Side placements: default to slide down
+            PlacementMode.Left or
+                PlacementMode.LeftEdgeAlignedTop or
+                PlacementMode.LeftEdgeAlignedBottom or
+                PlacementMode.Right or
+                PlacementMode.RightEdgeAlignedTop or
+                PlacementMode.RightEdgeAlignedBottom => SlideDirection.Down,
 
-        // Auto/Custom/etc: default to slide down
-        _ => SlideDirection.Down
-    };
+            // Auto/Custom/etc: default to slide down
+            _ => SlideDirection.Down
+        };
 
     private enum SlideDirection
     {

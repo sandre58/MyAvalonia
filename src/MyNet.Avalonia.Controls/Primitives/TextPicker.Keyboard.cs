@@ -30,7 +30,9 @@ public abstract partial class TextPicker<T, TPreviewer>
         {
             if (ReferenceEquals(e.Source, textBox)
                 && TextPickerPopupFocusHelper.TryHandleTextBoxTab(previewer, textBox, e, FocusPreviewerOnTabFromTextBox))
+            {
                 return true;
+            }
 
             if (TextPickerPopupFocusHelper.TryHandlePreviewerTab(previewer, TextBox, e))
                 return true;

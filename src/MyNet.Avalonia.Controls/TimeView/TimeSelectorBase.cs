@@ -351,8 +351,8 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
         return e.Key switch
         {
             Key.Enter when IsOnLastSelectableComponent() => RaiseInputCompleted(TimeInputCompletionMode.EnterKey) || true,
-            Key.Space or Key.Enter or Key.Right => MoveToNextComponent(wrap: true) || true,
-            Key.Left => MoveToPreviousComponent(wrap: true) || true,
+            Key.Space or Key.Enter or Key.Right => MoveToNextComponentAndFocus(wrap: true) || true,
+            Key.Left => MoveToPreviousComponentAndFocus(wrap: true) || true,
             Key.Up => Previous() || true,
             Key.Down => Next() || true,
             Key.PageDown => NextLarge() || true,
@@ -361,6 +361,24 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
             Key.End => Last() || true,
             _ => false
         };
+    }
+
+    private bool MoveToNextComponentAndFocus(bool wrap)
+    {
+        if (!MoveToNextComponent(wrap))
+            return false;
+
+        FocusSelectedComponent();
+        return true;
+    }
+
+    private bool MoveToPreviousComponentAndFocus(bool wrap)
+    {
+        if (!MoveToPreviousComponent(wrap))
+            return false;
+
+        FocusSelectedComponent();
+        return true;
     }
 
     private void OnComponentKeyDown(object? sender, KeyEventArgs e)

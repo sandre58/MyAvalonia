@@ -27,8 +27,7 @@ public static class ControlExtensions
 
     extension(Control ctrl)
     {
-        public Control? GetFirstFocusableControl()
-            => ctrl.GetVisualDescendants().OfType<Control>().FirstOrDefault(x => x is { Focusable: true, IsEffectivelyEnabled: true, IsVisible: true });
+        public Control? GetFirstFocusableControl() => ctrl.GetVisualDescendants().OfType<Control>().FirstOrDefault(x => x is { Focusable: true, IsEffectivelyEnabled: true, IsVisible: true });
 
         public Popup? GetPopup()
         {
@@ -43,13 +42,26 @@ public static class ControlExtensions
             return popup;
         }
 
-        public bool IsPopupOpen() => TryGetBooleanPropertyValue(ctrl, "IsDropDownOpen", out var isDropDownOpen)
-            ? isDropDownOpen
-            : TryGetFlyout(ctrl, out var flyout) && TryGetBooleanPropertyValue(flyout, "IsOpen", out var isFlyoutOpen)
-                ? isFlyoutOpen
-                : TryGetBooleanPropertyValue(ctrl, "IsOpen", out var isOpen)
-                    ? isOpen
-                    : ctrl.GetPopup()?.IsOpen ?? false;
+        public bool IsPopupOpen()
+            => TryGetBooleanPropertyValue(ctrl, "IsDropDownOpen", out var isDropDownOpen)
+                ? isDropDownOpen
+                : TryGetFlyout(ctrl, out var flyout) && TryGetBooleanPropertyValue(flyout, "IsOpen", out var isFlyoutOpen)
+                    ? isFlyoutOpen
+                    : TryGetBooleanPropertyValue(ctrl, "IsOpen", out var isOpen)
+                        ? isOpen
+                        : ctrl.GetPopup()?.IsOpen ?? false;
+
+        public void TogglePopup()
+        {
+            if (ctrl.IsPopupOpen())
+            {
+                ctrl.ClosePopup();
+            }
+            else
+            {
+                ctrl.OpenPopup();
+            }
+        }
 
         public void OpenPopup()
         {
@@ -92,36 +104,36 @@ public static class ControlExtensions
 
     extension(TemplatedControl tc)
     {
-        public bool Increment(int value) => tc switch
-        {
-            Spinner spinner => spinner.IncrementSpinner(value),
-            DatePicker datePicker => datePicker.IncrementDay(value),
-            TimePicker timePicker => timePicker.IncrementMinute(value),
-            NumericUpDown numericUpDown => numericUpDown.IncrementNumericUpDown(value),
-            ComboBox comboBox => comboBox.IncrementComboBox(value),
-            IIncrementableControl incrementableControl => incrementableControl.Increment(value),
-            _ => false
-        };
+        public bool Increment(int value)
+            => tc switch
+            {
+                Spinner spinner => spinner.IncrementSpinner(value),
+                DatePicker datePicker => datePicker.IncrementDay(value),
+                TimePicker timePicker => timePicker.IncrementMinute(value),
+                NumericUpDown numericUpDown => numericUpDown.IncrementNumericUpDown(value),
+                ComboBox comboBox => comboBox.IncrementComboBox(value),
+                IIncrementableControl incrementableControl => incrementableControl.Increment(value),
+                _ => false
+            };
 
-        public bool IncrementLarge(int value) => tc switch
-        {
-            Spinner spinner => spinner.IncrementLargeSpinner(value),
-            DatePicker datePicker => datePicker.IncrementMonth(value),
-            TimePicker timePicker => timePicker.IncrementHour(value),
-            NumericUpDown numericUpDown => numericUpDown.IncrementLargeNumericUpDown(value),
-            ComboBox comboBox => comboBox.IncrementLargeComboBox(value),
-            IIncrementableControl incrementableControl => incrementableControl.IncrementLarge(value),
-            _ => false
-        };
+        public bool IncrementLarge(int value)
+            => tc switch
+            {
+                Spinner spinner => spinner.IncrementLargeSpinner(value),
+                DatePicker datePicker => datePicker.IncrementMonth(value),
+                TimePicker timePicker => timePicker.IncrementHour(value),
+                NumericUpDown numericUpDown => numericUpDown.IncrementLargeNumericUpDown(value),
+                ComboBox comboBox => comboBox.IncrementLargeComboBox(value),
+                IIncrementableControl incrementableControl => incrementableControl.IncrementLarge(value),
+                _ => false
+            };
     }
 
     extension(Spinner spinner)
     {
-        private bool IncrementLargeSpinner(int value)
-            => spinner.IncrementSpinnerCore(value * 5);
+        private bool IncrementLargeSpinner(int value) => spinner.IncrementSpinnerCore(value * 5);
 
-        private bool IncrementSpinner(int value)
-            => spinner.IncrementSpinnerCore(value);
+        private bool IncrementSpinner(int value) => spinner.IncrementSpinnerCore(value);
 
         /// <summary>
         /// Raises the Spin event programmatically, respecting <see cref="Spinner.ValidSpinDirection"/>.
@@ -147,11 +159,9 @@ public static class ControlExtensions
 
     extension(ComboBox comboBox)
     {
-        private bool IncrementLargeComboBox(int value)
-            => comboBox.IncrementComboBoxCore(value * 5);
+        private bool IncrementLargeComboBox(int value) => comboBox.IncrementComboBoxCore(value * 5);
 
-        private bool IncrementComboBox(int value)
-            => comboBox.IncrementComboBoxCore(value);
+        private bool IncrementComboBox(int value) => comboBox.IncrementComboBoxCore(value);
 
         private bool IncrementComboBoxCore(int value)
         {
@@ -172,11 +182,9 @@ public static class ControlExtensions
 
     extension(NumericUpDown numericUpDown)
     {
-        private bool IncrementNumericUpDown(int value)
-            => numericUpDown.IncrementNumericUpDownCore(value * numericUpDown.Increment);
+        private bool IncrementNumericUpDown(int value) => numericUpDown.IncrementNumericUpDownCore(value * numericUpDown.Increment);
 
-        private bool IncrementLargeNumericUpDown(int value)
-            => numericUpDown.IncrementNumericUpDownCore(value * numericUpDown.Increment * 10);
+        private bool IncrementLargeNumericUpDown(int value) => numericUpDown.IncrementNumericUpDownCore(value * numericUpDown.Increment * 10);
 
         private bool IncrementNumericUpDownCore(decimal incrementValue)
         {

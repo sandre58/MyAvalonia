@@ -177,7 +177,7 @@ public partial class DateTimePickerEx : TextPicker<DateTime?, DateTimeView>
 
     protected override void RemovePreviewerHandlers()
     {
-        if (Previewer is DateTimeView view)
+        if (Previewer is { } view)
             view.SelectedValueChanged -= OnDateTimeChanged;
 
         base.RemovePreviewerHandlers();

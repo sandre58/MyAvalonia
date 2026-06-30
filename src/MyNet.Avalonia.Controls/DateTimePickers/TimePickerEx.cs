@@ -175,7 +175,7 @@ public class TimePickerEx : TextPicker<TimeSpan?, TimeView>
 
     protected override void TryFocusPopupContent()
     {
-        if (Previewer is TimeView timeView)
+        if (Previewer is { } timeView)
         {
             timeView.FocusComponent(TimeComponent.Hour);
             return;

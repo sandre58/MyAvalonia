@@ -489,7 +489,7 @@ public class ColorPickerEx : TextPicker<Color?, ColorView>
 
     protected override void TryFocusPopupContent()
     {
-        if (Previewer is ColorView colorView)
+        if (Previewer is { } colorView)
         {
             ColorViewFocusHelper.FocusDefaultContent(colorView);
             return;

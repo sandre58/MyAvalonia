@@ -261,7 +261,7 @@ public partial class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
 
     protected override void TryFocusPopupContent()
     {
-        if (Previewer is TimeRangeView view)
+        if (Previewer is { } view)
         {
             view.FinalizePopupOpen();
             return;
