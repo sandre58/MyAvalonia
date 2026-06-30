@@ -41,7 +41,7 @@ namespace MyNet.Avalonia.Controls;
 [TemplatePart(PartPickerPresenter, typeof(DateTimeScrollPickerPresenter))]
 [PseudoClasses(PseudoHasNoDate, PseudoFlyoutOpen)]
 [SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Improve Avalonia control")]
-public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
+public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl, IIncrementableControl
 {
     private const string PartFlyoutButton = "PART_FlyoutButton";
     private const string PartButtonContentGrid = "PART_ButtonContentGrid";
@@ -166,8 +166,8 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
         PseudoClasses.Set(PseudoHasNoDate, true);
 
         var now = DateTimeOffset.Now;
-        SetCurrentValue(MinYearProperty, new DateTimeOffset(now.Year - 100, 1, 1, 0, 0, 0, now.Offset));
-        SetCurrentValue(MaxYearProperty, new DateTimeOffset(now.Year + 100, 12, 31, 0, 0, 0, now.Offset));
+        SetCurrentValue(MinYearProperty, new(now.Year - 100, 1, 1, 0, 0, 0, now.Offset));
+        SetCurrentValue(MaxYearProperty, new(now.Year + 100, 12, 31, 0, 0, 0, now.Offset));
 
         var timePattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern;
         if (timePattern.Contains('H', StringComparison.Ordinal))
@@ -357,7 +357,10 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
         if (_flyoutButton != null)
             _flyoutButton.Click -= OnFlyoutButtonClicked;
         if (_popup != null)
+        {
+            _popup.Opened -= OnPopupOpened;
             _popup.Closed -= OnPopupClosed;
+        }
         if (_presenter != null)
         {
             _presenter.Confirmed -= OnConfirmed;
@@ -395,7 +398,10 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
         if (_flyoutButton != null)
             _flyoutButton.Click += OnFlyoutButtonClicked;
         if (_popup != null)
+        {
+            _popup.Opened += OnPopupOpened;
             _popup.Closed += OnPopupClosed;
+        }
 
         if (_presenter != null)
         {
@@ -440,7 +446,7 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
         {
             var (oldValue, newValue) = change.GetOldAndNewValue<DateTime?>();
             SetSelectedDateTimeText();
-            SelectedDateTimeChanged?.Invoke(this, new DateTimeScrollPickerSelectedValueChangedEventArgs(oldValue, newValue));
+            SelectedDateTimeChanged?.Invoke(this, new(oldValue, newValue));
         }
     }
 
@@ -522,7 +528,7 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
         {
             if (i > 0)
             {
-                columns.Add(new ColumnDefinition(0, GridUnitType.Auto));
+                columns.Add(new(0, GridUnitType.Auto));
                 var useDateTimeSeparator = datePartCount > 0 && orderedTimeSegments.Count > 0 && i == datePartCount;
                 if (useDateTimeSeparator && _dateTimeSeparator is not null)
                 {
@@ -537,12 +543,12 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
                 }
             }
 
-            columns.Add(new ColumnDefinition(GridLength.Star));
+            columns.Add(new(GridLength.Star));
             Grid.SetColumn(orderedSegments[i], columns.Count - 1);
         }
 
         if (columns.Count == 0)
-            columns.Add(new ColumnDefinition(GridLength.Star));
+            columns.Add(new(GridLength.Star));
 
         _contentGrid.ColumnDefinitions = columns;
     }
@@ -584,7 +590,7 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
             {
                 var hr = dt.Hour;
                 hr = hr > 12 ? hr - 12 : hr == 0 ? 12 : hr;
-                displayTime = new TimeSpan(hr, dt.Minute, dt.Second);
+                displayTime = new(hr, dt.Minute, dt.Second);
             }
 
             if (_hourText != null)
@@ -620,6 +626,28 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
             ? CultureInfo.CurrentCulture.DateTimeFormat.PMDesignator
             : CultureInfo.InvariantCulture.DateTimeFormat.PMDesignator;
 
+    /// <inheritdoc />
+    public bool Increment(int value)
+    {
+        if (IsDropDownOpen)
+            return false;
+
+        var current = SelectedDateTime ?? DateTime.Now;
+        SetCurrentValue(SelectedDateTimeProperty, current.AddMinutes(value * MinuteIncrement));
+        return true;
+    }
+
+    /// <inheritdoc />
+    public bool IncrementLarge(int value)
+    {
+        if (IsDropDownOpen)
+            return false;
+
+        var current = SelectedDateTime ?? DateTime.Now;
+        SetCurrentValue(SelectedDateTimeProperty, current.AddHours(value));
+        return true;
+    }
+
     /// <summary>
     /// Toggles the drop-down open state.
     /// </summary>
@@ -639,10 +667,26 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
         if (IsDropDownOpen)
             return;
 
-        if (_presenter is null)
-            throw new InvalidOperationException("No DateTimeScrollPickerPresenter found.");
-        if (_popup is null)
-            throw new InvalidOperationException("No Popup found.");
+        SetCurrentValue(IsDropDownOpenProperty, true);
+    }
+
+    /// <summary>
+    /// Closes the drop-down.
+    /// </summary>
+    public void ClosePopup()
+    {
+        if (!IsDropDownOpen)
+            return;
+
+        SetCurrentValue(IsDropDownOpenProperty, false);
+    }
+
+    private void OnFlyoutButtonClicked(object? sender, RoutedEventArgs e) => OpenPopup();
+
+    private void OnPopupOpened(object? sender, EventArgs e)
+    {
+        if (_presenter is null || _popup is null)
+            return;
 
         _presenter.SelectedDateTime = SelectedDateTime ?? DateTime.Now;
 
@@ -650,8 +694,6 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
         _popup.PlacementAnchor = PopupAnchor.Bottom;
         _popup.PlacementGravity = PopupGravity.Bottom;
         _popup.PlacementConstraintAdjustment = PopupPositionerConstraintAdjustment.SlideY;
-        _popup.IsOpen = true;
-        SetCurrentValue(IsDropDownOpenProperty, true);
 
         if (!_presenter.IsMeasureValid)
             this.GetLayoutManager()?.ExecuteInitialLayoutPass();
@@ -664,28 +706,23 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl
         DropDownOpened?.Invoke(this, EventArgs.Empty);
     }
 
-    /// <summary>
-    /// Closes the drop-down.
-    /// </summary>
-    public void ClosePopup() => _popup?.Close();
-
-    private void OnFlyoutButtonClicked(object? sender, RoutedEventArgs e) => OpenPopup();
-
     private void OnPopupClosed(object? sender, EventArgs e)
     {
-        SetCurrentValue(IsDropDownOpenProperty, false);
+        if (IsDropDownOpen)
+            SetCurrentValue(IsDropDownOpenProperty, false);
+
         DropDownClosed?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnDismissPicker(object? sender, EventArgs e)
     {
-        _popup?.Close();
+        ClosePopup();
         Focus();
     }
 
     private void OnConfirmed(object? sender, EventArgs e)
     {
-        _popup?.Close();
         SetCurrentValue(SelectedDateTimeProperty, _presenter!.SelectedDateTime);
+        ClosePopup();
     }
 }

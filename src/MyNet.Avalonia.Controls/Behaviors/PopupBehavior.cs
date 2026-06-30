@@ -279,6 +279,7 @@ public static class PopupBehavior
 
             case Key.F4:
                 tc.TogglePopup();
+                e.Handled = true;
                 break;
         }
     }

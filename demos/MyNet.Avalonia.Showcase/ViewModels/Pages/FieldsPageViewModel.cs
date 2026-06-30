@@ -110,7 +110,7 @@ internal sealed class FieldsPageViewModel(ICommandFactory commands) : ShowcaseVi
                             var start = new TimeSpan(startHour, RandomGenerator.Current.Int(0, 59), 0);
                             var end = start.Add(TimeSpan.FromHours(RandomGenerator.Current.Int(1, 4)));
                             if (end.TotalDays >= 1)
-                                end = new TimeSpan(23, 59, 0);
+                                end = new(23, 59, 0);
 
                             timeRangePickerEx.StartTime = start;
                             timeRangePickerEx.EndTime = end;

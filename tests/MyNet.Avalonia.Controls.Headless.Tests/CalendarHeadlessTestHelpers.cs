@@ -130,10 +130,10 @@ internal static class CalendarHeadlessTestHelpers
 
     internal static Point GetVerticalGapPosition(Grid grid, CalendarDayButton upperButton, CalendarDayButton lowerButton)
     {
-        var upperOrigin = upperButton.TranslatePoint(new Point(0, 0), grid) ?? default;
-        var lowerOrigin = lowerButton.TranslatePoint(new Point(0, 0), grid) ?? default;
+        var upperOrigin = upperButton.TranslatePoint(new(0, 0), grid) ?? default;
+        var lowerOrigin = lowerButton.TranslatePoint(new(0, 0), grid) ?? default;
         var gapY = (upperOrigin.Y + upperButton.Bounds.Height + lowerOrigin.Y) / 2;
         var gapX = upperOrigin.X + (upperButton.Bounds.Width / 2);
-        return new Point(gapX, gapY);
+        return new(gapX, gapY);
     }
 }

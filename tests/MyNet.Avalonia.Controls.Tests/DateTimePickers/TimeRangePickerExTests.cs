@@ -64,7 +64,7 @@ public class TimeRangePickerExTests
         var picker = CreatePicker();
         picker.DisplayFormat = @"HH\:mm";
         picker.RangeSeparator = " -> ";
-        picker.SelectedValue = TimeRangeHelper.BuildPeriod(new TimeSpan(9, 0, 0), new TimeSpan(17, 0, 0), DateTime.Today).Period;
+        picker.SelectedValue = TimeRangeHelper.BuildPeriod(new(9, 0, 0), new(17, 0, 0), DateTime.Today).Period;
 
         picker.Text.Should().Be("09:00 -> 17:00");
     }
@@ -75,8 +75,8 @@ public class TimeRangePickerExTests
         var picker = CreatePicker();
         picker.AllowOvernight = true;
         picker.SelectedValue = TimeRangeHelper.BuildPeriod(
-            new TimeSpan(22, 0, 0),
-            new TimeSpan(2, 0, 0),
+            new(22, 0, 0),
+            new(2, 0, 0),
             DateTime.Today,
             allowOvernight: true,
             TimeRangeInvalidBehavior.Swap).Period;
@@ -94,8 +94,8 @@ public class TimeRangePickerExTests
         picker.ShowOvernightIndicator = true;
         picker.DisplayFormat = @"hh\:mm";
         picker.SelectedValue = TimeRangeHelper.BuildPeriod(
-            new TimeSpan(22, 0, 0),
-            new TimeSpan(2, 0, 0),
+            new(22, 0, 0),
+            new(2, 0, 0),
             DateTime.Today,
             allowOvernight: true,
             TimeRangeInvalidBehavior.Swap).Period;
@@ -210,8 +210,8 @@ public class TimeRangePickerExTests
         view.ActiveBoundary.Should().Be(TimeRangeBoundary.End);
         view.EndTime.Should().Be(new TimeSpan(10, 0, 0));
         view.SelectedValue.Should().NotBeNull();
-        TimeRangeHelper.GetPeriodStartTime(view.SelectedValue!).Should().Be(new TimeSpan(9, 0, 0));
-        TimeRangeHelper.GetPeriodEndTime(view.SelectedValue!).Should().Be(new TimeSpan(10, 0, 0));
+        TimeRangeHelper.GetPeriodStartTime(view.SelectedValue!).Should().Be(new(9, 0, 0));
+        TimeRangeHelper.GetPeriodEndTime(view.SelectedValue!).Should().Be(new(10, 0, 0));
     }
 
     [Fact]
@@ -238,7 +238,7 @@ public class TimeRangePickerExTests
     {
         var picker = new TestableTimeRangePickerEx { DisplayFormat = @"hh\:mm" };
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        picker.AttachPreviewer(new TimeRangeView());
+        picker.AttachPreviewer(new());
         return picker;
     }
 

@@ -187,7 +187,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         if (_updateDepth > 0)
             return;
 
-        OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        OnCollectionChanged(new(NotifyCollectionChangedAction.Reset));
         owner.SyncSelectedDateFromCollection();
     }
 

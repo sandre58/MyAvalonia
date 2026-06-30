@@ -17,14 +17,14 @@ public class SelectedDatesCollectionTests
     public void Remove_MiddleOfRange_RemovesOnlyThatDate()
     {
         var calendar = new Controls.Calendar { SelectionMode = CalendarSelectionMode.MultipleRange };
-        calendar.SelectedDates.Set(new DateTime(2026, 6, 10), new DateTime(2026, 6, 14));
+        calendar.SelectedDates.Set(new(2026, 6, 10), new(2026, 6, 14));
 
-        calendar.SelectedDates.Remove(new DateTime(2026, 6, 12));
+        calendar.SelectedDates.Remove(new(2026, 6, 12));
 
         calendar.SelectedDates.Should().BeEquivalentTo([
-            new DateTime(2026, 6, 10),
-            new DateTime(2026, 6, 11),
-            new DateTime(2026, 6, 13),
+            new(2026, 6, 10),
+            new(2026, 6, 11),
+            new(2026, 6, 13),
             new DateTime(2026, 6, 14),
         ]);
     }
@@ -33,15 +33,15 @@ public class SelectedDatesCollectionTests
     public void SelectedDateChange_MultipleRange_DoesNotReplaceExistingSelection()
     {
         var calendar = new Controls.Calendar { SelectionMode = CalendarSelectionMode.MultipleRange };
-        calendar.SelectedDates.Set(new DateTime(2026, 6, 10), new DateTime(2026, 6, 14));
+        calendar.SelectedDates.Set(new(2026, 6, 10), new(2026, 6, 14));
 
         calendar.SelectedDate = new DateTime(2026, 6, 12);
 
         calendar.SelectedDates.Should().BeEquivalentTo([
-            new DateTime(2026, 6, 10),
-            new DateTime(2026, 6, 11),
-            new DateTime(2026, 6, 12),
-            new DateTime(2026, 6, 13),
+            new(2026, 6, 10),
+            new(2026, 6, 11),
+            new(2026, 6, 12),
+            new(2026, 6, 13),
             new DateTime(2026, 6, 14),
         ]);
     }
@@ -65,7 +65,7 @@ public class SelectedDatesCollectionTests
         var changeCount = 0;
         calendar.SelectedDates.CollectionChanged += (_, _) => changeCount++;
 
-        calendar.SelectedDates.Set(new DateTime(2026, 6, 10), new DateTime(2026, 6, 20));
+        calendar.SelectedDates.Set(new(2026, 6, 10), new(2026, 6, 20));
 
         changeCount.Should().Be(1);
         calendar.SelectedDates.Should().HaveCount(11);
@@ -75,12 +75,12 @@ public class SelectedDatesCollectionTests
     public void SetRange_ReplacingRange_RaisesSingleCollectionChanged()
     {
         var calendar = new Controls.Calendar { SelectionMode = CalendarSelectionMode.SingleRange };
-        calendar.SelectedDates.Set(new DateTime(2026, 6, 1), new DateTime(2026, 6, 5));
+        calendar.SelectedDates.Set(new(2026, 6, 1), new(2026, 6, 5));
 
         var changeCount = 0;
         calendar.SelectedDates.CollectionChanged += (_, _) => changeCount++;
 
-        calendar.SelectedDates.Set(new DateTime(2026, 6, 10), new DateTime(2026, 6, 15));
+        calendar.SelectedDates.Set(new(2026, 6, 10), new(2026, 6, 15));
 
         changeCount.Should().Be(1);
         calendar.SelectedDates.Should().HaveCount(6);
@@ -92,14 +92,14 @@ public class SelectedDatesCollectionTests
         var calendar = new Controls.Calendar
         {
             SelectionMode = CalendarSelectionMode.MultipleRange,
-            DisplayDate = new DateTime(2026, 6, 15),
+            DisplayDate = new(2026, 6, 15),
         };
         var contextBefore = calendar.DisplayDateContext;
 
-        calendar.SelectedDates.Set(new DateTime(2026, 6, 10), new DateTime(2026, 6, 14));
+        calendar.SelectedDates.Set(new(2026, 6, 10), new(2026, 6, 14));
 
         calendar.DisplayDateContext.Should().Be(contextBefore);
-        calendar.SelectedDate.Should().Be(new DateTime(2026, 6, 10));
+        calendar.SelectedDate.Should().Be(new(2026, 6, 10));
     }
 
     [Fact]
@@ -107,7 +107,7 @@ public class SelectedDatesCollectionTests
     {
         var calendar = new Controls.Calendar { SelectionMode = CalendarSelectionMode.SingleRange };
 
-        calendar.SelectedDates.Set(new DateTime(2026, 6, 14), new DateTime(2026, 6, 9));
+        calendar.SelectedDates.Set(new(2026, 6, 14), new(2026, 6, 9));
 
         calendar.SelectedDates.Should().Contain(new DateTime(2026, 6, 9));
         calendar.SelectedDates.Should().Contain(new DateTime(2026, 6, 14));
@@ -119,8 +119,8 @@ public class SelectedDatesCollectionTests
     {
         var calendar = new Controls.Calendar { SelectionMode = CalendarSelectionMode.SingleRange };
 
-        calendar.SelectedDates.Set(new DateTime(2026, 6, 8), new DateTime(2026, 6, 11));
-        calendar.SelectedDates.Set(new DateTime(2026, 6, 14), new DateTime(2026, 6, 9));
+        calendar.SelectedDates.Set(new(2026, 6, 8), new(2026, 6, 11));
+        calendar.SelectedDates.Set(new(2026, 6, 14), new(2026, 6, 9));
 
         calendar.SelectedDates.Should().Contain(new DateTime(2026, 6, 9));
         calendar.SelectedDates.Should().Contain(new DateTime(2026, 6, 14));

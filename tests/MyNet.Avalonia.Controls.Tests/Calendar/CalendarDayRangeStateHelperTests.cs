@@ -29,8 +29,8 @@ public class CalendarDayRangeStateHelperTests
 
         CalendarDayRangeStateHelper.EnumerateConsecutiveRanges(dates)
             .Should().Equal(
-                (new DateTime(2026, 5, 10), new DateTime(2026, 5, 11)),
-                (new DateTime(2026, 5, 20), new DateTime(2026, 5, 22)));
+                (new(2026, 5, 10), new(2026, 5, 11)),
+                (new(2026, 5, 20), new(2026, 5, 22)));
     }
 
     [Fact]

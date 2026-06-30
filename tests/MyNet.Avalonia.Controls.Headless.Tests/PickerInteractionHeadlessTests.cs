@@ -36,12 +36,12 @@ public class PickerInteractionHeadlessTests
         var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
         grid.Should().NotBeNull();
 
-        var day = CalendarHeadlessTestHelpers.FindDayButton(grid!, new DateTime(2026, 6, 10));
+        var day = CalendarHeadlessTestHelpers.FindDayButton(grid!, new(2026, 6, 10));
         HeadlessControlHost.PointerPress(day);
         HeadlessControlHost.PointerRelease(day);
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
-        picker.SelectedValue.Should().Be(new DateTime(2026, 6, 10));
+        picker.SelectedValue.Should().Be(new(2026, 6, 10));
         picker.IsDropDownOpen.Should().BeFalse();
     }
 
@@ -59,12 +59,12 @@ public class PickerInteractionHeadlessTests
         var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
         grid.Should().NotBeNull();
 
-        var day = CalendarHeadlessTestHelpers.FindDayButton(grid!, new DateTime(2026, 6, 15));
+        var day = CalendarHeadlessTestHelpers.FindDayButton(grid!, new(2026, 6, 15));
         HeadlessControlHost.PointerPress(day);
         HeadlessControlHost.PointerRelease(day);
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
-        picker.SelectedValue.Should().Be(new DateTime(2026, 6, 15));
+        picker.SelectedValue.Should().Be(new(2026, 6, 15));
 
         HeadlessControlHost.KeyDown(picker, Key.Escape);
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
@@ -85,7 +85,7 @@ public class PickerInteractionHeadlessTests
         picker.PreviewerView!.SelectedValue = new DateTime(2026, 6, 1, 11, 0, 0);
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
-        picker.SelectedValue.Should().Be(new DateTime(2026, 6, 1, 11, 0, 0));
+        picker.SelectedValue.Should().Be(new(2026, 6, 1, 11, 0, 0));
         picker.IsDropDownOpen.Should().BeTrue();
     }
 
@@ -120,7 +120,7 @@ public class PickerInteractionHeadlessTests
         HeadlessControlHost.KeyDown(calendar, Key.Enter);
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
-        picker.SelectedValue.Should().Be(new DateTime(2026, 6, 20));
+        picker.SelectedValue.Should().Be(new(2026, 6, 20));
         picker.IsDropDownOpen.Should().BeFalse();
     }
 
@@ -197,7 +197,7 @@ public class PickerInteractionHeadlessTests
         var picker = new TestableCalendarDatePickerEx
         {
             DisplayFormat = "yyyy-MM-dd",
-            DisplayDate = new DateTime(2026, 6, 15),
+            DisplayDate = new(2026, 6, 15),
             Width = 320,
             Height = 40,
             Theme = theme,
@@ -220,7 +220,7 @@ public class PickerInteractionHeadlessTests
 
         var picker = new TestableDateTimePickerEx
         {
-            DisplayDate = new DateTime(2026, 6, 15),
+            DisplayDate = new(2026, 6, 15),
             Width = 320,
             Height = 40,
             Theme = theme,

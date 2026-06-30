@@ -316,7 +316,7 @@ public class PickerFocusHeadlessTests
 
             DisplayFormat = "yyyy-MM-dd",
 
-            DisplayDate = new DateTime(2026, 6, 15),
+            DisplayDate = new(2026, 6, 15),
 
             SelectedValue = new DateTime(2026, 6, 15),
 
@@ -410,7 +410,7 @@ public class PickerFocusHeadlessTests
 
         {
 
-            DisplayDate = new DateTime(2026, 6, 15),
+            DisplayDate = new(2026, 6, 15),
 
             SelectedValue = new DateTime(2026, 6, 15, 10, 30, 0),
 

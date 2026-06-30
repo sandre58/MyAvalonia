@@ -318,6 +318,7 @@
                                HorizontalOffset="3"
                                InheritsTransform="True"
                                IsLightDismissEnabled="True"
+                               IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
                                Placement="Bottom"
                                PlacementTarget="{TemplateBinding}"
                                WindowManagerAddShadowHint="False">
@@ -686,6 +687,7 @@
                                HorizontalOffset="3"
                                InheritsTransform="True"
                                IsLightDismissEnabled="True"
+                               IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
                                Placement="Bottom"
                                PlacementTarget="{TemplateBinding}"
                                WindowManagerAddShadowHint="False">

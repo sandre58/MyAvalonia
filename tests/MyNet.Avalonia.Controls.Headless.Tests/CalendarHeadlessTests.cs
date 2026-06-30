@@ -34,7 +34,7 @@ public partial class CalendarHeadlessTests
         var endDate = new DateTime(2026, 5, 14);
         var startButton = FindDayButton(grid!, startDate);
         var endButton = FindDayButton(grid!, endDate);
-        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var middleButton = FindDayButton(grid!, new(2026, 5, 12));
 
         HeadlessControlHost.PointerRelease(startButton);
         HeadlessControlHost.PointerEnter(endButton);
@@ -98,7 +98,7 @@ public partial class CalendarHeadlessTests
         var endDate = new DateTime(2026, 5, 14);
         var startButton = FindDayButton(grid!, startDate);
         var endButton = FindDayButton(grid!, endDate);
-        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var middleButton = FindDayButton(grid!, new(2026, 5, 12));
 
         HeadlessControlHost.PointerRelease(startButton);
         HeadlessControlHost.PointerEnter(endButton);
@@ -149,7 +149,7 @@ public partial class CalendarHeadlessTests
         dayButtonClicks.Should().Be(2);
         calendar.SelectedDates.Should().Contain(startDate);
         calendar.SelectedDates.Should().Contain(endDate);
-        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsInRange.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 12)).IsInRange.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -168,7 +168,7 @@ public partial class CalendarHeadlessTests
         var endDate = new DateTime(2026, 5, 14);
         var startButton = FindDayButton(grid!, startDate);
         var endButton = FindDayButton(grid!, endDate);
-        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var middleButton = FindDayButton(grid!, new(2026, 5, 12));
 
         calendar.MoveToDate(startDate);
         HeadlessControlHost.KeyDown(calendar, Key.Space);
@@ -268,7 +268,7 @@ public partial class CalendarHeadlessTests
         startButton.IsStartDate.Should().BeTrue();
         startButton.IsEndDate.Should().BeFalse("committed range start must not keep single-day end cap");
         endButton.IsEndDate.Should().BeTrue();
-        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsInRange.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 12)).IsInRange.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -531,7 +531,7 @@ public partial class CalendarHeadlessTests
 
         middleButton.IsPreviewInRange.Should().BeTrue("stable middle cell must keep preview-in-range when end cap moves");
         endButton.IsPreviewEndDate.Should().BeFalse("previous end cap becomes in-range");
-        FindDayButton(grid!, new DateTime(2026, 5, 15)).IsPreviewEndDate.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 15)).IsPreviewEndDate.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -572,7 +572,7 @@ public partial class CalendarHeadlessTests
         var endDate = new DateTime(2026, 5, 14);
         var startButton = FindDayButton(grid!, startDate);
         var endButton = FindDayButton(grid!, endDate);
-        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var middleButton = FindDayButton(grid!, new(2026, 5, 12));
 
         EstablishDragModeAnchor(calendar, startDate);
 
@@ -794,7 +794,7 @@ public partial class CalendarHeadlessTests
 
         FindDayButton(grid!, startDate).IsPreviewStartDate.Should().BeTrue();
         FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeTrue();
-        FindDayButton(grid!, new DateTime(2026, 5, 14)).IsPreviewInRange.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 14)).IsPreviewInRange.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -812,7 +812,7 @@ public partial class CalendarHeadlessTests
         var endDate = new DateTime(2026, 5, 14);
         var startButton = FindDayButton(grid!, startDate);
         var endButton = FindDayButton(grid!, endDate);
-        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var middleButton = FindDayButton(grid!, new(2026, 5, 12));
 
         EstablishDragModeAnchor(calendar, startDate);
         HeadlessControlHost.PointerMove(endButton, KeyModifiers.Shift);
@@ -865,7 +865,7 @@ public partial class CalendarHeadlessTests
 
         FindDayButton(grid!, pointerDate).IsPreviewEndDate.Should().BeFalse("static pointer must not override keyboard interval end");
         FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeTrue("keyboard preview must survive shift release");
-        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -884,7 +884,7 @@ public partial class CalendarHeadlessTests
         var endDate = new DateTime(2026, 5, 14);
         var startButton = FindDayButton(grid!, startDate);
         var endButton = FindDayButton(grid!, endDate);
-        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var middleButton = FindDayButton(grid!, new(2026, 5, 12));
 
         EstablishDragModeAnchor(calendar, startDate);
 
@@ -927,7 +927,7 @@ public partial class CalendarHeadlessTests
 
         FindDayButton(grid!, pointerDate).IsPreviewEndDate.Should().BeFalse("pointer move without shift must not affect keyboard preview");
         FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeTrue();
-        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -975,7 +975,7 @@ public partial class CalendarHeadlessTests
         var endDate = new DateTime(2026, 5, 14);
         var startButton = FindDayButton(grid!, startDate);
         var endButton = FindDayButton(grid!, endDate);
-        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var middleButton = FindDayButton(grid!, new(2026, 5, 12));
 
         EstablishDragModeAnchor(calendar, startDate);
 
@@ -1014,7 +1014,7 @@ public partial class CalendarHeadlessTests
         var endDate = new DateTime(2026, 5, 14);
         var startButton = FindDayButton(grid!, startDate);
         var endButton = FindDayButton(grid!, endDate);
-        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var middleButton = FindDayButton(grid!, new(2026, 5, 12));
 
         HeadlessControlHost.PointerPress(startButton, KeyModifiers.Shift);
         HeadlessControlHost.PointerMove(endButton, KeyModifiers.Shift, leftButtonPressed: true);
@@ -1044,7 +1044,7 @@ public partial class CalendarHeadlessTests
         var endDate = new DateTime(2026, 5, 14);
         var startButton = FindDayButton(grid!, startDate);
         var endButton = FindDayButton(grid!, endDate);
-        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var middleButton = FindDayButton(grid!, new(2026, 5, 12));
 
         EstablishDragModeAnchor(calendar, startDate);
         HeadlessControlHost.PointerMove(endButton, KeyModifiers.Shift);
@@ -1094,7 +1094,7 @@ public partial class CalendarHeadlessTests
 
         startButton.IsPreviewStartDate.Should().BeTrue("shift+move after commit must reactivate preview");
         FindDayButton(grid!, reactivateDate).IsPreviewEndDate.Should().BeTrue();
-        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -1128,7 +1128,7 @@ public partial class CalendarHeadlessTests
 
         startButton.IsPreviewStartDate.Should().BeTrue("shift+arrow after commit must reactivate preview");
         FindDayButton(grid!, extendedDate).IsPreviewEndDate.Should().BeTrue();
-        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -1252,7 +1252,7 @@ public partial class CalendarHeadlessTests
         HeadlessControlHost.PointerRelease(FindDayButton(grid!, rangeEnd));
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
-        var committedMiddle = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var committedMiddle = FindDayButton(grid!, new(2026, 5, 12));
         committedMiddle.IsInRange.Should().BeTrue("existing range must be committed before preview extension");
 
         for (var i = 0; i < 4; i++)
@@ -1263,7 +1263,7 @@ public partial class CalendarHeadlessTests
         committedMiddle.IsPreviewInRange.Should().BeTrue("preview must overlay already-committed dates while shift is held");
         FindDayButton(grid!, rangeStart).IsPreviewStartDate.Should().BeTrue();
         FindDayButton(grid!, previewEnd).IsPreviewEndDate.Should().BeTrue();
-        FindDayButton(grid!, new DateTime(2026, 5, 16)).IsPreviewInRange.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 16)).IsPreviewInRange.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -1288,13 +1288,13 @@ public partial class CalendarHeadlessTests
         HeadlessControlHost.KeyDown(calendar, Key.Right, KeyModifiers.Shift);
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
-        FindDayButton(grid!, new DateTime(2026, 5, 14)).IsPreviewEndDate.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 14)).IsPreviewEndDate.Should().BeTrue();
 
         HeadlessControlHost.KeyDown(calendar, Key.Right);
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
         FindDayButton(grid!, middleDate).IsPreviewInRange.Should().BeFalse("non-shift arrow must clear interval preview band");
-        FindDayButton(grid!, new DateTime(2026, 5, 15)).IsFocused.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 15)).IsFocused.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -1321,7 +1321,7 @@ public partial class CalendarHeadlessTests
 
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
-        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var middleButton = FindDayButton(grid!, new(2026, 5, 12));
         middleButton.IsPreviewInRange.Should().BeTrue();
         FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeTrue();
         calendar.SelectedDates.Should().NotContain(endDate);
@@ -1356,7 +1356,7 @@ public partial class CalendarHeadlessTests
 
         FindDayButton(grid!, pointerDate).IsPreviewEndDate.Should().BeFalse("pointer hover must not override keyboard interval end");
         FindDayButton(grid!, endDate).IsPreviewEndDate.Should().BeTrue("keyboard interval end must survive shift release");
-        FindDayButton(grid!, new DateTime(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
+        FindDayButton(grid!, new(2026, 5, 12)).IsPreviewInRange.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -1427,14 +1427,14 @@ public partial class CalendarHeadlessTests
         calendar.Focus();
 
         var previewDate = new DateTime(2026, 5, 20);
-        calendar.MoveToDate(new DateTime(2026, 5, 15));
+        calendar.MoveToDate(new(2026, 5, 15));
         HeadlessControlHost.KeyDown(calendar, Key.Right);
         HeadlessControlHost.KeyDown(calendar, Key.Right);
         HeadlessControlHost.KeyDown(calendar, Key.Right);
         HeadlessControlHost.KeyDown(calendar, Key.Right);
         HeadlessControlHost.KeyDown(calendar, Key.Right);
 
-        calendar.SelectedDate.Should().Be(new DateTime(2026, 5, 15));
+        calendar.SelectedDate.Should().Be(new(2026, 5, 15));
 
         HeadlessControlHost.KeyDown(calendar, Key.Enter);
         calendar.SelectedDate.Should().Be(previewDate);
@@ -1452,7 +1452,7 @@ public partial class CalendarHeadlessTests
         grid.Should().NotBeNull();
 
         var previewDate = new DateTime(2026, 5, 20);
-        calendar.MoveToDate(new DateTime(2026, 5, 15));
+        calendar.MoveToDate(new(2026, 5, 15));
         HeadlessControlHost.KeyDown(calendar, Key.Right);
         HeadlessControlHost.KeyDown(calendar, Key.Right);
         HeadlessControlHost.KeyDown(calendar, Key.Right);
@@ -1466,7 +1466,7 @@ public partial class CalendarHeadlessTests
         previewButton.IsPreviewStartDate.Should().BeFalse("single-date keyboard preview uses focus, not preview pseudos");
         previewButton.IsPreviewEndDate.Should().BeFalse();
 
-        HeadlessControlHost.PointerEnter(FindDayButton(grid!, new DateTime(2026, 5, 12)));
+        HeadlessControlHost.PointerEnter(FindDayButton(grid!, new(2026, 5, 12)));
 
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
@@ -1490,7 +1490,7 @@ public partial class CalendarHeadlessTests
         var endDate = new DateTime(2026, 5, 14);
         var startButton = FindDayButton(grid!, startDate);
         var endButton = FindDayButton(grid!, endDate);
-        var middleButton = FindDayButton(grid!, new DateTime(2026, 5, 12));
+        var middleButton = FindDayButton(grid!, new(2026, 5, 12));
 
         HeadlessControlHost.PointerRelease(startButton);
         HeadlessControlHost.PointerEnter(endButton);

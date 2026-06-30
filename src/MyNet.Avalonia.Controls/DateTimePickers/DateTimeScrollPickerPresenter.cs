@@ -203,8 +203,8 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
     public DateTimeScrollPickerPresenter()
     {
         var now = DateTimeOffset.Now;
-        SetCurrentValue(MinYearProperty, new DateTimeOffset(now.Year - 100, 1, 1, 0, 0, 0, now.Offset));
-        SetCurrentValue(MaxYearProperty, new DateTimeOffset(now.Year + 100, 12, 31, 0, 0, 0, now.Offset));
+        SetCurrentValue(MinYearProperty, new(now.Year - 100, 1, 1, 0, 0, 0, now.Offset));
+        SetCurrentValue(MaxYearProperty, new(now.Year + 100, 12, 31, 0, 0, 0, now.Offset));
         SetCurrentValue(SelectedDateTimeProperty, DateTime.Now);
 
         var timePattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern;
@@ -617,7 +617,7 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
         {
             if (i > 0)
             {
-                columns.Add(new ColumnDefinition(0, GridUnitType.Auto));
+                columns.Add(new(0, GridUnitType.Auto));
                 var useDateTimeSeparator = datePartCount > 0 && orderedTimeHosts.Count > 0 && i == datePartCount;
                 if (useDateTimeSeparator && _dateTimeSeparator is not null)
                 {
@@ -633,12 +633,12 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
             }
 
             var isMonth = ReferenceEquals(orderedHosts[i], items.MonthHost);
-            columns.Add(new ColumnDefinition(isMonth ? 2 : 1, GridUnitType.Star));
+            columns.Add(new(isMonth ? 2 : 1, GridUnitType.Star));
             Grid.SetColumn(orderedHosts[i], columns.Count - 1);
         }
 
         if (columns.Count == 0)
-            columns.Add(new ColumnDefinition(GridLength.Star));
+            columns.Add(new(GridLength.Star));
 
         items.PickerContainer.ColumnDefinitions = columns;
     }
@@ -699,7 +699,7 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
         var year = items.YearSelector.SelectedValue;
         var maxDays = _calendar.GetDaysInMonth(year, _syncDateTime.Month);
         var day = _syncDateTime.Day > maxDays ? maxDays : _syncDateTime.Day;
-        _syncDateTime = new DateTime(year, _syncDateTime.Month, day, _syncDateTime.Hour, _syncDateTime.Minute, _syncDateTime.Second);
+        _syncDateTime = new(year, _syncDateTime.Month, day, _syncDateTime.Hour, _syncDateTime.Minute, _syncDateTime.Second);
 
         if (DayVisible && items.DaySelector is { } daySelector)
             DateTimePickerPanelAssist.SetFormatDate(daySelector, _syncDateTime);
@@ -715,7 +715,7 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
         var month = items.MonthSelector.SelectedValue;
         var maxDays = _calendar.GetDaysInMonth(_syncDateTime.Year, month);
         var day = _syncDateTime.Day > maxDays ? maxDays : _syncDateTime.Day;
-        _syncDateTime = new DateTime(_syncDateTime.Year, month, day, _syncDateTime.Hour, _syncDateTime.Minute, _syncDateTime.Second);
+        _syncDateTime = new(_syncDateTime.Year, month, day, _syncDateTime.Hour, _syncDateTime.Minute, _syncDateTime.Second);
 
         if (DayVisible && items.DaySelector is { } daySelector)
             DateTimePickerPanelAssist.SetFormatDate(daySelector, _syncDateTime);
@@ -728,7 +728,7 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
         if (_suppressUpdateSelection || _templateItems is not { } items || items.DaySelector is null)
             return;
 
-        _syncDateTime = new DateTime(_syncDateTime.Year, _syncDateTime.Month, items.DaySelector.SelectedValue, _syncDateTime.Hour, _syncDateTime.Minute, _syncDateTime.Second);
+        _syncDateTime = new(_syncDateTime.Year, _syncDateTime.Month, items.DaySelector.SelectedValue, _syncDateTime.Hour, _syncDateTime.Minute, _syncDateTime.Second);
     }
 
     private void OnTimeChanged(object? sender, EventArgs e)
@@ -750,7 +750,7 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
         if (Is12HourClock)
             hr = per == 1 ? hr == 12 ? 12 : hr + 12 : per == 0 && hr == 12 ? 0 : hr;
 
-        return new TimeSpan(hr, min, sec);
+        return new(hr, min, sec);
     }
 
     private void RefreshDaysIfNeeded(TemplateItems items, int maxDays)

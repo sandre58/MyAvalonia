@@ -39,8 +39,8 @@ public class DateRangePickerExHeadlessTests
         var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
         grid.Should().NotBeNull();
 
-        HeadlessControlHost.PointerPress(FindDayButton(grid!, new DateTime(2026, 6, 14)));
-        HeadlessControlHost.PointerRelease(FindDayButton(grid!, new DateTime(2026, 6, 14)));
+        HeadlessControlHost.PointerPress(FindDayButton(grid!, new(2026, 6, 14)));
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, new(2026, 6, 14)));
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
         calendar.HasPendingRangeSelection.Should().BeTrue();
@@ -64,8 +64,8 @@ public class DateRangePickerExHeadlessTests
         var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
         grid.Should().NotBeNull();
 
-        HeadlessControlHost.PointerPress(FindDayButton(grid!, new DateTime(2026, 6, 14)));
-        HeadlessControlHost.PointerRelease(FindDayButton(grid!, new DateTime(2026, 6, 14)));
+        HeadlessControlHost.PointerPress(FindDayButton(grid!, new(2026, 6, 14)));
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, new(2026, 6, 14)));
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
         picker.IsDropDownOpen = false;
@@ -80,7 +80,7 @@ public class DateRangePickerExHeadlessTests
     [AvaloniaFact]
     public void CancelPendingRangeSelection_ClearsTapModeAnchor()
     {
-        var calendar = CalendarHeadlessTestHelpers.CreateCalendar(new DateTime(2026, 6, 15));
+        var calendar = CalendarHeadlessTestHelpers.CreateCalendar(new(2026, 6, 15));
         calendar.SelectionMode = CalendarSelectionMode.SingleRange;
         calendar.AllowTapRangeSelection = true;
         HeadlessControlHost.Show(calendar, new(420, 360));
@@ -88,8 +88,8 @@ public class DateRangePickerExHeadlessTests
         var grid = HeadlessControlHost.FindByName<Grid>(calendar, Calendar.PartMonthGrid);
         grid.Should().NotBeNull();
 
-        HeadlessControlHost.PointerPress(FindDayButton(grid!, new DateTime(2026, 6, 14)));
-        HeadlessControlHost.PointerRelease(FindDayButton(grid!, new DateTime(2026, 6, 14)));
+        HeadlessControlHost.PointerPress(FindDayButton(grid!, new(2026, 6, 14)));
+        HeadlessControlHost.PointerRelease(FindDayButton(grid!, new(2026, 6, 14)));
         Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
 
         calendar.HasPendingRangeSelection.Should().BeTrue();
@@ -111,7 +111,7 @@ public class DateRangePickerExHeadlessTests
         var picker = new TestableDateRangePickerEx
         {
             DisplayFormat = "yyyy-MM-dd",
-            DisplayDate = new DateTime(2026, 6, 15),
+            DisplayDate = new(2026, 6, 15),
             AutoCommit = false,
             Width = 320,
             Height = 40,

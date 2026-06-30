@@ -45,7 +45,7 @@ internal static class HeadlessControlHost
             button,
             new(4, 4),
             0,
-            new PointerPointProperties(RawInputModifiers.None, PointerUpdateKind.LeftButtonPressed),
+            new(RawInputModifiers.None, PointerUpdateKind.LeftButtonPressed),
             modifiers,
             0));
 
@@ -56,12 +56,12 @@ internal static class HeadlessControlHost
             button,
             new(4, 4),
             0,
-            new PointerPointProperties(RawInputModifiers.None, PointerUpdateKind.LeftButtonReleased),
+            new(RawInputModifiers.None, PointerUpdateKind.LeftButtonReleased),
             modifiers,
             MouseButton.Left));
 
     public static void PointerEnter(Control control, KeyModifiers modifiers = KeyModifiers.None) =>
-        control.RaiseEvent(new PointerEventArgs(InputElement.PointerEnteredEvent, control, null!, control, new(4, 4), 0, new PointerPointProperties(RawInputModifiers.None, PointerUpdateKind.Other), modifiers));
+        control.RaiseEvent(new PointerEventArgs(InputElement.PointerEnteredEvent, control, null!, control, new(4, 4), 0, new(RawInputModifiers.None, PointerUpdateKind.Other), modifiers));
 
     public static void PointerMove(Control control, KeyModifiers modifiers = KeyModifiers.None, bool leftButtonPressed = false) =>
         PointerMoveAt(control, new(4, 4), modifiers, leftButtonPressed);
@@ -74,7 +74,7 @@ internal static class HeadlessControlHost
             control,
             position,
             0,
-            new PointerPointProperties(leftButtonPressed ? RawInputModifiers.LeftMouseButton : RawInputModifiers.None, PointerUpdateKind.Other),
+            new(leftButtonPressed ? RawInputModifiers.LeftMouseButton : RawInputModifiers.None, PointerUpdateKind.Other),
             modifiers));
 
     public static void PointerExitedAt(Control control, Point position, KeyModifiers modifiers = KeyModifiers.None, bool leftButtonPressed = false) =>
@@ -85,7 +85,7 @@ internal static class HeadlessControlHost
             control,
             position,
             0,
-            new PointerPointProperties(leftButtonPressed ? RawInputModifiers.LeftMouseButton : RawInputModifiers.None, PointerUpdateKind.Other),
+            new(leftButtonPressed ? RawInputModifiers.LeftMouseButton : RawInputModifiers.None, PointerUpdateKind.Other),
             modifiers));
 
     public static void KeyDown(InputElement element, Key key, KeyModifiers modifiers = KeyModifiers.None) =>

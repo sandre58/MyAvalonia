@@ -642,7 +642,7 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
 
         var seeded = start.Add(TimeSpan.FromHours(1));
 
-        return seeded.TotalDays >= 1 ? new TimeSpan(23, 59, 59) : seeded;
+        return seeded.TotalDays >= 1 ? new(23, 59, 59) : seeded;
 
     }
 

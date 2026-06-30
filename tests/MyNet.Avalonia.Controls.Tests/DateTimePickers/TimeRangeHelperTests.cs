@@ -20,21 +20,21 @@ public class TimeRangeHelperTests
     public void BuildPeriod_SwapsWhenEndBeforeStart()
     {
         var result = TimeRangeHelper.BuildPeriod(
-            new TimeSpan(17, 0, 0),
-            new TimeSpan(9, 0, 0),
+            new(17, 0, 0),
+            new(9, 0, 0),
             ReferenceDate);
 
         result.IsValid.Should().BeTrue();
-        TimeRangeHelper.GetPeriodStartTime(result.Period!).Should().Be(new TimeSpan(9, 0, 0));
-        TimeRangeHelper.GetPeriodEndTime(result.Period!).Should().Be(new TimeSpan(17, 0, 0));
+        TimeRangeHelper.GetPeriodStartTime(result.Period!).Should().Be(new(9, 0, 0));
+        TimeRangeHelper.GetPeriodEndTime(result.Period!).Should().Be(new(17, 0, 0));
     }
 
     [Fact]
     public void BuildPeriod_AllowsOvernight()
     {
         var result = TimeRangeHelper.BuildPeriod(
-            new TimeSpan(22, 0, 0),
-            new TimeSpan(2, 0, 0),
+            new(22, 0, 0),
+            new(2, 0, 0),
             ReferenceDate,
             allowOvernight: true,
             TimeRangeInvalidBehavior.Swap);
@@ -47,8 +47,8 @@ public class TimeRangeHelperTests
     public void BuildPeriod_ReportErrorWhenEndBeforeStart()
     {
         var result = TimeRangeHelper.BuildPeriod(
-            new TimeSpan(17, 0, 0),
-            new TimeSpan(9, 0, 0),
+            new(17, 0, 0),
+            new(9, 0, 0),
             ReferenceDate,
             allowOvernight: false,
             TimeRangeInvalidBehavior.ReportError);
@@ -61,8 +61,8 @@ public class TimeRangeHelperTests
     public void SpansOvernight_ReturnsTrueWhenEndIsNextDay()
     {
         var result = TimeRangeHelper.BuildPeriod(
-            new TimeSpan(22, 0, 0),
-            new TimeSpan(2, 0, 0),
+            new(22, 0, 0),
+            new(2, 0, 0),
             ReferenceDate,
             allowOvernight: true,
             TimeRangeInvalidBehavior.Swap);
