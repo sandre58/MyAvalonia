@@ -37,3 +37,16 @@ Controls must support binding and commands without ViewModel-specific logic.
 
 - Document and validate `[TemplatePart]` parts in `OnApplyTemplate`
 - Prefer `TemplateBinding`; avoid runtime visual tree search
+
+## New control — four pillars
+
+Creating a control is not only class + ControlTheme. Before shipping, verify all four:
+
+| Pillar | Ask |
+|--------|-----|
+| **Design** | Single responsibility? States via pseudo-classes? Theme tokens and variants? Focus/disabled/hover visuals? |
+| **Keyboard** | `Focusable` / `IsTabStop`? Tab cycle inside composite controls? Enter, Esc, arrows? Where does focus land on open/close? |
+| **Mouse** | Click, drag, or both? Hover and pressed states? Adequate hit targets? Popup light-dismiss? |
+| **Automation** | Correct `AutomationControlType`? `AutomationProperties.SetName` reflects current value? Meaningful for screen readers and UI tests? |
+
+Reference implementations: `TextPicker.Keyboard.cs`, `Clock.cs` (automation), `ClockTimeComponent.cs` (pointer).

@@ -12,6 +12,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
@@ -37,6 +38,29 @@ public class ClockTimeComponent : TemplatedControl, IComponentTimeSelector
 
     static ClockTimeComponent() { }
 
+    private bool _embeddedChromeNeedsVisualAttach;
+
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+
+        if (!_embeddedChromeNeedsVisualAttach || _cellPanel is null)
+            return;
+
+        _embeddedChromeNeedsVisualAttach = false;
+        UpdateCellPanel();
+        AdjustPointer();
+        UpdateVisual(Value);
+    }
+
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        if (_cellPanel is not null)
+            _embeddedChromeNeedsVisualAttach = true;
+
+        base.OnDetachedFromVisualTree(e);
+    }
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
@@ -52,6 +76,9 @@ public class ClockTimeComponent : TemplatedControl, IComponentTimeSelector
         UpdateCellPanel();
         AdjustPointer();
         UpdateVisual(_value);
+
+        if (!this.IsAttachedToVisualTree())
+            _embeddedChromeNeedsVisualAttach = true;
     }
 
     /// <inheritdoc />

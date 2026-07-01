@@ -17,6 +17,7 @@
                             VerticalAlignment="Stretch"
                             Padding="0"
                             Classes="flex-uniform"
+                            my:ClassesAssist.UseRegisteredClasses="True"
                             my:DisableAssist.IsDisablable="False"
                             my:ItemsAssist.Role="{TemplateBinding (my:ThemeAssist.Role)}"
                             my:VariantAssist.Primary="{my:Theme Primary}"

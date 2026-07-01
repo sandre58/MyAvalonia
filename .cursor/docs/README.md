@@ -7,7 +7,7 @@ Short guides for Cursor agents. For deep reference, see `.cursor/reference/`.
 | Task | Read |
 |------|------|
 | Any change | `01-architecture-overview.md` |
-| New control | `02-control-creation-guide.md` + `04-control-design` rule |
+| New control | `02-control-creation-guide.md` + `04-control-design` rule — cover **Design, Keyboard, Mouse, Automation** |
 | Theme/style fix | `03-theming-guide.md` |
 | Extended feature (dialogs, nav) | `04-extending-library.md` |
 | Showcase demo page | `05-showcase-structure.md` |

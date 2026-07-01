@@ -14,6 +14,21 @@ alwaysApply: false
 
 ## New control checklist
 
+### Four pillars (mandatory)
+
+Every new control must explicitly cover all four — not only API + theme:
+
+| Pillar | Minimum |
+|--------|---------|
+| **Design** | Single responsibility (`04-control-design.mdc`), ControlTheme, pseudo-classes, `MyNet.*` tokens |
+| **Keyboard** | Focus model, tab order, expected shortcuts (Enter, Esc, arrows); `{Name}.Keyboard.cs` when non-trivial |
+| **Mouse** | Pointer press/move/release, hover/disabled states, cursor; light-dismiss for popups |
+| **Automation** | `AutomationProperties` control type + name; update name when value/state changes |
+
+Pickers: also align with `picker-interaction-contract.md` and `pickers.md`.
+
+### Structure
+
 1. Single responsibility — see `04-control-design.mdc`
 2. Class in `Controls/{Domain}/` — inherit `RegionControl`, `TemplatedControl`, etc.
 3. Pseudo-classes via `PseudoClassName` constants + `Property.Changed.AddClassHandler`

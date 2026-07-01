@@ -20,6 +20,13 @@ Similar existing control: @[Path/Example.cs]
 5. Minimal headless test
 6. No hardcoded strings — localization if UI text is shown
 
+## Four pillars (verify before done)
+
+- [ ] **Design** — single responsibility, ControlTheme, pseudo-classes, token-based states
+- [ ] **Keyboard** — focus model, tab order, shortcuts; `{Name}.Keyboard.cs` if needed
+- [ ] **Mouse** — pointer handlers, hover/pressed, popup dismiss if applicable
+- [ ] **Automation** — `AutomationProperties` control type + dynamic name
+
 ## Constraints
 
 - Zero `.axaml` in Controls

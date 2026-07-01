@@ -56,6 +56,15 @@
     <File Path="build/coverage/Run-SolutionCoverage.ps1" />
     <File Path="build/coverage/Verify-CriticalCoverage.ps1" />
   </Folder>
+  <Folder Name="/Solution Files/Cursor/Commands/">
+    <File Path=".cursor/commands/add-feature-module.md" />
+    <File Path=".cursor/commands/architecture-review.md" />
+    <File Path=".cursor/commands/fix-binding-style.md" />
+    <File Path=".cursor/commands/new-control.md" />
+    <File Path=".cursor/commands/nuget-review.md" />
+    <File Path=".cursor/commands/refactor-viewmodel.md" />
+    <File Path=".cursor/commands/safe-refactor.md" />
+  </Folder>
   <Folder Name="/Solution Files/Cursor/Docs/">
     <File Path=".cursor/docs/01-architecture-overview.md" />
     <File Path=".cursor/docs/02-control-creation-guide.md" />

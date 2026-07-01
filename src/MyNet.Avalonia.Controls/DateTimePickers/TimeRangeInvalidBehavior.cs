@@ -21,5 +21,5 @@ public enum TimeRangeInvalidBehavior
     /// <summary>
     /// Reports a data validation error and keeps the last committed value.
     /// </summary>
-    ReportError,
+    ReportError
 }

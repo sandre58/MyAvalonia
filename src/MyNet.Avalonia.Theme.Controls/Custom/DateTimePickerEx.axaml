@@ -47,8 +47,8 @@
         <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="my:GlobalizationBehavior.UpdateOnCultureChanged" Value="True" />
-        <Setter Property="my:PopupAssist.Width" Value="280" />
-        <Setter Property="my:PopupAssist.Height" Value="320" />
+        <Setter Property="my:PopupAssist.Width" Value="260" />
+        <Setter Property="my:PopupAssist.Height" Value="300" />
 
         <!-- Default -->
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />

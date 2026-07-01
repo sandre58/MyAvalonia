@@ -23,6 +23,7 @@
                                  Theme="{StaticResource {x:Type ToggleButton}}"
                                  FontSize="{TemplateBinding FontSize}"
                                  Classes="variant-text size-sm"
+                                 my:ClassesAssist.UseRegisteredClasses="True"
                                  my:DisableAssist.IsDisablable="False"
                                  IsChecked="{TemplateBinding IsAm, Mode=TwoWay}" />
                     <RadioButton x:Name="PART_PmButton"
@@ -33,6 +34,7 @@
                                  Theme="{StaticResource {x:Type ToggleButton}}"
                                  FontSize="{TemplateBinding FontSize}"
                                  Classes="variant-text size-sm"
+                                 my:ClassesAssist.UseRegisteredClasses="True"
                                  my:DisableAssist.IsDisablable="False"
                                  IsChecked="{Binding !IsAm, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
                 </StackPanel>
@@ -241,7 +243,8 @@
                                                           IsTabStop="False"
                                                           TabIndex="-1"
                                                           BorderThickness="0"
-                                                      Classes="variant-solid shadow-surface"
+                                                          Classes="variant-solid shadow-surface"
+                                                          my:ClassesAssist.UseRegisteredClasses="True"
                                                           my:DisableAssist.IsDisablable="False"
                                                           Hour="{TemplateBinding Hour, Mode=TwoWay}"
                                                           Minute="{TemplateBinding Minute, Mode=TwoWay}"
@@ -289,12 +292,12 @@
         </Style>
 
         <Style Selector="^.compact /template/ Grid#PART_ClockHost">
-            <Setter Property="Height" Value="220" />
+            <Setter Property="Height" Value="200" />
         </Style>
 
         <Style Selector="^.compact /template/ Viewbox#PART_ClockViewbox">
-            <Setter Property="MaxWidth" Value="220" />
-            <Setter Property="MaxHeight" Value="220" />
+            <Setter Property="MaxWidth" Value="200" />
+            <Setter Property="MaxHeight" Value="200" />
         </Style>
     </ControlTheme>
 
