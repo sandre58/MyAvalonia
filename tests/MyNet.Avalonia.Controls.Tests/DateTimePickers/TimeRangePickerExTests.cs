@@ -47,7 +47,7 @@ public class TimeRangePickerExTests
     }
 
     [Fact]
-    public void StartTimeAfterEndTime_NormalizesSelectedValue()
+    public void EndTimeAfterStartTime_WhenEndEditedLast_CoercesStartToEnd()
     {
         var picker = CreatePicker();
 
@@ -55,7 +55,34 @@ public class TimeRangePickerExTests
         picker.EndTime = new TimeSpan(10, 0, 0);
 
         picker.StartTime.Should().Be(new TimeSpan(10, 0, 0));
-        picker.EndTime.Should().Be(new TimeSpan(18, 0, 0));
+        picker.EndTime.Should().Be(new TimeSpan(10, 0, 0));
+    }
+
+    [Fact]
+    public void StartTimeAfterEndTime_WhenStartEditedLast_CoercesEndToStart()
+    {
+        var picker = CreatePicker();
+        picker.StartTime = new TimeSpan(9, 0, 0);
+        picker.EndTime = new TimeSpan(17, 0, 0);
+
+        picker.StartTime = new TimeSpan(19, 0, 0);
+
+        picker.StartTime.Should().Be(new TimeSpan(19, 0, 0));
+        picker.EndTime.Should().Be(new TimeSpan(19, 0, 0));
+    }
+
+    [Fact]
+    public void ConvertValueFromString_InvalidSameDayRange_CoercesEndToStart()
+    {
+        var picker = CreatePicker();
+        picker.DisplayFormat = @"HH\:mm";
+        picker.RangeSeparator = " – ";
+
+        var period = InvokeConvertValueFromString(picker, "19:00 – 18:55");
+        picker.SelectedValue = period;
+
+        picker.StartTime.Should().Be(new TimeSpan(19, 0, 0));
+        picker.EndTime.Should().Be(new TimeSpan(19, 0, 0));
     }
 
     [Fact]
@@ -78,8 +105,7 @@ public class TimeRangePickerExTests
             new(22, 0, 0),
             new(2, 0, 0),
             DateTime.Today,
-            allowOvernight: true,
-            TimeRangeInvalidBehavior.Swap).Period;
+            allowOvernight: true).Period;
 
         picker.StartTime.Should().Be(new TimeSpan(22, 0, 0));
         picker.EndTime.Should().Be(new TimeSpan(2, 0, 0));
@@ -97,25 +123,9 @@ public class TimeRangePickerExTests
             new(22, 0, 0),
             new(2, 0, 0),
             DateTime.Today,
-            allowOvernight: true,
-            TimeRangeInvalidBehavior.Swap).Period;
+            allowOvernight: true).Period;
 
         picker.Text.Should().Contain("(+1)");
-    }
-
-    [Fact]
-    public void InvalidRangeBehavior_ReportError_DoesNotCommitInvalidRange()
-    {
-        var picker = CreatePicker();
-        picker.InvalidRangeBehavior = TimeRangeInvalidBehavior.ReportError;
-
-        picker.StartTime = new TimeSpan(17, 0, 0);
-        picker.EndTime = new TimeSpan(9, 0, 0);
-
-        picker.SelectedValue.Should().BeNull();
-        picker.StartTime.Should().Be(new TimeSpan(17, 0, 0));
-        picker.EndTime.Should().Be(new TimeSpan(9, 0, 0));
-        picker.GetValue(DataValidationErrors.ErrorsProperty).Should().NotBeNull();
     }
 
     [Fact]
@@ -226,6 +236,41 @@ public class TimeRangePickerExTests
 
         view.ActiveBoundary.Should().Be(TimeRangeBoundary.Start);
     }
+
+    [Fact]
+    public void CoerceDuringFlyout_WhenEndEdited_AdjustsStartToEnd()
+    {
+        var view = new TimeRangeView();
+        view.StartTime = new TimeSpan(15, 32, 0);
+        view.EndTime = new TimeSpan(18, 55, 0);
+        view.SwitchBoundary(TimeRangeBoundary.End);
+
+        view.EndTime = new TimeSpan(14, 12, 0);
+
+        view.ActiveBoundary.Should().Be(TimeRangeBoundary.End);
+        view.StartTime.Should().Be(new TimeSpan(14, 12, 0));
+        view.EndTime.Should().Be(new TimeSpan(14, 12, 0));
+    }
+
+    [Fact]
+    public void CoerceDuringFlyout_WhenStartEdited_AdjustsEndToStart()
+    {
+        var view = new TimeRangeView();
+        view.StartTime = new TimeSpan(15, 32, 0);
+        view.EndTime = new TimeSpan(18, 55, 0);
+        view.SwitchBoundary(TimeRangeBoundary.Start);
+
+        view.StartTime = new TimeSpan(19, 0, 0);
+
+        view.StartTime.Should().Be(new TimeSpan(19, 0, 0));
+        view.EndTime.Should().Be(new TimeSpan(19, 0, 0));
+    }
+
+    private static Period InvokeConvertValueFromString(TimeRangePickerEx picker, string text) =>
+        (Period)typeof(TimeRangePickerEx).GetMethod(
+            "ConvertValueFromString",
+            BindingFlags.Instance | BindingFlags.NonPublic)!
+            .Invoke(picker, [text])!;
 
     private static TimeRangePickerEx CreatePicker()
     {

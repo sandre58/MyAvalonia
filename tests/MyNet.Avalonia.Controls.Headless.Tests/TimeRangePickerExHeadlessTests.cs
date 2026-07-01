@@ -101,6 +101,27 @@ public class TimeRangePickerExHeadlessTests
     }
 
     [AvaloniaFact]
+    public void TabSwitch_FocusesHourOnActiveBoundary()
+    {
+        var picker = CreatePicker();
+        picker.IsDropDownOpen = true;
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        var previewer = GetPreviewer(picker);
+        var selector = HeadlessControlHost.FindByName<TabControl>(previewer, TimeRangeView.PartBoundarySelector);
+        selector!.SelectedIndex = 1;
+        Dispatcher.UIThread.RunJobs(DispatcherPriority.Render);
+
+        var endTimeView = HeadlessControlHost.FindByName<TimeView>(previewer, TimeRangeView.PartEndTimeView);
+        endTimeView.Should().NotBeNull();
+        endTimeView!.SelectedComponent.Should().Be(TimeComponent.Hour);
+
+        var hourComponent = HeadlessControlHost.FindByName<NumericUpDownTimeComponent>(endTimeView, "PART_Hour");
+        hourComponent.Should().NotBeNull();
+        hourComponent!.IsActive.Should().BeTrue();
+    }
+
+    [AvaloniaFact]
     public void ClosePopup_WithCompletePreview_KeepsCommittedValue()
     {
         var picker = CreatePicker();

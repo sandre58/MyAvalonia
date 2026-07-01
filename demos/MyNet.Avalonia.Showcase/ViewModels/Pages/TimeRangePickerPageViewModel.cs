@@ -27,9 +27,6 @@ internal sealed class TimeRangePickerPageViewModel(ICommandFactory commands) : S
         .AddValueAction((x, y) => x.SetValue(TimeRangePickerEx.ShowOvernightIndicatorProperty, y),
             false,
             x => x.DisplayName(nameof(SettingsResources.ShowOvernightIndicator)).Of<ToggleSwitchEditor>())
-        .AddValueAction((x, y) => x.SetValue(TimeRangePickerEx.InvalidRangeBehaviorProperty, (bool)y ? TimeRangeInvalidBehavior.ReportError : TimeRangeInvalidBehavior.Swap),
-            false,
-            x => x.DisplayName(nameof(SettingsResources.InvalidRangeReportError)).Of<ToggleSwitchEditor>())
         .AddAction<TimeRangePickerEx>(x => x.Clear(),
             x => x.DisplayName(nameof(UiResources.Clear)).WithIcon(MaterialIconKind.TrashCan))
 ])

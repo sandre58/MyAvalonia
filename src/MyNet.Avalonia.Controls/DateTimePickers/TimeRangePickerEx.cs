@@ -112,19 +112,6 @@ public partial class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
 
     #endregion
 
-    #region InvalidRangeBehavior
-
-    public static readonly StyledProperty<TimeRangeInvalidBehavior> InvalidRangeBehaviorProperty =
-        AvaloniaProperty.Register<TimeRangePickerEx, TimeRangeInvalidBehavior>(nameof(InvalidRangeBehavior), TimeRangeInvalidBehavior.Swap);
-
-    public TimeRangeInvalidBehavior InvalidRangeBehavior
-    {
-        get => GetValue(InvalidRangeBehaviorProperty);
-        set => SetValue(InvalidRangeBehaviorProperty, value);
-    }
-
-    #endregion
-
     #region ShowOvernightIndicator
 
     public static readonly StyledProperty<bool> ShowOvernightIndicatorProperty =
@@ -192,23 +179,34 @@ public partial class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
         else
             _partialEnd = value;
 
-        TryCommitPartialRange();
+        TryCommitPartialRange(isStart ? TimeRangeBoundary.Start : TimeRangeBoundary.End);
     }
 
-    private void TryCommitPartialRange()
+    private void TryCommitPartialRange(TimeRangeBoundary editedBoundary)
     {
-        if (_partialStart is not { } start || _partialEnd is not { } end)
+        if (_partialStart is null && _partialEnd is null)
             return;
 
-        var result = TimeRangeHelper.BuildPeriod(start, end, ReferenceDate, AllowOvernight, InvalidRangeBehavior);
-        if (!result.IsValid)
+        if (_partialStart is not { } start)
         {
-            if (result.ShouldReportError)
-                ReportInvalidRange();
+            if (SelectedValue is not { } period)
+                return;
 
-            return;
+            start = TimeRangeHelper.GetPeriodStartTime(period);
         }
 
+        if (_partialEnd is not { } end)
+        {
+            if (SelectedValue is not { } period)
+                return;
+
+            end = TimeRangeHelper.GetPeriodEndTime(period);
+        }
+
+        if (!AllowOvernight)
+            (start, end) = TimeRangeHelper.CoerceSameDayRange(start, end, editedBoundary);
+
+        var result = TimeRangeHelper.BuildPeriod(start, end, ReferenceDate, AllowOvernight);
         _partialStart = null;
         _partialEnd = null;
         SetCurrentValue(SelectedValueProperty, result.Period);
@@ -276,7 +274,6 @@ public partial class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
         previewer.ShowSeconds = ShowSeconds;
         previewer.TimeFormat = TimeFormat;
         previewer.AllowOvernight = AllowOvernight;
-        previewer.InvalidRangeBehavior = InvalidRangeBehavior;
         previewer.ReferenceDate = ReferenceDate;
     }
 
@@ -322,10 +319,6 @@ public partial class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
         {
             Previewer.AllowOvernight = change.GetNewValue<bool>();
         }
-        else if (Previewer is not null && change.Property == InvalidRangeBehaviorProperty)
-        {
-            Previewer.InvalidRangeBehavior = change.GetNewValue<TimeRangeInvalidBehavior>();
-        }
         else if (Previewer is not null && change.Property == ReferenceDateProperty)
         {
             Previewer.ReferenceDate = change.GetNewValue<DateTime>();
@@ -340,18 +333,9 @@ public partial class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
     {
         var previewValue = GetPreviewValue();
         if (previewValue is null && Previewer?.StartTime is null && Previewer?.EndTime is null)
-        {
             SetCurrentValue(SelectedValueProperty, null);
-        }
-        else if (Previewer?.TryBuildSelectedValue() is { IsValid: false, ShouldReportError: true })
-        {
-            ReportInvalidRange();
-            return;
-        }
         else
-        {
             SetCurrentValue(SelectedValueProperty, previewValue);
-        }
 
         DataValidationErrors.ClearErrors(this);
     }
@@ -417,16 +401,10 @@ public partial class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
         var start = ParseTime(startText, format, culture);
         var end = ParseTime(endText, format, culture);
 
-        var result = TimeRangeHelper.BuildPeriod(start, end, ReferenceDate, AllowOvernight, InvalidRangeBehavior);
-        if (!result.IsValid)
-        {
-            if (result.ShouldReportError)
-                throw new ArgumentOutOfRangeException(nameof(text), TimeRangePickerExResources.EndBeforeStart);
+        if (!AllowOvernight)
+            (start, end) = TimeRangeHelper.CoerceSameDayRange(start, end, TimeRangeBoundary.Start);
 
-            throw new FormatException($"Invalid time range '{text}'.");
-        }
-
-        return result.Period!;
+        return TimeRangeHelper.BuildPeriod(start, end, ReferenceDate, AllowOvernight).Period!;
     }
 
     protected override void SetPreviewValue(Period? value)
@@ -465,9 +443,6 @@ public partial class TimeRangePickerEx : TextPicker<Period?, TimeRangeView>
 
         return Previewer.StartTime.HasValue || Previewer.EndTime.HasValue;
     }
-
-    private void ReportInvalidRange() =>
-        DataValidationErrors.SetError(this, new ArgumentOutOfRangeException(nameof(SelectedValue), TimeRangePickerExResources.EndBeforeStart));
 
     private static string FormatTime(TimeSpan time, string format, CultureInfo culture) =>
         DateTime.Today.Add(time).ToString(format, culture);

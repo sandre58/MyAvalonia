@@ -28,8 +28,6 @@ public static class TimeRangePickerExResources
         set => _resourceCulture = value;
     }
 
-    public static string EndBeforeStart => GetString(nameof(EndBeforeStart));
-
     public static string OvernightIndicatorSuffix => GetString(nameof(OvernightIndicatorSuffix));
 
     public static string Start => GetString(nameof(Start));

@@ -12,9 +12,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EndBeforeStart" xml:space="preserve">
-    <value>L'heure de fin doit être postérieure à l'heure de début.</value>
-  </data>
   <data name="OvernightIndicatorSuffix" xml:space="preserve">
     <value> (+1)</value>
   </data>
