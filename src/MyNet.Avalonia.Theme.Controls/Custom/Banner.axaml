@@ -148,9 +148,25 @@
             <Setter Property="IsVisible" Value="True" />
         </Style>
 
+        <Style Selector="^:header-empty">
+            <Setter Property="my:LeadingAssist.VerticalAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="^:header-empty /template/ ContentControl#PART_Leading">
+            <Setter Property="Grid.RowSpan" Value="1" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="^:header-empty /template/ Panel#PART_LeadingHost">
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
         <Style Selector="^:header-empty /template/ ContentPresenter#PART_Content">
             <Setter Property="Grid.Row" Value="0" />
             <Setter Property="Margin" Value="0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="^:header-empty /template/ ContentPresenter#PART_Content > TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
         <!-- Plain leading by default; opt in to badge with class leading-badge. -->

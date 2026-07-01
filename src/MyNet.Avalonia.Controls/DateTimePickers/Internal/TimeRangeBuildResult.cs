@@ -10,4 +10,4 @@ using MyNet.Primitives.Intervals;
 namespace MyNet.Avalonia.Controls.Internals;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
-internal readonly record struct TimeRangeBuildResult(Period? Period, bool IsValid, bool ShouldReportError);
+internal readonly record struct TimeRangeBuildResult(Period? Period, bool IsValid);
