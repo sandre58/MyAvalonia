@@ -289,12 +289,12 @@
         </Style>
 
         <Style Selector="^.compact /template/ Grid#PART_ClockHost">
-            <Setter Property="Height" Value="180" />
+            <Setter Property="Height" Value="220" />
         </Style>
 
         <Style Selector="^.compact /template/ Viewbox#PART_ClockViewbox">
-            <Setter Property="MaxWidth" Value="180" />
-            <Setter Property="MaxHeight" Value="180" />
+            <Setter Property="MaxWidth" Value="220" />
+            <Setter Property="MaxHeight" Value="220" />
         </Style>
     </ControlTheme>
 

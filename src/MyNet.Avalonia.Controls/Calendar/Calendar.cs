@@ -20,6 +20,7 @@ using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Internals;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Collections;
@@ -604,6 +605,12 @@ public class Calendar : TemplatedControl
     {
         _monthGrid?.Children.Clear();
         _yearGrid?.Children.Clear();
+
+        if (_monthGrid is not null)
+        {
+            PointerExitedEvent.RemoveHandler(OnMonthGridPointerLeave, _monthGrid);
+            PointerMovedEvent.RemoveHandler(OnMonthGridPointerMove, _monthGrid);
+        }
 
         // Generate Day titles (Sun, Mon, Tue, Wed, Thu, Fri, Sat) based on FirstDayOfWeek and culture.
         const int dayTitleRow = 0;
@@ -1982,6 +1989,28 @@ public class Calendar : TemplatedControl
 
     #endregion
 
+    private bool _embeddedChromeNeedsVisualAttach;
+
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+
+        if (!_embeddedChromeNeedsVisualAttach || _monthGrid is null)
+            return;
+
+        _embeddedChromeNeedsVisualAttach = false;
+        InitializeGridButtons();
+        Refresh();
+    }
+
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        if (_monthGrid is not null)
+            _embeddedChromeNeedsVisualAttach = true;
+
+        base.OnDetachedFromVisualTree(e);
+    }
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
@@ -2014,5 +2043,8 @@ public class Calendar : TemplatedControl
 
         InitializeGridButtons();
         Refresh();
+
+        if (!this.IsAttachedToVisualTree())
+            _embeddedChromeNeedsVisualAttach = true;
     }
 }

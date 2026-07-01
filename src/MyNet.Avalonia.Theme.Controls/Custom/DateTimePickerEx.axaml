@@ -47,6 +47,8 @@
         <Setter Property="my:ItemsAssist.CornerRadius" Value="0" />
         <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="my:GlobalizationBehavior.UpdateOnCultureChanged" Value="True" />
+        <Setter Property="my:PopupAssist.Width" Value="280" />
+        <Setter Property="my:PopupAssist.Height" Value="320" />
 
         <!-- Default -->
         <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
@@ -231,6 +233,8 @@
                                                          Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
                                                          Background="Transparent"
                                                          BorderThickness="0"
+                                                         Width="{TemplateBinding my:PopupAssist.Width}"
+                                                         Height="{TemplateBinding my:PopupAssist.Height}"
                                                          DisplayDate="{TemplateBinding DisplayDate}"
                                                          DisplayDateEnd="{TemplateBinding DisplayDateEnd}"
                                                          DisplayDateStart="{TemplateBinding DisplayDateStart}"
@@ -520,6 +524,8 @@
                                                          Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}"
                                                          Background="Transparent"
                                                          BorderThickness="0"
+                                                         Width="{TemplateBinding my:PopupAssist.Width}"
+                                                         Height="{TemplateBinding my:PopupAssist.Height}"
                                                          DisplayDate="{TemplateBinding DisplayDate}"
                                                          DisplayDateEnd="{TemplateBinding DisplayDateEnd}"
                                                          DisplayDateStart="{TemplateBinding DisplayDateStart}"
