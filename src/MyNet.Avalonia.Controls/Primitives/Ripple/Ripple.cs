@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using Avalonia;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
@@ -13,6 +14,7 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Rendering.Composition;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;
@@ -118,6 +120,9 @@ public class Ripple : ContentControl
         if (e.Key is not Key.Space and not Key.Enter)
             return;
 
+        if (!ShouldRespondToKeyboardActivation())
+            return;
+
         TryStartRipple(Bounds.Width / 2, Bounds.Height / 2, isCentered: true);
     }
 
@@ -126,9 +131,37 @@ public class Ripple : ContentControl
         if (e.Key is not Key.Space and not Key.Enter)
             return;
 
+        if (!ShouldRespondToKeyboardActivation())
+            return;
+
         _isCancelled = true;
         RemoveLastRipple();
     }
+
+    private bool ShouldRespondToKeyboardActivation()
+    {
+        if (_interactiveParent is not Visual interactiveParent)
+            return false;
+
+        var focused = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() as Visual;
+        if (focused is null)
+            return false;
+
+        if (!ReferenceEquals(focused, interactiveParent)
+            && !interactiveParent.IsVisualAncestorOf(focused))
+            return false;
+
+        if (ReferenceEquals(focused, interactiveParent))
+            return CountRipplesUnder(interactiveParent) == 1;
+
+        if (focused.IsVisualAncestorOf(this))
+            return true;
+
+        return this.IsVisualAncestorOf(focused);
+    }
+
+    private static int CountRipplesUnder(Visual root) =>
+        root.GetVisualDescendants().OfType<Ripple>().Count();
 
     private void TryStartRipple(double x, double y, bool isCentered)
     {

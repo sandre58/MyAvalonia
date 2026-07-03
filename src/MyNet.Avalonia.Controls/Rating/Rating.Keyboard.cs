@@ -35,20 +35,29 @@ public partial class Rating
         {
             case Key.Right:
             case Key.Up:
-                CommitValue(RatingValueHelper.Increment(Value, step, Precision, minimum, maximum));
+                SetPreviewValue(RatingValueHelper.Increment(GetActiveEditValue(), step, Precision, minimum, maximum));
                 return true;
 
             case Key.Left:
             case Key.Down:
-                CommitValue(RatingValueHelper.Increment(Value, -step, Precision, minimum, maximum));
+                SetPreviewValue(RatingValueHelper.Increment(GetActiveEditValue(), -step, Precision, minimum, maximum));
                 return true;
 
             case Key.Home:
-                CommitValue(minimum);
+                SetPreviewValue(minimum);
                 return true;
 
             case Key.End:
-                CommitValue(maximum);
+                SetPreviewValue(maximum);
+                return true;
+
+            case Key.Enter:
+            case Key.Space:
+                CommitPreview();
+                return true;
+
+            case Key.Escape:
+                ClearPreview();
                 return true;
 
             case Key.D0:
@@ -60,6 +69,7 @@ public partial class Rating
                     return false;
 
                 CommitValue(minimum);
+                ClearPreview();
                 return true;
 
             case Key.D1:
@@ -107,6 +117,7 @@ public partial class Rating
     {
         var value = System.Math.Min(digit, maximum);
         CommitValue(value);
+        ClearPreview();
         return true;
     }
 }

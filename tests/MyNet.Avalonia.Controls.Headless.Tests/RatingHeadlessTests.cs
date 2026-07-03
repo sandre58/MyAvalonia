@@ -169,7 +169,7 @@ public class RatingHeadlessTests
     }
 
     [AvaloniaFact]
-    public void ArrowRight_IncrementsValue()
+    public void ArrowRight_UpdatesPreviewOnly()
     {
         var rating = new Rating { MaxRating = 5, Value = 2, Precision = RatingPrecision.Integer };
 
@@ -178,7 +178,87 @@ public class RatingHeadlessTests
 
         HeadlessControlHost.KeyDown(rating, Key.Right);
 
+        rating.Value.Should().Be(2);
+        rating.Items[2].IsPreviewExtend.Should().BeTrue();
+        rating.Items[2].PreviewFillRatio.Should().Be(1);
+    }
+
+    [AvaloniaFact]
+    public void ArrowThenEnter_CommitsPreview()
+    {
+        var rating = new Rating { MaxRating = 5, Value = 2, Precision = RatingPrecision.Integer };
+
+        HeadlessControlHost.Show(rating, new(240, 48));
+        rating.Focus();
+
+        HeadlessControlHost.KeyDown(rating, Key.Right);
+        HeadlessControlHost.KeyDown(rating, Key.Enter);
+
         rating.Value.Should().Be(3);
+        rating.Items.Should().OnlyContain(item => !item.IsPreview);
+    }
+
+    [AvaloniaFact]
+    public void ArrowThenSpace_CommitsPreview()
+    {
+        var rating = new Rating { MaxRating = 5, Value = 2, Precision = RatingPrecision.Integer };
+
+        HeadlessControlHost.Show(rating, new(240, 48));
+        rating.Focus();
+
+        HeadlessControlHost.KeyDown(rating, Key.Right);
+        HeadlessControlHost.KeyDown(rating, Key.Space);
+
+        rating.Value.Should().Be(3);
+        rating.Items.Should().OnlyContain(item => !item.IsPreview);
+    }
+
+    [AvaloniaFact]
+    public void ArrowThenEscape_CancelsPreview()
+    {
+        var rating = new Rating { MaxRating = 5, Value = 2, Precision = RatingPrecision.Integer };
+
+        HeadlessControlHost.Show(rating, new(240, 48));
+        rating.Focus();
+
+        HeadlessControlHost.KeyDown(rating, Key.Right);
+        HeadlessControlHost.KeyDown(rating, Key.Escape);
+
+        rating.Value.Should().Be(2);
+        rating.Items.Should().OnlyContain(item => !item.IsPreview);
+    }
+
+    [AvaloniaFact]
+    public void EnterWithoutPreview_DoesNotChangeValue()
+    {
+        var rating = new Rating { MaxRating = 5, Value = 2, Precision = RatingPrecision.Integer };
+
+        HeadlessControlHost.Show(rating, new(240, 48));
+        rating.Focus();
+
+        HeadlessControlHost.KeyDown(rating, Key.Enter);
+
+        rating.Value.Should().Be(2);
+        rating.Items.Should().OnlyContain(item => !item.IsPreview);
+    }
+
+    [AvaloniaFact]
+    public void LostFocus_ClearsPreview()
+    {
+        var rating = new Rating { MaxRating = 5, Value = 2, Precision = RatingPrecision.Integer };
+        var button = new Button();
+        var panel = new StackPanel { Children = { rating, button } };
+
+        HeadlessControlHost.Show(panel, new(240, 96));
+        rating.Focus();
+
+        HeadlessControlHost.KeyDown(rating, Key.Right);
+        rating.Items[2].IsPreviewExtend.Should().BeTrue();
+
+        button.Focus();
+
+        rating.Value.Should().Be(2);
+        rating.Items.Should().OnlyContain(item => !item.IsPreview);
     }
 
     [AvaloniaFact]

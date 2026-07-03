@@ -256,6 +256,12 @@ public partial class Rating : TemplatedControl
             UpdateInteractionState();
     }
 
+    protected override void OnLostFocus(FocusChangedEventArgs e)
+    {
+        ClearPreview();
+        base.OnLostFocus(e);
+    }
+
     private void OnValueChanged(AvaloniaPropertyChangedEventArgs e)
     {
         UpdateEmptyState();
@@ -399,11 +405,7 @@ public partial class Rating : TemplatedControl
             GetEffectiveMinimum(),
             GetEffectiveMaximum());
 
-        if (_previewValue is { } current && Math.Abs(current - candidate) < double.Epsilon)
-            return;
-
-        _previewValue = candidate;
-        UpdateItemStates();
+        SetPreviewValue(candidate);
     }
 
     internal void HandleItemPointerPressed(RatingItem item, PointerPressedEventArgs e)
@@ -439,6 +441,28 @@ public partial class Rating : TemplatedControl
 
         _previewValue = null;
         UpdateItemStates();
+    }
+
+    private double GetActiveEditValue() => _previewValue ?? Value;
+
+    private void SetPreviewValue(double candidate)
+    {
+        candidate = RatingValueHelper.Clamp(candidate, GetEffectiveMinimum(), GetEffectiveMaximum());
+
+        if (_previewValue is { } current && Math.Abs(current - candidate) < double.Epsilon)
+            return;
+
+        _previewValue = candidate;
+        UpdateItemStates();
+    }
+
+    private void CommitPreview()
+    {
+        if (!_previewValue.HasValue)
+            return;
+
+        CommitValue(_previewValue.Value);
+        ClearPreview();
     }
 
     private double GetPointerFraction(RatingItem item, PointerEventArgs e)
