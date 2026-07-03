@@ -1,0 +1,108 @@
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.RatingPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+             xmlns:enums="clr-namespace:MyNet.Avalonia.Controls.Enums;assembly=MyNet.Avalonia.Controls"
+             x:DataType="vm:RatingPageViewModel"
+             x:Name="Root"
+             Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Display Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             ClipToBounds="False"
+             mc:Ignorable="d"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors">
+
+    <v:ShowcaseView ShowIcon="False" ShowContent="False">
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Spacing="{my:Spacing Sm}">
+                    <my:Rating x:Name="RatingControl"
+                               behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
+                    <TextBlock Classes="opacity-high"
+                               HorizontalAlignment="Center"
+                               Text="{Binding #RatingControl.Value, StringFormat='Value: {0:0.##}'}" />
+                </StackPanel>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <my:Rating Value="4"
+                           behavior:PlaygroundBehavior.AttachStyle="{Binding}" />
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+        <v:ShowcaseView.CustomContent>
+            <StackPanel Spacing="{my:Spacing Lg}">
+                <StackPanel Spacing="{my:Spacing Sm}">
+                    <TextBlock Classes="text-h6" Text="Read-only" />
+                    <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Md}">
+                        <my:Rating Value="0" IsReadOnly="True" />
+                        <my:Rating Value="2.5" IsReadOnly="True" />
+                        <my:Rating Value="3.7" IsReadOnly="True" />
+                        <my:Rating Value="5" IsReadOnly="True" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Spacing="{my:Spacing Sm}">
+                    <TextBlock Classes="text-h6" Text="Precision" />
+                    <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Md}">
+                        <my:Rating Value="3" />
+                        <my:Rating Value="3.5" Precision="{x:Static enums:RatingPrecision.Half}" />
+                        <my:Rating Value="3.7" Precision="{x:Static enums:RatingPrecision.Continuous}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Spacing="{my:Spacing Sm}">
+                    <TextBlock Classes="text-h6" Text="Presets" />
+                    <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Md}" VerticalAlignment="Center">
+                        <my:Rating Classes="preset-favorite" Value="4" IsReadOnly="True" />
+                        <my:Rating Classes="preset-like" Value="3.5" IsReadOnly="True"
+                                   Precision="{x:Static enums:RatingPrecision.Half}" />
+                        <my:Rating Classes="preset-score size-lg" Value="4.5" IsReadOnly="True"
+                                   Precision="{x:Static enums:RatingPrecision.Continuous}" />
+                        <my:Rating Classes="preset-trust" Value="3" IsReadOnly="True" />
+                        <my:Rating Classes="preset-mood" Value="4" IsReadOnly="True" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Spacing="{my:Spacing Sm}">
+                    <TextBlock Classes="text-h6" Text="Symbol shapes" />
+                    <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Md}" VerticalAlignment="Center">
+                        <my:Rating Classes="symbol-star-dual" Value="4" IsReadOnly="True" />
+                        <my:Rating Classes="symbol-circle preset-score" Value="3" IsReadOnly="True" />
+                        <my:Rating Classes="symbol-flag" Value="2.5" IsReadOnly="True"
+                                   Precision="{x:Static enums:RatingPrecision.Half}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Spacing="{my:Spacing Sm}">
+                    <TextBlock Classes="text-h6" Text="Sizes (size-sm / size-md / size-lg)" />
+                    <StackPanel Orientation="Horizontal" Spacing="{my:Spacing Md}" VerticalAlignment="Center">
+                        <my:Rating Classes="size-sm" Value="3" IsReadOnly="True" />
+                        <my:Rating Classes="size-md" Value="3" IsReadOnly="True" />
+                        <my:Rating Classes="size-lg" Value="3" IsReadOnly="True" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Spacing="{my:Spacing Sm}">
+                    <TextBlock Classes="text-h6" Text="Vertical &amp; clearable" />
+                    <my:Rating Value="4"
+                               Orientation="Vertical"
+                               IsClearable="True"
+                               ClearOnReselect="True" />
+                </StackPanel>
+            </StackPanel>
+        </v:ShowcaseView.CustomContent>
+
+    </v:ShowcaseView>
+</ContentPage>

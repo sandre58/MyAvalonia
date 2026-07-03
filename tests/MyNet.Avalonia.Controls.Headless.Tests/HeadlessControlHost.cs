@@ -49,11 +49,33 @@ internal static class HeadlessControlHost
             modifiers,
             0));
 
+    public static void PointerPress(Control control, KeyModifiers modifiers = KeyModifiers.None) =>
+        control.RaiseEvent(new PointerPressedEventArgs(
+            control,
+            new Pointer(1, PointerType.Mouse, true),
+            control,
+            new(4, 4),
+            0,
+            new(RawInputModifiers.None, PointerUpdateKind.LeftButtonPressed),
+            modifiers,
+            0));
+
     public static void PointerRelease(Button button, KeyModifiers modifiers = KeyModifiers.None) =>
         button.RaiseEvent(new PointerReleasedEventArgs(
             InputElement.PointerReleasedEvent,
             new Pointer(1, PointerType.Mouse, true),
             button,
+            new(4, 4),
+            0,
+            new(RawInputModifiers.None, PointerUpdateKind.LeftButtonReleased),
+            modifiers,
+            MouseButton.Left));
+
+    public static void PointerRelease(Control control, KeyModifiers modifiers = KeyModifiers.None) =>
+        control.RaiseEvent(new PointerReleasedEventArgs(
+            InputElement.PointerReleasedEvent,
+            new Pointer(1, PointerType.Mouse, true),
+            control,
             new(4, 4),
             0,
             new(RawInputModifiers.None, PointerUpdateKind.LeftButtonReleased),

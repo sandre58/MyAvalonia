@@ -55,6 +55,7 @@ internal static class PagesCatalog
                 new(typeof(MultiComboBoxPageViewModel), typeof(MultiComboBoxPage), MaterialIconKind.FormSelect),
                 new(typeof(TagBoxPageViewModel), typeof(TagBoxPage), MaterialIconKind.TagMultiple),
                 new(typeof(SliderPageViewModel), typeof(SliderPage), MaterialIconKind.TuneVariant),
+                new(typeof(RatingPageViewModel), typeof(RatingPage), MaterialIconKind.Star),
                 new(typeof(ColorViewPageViewModel), typeof(ColorViewPage), MaterialIconKind.Palette),
                 new(typeof(CalendarPageViewModel), typeof(CalendarPage), MaterialIconKind.Calendar),
                 new(typeof(DateRangePickerPageViewModel), typeof(DateRangePickerPage), MaterialIconKind.CalendarRange),

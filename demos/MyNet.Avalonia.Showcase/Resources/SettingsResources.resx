@@ -817,4 +817,16 @@
   <data name="VerticalAnchor" xml:space="preserve">
       <value>Ancrer verticalement</value>
   </data>
+  <data name="Precision" xml:space="preserve">
+      <value>Précision</value>
+  </data>
+  <data name="IsClearable" xml:space="preserve">
+      <value>Effaçable</value>
+  </data>
+  <data name="ClearOnReselect" xml:space="preserve">
+      <value>Effacer si re-sélection</value>
+  </data>
+  <data name="SymbolSize" xml:space="preserve">
+      <value>Taille symbole</value>
+  </data>
 </root>

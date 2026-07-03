@@ -223,4 +223,33 @@
         </Setter>
     </ControlTheme>
 
+    <ControlTheme x:Key="{x:Type controls:RatingItem}" TargetType="controls:RatingItem">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:RatingItem">
+                <Border Background="Transparent">
+                    <Panel Name="PART_SymbolHost"
+                           Width="{Binding IconSize, RelativeSource={RelativeSource TemplatedParent}}"
+                           Height="{Binding IconSize, RelativeSource={RelativeSource TemplatedParent}}"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Index, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Panel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:Rating}" TargetType="controls:Rating">
+        <Setter Property="ItemTheme" Value="{StaticResource {x:Type controls:RatingItem}}" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:Rating">
+                <StackPanel Name="{x:Static controls:Rating.PartItemsPanel}"
+                            Orientation="{TemplateBinding Orientation}"
+                            Spacing="4" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
 </ResourceDictionary>

@@ -26,6 +26,7 @@ public static class PseudoClassName
     public const string FirstLevel = ":first-level";
     public const string FixedWidth = ":fixed-width";
     public const string Floating = ":floating";
+    public const string Full = ":full";
     public const string FlyoutOpen = ":flyout-open";
     public const string Focus = ":focus";
     public const string FocusWithin = ":focus-within";
@@ -51,7 +52,14 @@ public static class PseudoClassName
     public const string Month = ":month";
     public const string NoLabel = ":no-label";
     public const string Pointerover = ":pointerover";
+    public const string Partial = ":partial";
     public const string Pressed = ":pressed";
+    public const string Preview = ":preview";
+    public const string PreviewExtend = ":preview-extend";
+    public const string PreviewHold = ":preview-hold";
+    public const string PreviewRetract = ":preview-retract";
+    public const string PreviewSplit = ":preview-split";
+    public const string ReadOnly = ":readonly";
     public const string PreviewEndDate = ":preview-end-date";
     public const string PreviewInRange = ":preview-in-range";
     public const string PreviewStartDate = ":preview-start-date";

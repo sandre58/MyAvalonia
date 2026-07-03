@@ -837,4 +837,16 @@
   <data name="HorizontalAnchor" xml:space="preserve">
       <value>Horizontal anchor</value>
   </data>
+  <data name="Precision" xml:space="preserve">
+      <value>Precision</value>
+  </data>
+  <data name="IsClearable" xml:space="preserve">
+      <value>Clearable</value>
+  </data>
+  <data name="ClearOnReselect" xml:space="preserve">
+      <value>Clear on reselect</value>
+  </data>
+  <data name="SymbolSize" xml:space="preserve">
+      <value>Symbol size</value>
+  </data>
 </root>

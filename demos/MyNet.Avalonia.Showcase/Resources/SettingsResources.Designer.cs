@@ -922,7 +922,43 @@ namespace MyNet.Avalonia.Showcase.Resources {
                 return ResourceManager.GetString("IsReadOnly", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Effaçable.
+        /// </summary>
+        internal static string IsClearable {
+            get {
+                return ResourceManager.GetString("IsClearable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Effacer si re-sélection.
+        /// </summary>
+        internal static string ClearOnReselect {
+            get {
+                return ResourceManager.GetString("ClearOnReselect", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Taille symbole.
+        /// </summary>
+        internal static string SymbolSize {
+            get {
+                return ResourceManager.GetString("SymbolSize", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Précision.
+        /// </summary>
+        internal static string Precision {
+            get {
+                return ResourceManager.GetString("Precision", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Est rond.
         /// </summary>

@@ -30,6 +30,11 @@
     </ItemGroup>
     
     <ItemGroup>
+      <Compile Update="Localization\RatingResources.Designer.cs">
+        <DependentUpon>RatingResources.resx</DependentUpon>
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+      </Compile>
       <Compile Update="Localization\TimeRangePickerExResources.Designer.cs">
         <DependentUpon>TimeRangePickerExResources.resx</DependentUpon>
         <DesignTime>True</DesignTime>
@@ -48,6 +53,10 @@
     </ItemGroup>
     
     <ItemGroup>
+      <EmbeddedResource Update="Localization\RatingResources.resx">
+        <LastGenOutput>RatingResources.Designer.cs</LastGenOutput>
+        <Generator>PublicResXFileCodeGenerator</Generator>
+      </EmbeddedResource>
       <EmbeddedResource Update="Localization\TimeRangePickerExResources.resx">
         <LastGenOutput>TimeRangePickerExResources.Designer.cs</LastGenOutput>
         <Generator>PublicResXFileCodeGenerator</Generator>

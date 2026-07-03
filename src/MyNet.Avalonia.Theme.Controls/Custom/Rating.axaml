@@ -1,0 +1,423 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
+
+    <!--  ==============================================  -->
+    <!--  RATING PRESET COLORS  -->
+    <!--  ==============================================  -->
+
+    <Color x:Key="MyNet.Color.Rating.Gold">#FFB800</Color>
+    <Color x:Key="MyNet.Color.Rating.Favorite">#E53935</Color>
+    <Color x:Key="MyNet.Color.Rating.Like">#1976D2</Color>
+    <Color x:Key="MyNet.Color.Rating.Trust">#43A047</Color>
+    <Color x:Key="MyNet.Color.Rating.Mood">#8E24AA</Color>
+
+    <SolidColorBrush x:Key="MyNet.Brush.Rating.Gold" Color="{StaticResource MyNet.Color.Rating.Gold}" />
+    <SolidColorBrush x:Key="MyNet.Brush.Rating.Favorite" Color="{StaticResource MyNet.Color.Rating.Favorite}" />
+    <SolidColorBrush x:Key="MyNet.Brush.Rating.Like" Color="{StaticResource MyNet.Color.Rating.Like}" />
+    <SolidColorBrush x:Key="MyNet.Brush.Rating.Trust" Color="{StaticResource MyNet.Color.Rating.Trust}" />
+    <SolidColorBrush x:Key="MyNet.Brush.Rating.Mood" Color="{StaticResource MyNet.Color.Rating.Mood}" />
+
+    <!--  ==============================================  -->
+    <!--  RATING SYMBOL TEMPLATE  -->
+    <!--  ==============================================  -->
+
+    <DataTemplate x:Key="MyNet.DataTemplate.RatingSymbol" x:DataType="{x:Type icons:MaterialIconKind}">
+        <my:MaterialIcon Kind="{Binding}" />
+    </DataTemplate>
+
+    <!--  ==============================================  -->
+    <!--  RATING ITEM THEME  -->
+    <!--  ==============================================  -->
+
+    <ControlTheme x:Key="{x:Type my:RatingItem}" TargetType="my:RatingItem">
+        <Setter Property="my:ThemeAssist.Category" Value="Unknown" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="False" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="UseLayoutRounding" Value="False" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="IconSize" Value="{Binding $parent[my:Rating].ItemSize}" />
+        <Setter Property="Padding" Value="{Binding $parent[my:Rating].(my:ItemsAssist.Padding)}" />
+        <Setter Property="Margin" Value="{Binding $parent[my:Rating].(my:ItemsAssist.Margin)}" />
+        <Setter Property="Foreground" Value="{Binding $parent[my:Rating].(my:ItemsAssist.Foreground)}" />
+        <Setter Property="my:InteractionAssist.HoverForeground" Value="{Binding $parent[my:Rating].(my:ItemsAssist.HoverForeground)}" />
+        <Setter Property="my:InteractionAssist.ActiveForeground" Value="{Binding $parent[my:Rating].(my:ItemsAssist.ActiveForeground)}" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="{Binding $parent[my:Rating].(my:ItemsAssist.RippleColor)}" />
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:RatingItem">
+                <Border Background="Transparent"
+                        MinWidth="{TemplateBinding IconSize}"
+                        MinHeight="{TemplateBinding IconSize}">
+                    <my:Ripple Name="PART_Ripple"
+                               RippleFill="{TemplateBinding my:InteractionAssist.RippleColor}"
+                               IsCentered="True"
+                               SizeMultiplier="2"
+                               IsEnabled="{Binding $parent[my:Rating].IsReadOnly, Converter={x:Static BoolConverters.Not}}">
+                        <Canvas Name="PART_SymbolHost"
+                               Width="{TemplateBinding IconSize}"
+                               Height="{TemplateBinding IconSize}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top">
+                            <ContentPresenter Name="PART_EmptySymbol"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch"
+                                              Width="{TemplateBinding IconSize}"
+                                              Height="{TemplateBinding IconSize}"
+                                              Content="{Binding $parent[my:Rating].EmptySymbol}"
+                                              ContentTemplate="{StaticResource MyNet.DataTemplate.RatingSymbol}"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              my:IconAssist.Size="{TemplateBinding IconSize}"
+                                              my:IconAssist.Role="Primary" />
+
+                            <Canvas Name="PART_FilledClip"
+                                    ClipToBounds="True">
+                                <ContentPresenter Name="PART_FilledSymbol"
+                                                  Width="{TemplateBinding IconSize}"
+                                                  Height="{TemplateBinding IconSize}"
+                                                  Content="{Binding $parent[my:Rating].EffectiveFilledSymbol}"
+                                                  ContentTemplate="{StaticResource MyNet.DataTemplate.RatingSymbol}"
+                                                  Foreground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
+                                                  my:IconAssist.Size="{TemplateBinding IconSize}"
+                                                  my:IconAssist.Role="Primary" />
+                            </Canvas>
+
+                            <Panel Name="PART_PreviewClip"
+                                   ClipToBounds="True">
+                                <ContentPresenter Name="PART_PreviewSymbol"
+                                                  Width="{TemplateBinding IconSize}"
+                                                  Height="{TemplateBinding IconSize}"
+                                                  Content="{Binding $parent[my:Rating].EffectiveFilledSymbol}"
+                                                  ContentTemplate="{StaticResource MyNet.DataTemplate.RatingSymbol}"
+                                                  Foreground="{Binding $parent[my:Rating].(my:ItemsAssist.HoverForeground)}"
+                                                  my:IconAssist.Size="{TemplateBinding IconSize}"
+                                                  my:IconAssist.Role="Primary" />
+                            </Panel>
+                        </Canvas>
+                    </my:Ripple>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^.use-transitions:preview-extend /template/ ContentPresenter#PART_PreviewSymbol">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <DoubleTransition Easing="LinearEasing" Property="Opacity" Duration="{StaticResource MyNet.Animation.Opacity}" />
+                </Transitions>
+            </Setter>
+        </Style>
+
+        <!-- Baseline defaults -->
+        <Style Selector="^ /template/ ContentPresenter#PART_FilledSymbol">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+        <Style Selector="^ /template/ ContentPresenter#PART_PreviewSymbol">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+
+        <!-- :empty — grey empty slot -->
+        <Style Selector="^:empty /template/ ContentPresenter#PART_FilledSymbol">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+        <Style Selector="^:empty /template/ ContentPresenter#PART_PreviewSymbol">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+
+        <!-- :partial / :full — committed fill -->
+        <Style Selector="^:partial /template/ ContentPresenter#PART_FilledSymbol, ^:full /template/ ContentPresenter#PART_FilledSymbol">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+        <Style Selector="^:partial /template/ ContentPresenter#PART_PreviewSymbol, ^:full /template/ ContentPresenter#PART_PreviewSymbol">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+
+        <!-- :preview-extend — light preview on empty or new slots -->
+        <Style Selector="^:preview-extend /template/ ContentPresenter#PART_FilledSymbol">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+        <Style Selector="^:preview-extend /template/ ContentPresenter#PART_PreviewSymbol">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <!-- :preview-hold — lighten committed fill in place (no layer swap) -->
+        <Style Selector="^:preview-hold /template/ ContentPresenter#PART_FilledSymbol">
+            <Setter Property="Foreground" Value="{Binding $parent[my:Rating].(my:ItemsAssist.HoverForeground)}" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+        <Style Selector="^:preview-hold /template/ ContentPresenter#PART_PreviewSymbol">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+
+        <!-- :preview-retract — attenuated committed fill beyond preview -->
+        <Style Selector="^:preview-retract /template/ ContentPresenter#PART_FilledSymbol">
+            <Setter Property="Opacity" Value="0.35" />
+        </Style>
+        <Style Selector="^:preview-retract /template/ ContentPresenter#PART_PreviewSymbol">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+
+        <!-- :preview-split — hold (left) + retract (right) on the same item -->
+        <Style Selector="^:preview-split /template/ ContentPresenter#PART_PreviewSymbol">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+        <Style Selector="^:preview-split /template/ ContentPresenter#PART_FilledSymbol">
+            <Setter Property="Opacity" Value="0.35" />
+        </Style>
+
+        <!-- Horizontal orientation: clip width from left -->
+        <Style Selector="^:horizontal /template/ Canvas#PART_FilledClip">
+            <Setter Property="Canvas.Top" Value="0" />
+            <Setter Property="Canvas.Left">
+                <Setter.Value>
+                    <MultiBinding Converter="{x:Static my:MathConverter.Multiply}">
+                        <Binding Path="FilledClipOffsetRatio" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                        <Binding Path="IconSize" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Canvas.Width">
+                <Setter.Value>
+                    <MultiBinding Converter="{x:Static my:MathConverter.Multiply}">
+                        <Binding Path="FilledClipRatio" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                        <Binding Path="IconSize" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Height" Value="{Binding IconSize, RelativeSource={RelativeSource AncestorType=my:RatingItem}}" />
+        </Style>
+        <Style Selector="^:horizontal /template/ Panel#PART_PreviewClip">
+            <Setter Property="Canvas.Top" Value="0" />
+            <Setter Property="Height" Value="{Binding IconSize, RelativeSource={RelativeSource AncestorType=my:RatingItem}}" />
+            <Setter Property="Width">
+                <Setter.Value>
+                    <MultiBinding Converter="{x:Static my:MathConverter.Multiply}">
+                        <Binding Path="PreviewFillRatio" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                        <Binding Path="IconSize" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style Selector="^:horizontal /template/ ContentPresenter#PART_FilledSymbol">
+            <Setter Property="Canvas.Top" Value="0" />
+            <Setter Property="Canvas.Left">
+                <Setter.Value>
+                    <MultiBinding Converter="{x:Static my:MathConverter.Multiply}">
+                        <Binding Path="FilledSymbolOffsetRatio" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                        <Binding Path="IconSize" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style Selector="^:horizontal /template/ ContentPresenter#PART_PreviewSymbol">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+
+        <!-- Vertical orientation: clip height from top (mirror of horizontal left-to-right) -->
+        <Style Selector="^:vertical /template/ Canvas#PART_FilledClip, ^:vertical /template/ Panel#PART_PreviewClip">
+            <Setter Property="Canvas.Left" Value="0" />
+            <Setter Property="Canvas.Width" Value="{Binding IconSize, RelativeSource={RelativeSource AncestorType=my:RatingItem}}" />
+            <Setter Property="Canvas.Top" Value="0" />
+            <Setter Property="Canvas.Bottom" Value="{x:Static x:Double.NaN}" />
+        </Style>
+        <Style Selector="^:vertical /template/ Canvas#PART_FilledClip">
+            <Setter Property="Height">
+                <Setter.Value>
+                    <MultiBinding Converter="{x:Static my:MathConverter.Multiply}">
+                        <Binding Path="FilledClipRatio" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                        <Binding Path="IconSize" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Canvas.Top">
+                <Setter.Value>
+                    <MultiBinding Converter="{x:Static my:MathConverter.Multiply}">
+                        <Binding Path="FilledClipOffsetRatio" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                        <Binding Path="IconSize" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style Selector="^:vertical /template/ Panel#PART_PreviewClip">
+            <Setter Property="Width" Value="{Binding IconSize, RelativeSource={RelativeSource AncestorType=my:RatingItem}}" />
+            <Setter Property="Height">
+                <Setter.Value>
+                    <MultiBinding Converter="{x:Static my:MathConverter.Multiply}">
+                        <Binding Path="PreviewFillRatio" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                        <Binding Path="IconSize" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style Selector="^:vertical /template/ ContentPresenter#PART_FilledSymbol">
+            <Setter Property="Canvas.Left" Value="0" />
+            <Setter Property="Canvas.Top" Value="0" />
+            <Setter Property="Canvas.Bottom" Value="{x:Static x:Double.NaN}" />
+        </Style>
+        <Style Selector="^:vertical /template/ ContentPresenter#PART_PreviewSymbol">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <Style Selector="^:vertical:preview-split /template/ ContentPresenter#PART_FilledSymbol">
+            <Setter Property="Canvas.Top">
+                <Setter.Value>
+                    <MultiBinding Converter="{x:Static my:MathConverter.Multiply}">
+                        <Binding Path="FilledSymbolOffsetRatio" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                        <Binding Path="IconSize" RelativeSource="{RelativeSource AncestorType=my:RatingItem}" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ControlTheme>
+
+    <!--  ==============================================  -->
+    <!--  DEFAULT RATING THEME  -->
+    <!--  ==============================================  -->
+
+    <ControlTheme x:Key="{x:Type my:Rating}" TargetType="my:Rating">
+        <Setter Property="my:ThemeAssist.Category" Value="Indicator" />
+        <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
+        <Setter Property="my:TransitionsAssist.UseTransitions" Value="True" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="ItemTheme" Value="{StaticResource {x:Type my:RatingItem}}" />
+        <Setter Property="ItemSize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+        <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.Star}" />
+        <Setter Property="my:ItemsAssist.Margin" Value="0" />
+        <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Xs}" />
+        <Setter Property="my:ItemsAssist.Spacing" Value="0" />
+        <Setter Property="my:ItemsAssist.ShadowDepth" Value="Depth0" />
+
+        <!-- Default colors -->
+        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+
+        <!-- Variant -->
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary, Role=(my:ItemsAssist.Role)}" />
+
+        <!-- Theme -->
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+
+        <!-- Items -->
+        <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground Opacity=Medium}" />
+        <Setter Property="my:ItemsAssist.HoverForeground" Value="{my:ThemeBrush (my:VariantAssist.Primary), Opacity=High}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        <Setter Property="my:ItemsAssist.RippleColor" Value="{my:ThemeBrush (my:ItemsAssist.ActiveForeground)}" />
+
+        <Style Selector="^[(my|ItemsAssist.Role)=Contrast]">
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:Foreground}" />
+        </Style>
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="my:Rating">
+                <StackPanel Name="{x:Static my:Rating.PartItemsPanel}"
+                            Orientation="{TemplateBinding Orientation}"
+                            Spacing="{TemplateBinding (my:ItemsAssist.Spacing)}" />
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:readonly">
+            <Setter Property="Cursor" Value="Arrow" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground Opacity=High}" />
+        </Style>
+
+        <!-- Sizes -->
+        <Style Selector="^.size-xs">
+            <Setter Property="ItemSize" Value="{StaticResource MyNet.Size.Icon.Xs}" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Xxs}" />
+        </Style>
+        <Style Selector="^.size-sm">
+            <Setter Property="ItemSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Xxs}" />
+        </Style>
+        <Style Selector="^.size-md">
+            <Setter Property="ItemSize" Value="{StaticResource MyNet.Size.Icon.Md}" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Xs}" />
+        </Style>
+        <Style Selector="^.size-lg">
+            <Setter Property="ItemSize" Value="{StaticResource MyNet.Size.Icon.Lg}" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Sm}" />
+        </Style>
+        <Style Selector="^.size-xl">
+            <Setter Property="ItemSize" Value="{StaticResource MyNet.Size.Icon.Xl}" />
+            <Setter Property="my:ItemsAssist.Padding" Value="{my:Thickness Sm}" />
+        </Style>
+
+        <!-- Symbol shapes -->
+        <Style Selector="^.symbol-star-dual">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.StarOutline}" />
+            <Setter Property="FilledSymbol" Value="{x:Static icons:MaterialIconKind.Star}" />
+        </Style>
+        <Style Selector="^.symbol-heart">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.HeartOutline}" />
+            <Setter Property="FilledSymbol" Value="{x:Static icons:MaterialIconKind.Heart}" />
+        </Style>
+        <Style Selector="^.symbol-thumb">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.ThumbUpOutline}" />
+            <Setter Property="FilledSymbol" Value="{x:Static icons:MaterialIconKind.ThumbUp}" />
+        </Style>
+        <Style Selector="^.symbol-circle">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.Circle}" />
+            <Setter Property="FilledSymbol" Value="{x:Null}" />
+        </Style>
+        <Style Selector="^.symbol-flag">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.FlagOutline}" />
+            <Setter Property="FilledSymbol" Value="{x:Static icons:MaterialIconKind.Flag}" />
+        </Style>
+        <Style Selector="^.symbol-shield">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.ShieldOutline}" />
+            <Setter Property="FilledSymbol" Value="{x:Static icons:MaterialIconKind.Shield}" />
+        </Style>
+        <Style Selector="^.symbol-emote">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.EmoticonOutline}" />
+            <Setter Property="FilledSymbol" Value="{x:Static icons:MaterialIconKind.EmoticonHappy}" />
+        </Style>
+
+        <!-- Presets (shape + custom colors) -->
+        <Style Selector="^.preset-default">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.Star}" />
+            <Setter Property="FilledSymbol" Value="{x:Null}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{Binding $self.(my:VariantAssist.Primary)}" />
+        </Style>
+        <Style Selector="^.preset-favorite">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.HeartOutline}" />
+            <Setter Property="FilledSymbol" Value="{x:Static icons:MaterialIconKind.Heart}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{StaticResource MyNet.Brush.Rating.Favorite}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{StaticResource MyNet.Brush.Rating.Favorite}" />
+        </Style>
+        <Style Selector="^.preset-like">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.ThumbUpOutline}" />
+            <Setter Property="FilledSymbol" Value="{x:Static icons:MaterialIconKind.ThumbUp}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{StaticResource MyNet.Brush.Rating.Like}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{StaticResource MyNet.Brush.Rating.Like}" />
+        </Style>
+        <Style Selector="^.preset-score">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.Star}" />
+            <Setter Property="FilledSymbol" Value="{x:Null}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{StaticResource MyNet.Brush.Rating.Gold}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{StaticResource MyNet.Brush.Rating.Gold}" />
+        </Style>
+        <Style Selector="^.preset-trust">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.ShieldOutline}" />
+            <Setter Property="FilledSymbol" Value="{x:Static icons:MaterialIconKind.Shield}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{StaticResource MyNet.Brush.Rating.Trust}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{StaticResource MyNet.Brush.Rating.Trust}" />
+        </Style>
+        <Style Selector="^.preset-mood">
+            <Setter Property="EmptySymbol" Value="{x:Static icons:MaterialIconKind.EmoticonOutline}" />
+            <Setter Property="FilledSymbol" Value="{x:Static icons:MaterialIconKind.EmoticonHappy}" />
+            <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
+            <Setter Property="my:ItemsAssist.ActiveForeground" Value="{StaticResource MyNet.Brush.Rating.Mood}" />
+            <Setter Property="my:ItemsAssist.RippleColor" Value="{StaticResource MyNet.Brush.Rating.Mood}" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>
