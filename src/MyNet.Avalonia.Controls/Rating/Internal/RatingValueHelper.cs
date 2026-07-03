@@ -6,10 +6,9 @@
 
 using System;
 using MyNet.Avalonia.Controls.Enums;
+using MyNet.Primitives;
 
-#pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls.Internals;
-#pragma warning restore IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.Controls.Internals.Rating;
 
 internal static class RatingValueHelper
 {
@@ -22,23 +21,20 @@ internal static class RatingValueHelper
             _ => 1
         };
 
-    public static double Clamp(double value, double minimum, double maximum) =>
-        Math.Clamp(value, minimum, maximum);
-
     public static double Snap(double value, RatingPrecision precision, double minimum, double maximum)
     {
-        value = Clamp(value, minimum, maximum);
+        value = value.SafeClamp(minimum, maximum);
 
         if (precision == RatingPrecision.Continuous)
             return Math.Round(value, 1, MidpointRounding.AwayFromZero);
 
         var step = GetStep(precision);
         var snapped = (Math.Round(((value - minimum) / step), MidpointRounding.AwayFromZero) * step) + minimum;
-        return Clamp(snapped, minimum, maximum);
+        return snapped.SafeClamp(minimum, maximum);
     }
 
     public static double GetFillRatio(double value, int index) =>
-        Clamp(value - (index - 1), 0, 1);
+        (value - (index - 1)).SafeClamp(0, 1);
 
     public static double ValueFromItemPosition(
         int index,
@@ -48,12 +44,12 @@ internal static class RatingValueHelper
         double maximum)
     {
         if (precision == RatingPrecision.Integer)
-            return Clamp(index, minimum, maximum);
+            return ((double)index).SafeClamp(minimum, maximum);
 
         if (precision == RatingPrecision.Half)
         {
             var value = fraction <= 0.5 ? index - 0.5 : index;
-            return Clamp(value, minimum, maximum);
+            return value.SafeClamp(minimum, maximum);
         }
 
         return Snap((index - 1) + fraction, precision, minimum, maximum);
@@ -76,8 +72,8 @@ internal static class RatingValueHelper
             return 1;
 
         return isHorizontal
-            ? Clamp(x / width, 0, 1)
-            : Clamp(y / height, 0, 1);
+            ? (x / width).SafeClamp(0, 1)
+            : (y / height).SafeClamp(0, 1);
     }
 
     public static double GetPointerFractionInContent(
@@ -98,10 +94,10 @@ internal static class RatingValueHelper
         if (isHorizontal)
         {
             var localX = x - paddingLeft;
-            return Clamp(localX / contentSize, 0, 1);
+            return (localX / contentSize).SafeClamp(0, 1);
         }
 
         var localY = y - paddingTop;
-        return Clamp(localY / contentSize, 0, 1);
+        return (localY / contentSize).SafeClamp(0, 1);
     }
 }

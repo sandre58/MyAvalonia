@@ -10,7 +10,7 @@ using Avalonia.Controls.Templates;
 using Avalonia.Metadata;
 using MyNet.Avalonia.Controls.Enums;
 
-namespace MyNet.Avalonia.Theme.Controls;
+namespace MyNet.Avalonia.Theme.Controls.DataTemplates;
 
 /// <summary>
 /// Selects a <see cref="IDataTemplate"/> for each <see cref="LoaderAnimation"/> value.

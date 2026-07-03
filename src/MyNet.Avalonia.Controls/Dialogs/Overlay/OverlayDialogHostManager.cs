@@ -11,7 +11,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Layout;
 using Avalonia.VisualTree;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Dialogs.Overlay.Internal;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;

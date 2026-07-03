@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Internals.Pagination;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Pagination;
@@ -27,12 +27,12 @@ public class PaginationExpandedTests
     }
 
     [Fact]
-    public void BuildButtonStates_WithZeroPageCount_HidesAllButtons() => PaginationLayoutHelper.BuildButtonStates(1, 0).Should().OnlyContain(x => !x.IsVisible);
+    public void BuildButtonStates_WithZeroPageCount_HidesAllButtons() => PaginationHelper.BuildButtonStates(1, 0).Should().OnlyContain(x => !x.IsVisible);
 
     [Fact]
     public void BuildButtonStates_WithSevenPages_ShowsAllWithoutEllipsis()
     {
-        var states = PaginationLayoutHelper.BuildButtonStates(4, 7);
+        var states = PaginationHelper.BuildButtonStates(4, 7);
 
         states.Should().OnlyContain(x => x.IsVisible);
         states.Should().NotContain(x => x.IsLeftEllipsis || x.IsRightEllipsis);
@@ -42,7 +42,7 @@ public class PaginationExpandedTests
     [Fact]
     public void BuildButtonStates_AtStart_ShowsRightEllipsisOnly()
     {
-        var states = PaginationLayoutHelper.BuildButtonStates(1, 20);
+        var states = PaginationHelper.BuildButtonStates(1, 20);
 
         states[1].IsLeftEllipsis.Should().BeFalse();
         states[5].IsRightEllipsis.Should().BeTrue();

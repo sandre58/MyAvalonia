@@ -7,8 +7,6 @@
 using System;
 using MyNet.Avalonia.Controls.Primitives;
 
-#pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls.Internals;
-#pragma warning restore IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.Controls.Internals.Calendar;
 
 internal readonly record struct CalendarDayCellState(DayContext DateContext, DateTime Date, bool IsInactive);

@@ -9,60 +9,22 @@ using System.Collections.Generic;
 using MyNet.Primitives;
 using MyNet.Primitives.Intervals;
 
-#pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls.Internals;
-#pragma warning restore IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.Controls.Internals.Calendar;
 
 internal static class CalendarDateRangeHelper
 {
-    public static Period ToDateRangePeriod(DateTime start, DateTime end)
-    {
-        start = start.DiscardTime();
-        end = end.DiscardTime();
+    public static Period ToDateRangePeriod(DateTime start, DateTime end) => start.ToInclusivePeriod(end);
 
-        if (start.IsAfter(end))
-            (start, end) = (end, start);
+    public static DateTime GetRangeStart(DateTime? displayDateStart) => displayDateStart.OrMinValue();
 
-        return start == end
-            ? start.ToPeriod(start.AddDays(1).AddTicks(-1))
-            : start.ToPeriod(end);
-    }
+    public static DateTime GetRangeEnd(DateTime? displayDateEnd) => displayDateEnd.OrMaxValue();
 
-    public static DateTime GetRangeStart(DateTime? displayDateStart) => displayDateStart ?? DateTime.MinValue;
+    public static DateTime ClampToRange(DateTime date, DateTime rangeStart, DateTime rangeEnd) =>
+        date.SafeClamp(rangeStart, rangeEnd);
 
-    public static DateTime GetRangeEnd(DateTime? displayDateEnd) => displayDateEnd ?? DateTime.MaxValue;
+    public static DateTime? GetSelectedMin(IReadOnlyList<DateTime> selectedDates) => selectedDates.MinOrNull();
 
-    public static DateTime ClampToRange(DateTime date, DateTime rangeStart, DateTime rangeEnd) => date.IsBefore(rangeStart) ? rangeStart : date.IsAfter(rangeEnd) ? rangeEnd : date;
-
-    public static DateTime? GetSelectedMin(IReadOnlyList<DateTime> selectedDates)
-    {
-        if (selectedDates.Count == 0)
-            return null;
-
-        var selectedMin = selectedDates[0];
-        for (var i = 1; i < selectedDates.Count; i++)
-        {
-            if (selectedDates[i].IsBefore(selectedMin))
-                selectedMin = selectedDates[i];
-        }
-
-        return selectedMin;
-    }
-
-    public static DateTime? GetSelectedMax(IReadOnlyList<DateTime> selectedDates)
-    {
-        if (selectedDates.Count == 0)
-            return null;
-
-        var selectedMax = selectedDates[0];
-        for (var i = 1; i < selectedDates.Count; i++)
-        {
-            if (selectedDates[i].IsAfter(selectedMax))
-                selectedMax = selectedDates[i];
-        }
-
-        return selectedMax;
-    }
+    public static DateTime? GetSelectedMax(IReadOnlyList<DateTime> selectedDates) => selectedDates.MaxOrNull();
 
     public static DisplayDateRangeAdjustment? ResolveDisplayDateStartChange(
         DateTime newStart,

@@ -6,6 +6,7 @@
 
 using Avalonia.Controls;
 using Avalonia.Input;
+using MyNet.Avalonia.Controls.Internals.DateTimeView;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;

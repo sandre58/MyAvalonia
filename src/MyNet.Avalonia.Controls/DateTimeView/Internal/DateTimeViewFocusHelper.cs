@@ -14,23 +14,15 @@ using Avalonia.Controls;
 
 using Avalonia.Input;
 
+using MyNet.Avalonia.Controls.Internals.Calendar;
 using MyNet.Avalonia.Controls.Primitives.Internal;
+using DateTimeViewControl = global::MyNet.Avalonia.Controls.DateTimeView;
 
-
-
-#pragma warning disable IDE0130 // Namespace does not match folder structure
-
-namespace MyNet.Avalonia.Controls;
-
-#pragma warning restore IDE0130 // Namespace does not match folder structure
-
-
+namespace MyNet.Avalonia.Controls.Internals.DateTimeView;
 
 internal static class DateTimeViewFocusHelper
-
 {
-
-    public static bool TryHandleTextBoxTab(DateTimeView view, TextBox textBox, KeyEventArgs e)
+    public static bool TryHandleTextBoxTab(DateTimeViewControl view, TextBox textBox, KeyEventArgs e)
 
     {
 
@@ -56,7 +48,7 @@ internal static class DateTimeViewFocusHelper
 
 
 
-    public static bool TryHandlePreviewerTab(DateTimeView view, TextBox? textBox, KeyEventArgs e)
+    public static bool TryHandlePreviewerTab(DateTimeViewControl view, TextBox? textBox, KeyEventArgs e)
 
     {
 
@@ -176,7 +168,7 @@ internal static class DateTimeViewFocusHelper
 
 
 
-    private static void FocusLastSection(DateTimeView view)
+    private static void FocusLastSection(DateTimeViewControl view)
 
     {
 

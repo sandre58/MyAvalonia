@@ -13,7 +13,7 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
-using MyNet.Avalonia.Controls.Helpers;
+using MyNet.Avalonia.Controls.ColorPicker.Internal;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;

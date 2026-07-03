@@ -15,7 +15,6 @@ using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Internals;
 using MyNet.Avalonia.Controls.Primitives;
 
 namespace MyNet.Avalonia.Controls.Headless.Tests;

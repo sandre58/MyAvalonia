@@ -16,7 +16,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Styling;
 using MyNet.Avalonia.Commands;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Internals.Pagination;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -303,7 +303,7 @@ public class Pagination : TemplatedControl
             return;
         }
 
-        ApplyButtonStates(PaginationLayoutHelper.BuildButtonStates(page, pageCount));
+        ApplyButtonStates(PaginationHelper.BuildButtonStates(page, pageCount));
 
         SetCurrentValue(PageCountProperty, pageCount);
         SetCurrentValue(CurrentPageProperty, page);
@@ -315,7 +315,7 @@ public class Pagination : TemplatedControl
 
     private void ApplyButtonStates(PaginationButtonState[] states)
     {
-        for (var i = 0; i < PaginationLayoutHelper.ButtonSlotCount; i++)
+        for (var i = 0; i < PaginationHelper.ButtonSlotCount; i++)
         {
             var state = states[i];
             var button = _buttons[i];

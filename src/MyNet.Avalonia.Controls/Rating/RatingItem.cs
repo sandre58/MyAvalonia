@@ -10,7 +10,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Internals.Rating;
 using MyNet.Avalonia.Controls.Localization;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure

@@ -9,5 +9,6 @@ using Avalonia.Metadata;
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.Controls")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.Controls.Assists")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.Controls.DataGrid")]
+[assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.Controls.DataTemplates")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.Controls.Converters")]
 [assembly: XmlnsDefinition("http://mynet.com/avalonia", "MyNet.Avalonia.Theme.Controls.MarkupExtensions")]

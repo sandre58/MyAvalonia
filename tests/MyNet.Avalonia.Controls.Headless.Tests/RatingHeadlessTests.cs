@@ -9,7 +9,7 @@ using Avalonia.Headless.XUnit;
 using Avalonia.Input;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Enums;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Internals.Rating;
 
 namespace MyNet.Avalonia.Controls.Headless.Tests;
 

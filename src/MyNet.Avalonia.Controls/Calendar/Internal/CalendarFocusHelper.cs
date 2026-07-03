@@ -23,24 +23,14 @@ using Avalonia.Input;
 using Avalonia.VisualTree;
 
 using MyNet.Avalonia.Controls.Primitives;
-
 using MyNet.Avalonia.Controls.Primitives.Internal;
+using CalendarControl = global::MyNet.Avalonia.Controls.Calendar;
 
-
-
-#pragma warning disable IDE0130 // Namespace does not match folder structure
-
-namespace MyNet.Avalonia.Controls;
-
-#pragma warning restore IDE0130 // Namespace does not match folder structure
-
-
+namespace MyNet.Avalonia.Controls.Internals.Calendar;
 
 internal static class CalendarFocusHelper
-
 {
-
-    public static bool TryHandleTextBoxTab(Calendar calendar, TextBox textBox, KeyEventArgs e)
+    public static bool TryHandleTextBoxTab(CalendarControl calendar, TextBox textBox, KeyEventArgs e)
 
     {
 
@@ -66,7 +56,7 @@ internal static class CalendarFocusHelper
 
 
 
-    public static bool TryHandlePreviewerTab(Calendar calendar, TextBox? textBox, KeyEventArgs e)
+    public static bool TryHandlePreviewerTab(CalendarControl calendar, TextBox? textBox, KeyEventArgs e)
 
     {
 
@@ -114,7 +104,7 @@ internal static class CalendarFocusHelper
 
 
 
-    public static void FocusLastDay(Calendar calendar)
+    public static void FocusLastDay(CalendarControl calendar)
 
     {
 
@@ -126,7 +116,7 @@ internal static class CalendarFocusHelper
 
 
 
-    internal static IReadOnlyList<Control> GetTabFocusables(Calendar calendar) =>
+    internal static IReadOnlyList<Control> GetTabFocusables(CalendarControl calendar) =>
 
         [.. calendar.GetVisualDescendants()
 

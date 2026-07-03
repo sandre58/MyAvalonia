@@ -7,7 +7,7 @@
 using System;
 using System.Linq;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Internals.Calendar;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Calendar;

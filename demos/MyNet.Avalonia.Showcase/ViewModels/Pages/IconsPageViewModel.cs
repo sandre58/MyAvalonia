@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Material.Icons;
-using MyNet.Avalonia.Controls.Helpers;
+using MyNet.Avalonia.Controls.Icons;
 using MyNet.Avalonia.Showcase.ViewModels.Base;
 using MyNet.Avalonia.Theme.Theming;
 using MyNet.Observable.Collections;
@@ -28,7 +28,7 @@ internal sealed class IconsPageViewModel : PageViewModel
     public IconsPageViewModel(ICommandFactory commands)
     {
         Icons = new(
-            ExtendedCollection.FromReadOnly(IconsHelper.Groups.Select(GetOrCreateWrapper)),
+            ExtendedCollection.FromReadOnly(MaterialIconCatalog.Groups.Select(GetOrCreateWrapper)),
             new() { Paging = new PagingViewModel(100) });
 
         MoveToPageCommand = commands.CreateRequired<int>(page => Icons.Paging!.MoveToPage(page));

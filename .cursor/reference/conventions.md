@@ -464,6 +464,32 @@ Requirements:
 
 ---
 
+# Helper placement
+
+Internal helpers and static utilities follow a predictable layout.
+
+**Namespace rule:** colocate under `MyNet.Avalonia.Controls.Internals.{Domain}` when a public control type shares the domain name (e.g. `Calendar`, `Rating`, `Pagination` — C# forbids `MyNet.Avalonia.Controls.Calendar.Internal` alongside `class Calendar`). Use `MyNet.Avalonia.Controls.{Domain}.Internal` only when no name collision exists (e.g. `DateTimePickers`, `Dialogs.Overlay`).
+
+| Location | When to use | Visibility |
+|---|---|---|
+| `{Domain}/Internal/` | Logic specific to one control family (Calendar, Rating, Pagination…) | `internal` |
+| `Primitives/Internal/` | Shared TextPicker infrastructure (date/time/color pickers) | `internal` |
+| `Extensions/` | Public extensions on Avalonia or MyNet types | `public` |
+| `Icons/` | Public catalog APIs (e.g. `MaterialIconCatalog`) | `public` |
+| **`MyNet.*` (external repo)** | Pure .NET logic with no Avalonia dependency | `public` in the relevant MyNet package |
+
+**Keep in Controls:** Avalonia-specific logic (focus, popup, calendar cell state, eyedropper bitmap).
+
+**Prefer MyNet over local duplication:** Before adding a helper, check `MyNet.Primitives`, `MyNet.Globalization`, and `MyNet.Collections` for existing APIs (`SafeClamp`, `DiscardTime`, `DateTime.Range`, `.Translate()`, etc.).
+
+**Do not push UI state into MyNet:** Keep partial picker state (`TryBuild` with `IsValid`), edited-boundary enums, and Avalonia-specific result types in Controls. MyNet returns domain values (`Period`, tuples, nullable dates); Controls compose incomplete UI state (e.g. `TimeRangeBuildResult`, `TimeRangeBoundary`).
+
+**Do not merge blindly:** Keep separate helpers when a file hides substantial private logic or improves parent control readability (`CalendarKeyboardNavigationHelper`, `TextPickerValidationHelper`).
+
+**Obsolete public APIs:** When relocating public helpers (e.g. `IconsHelper` → `MaterialIconCatalog`), keep a one-version `[Obsolete]` shim in the old namespace.
+
+---
+
 # Architectural Goal
 
 Every control should feel:

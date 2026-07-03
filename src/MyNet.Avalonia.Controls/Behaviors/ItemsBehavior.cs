@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
-using MyNet.Avalonia.Controls.Behaviors.Internal;
+using MyNet.Collections;
 using MyNet.Globalization.Culture;
 using MyNet.Globalization.Facade;
 using MyNet.Observable;
@@ -277,7 +277,7 @@ public static class ItemsBehavior
         {
             var values = type.GetLocalizedEnums(excludedValues).Cast<object>().ToList();
             if (GetSortByDisplay(sender))
-                ItemsBehaviorHelper.SortByDisplay(values, static item => ((LocalizedEnum)item).Display, GlobalizationServices.Current.CurrentCulture.CompareInfo);
+                values.SortByDisplay(static item => ((LocalizedEnum)item).Display, GlobalizationServices.Current.CurrentCulture);
 
             if (GetIncludeNullValue(sender))
                 values.Insert(0, new NullEnumListItem(ResolveNullDisplay(sender)));
@@ -289,7 +289,7 @@ public static class ItemsBehavior
         {
             var values = type.GetLocalizedSmartEnums(excludedValues).Cast<object>().ToList();
             if (GetSortByDisplay(sender))
-                ItemsBehaviorHelper.SortByDisplay(values, static item => ((LocalizedSmartEnum)item).Display, GlobalizationServices.Current.CurrentCulture.CompareInfo);
+                values.SortByDisplay(static item => ((LocalizedSmartEnum)item).Display, GlobalizationServices.Current.CurrentCulture);
 
             if (GetIncludeNullValue(sender))
                 values.Insert(0, new NullSmartEnumListItem(ResolveNullDisplay(sender)));
@@ -315,18 +315,13 @@ public static class ItemsBehavior
     }
 
     private static string ResolveNullDisplay(SelectingItemsControl sender) =>
-        ItemsBehaviorHelper.ResolveNullDisplay(
+        GetNullDisplayResourceKey(sender).TranslateOr(
             GetNullDisplayText(sender),
-            GetNullDisplayResourceKey(sender),
-            GetNullDisplayResourceFilename(sender),
-            key => key.Translate(),
-            (key, filename) => key.Translate(filename));
+            GetNullDisplayResourceFilename(sender));
 
     private static bool RequiresCultureRefresh(SelectingItemsControl control) =>
-        ItemsBehaviorHelper.RequiresCultureRefresh(
-            GetSortByDisplay(control),
-            GetIncludeNullValue(control),
-            GetNullDisplayResourceKey(control));
+        GetSortByDisplay(control)
+        || (GetIncludeNullValue(control) && !string.IsNullOrEmpty(GetNullDisplayResourceKey(control)));
 
     private static void UpdateCultureSubscription(SelectingItemsControl control)
     {

@@ -15,14 +15,9 @@ using Avalonia.Controls;
 using Avalonia.Input;
 
 using MyNet.Avalonia.Controls.Primitives.Internal;
+using TimeViewControl = global::MyNet.Avalonia.Controls.TimeView;
 
-
-
-#pragma warning disable IDE0130 // Namespace does not match folder structure
-
-namespace MyNet.Avalonia.Controls;
-
-#pragma warning restore IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.Controls.Internals.TimeView;
 
 
 
@@ -92,7 +87,7 @@ internal static class TimeRangeViewFocusHelper
 
         TimeRangeView view,
 
-        TimeView timeView,
+        TimeViewControl timeView,
 
         TextBox textBox,
 

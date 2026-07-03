@@ -7,7 +7,7 @@
 using System;
 using FluentAssertions;
 using MyNet.Avalonia.Controls;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.DateTimePickers.Internal;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.DateTimePickers;

@@ -5,15 +5,55 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Internals.Calendar;
 using MyNet.Primitives;
+using MyNet.Primitives.Temporal;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Calendar;
 
 public class CalendarDateRangeHelperTests
 {
+    [Fact]
+    public void NormalizeDateRange_OrdersAscending()
+    {
+        var (start, end) = new DateTime(2026, 5, 20, 14, 30, 0).Normalize(new(2026, 5, 10, 8, 0, 0));
+
+        start.Should().Be(new(2026, 5, 10));
+        end.Should().Be(new(2026, 5, 20));
+    }
+
+    [Fact]
+    public void NormalizeDateRange_DiscardsTimeComponent()
+    {
+        var (start, end) = new DateTime(2026, 1, 1, 23, 59, 59).Normalize(new(2026, 1, 2, 0, 0, 1));
+
+        start.Should().Be(new(2026, 1, 1));
+        end.Should().Be(new(2026, 1, 2));
+    }
+
+    [Fact]
+    public void EnumerateDays_Forward_IncludesBothEnds()
+    {
+        var dates = new DateTime(2026, 5, 10).Range(new(2026, 5, 12), 1, TimeUnit.Day).ToList();
+
+        dates.Should().Equal(new DateTime(2026, 5, 10), new DateTime(2026, 5, 11), new DateTime(2026, 5, 12));
+    }
+
+    [Fact]
+    public void EnumerateDays_Reverse_IncludesBothEnds()
+    {
+        var dates = new DateTime(2026, 5, 12).Range(new(2026, 5, 10), -1, TimeUnit.Day).ToList();
+
+        dates.Should().Equal(new DateTime(2026, 5, 12), new DateTime(2026, 5, 11), new DateTime(2026, 5, 10));
+    }
+
+    [Fact]
+    public void EnumerateDays_SingleDay_ReturnsOneDate() => new DateTime(2026, 5, 15).Range(new(2026, 5, 15), 1, TimeUnit.Day)
+        .Should().ContainSingle().Which.Should().Be(new(2026, 5, 15));
+
     [Fact]
     public void ToDateRangePeriod_SingleDay_ReturnsSameCalendarBounds()
     {

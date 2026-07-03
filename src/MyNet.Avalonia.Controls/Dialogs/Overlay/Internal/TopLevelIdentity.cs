@@ -8,9 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Avalonia.Controls;
 
-#pragma warning disable IDE0130
-namespace MyNet.Avalonia.Controls.Internals;
-#pragma warning restore IDE0130
+namespace MyNet.Avalonia.Controls.Dialogs.Overlay.Internal;
 
 internal static class TopLevelIdentity
 {

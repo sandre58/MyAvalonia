@@ -22,7 +22,9 @@
         <PackageReference Include="Avalonia.Controls.ItemsRepeater" />
         <PackageReference Include="Avalonia.Xaml.Behaviors" />
         <PackageReference Include="Material.Icons" />
+        <PackageReference Include="MyNet.Collections" />
         <PackageReference Include="MyNet.Globalization" />
+        <PackageReference Include="MyNet.Primitives" />
     </ItemGroup>
     
     <ItemGroup>

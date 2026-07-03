@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using Avalonia.Input;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Internals.Rating;
 
 namespace MyNet.Avalonia.Controls;
 

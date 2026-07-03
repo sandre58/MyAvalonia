@@ -19,8 +19,9 @@ using Avalonia.Layout;
 using Avalonia.Styling;
 using Material.Icons;
 using MyNet.Avalonia.Controls.Enums;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Internals.Rating;
 using MyNet.Avalonia.Controls.Localization;
+using MyNet.Primitives;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls;
@@ -229,7 +230,7 @@ public partial class Rating : TemplatedControl
 
     internal IReadOnlyList<RatingItem> Items => _items;
 
-    private static double CoerceValue(AvaloniaObject sender, double value) => sender is not Rating rating ? value : RatingValueHelper.Clamp(value, rating.Minimum, rating.MaxRating);
+    private static double CoerceValue(AvaloniaObject sender, double value) => sender is not Rating rating ? value : value.SafeClamp(rating.Minimum, rating.MaxRating);
 
     private static int CoerceMaxRating(AvaloniaObject sender, int value) =>
         Math.Max(1, value);
@@ -447,7 +448,7 @@ public partial class Rating : TemplatedControl
 
     private void SetPreviewValue(double candidate)
     {
-        candidate = RatingValueHelper.Clamp(candidate, GetEffectiveMinimum(), GetEffectiveMaximum());
+        candidate = candidate.SafeClamp(GetEffectiveMinimum(), GetEffectiveMaximum());
 
         if (_previewValue is { } current && Math.Abs(current - candidate) < double.Epsilon)
             return;
@@ -487,7 +488,7 @@ public partial class Rating : TemplatedControl
 
     private void CommitValue(double newValue)
     {
-        newValue = RatingValueHelper.Clamp(newValue, GetEffectiveMinimum(), GetEffectiveMaximum());
+        newValue = newValue.SafeClamp(GetEffectiveMinimum(), GetEffectiveMaximum());
         SetCurrentValue(ValueProperty, newValue);
     }
 }

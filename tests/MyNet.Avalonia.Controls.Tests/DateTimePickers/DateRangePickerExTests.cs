@@ -7,7 +7,8 @@
 using System;
 using System.Globalization;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.DateTimePickers.Internal;
+using MyNet.Avalonia.Controls.Internals.Calendar;
 using MyNet.Primitives;
 using Xunit;
 

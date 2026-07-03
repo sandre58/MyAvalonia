@@ -7,7 +7,7 @@
 using System;
 using System.Linq;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Helpers;
+using MyNet.Avalonia.Controls.Icons;
 using MyNet.Avalonia.Showcase.Tests.Playground;
 using MyNet.Avalonia.Showcase.ViewModels.Pages;
 using Xunit;
@@ -21,7 +21,7 @@ public class IconsPageViewModelTests
     {
         var viewModel = new IconsPageViewModel(new TestCommandFactory());
 
-        viewModel.Icons.Paging!.TotalItems.Should().Be(IconsHelper.Groups.Count);
+        viewModel.Icons.Paging!.TotalItems.Should().Be(MaterialIconCatalog.Groups.Count);
         viewModel.Icons.Paging.PageSize.Should().Be(100);
         viewModel.Icons.Items.Count.Should().BeLessThanOrEqualTo(100);
         viewModel.Icons.Items.Count.Should().BeGreaterThan(0);
@@ -33,7 +33,7 @@ public class IconsPageViewModelTests
         var viewModel = new IconsPageViewModel(new TestCommandFactory());
         viewModel.SearchText = "Account";
 
-        viewModel.Icons.Paging!.TotalItems.Should().BeLessThan(IconsHelper.Groups.Count);
+        viewModel.Icons.Paging!.TotalItems.Should().BeLessThan(MaterialIconCatalog.Groups.Count);
         viewModel.Icons.Items.Count.Should().BeLessThanOrEqualTo(viewModel.Icons.Paging.PageSize);
         viewModel.Icons.Items.Should().OnlyContain(icon =>
             icon.DisplayName.Contains("Account", StringComparison.OrdinalIgnoreCase)

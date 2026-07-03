@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="EyeDropperHelper.cs" company="Stéphane ANDRE">
 // Copyright (c) Stéphane ANDRE. All rights reserved.
 // </copyright>
@@ -8,9 +8,9 @@ using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 
-namespace MyNet.Avalonia.Controls.Helpers;
+namespace MyNet.Avalonia.Controls.ColorPicker.Internal;
 
-public static class EyeDropperHelper
+internal static class EyeDropperHelper
 {
     public static Color GetPixelColor(PixelPoint pixelPoint)
     {
@@ -29,13 +29,11 @@ public static class EyeDropperHelper
             }
         }
 
-        var color = Color.FromArgb(
+        return Color.FromArgb(
             buffer[3],
             buffer[2],
             buffer[1],
             buffer[0]);
-
-        return color;
     }
 
     public static RenderTargetBitmap CaptureRegion(Rect region)

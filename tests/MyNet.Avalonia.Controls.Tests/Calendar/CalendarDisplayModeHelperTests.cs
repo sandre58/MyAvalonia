@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Internals.Calendar;
 using MyNet.Avalonia.Controls.Primitives;
 using Xunit;
 

@@ -12,7 +12,7 @@ using MyNet.Humanizer;
 namespace MyNet.Avalonia.Controls.Tests.Infrastructure;
 
 /// <summary>
-/// Initializes MyNet globalization services required by Humanizer-based helpers (e.g. <see cref="Helpers.IconsHelper"/>).
+/// Initializes MyNet globalization services required by Humanizer-based helpers (e.g. <see cref="Icons.MaterialIconCatalog"/>).
 /// </summary>
 internal sealed class GlobalizationTestFixture : IDisposable
 {

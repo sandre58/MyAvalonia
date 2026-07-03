@@ -12,7 +12,6 @@ using Avalonia.Headless.XUnit;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Internals;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives;
 

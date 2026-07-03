@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Dialogs.Overlay.Internal;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Dialogs;

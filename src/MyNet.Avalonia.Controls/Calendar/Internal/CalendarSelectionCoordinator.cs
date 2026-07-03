@@ -6,10 +6,9 @@
 
 using System;
 using Avalonia.Controls;
+using MyNet.Primitives;
 
-#pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls.Internals;
-#pragma warning restore IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.Controls.Internals.Calendar;
 
 /// <summary>
 /// ListBox Extended-style selection rules for calendar day cells (Variant A: first commit sets anchor + selection).
@@ -275,7 +274,7 @@ internal sealed class CalendarSelectionCoordinator(
 
     private void CommitRange(DateTime anchor, DateTime end, bool shift, bool ctrl, bool clearAnchor)
     {
-        var (rangeStart, rangeEnd) = NormalizeRange(anchor, end);
+        var (rangeStart, rangeEnd) = anchor.MinMax(end);
 
         switch (selectionMode())
         {
@@ -320,7 +319,7 @@ internal sealed class CalendarSelectionCoordinator(
         }
         else
         {
-            var (rangeStart, rangeEnd) = NormalizeRange(pressDate, releaseDate);
+            var (rangeStart, rangeEnd) = pressDate.MinMax(releaseDate);
             commands.SetSelection(rangeStart, rangeEnd);
             _anchorDate = pressDate;
         }
@@ -331,7 +330,7 @@ internal sealed class CalendarSelectionCoordinator(
     {
         if (ctrl && shift)
         {
-            var (rangeStart, rangeEnd) = NormalizeRange(_anchorDate ?? pressDate, releaseDate);
+            var (rangeStart, rangeEnd) = (_anchorDate ?? pressDate).MinMax(releaseDate);
             commands.AddSelection(rangeStart, rangeEnd);
         }
         else if (shift)
@@ -340,14 +339,11 @@ internal sealed class CalendarSelectionCoordinator(
         }
         else
         {
-            var (rangeStart, rangeEnd) = NormalizeRange(pressDate, releaseDate);
+            var (rangeStart, rangeEnd) = pressDate.MinMax(releaseDate);
             commands.SetSelection(rangeStart, rangeEnd);
             _anchorDate = pressDate;
         }
     }
-
-    private static (DateTime Start, DateTime End) NormalizeRange(DateTime a, DateTime b) =>
-        a <= b ? (a, b) : (b, a);
 
     private DateTime GetEffectiveAnchor(DateTime? fallback = null) =>
         _anchorDate ?? fallback ?? displayDate();

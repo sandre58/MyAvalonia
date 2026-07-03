@@ -8,8 +8,10 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Threading;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.Internals.Calendar;
+using MyNet.Primitives;
 using MyNet.Primitives.Intervals;
+using MyNet.Primitives.Temporal;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;
@@ -23,7 +25,7 @@ public sealed class CalendarBlackoutDatesCollection(Calendar owner) : Observable
 
     public bool Contains(DateTime start, DateTime end)
     {
-        var (rangeStart, rangeEnd) = CalendarBlackoutDatesHelper.NormalizeRange(start, end);
+        var (rangeStart, rangeEnd) = start.Normalize(end);
         return this.Any(x => x.Contains(new Period(rangeStart, rangeEnd)));
     }
 

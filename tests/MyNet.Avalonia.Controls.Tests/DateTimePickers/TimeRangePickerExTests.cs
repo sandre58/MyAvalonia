@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Reflection;
 using Avalonia.Controls;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.DateTimePickers.Internal;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives;
 using MyNet.Primitives.Intervals;

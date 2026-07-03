@@ -14,7 +14,7 @@ using Avalonia.Data;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.DateTimePickers.Internal;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives.Intervals;
 using MyNet.Primitives.Temporal;

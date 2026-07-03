@@ -15,7 +15,7 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using MyNet.Avalonia.Controls.Internals;
+using MyNet.Avalonia.Controls.DateTimePickers.Internal;
 using MyNet.Avalonia.Controls.Localization;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives;

@@ -6,8 +6,6 @@
 
 using MyNet.Primitives.Intervals;
 
-#pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls.Internals;
-#pragma warning restore IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.Controls.DateTimePickers.Internal;
 
 internal readonly record struct TimeRangeBuildResult(Period? Period, bool IsValid);

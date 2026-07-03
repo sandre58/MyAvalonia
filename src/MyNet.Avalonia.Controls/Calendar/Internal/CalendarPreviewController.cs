@@ -4,9 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-#pragma warning disable IDE0130 // Namespace does not match folder structure
-namespace MyNet.Avalonia.Controls.Internals;
-#pragma warning restore IDE0130 // Namespace does not match folder structure
+namespace MyNet.Avalonia.Controls.Internals.Calendar;
 
 internal enum CalendarPreviewController
 {
