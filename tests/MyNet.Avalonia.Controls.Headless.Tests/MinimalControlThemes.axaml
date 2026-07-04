@@ -1,7 +1,8 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls"
-                    xmlns:my="http://mynet.com/avalonia">
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
 
     <ControlTheme x:Key="{x:Type controls:PaginationButton}" TargetType="controls:PaginationButton">
         <Setter Property="MinWidth" Value="32" />
@@ -248,6 +249,133 @@
                 <StackPanel Name="{x:Static controls:Rating.PartItemsPanel}"
                             Orientation="{TemplateBinding Orientation}"
                             Spacing="4" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type ComboBoxItem}" TargetType="ComboBoxItem">
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="ComboBoxItem">
+                <ContentPresenter Content="{TemplateBinding Content}" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:PlaceholderContentControl}" TargetType="controls:PlaceholderContentControl">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:PlaceholderContentControl">
+                <ContentPresenter Name="PART_Presenter"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^.variant-watermark">
+            <Setter Property="PlaceholderTemplate" Value="{StaticResource MyNet.PlaceholderTemplate.IconText}" />
+            <Setter Property="my:IconAssist.Role" Value="Primary" />
+            <Setter Property="my:IconAssist.Opacity" Value="0.5" />
+            <Setter Property="my:IconAssist.IconTemplate" Value="{StaticResource MyNet.DataTemplate.MaterialIcon}" />
+            <Style Selector="^:placeholder /template/ ContentPresenter#PART_Presenter">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+            <Style Selector="^:placeholder /template/ ContentPresenter#PART_Presenter TextBlock">
+                <Setter Property="my:ClassesAssist.Classes" Value="text-caption" />
+                <Setter Property="FontStyle" Value="Italic" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.variant-watermark.size-sm">
+            <Setter Property="my:IconAssist.Size" Value="20" />
+            <Setter Property="my:IconAssist.Spacing" Value="5" />
+        </Style>
+    </ControlTheme>
+
+    <DataTemplate x:Key="MyNet.DataTemplate.MaterialIcon" x:DataType="icons:MaterialIconKind">
+        <controls:MaterialIcon Kind="{Binding}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="MyNet.PlaceholderTemplate.IconText">
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource AncestorType=controls:PlaceholderContentControl}}">
+            <ContentPresenter HorizontalAlignment="Center"
+                              Content="{Binding (my:IconAssist.Icon), RelativeSource={RelativeSource AncestorType=controls:PlaceholderContentControl}}"
+                              ContentTemplate="{Binding (my:IconAssist.IconTemplate), RelativeSource={RelativeSource AncestorType=controls:PlaceholderContentControl}}"
+                              IsVisible="{Binding (my:IconAssist.Icon), RelativeSource={RelativeSource AncestorType=controls:PlaceholderContentControl}, Converter={x:Static my:NullConverter.IsPresent}}"
+                              my:IconAssist.Opacity="{Binding (my:IconAssist.Opacity), RelativeSource={RelativeSource AncestorType=controls:PlaceholderContentControl}}"
+                              my:IconAssist.Role="{Binding (my:IconAssist.Role), RelativeSource={RelativeSource AncestorType=controls:PlaceholderContentControl}}"
+                              my:IconAssist.Size="{Binding (my:IconAssist.Size), RelativeSource={RelativeSource AncestorType=controls:PlaceholderContentControl}}" />
+            <TextBlock HorizontalAlignment="Center"
+                       Text="{Binding}"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap" />
+        </StackPanel>
+    </DataTemplate>
+
+    <ControlTheme x:Key="{x:Type ComboBox}" TargetType="ComboBox">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="ComboBox">
+                <Panel>
+                    <ToggleButton Name="PART_DropDownButton" Focusable="False" />
+                    <ContentPresenter Name="PART_SelectionBox" />
+                    <Popup Name="PART_Popup"
+                           IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}">
+                        <DockPanel>
+                            <TextBox Name="PART_SearchBox"
+                                     DockPanel.Dock="Top"
+                                     IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
+                                     Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}" />
+                            <controls:PlaceholderContentControl Name="PART_SearchPlaceholder"
+                                                                PlaceholderText="No results">
+                                <ScrollViewer Name="PART_SearchItems">
+                                    <ItemsPresenter Name="PART_ItemsPresenter" />
+                                </ScrollViewer>
+                            </controls:PlaceholderContentControl>
+                        </DockPanel>
+                    </Popup>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:MultiComboBoxItem}" TargetType="controls:MultiComboBoxItem">
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:MultiComboBoxItem">
+                <ContentPresenter Content="{TemplateBinding Content}" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:MultiComboBox}" TargetType="controls:MultiComboBox">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:MultiComboBox">
+                <Panel>
+                    <ContentPresenter Name="PART_ContentPresenter" />
+                    <Popup Name="PART_Popup"
+                           IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}">
+                        <DockPanel>
+                            <TextBox Name="PART_SearchBox"
+                                     DockPanel.Dock="Top"
+                                     IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
+                                     Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}" />
+                            <Button DockPanel.Dock="Top"
+                                    Command="{Binding $parent[controls:MultiComboBox].SelectAll}"
+                                    Content="Select all"
+                                    IsVisible="{TemplateBinding ShowSelectAll}" />
+                            <controls:PlaceholderContentControl Name="PART_SearchPlaceholder"
+                                                                PlaceholderText="No results">
+                                <ScrollViewer Name="PART_SearchItems" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <ItemsPresenter Name="PART_ItemsPresenter" />
+                                </ScrollViewer>
+                            </controls:PlaceholderContentControl>
+                        </DockPanel>
+                    </Popup>
+                </Panel>
             </ControlTemplate>
         </Setter>
     </ControlTheme>

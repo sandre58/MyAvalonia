@@ -6,6 +6,7 @@
 
 using System;
 using Avalonia.Controls;
+using MyNet.Avalonia.Controls.Behaviors;
 
 namespace MyNet.Avalonia.Controls.Proxy;
 
@@ -15,7 +16,10 @@ public sealed class ComboBoxProxy : IControlProxy
 
     public bool IsEmpty() => _control.SelectedItem is null;
 
-    public bool IsFocused() => _control.IsKeyboardFocusWithin || _control.IsDropDownOpen;
+    public bool IsFocused() =>
+        _control.IsKeyboardFocusWithin
+        || _control.IsDropDownOpen
+        || ItemsSearchBehavior.IsSearchBoxFocused(_control);
 
     public bool IsActive() => !IsEmpty() || IsFocused();
 

@@ -1616,6 +1616,51 @@ namespace MyNet.Avalonia.Showcase.Resources {
             }
         }
         
+        internal static string IsSearchEnabled {
+            get {
+                return ResourceManager.GetString("IsSearchEnabled", resourceCulture);
+            }
+        }
+        
+        internal static string SearchFilterMode {
+            get {
+                return ResourceManager.GetString("SearchFilterMode", resourceCulture);
+            }
+        }
+        
+        internal static string SearchIsCaseSensitive {
+            get {
+                return ResourceManager.GetString("SearchIsCaseSensitive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thème barre de recherche.
+        /// </summary>
+        internal static string SearchTextBoxTheme {
+            get {
+                return ResourceManager.GetString("SearchTextBoxTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avec bordure.
+        /// </summary>
+        internal static string SearchTextBoxThemeBordered {
+            get {
+                return ResourceManager.GetString("SearchTextBoxThemeBordered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sans bordure (Clean).
+        /// </summary>
+        internal static string SearchTextBoxThemeClean {
+            get {
+                return ResourceManager.GetString("SearchTextBoxThemeClean", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Afficher la sélection.
         /// </summary>

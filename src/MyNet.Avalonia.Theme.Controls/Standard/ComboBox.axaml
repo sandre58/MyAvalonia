@@ -1,7 +1,8 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia"
-                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
 
     <ControlTheme x:Key="{x:Type ComboBoxItem}" TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -65,6 +66,9 @@
         <Setter Property="my:ClipboardAssist.Content" Value="{my:Display SelectionBoxItem, RelativeSource={RelativeSource Self}}" />
         <Setter Property="PlaceholderText" Value="{x:Static sys:String.Empty}" />
         <Setter Property="MaxDropDownHeight" Value="350" />
+        <Setter Property="my:ItemsSearchBehavior.IsEnabled" Value="False" />
+        <Setter Property="my:ItemsSearchAssist.TextBoxTheme" Value="{StaticResource MyNet.Theme.TextBox.Embedded.Popup.Search}" />
+        <Setter Property="my:ItemsSearchAssist.PlaceholderText" Value="{my:Loc SearchPlaceholder, Filename=ItemsSearchResources}" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.Margin" Value="0 1" />
@@ -244,12 +248,30 @@
                                         Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                        <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
-                                            <ItemsPresenter Name="PART_ItemsPresenter"
-                                                            Grid.IsSharedSizeScope="True"
-                                                            ItemsPanel="{TemplateBinding ItemsPanel}"
-                                                            KeyboardNavigation.TabNavigation="Continue" />
-                                        </ScrollViewer>
+                                        <DockPanel TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
+                                            <TextBox Name="PART_SearchBox"
+                                                     DockPanel.Dock="Top"
+                                                     HorizontalAlignment="Stretch"
+                                                     IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
+                                                     PlaceholderText="{TemplateBinding (my:ItemsSearchAssist.PlaceholderText)}"
+                                                     Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}"
+                                                     Theme="{TemplateBinding (my:ItemsSearchAssist.TextBoxTheme)}" />
+                                            <Separator DockPanel.Dock="Top" IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}" />
+                                            <my:PlaceholderContentControl Name="PART_SearchPlaceholder"
+                                                                          Classes="variant-watermark size-sm"
+                                                                          my:IconAssist.Icon="{x:Static icons:MaterialIconKind.FileSearchOutline}"
+                                                                          my:PlaceholderAssist.MinHeight="60"
+                                                                          my:PlaceholderAssist.Padding="{StaticResource MyNet.Padding.Surface}"
+                                                                          PlaceholderText="{my:Loc NoResults, Filename=ItemsSearchResources}">
+                                                <ScrollViewer Name="PART_SearchItems"
+                                                              Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
+                                                    <ItemsPresenter Name="PART_ItemsPresenter"
+                                                                    Grid.IsSharedSizeScope="True"
+                                                                    ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                                    KeyboardNavigation.TabNavigation="Continue" />
+                                                </ScrollViewer>
+                                            </my:PlaceholderContentControl>
+                                        </DockPanel>
                                     </Border>
                                 </Border>
                             </Popup>
@@ -547,12 +569,30 @@
                                         Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                        <ScrollViewer Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
-                                            <ItemsPresenter Name="PART_ItemsPresenter"
-                                                            Grid.IsSharedSizeScope="True"
-                                                            ItemsPanel="{TemplateBinding ItemsPanel}"
-                                                            KeyboardNavigation.TabNavigation="Continue" />
-                                        </ScrollViewer>
+                                        <DockPanel TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
+                                            <TextBox Name="PART_SearchBox"
+                                                     DockPanel.Dock="Top"
+                                                     HorizontalAlignment="Stretch"
+                                                     IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
+                                                     PlaceholderText="{TemplateBinding (my:ItemsSearchAssist.PlaceholderText)}"
+                                                     Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}"
+                                                     Theme="{TemplateBinding (my:ItemsSearchAssist.TextBoxTheme)}" />
+                                            <Separator DockPanel.Dock="Top" IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}" />
+                                            <my:PlaceholderContentControl Name="PART_SearchPlaceholder"
+                                                                          Classes="variant-watermark size-sm"
+                                                                          my:IconAssist.Icon="{x:Static icons:MaterialIconKind.FileSearchOutline}"
+                                                                          my:PlaceholderAssist.MinHeight="60"
+                                                                          my:PlaceholderAssist.Padding="{StaticResource MyNet.Padding.Surface}"
+                                                                          PlaceholderText="{my:Loc NoResults, Filename=ItemsSearchResources}">
+                                                <ScrollViewer Name="PART_SearchItems"
+                                                              Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
+                                                    <ItemsPresenter Name="PART_ItemsPresenter"
+                                                                    Grid.IsSharedSizeScope="True"
+                                                                    ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                                    KeyboardNavigation.TabNavigation="Continue" />
+                                                </ScrollViewer>
+                                            </my:PlaceholderContentControl>
+                                        </DockPanel>
                                     </Border>
                                 </Border>
                             </Popup>

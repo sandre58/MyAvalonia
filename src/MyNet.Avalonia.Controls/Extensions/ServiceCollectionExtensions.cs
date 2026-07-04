@@ -29,6 +29,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddMyNetAvaloniaControls(this IServiceCollection services)
     {
         services.AddTranslationResource(nameof(ColorPickerResources), ColorPickerResources.ResourceManager);
+        services.AddTranslationResource(nameof(ItemsSearchResources), ItemsSearchResources.ResourceManager);
         services.AddTranslationResource(nameof(MessagesResources), MessagesResources.ResourceManager);
 
         if (Interlocked.Exchange(ref _convertersRegistered, 1) == 0)

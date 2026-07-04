@@ -1,7 +1,8 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:my="http://mynet.com/avalonia"
-                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
 
     <ControlTheme x:Key="{x:Type my:MultiComboBoxItem}" TargetType="my:MultiComboBoxItem">
         <Setter Property="my:DisableAssist.IsDisablable" Value="True" />
@@ -183,6 +184,11 @@
         <Setter Property="PlaceholderText" Value="{x:Static sys:String.Empty}" />
         <Setter Property="MaxDropDownHeight" Value="350" />
         <Setter Property="MaxSelectionBoxHeight" Value="270" />
+        <Setter Property="my:ItemsSearchBehavior.IsEnabled" Value="False" />
+        <Setter Property="my:ItemsSearchBehavior.TextBoxTheme"
+                Value="{StaticResource MyNet.Theme.TextBox.Embedded.Popup.Search}" />
+        <Setter Property="my:ItemsSearchAssist.PlaceholderText"
+                Value="{my:Loc SearchPlaceholder, Filename=ItemsSearchResources}" />
         <Setter Property="SelectedItemContainerTheme" Value="{StaticResource MyNet.Theme.Tag.Embedded.MultiComboBox}" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:ItemsAssist.VerticalAlignment" Value="Stretch" />
@@ -286,22 +292,22 @@
                                     </ContentControl>
 
                                     <my:InputChrome Name="PART_Input"
-                                                  Grid.Column="1"
-                                                  Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
-                                                  HorizontalAlignment="Stretch"
-                                                  VerticalAlignment="Center"
-                                                  ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
-                                                  FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
-                                                  FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
-                                                  InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
-                                                  InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
-                                                  InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
-                                                  InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
-                                                  InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
-                                                  Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                                  UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
-                                                  PlaceholderText="{TemplateBinding PlaceholderText}"
-                                                  PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
+                                                    Grid.Column="1"
+                                                    Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
+                                                    FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
+                                                    FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
+                                                    InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
+                                                    InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
+                                                    InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
+                                                    InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
+                                                    InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
+                                                    Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
+                                                    UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
+                                                    PlaceholderText="{TemplateBinding PlaceholderText}"
+                                                    PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
 
                                         <ScrollViewer MaxHeight="{TemplateBinding MaxSelectionBoxHeight}"
                                                       HorizontalScrollBarVisibility="Disabled">
@@ -377,24 +383,43 @@
                                             CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <DockPanel
                                             TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
-                                            <Button HorizontalAlignment="Stretch"
-                                                    HorizontalContentAlignment="Left"
-                                                    my:IconAssist.Icon="{my:MaterialIcon CheckAll}"
-                                                    Command="{Binding $parent[my:MultiComboBox].SelectAll}"
-                                                    Content="{my:Loc SelectAll}"
-                                                    Margin="{StaticResource MyNet.Padding.ScrollViewer.Popup}"
-                                                    DockPanel.Dock="Top"
-                                                    FontSize="{Binding $parent[TemplatedControl].FontSize}"
-                                                    IsVisible="{TemplateBinding ShowSelectAll}"
-                                                    Classes="variant-text"
-                                                    my:ThemeAssist.Role="Contrast" />
-                                            <ScrollViewer
-                                                Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
-                                                <ItemsPresenter Name="PART_ItemsPresenter"
-                                                                Grid.IsSharedSizeScope="True"
-                                                                ItemsPanel="{TemplateBinding ItemsPanel}"
-                                                                KeyboardNavigation.TabNavigation="Continue" />
-                                            </ScrollViewer>
+                                            <TextBox Name="PART_SearchBox"
+                                                     DockPanel.Dock="Top"
+                                                     IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
+                                                     PlaceholderText="{TemplateBinding (my:ItemsSearchAssist.PlaceholderText)}"
+                                                     Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}"
+                                                     Theme="{TemplateBinding (my:ItemsSearchBehavior.TextBoxTheme)}" />
+                                            <Separator DockPanel.Dock="Top"
+                                                       IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}" />
+                                            <my:PlaceholderContentControl Name="PART_SearchPlaceholder"
+                                                                          Classes="variant-watermark size-sm"
+                                                                          my:IconAssist.Icon="{x:Static icons:MaterialIconKind.FileSearchOutline}"
+                                                                          my:PlaceholderAssist.MinHeight="60"
+                                                                          my:PlaceholderAssist.Padding="{StaticResource MyNet.Padding.Surface}"
+                                                                          PlaceholderText="{my:Loc NoResults, Filename=ItemsSearchResources}">
+                                                <DockPanel>
+                                                    <Button HorizontalAlignment="Stretch"
+                                                            HorizontalContentAlignment="Left"
+                                                            my:IconAssist.Icon="{my:MaterialIcon CheckAll}"
+                                                            Command="{Binding $parent[my:MultiComboBox].SelectAll}"
+                                                            Content="{my:Loc SelectAll}"
+                                                            Margin="{my:Thickness Sm, Horizontal}"
+                                                            DockPanel.Dock="Top"
+                                                            FontSize="{Binding $parent[TemplatedControl].FontSize}"
+                                                            IsVisible="{TemplateBinding ShowSelectAll}"
+                                                            Classes="variant-text"
+                                                            my:ThemeAssist.Role="Contrast" />
+                                                    <Separator DockPanel.Dock="Top"
+                                                               IsVisible="{TemplateBinding ShowSelectAll}" />
+                                                    <ScrollViewer Name="PART_SearchItems"
+                                                                  Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
+                                                        <ItemsPresenter Name="PART_ItemsPresenter"
+                                                                        Grid.IsSharedSizeScope="True"
+                                                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                                        KeyboardNavigation.TabNavigation="Continue" />
+                                                    </ScrollViewer>
+                                                </DockPanel>
+                                            </my:PlaceholderContentControl>
                                         </DockPanel>
                                     </Border>
                                 </Border>
@@ -592,21 +617,21 @@
                                 </ContentControl>
 
                                 <my:InputChrome Name="PART_Input" Grid.Column="1"
-                                              Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"
-                                              ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
-                                              FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
-                                              FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
-                                              InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
-                                              InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
-                                              InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
-                                              InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
-                                              InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
-                                              Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
-                                              UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
-                                              PlaceholderText="{TemplateBinding PlaceholderText}"
-                                              PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
+                                                Padding="{TemplateBinding (my:InputAssist.InnerPadding)}"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch"
+                                                ActiveForeground="{TemplateBinding (my:InteractionAssist.ActiveForeground)}"
+                                                FloatingOffset="{TemplateBinding (my:InputAssist.FloatingOffset)}"
+                                                FloatingScale="{TemplateBinding (my:InputAssist.FloatingScale)}"
+                                                InactiveForeground="{TemplateBinding (my:InputAssist.PlaceholderForeground)}"
+                                                InnerFontSize="{TemplateBinding (my:InputAssist.InnerFontSize)}"
+                                                InnerForeground="{TemplateBinding (my:InputAssist.InnerForeground)}"
+                                                InnerLeftContent="{TemplateBinding (my:InputAssist.InnerLeftContent)}"
+                                                InnerRightContent="{TemplateBinding (my:InputAssist.InnerRightContent)}"
+                                                Proxy="{TemplateBinding (my:ProxyBehavior.Proxy)}"
+                                                UseFloatingPlaceholder="{TemplateBinding (my:InputAssist.UseFloatingPlaceholder)}"
+                                                PlaceholderText="{TemplateBinding PlaceholderText}"
+                                                PlaceholderFontSize="{TemplateBinding (my:InputAssist.PlaceholderFontSize)}">
 
                                     <ScrollViewer MaxHeight="{TemplateBinding MaxSelectionBoxHeight}"
                                                   HorizontalScrollBarVisibility="Disabled">
@@ -695,6 +720,18 @@
                                             CornerRadius="{StaticResource MyNet.Corners.Popup}">
                                         <DockPanel
                                             TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
+                                            <TextBox Name="PART_SearchBox"
+                                                     DockPanel.Dock="Top"
+                                                     IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
+                                                     my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
+                                                     FontSize="{Binding $parent[TemplatedControl].FontSize}"
+                                                     PlaceholderText="{TemplateBinding (my:ItemsSearchAssist.PlaceholderText)}"
+                                                     Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}"
+                                                     Theme="{TemplateBinding (my:ItemsSearchBehavior.TextBoxTheme)}" />
+                                            <Separator DockPanel.Dock="Top"
+                                                       Margin="{my:Thickness Left=8, Top=0, Right=8, Bottom=4}"
+                                                       IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
+                                                       Background="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Opacity=Medium, Contrast=True}" />
                                             <Button HorizontalAlignment="Stretch"
                                                     HorizontalContentAlignment="Left"
                                                     my:IconAssist.Icon="{my:MaterialIcon CheckAll}"
@@ -702,17 +739,28 @@
                                                     my:ThemeAssist.Role="Contrast"
                                                     Command="{Binding $parent[my:MultiComboBox].SelectAll}"
                                                     Content="{my:Loc SelectAll}"
-                                                    Margin="{StaticResource MyNet.Padding.ScrollViewer.Popup}"
+                                                    Margin="8,4,8,0"
                                                     DockPanel.Dock="Top"
                                                     FontSize="{Binding $parent[TemplatedControl].FontSize}"
                                                     IsVisible="{TemplateBinding ShowSelectAll}" />
-                                            <ScrollViewer
-                                                Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
-                                                <ItemsPresenter Name="PART_ItemsPresenter"
-                                                                Grid.IsSharedSizeScope="True"
-                                                                ItemsPanel="{TemplateBinding ItemsPanel}"
-                                                                KeyboardNavigation.TabNavigation="Continue" />
-                                            </ScrollViewer>
+                                            <Separator DockPanel.Dock="Top"
+                                                       Margin="{my:Thickness Left=8, Top=0, Right=8, Bottom=4}"
+                                                       IsVisible="{TemplateBinding ShowSelectAll}"
+                                                       Background="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Opacity=Medium, Contrast=True}" />
+                                            <my:PlaceholderContentControl Name="PART_SearchPlaceholder"
+                                                                          Classes="variant-watermark size-sm"
+                                                                          my:IconAssist.Icon="{x:Static icons:MaterialIconKind.FileSearchOutline}"
+                                                                          my:PlaceholderAssist.MinHeight="96"
+                                                                          my:PlaceholderAssist.Padding="{StaticResource MyNet.Padding.Surface}"
+                                                                          PlaceholderText="{my:Loc NoResults, Filename=ItemsSearchResources}">
+                                                <ScrollViewer Name="PART_SearchItems"
+                                                              Theme="{StaticResource MyNet.Theme.ScrollViewer.Embedded.Popup}">
+                                                    <ItemsPresenter Name="PART_ItemsPresenter"
+                                                                    Grid.IsSharedSizeScope="True"
+                                                                    ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                                    KeyboardNavigation.TabNavigation="Continue" />
+                                                </ScrollViewer>
+                                            </my:PlaceholderContentControl>
                                         </DockPanel>
                                     </Border>
                                 </Border>

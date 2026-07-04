@@ -96,11 +96,13 @@
                                      ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}" />
                     <ComboBox behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
                               ItemsSource="{m:RandomCountries All=True}"
-                              ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}" />
+                              ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}"
+                              my:ItemsSearchBehavior.IsEnabled="True" />
                     <my:MultiComboBox behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
                                       ItemsSource="{m:RandomCountries All=True}"
                                       ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}"
-                                      SelectedItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}" />
+                                      SelectedItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}"
+                                      IsSearchEnabled="True" />
                     <my:TagBox behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}" />
                     <ButtonSpinner behavior:PlaygroundBehavior.AttachStyleProvider="{Binding}"
                                    my:SpinnerBehavior.IncreaseCommand="{ReflectionBinding ((vm:FieldsPageViewModel)Data).IncreaseSpinnerCommand, FallbackValue={x:Null}, Source={StaticResource PageProxy}}"

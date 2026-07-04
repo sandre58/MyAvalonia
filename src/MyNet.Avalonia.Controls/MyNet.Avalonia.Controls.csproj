@@ -47,6 +47,11 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
       </Compile>
+      <Compile Update="Localization\ItemsSearchResources.Designer.cs">
+        <DependentUpon>ItemsSearchResources.resx</DependentUpon>
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+      </Compile>
       <Compile Update="Localization\MessagesResources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
@@ -65,6 +70,10 @@
       </EmbeddedResource>
       <EmbeddedResource Update="Localization\ColorPickerResources.resx">
         <LastGenOutput>ColorPickerResources.Designer.cs</LastGenOutput>
+        <Generator>ResXFileCodeGenerator</Generator>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Localization\ItemsSearchResources.resx">
+        <LastGenOutput>ItemsSearchResources.Designer.cs</LastGenOutput>
         <Generator>ResXFileCodeGenerator</Generator>
       </EmbeddedResource>
       <EmbeddedResource Update="Localization\MessagesResources.resx">

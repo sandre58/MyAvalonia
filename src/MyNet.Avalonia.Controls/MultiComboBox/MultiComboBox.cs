@@ -22,6 +22,7 @@ using Avalonia.Input;
 using Avalonia.Metadata;
 using Avalonia.Styling;
 using Avalonia.VisualTree;
+using MyNet.Avalonia.Controls.Behaviors;
 using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives;
 
@@ -34,7 +35,7 @@ namespace MyNet.Avalonia.Controls;
 /// </summary>
 [TemplatePart(PartPopup, typeof(Popup), IsRequired = true)]
 [PseudoClasses(PseudoClassName.FlyoutOpen, PseudoClassName.Empty, PseudoClassName.Pressed)]
-public class MultiComboBox : SelectingItemsControl, IPopupControl
+public partial class MultiComboBox : SelectingItemsControl, IPopupControl
 {
     public const string PartRootPanel = "PART_RootPanel";
     public const string PartPopup = "PART_Popup";
@@ -102,6 +103,160 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
     {
         get => GetValue(ShowSelectAllProperty);
         set => SetValue(ShowSelectAllProperty, value);
+    }
+
+    #endregion
+
+    #region Items search
+
+    /// <summary>
+    /// Provides IsSearchEnabled Property.
+    /// </summary>
+    public static readonly StyledProperty<bool> IsSearchEnabledProperty =
+        ItemsSearchBehavior.IsEnabledProperty.AddOwner<MultiComboBox>();
+
+    /// <summary>
+    /// Gets or sets a value indicating whether popup item search is enabled.
+    /// </summary>
+    public bool IsSearchEnabled
+    {
+        get => GetValue(IsSearchEnabledProperty);
+        set => SetValue(IsSearchEnabledProperty, value);
+    }
+
+    /// <summary>
+    /// Provides SearchText Property.
+    /// </summary>
+    public static readonly StyledProperty<string?> SearchTextProperty =
+        ItemsSearchBehavior.TextProperty.AddOwner<MultiComboBox>();
+
+    /// <summary>
+    /// Gets or sets the popup search query text.
+    /// </summary>
+    public string? SearchText
+    {
+        get => GetValue(SearchTextProperty);
+        set => SetValue(SearchTextProperty, value);
+    }
+
+    /// <summary>
+    /// Provides SearchFilterMode Property.
+    /// </summary>
+    public static readonly StyledProperty<ItemsSearchFilterMode> SearchFilterModeProperty =
+        ItemsSearchBehavior.FilterModeProperty.AddOwner<MultiComboBox>();
+
+    /// <summary>
+    /// Gets or sets how search text is matched against item labels.
+    /// </summary>
+    public ItemsSearchFilterMode SearchFilterMode
+    {
+        get => GetValue(SearchFilterModeProperty);
+        set => SetValue(SearchFilterModeProperty, value);
+    }
+
+    /// <summary>
+    /// Provides SearchIsCaseSensitive Property.
+    /// </summary>
+    public static readonly StyledProperty<bool> SearchIsCaseSensitiveProperty =
+        ItemsSearchBehavior.IsCaseSensitiveProperty.AddOwner<MultiComboBox>();
+
+    /// <summary>
+    /// Gets or sets a value indicating whether search matching is case-sensitive.
+    /// </summary>
+    public bool SearchIsCaseSensitive
+    {
+        get => GetValue(SearchIsCaseSensitiveProperty);
+        set => SetValue(SearchIsCaseSensitiveProperty, value);
+    }
+
+    /// <summary>
+    /// Provides SearchMinimumLength Property.
+    /// </summary>
+    public static readonly StyledProperty<int> SearchMinimumLengthProperty =
+        ItemsSearchBehavior.MinimumLengthProperty.AddOwner<MultiComboBox>();
+
+    /// <summary>
+    /// Gets or sets the minimum search text length before filtering is applied.
+    /// </summary>
+    public int SearchMinimumLength
+    {
+        get => GetValue(SearchMinimumLengthProperty);
+        set => SetValue(SearchMinimumLengthProperty, value);
+    }
+
+    /// <summary>
+    /// Provides SearchClearOnClose Property.
+    /// </summary>
+    public static readonly StyledProperty<bool> SearchClearOnCloseProperty =
+        ItemsSearchBehavior.ClearOnCloseProperty.AddOwner<MultiComboBox>();
+
+    /// <summary>
+    /// Gets or sets a value indicating whether search text is cleared when the popup closes.
+    /// </summary>
+    public bool SearchClearOnClose
+    {
+        get => GetValue(SearchClearOnCloseProperty);
+        set => SetValue(SearchClearOnCloseProperty, value);
+    }
+
+    /// <summary>
+    /// Provides SearchPlaceholderText Property.
+    /// </summary>
+    public static readonly StyledProperty<string?> SearchPlaceholderTextProperty =
+        ItemsSearchBehavior.PlaceholderTextProperty.AddOwner<MultiComboBox>();
+
+    /// <summary>
+    /// Gets or sets the placeholder shown in the popup search field.
+    /// </summary>
+    public string? SearchPlaceholderText
+    {
+        get => GetValue(SearchPlaceholderTextProperty);
+        set => SetValue(SearchPlaceholderTextProperty, value);
+    }
+
+    /// <summary>
+    /// Provides SearchTextBoxTheme Property.
+    /// </summary>
+    public static readonly StyledProperty<ControlTheme?> SearchTextBoxThemeProperty =
+        ItemsSearchBehavior.TextBoxThemeProperty.AddOwner<MultiComboBox>();
+
+    /// <summary>
+    /// Gets or sets the theme applied to the popup search <see cref="TextBox"/>.
+    /// </summary>
+    public ControlTheme? SearchTextBoxTheme
+    {
+        get => GetValue(SearchTextBoxThemeProperty);
+        set => SetValue(SearchTextBoxThemeProperty, value);
+    }
+
+    /// <summary>
+    /// Provides SearchMemberPath Property.
+    /// </summary>
+    public static readonly StyledProperty<string?> SearchMemberPathProperty =
+        ItemsSearchBehavior.SearchMemberPathProperty.AddOwner<MultiComboBox>();
+
+    /// <summary>
+    /// Gets or sets the property path used to resolve searchable item text.
+    /// </summary>
+    public string? SearchMemberPath
+    {
+        get => GetValue(SearchMemberPathProperty);
+        set => SetValue(SearchMemberPathProperty, value);
+    }
+
+    /// <summary>
+    /// Provides SearchFilterDelay Property.
+    /// </summary>
+    public static readonly StyledProperty<int> SearchFilterDelayProperty =
+        ItemsSearchBehavior.FilterDelayProperty.AddOwner<MultiComboBox>();
+
+    /// <summary>
+    /// Gets or sets the delay in milliseconds before popup search filtering is applied.
+    /// </summary>
+    public int SearchFilterDelay
+    {
+        get => GetValue(SearchFilterDelayProperty);
+        set => SetValue(SearchFilterDelayProperty, value);
     }
 
     #endregion
@@ -221,67 +376,12 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
         _popup.Closed += PopupClosed;
     }
 
-    protected override void OnKeyDown(KeyEventArgs e)
-    {
-        base.OnKeyDown(e);
-
-        if (e.Handled) return;
-
-        if (!IsDropDownOpen)
-        {
-            switch (e.Key)
-            {
-                case Key.Enter:
-                case Key.Down:
-                case Key.Up:
-                case Key.F4:
-                    OpenPopup();
-
-                    break;
-            }
-        }
-        else
-        {
-            var hotkeys = Application.Current!.PlatformSettings?.HotkeyConfiguration;
-            var ctrl = hotkeys is not null && e.KeyModifiers.HasFlag(hotkeys.CommandModifiers);
-
-            if (e.Key is Key.Escape or Key.Tab or Key.F4)
-            {
-                ClosePopup();
-                e.Handled = true;
-            }
-
-            // This part of code is needed just to acquire initial focus, subsequent focus navigation will be done by ItemsControl.
-            else if (SelectedIndex < 0 && ItemCount > 0 && e.Key is Key.Up or Key.Down && IsFocused)
-            {
-                var firstChild = Presenter?.Panel?.Children.FirstOrDefault(CanFocus);
-                if (firstChild != null)
-                {
-                    e.Handled = firstChild.Focus(NavigationMethod.Directional);
-                }
-            }
-            else if (!ctrl && e.Key.ToNavigationDirection() is { } direction && direction.IsDirectional())
-            {
-                e.Handled |= MoveSelection(direction, WrapSelection, e.KeyModifiers.HasFlag(KeyModifiers.Shift));
-            }
-            else if (SelectionMode.HasFlag(SelectionMode.Multiple) && hotkeys?.SelectAll.Any(x => x.Matches(e)) == true)
-            {
-                Selection.SelectAll();
-                e.Handled = true;
-            }
-            else if (e.Key is Key.Space or Key.Enter)
-            {
-                UpdateSelectionFromEvent((Control)e.Source!, e);
-            }
-        }
-    }
-
     internal void ItemFocused(MultiComboBoxItem dropDownItem)
     {
         if (IsDropDownOpen && dropDownItem is { IsFocused: true, IsArrangeValid: true }) dropDownItem.BringIntoView();
     }
 
-    public void SelectAll() => Selection.SelectAll();
+    public void SelectAll() => ItemsSearchBehavior.SelectAllVisibleItems(this);
 
     public void UnselectAll() => Selection.Clear();
 
@@ -330,7 +430,8 @@ public class MultiComboBox : SelectingItemsControl, IPopupControl
 
     private void PopupOpened(object? sender, EventArgs e)
     {
-        TryFocusSelectedItem();
+        if (!IsSearchEnabled)
+            TryFocusSelectedItem();
 
         _subscriptionsOnOpen.Clear();
 

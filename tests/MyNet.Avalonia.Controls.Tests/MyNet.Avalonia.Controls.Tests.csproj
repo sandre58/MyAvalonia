@@ -6,6 +6,8 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+        <PackageReference Include="MyNet.Geography" />
+        <PackageReference Include="MyNet.Geography.Localization" />
     </ItemGroup>
 
 </Project>

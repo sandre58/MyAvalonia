@@ -23,6 +23,7 @@ public static class PseudoClassName
     public const string EndDate = ":end-date";
     public const string Error = ":error";
     public const string First = ":first";
+    public const string FilteredOut = ":filtered-out";
     public const string FirstLevel = ":first-level";
     public const string FixedWidth = ":fixed-width";
     public const string Floating = ":floating";

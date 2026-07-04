@@ -580,4 +580,32 @@
         </Setter>
     </ControlTheme>
 
+    <ControlTheme x:Key="MyNet.Theme.TextBox.Embedded.Popup.Search.Outlined" TargetType="TextBox"
+                  BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Margin" Value="{my:Thickness Sm, Bottom=0}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="my:IconAssist.Icon">
+            <Template>
+                <my:MaterialIcon Kind="Magnify" />
+            </Template>
+        </Setter>
+        <Setter Property="my:InputAssist.ShowClearButton" Value="True" />
+    </ControlTheme>
+
+    <ControlTheme x:Key="MyNet.Theme.TextBox.Embedded.Popup.Search" TargetType="TextBox"
+                  BasedOn="{StaticResource MyNet.Theme.TextBox.Embedded.Popup.Search.Outlined}">
+        <Setter Property="my:VariantAssist.Background" Value="Transparent" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="my:InteractionAssist.HoverBackground" Value="Transparent" />
+        <Setter Property="my:InteractionAssist.ActiveBackground" Value="Transparent" />
+        <Setter Property="my:InteractionAssist.HoverBorderBrush" Value="Transparent" />
+        <Setter Property="my:InteractionAssist.ActiveBorderBrush" Value="Transparent" />
+        <Setter Property="my:InteractionAssist.RippleColor" Value="Transparent" />
+
+        <Style Selector="^:focus-within">
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+    </ControlTheme>
+
 </ResourceDictionary>

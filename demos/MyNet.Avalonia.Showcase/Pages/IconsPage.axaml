@@ -7,6 +7,7 @@
              xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
              xmlns:common="clr-namespace:MyNet.Avalonia.Showcase.Views.Common"
+             xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons"
              x:DataType="vm:IconsPageViewModel"
              ClipToBounds="False"
              x:Name="Root" Theme="{StaticResource {x:Type ContentPage}}"
@@ -26,7 +27,7 @@
                    OpenPaneLength="300"
                    PanePlacement="Right">
             <SplitView.Pane>
-                <my:PlaceholderContentControl my:IconAssist.Icon="{my:MaterialIcon CircleOffOutline, Size=80}"
+                <my:PlaceholderContentControl my:IconAssist.Icon="{my:MaterialIcon CircleOffOutline}"
                                               Classes="variant-watermark size-xl"
                                               Content="{Binding SelectedItem, ElementName=IconsList}"
                                               PlaceholderText="{my:Loc SelectItem}"

@@ -807,6 +807,24 @@
   <data name="ShowSelectAll" xml:space="preserve">
       <value>Show select all</value>
   </data>
+  <data name="IsSearchEnabled" xml:space="preserve">
+      <value>Search enabled</value>
+  </data>
+  <data name="SearchFilterMode" xml:space="preserve">
+      <value>Filter mode</value>
+  </data>
+  <data name="SearchIsCaseSensitive" xml:space="preserve">
+      <value>Case sensitive</value>
+  </data>
+  <data name="SearchTextBoxTheme" xml:space="preserve">
+      <value>Search bar theme</value>
+  </data>
+  <data name="SearchTextBoxThemeBordered" xml:space="preserve">
+      <value>Bordered</value>
+  </data>
+  <data name="SearchTextBoxThemeClean" xml:space="preserve">
+      <value>Borderless (Clean)</value>
+  </data>
   <data name="MaxDropDownHeight" xml:space="preserve">
       <value>Max drop-down height</value>
   </data>

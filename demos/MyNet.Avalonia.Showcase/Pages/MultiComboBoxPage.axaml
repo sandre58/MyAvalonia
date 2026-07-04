@@ -35,6 +35,8 @@
                                       ItemsSource="{m:RandomCountries All=True}"
                                       ItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}"
                                       SelectedItemTemplate="{StaticResource MyNet.DataTemplate.Country.Xs}"
+                                      IsSearchEnabled="True"
+                                      SearchMemberPath="Name"
                                       PlaceholderText="{my:Loc ChooseCountry}" />
                 </Panel>
             </DataTemplate>
