@@ -171,7 +171,9 @@ Optional in-popup filtering for `ComboBox` (MyNet theme) and `MultiComboBox`:
 
 **Search with custom item templates**: when items use `{my:Display}` or localized data templates (e.g. `Country`), omit `SearchMemberPath` — filtering uses the same display text as the UI (`DisplayTextResolver`). Set `SearchMemberPath` only for non-display properties (e.g. `Alpha2` on `Country`, POCO fields). Falls back to `DisplayMemberBinding`, then registered display types, then `ToString()`.
 
-**Large local lists**: set `FilterDelay` (default `150` ms) to debounce in-popup filtering. Use `MinimumLength` to skip filtering until enough characters are typed. Set `FilterDelay="0"` for immediate filtering.
+**Large local lists**: set `FilterDelay` (default `150` ms) to debounce in-popup filtering. Use `MinimumLength` (≥ 2 recommended) to skip filtering until enough characters are typed. Set `FilterDelay="0"` for immediate filtering. Filtering keeps the host `ItemsPanel` (typically `VirtualizingStackPanel`) — only visible containers are materialized.
+
+**Large static catalogs** (e.g. `MaterialIconCatalog.Groups`, 7000+ items): set `SearchMemberPath="DisplayName"` on `MaterialIconKindGroup`. For browse-all UX with pagination, prefer a ViewModel-filtered list (see showcase `IconsPage`) over in-popup search alone.
 
 Keyboard when search is enabled:
 

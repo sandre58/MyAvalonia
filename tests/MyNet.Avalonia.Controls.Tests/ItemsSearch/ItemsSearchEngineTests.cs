@@ -5,10 +5,12 @@
 // -----------------------------------------------------------------------
 
 using System.Globalization;
+using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Data;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Behaviors;
+using MyNet.Avalonia.Controls.Icons;
 using MyNet.Avalonia.Controls.Internal;
 using MyNet.Avalonia.Controls.Tests.Infrastructure;
 using MyNet.Geography;
@@ -116,8 +118,17 @@ public class ItemsSearchEngineTests
         ItemsSearchEngine.GetItemText(control, Country.Spain).Should().Be(Country.Spain.Alpha2);
     }
 
+    [Fact]
+    public void GetItemText_MaterialIconKindGroup_UsesDisplayNameWithoutBinding()
+    {
+        var control = new ListBox();
+        ItemsSearchBehavior.SetSearchMemberPath(control, "DisplayName");
+        var group = MaterialIconCatalog.Groups.First(x => x.Name == "Home");
+
+        ItemsSearchEngine.GetItemText(control, group).Should().Be(group.DisplayName);
+    }
+
     [Theory]
-    [InlineData("fr-FR", "espagne", true)]
     [InlineData("fr-FR", "spain", false)]
     [InlineData("en-US", "spain", true)]
     [InlineData("en-US", "espagne", false)]

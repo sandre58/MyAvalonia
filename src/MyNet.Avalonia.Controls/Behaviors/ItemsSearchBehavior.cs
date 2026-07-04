@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Avalonia;
@@ -12,7 +13,6 @@ using Avalonia.Automation;
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
-using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -58,12 +58,20 @@ public static class ItemsSearchBehavior
 
         public bool ContainerHandlersAttached { get; set; }
 
-        public ITemplate<Panel?>? OriginalItemsPanel { get; set; }
-
         public DispatcherTimer? FilterTimer { get; set; }
-    }
 
-    private static readonly ITemplate<Panel?> NonVirtualizingItemsPanel = new FuncTemplate<Panel?>(() => new StackPanel());
+        public bool[]? VisibilityMask { get; set; }
+
+        public bool FilterActive { get; set; }
+
+        public int MatchCount { get; set; }
+
+        public int? SingleMatchIndex { get; set; }
+
+        public Dictionary<int, Control> RealizedContainers { get; } = [];
+
+        public ItemsSearchTextCache TextCache { get; } = new();
+    }
 
     private static readonly ConditionalWeakTable<SelectingItemsControl, State> States = [];
 
@@ -282,7 +290,29 @@ public static class ItemsSearchBehavior
 
     internal static bool IsItemVisible(Control itemContainer) => itemContainer.IsVisible;
 
-    internal static int GetMatchCount(SelectingItemsControl control) => ItemsSearchEngine.GetMatchCount(control);
+    internal static int GetMatchCount(SelectingItemsControl control)
+    {
+        if (States.TryGetValue(control, out var state) && state.FilterActive)
+            return state.MatchCount;
+
+        return control.ItemCount;
+    }
+
+    internal static int? TryGetSingleMatchIndex(SelectingItemsControl control)
+    {
+        if (States.TryGetValue(control, out var state) && state.FilterActive)
+            return state.SingleMatchIndex;
+
+        return null;
+    }
+
+    internal static bool IsItemIndexVisible(SelectingItemsControl control, int index)
+    {
+        if (!States.TryGetValue(control, out var state) || !state.FilterActive || state.VisibilityMask is null)
+            return true;
+
+        return index >= 0 && index < state.VisibilityMask.Length && state.VisibilityMask[index];
+    }
 
     internal static void FlushApplyFilter(SelectingItemsControl control)
     {
@@ -301,28 +331,55 @@ public static class ItemsSearchBehavior
         var text = GetText(control);
         var applyFilter = ItemsSearchEngine.ShouldApplyFilter(text, GetMinimumLength(control));
         var filterActive = applyFilter && !string.IsNullOrEmpty(text);
-        UpdateItemsPanel(control, state, filterActive);
+        state.FilterActive = filterActive;
+        state.TextCache.EnsureCurrent(GetSearchMemberPath(control));
+
+        var itemCount = control.ItemCount;
+        var filterMode = GetFilterMode(control);
+        var isCaseSensitive = GetIsCaseSensitive(control);
         var matchCount = 0;
+        int? singleMatchIndex = null;
 
-        for (var i = 0; i < control.ItemCount; i++)
+        if (filterActive)
         {
-            var item = control.Items[i];
-            var matches = !applyFilter
-                          || string.IsNullOrEmpty(text)
-                          || ItemsSearchEngine.IsMatch(
-                              text,
-                              ItemsSearchEngine.GetItemText(control, item),
-                              GetFilterMode(control),
-                              GetIsCaseSensitive(control));
+            EnsureMaskSize(state, itemCount);
 
-            if (matches)
+            for (var i = 0; i < itemCount; i++)
+            {
+                var matches = ItemsSearchEngine.IsItemMatch(
+                    control,
+                    control.Items[i],
+                    text,
+                    applyFilter: true,
+                    filterMode,
+                    isCaseSensitive,
+                    state.TextCache);
+
+                state.VisibilityMask![i] = matches;
+
+                if (!matches)
+                    continue;
+
                 matchCount++;
-
-            if (control.ContainerFromIndex(i) is { } container)
-                container.IsVisible = matches;
+                if (matchCount == 1)
+                    singleMatchIndex = i;
+                else
+                    singleMatchIndex = null;
+            }
+        }
+        else
+        {
+            state.VisibilityMask = null;
+            matchCount = itemCount;
+            singleMatchIndex = null;
         }
 
-        var showEmpty = applyFilter && !string.IsNullOrEmpty(text) && matchCount == 0;
+        state.MatchCount = matchCount;
+        state.SingleMatchIndex = matchCount == 1 ? singleMatchIndex : null;
+
+        ApplyMaskToRealizedContainers(state, filterActive);
+
+        var showEmpty = filterActive && matchCount == 0;
 
         if (state.SearchPlaceholder is not null)
         {
@@ -411,8 +468,7 @@ public static class ItemsSearchBehavior
 
         for (var i = 0; i < control.ItemCount; i++)
         {
-            var container = control.ContainerFromIndex(i);
-            if (container is not { IsVisible: true })
+            if (!IsItemIndexVisible(control, i))
                 continue;
 
             control.Selection.Select(i);
@@ -440,7 +496,12 @@ public static class ItemsSearchBehavior
         if (args.Property == TextProperty)
             ScheduleApplyFilter(control);
         else
+        {
+            if (args.Property == SearchMemberPathProperty && States.TryGetValue(control, out var state))
+                state.TextCache.Invalidate();
+
             ApplyFilter(control);
+        }
     }
 
     private static void ScheduleApplyFilter(SelectingItemsControl control)
@@ -595,6 +656,7 @@ public static class ItemsSearchBehavior
         if (sender is not SelectingItemsControl control || e.Container is null)
             return;
 
+        TrackRealizedContainer(control, e.Index, e.Container);
         SetContainerVisibility(control, e.Index, e.Container);
     }
 
@@ -603,7 +665,19 @@ public static class ItemsSearchBehavior
         if (sender is not SelectingItemsControl control || e.Container is null)
             return;
 
+        if (States.TryGetValue(control, out var state) && e.OldIndex >= 0)
+            state.RealizedContainers.Remove(e.OldIndex);
+
+        TrackRealizedContainer(control, e.NewIndex, e.Container);
         SetContainerVisibility(control, e.NewIndex, e.Container);
+    }
+
+    private static void TrackRealizedContainer(SelectingItemsControl control, int index, Control container)
+    {
+        if (index < 0 || !States.TryGetValue(control, out var state))
+            return;
+
+        state.RealizedContainers[index] = container;
     }
 
     private static void SetContainerVisibility(SelectingItemsControl control, int index, Control container)
@@ -611,45 +685,31 @@ public static class ItemsSearchBehavior
         if (!GetIsEnabled(control))
             return;
 
-        var text = GetText(control);
-        var applyFilter = ItemsSearchEngine.ShouldApplyFilter(text, GetMinimumLength(control));
-        if (!applyFilter || string.IsNullOrEmpty(text))
+        container.IsVisible = IsItemIndexVisible(control, index);
+    }
+
+    private static void EnsureMaskSize(State state, int itemCount)
+    {
+        if (state.VisibilityMask is null || state.VisibilityMask.Length != itemCount)
+            state.VisibilityMask = new bool[itemCount];
+    }
+
+    private static void ApplyMaskToRealizedContainers(State state, bool filterActive)
+    {
+        if (!filterActive || state.VisibilityMask is null)
         {
-            container.IsVisible = true;
+            foreach (var container in state.RealizedContainers.Values)
+                container.IsVisible = true;
+
             return;
         }
 
-        var item = index >= 0 && index < control.ItemCount ? control.Items[index] : null;
-        container.IsVisible = item is null
-                                || ItemsSearchEngine.IsMatch(
-                                    text,
-                                    ItemsSearchEngine.GetItemText(control, item),
-                                    GetFilterMode(control),
-                                    GetIsCaseSensitive(control));
-    }
-
-    private static void UpdateItemsPanel(SelectingItemsControl control, State state, bool filterActive)
-    {
-        if (filterActive)
+        foreach (var (index, container) in state.RealizedContainers)
         {
-            state.OriginalItemsPanel ??= control.ItemsPanel;
-
-            if (control.ItemsPanel != NonVirtualizingItemsPanel)
-                control.ItemsPanel = NonVirtualizingItemsPanel;
+            container.IsVisible = index >= 0
+                                  && index < state.VisibilityMask.Length
+                                  && state.VisibilityMask[index];
         }
-        else
-        {
-            RestoreItemsPanel(control, state);
-        }
-    }
-
-    private static void RestoreItemsPanel(SelectingItemsControl control, State state)
-    {
-        if (state.OriginalItemsPanel is null)
-            return;
-
-        control.ItemsPanel = state.OriginalItemsPanel;
-        state.OriginalItemsPanel = null;
     }
 
     private static void OnPopupOpened(SelectingItemsControl control)
@@ -674,17 +734,18 @@ public static class ItemsSearchBehavior
 
     private static void RestoreAllItems(SelectingItemsControl control)
     {
-        for (var i = 0; i < control.ItemCount; i++)
-        {
-            var container = control.ContainerFromIndex(i);
-            if (container is null)
-                continue;
-
-            container.IsVisible = true;
-        }
-
         if (!States.TryGetValue(control, out var state))
             return;
+
+        foreach (var container in state.RealizedContainers.Values)
+            container.IsVisible = true;
+
+        state.VisibilityMask = null;
+        state.FilterActive = false;
+        state.MatchCount = control.ItemCount;
+        state.SingleMatchIndex = null;
+        state.TextCache.Invalidate();
+        state.RealizedContainers.Clear();
 
         if (state.SearchPlaceholder is not null)
             state.SearchPlaceholder.PlaceholderActive = false;
@@ -696,8 +757,6 @@ public static class ItemsSearchBehavior
             if (state.SearchItemsScrollViewer is not null)
                 state.SearchItemsScrollViewer.IsVisible = true;
         }
-
-        RestoreItemsPanel(control, state);
     }
 
     private static void TryResolveTemplatePartsFromVisualTree(SelectingItemsControl control)

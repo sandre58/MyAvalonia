@@ -142,7 +142,7 @@ internal static class ItemsSearchFocusHelper
 
         if (matchCount == 1)
         {
-            var matchIndex = ItemsSearchEngine.TryGetSingleMatchIndex(control);
+            var matchIndex = ItemsSearchBehavior.TryGetSingleMatchIndex(control);
             if (matchIndex is null)
                 return false;
 

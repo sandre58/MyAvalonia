@@ -14,11 +14,13 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Headless.XUnit;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Controls.Templates;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Behaviors;
+using MyNet.Avalonia.Controls.Icons;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Headless.Tests;
@@ -261,42 +263,7 @@ public class ItemsSearchHeadlessTests
     }
 
     [AvaloniaFact]
-    public void ComboBox_ActiveFilter_UsesNonVirtualizingItemsPanel()
-    {
-        var comboBox = CreateComboBox(ItemsSearchFilterMode.Contains);
-        comboBox.IsDropDownOpen = true;
-        RunRenderJobs();
-
-        ItemsSearchBehavior.SetText(comboBox, "be");
-        RunRenderJobs();
-
-        GetRealizedItemsPanel(comboBox).Should().BeOfType<StackPanel>();
-    }
-
-    [AvaloniaFact]
-    public void ComboBox_ActiveFilter_AllMaterializedContainersMatch()
-    {
-        var comboBox = CreateComboBox(ItemsSearchFilterMode.Contains);
-        comboBox.IsDropDownOpen = true;
-        RunRenderJobs();
-
-        ItemsSearchBehavior.SetText(comboBox, "be");
-        RunRenderJobs();
-
-        for (var i = 0; i < comboBox.ItemCount; i++)
-        {
-            var container = comboBox.ContainerFromIndex(i);
-            if (container is null)
-                continue;
-
-            var itemText = comboBox.Items[i]?.ToString();
-            var shouldMatch = itemText?.Contains("be", StringComparison.OrdinalIgnoreCase) == true;
-            container.IsVisible.Should().Be(shouldMatch, $"item '{itemText}' at index {i}");
-        }
-    }
-
-    [AvaloniaFact]
-    public void ComboBox_ClearSearch_RestoresOriginalItemsPanel()
+    public void ComboBox_ActiveFilter_KeepsOriginalItemsPanel()
     {
         var comboBox = CreateComboBox(ItemsSearchFilterMode.Contains);
         comboBox.IsDropDownOpen = true;
@@ -307,12 +274,81 @@ public class ItemsSearchHeadlessTests
         ItemsSearchBehavior.SetText(comboBox, "be");
         RunRenderJobs();
 
-        GetRealizedItemsPanel(comboBox).Should().BeOfType<StackPanel>();
+        comboBox.ItemsPanel.Should().BeSameAs(originalPanel);
+    }
+
+    [AvaloniaFact]
+    public void ComboBox_ActiveFilter_RealizedContainersMatchMask()
+    {
+        var comboBox = CreateComboBox(ItemsSearchFilterMode.Contains);
+        comboBox.IsDropDownOpen = true;
+        RunRenderJobs();
+
+        ItemsSearchBehavior.SetText(comboBox, "be");
+        RunRenderJobs();
+
+        for (var i = 0; i < comboBox.ItemCount; i++)
+        {
+            var itemText = comboBox.Items[i]?.ToString();
+            var shouldMatch = itemText?.Contains("be", StringComparison.OrdinalIgnoreCase) == true;
+            ItemsSearchBehavior.IsItemIndexVisible(comboBox, i).Should().Be(shouldMatch, $"item '{itemText}' at index {i}");
+
+            var container = comboBox.ContainerFromIndex(i);
+            if (container is null)
+                continue;
+
+            container.IsVisible.Should().Be(shouldMatch, $"item '{itemText}' at index {i}");
+        }
+    }
+
+    [AvaloniaFact]
+    public void ComboBox_ClearSearch_RestoresAllItemsVisible()
+    {
+        var comboBox = CreateComboBox(ItemsSearchFilterMode.Contains);
+        comboBox.IsDropDownOpen = true;
+        RunRenderJobs();
+
+        var originalPanel = comboBox.ItemsPanel;
+
+        ItemsSearchBehavior.SetText(comboBox, "be");
+        RunRenderJobs();
+
+        comboBox.ItemsPanel.Should().BeSameAs(originalPanel);
 
         ItemsSearchBehavior.SetText(comboBox, null);
         RunRenderJobs();
 
         comboBox.ItemsPanel.Should().BeSameAs(originalPanel);
+        GetVisibleItemCount(comboBox).Should().Be(comboBox.ItemCount);
+    }
+
+    [AvaloniaFact]
+    public void ComboBox_ActiveFilter_LargeMaterialIconCatalog_KeepsVirtualization()
+    {
+        var comboBox = CreateLargeIconComboBox();
+        comboBox.IsDropDownOpen = true;
+        RunRenderJobs();
+
+        ItemsSearchBehavior.SetText(comboBox, "Arrow");
+        RunRenderJobs();
+
+        comboBox.ItemsPanel.Should().BeOfType<FuncTemplate<Panel?>>();
+        CountRealizedContainers(comboBox).Should().BeLessThan(50);
+        ItemsSearchBehavior.GetMatchCount(comboBox).Should().BeGreaterThan(0);
+    }
+
+    [AvaloniaFact]
+    public void ComboBox_ActiveFilter_LargeMaterialIconCatalog_FiltersByDisplayName()
+    {
+        var comboBox = CreateLargeIconComboBox();
+        comboBox.IsDropDownOpen = true;
+        RunRenderJobs();
+
+        ItemsSearchBehavior.SetText(comboBox, "zzz-no-match-zzz");
+        RunRenderJobs();
+
+        ItemsSearchBehavior.GetMatchCount(comboBox).Should().Be(0);
+        FindSearchPlaceholder(comboBox)!.IsPlaceholderVisible.Should().BeTrue();
     }
 
     [AvaloniaFact]
@@ -331,6 +367,32 @@ public class ItemsSearchHeadlessTests
         multiComboBox.SelectedItems!.Count.Should().Be(1);
         multiComboBox.SelectedItems!.Cast<string>().Should().ContainSingle("Alpha");
     }
+
+    private static ComboBox CreateLargeIconComboBox()
+    {
+        Application.Current!.TryGetResource(typeof(ComboBox), null, out var themeObj).Should().BeTrue();
+
+        var comboBox = new ComboBox
+        {
+            ItemsSource = MaterialIconCatalog.Groups.Take(500).ToList(),
+            ItemsPanel = new FuncTemplate<Panel?>(() => new VirtualizingStackPanel()),
+            MaxDropDownHeight = 320,
+            Width = 320,
+            Height = 32,
+            Theme = (ControlTheme)themeObj!,
+        };
+
+        ItemsSearchBehavior.SetIsEnabled(comboBox, true);
+        ItemsSearchBehavior.SetSearchMemberPath(comboBox, "DisplayName");
+        ItemsSearchBehavior.SetFilterDelay(comboBox, 0);
+
+        HeadlessControlHost.Show(comboBox, new(320, 480));
+        RunRenderJobs();
+        return comboBox;
+    }
+
+    private static int CountRealizedContainers(SelectingItemsControl control) =>
+        control.GetVisualDescendants().OfType<ComboBoxItem>().Count();
 
     private static ComboBox CreateComboBox(ItemsSearchFilterMode mode)
     {

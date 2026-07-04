@@ -331,7 +331,8 @@
                             <controls:PlaceholderContentControl Name="PART_SearchPlaceholder"
                                                                 PlaceholderText="No results">
                                 <ScrollViewer Name="PART_SearchItems">
-                                    <ItemsPresenter Name="PART_ItemsPresenter" />
+                                    <ItemsPresenter Name="PART_ItemsPresenter"
+                                                    ItemsPanel="{TemplateBinding ItemsPanel}" />
                                 </ScrollViewer>
                             </controls:PlaceholderContentControl>
                         </DockPanel>
@@ -370,7 +371,8 @@
                             <controls:PlaceholderContentControl Name="PART_SearchPlaceholder"
                                                                 PlaceholderText="No results">
                                 <ScrollViewer Name="PART_SearchItems" MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                                    <ItemsPresenter Name="PART_ItemsPresenter" />
+                                    <ItemsPresenter Name="PART_ItemsPresenter"
+                                                    ItemsPanel="{TemplateBinding ItemsPanel}" />
                                 </ScrollViewer>
                             </controls:PlaceholderContentControl>
                         </DockPanel>

@@ -9,6 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using MyNet.Avalonia.Controls.Behaviors;
+using MyNet.Avalonia.Controls.Icons;
 using MyNet.Avalonia.Converters;
 using MyNet.Globalization.Facade;
 
@@ -35,13 +36,52 @@ internal static class ItemsSearchEngine
         };
     }
 
-    public static string GetItemText(SelectingItemsControl control, object? item)
+    public static string GetItemText(SelectingItemsControl control, object? item) =>
+        GetItemText(control, item, cache: null);
+
+    public static string GetItemText(SelectingItemsControl control, object? item, ItemsSearchTextCache? cache)
     {
         if (item is null)
             return string.Empty;
 
-        var culture = GlobalizationServices.Current.CurrentCulture;
         var searchPath = ItemsSearchBehavior.GetSearchMemberPath(control);
+        if (cache is not null)
+        {
+            cache.EnsureCurrent(searchPath);
+            return cache.GetOrAdd(item, searchPath, () => ResolveItemText(control, item, searchPath));
+        }
+
+        return ResolveItemText(control, item, searchPath);
+    }
+
+    public static bool ShouldApplyFilter(string? text, int minimumLength) =>
+        string.IsNullOrEmpty(text) || text.Length >= minimumLength;
+
+    public static bool IsItemMatch(
+        SelectingItemsControl control,
+        object? item,
+        string? text,
+        bool applyFilter,
+        ItemsSearchFilterMode filterMode,
+        bool isCaseSensitive,
+        ItemsSearchTextCache? cache)
+    {
+        if (!applyFilter || string.IsNullOrEmpty(text))
+            return true;
+
+        return IsMatch(
+            text,
+            GetItemText(control, item, cache),
+            filterMode,
+            isCaseSensitive);
+    }
+
+    private static string ResolveItemText(SelectingItemsControl control, object item, string? searchPath)
+    {
+        if (TryGetMaterialIconKindGroupText(item, searchPath, out var groupText))
+            return groupText;
+
+        var culture = GlobalizationServices.Current.CurrentCulture;
 
         if (!string.IsNullOrEmpty(searchPath) && !IsDisplayAlignedSearchPath(searchPath))
         {
@@ -78,57 +118,36 @@ internal static class ItemsSearchEngine
         return item.ToString() ?? string.Empty;
     }
 
+    private static bool TryGetMaterialIconKindGroupText(object item, string? searchPath, out string text)
+    {
+        if (item is not MaterialIconKindGroup group)
+        {
+            text = string.Empty;
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(searchPath) || searchPath is "Display" or "DisplayName" or ".")
+        {
+            text = group.DisplayName;
+            return true;
+        }
+
+        if (searchPath is "Name")
+        {
+            text = group.Name;
+            return true;
+        }
+
+        if (searchPath is "Kind")
+        {
+            text = group.Kind.ToString();
+            return true;
+        }
+
+        text = string.Empty;
+        return false;
+    }
+
     private static bool IsDisplayAlignedSearchPath(string? path) =>
         string.IsNullOrEmpty(path) || path is "Name" or "Display" or ".";
-
-    public static bool ShouldApplyFilter(string? text, int minimumLength) =>
-        string.IsNullOrEmpty(text) || text.Length >= minimumLength;
-
-    public static int GetMatchCount(SelectingItemsControl control)
-    {
-        var text = ItemsSearchBehavior.GetText(control);
-        var applyFilter = ShouldApplyFilter(text, ItemsSearchBehavior.GetMinimumLength(control));
-        if (!applyFilter || string.IsNullOrEmpty(text))
-            return control.ItemCount;
-
-        var count = 0;
-        for (var i = 0; i < control.ItemCount; i++)
-        {
-            if (IsItemMatch(control, control.Items[i], text, applyFilter))
-                count++;
-        }
-
-        return count;
-    }
-
-    public static int? TryGetSingleMatchIndex(SelectingItemsControl control)
-    {
-        var text = ItemsSearchBehavior.GetText(control);
-        var applyFilter = ShouldApplyFilter(text, ItemsSearchBehavior.GetMinimumLength(control));
-        if (!applyFilter || string.IsNullOrEmpty(text))
-            return null;
-
-        int? matchIndex = null;
-        for (var i = 0; i < control.ItemCount; i++)
-        {
-            if (!IsItemMatch(control, control.Items[i], text, applyFilter))
-                continue;
-
-            if (matchIndex is not null)
-                return null;
-
-            matchIndex = i;
-        }
-
-        return matchIndex;
-    }
-
-    private static bool IsItemMatch(SelectingItemsControl control, object? item, string? text, bool applyFilter) =>
-        !applyFilter
-        || string.IsNullOrEmpty(text)
-        || IsMatch(
-            text,
-            GetItemText(control, item),
-            ItemsSearchBehavior.GetFilterMode(control),
-            ItemsSearchBehavior.GetIsCaseSensitive(control));
 }

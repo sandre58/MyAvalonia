@@ -241,23 +241,29 @@
                                    InheritsTransform="True"
                                    IsLightDismissEnabled="True"
                                    IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
+                                   MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                        HorizontalAlignment="Stretch"
                                         Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                        <DockPanel TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
+                                        <Grid HorizontalAlignment="Stretch"
+                                              RowDefinitions="Auto,Auto,*"
+                                              TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
                                             <TextBox Name="PART_SearchBox"
-                                                     DockPanel.Dock="Top"
+                                                     Grid.Row="0"
                                                      HorizontalAlignment="Stretch"
                                                      IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
                                                      PlaceholderText="{TemplateBinding (my:ItemsSearchAssist.PlaceholderText)}"
                                                      Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}"
                                                      Theme="{TemplateBinding (my:ItemsSearchAssist.TextBoxTheme)}" />
-                                            <Separator DockPanel.Dock="Top" IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}" />
+                                            <Separator Grid.Row="1" IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}" />
                                             <my:PlaceholderContentControl Name="PART_SearchPlaceholder"
+                                                                          Grid.Row="2"
+                                                                          HorizontalAlignment="Stretch"
                                                                           Classes="variant-watermark size-sm"
                                                                           my:IconAssist.Icon="{x:Static icons:MaterialIconKind.FileSearchOutline}"
                                                                           my:PlaceholderAssist.MinHeight="60"
@@ -271,7 +277,7 @@
                                                                     KeyboardNavigation.TabNavigation="Continue" />
                                                 </ScrollViewer>
                                             </my:PlaceholderContentControl>
-                                        </DockPanel>
+                                        </Grid>
                                     </Border>
                                 </Border>
                             </Popup>
@@ -562,23 +568,29 @@
                                    InheritsTransform="True"
                                    IsLightDismissEnabled="True"
                                    IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
+                                   MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
                                    Placement="BottomEdgeAlignedLeft"
                                    PlacementTarget="PART_MainBorder"
                                    WindowManagerAddShadowHint="False">
                                 <Border MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                        HorizontalAlignment="Stretch"
                                         Theme="{StaticResource MyNet.Theme.Border.Popup}"
                                         Background="{TemplateBinding (my:PopupAssist.Background)}">
                                     <Border HorizontalAlignment="Stretch" ClipToBounds="True" CornerRadius="{StaticResource MyNet.Corners.Popup}">
-                                        <DockPanel TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
+                                        <Grid HorizontalAlignment="Stretch"
+                                              RowDefinitions="Auto,Auto,*"
+                                              TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
                                             <TextBox Name="PART_SearchBox"
-                                                     DockPanel.Dock="Top"
+                                                     Grid.Row="0"
                                                      HorizontalAlignment="Stretch"
                                                      IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
                                                      PlaceholderText="{TemplateBinding (my:ItemsSearchAssist.PlaceholderText)}"
                                                      Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}"
                                                      Theme="{TemplateBinding (my:ItemsSearchAssist.TextBoxTheme)}" />
-                                            <Separator DockPanel.Dock="Top" IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}" />
+                                            <Separator Grid.Row="1" IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}" />
                                             <my:PlaceholderContentControl Name="PART_SearchPlaceholder"
+                                                                          Grid.Row="2"
+                                                                          HorizontalAlignment="Stretch"
                                                                           Classes="variant-watermark size-sm"
                                                                           my:IconAssist.Icon="{x:Static icons:MaterialIconKind.FileSearchOutline}"
                                                                           my:PlaceholderAssist.MinHeight="60"
@@ -592,7 +604,7 @@
                                                                     KeyboardNavigation.TabNavigation="Continue" />
                                                 </ScrollViewer>
                                             </my:PlaceholderContentControl>
-                                        </DockPanel>
+                                        </Grid>
                                     </Border>
                                 </Border>
                             </Popup>
