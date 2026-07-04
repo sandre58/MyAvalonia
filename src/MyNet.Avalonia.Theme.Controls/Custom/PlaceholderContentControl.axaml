@@ -14,44 +14,55 @@
         <Setter Property="Focusable" Value="false" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid>
-                    <ContentPresenter Name="PART_ContentPresenter"
-                                      Padding="{TemplateBinding Padding}"
-                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      Background="{TemplateBinding Background}"
-                                      BorderBrush="{TemplateBinding BorderBrush}"
-                                      BorderThickness="{TemplateBinding BorderThickness}"
-                                      Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      IsVisible="{TemplateBinding Content, Converter={x:Static my:NullConverter.IsPresent}}" />
-
-                    <ContentPresenter Name="PART_PlaceholderPresenter"
-                                      Padding="{TemplateBinding Padding}"
-                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      Background="{TemplateBinding Background}"
-                                      BorderBrush="{TemplateBinding BorderBrush}"
-                                      BorderThickness="{TemplateBinding BorderThickness}"
-                                      Content="{TemplateBinding PlaceholderText}"
-                                      ContentTemplate="{TemplateBinding PlaceholderTemplate}"
-                                      IsVisible="{TemplateBinding Content, Converter={x:Static my:NullConverter.IsEmpty}}" />
-                </Grid>
+                <ContentPresenter Name="PART_Presenter"
+                                  Padding="{TemplateBinding Padding}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}" />
             </ControlTemplate>
         </Setter>
 
         <Style Selector="^.variant-watermark">
-            <Setter Property="my:IconAssist.Alignment" Value="Top" />
+            <Setter Property="PlaceholderTemplate" Value="{StaticResource MyNet.PlaceholderTemplate.IconText}" />
 
-            <Style Selector="^ /template/ ContentPresenter#PART_PlaceholderPresenter">
-                <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
-                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="my:ClassesAssist.Classes" Value="Caption" />
-                <Setter Property="FontStyle" Value="Italic" />
+            <Style Selector="^:placeholder">
+                <Setter Property="my:IconAssist.Opacity" Value="{DynamicResource MyNet.Opacity.High}" />
+                
+                <Style Selector="^ /template/ ContentPresenter#PART_Presenter">
+                    <Setter Property="Opacity" Value="{DynamicResource MyNet.Opacity.Medium}" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="FontStyle" Value="Italic" />
+                </Style>
+
+                <Style Selector="^.size-xs">
+                    <Setter Property="my:IconAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
+                    <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Sm}" />
+                </Style>
+                <Style Selector="^.size-sm">
+                    <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Md}" />
+                    <Setter Property="my:IconAssist.Spacing" Value="{StaticResource MyNet.Spacing.Sm}" />
+                    <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+                </Style>
+                <Style Selector="^.size-md">
+                    <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xl}" />
+                    <Setter Property="my:IconAssist.Spacing" Value="{StaticResource MyNet.Spacing.Md}" />
+                    <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+                </Style>
+                <Style Selector="^.size-lg">
+                    <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xxl}" />
+                    <Setter Property="my:IconAssist.Spacing" Value="{StaticResource MyNet.Spacing.Lg}" />
+                    <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Md}" />
+                </Style>
+                <Style Selector="^.size-xl">
+                    <Setter Property="my:IconAssist.Size" Value="{StaticResource MyNet.Size.Icon.Xxxl}" />
+                    <Setter Property="my:IconAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xl}" />
+                    <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Lg}" />
+                </Style>
             </Style>
         </Style>
     </ControlTheme>
-
 
 </ResourceDictionary>

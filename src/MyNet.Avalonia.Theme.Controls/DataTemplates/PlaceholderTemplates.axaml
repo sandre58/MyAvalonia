@@ -1,0 +1,23 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia">
+
+    <DataTemplate x:Key="MyNet.PlaceholderTemplate.IconText">
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource AncestorType=my:PlaceholderContentControl}}">
+            <ContentPresenter HorizontalAlignment="Center"
+                              Content="{Binding (my:IconAssist.Icon), RelativeSource={RelativeSource AncestorType=my:PlaceholderContentControl}}"
+                              ContentTemplate="{Binding (my:IconAssist.IconTemplate), RelativeSource={RelativeSource AncestorType=my:PlaceholderContentControl}}"
+                              IsVisible="{Binding (my:IconAssist.Icon), RelativeSource={RelativeSource AncestorType=my:PlaceholderContentControl}, Converter={x:Static my:NullConverter.IsPresent}}"
+                              my:IconAssist.Opacity="{Binding (my:IconAssist.Opacity), RelativeSource={RelativeSource AncestorType=my:PlaceholderContentControl}}"
+                              my:IconAssist.Role="Primary"
+                              my:IconAssist.Size="{Binding (my:IconAssist.Size), RelativeSource={RelativeSource AncestorType=my:PlaceholderContentControl}}" />
+            <TextBlock HorizontalAlignment="Center"
+                       Text="{my:Display}"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap" />
+        </StackPanel>
+    </DataTemplate>
+
+</ResourceDictionary>

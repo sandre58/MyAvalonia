@@ -5,8 +5,11 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using Microsoft.Extensions.DependencyInjection;
+using MyNet.Geography;
 using MyNet.Globalization;
+using MyNet.Globalization.Culture;
 using MyNet.Humanizer;
 
 namespace MyNet.Avalonia.Controls.Tests.Infrastructure;
@@ -14,7 +17,7 @@ namespace MyNet.Avalonia.Controls.Tests.Infrastructure;
 /// <summary>
 /// Initializes MyNet globalization services required by Humanizer-based helpers (e.g. <see cref="Icons.MaterialIconCatalog"/>).
 /// </summary>
-internal sealed class GlobalizationTestFixture : IDisposable
+public sealed class GlobalizationTestFixture : IDisposable
 {
     private readonly ServiceProvider _services;
 
@@ -24,13 +27,21 @@ internal sealed class GlobalizationTestFixture : IDisposable
         collection.AddGlobalization()
             .AddLocalization()
             .AddInflection()
-            .AddHumanizer();
+            .AddHumanizer()
+            .AddGeographyLocalization();
 
         _services = collection.BuildServiceProvider();
         _services.UseGlobalization();
         _services.UseLocalization();
         _services.UseDisplayText();
     }
+
+    public void SetCulture(CultureInfo culture) =>
+        _services.GetRequiredService<ICultureService>().SetCulture(culture);
+
+    public void SetFrenchCulture() => SetCulture(SupportedCultures.French);
+
+    public void SetEnglishCulture() => SetCulture(SupportedCultures.English);
 
     public void Dispose() => _services.Dispose();
 }
