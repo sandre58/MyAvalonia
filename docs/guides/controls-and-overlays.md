@@ -24,7 +24,17 @@ xmlns:controls="http://mynet.com/avalonia/controls"
 | Feedback | `Avatar`, `Badge`, `Loader`, `BusyIndicator`, `Ripple` |
 | Dialogs | `ContentDialog`, `OverlayDialog`, `OverlayDialogHost` |
 | Icons | `ExtendedIcon`, `MaterialIcon` |
+| Placeholder swap | `PlaceholderContentControl` — content or watermark placeholder (`variant-watermark`, optional `IconAssist` + `PlaceholderText`) |
 | Behaviors | `ItemsBehavior`, `FocusBehavior`, `PopupBehavior`, `DataGridBehavior`, … |
+
+### Empty state vs placeholder swap
+
+| Scenario | Control | Notes |
+|----------|---------|--------|
+| Page / list / panel with **no alternate content** | `EmptyState` | Title, subtitle, optional actions; do not nest inside `PlaceholderContentControl` by default |
+| **Same slot** shows real content or empty hint (picker pane, search popup) | `PlaceholderContentControl` | `variant-watermark` + optional icon (`MaterialIconKind`); popup search adds `PlaceholderAssist` |
+| Compact watermark | `PlaceholderContentControl` | `variant-watermark` without icon — italic caption text only |
+
 
 Live demos: [Showcase](../../demos/MyNet.Avalonia.Showcase/) pages (Calendar, ColorPicker, Navigation, Dialogs, …).
 

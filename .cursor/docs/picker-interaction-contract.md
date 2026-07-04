@@ -17,7 +17,7 @@ Internal reference for picker workflow uniformization. Public guide: [`docs/pick
 | **TimePicker** (std) | idem | idem | On Accept | Dismiss | idem | idem | idem | idem |
 | **CalendarDatePicker** (std) | Toggle btn | IsDropDownOpen | On day select | — | Calendar | Once | — | — |
 | **ColorPicker** (std) | DropDownButton Flyout | Flyout native | On pick | — | ColorView | Menu | — | — |
-| **MultiComboBox** | Click, Enter, ↑↓, F4 | Esc, Tab, F4 | Immediate per toggle | N/A | Selected item | Once | ↑↓ open | Space/Enter toggle |
+| **MultiComboBox** | Click, Enter, ↑↓, F4 | Esc (×2 clears filter first when search active), Tab, F4 | Immediate per toggle | N/A | Selected item, or **SearchBox** when `IsSearchEnabled` | SearchBox ↔ SelectAll ↔ visible items; **Ctrl+F** → SearchBox + select all; **Enter** on search → select/focus | ↑↓ open | Space/Enter toggle; **Select All** = visible items only when search active |
 | **CulturePicker** | DropDownButton | MenuFlyout | Command per item | N/A | Menu | Menu native | — | — |
 
 \*Zone click toggles popup when text is not editable (`InputBehavior.IsTextEditable`).
@@ -68,3 +68,17 @@ Calendar pickers appear to “close on Enter” because Enter selects a day → 
 Legacy: `CloseOnCommit=true` without `CloseOnSingleSelection` preserves pre-unification behavior.
 
 Future (not implemented): `CloseOnInputComplete` could close on `InputCompleted` + `EnterKey` on last time spinner — opt-in only.
+
+## ItemsSearch empty state (`PlaceholderContentControl`)
+
+Popup search templates use `PART_SearchPlaceholder` (`PlaceholderContentControl`) wrapping `PART_SearchItems` / `PART_ItemsPresenter`.
+
+| API | Role |
+|-----|------|
+| `PlaceholderActive` (`bool?`) | `null` = auto (empty `Content`); `true` / `false` = force placeholder or content |
+| `:placeholder` pseudo-class | Theme styling when placeholder is shown (e.g. `variant-watermark:placeholder`) |
+| `IsPlaceholderVisible` | Read-only mirror of placeholder state (automation/tests) |
+| `variant-watermark` + `size-sm`…`size-xl` | Watermark text (italic caption) + optional icon via `IconAssist.Icon` (`MaterialIconKind` + `IconTemplate`); `MyNet.PlaceholderTemplate.IconText` |
+| `PlaceholderAssist.MinHeight` / `Padding` | Layout on presenter **only** when placeholder is active (popup search empty state) |
+
+`ItemsSearchBehavior` sets `PlaceholderActive = true` when filter is active and match count is 0. Theme templates use `PART_SearchPlaceholder` with `variant-watermark size-sm`, `FileSearchOutline`, and `PlaceholderAssist`. Legacy templates with `PART_SearchEmpty` TextBlock remain supported.

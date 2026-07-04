@@ -148,9 +148,48 @@ Industry alignment: atomic date selection closes on commit; multi-field time fly
 
 ## Exceptions
 
-- **`MultiComboBox`**: immediate commit; `F4` / `Enter` opens; popup stays open for multi-toggle.
+- **`MultiComboBox`**: immediate commit; `F4` / `Enter` opens; popup stays open for multi-toggle. Optional popup search via `IsSearchEnabled` / `ItemsSearchBehavior.IsEnabled` on `ComboBox`.
 - **`CulturePicker`**: menu flyout; selection via command — not a `TextPicker`.
 - **Avalonia standard pickers** (`DatePicker`, `TimePicker`, `CalendarDatePicker`, `ColorPicker`): logic in Avalonia; MyNet provides themes only (`PopupBehavior`, Accept/Dismiss).
+
+## Popup item search (`ItemsSearchBehavior`)
+
+Optional in-popup filtering for `ComboBox` (MyNet theme) and `MultiComboBox`:
+
+| API | Package | Role |
+|-----|---------|------|
+| `ItemsSearchBehavior.*` | Controls | Enable search, `Text`, `FilterMode`, `MinimumLength`, `FilterDelay`, `ClearOnClose`, `SearchMemberPath` |
+| `ItemsSearchAssist.*` | Theme.Controls | `PlaceholderText`, `TextBoxTheme` (ComboBox default theme) |
+| `MultiComboBox.IsSearchEnabled` / `SearchText` / `SearchMemberPath` / … | Controls | Styled aliases for discoverability |
+
+**TextBox popup themes** (compare via `ItemsSearchAssist.TextBoxTheme` on `ComboBox`, or `MultiComboBox.SearchTextBoxTheme`):
+
+| Theme key                                            | Style |
+|------------------------------------------------------|--------|
+| `MyNet.Theme.TextBox.Embedded.Popup.Search`          | Borderless Clean variant for embedded popup |
+| `MyNet.Theme.TextBox.Embedded.Popup.Search.Outlined` | Standard bordered TextBox + search icon (default) |
+
+**Search with custom item templates**: when items use `{my:Display}` or localized data templates (e.g. `Country`), omit `SearchMemberPath` — filtering uses the same display text as the UI (`DisplayTextResolver`). Set `SearchMemberPath` only for non-display properties (e.g. `Alpha2` on `Country`, POCO fields). Falls back to `DisplayMemberBinding`, then registered display types, then `ToString()`.
+
+**Large local lists**: set `FilterDelay` (default `150` ms) to debounce in-popup filtering. Use `MinimumLength` to skip filtering until enough characters are typed. Set `FilterDelay="0"` for immediate filtering.
+
+Keyboard when search is enabled:
+
+| Key | Action |
+|-----|--------|
+| Popup open | Initial focus on `PART_SearchBox` |
+| `Enter` (search, 1 match) | Select item; `ComboBox` closes popup |
+| `Enter` (search, N matches) | Focus first visible item |
+| `Enter` (search, 0 matches) | No-op |
+| `↓` from search | Focus first visible item |
+| `↑` from first visible item | Return to search |
+| `Ctrl+F` from item | Focus search and select all search text |
+| `Esc` (filter non-empty) | Clear filter, keep popup open |
+| `Esc` (filter empty) | Close popup |
+| No matches | Empty message shown; item list hidden |
+| `MultiComboBox` Select All | Selects **visible/filtered** items only |
+
+Remote/async search: bind `Text` with `Delay` and refresh `ItemsSource` from the ViewModel — no built-in loader in v1.
 
 ## Creating a new Ex picker
 

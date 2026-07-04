@@ -39,6 +39,7 @@ This document summarizes the current state of MyNet.Avalonia project development
 - [x] **Expander** - Collapsible content container
 - [x] **Flyout** - Popup overlay content
 - [x] **GridSplitter** - Resizable grid divider
+- [ ] **GroupBox** - Grouped content container
 - [x] **HeaderedContentControl** - Content with header
 - [x] **HyperlinkButton** - Clickable hyperlink
 - [x] **ItemsControl** - Collection display base
@@ -106,8 +107,7 @@ This document summarizes the current state of MyNet.Avalonia project development
 - [ ] **MultiAucompleteBox**
 - [x] **Loader** - Loading animation control
 - [x] **BusyIndicator** - Full-surface busy overlay shell
-- [ ] **Rating**
-- [ ] **Chip**
+- [x] **Rating**
 - [ ] **Stepper** - Step progress indicator
 - [ ] **Timeline**
 - [ ] **DropZone** - Drag & drop zone
@@ -121,7 +121,7 @@ This document summarizes the current state of MyNet.Avalonia project development
 
 - [x] Refactor IsEditable/IsReadOnly functionality for all editables fields
 - [ ] Add IsEditable functionality for MultiComboBox
-- [ ] Add search option for ComboBox and MultiComboBox
+- [x] Add search option for ComboBox and MultiComboBox
 - [ ] Add custom behavior to NumericUpDown for IsTextEditable functionality
 - [x] Cursor for all controls
 
