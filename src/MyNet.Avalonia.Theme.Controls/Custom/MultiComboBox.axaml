@@ -388,6 +388,7 @@
                                               TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
                                             <TextBox Name="PART_SearchBox"
                                                      Grid.Row="0"
+                                                     Classes="kind-embedded-search"
                                                      HorizontalAlignment="Stretch"
                                                      IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
                                                      PlaceholderText="{TemplateBinding (my:ItemsSearchAssist.PlaceholderText)}"
@@ -731,6 +732,7 @@
                                               TextElement.Foreground="{my:ThemeBrush (my:PopupAssist.Background), RelativeSource={RelativeSource TemplatedParent}, Contrast=True}">
                                             <TextBox Name="PART_SearchBox"
                                                      Grid.Row="0"
+                                                     Classes="kind-embedded-search"
                                                      HorizontalAlignment="Stretch"
                                                      IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
                                                      my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"

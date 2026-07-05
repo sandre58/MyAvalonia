@@ -31,7 +31,7 @@
                              HorizontalAlignment="Center">
                     <UniformGrid.Styles>
                         <Style
-                            Selector="AutoCompleteBox, ButtonSpinner, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox, my|CalendarDatePickerEx, my|ColorPickerEx, my|DateRangePickerEx, my|DateTimePickerEx, my|DateTimeScrollPickerEx, my|MultiComboBox, my|TagBox, my|TimePickerEx, my|TimeRangePickerEx">
+                            Selector="AutoCompleteBox, ButtonSpinner, ComboBox, CalendarDatePicker, DatePicker, NumericUpDown, TimePicker, TextBox:not(.kind-embedded-search), my|CalendarDatePickerEx, my|ColorPickerEx, my|DateRangePickerEx, my|DateTimePickerEx, my|DateTimeScrollPickerEx, my|MultiComboBox, my|TagBox, my|TimePickerEx, my|TimeRangePickerEx">
                             <Setter Property="HorizontalAlignment" Value="Stretch" />
                             <Setter Property="MaxWidth" Value="250" />
                         </Style>
@@ -56,7 +56,7 @@
                         <Style Selector="TimePicker.kind-underline">
                             <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TimePicker.Underline}" />
                         </Style>
-                        <Style Selector="TextBox.kind-underline">
+                        <Style Selector="TextBox.kind-underline:not(.kind-embedded-search)">
                             <Setter Property="Theme" Value="{StaticResource MyNet.Theme.TextBox.Underline}" />
                         </Style>
                         <Style Selector="my|CalendarDatePickerEx.kind-underline">

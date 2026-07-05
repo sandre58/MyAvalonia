@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:MyNet.Avalonia.Controls;assembly=MyNet.Avalonia.Controls"
                     xmlns:my="http://mynet.com/avalonia"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
                     xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
 
     <ControlTheme x:Key="{x:Type controls:PaginationButton}" TargetType="controls:PaginationButton">
@@ -297,7 +298,7 @@
         <controls:MaterialIcon Kind="{Binding}" />
     </DataTemplate>
 
-    <DataTemplate x:Key="MyNet.PlaceholderTemplate.IconText">
+    <DataTemplate x:Key="MyNet.PlaceholderTemplate.IconText" x:DataType="sys:String">
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Spacing="{Binding (my:IconAssist.Spacing), RelativeSource={RelativeSource AncestorType=controls:PlaceholderContentControl}}">
@@ -325,6 +326,7 @@
                            IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}">
                         <DockPanel>
                             <TextBox Name="PART_SearchBox"
+                                     Classes="kind-embedded-search"
                                      DockPanel.Dock="Top"
                                      IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
                                      Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}" />
@@ -361,6 +363,7 @@
                            IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}">
                         <DockPanel>
                             <TextBox Name="PART_SearchBox"
+                                     Classes="kind-embedded-search"
                                      DockPanel.Dock="Top"
                                      IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
                                      Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}" />

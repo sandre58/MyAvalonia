@@ -82,3 +82,5 @@ Popup search templates use `PART_SearchPlaceholder` (`PlaceholderContentControl`
 | `PlaceholderAssist.MinHeight` / `Padding` | Layout on presenter **only** when placeholder is active (popup search empty state) |
 
 `ItemsSearchBehavior` sets `PlaceholderActive = true` when filter is active and match count is 0. Theme templates use `PART_SearchPlaceholder` with `variant-watermark size-sm`, `FileSearchOutline`, and `PlaceholderAssist`. Legacy templates with `PART_SearchEmpty` TextBlock remain supported.
+
+**Embedded search isolation**: `PART_SearchBox` is a standard `TextBox` with class `kind-embedded-search` (`ItemsSearchBehavior.EmbeddedSearchBoxClass`). ComboBox / MultiComboBox ControlThemes override `MaxWidth`, `HorizontalAlignment`, and `Theme` on `^ /template/ TextBox#PART_SearchBox` so ancestor page styles do not affect popup search. App styles targeting `TextBox` or `:is(TemplatedControl)` should use `:not(.kind-embedded-search)` when setting layout, theme, or `InputAssist`.

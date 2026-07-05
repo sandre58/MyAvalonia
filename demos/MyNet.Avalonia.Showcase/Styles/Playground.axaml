@@ -18,7 +18,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
     </Style>
 
-    <Style Selector="my|Form.kind-settings :is(TemplatedControl)">
+    <Style Selector="my|Form.kind-settings :is(TemplatedControl):not(.kind-embedded-search)">
         <Setter Property="my:ValidationAssist.Theme" Value="{StaticResource MyNet.Theme.DataValidationErrors.Glyph}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="my:InputAssist.ShowClearButton" Value="True" />

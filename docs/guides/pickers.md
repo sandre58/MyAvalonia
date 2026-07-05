@@ -175,6 +175,8 @@ Optional in-popup filtering for `ComboBox` (MyNet theme) and `MultiComboBox`:
 
 **Large static catalogs** (e.g. `MaterialIconCatalog.Groups`, 7000+ items): set `SearchMemberPath="DisplayName"` on `MaterialIconKindGroup`. For browse-all UX with pagination, prefer a ViewModel-filtered list (see showcase `IconsPage`) over in-popup search alone.
 
+**Style isolation**: `PART_SearchBox` carries the stable class `kind-embedded-search` (`ItemsSearchBehavior.EmbeddedSearchBoxClass`). The ComboBox / MultiComboBox ControlTheme applies high-specificity template overrides so page-level styles (e.g. `TextBox { MaxWidth }`, `TextBox.kind-underline`, broad `:is(TemplatedControl)` InputAssist setters) do not leak into the popup search bar. When authoring app styles that target `TextBox` layout, theme, or input assists, exclude embedded search boxes with `:not(.kind-embedded-search)`. Customize the search TextBox via `ItemsSearchAssist.TextBoxTheme` (ComboBox) or `MultiComboBox.SearchTextBoxTheme` — default `MyNet.Theme.TextBox.Embedded.Popup.Search.Outlined`.
+
 Keyboard when search is enabled:
 
 | Key | Action |
