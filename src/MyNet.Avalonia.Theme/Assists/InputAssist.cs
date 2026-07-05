@@ -14,7 +14,7 @@ public static class InputAssist
     #region PlaceholderText
 
     /// <summary>
-    /// Provides PlaceholderText Property for attached InputBehavior element.
+    /// Provides PlaceholderText Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<string?> PlaceholderTextProperty = AvaloniaProperty.RegisterAttached<StyledElement, string?>("PlaceholderText", typeof(InputAssist));
 
@@ -36,7 +36,7 @@ public static class InputAssist
     #region UseFloatingPlaceholder
 
     /// <summary>
-    /// Provides UseFloatingPlaceholder Property for attached InputBehavior element.
+    /// Provides UseFloatingPlaceholder Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<bool> UseFloatingPlaceholderProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("UseFloatingPlaceholder", typeof(InputAssist));
 
@@ -58,7 +58,7 @@ public static class InputAssist
     #region FloatingScale
 
     /// <summary>
-    /// Provides FloatingScale Property for attached InputBehavior element.
+    /// Provides FloatingScale Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<double> FloatingScaleProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("FloatingScale", typeof(InputAssist), 0.75d);
 
@@ -80,7 +80,7 @@ public static class InputAssist
     #region FloatingOffset
 
     /// <summary>
-    /// Provides FloatingOffset Property for attached InputBehavior element.
+    /// Provides FloatingOffset Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<double> FloatingOffsetProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("FloatingOffset", typeof(InputAssist), 12.0d);
 
@@ -102,7 +102,7 @@ public static class InputAssist
     #region PlaceholderForeground
 
     /// <summary>
-    /// Provides PlaceholderForeground Property for attached InputBehavior element.
+    /// Provides PlaceholderForeground Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<IBrush> PlaceholderForegroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush>("PlaceholderForeground", typeof(InputAssist));
 
@@ -124,7 +124,7 @@ public static class InputAssist
     #region PlaceholderFontSize
 
     /// <summary>
-    /// Provides PlaceholderFontSize Property for attached InputBehavior element.
+    /// Provides PlaceholderFontSize Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<double> PlaceholderFontSizeProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("PlaceholderFontSize", typeof(InputAssist));
 
@@ -146,7 +146,7 @@ public static class InputAssist
     #region InnerLeftContent
 
     /// <summary>
-    /// Provides InnerLeftContent Property for attached InputBehavior element.
+    /// Provides InnerLeftContent Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<object?> InnerLeftContentProperty = AvaloniaProperty.RegisterAttached<StyledElement, object?>("InnerLeftContent", typeof(InputAssist));
 
@@ -168,7 +168,7 @@ public static class InputAssist
     #region InnerRightContent
 
     /// <summary>
-    /// Provides InnerRightContent Property for attached InputBehavior element.
+    /// Provides InnerRightContent Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<object?> InnerRightContentProperty = AvaloniaProperty.RegisterAttached<StyledElement, object?>("InnerRightContent", typeof(InputAssist));
 
@@ -190,7 +190,7 @@ public static class InputAssist
     #region InnerForeground
 
     /// <summary>
-    /// Provides InnerForeground Property for attached InputBehavior element.
+    /// Provides InnerForeground Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<IBrush?> InnerForegroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("InnerForeground", typeof(InputAssist));
 
@@ -212,7 +212,7 @@ public static class InputAssist
     #region InnerFontSize
 
     /// <summary>
-    /// Provides InnerFontSize Property for attached InputBehavior element.
+    /// Provides InnerFontSize Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<double> InnerFontSizeProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("InnerFontSize", typeof(InputAssist));
 
@@ -234,7 +234,7 @@ public static class InputAssist
     #region InnerPadding
 
     /// <summary>
-    /// Provides InnerPadding Property for attached InputBehavior element.
+    /// Provides InnerPadding Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<Thickness> InnerPaddingProperty = AvaloniaProperty.RegisterAttached<StyledElement, Thickness>("InnerPadding", typeof(InputAssist), new(0));
 
@@ -256,7 +256,7 @@ public static class InputAssist
     #region UnderText
 
     /// <summary>
-    /// Provides UnderText Property for attached InputBehavior element.
+    /// Provides UnderText Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<string> UnderTextProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("UnderText", typeof(InputAssist));
 
@@ -278,7 +278,7 @@ public static class InputAssist
     #region UnderForeground
 
     /// <summary>
-    /// Provides UnderForeground Property for attached InputBehavior element.
+    /// Provides UnderForeground Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<IBrush?> UnderForegroundProperty = AvaloniaProperty.RegisterAttached<StyledElement, IBrush?>("UnderForeground", typeof(InputAssist));
 
@@ -300,7 +300,7 @@ public static class InputAssist
     #region UnderFontSize
 
     /// <summary>
-    /// Provides UnderFontSize Property for attached InputBehavior element.
+    /// Provides UnderFontSize Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<double> UnderFontSizeProperty = AvaloniaProperty.RegisterAttached<StyledElement, double>("UnderFontSize", typeof(InputAssist), 10.0d);
 
@@ -322,7 +322,7 @@ public static class InputAssist
     #region UnderFontWeight
 
     /// <summary>
-    /// Provides UnderFontWeight Property for attached InputBehavior element.
+    /// Provides UnderFontWeight Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<FontWeight> UnderFontWeightProperty = AvaloniaProperty.RegisterAttached<StyledElement, FontWeight>("UnderFontWeight", typeof(InputAssist), FontWeight.Normal);
 
@@ -344,7 +344,7 @@ public static class InputAssist
     #region UnderFontStyle
 
     /// <summary>
-    /// Provides UnderFontStyle Property for attached InputBehavior element.
+    /// Provides UnderFontStyle Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<FontStyle> UnderFontStyleProperty = AvaloniaProperty.RegisterAttached<StyledElement, FontStyle>("UnderFontStyle", typeof(InputAssist));
 
@@ -366,7 +366,7 @@ public static class InputAssist
     #region ShowClearButton
 
     /// <summary>
-    /// Provides ShowClearButton Property for attached InputBehavior element.
+    /// Provides ShowClearButton Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<bool> ShowClearButtonProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("ShowClearButton", typeof(InputAssist));
 
@@ -388,7 +388,7 @@ public static class InputAssist
     #region ShowRevealButton
 
     /// <summary>
-    /// Provides ShowRevealButton Property for attached InputBehavior element.
+    /// Provides ShowRevealButton Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<bool> ShowRevealButtonProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("ShowRevealButton", typeof(InputAssist));
 
@@ -410,7 +410,7 @@ public static class InputAssist
     #region ShowClipboardButton
 
     /// <summary>
-    /// Provides ShowClipboardButton Property for attached InputBehavior element.
+    /// Provides ShowClipboardButton Property for attached InputAssist element.
     /// </summary>
     public static readonly AttachedProperty<bool> ShowClipboardButtonProperty = AvaloniaProperty.RegisterAttached<StyledElement, bool>("ShowClipboardButton", typeof(InputAssist));
 

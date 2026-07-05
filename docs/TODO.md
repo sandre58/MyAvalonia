@@ -120,7 +120,7 @@ This document summarizes the current state of MyNet.Avalonia project development
 #### New functionalities
 
 - [x] Refactor IsEditable/IsReadOnly functionality for all editables fields
-- [ ] Add IsEditable functionality for MultiComboBox
+- [x] Add IsEditable functionality for MultiComboBox
 - [x] Add search option for ComboBox and MultiComboBox
 - [ ] Add custom behavior to NumericUpDown for IsTextEditable functionality
 - [x] Cursor for all controls

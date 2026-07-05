@@ -16,7 +16,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Internal;
@@ -203,46 +202,6 @@ public static class ItemsSearchBehavior
     /// Accessor for Attached <see cref="ClearOnCloseProperty"/>.
     /// </summary>
     public static bool GetClearOnClose(SelectingItemsControl element) => element.GetValue(ClearOnCloseProperty);
-
-    #endregion
-
-    #region PlaceholderText
-
-    /// <summary>
-    /// Provides PlaceholderText Property for attached ItemsSearchBehavior element.
-    /// </summary>
-    public static readonly AttachedProperty<string?> PlaceholderTextProperty =
-        AvaloniaProperty.RegisterAttached<SelectingItemsControl, string?>("PlaceholderText", typeof(ItemsSearchBehavior));
-
-    /// <summary>
-    /// Accessor for Attached <see cref="PlaceholderTextProperty"/>.
-    /// </summary>
-    public static void SetPlaceholderText(SelectingItemsControl element, string? value) => element.SetValue(PlaceholderTextProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached <see cref="PlaceholderTextProperty"/>.
-    /// </summary>
-    public static string? GetPlaceholderText(SelectingItemsControl element) => element.GetValue(PlaceholderTextProperty);
-
-    #endregion
-
-    #region TextBoxTheme
-
-    /// <summary>
-    /// Provides TextBoxTheme Property for attached ItemsSearchBehavior element.
-    /// </summary>
-    public static readonly AttachedProperty<ControlTheme?> TextBoxThemeProperty =
-        AvaloniaProperty.RegisterAttached<SelectingItemsControl, ControlTheme?>("TextBoxTheme", typeof(ItemsSearchBehavior));
-
-    /// <summary>
-    /// Accessor for Attached <see cref="TextBoxThemeProperty"/>.
-    /// </summary>
-    public static void SetTextBoxTheme(SelectingItemsControl element, ControlTheme? value) => element.SetValue(TextBoxThemeProperty, value);
-
-    /// <summary>
-    /// Accessor for Attached <see cref="TextBoxThemeProperty"/>.
-    /// </summary>
-    public static ControlTheme? GetTextBoxTheme(SelectingItemsControl element) => element.GetValue(TextBoxThemeProperty);
 
     #endregion
 
@@ -812,6 +771,6 @@ public static class ItemsSearchBehavior
 
         AutomationProperties.SetName(
             state.SearchBox,
-            GetPlaceholderText(control) ?? ItemsSearchResources.SearchPlaceholder);
+            state.SearchBox.Watermark ?? ItemsSearchResources.SearchPlaceholder);
     }
 }

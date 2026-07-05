@@ -14,7 +14,7 @@ public static class ExpanderAssist
     #region ButtonTheme
 
     /// <summary>
-    /// Provides ButtonTheme Property for attached ExpanderBehavior element.
+    /// Provides ButtonTheme Property for attached ExpanderAssist element.
     /// </summary>
     public static readonly AttachedProperty<ControlTheme> ButtonThemeProperty = AvaloniaProperty.RegisterAttached<StyledElement, ControlTheme>("ButtonTheme", typeof(ExpanderAssist));
 

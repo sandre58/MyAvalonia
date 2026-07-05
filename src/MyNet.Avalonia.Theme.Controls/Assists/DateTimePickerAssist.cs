@@ -79,7 +79,7 @@ public static class DateTimePickerAssist
     #region PlaceholderHour
 
     /// <summary>
-    /// Provides PlaceholderHour Property for attached DateTimePickerBehavior element.
+    /// Provides PlaceholderHour Property for attached DateTimePickerAssist element.
     /// </summary>
     public static readonly AttachedProperty<string> PlaceholderHourProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("PlaceholderHour", typeof(DateTimePickerAssist));
 
@@ -101,7 +101,7 @@ public static class DateTimePickerAssist
     #region PlaceholderMinute
 
     /// <summary>
-    /// Provides PlaceholderMinute Property for attached DateTimePickerBehavior element.
+    /// Provides PlaceholderMinute Property for attached DateTimePickerAssist element.
     /// </summary>
     public static readonly AttachedProperty<string> PlaceholderMinuteProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("PlaceholderMinute", typeof(DateTimePickerAssist));
 
@@ -123,7 +123,7 @@ public static class DateTimePickerAssist
     #region PlaceholderSecond
 
     /// <summary>
-    /// Provides PlaceholderSecond Property for attached DateTimePickerBehavior element.
+    /// Provides PlaceholderSecond Property for attached DateTimePickerAssist element.
     /// </summary>
     public static readonly AttachedProperty<string> PlaceholderSecondProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("PlaceholderSecond", typeof(DateTimePickerAssist));
 
@@ -145,7 +145,7 @@ public static class DateTimePickerAssist
     #region PlaceholderPeriod
 
     /// <summary>
-    /// Provides PlaceholderPeriod Property for attached DateTimePickerBehavior element.
+    /// Provides PlaceholderPeriod Property for attached DateTimePickerAssist element.
     /// </summary>
     public static readonly AttachedProperty<string> PlaceholderPeriodProperty = AvaloniaProperty.RegisterAttached<StyledElement, string>("PlaceholderPeriod", typeof(DateTimePickerAssist));
 

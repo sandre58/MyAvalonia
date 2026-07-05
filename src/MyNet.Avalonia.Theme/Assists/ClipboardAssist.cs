@@ -13,6 +13,11 @@ namespace MyNet.Avalonia.Theme.Assists;
 
 public static class ClipboardAssist
 {
+    /// <summary>
+    /// Gets a command that copies text to the clipboard.
+    /// Kept on this assist because ControlThemes bind clipboard buttons directly to it;
+    /// it is not attached-property behavior on the host control.
+    /// </summary>
     public static ICommand? CopyTextCommand { get; } = ActionCommand.Create<string>(async x => await ClipboardManager.CopyTextAsync(x).ConfigureAwait(false));
 
     #region Content

@@ -49,6 +49,6 @@ Merged via `Tokens/_index.axaml`:
 ## Assists
 
 - Theme: `VariantAssist`, `ShadowAssist`, `ValidationAssist`
-- Controls: `IconAssist`, `DataGridAssist`, `DrawerAssist`
+- Theme.Controls: `IconAssist`, `DataGridAssist`, `ItemsSearchAssist`
 
 Human guide: `docs/guides/theming.md`

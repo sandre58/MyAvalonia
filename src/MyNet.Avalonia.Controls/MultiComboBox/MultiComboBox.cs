@@ -203,7 +203,7 @@ public partial class MultiComboBox : SelectingItemsControl, IPopupControl
     /// Provides SearchPlaceholderText Property.
     /// </summary>
     public static readonly StyledProperty<string?> SearchPlaceholderTextProperty =
-        ItemsSearchBehavior.PlaceholderTextProperty.AddOwner<MultiComboBox>();
+        AvaloniaProperty.Register<MultiComboBox, string?>(nameof(SearchPlaceholderText));
 
     /// <summary>
     /// Gets or sets the placeholder shown in the popup search field.
@@ -218,7 +218,7 @@ public partial class MultiComboBox : SelectingItemsControl, IPopupControl
     /// Provides SearchTextBoxTheme Property.
     /// </summary>
     public static readonly StyledProperty<ControlTheme?> SearchTextBoxThemeProperty =
-        ItemsSearchBehavior.TextBoxThemeProperty.AddOwner<MultiComboBox>();
+        AvaloniaProperty.Register<MultiComboBox, ControlTheme?>(nameof(SearchTextBoxTheme));
 
     /// <summary>
     /// Gets or sets the theme applied to the popup search <see cref="TextBox"/>.

@@ -185,9 +185,9 @@
         <Setter Property="MaxDropDownHeight" Value="350" />
         <Setter Property="MaxSelectionBoxHeight" Value="270" />
         <Setter Property="my:ItemsSearchBehavior.IsEnabled" Value="False" />
-        <Setter Property="my:ItemsSearchBehavior.TextBoxTheme"
+        <Setter Property="SearchTextBoxTheme"
                 Value="{StaticResource MyNet.Theme.TextBox.Embedded.Popup.Search}" />
-        <Setter Property="my:ItemsSearchAssist.PlaceholderText"
+        <Setter Property="SearchPlaceholderText"
                 Value="{my:Loc SearchPlaceholder, Filename=ItemsSearchResources}" />
         <Setter Property="SelectedItemContainerTheme" Value="{StaticResource MyNet.Theme.Tag.Embedded.MultiComboBox}" />
         <Setter Property="my:ItemsAssist.HorizontalAlignment" Value="Stretch" />
@@ -391,9 +391,9 @@
                                                      Classes="kind-embedded-search"
                                                      HorizontalAlignment="Stretch"
                                                      IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
-                                                     PlaceholderText="{TemplateBinding (my:ItemsSearchAssist.PlaceholderText)}"
+                                                     PlaceholderText="{TemplateBinding SearchPlaceholderText}"
                                                      Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}"
-                                                     Theme="{TemplateBinding (my:ItemsSearchBehavior.TextBoxTheme)}" />
+                                                     Theme="{TemplateBinding SearchTextBoxTheme}" />
                                             <Separator Grid.Row="1"
                                                        IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}" />
                                             <my:PlaceholderContentControl Name="PART_SearchPlaceholder"
@@ -737,9 +737,9 @@
                                                      IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
                                                      my:ThemeAssist.Role="{TemplateBinding (my:PopupAssist.Role)}"
                                                      FontSize="{Binding $parent[TemplatedControl].FontSize}"
-                                                     PlaceholderText="{TemplateBinding (my:ItemsSearchAssist.PlaceholderText)}"
+                                                     PlaceholderText="{TemplateBinding SearchPlaceholderText}"
                                                      Text="{TemplateBinding (my:ItemsSearchBehavior.Text), Mode=TwoWay}"
-                                                     Theme="{TemplateBinding (my:ItemsSearchBehavior.TextBoxTheme)}" />
+                                                     Theme="{TemplateBinding SearchTextBoxTheme}" />
                                             <Separator Grid.Row="1"
                                                        Margin="{my:Thickness Left=8, Top=0, Right=8, Bottom=4}"
                                                        IsVisible="{TemplateBinding (my:ItemsSearchBehavior.IsEnabled)}"
