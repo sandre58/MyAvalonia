@@ -69,6 +69,7 @@ internal static class PagesCatalog
                 new(typeof(ExpanderPageViewModel), typeof(ExpanderPage), MaterialIconKind.ArrowExpand),
                 new(typeof(SplitViewPageViewModel), typeof(SplitViewPage), MaterialIconKind.ViewSplitVertical),
                 new(typeof(TabControlPageViewModel), typeof(TabControlPage), MaterialIconKind.Tab),
+                new(typeof(ToolBarPageViewModel), typeof(ToolBarPage), MaterialIconKind.Wrench),
                 new(typeof(GridSplitterPageViewModel), typeof(GridSplitterPage), MaterialIconKind.ArrowSplitVertical),
                 new(typeof(HeaderedContentControlPageViewModel), typeof(HeaderedContentControlPage), MaterialIconKind.CardBulleted),
                 new(typeof(FormPageViewModel), typeof(FormPage), MaterialIconKind.FormatLineStyle),

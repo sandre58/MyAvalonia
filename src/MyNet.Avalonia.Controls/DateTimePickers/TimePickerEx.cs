@@ -14,7 +14,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Avalonia.Controls.Primitives.Internal;
 using MyNet.Primitives;
 using MyNet.Primitives.Temporal;
 

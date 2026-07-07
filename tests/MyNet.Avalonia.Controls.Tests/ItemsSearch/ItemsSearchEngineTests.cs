@@ -39,9 +39,7 @@ public class ItemsSearchEngineTests
         ItemsSearchFilterMode mode,
         bool caseSensitive,
         bool expected)
-    {
-        ItemsSearchEngine.IsMatch(query, itemText, mode, caseSensitive).Should().Be(expected);
-    }
+        => ItemsSearchEngine.IsMatch(query, itemText, mode, caseSensitive).Should().Be(expected);
 
     [Theory]
     [InlineData(null, 0, true)]

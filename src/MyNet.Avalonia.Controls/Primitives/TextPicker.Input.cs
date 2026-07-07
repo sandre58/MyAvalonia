@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using MyNet.Avalonia.Controls.Behaviors;

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true" />
+    </xsd:schema>
+    <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+    <resheader name="version"><value>1.3</value></resheader>
+    <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+    <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+    <data name="ItemSpacing" xml:space="preserve"><value>Item spacing</value></data>
+    <data name="OverflowMode" xml:space="preserve"><value>Overflow mode</value></data>
+    <data name="AddItem" xml:space="preserve"><value>Add item</value></data>
+    <data name="RemoveItem" xml:space="preserve"><value>Remove item</value></data>
+    <data name="ResetItems" xml:space="preserve"><value>Reset items</value></data>
+    <data name="PreviewWidth" xml:space="preserve"><value>Preview width</value></data>
+    <data name="DebugPanelTitle" xml:space="preserve"><value>Layout state</value></data>
+    <data name="IsOverflowAvailable" xml:space="preserve"><value>Overflow available</value></data>
+    <data name="OverflowItemsCount" xml:space="preserve"><value>Overflow items</value></data>
+    <data name="ItemsCount" xml:space="preserve"><value>Total items</value></data>
+    <data name="FluentRibbonNote" xml:space="preserve"><value>Fluent and Ribbon modes use the Standard engine in Phase 1.</value></data>
+    <data name="PresetSmallTitle" xml:space="preserve"><value>Small toolbar (3 items)</value></data>
+    <data name="PresetStandardTitle" xml:space="preserve"><value>Standard toolbar (8 items)</value></data>
+    <data name="PresetOverflowTitle" xml:space="preserve"><value>Overflow stress (18 items)</value></data>
+    <data name="PresetMixedTitle" xml:space="preserve"><value>Mixed sizes and priorities</value></data>
+</root>

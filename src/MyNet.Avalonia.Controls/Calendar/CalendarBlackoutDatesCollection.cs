@@ -8,10 +8,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Threading;
-using MyNet.Avalonia.Controls.Internals.Calendar;
 using MyNet.Primitives;
 using MyNet.Primitives.Intervals;
-using MyNet.Primitives.Temporal;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;

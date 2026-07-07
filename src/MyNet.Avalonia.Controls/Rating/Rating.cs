@@ -54,7 +54,7 @@ public partial class Rating : TemplatedControl
         AvaloniaProperty.Register<Rating, int>(nameof(MaxRating), 5, coerce: CoerceMaxRating);
 
     public static readonly StyledProperty<RatingPrecision> PrecisionProperty =
-        AvaloniaProperty.Register<Rating, RatingPrecision>(nameof(Precision), RatingPrecision.Integer);
+        AvaloniaProperty.Register<Rating, RatingPrecision>(nameof(Precision));
 
     public static readonly StyledProperty<bool> IsClearableProperty =
         AvaloniaProperty.Register<Rating, bool>(nameof(IsClearable), true);
@@ -66,7 +66,7 @@ public partial class Rating : TemplatedControl
         AvaloniaProperty.Register<Rating, bool>(nameof(IsReadOnly));
 
     public static readonly StyledProperty<Orientation> OrientationProperty =
-        AvaloniaProperty.Register<Rating, Orientation>(nameof(Orientation), Orientation.Horizontal);
+        AvaloniaProperty.Register<Rating, Orientation>(nameof(Orientation));
 
     public static readonly StyledProperty<double> ItemSizeProperty =
         AvaloniaProperty.Register<Rating, double>(nameof(ItemSize), 24);

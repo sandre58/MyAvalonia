@@ -361,6 +361,7 @@ public class DateTimeScrollPickerEx : TemplatedControl, IPopupControl, IIncremen
             _popup.Opened -= OnPopupOpened;
             _popup.Closed -= OnPopupClosed;
         }
+
         if (_presenter != null)
         {
             _presenter.Confirmed -= OnConfirmed;

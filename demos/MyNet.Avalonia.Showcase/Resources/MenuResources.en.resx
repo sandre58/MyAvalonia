@@ -206,6 +206,7 @@
   <data name="SplitButton" xml:space="preserve"><value>Split button</value></data>
   <data name="SplitView" xml:space="preserve"><value>Split view</value></data>
   <data name="TabControl" xml:space="preserve"><value>Tabs</value></data>
+  <data name="ToolBar" xml:space="preserve"><value>Toolbar</value></data>
   <data name="TabbedPage" xml:space="preserve"><value>Tabbed page</value></data>
   <data name="TextBlock" xml:space="preserve"><value>Text block</value></data>
   <data name="TextField" xml:space="preserve"><value>Input chrome</value></data>

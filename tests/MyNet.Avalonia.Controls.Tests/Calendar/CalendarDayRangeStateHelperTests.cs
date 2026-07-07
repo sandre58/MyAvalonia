@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Linq;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Internals.Calendar;
 using MyNet.Avalonia.Controls.Primitives;

@@ -186,6 +186,7 @@
   <data name="SplitButton" xml:space="preserve"><value>Bouton partagé</value></data>
   <data name="SplitView" xml:space="preserve"><value>Vue partagée</value></data>
   <data name="TabControl" xml:space="preserve"><value>Onglets</value></data>
+  <data name="ToolBar" xml:space="preserve"><value>Barre d'outils</value></data>
   <data name="TabbedPage" xml:space="preserve"><value>Page à onglets</value></data>
   <data name="TextBlock" xml:space="preserve"><value>Bloc de texte</value></data>
   <data name="TextField" xml:space="preserve"><value>Chrome de champ</value></data>

@@ -16,7 +16,6 @@ using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
-using MyNet.Primitives;
 using MyNet.Primitives.Temporal;
 using MyNet.Utilities.Suspending;
 
@@ -350,7 +349,7 @@ public abstract class TimeSelectorBase : TemplatedControl, IValueSelector<TimeSp
 
         return e.Key switch
         {
-            Key.Enter when IsOnLastSelectableComponent() => RaiseInputCompleted(TimeInputCompletionMode.EnterKey) || true,
+            Key.Enter when IsOnLastSelectableComponent() => RaiseInputCompleted() || true,
             Key.Space or Key.Enter or Key.Right => MoveToNextComponentAndFocus(wrap: true) || true,
             Key.Left => MoveToPreviousComponentAndFocus(wrap: true) || true,
             Key.Up => Previous() || true,

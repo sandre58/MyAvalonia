@@ -10,9 +10,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Threading;
-using MyNet.Avalonia.Controls.Internals.Calendar;
 using MyNet.Primitives;
-using MyNet.Primitives.Temporal;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace MyNet.Avalonia.Controls.Primitives;
@@ -29,7 +27,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         BeginUpdate();
         try
         {
-            foreach (var date in rangeStart.Range(rangeEnd, rangeStart <= rangeEnd ? 1 : -1, TimeUnit.Day))
+            foreach (var date in rangeStart.Range(rangeEnd, rangeStart <= rangeEnd ? 1 : -1))
                 Add(date);
         }
         finally
@@ -45,7 +43,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
         BeginUpdate();
         try
         {
-            foreach (var date in rangeStart.Range(rangeEnd, rangeStart <= rangeEnd ? 1 : -1, TimeUnit.Day))
+            foreach (var date in rangeStart.Range(rangeEnd, rangeStart <= rangeEnd ? 1 : -1))
                 Remove(date);
         }
         finally
@@ -95,7 +93,7 @@ public sealed class SelectedDatesCollection(Calendar owner) : ObservableCollecti
             foreach (var item in datesToRemove)
                 Remove(item);
 
-            foreach (var date in rangeStart.Range(rangeEnd, rangeStart <= rangeEnd ? 1 : -1, TimeUnit.Day))
+            foreach (var date in rangeStart.Range(rangeEnd, rangeStart <= rangeEnd ? 1 : -1))
             {
                 if (!Contains(date))
                     Add(date);

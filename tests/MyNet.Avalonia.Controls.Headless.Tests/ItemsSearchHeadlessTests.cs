@@ -21,7 +21,6 @@ using Avalonia.VisualTree;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Behaviors;
 using MyNet.Avalonia.Controls.Icons;
-using Xunit;
 
 namespace MyNet.Avalonia.Controls.Headless.Tests;
 

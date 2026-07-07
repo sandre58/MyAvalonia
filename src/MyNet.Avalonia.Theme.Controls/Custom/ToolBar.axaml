@@ -1,0 +1,170 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
+
+    <DataTemplate x:Key="MyNet.DataTemplate.ToolBarOverflowItem"
+                  x:DataType="my:ToolBarOverflowEntry"
+                  DataType="my:ToolBarOverflowEntry">
+        <Button Classes="kind-button variant-text"
+                Background="Transparent"
+                BorderThickness="0"
+                Padding="{StaticResource MyNet.Padding.Button.Sm}"
+                Command="{Binding Command}"
+                IsEnabled="{Binding IsEnabled}"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Left"
+                MinHeight="{StaticResource MyNet.Height.Button.Sm}"
+                Foreground="{my:ThemeContext Foreground.Primary}"
+                IsHitTestVisible="True"
+                Cursor="Hand">
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Xs}">
+                <ContentPresenter Content="{Binding Icon}"
+                                  Foreground="{my:ThemeContext Foreground.Primary}"
+                                  IsVisible="{Binding Icon, Converter={x:Static my:NullConverter.IsPresent}}"
+                                  VerticalAlignment="Center">
+                    <ContentPresenter.DataTemplates>
+                        <DataTemplate DataType="icons:MaterialIconKind">
+                            <my:MaterialIcon Kind="{Binding}"
+                                               Classes="size-sm"
+                                               Foreground="{my:ThemeContext Foreground.Primary}" />
+                        </DataTemplate>
+                    </ContentPresenter.DataTemplates>
+                </ContentPresenter>
+
+                <ContentPresenter Content="{Binding Header}"
+                                  ContentTemplate="{Binding HeaderTemplate}"
+                                  Foreground="{my:ThemeContext Foreground.Primary}"
+                                  IsVisible="{Binding Header, Converter={x:Static my:NullConverter.IsPresent}}"
+                                  VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MyNet.DataTemplate.ToolBarOverflowSeparator"
+                  x:DataType="my:ToolBarOverflowEntry"
+                  DataType="my:ToolBarOverflowEntry">
+        <Border Height="1"
+                Margin="8,4"
+                Background="{my:ThemeContext Control.Border}" />
+    </DataTemplate>
+
+    <my:ToolBarOverflowEntryTemplateSelector x:Key="MyNet.DataTemplate.ToolBarOverflowEntry"
+                                             Item="{StaticResource MyNet.DataTemplate.ToolBarOverflowItem}"
+                                             Separator="{StaticResource MyNet.DataTemplate.ToolBarOverflowSeparator}" />
+
+    <ControlTheme x:Key="{x:Type my:ToolBar}" TargetType="my:ToolBar">
+        <Setter Property="my:ThemeAssist.Category" Value="Navigation" />
+        <Setter Property="ItemContainerTheme" Value="{StaticResource {x:Type my:ToolBarItem}}" />
+        <Setter Property="OverflowItemTemplate" Value="{StaticResource MyNet.DataTemplate.ToolBarOverflowEntry}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="4 2" />
+        <Setter Property="OverflowMode" Value="Adaptive" />
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="ItemSpacing" Value="2" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+
+        <Setter Property="my:VariantAssist.DefaultBackground" Value="Transparent" />
+        <Setter Property="my:VariantAssist.DefaultBorderBrush" Value="Transparent" />
+        <Setter Property="my:VariantAssist.DefaultForeground" Value="{my:ThemeContext Foreground.Primary}" />
+        <Setter Property="my:VariantAssist.DefaultPrimary" Value="{my:ThemeContext Primary}" />
+
+        <Setter Property="my:VariantAssist.Background" Value="{my:ThemeRole Background}" />
+        <Setter Property="my:VariantAssist.BorderBrush" Value="{my:ThemeRole BorderBrush}" />
+        <Setter Property="my:VariantAssist.Foreground" Value="{my:ThemeRole Foreground, Contrast=True}" />
+        <Setter Property="my:VariantAssist.Primary" Value="{my:ThemeRole Primary}" />
+        <Setter Property="my:VariantAssist.BorderThickness" Value="0" />
+
+        <Setter Property="Foreground" Value="{Binding $self.(my:VariantAssist.Foreground)}" />
+        <Setter Property="my:ItemsAssist.Background" Value="Transparent" />
+        <Setter Property="my:ItemsAssist.BorderBrush" Value="{my:ThemeContext Control.Border}" />
+        <Setter Property="my:ItemsAssist.Foreground" Value="{my:Foreground}" />
+        <Setter Property="my:ItemsAssist.HoverBackground" Value="{my:Foreground Opacity=Hover}" />
+        <Setter Property="my:ItemsAssist.ActiveBackground" Value="{my:Foreground Opacity=Focus}" />
+        <Setter Property="my:ItemsAssist.ActiveForeground" Value="{my:ThemeContext Primary}" />
+        <Setter Property="my:ItemsAssist.Padding" Value="{StaticResource MyNet.Padding.Button.Sm}" />
+        <Setter Property="my:ItemsAssist.Margin" Value="0" />
+        <Setter Property="my:ItemsAssist.CornerRadius" Value="{StaticResource MyNet.Corners.Control}" />
+        <Setter Property="my:IconAssist.Alignment" Value="Left" />
+        <Setter Property="my:IconAssist.Spacing" Value="{StaticResource MyNet.Spacing.Xs}" />
+        <Setter Property="my:IconAssist.PrimarySize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+        <Setter Property="my:IconAssist.LabelSize" Value="{StaticResource MyNet.Size.Icon.Sm}" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border x:Name="PART_Root"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}">
+                    <Grid ColumnDefinitions="*,Auto">
+
+                        <ItemsPresenter x:Name="PART_ItemsPresenter" Grid.Column="0">
+                            <ItemsPresenter.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <my:ToolBarPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsPresenter.ItemsPanel>
+                        </ItemsPresenter>
+
+                        <ToggleButton x:Name="PART_OverflowButton"
+                                      Grid.Column="1"
+                                      Classes="kind-button variant-text size-sm"
+                                      Theme="{StaticResource {x:Type ToggleButton}}"
+                                      IsVisible="{TemplateBinding IsOverflowAvailable}"
+                                      VerticalAlignment="Center"
+                                      MinWidth="{StaticResource MyNet.Height.Button.Sm}"
+                                      MinHeight="{StaticResource MyNet.Height.Button.Sm}"
+                                      Padding="{StaticResource MyNet.Padding.Button.Sm}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      Focusable="True"
+                                      Content="{my:MaterialIcon Kind=DotsHorizontal}" />
+
+                        <Popup x:Name="PART_OverflowPopup"
+                               Grid.Column="1"
+                               PlacementTarget="{Binding #PART_OverflowButton}"
+                               Placement="BottomEdgeAlignedRight"
+                               IsOpen="{Binding #PART_OverflowButton.IsChecked, Mode=TwoWay}"
+                               IsLightDismissEnabled="True">
+
+                            <Border BorderThickness="1"
+                                    Padding="4"
+                                    MinWidth="120"
+                                    Background="{my:ThemeContext Surface.Level2}"
+                                    BorderBrush="{my:ThemeContext Control.Border}"
+                                    CornerRadius="{StaticResource MyNet.Corners.Control}">
+
+                                <ItemsControl x:Name="PART_OverflowItemsControl"
+                                              ItemContainerTheme="{x:Null}"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              ItemTemplate="{TemplateBinding OverflowItemTemplate}"
+                                              ItemsSource="{TemplateBinding OverflowItems}">
+
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Spacing="2" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:horizontal">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+
+        <Style Selector="^:vertical">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>
+

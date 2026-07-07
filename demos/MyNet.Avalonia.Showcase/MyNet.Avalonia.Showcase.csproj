@@ -121,6 +121,11 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>BusyIndicatorPageResources.resx</DependentUpon>
       </Compile>
+      <Compile Update="Resources\ToolBarPageResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ToolBarPageResources.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -183,6 +188,10 @@
         <EmbeddedResource Update="Resources\BusyIndicatorPageResources.resx">
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>BusyIndicatorPageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\ToolBarPageResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>ToolBarPageResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 </Project>

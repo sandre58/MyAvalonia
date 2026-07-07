@@ -11,7 +11,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
-using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.DateTimePickers.Internal;
@@ -136,7 +135,7 @@ public class TimeRangeView : TemplatedControl, IValueSelector<Period?>
     #region ActiveBoundary
 
     public static readonly StyledProperty<TimeRangeBoundary> ActiveBoundaryProperty =
-        AvaloniaProperty.Register<TimeRangeView, TimeRangeBoundary>(nameof(ActiveBoundary), TimeRangeBoundary.Start);
+        AvaloniaProperty.Register<TimeRangeView, TimeRangeBoundary>(nameof(ActiveBoundary));
 
     public TimeRangeBoundary ActiveBoundary
     {

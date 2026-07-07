@@ -19,7 +19,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Threading;
 using Avalonia.VisualTree;
 using MyNet.Avalonia.Controls.Internals.Calendar;
 using MyNet.Avalonia.Controls.Primitives;
@@ -766,7 +765,7 @@ public class Calendar : TemplatedControl
 
         foreach (var (start, end) in CalendarDayRangeStateHelper.EnumerateConsecutiveRanges(SelectedDates))
         {
-            foreach (var date in start.Range(end, start <= end ? 1 : -1, TimeUnit.Day))
+            foreach (var date in start.Range(end, start <= end ? 1 : -1))
             {
                 var normalized = date.DiscardTime();
                 newDates.Add(normalized);
@@ -937,7 +936,7 @@ public class Calendar : TemplatedControl
         }
 
         HashSet<DateTime>? newDates = null;
-        foreach (var date in anchor.Range(end, anchor <= end ? 1 : -1, TimeUnit.Day))
+        foreach (var date in anchor.Range(end, anchor <= end ? 1 : -1))
         {
             newDates ??= [];
             newDates.Add(date.DiscardTime());

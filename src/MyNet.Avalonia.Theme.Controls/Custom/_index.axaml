@@ -37,6 +37,9 @@
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/TimeRangeView.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/TimePickerEx.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/TimeView.axaml" />
+        <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/ToolBarItem.axaml" />
+        <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/ToolBarSeparator.axaml" />
+        <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/ToolBar.axaml" />
         <ResourceInclude Source="avares://MyNet.Avalonia.Theme.Controls/Custom/Underline.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -52,6 +52,7 @@ public static class PseudoClassName
     public const string Modal = ":modal";
     public const string Month = ":month";
     public const string NoLabel = ":no-label";
+    public const string Overflow = ":overflow";
     public const string Pointerover = ":pointerover";
     public const string Partial = ":partial";
     public const string Pressed = ":pressed";

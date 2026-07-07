@@ -131,7 +131,7 @@ public static class ItemsSearchBehavior
     /// Provides FilterMode Property for attached ItemsSearchBehavior element.
     /// </summary>
     public static readonly AttachedProperty<ItemsSearchFilterMode> FilterModeProperty =
-        AvaloniaProperty.RegisterAttached<SelectingItemsControl, ItemsSearchFilterMode>("FilterMode", typeof(ItemsSearchBehavior), ItemsSearchFilterMode.Contains);
+        AvaloniaProperty.RegisterAttached<SelectingItemsControl, ItemsSearchFilterMode>("FilterMode", typeof(ItemsSearchBehavior));
 
     /// <summary>
     /// Accessor for Attached <see cref="FilterModeProperty"/>.
@@ -286,7 +286,7 @@ public static class ItemsSearchBehavior
         if (!GetIsEnabled(control))
             return;
 
-        var state = States.GetValue(control, static _ => new State());
+        var state = States.GetValue(control, static _ => new());
         var text = GetText(control);
         var applyFilter = ItemsSearchEngine.ShouldApplyFilter(text, GetMinimumLength(control));
         var filterActive = applyFilter && !string.IsNullOrEmpty(text);
@@ -374,7 +374,7 @@ public static class ItemsSearchBehavior
         if (!GetIsEnabled(control))
             return;
 
-        var state = States.GetValue(control, static _ => new State());
+        var state = States.GetValue(control, static _ => new());
         if (state.SearchBox is null)
             return;
 
@@ -388,7 +388,7 @@ public static class ItemsSearchBehavior
         if (!GetIsEnabled(control) || !control.IsPopupOpen())
             return false;
 
-        var state = States.GetValue(control, static _ => new State());
+        var state = States.GetValue(control, static _ => new());
         if (state.SearchBox is null || state.ItemsPresenter is null)
             TryResolveTemplatePartsFromVisualTree(control);
 
@@ -478,10 +478,10 @@ public static class ItemsSearchBehavior
             return;
         }
 
-        var state = States.GetValue(control, static _ => new State());
+        var state = States.GetValue(control, static _ => new());
         StopFilterTimer(state);
 
-        state.FilterTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(delay) };
+        state.FilterTimer = new() { Interval = TimeSpan.FromMilliseconds(delay) };
         state.FilterTimer.Tick += (_, _) =>
         {
             StopFilterTimer(state);
@@ -501,7 +501,7 @@ public static class ItemsSearchBehavior
 
     private static void Attach(SelectingItemsControl control)
     {
-        var state = States.GetValue(control, static _ => new State());
+        var state = States.GetValue(control, static _ => new());
 
         if (state.TemplateAppliedHandler is null)
         {
@@ -578,7 +578,7 @@ public static class ItemsSearchBehavior
 
     private static void ResolveTemplateParts(SelectingItemsControl control, TemplateAppliedEventArgs e)
     {
-        var state = States.GetValue(control, static _ => new State());
+        var state = States.GetValue(control, static _ => new());
         state.SearchBox = e.NameScope.Find<TextBox>(PartSearchBox);
         state.SearchEmpty = e.NameScope.Find<TextBlock>(PartSearchEmpty);
         state.SearchPlaceholder = e.NameScope.Find<PlaceholderContentControl>(PartSearchPlaceholder);
@@ -720,7 +720,7 @@ public static class ItemsSearchBehavior
 
     private static void TryResolveTemplatePartsFromVisualTree(SelectingItemsControl control)
     {
-        var state = States.GetValue(control, static _ => new State());
+        var state = States.GetValue(control, static _ => new());
 
         state.SearchBox ??= FindTemplatePart<TextBox>(control, PartSearchBox);
         state.SearchEmpty ??= FindTemplatePart<TextBlock>(control, PartSearchEmpty);

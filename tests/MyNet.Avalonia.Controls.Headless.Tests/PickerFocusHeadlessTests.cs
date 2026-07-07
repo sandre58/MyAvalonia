@@ -34,9 +34,6 @@ using FluentAssertions;
 
 using MyNet.Avalonia.Controls.Primitives;
 
-using MyNet.Primitives.Temporal;
-
-
 
 namespace MyNet.Avalonia.Controls.Headless.Tests;
 

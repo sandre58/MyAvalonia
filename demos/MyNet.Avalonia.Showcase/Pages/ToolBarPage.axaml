@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage x:Class="MyNet.Avalonia.Showcase.Pages.ToolBarPage"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="http://mynet.com/avalonia"
+             xmlns:v="clr-namespace:MyNet.Avalonia.Showcase.Views.Playground"
+             xmlns:vm="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Pages"
+             xmlns:vmBase="clr-namespace:MyNet.Avalonia.Showcase.ViewModels.Playground"
+             xmlns:rendering="clr-namespace:MyNet.Avalonia.Showcase.ThemeBuilder.Rendering"
+             xmlns:behavior="clr-namespace:MyNet.Avalonia.Showcase.Behaviors"
+             x:DataType="vm:ToolBarPageViewModel"
+             x:Name="Root"
+             Theme="{StaticResource {x:Type ContentPage}}"
+             Header="{my:Display Title}"
+             my:IconAssist.Icon="{Binding Icon}"
+             mc:Ignorable="d">
+
+    <ContentPage.Resources>
+        <my:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+        <ControlTheme x:Key="ToolBarPlaygroundItemTheme"
+                      x:DataType="vm:ToolBarItemViewModel"
+                      TargetType="my:ToolBarItem"
+                      BasedOn="{StaticResource {x:Type my:ToolBarItem}}">
+            <Setter Property="Header" Value="{Binding Title}" />
+            <Setter Property="OverflowPriority" Value="{Binding OverflowPriority}" />
+            <Setter Property="Command" Value="{Binding Command}" />
+            <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+            <Setter Property="Icon" Value="{Binding Icon}" />
+        </ControlTheme>
+        <DataTemplate x:Key="ToolBarOverflowItemTemplate" DataType="vm:ToolBarItemViewModel">
+            <Button Classes="kind-button variant-text"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Padding="{StaticResource MyNet.Padding.Button.Sm}"
+                    Command="{Binding Command}"
+                    IsEnabled="{Binding IsEnabled}"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Left"
+                    Cursor="Hand">
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Xs}">
+                    <ContentControl Content="{Binding Icon}" />
+                    <TextBlock Text="{Binding Title}" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <v:ShowcaseView>
+
+        <v:ShowcaseView.PlaygroundControlTemplate>
+            <DataTemplate x:DataType="vmBase:PlaygroundViewModel">
+                <StackPanel x:Name="PlaygroundRoot"
+                            Spacing="{StaticResource MyNet.Spacing.Lg}"
+                            MaxWidth="720"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+
+                    <!-- Actions + preview width -->
+                    <StackPanel Spacing="{StaticResource MyNet.Spacing.Sm}">
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource MyNet.Spacing.Sm}">
+                            <Button Content="{my:Loc AddItem, Filename=ToolBarPageResources}"
+                                    Command="{ReflectionBinding AddItemCommand, Source={StaticResource PageProxy}}" />
+                            <Button Content="{my:Loc RemoveItem, Filename=ToolBarPageResources}"
+                                    Command="{ReflectionBinding RemoveItemCommand, Source={StaticResource PageProxy}}" />
+                            <Button Content="{my:Loc ResetItems, Filename=ToolBarPageResources}"
+                                    Command="{ReflectionBinding ResetItemsCommand, Source={StaticResource PageProxy}}" />
+                        </StackPanel>
+                        <StackPanel Spacing="{StaticResource MyNet.Spacing.Xs}">
+                            <TextBlock Classes="text-helper"
+                                       Text="{my:Loc PreviewWidth, Filename=ToolBarPageResources}" />
+                            <Slider Minimum="80"
+                                    Maximum="800"
+                                    MinWidth="200"
+                                    HorizontalAlignment="Stretch"
+                                    Value="{ReflectionBinding PreviewWidth, Mode=TwoWay, Source={StaticResource PageProxy}}" />
+                        </StackPanel>
+                        <TextBlock Classes="text-caption text-helper"
+                                   Text="{my:Loc FluentRibbonNote, Filename=ToolBarPageResources}"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!-- Preview + debug (shared page VM scope) -->
+                    <ContentControl Content="{ReflectionBinding Data, Source={StaticResource PageProxy}}">
+                        <ContentControl.ContentTemplate>
+                            <DataTemplate x:DataType="vm:ToolBarPageViewModel">
+                                <StackPanel Spacing="{StaticResource MyNet.Spacing.Md}">
+                                    <Border BorderBrush="{my:ThemeBrush MyNet.Color.Divider}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource MyNet.Corners.Control}"
+                                            Padding="{my:Thickness Sm}"
+                                            HorizontalAlignment="Left"
+                                            Width="{Binding PreviewWidth}">
+                                        <my:ToolBar x:Name="DemoToolBar"
+                                                     behavior:PlaygroundBehavior.AttachStyleProvider="{Binding #PlaygroundRoot.DataContext}"
+                                                     ItemsSource="{Binding Items}"
+                                                     ItemContainerTheme="{StaticResource ToolBarPlaygroundItemTheme}"
+                                                     OverflowItemTemplate="{StaticResource ToolBarOverflowItemTemplate}"
+                                                     HorizontalAlignment="Stretch" />
+                                    </Border>
+
+                                    <Border Background="{my:ThemeBrush MyNet.Color.Background.Secondary}"
+                                            CornerRadius="{StaticResource MyNet.Corners.Control}"
+                                            Padding="{my:Thickness Md}">
+                                        <StackPanel Spacing="{StaticResource MyNet.Spacing.Xs}">
+                                            <TextBlock Classes="text-subtitle" Text="{my:Loc DebugPanelTitle, Filename=ToolBarPageResources}" />
+                                            <TextBlock Classes="text-helper">
+                                                <Run Text="{my:Loc IsOverflowAvailable, Filename=ToolBarPageResources}" />
+                                                <Run Text=": " />
+                                                <Run Text="{Binding #DemoToolBar.IsOverflowAvailable}" />
+                                            </TextBlock>
+                                            <TextBlock Classes="text-helper">
+                                                <Run Text="{my:Loc OverflowItemsCount, Filename=ToolBarPageResources}" />
+                                                <Run Text=": " />
+                                                <Run Text="{Binding #DemoToolBar.OverflowItems.Count}" />
+                                            </TextBlock>
+                                            <TextBlock Classes="text-helper">
+                                                <Run Text="{my:Loc ItemsCount, Filename=ToolBarPageResources}" />
+                                                <Run Text=": " />
+                                                <Run Text="{Binding Items.Count}" />
+                                            </TextBlock>
+                                            <TextBlock Classes="text-helper">
+                                                <Run Text="{my:Loc Layout, Filename=SettingsResources}" />
+                                                <Run Text=": " />
+                                                <Run Text="{Binding #DemoToolBar.LayoutMode}" />
+                                            </TextBlock>
+                                            <TextBlock Classes="text-helper">
+                                                <Run Text="{my:Loc Orientation, Filename=SettingsResources}" />
+                                                <Run Text=": " />
+                                                <Run Text="{Binding #DemoToolBar.Orientation}" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ContentControl.ContentTemplate>
+                    </ContentControl>
+                </StackPanel>
+            </DataTemplate>
+        </v:ShowcaseView.PlaygroundControlTemplate>
+
+        <v:ShowcaseView.ThemeControlTemplate>
+            <DataTemplate x:DataType="rendering:ControlStyle">
+                <my:ToolBar behavior:PlaygroundBehavior.AttachStyle="{Binding}"
+                            HorizontalAlignment="Left">
+                    <my:ToolBarItem Header="New" Icon="{my:MaterialIcon FileOutline}" />
+                    <my:ToolBarItem Header="Open" Icon="{my:MaterialIcon FolderOpenOutline}" />
+                    <my:ToolBarSeparator />
+                    <my:ToolBarItem Header="Save" Icon="{my:MaterialIcon ContentSaveOutline}" />
+                    <my:ToolBarItem Header="Print" Icon="{my:MaterialIcon PrinterOutline}" />
+                </my:ToolBar>
+            </DataTemplate>
+        </v:ShowcaseView.ThemeControlTemplate>
+
+        <v:ShowcaseView.CustomContent>
+            <StackPanel Spacing="{StaticResource MyNet.Spacing.Xl}">
+
+                <!-- Small toolbar (3 items) -->
+                <StackPanel Spacing="{StaticResource MyNet.Spacing.Sm}">
+                    <TextBlock Classes="text-subtitle" Text="{my:Loc PresetSmallTitle, Filename=ToolBarPageResources}" />
+                    <my:ToolBar HorizontalAlignment="Left">
+                        <my:ToolBarItem Header="New" Icon="{my:MaterialIcon FileOutline}" />
+                        <my:ToolBarItem Header="Open" Icon="{my:MaterialIcon FolderOpenOutline}" />
+                        <my:ToolBarItem Header="Save" Icon="{my:MaterialIcon ContentSaveOutline}" />
+                    </my:ToolBar>
+                </StackPanel>
+
+                <!-- Standard toolbar (8 items + separator) -->
+                <StackPanel Spacing="{StaticResource MyNet.Spacing.Sm}">
+                    <TextBlock Classes="text-subtitle" Text="{my:Loc PresetStandardTitle, Filename=ToolBarPageResources}" />
+                    <my:ToolBar HorizontalAlignment="Left">
+                        <my:ToolBarItem Header="New" Icon="{my:MaterialIcon FileOutline}" />
+                        <my:ToolBarItem Header="Open" Icon="{my:MaterialIcon FolderOpenOutline}" />
+                        <my:ToolBarItem Header="Save" Icon="{my:MaterialIcon ContentSaveOutline}" />
+                        <my:ToolBarSeparator />
+                        <my:ToolBarItem Header="Undo" Icon="{my:MaterialIcon Undo}" />
+                        <my:ToolBarItem Header="Redo" Icon="{my:MaterialIcon Redo}" />
+                        <my:ToolBarItem Header="Cut" Icon="{my:MaterialIcon ContentCut}" />
+                        <my:ToolBarItem Header="Copy" Icon="{my:MaterialIcon ContentCopy}" />
+                        <my:ToolBarItem Header="Paste" Icon="{my:MaterialIcon ContentPaste}" />
+                    </my:ToolBar>
+                </StackPanel>
+
+                <!-- Overflow stress (18 items, narrow container) -->
+                <StackPanel Spacing="{StaticResource MyNet.Spacing.Sm}">
+                    <TextBlock Classes="text-subtitle" Text="{my:Loc PresetOverflowTitle, Filename=ToolBarPageResources}" />
+                    <Border BorderBrush="{my:ThemeBrush MyNet.Color.Divider}"
+                            BorderThickness="1"
+                            CornerRadius="{StaticResource MyNet.Corners.Control}"
+                            Padding="{my:Thickness Sm}"
+                            MaxWidth="120"
+                            HorizontalAlignment="Left">
+                        <my:ToolBar OverflowMode="Adaptive" HorizontalAlignment="Stretch">
+                            <my:ToolBarItem Header="Item 1" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 2" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 3" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 4" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 5" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 6" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 7" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 8" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 9" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 10" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 11" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 12" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 13" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 14" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 15" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 16" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 17" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Item 18" Icon="{my:MaterialIcon CircleOutline}" OverflowPriority="Normal" />
+                        </my:ToolBar>
+                    </Border>
+                </StackPanel>
+
+                <!-- Mixed sizes and overflow priorities -->
+                <StackPanel Spacing="{StaticResource MyNet.Spacing.Sm}">
+                    <TextBlock Classes="text-subtitle" Text="{my:Loc PresetMixedTitle, Filename=ToolBarPageResources}" />
+                    <Border BorderBrush="{my:ThemeBrush MyNet.Color.Divider}"
+                            BorderThickness="1"
+                            CornerRadius="{StaticResource MyNet.Corners.Control}"
+                            Padding="{my:Thickness Sm}"
+                            MaxWidth="320"
+                            HorizontalAlignment="Left">
+                        <my:ToolBar OverflowMode="Adaptive" HorizontalAlignment="Stretch">
+                            <my:ToolBarItem Header="Pin (never overflow)"
+                                            Icon="{my:MaterialIcon PinOutline}"
+                                            OverflowPriority="NeverOverflow" />
+                            <my:ToolBarItem Header="Export to PDF with long title"
+                                            Icon="{my:MaterialIcon FilePdfBox}"
+                                            OverflowPriority="Low" />
+                            <my:ToolBarItem Header="Share"
+                                            Icon="{my:MaterialIcon ShareVariantOutline}"
+                                            OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Archive"
+                                            Icon="{my:MaterialIcon ArchiveOutline}"
+                                            OverflowPriority="Normal" />
+                            <my:ToolBarItem Header="Overflow menu only"
+                                            Icon="{my:MaterialIcon DotsHorizontal}"
+                                            OverflowPriority="AlwaysOverflow" />
+                        </my:ToolBar>
+                    </Border>
+                </StackPanel>
+
+            </StackPanel>
+        </v:ShowcaseView.CustomContent>
+
+    </v:ShowcaseView>
+
+</ContentPage>

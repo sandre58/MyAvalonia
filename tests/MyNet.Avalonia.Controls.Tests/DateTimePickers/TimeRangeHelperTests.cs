@@ -6,7 +6,6 @@
 
 using System;
 using FluentAssertions;
-using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.DateTimePickers.Internal;
 using Xunit;
 
@@ -24,8 +23,8 @@ public class TimeRangeHelperTests
             new(14, 12, 0),
             TimeRangeBoundary.End);
 
-        start.Should().Be(new TimeSpan(14, 12, 0));
-        end.Should().Be(new TimeSpan(14, 12, 0));
+        start.Should().Be(new(14, 12, 0));
+        end.Should().Be(new(14, 12, 0));
     }
 
     [Fact]
@@ -36,8 +35,8 @@ public class TimeRangeHelperTests
             new(18, 55, 0),
             TimeRangeBoundary.Start);
 
-        start.Should().Be(new TimeSpan(19, 0, 0));
-        end.Should().Be(new TimeSpan(19, 0, 0));
+        start.Should().Be(new(19, 0, 0));
+        end.Should().Be(new(19, 0, 0));
     }
 
     [Fact]

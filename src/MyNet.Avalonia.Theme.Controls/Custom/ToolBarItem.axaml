@@ -1,0 +1,112 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:my="http://mynet.com/avalonia"
+                    xmlns:icons="clr-namespace:Material.Icons;assembly=Material.Icons">
+
+    <ControlTheme x:Key="{x:Type my:ToolBarItem}" TargetType="my:ToolBarItem">
+
+        <!-- Cascade styling tokens from the parent ToolBar via ItemsAssist / IconAssist -->
+        <Setter Property="Background" Value="{Binding $parent[my:ToolBar].(my:ItemsAssist.Background)}" />
+        <Setter Property="Foreground" Value="{Binding $parent[my:ToolBar].(my:ItemsAssist.Foreground)}" />
+        <Setter Property="Padding" Value="{Binding $parent[my:ToolBar].(my:ItemsAssist.Padding)}" />
+        <Setter Property="Margin" Value="{Binding $parent[my:ToolBar].(my:ItemsAssist.Margin)}" />
+        <Setter Property="CornerRadius" Value="{Binding $parent[my:ToolBar].(my:ItemsAssist.CornerRadius)}" />
+        <Setter Property="my:IconAssist.Alignment" Value="{Binding $parent[my:ToolBar].(my:IconAssist.Alignment)}" />
+        <Setter Property="my:IconAssist.Spacing" Value="{Binding $parent[my:ToolBar].(my:IconAssist.Spacing)}" />
+        <Setter Property="my:IconAssist.PrimarySize" Value="{Binding $parent[my:ToolBar].(my:IconAssist.PrimarySize)}" />
+        <Setter Property="my:IconAssist.LabelSize" Value="{Binding $parent[my:ToolBar].(my:IconAssist.LabelSize)}" />
+        <Setter Property="FontSize" Value="{StaticResource MyNet.Font.Size.Button}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="MinHeight" Value="28" />
+        <Setter Property="MinWidth" Value="28" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusAdorner" Value="{x:Null}" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border x:Name="PART_Root"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}">
+
+                    <StackPanel x:Name="PART_Content"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Spacing="{Binding $parent[my:ToolBar].(my:IconAssist.Spacing)}">
+
+                        <!-- Icon slot -->
+                        <ContentPresenter x:Name="PART_Icon"
+                                          Content="{TemplateBinding Icon}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
+                                          VerticalAlignment="Center">
+                            <ContentPresenter.DataTemplates>
+                                <DataTemplate DataType="icons:MaterialIconKind">
+                                    <my:MaterialIcon Kind="{Binding}" />
+                                </DataTemplate>
+                            </ContentPresenter.DataTemplates>
+                        </ContentPresenter>
+
+                        <!-- Header text / label slot — hidden in compact mode -->
+                        <ContentPresenter x:Name="PART_Header"
+                                          Content="{TemplateBinding Header}"
+                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
+                                          VerticalAlignment="Center" />
+
+                        <!-- Fallback: arbitrary content (Button.Content) -->
+                        <ContentPresenter x:Name="PART_FallbackContent"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          IsVisible="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static my:NullConverter.IsPresent}}"
+                                          VerticalAlignment="Center" />
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        
+        <!-- Icon sizing for MaterialIcon / PathIcon in the icon slot -->
+        <Style Selector="^ /template/ ContentPresenter#PART_Icon my|MaterialIcon">
+            <Setter Property="Width" Value="{Binding $parent[my:ToolBarItem].(my:IconAssist.PrimarySize)}" />
+            <Setter Property="Height" Value="{Binding $parent[my:ToolBarItem].(my:IconAssist.PrimarySize)}" />
+            <Setter Property="Foreground" Value="{Binding $parent[my:ToolBarItem].Foreground}" />
+        </Style>
+
+        <Style Selector="^ /template/ ContentPresenter#PART_Icon PathIcon">
+            <Setter Property="Width" Value="{Binding $parent[my:ToolBarItem].(my:IconAssist.PrimarySize)}" />
+            <Setter Property="Height" Value="{Binding $parent[my:ToolBarItem].(my:IconAssist.PrimarySize)}" />
+            <Setter Property="Foreground" Value="{Binding $parent[my:ToolBarItem].Foreground}" />
+        </Style>
+
+        <!-- Pointer-over: highlight background -->
+        <Style Selector="^:pointerover /template/ Border#PART_Root">
+            <Setter Property="Background" Value="{Binding $parent[my:ToolBar].(my:ItemsAssist.HoverBackground)}" />
+        </Style>
+
+        <!-- Pressed: slight opacity reduction -->
+        <Style Selector="^:pressed /template/ Border#PART_Root">
+            <Setter Property="Opacity" Value="0.75" />
+        </Style>
+
+        <!-- Focus ring -->
+        <Style Selector="^:focus-visible /template/ Border#PART_Root">
+            <Setter Property="BorderBrush" Value="{Binding $parent[my:ToolBar].(my:ItemsAssist.ActiveForeground)}" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+
+        <!-- Compact mode: hide the header label (icon-only) -->
+        <Style Selector="my|ToolBar:compact ^ /template/ ContentPresenter#PART_Header">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+
+    </ControlTheme>
+
+</ResourceDictionary>
+

@@ -7,7 +7,6 @@
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Media;
 using Avalonia.VisualTree;
 
 namespace MyNet.Avalonia.Controls.Primitives.Internal;

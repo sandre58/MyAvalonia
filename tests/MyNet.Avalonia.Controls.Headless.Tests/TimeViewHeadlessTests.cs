@@ -6,13 +6,11 @@
 
 using System;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
 using Avalonia.Input;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using FluentAssertions;
-using MyNet.Avalonia.Controls.Primitives;
 using MyNet.Primitives.Temporal;
 
 namespace MyNet.Avalonia.Controls.Headless.Tests;

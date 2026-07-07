@@ -11,7 +11,6 @@ using Avalonia.Controls;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Internals.Calendar;
 using MyNet.Primitives;
-using MyNet.Primitives.Temporal;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Calendar;
@@ -110,7 +109,7 @@ public class CalendarSelectionCoordinatorExpandedTests
         {
             Ranges.Add((start, end));
             _dates.Clear();
-            foreach (var date in start.Range(end, start <= end ? 1 : -1, TimeUnit.Day))
+            foreach (var date in start.Range(end, start <= end ? 1 : -1))
                 _dates.Add(date.DiscardTime());
         }
 
@@ -123,7 +122,7 @@ public class CalendarSelectionCoordinatorExpandedTests
         public void AddSelection(DateTime start, DateTime end)
         {
             Ranges.Add((start, end));
-            foreach (var date in start.Range(end, start <= end ? 1 : -1, TimeUnit.Day))
+            foreach (var date in start.Range(end, start <= end ? 1 : -1))
                 _dates.Add(date.DiscardTime());
         }
 

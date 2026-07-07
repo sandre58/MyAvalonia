@@ -316,6 +316,72 @@
         </StackPanel>
     </DataTemplate>
 
+    <ControlTheme x:Key="{x:Type controls:ToolBarItem}" TargetType="controls:ToolBarItem">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="MinWidth" Value="24" />
+        <Setter Property="MinHeight" Value="24" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:ToolBarItem">
+                <Border Name="PART_Root"
+                        Padding="{TemplateBinding Padding}">
+                    <ContentPresenter Content="{TemplateBinding Header}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:ToolBarSeparator}" TargetType="controls:ToolBarSeparator">
+        <Setter Property="Width" Value="1" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:ToolBarSeparator">
+                <Border Width="1" Background="Gray" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <DataTemplate x:Key="Headless.DataTemplate.ToolBarOverflowItem" DataType="my:ToolBarOverflowEntry">
+        <Button Content="{Binding Header}" />
+    </DataTemplate>
+
+    <ControlTheme x:Key="{x:Type controls:ToolBar}" TargetType="controls:ToolBar">
+        <Setter Property="ItemContainerTheme" Value="{StaticResource {x:Type controls:ToolBarItem}}" />
+        <Setter Property="OverflowItemTemplate" Value="{StaticResource Headless.DataTemplate.ToolBarOverflowItem}" />
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <controls:ToolBarPanel />
+            </ItemsPanelTemplate>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate TargetType="controls:ToolBar">
+                <Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ItemsPresenter Grid.Column="0"
+                                        x:Name="PART_ItemsPresenter"
+                                        ItemsPanel="{TemplateBinding ItemsPanel}" />
+                        <ToggleButton Name="PART_OverflowButton"
+                                      Grid.Column="1"
+                                      IsVisible="{TemplateBinding IsOverflowAvailable}"
+                                      Content="..." />
+                        <Popup Name="PART_OverflowPopup"
+                               Grid.Column="1"
+                               PlacementTarget="{Binding #PART_OverflowButton}"
+                               IsOpen="{Binding #PART_OverflowButton.IsChecked, Mode=TwoWay}">
+                            <Border Padding="4">
+                                <ItemsControl ItemTemplate="{TemplateBinding OverflowItemTemplate}"
+                                              ItemsSource="{TemplateBinding OverflowItems}" />
+                            </Border>
+                        </Popup>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
     <ControlTheme x:Key="{x:Type ComboBox}" TargetType="ComboBox">
         <Setter Property="Template">
             <ControlTemplate TargetType="ComboBox">

@@ -512,7 +512,6 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
         SetGrid(items);
 
         var dt = _syncDateTime;
-        UpdateFormatDates(items, dt);
 
         if (DayVisible && items.DaySelector is { } day)
         {
@@ -547,14 +546,7 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
         SetInitialFocus(items);
     }
 
-    private DateTime CoerceDateTime(DateTime value)
-    {
-        if (value < MinYear.DateTime)
-            return MinYear.DateTime;
-        if (value > MaxYear.DateTime)
-            return MaxYear.DateTime;
-        return value;
-    }
+    private DateTime CoerceDateTime(DateTime value) => value < MinYear.DateTime ? MinYear.DateTime : value > MaxYear.DateTime ? MaxYear.DateTime : value;
 
     private void SetGrid(TemplateItems items)
     {
@@ -563,13 +555,13 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
         var fmt = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
 
         // Date parts ordered following the current culture short date pattern.
-        var orderedDateParts = new List<(Panel? host, int index)>
+        var orderedDateParts = new List<(Panel? Host, int Index)>
         {
-            (items.MonthHost, MonthVisible ? fmt.IndexOf("m", StringComparison.OrdinalIgnoreCase) : -1),
-            (items.YearHost, YearVisible ? fmt.IndexOf("y", StringComparison.OrdinalIgnoreCase) : -1),
-            (items.DayHost, DayVisible ? fmt.IndexOf("d", StringComparison.OrdinalIgnoreCase) : -1),
+            (items.MonthHost, MonthVisible ? fmt.IndexOf('M', StringComparison.OrdinalIgnoreCase) : -1),
+            (items.YearHost, YearVisible ? fmt.IndexOf('Y', StringComparison.OrdinalIgnoreCase) : -1),
+            (items.DayHost, DayVisible ? fmt.IndexOf('D', StringComparison.OrdinalIgnoreCase) : -1)
         };
-        orderedDateParts.Sort((x, y) => x.index - y.index);
+        orderedDateParts.Sort((x, y) => x.Index - y.Index);
 
         var use24HourClock = ClockIdentifier == "24HourClock";
 
@@ -585,12 +577,12 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
         }
 
         var orderedTimeHosts = new List<Panel>();
-        AddTimeHost(items.HourHost, true);
-        AddTimeHost(items.MinuteHost, true);
-        AddTimeHost(items.SecondHost, UseSeconds);
-        AddTimeHost(items.PeriodHost, !use24HourClock);
+        addTimeHost(items.HourHost, true);
+        addTimeHost(items.MinuteHost, true);
+        addTimeHost(items.SecondHost, UseSeconds);
+        addTimeHost(items.PeriodHost, !use24HourClock);
 
-        void AddTimeHost(Panel? host, bool visible)
+        void addTimeHost(Panel? host, bool visible)
         {
             if (host is null)
                 return;
@@ -645,7 +637,7 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
 
     private void ResetGridChildrenColumns(TemplateItems items)
     {
-        foreach (var host in new Panel?[]
+        foreach (var host in new[]
                  {
                      items.DayHost, items.MonthHost, items.YearHost,
                      items.HourHost, items.MinuteHost, items.SecondHost, items.PeriodHost
@@ -701,9 +693,6 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
         var day = _syncDateTime.Day > maxDays ? maxDays : _syncDateTime.Day;
         _syncDateTime = new(year, _syncDateTime.Month, day, _syncDateTime.Hour, _syncDateTime.Minute, _syncDateTime.Second);
 
-        if (DayVisible && items.DaySelector is { } daySelector)
-            DateTimePickerPanelAssist.SetFormatDate(daySelector, _syncDateTime);
-
         RefreshDaysIfNeeded(items, maxDays);
     }
 
@@ -716,9 +705,6 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
         var maxDays = _calendar.GetDaysInMonth(_syncDateTime.Year, month);
         var day = _syncDateTime.Day > maxDays ? maxDays : _syncDateTime.Day;
         _syncDateTime = new(_syncDateTime.Year, month, day, _syncDateTime.Hour, _syncDateTime.Minute, _syncDateTime.Second);
-
-        if (DayVisible && items.DaySelector is { } daySelector)
-            DateTimePickerPanelAssist.SetFormatDate(daySelector, _syncDateTime);
 
         RefreshDaysIfNeeded(items, maxDays);
     }
@@ -801,20 +787,6 @@ public class DateTimeScrollPickerPresenter : PickerPresenterBase
     {
         if (e.NameScope.Find<Button>(name) is { } button)
             button.Click += (_, _) => OnSelectorButtonClick(type, direction);
-    }
-
-    private static void UpdateFormatDates(TemplateItems items, DateTime date)
-    {
-        var context = date.Date;
-
-        if (items.DaySelector is { } daySelector)
-            DateTimePickerPanelAssist.SetFormatDate(daySelector, context);
-
-        if (items.MonthSelector is { } monthSelector)
-            DateTimePickerPanelAssist.SetFormatDate(monthSelector, context);
-
-        if (items.YearSelector is { } yearSelector)
-            DateTimePickerPanelAssist.SetFormatDate(yearSelector, context);
     }
 
     internal double GetOffsetForPopup()

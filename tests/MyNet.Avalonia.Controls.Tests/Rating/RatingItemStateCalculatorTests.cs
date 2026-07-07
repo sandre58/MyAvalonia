@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using FluentAssertions;
-using MyNet.Avalonia.Controls;
 using MyNet.Avalonia.Controls.Internals.Rating;
 using Xunit;
 

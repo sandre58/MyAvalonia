@@ -10,13 +10,11 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
-using Avalonia.Input;
 using Avalonia.Styling;
 using Avalonia.VisualTree;
 using Avalonia.Threading;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.DateTimePickers.Internal;
-using MyNet.Primitives.Temporal;
 
 namespace MyNet.Avalonia.Controls.Headless.Tests;
 

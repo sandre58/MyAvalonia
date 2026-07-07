@@ -9,7 +9,6 @@ using System.Linq;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.Internals.Calendar;
 using MyNet.Primitives;
-using MyNet.Primitives.Temporal;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.Calendar;
@@ -37,7 +36,7 @@ public class CalendarDateRangeHelperTests
     [Fact]
     public void EnumerateDays_Forward_IncludesBothEnds()
     {
-        var dates = new DateTime(2026, 5, 10).Range(new(2026, 5, 12), 1, TimeUnit.Day).ToList();
+        var dates = new DateTime(2026, 5, 10).Range(new(2026, 5, 12)).ToList();
 
         dates.Should().Equal(new DateTime(2026, 5, 10), new DateTime(2026, 5, 11), new DateTime(2026, 5, 12));
     }
@@ -45,13 +44,13 @@ public class CalendarDateRangeHelperTests
     [Fact]
     public void EnumerateDays_Reverse_IncludesBothEnds()
     {
-        var dates = new DateTime(2026, 5, 12).Range(new(2026, 5, 10), -1, TimeUnit.Day).ToList();
+        var dates = new DateTime(2026, 5, 12).Range(new(2026, 5, 10), -1).ToList();
 
         dates.Should().Equal(new DateTime(2026, 5, 12), new DateTime(2026, 5, 11), new DateTime(2026, 5, 10));
     }
 
     [Fact]
-    public void EnumerateDays_SingleDay_ReturnsOneDate() => new DateTime(2026, 5, 15).Range(new(2026, 5, 15), 1, TimeUnit.Day)
+    public void EnumerateDays_SingleDay_ReturnsOneDate() => new DateTime(2026, 5, 15).Range(new(2026, 5, 15))
         .Should().ContainSingle().Which.Should().Be(new(2026, 5, 15));
 
     [Fact]

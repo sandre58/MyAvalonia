@@ -9,11 +9,6 @@
 // -----------------------------------------------------------------------
 
 
-
-using MyNet.Avalonia.Controls;
-
-
-
 namespace MyNet.Avalonia.Controls.Internals.Rating;
 
 
@@ -38,7 +33,7 @@ internal static class RatingItemStateCalculator
 
         if (previewValue is not { } preview)
 
-            return new RatingItemVisualState(committedRatio, 0, 0, false, false, false, false);
+            return new(committedRatio, 0, 0, false, false, false, false);
 
 
 
@@ -52,7 +47,7 @@ internal static class RatingItemStateCalculator
 
             var isPreviewExtend = previewRatio > committedRatio + double.Epsilon;
 
-            return new RatingItemVisualState(committedRatio, previewRatio, 0, isPreviewExtend, false, false, false);
+            return new(committedRatio, previewRatio, 0, isPreviewExtend, false, false, false);
 
         }
 
@@ -66,7 +61,7 @@ internal static class RatingItemStateCalculator
 
             {
 
-                return new RatingItemVisualState(
+                return new(
 
                     committedRatio,
 
@@ -90,7 +85,7 @@ internal static class RatingItemStateCalculator
 
             {
 
-                return new RatingItemVisualState(committedRatio, previewRatio, 0, false, true, false, false);
+                return new(committedRatio, previewRatio, 0, false, true, false, false);
 
             }
 
@@ -100,7 +95,7 @@ internal static class RatingItemStateCalculator
 
             {
 
-                return new RatingItemVisualState(committedRatio, previewRatio, 0, false, false, true, false);
+                return new(committedRatio, previewRatio, 0, false, false, true, false);
 
             }
 
@@ -108,7 +103,7 @@ internal static class RatingItemStateCalculator
 
 
 
-        return new RatingItemVisualState(committedRatio, previewRatio, 0, false, false, false, false);
+        return new(committedRatio, previewRatio, 0, false, false, false, false);
 
     }
 

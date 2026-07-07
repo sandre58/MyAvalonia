@@ -7,13 +7,10 @@
 using System;
 using System.Globalization;
 using System.Reflection;
-using Avalonia.Controls;
 using FluentAssertions;
 using MyNet.Avalonia.Controls.DateTimePickers.Internal;
 using MyNet.Avalonia.Controls.Primitives;
-using MyNet.Primitives;
 using MyNet.Primitives.Intervals;
-using MyNet.Primitives.Temporal;
 using Xunit;
 
 namespace MyNet.Avalonia.Controls.Tests.DateTimePickers;
@@ -143,10 +140,7 @@ public class TimeRangePickerExTests
     }
 
     [Fact]
-    public void AutoCommit_DefaultIsTrue()
-    {
-        CreatePicker().AutoCommit.Should().BeTrue();
-    }
+    public void AutoCommit_DefaultIsTrue() => CreatePicker().AutoCommit.Should().BeTrue();
 
     [Fact]
     public void AutoCommit_WhenCompleteRangeInPreviewer_UpdatesSelectedValue()
